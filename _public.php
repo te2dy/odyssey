@@ -19,7 +19,8 @@ if (!defined('DC_RC_PATH')) {
 \dcCore::app()->tpl->addValue('origineConfigActive', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineConfigActive']);
 \dcCore::app()->tpl->addValue('origineMiniStylesInline', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniStylesInline']);
 \dcCore::app()->tpl->addValue('origineMiniEntryLang', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniEntryLang']);
-\dcCore::app()->tpl->addValue('origineMiniBlogDescription', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniBlogDescription']);
+\dcCore::app()->tpl->addValue('origineMiniFooterCredits', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniFooterCredits']);
+
 \dcCore::app()->tpl->addBlock('origineMiniWidgetsNav', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniWidgetsNav']);
 \dcCore::app()->tpl->addBlock('origineMiniWidgetsExtra', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniWidgetsExtra']);
 \dcCore::app()->tpl->addBlock('origineMiniFooter', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniFooter']);
@@ -87,19 +88,15 @@ class tplOrigineMiniTheme
   }
 
   /**
-   * Displays meta description if a description is set in the blog settings.
+   * Credits to display at the bottom of the site.
    * 
-   * @param array $attr Formatting filters.
+   * They can be remove with the plugin origineConfig.
    * 
-   * @return string The meta description markup.
+   * @return void
    */
-  public static function origineMiniBlogDescription($attr)
+  public static function origineMiniFooterCredits()
   {
-    if (\dcCore::app()->blog->desc !== '') {
-      $f = \dcCore::app()->tpl->getFilters($attr);
-
-      return '<meta name=description content="<?php echo ' . sprintf($f, '\dcCore::app()->blog->desc') . '; ?>" />';
-    }
+    return '<div class=site-footer-block>' . sprintf(__('Powered by <a href=%s>Dotclear</a> and <a href=%s>Origine Mini</a>'), __('https://dotclear.org/'), 'https://github.com/te2dy/origine-mini') . '</div>';
   }
 
   /**
