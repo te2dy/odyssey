@@ -1,0 +1,27 @@
+{{tpl:extends parent="__layout.html"}}
+
+<tpl:Block name="head-title">
+  <title>{{tpl:CategoryTitle encode_html="1"}} – {{tpl:BlogName encode_html="1"}}</title>
+</tpl:Block>
+
+<tpl:Block name="head-description">
+  <tpl:CategoryIf has_description="1">
+    <meta name=description content="{{tpl:CategoryDescription encode_html="1" remove_html="1"}}">
+  </tpl:CategoryIf>
+
+  <tpl:CategoryIf has_description="0">
+    <meta name=description content="{{tpl:lang Posts related to the category}} {{tpl:CategoryTitle encode_html="1"}}">
+  </tpl:CategoryIf>
+</tpl:Block>
+
+<tpl:Block name="main-content">
+  <header class=content-info>
+    <p><small>{{tpl:lang Category}}</small></p>
+
+    <h1>{{tpl:CategoryTitle}}</h1>
+
+    {{tpl:CategoryDescription}}
+  </header>
+
+  {{tpl:include src="_entry-list.html"}}
+</tpl:Block>

@@ -1,0 +1,37 @@
+{{tpl:extends parent="__layout.html"}}
+
+<tpl:Block name="head-title">
+  <title>{{tpl:EntryTitle encode_html="1"}}</title>
+</tpl:Block>
+
+<tpl:Block name="head-description">
+  <tpl:EntryIf extended="1">
+    <meta name=description{{tpl:origineMiniEntryLang}} content="{{tpl:EntryExcerpt encode_html="1" remove_html="1"}}">
+  </tpl:EntryIf>
+
+  <tpl:EntryIf extended="0">
+    <meta name=description{{tpl:origineMiniEntryLang}} content="{{tpl:EntryContent encode_html="1" remove_html="1" cut_string="150"}}<tpl:EntryIfContentCut encode_html="1" remove_html="1" cut_string="150"> […]</tpl:EntryIfContentCut>">
+  </tpl:EntryIf>
+</tpl:Block>
+
+<tpl:Block name="head-link">
+  <link rel=stylesheet href={{tpl:BlogThemeURL}}/style.css>
+  <link rel=alternate type=application/atom+xml title="{{tpl:lang Syndicated feed}}" href={{tpl:BlogFeedURL}}>
+  <link rel=alternate type=application/atom+xml title="{{tpl:lang Syndicated comment feed}}" href={{tpl:EntryPingLink}}>
+</tpl:Block>
+
+<tpl:Block name="main-content">
+  {{tpl:include src="_entry-post.html"}}
+</tpl:Block>
+
+<tpl:Block name="footer-scripts">
+  <script src={{tpl:BlogQmarkURL}}pf={{tpl:BlogJsJQuery}}/jquery.js></script>
+
+  <tpl:EntryIf show_comments="1">
+    <script src={{tpl:BlogQmarkURL}}pf=util.js></script>
+    <script type=application/json id=dc_post_remember_str-data>
+      { "post_remember_str": "{{tpl:lang Remember me}}" }
+    </script>
+    <script src={{tpl:BlogQmarkURL}}pf=post.js></script>
+  </tpl:EntryIf>
+</tpl:Block>

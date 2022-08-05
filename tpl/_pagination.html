@@ -1,0 +1,17 @@
+<tpl:Pagination>
+  <div class="pagination text-secondary">
+    <small class=page-numbers>
+      {{tpl:PaginationCurrent}} {{tpl:lang of}} {{tpl:PaginationCounter}}
+    </small>
+
+    <div class=pagination-links>
+      <tpl:PaginationIf start="0">
+        <a aria-label="{{tpl:lang Link to previous posts}}" href={{tpl:PaginationURL offset="-1"}}>{{tpl:lang ‹ Previous page}}</a>
+      </tpl:PaginationIf>
+
+      <tpl:PaginationIf end="0">
+        <a aria-label="{{tpl:lang Link to next posts}}" class=page-next href={{tpl:PaginationURL offset="+1"}}>{{tpl:lang Next page ›}}</a>
+      </tpl:PaginationIf>
+    </div>
+  </div>
+</tpl:Pagination>

@@ -1,0 +1,245 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Last-Translator: Teddy\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+# Head
+
+msgid "Syndicated feed"
+msgstr ""
+
+# Header
+
+msgid "Skip to content"
+msgstr ""
+
+msgid "Skip to menu"
+msgstr ""
+
+# Posts & pages
+
+msgid "post"
+msgstr ""
+
+msgid "Selected post"
+msgstr ""
+
+msgid "Selected"
+msgstr ""
+
+msgid "Read more"
+msgstr ""
+
+msgid "Read more about"
+msgstr ""
+
+msgid "Page"
+msgstr ""
+
+msgid "Sorted in"
+msgstr ""
+
+msgid "Tags:"
+msgstr ""
+
+msgid "Post printed from"
+msgstr ""
+
+msgid "Previous post:"
+msgstr ""
+
+msgid "Next post:"
+msgstr ""
+
+# Comments & trackbacks
+
+msgid "reactions"
+msgstr ""
+
+msgid "One reaction"
+msgstr ""
+
+msgid "%d reactions"
+msgstr ""
+
+msgid "One comment"
+msgstr ""
+
+msgid "%d comments"
+msgstr ""
+
+msgid "One trackback"
+msgstr ""
+
+msgid "%d trackback"
+msgstr ""
+
+msgid "comment"
+msgstr ""
+
+msgid "trackback"
+msgstr ""
+
+msgid "at"
+msgstr ""
+
+msgid ":"
+msgstr ""
+
+msgid "Trackback:"
+msgstr ""
+
+msgid "Markdown language allowed (<a href="https://commonmark.org/help/" rel="nofollow">help</a>)."
+msgstr ""
+
+msgid "Previewing"
+msgstr ""
+
+msgid "Send comment"
+msgstr ""
+
+msgid "Write a comment"
+msgstr ""
+
+msgid "Subscribe to reactions"
+msgstr ""
+
+msgid "Subscribe to comments"
+msgstr ""
+
+msgid "Subscribe to trackbacks"
+msgstr ""
+
+msgid "Add a trackback:"
+msgstr ""
+
+msgid "Copied"
+msgstr ""
+
+msgid "Read this post ›"
+msgstr ""
+
+msgid "Name or nickname"
+msgstr ""
+
+msgid "Email address"
+msgstr ""
+
+msgid "URL of a personal account or website (optional)"
+msgstr ""
+
+msgid "Your comment"
+msgstr ""
+
+msgid "Remember me"
+msgstr ""
+
+# Pagination
+
+msgid "of"
+msgstr ""
+
+msgid "‹ Previous page"
+msgstr ""
+
+msgid "Next page ›"
+msgstr ""
+
+# Footer
+
+msgid "Dotclear"
+msgstr ""
+
+msgid "https://dotclear.org/"
+msgstr ""
+
+msgid "Origine"
+msgstr ""
+
+msgid "https://themes.dotaddict.org/galerie-dc2/details/origine"
+msgstr ""
+
+msgid "https://github.com/te2dy/origine"
+msgstr ""
+
+msgid "Powered by <a href="%1$s">%2$s</a> and <a href="%3$s">%4$s</a>"
+msgstr ""
+
+# Archives
+
+msgid "From"
+msgstr ""
+
+msgid "to"
+msgstr ""
+
+msgid "Archives sorted by month"
+msgstr ""
+
+msgid "category"
+msgstr ""
+
+msgid "Archives:"
+msgstr ""
+
+msgid "Posts related to the tag"
+msgstr ""
+
+msgid "tag"
+msgstr ""
+
+# Search
+
+msgid "Search"
+msgstr ""
+
+msgid "Search terms"
+msgstr ""
+
+msgid "Search results for"
+msgstr ""
+
+msgid "Your search returned <strong>one result</strong>:"
+msgstr ""
+
+msgid "Your search returned <strong>%2$s results</strong>:"
+msgstr ""
+
+msgid "No results."
+msgstr ""
+
+# 404
+
+msgid "There is nothing to display"
+msgstr ""
+
+msgid "Page without content"
+msgstr ""
+
+msgid "No content"
+msgstr ""
+
+# Accessibility
+
+msgid "Published date of the post"
+msgstr ""
+
+msgid "Link to previous posts"
+msgstr ""
+
+msgid "Link to next posts"
+msgstr ""
+
+####### NEW STRINGS TO BE SORTED.
+
+msgid "Latest Posts"
+msgstr ""
+
+msgid "List of posts"
+msgstr ""
+
+msgid "page"
+msgstr ""

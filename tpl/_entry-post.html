@@ -1,0 +1,65 @@
+<article id={{tpl:lang post}}-{{tpl:EntryID}} class="post post-single {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}"{{tpl:origineEntryLang}}>
+  <header class=post-header>
+    <time aria-label="{{tpl:lang Published date of the post}}" class="post-date text-secondary" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%m"}} pubdate>{{tpl:EntryDate}}</time>
+
+    <h1>{{tpl:EntryTitle}}</h1>
+  </header>
+
+  <section class=text>
+    {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
+
+    {{tpl:EntryContent}}
+
+    {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
+  </section>
+
+  <footer class=post-footer>
+    {{tpl:include src="_attachments.html"}}
+
+    <tpl:EntryIf has_category="1">
+      <div class="post-meta text-secondary">
+        {{tpl:lang Sorted in}} <a href={{tpl:EntryCategoryURL}}>{{tpl:EntryCategory}}</a>
+      </div>
+    </tpl:EntryIf>
+
+    <tpl:EntryTags>
+      <tpl:TagsHeader>
+        <div class="post-meta text-secondary">{{tpl:lang Tags:}}
+      </tpl:TagsHeader>
+
+      <a href={{tpl:TagURL}} rel=tag>{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
+
+      <tpl:TagsFooter>
+        </div>
+      </tpl:TagsFooter>
+    </tpl:EntryTags>
+
+    <div class="post-pagination text-secondary">
+      <tpl:EntryPrevious>
+        <div class=post-pagination-prev>
+          <div class=post-pagination-title>
+            <small>{{tpl:lang Previous post:}}</small>
+          </div>
+
+          <div class=post-pagination-link-container>
+            <a href={{tpl:EntryURL}} rel=prev>{{tpl:EntryTitle}}</a>
+          </div>
+        </div>
+      </tpl:EntryPrevious>
+
+      <tpl:EntryNext>
+        <div class=post-pagination-next>
+          <div class=post-pagination-title>
+            <small>{{tpl:lang Next post:}}</small>
+          </div>
+
+          <div class=post-pagination-link-container>
+            <a href={{tpl:EntryURL}} rel=next>{{tpl:EntryTitle}}</a>
+          </div>
+        </div>
+      </tpl:EntryNext>
+    </div>
+  </footer>
+</article>
+
+{{tpl:include src="_comments.html"}}

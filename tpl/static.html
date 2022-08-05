@@ -1,0 +1,29 @@
+{{tpl:extends parent="__layout.html"}}
+
+<tpl:Block name="head-title">
+  <title>{{tpl:BlogName encode_html="1"}}</title>
+</tpl:Block>
+
+<tpl:Block name="head-description">
+  {{tpl:origineMiniBlogDescription remove_html="1" encode_html="1"}}
+</tpl:Block>
+
+<tpl:Block name="main-content">
+    {{tpl:BlogStaticEntryURL}}
+
+    <tpl:Entries>
+      {{tpl:EntryContent}}
+
+      <article id={{tpl:lang page}}-{{tpl:EntryID}} class=page{{tpl:origineMiniEntryLang}}>
+        <section class=text>
+          {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
+
+          {{tpl:EntryContent}}
+
+          {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
+        </section>
+      </article>
+
+      {{tpl:include src="_comments.html"}}
+    </tpl:Entries>
+</tpl:Block>

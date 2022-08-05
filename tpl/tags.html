@@ -1,0 +1,23 @@
+{{tpl:extends parent="__layout.html"}}
+
+<tpl:Block name="head-title">
+  <title>{{tpl:lang Tags}} – {{tpl:BlogName encode_html="1"}}</title>
+</tpl:Block>
+
+<tpl:Block name="head-description"></tpl:Block>
+
+<tpl:Block name="main-content">
+  <header class=content-info>
+    <h1>{{tpl:lang Tags}}</h1>
+
+    <p>{{tpl:lang A list of tags used in this blog.}}</p>
+  </header>
+
+  <ul>
+    <tpl:Tags>
+      <li>
+        <a href={{tpl:TagURL}} class=tag{{tpl:TagRoundPercent}}>{{tpl:TagID}}</a>
+      </li>
+    </tpl:Tags>
+  </ul>
+</tpl:Block>

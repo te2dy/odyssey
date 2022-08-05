@@ -1,0 +1,19 @@
+<tpl:Entries no_content="1">
+  <tpl:EntriesHeader>
+    <ul class=post-list>
+  </tpl:EntriesHeader>
+
+  <li id={{tpl:lang post}}-{{tpl:EntryID}} class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}} {{tpl:EntryIfSelected return="post-list-selected"}}">
+    {{tpl:origineConfigCommentLink}}
+
+    <h3 class=post-title><a href={{tpl:EntryURL}}>{{tpl:EntryTitle}}</a></h3>
+
+    <small class="post-date text-secondary"><time aria-label="{{tpl:lang Published date of the post}}" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%m"}} pubdate>{{tpl:EntryDate}}</time></small>
+  </li>
+
+  <tpl:EntriesFooter>
+    </ul>
+
+    {{tpl:include src="_pagination.html"}}
+  </tpl:EntriesFooter>
+</tpl:Entries>

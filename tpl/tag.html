@@ -1,0 +1,19 @@
+{{tpl:extends parent="__layout.html"}}
+
+<tpl:Block name="head-title">
+  <title>{{tpl:TagID encode_html="1"}} – {{tpl:BlogName encode_html="1"}}</title>
+</tpl:Block>
+
+<tpl:Block name="head-description">
+  <meta name=description content="{{tpl:lang Posts related to the tag}} {{tpl:TagID encode_html="1"}}" />
+</tpl:Block>
+
+<tpl:Block name="main-content">
+  <header class=content-info>
+    <p><small>{{tpl:lang Tag}}</small></p>
+
+    <h1>{{tpl:TagID}}</h1>
+  </header>
+
+  {{tpl:include src="_entry-list.html"}}
+</tpl:Block>

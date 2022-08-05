@@ -1,0 +1,248 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Last-Translator: Teddy\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+# Head
+
+msgid "Syndicated feed"
+msgstr "Fil de syndication"
+
+# Header
+
+msgid "Skip to content"
+msgstr "Aller au contenu"
+
+msgid "Skip to menu"
+msgstr "Aller au menu"
+
+# Posts & pages
+
+msgid "post"
+msgstr "billet"
+
+msgid "Selected post"
+msgstr "Billet sélectionné"
+
+msgid "Selected"
+msgstr "Sélectionné"
+
+msgid "Read more"
+msgstr "Lire la suite"
+
+msgid "Read more about"
+msgstr "Lire la suite de"
+
+msgid "Page"
+msgstr "Page"
+
+msgid "Sorted in"
+msgstr "Classé dans"
+
+msgid "Tags:"
+msgstr "Mots-clés&nbsp;:"
+
+msgid "Post printed from"
+msgstr "Billet imprimé depuis"
+
+msgid "Previous post:"
+msgstr "Billet précédent :"
+
+msgid "Next post:"
+msgstr "Billet suivant :"
+
+# Comments & trackbacks
+
+msgid "reactions"
+msgstr "reactions"
+
+msgid "One reaction"
+msgstr "Une réaction"
+
+msgid "%d reactions"
+msgstr "%d réactions"
+
+msgid "One comment"
+msgstr "Un commentaire"
+
+msgid "%d comments"
+msgstr "%d commentaires"
+
+msgid "One trackback"
+msgstr "Un rétrolien"
+
+msgid "%d trackback"
+msgstr "%d rétroliens"
+
+msgid "comment"
+msgstr "commentaire"
+
+msgid "trackback"
+msgstr "retrolien"
+
+msgid "at"
+msgstr "à"
+
+msgid ":"
+msgstr "&nbsp;:"
+
+msgid "Trackback:"
+msgstr "Rétrolien&nbsp;:"
+
+msgid "Markdown language allowed (<a href="https://commonmark.org/help/" rel="nofollow">help</a>)."
+msgstr "Langage Markdown autorisé (<a href="https://commonmark.org/help/" hreflang="en" rel="nofollow">aide</a>)."
+
+msgid "Previewing"
+msgstr "Prévisualisation"
+
+msgid "Send comment"
+msgstr "Envoyer le commentaire"
+
+msgid "Write a comment"
+msgstr "Écrire un commentaire"
+
+msgid "Subscribe to reactions"
+msgstr "S’abonner aux réactions"
+
+msgid "Subscribe to comments"
+msgstr "S’abonner aux commentaires"
+
+msgid "Subscribe to trackbacks"
+msgstr "S’abonner aux rétroliens"
+
+msgid "Add a trackback:"
+msgstr "Ajouter un rétrolien&nbsp;:"
+
+msgid "Trackback URL:"
+msgstr "Adresse de rétrolien&nbsp;:"
+
+msgid "Copied"
+msgstr "Copiée"
+
+msgid "Read this post ›"
+msgstr "Lire ce billet ›"
+
+msgid "Name or nickname"
+msgstr "Nom ou pseudonyme"
+
+msgid "Email address"
+msgstr "Adresse électronique"
+
+msgid "URL of a personal account or website (optional)"
+msgstr "Adresse d’un compte ou site personnel (facultatif)"
+
+msgid "Your comment"
+msgstr "Votre commentaire"
+
+msgid "Remember me"
+msgstr "Se souvenir de moi"
+
+# Pagination
+
+msgid "of"
+msgstr "sur"
+
+msgid "‹ Previous page"
+msgstr "‹ Page précédente"
+
+msgid "Next page ›"
+msgstr "Page suivante ›"
+
+# Footer
+
+msgid "Dotclear"
+msgstr "Dotclear"
+
+msgid "https://dotclear.org/"
+msgstr "https://fr.dotclear.org/"
+
+msgid "Origine"
+msgstr "Origine"
+
+msgid "https://themes.dotaddict.org/galerie-dc2/details/origine"
+msgstr "https://themes.dotaddict.org/galerie-dc2/details/origine"
+
+msgid "https://github.com/te2dy/origine"
+msgstr "https://github.com/te2dy/origine"
+
+msgid "Powered by <a href="%1$s">%2$s</a> and <a href="%3$s">%4$s</a>"
+msgstr "Propulsé par <a href="%1$s">%2$s</a> et <a href="%3$s">%4$s</a>"
+
+# Archives
+
+msgid "From"
+msgstr "Du"
+
+msgid "to"
+msgstr "au"
+
+msgid "Archives sorted by month"
+msgstr "Archives classées par mois"
+
+msgid "category"
+msgstr "catégorie"
+
+msgid "Archives:"
+msgstr "Archives&nbsp;:"
+
+msgid "Posts related to the tag"
+msgstr "Billets associés au mot-clé"
+
+msgid "tag"
+msgstr "mot-clé"
+
+# Search
+
+msgid "Search"
+msgstr "Recherche"
+
+msgid "Search terms"
+msgstr "Termes de la recherche"
+
+msgid "Search results for"
+msgstr "Résultats de la recherche"
+
+msgid "Your search returned <strong>one result</strong>:"
+msgstr "Votre recherche a retourné <strong>un résultat</strong>&nbsp;:"
+
+msgid "Your search returned <strong>%2$s results</strong>:"
+msgstr "Votre recherche a retourné <strong>%2$s résultats</strong>&nbsp;:"
+
+msgid "No results."
+msgstr "Aucun résultat."
+
+# 404
+
+msgid "There is nothing to display"
+msgstr "Il n’y a rien à afficher"
+
+msgid "Page without content"
+msgstr "Page sans contenu"
+
+msgid "No content"
+msgstr "Aucun contenu"
+
+# Accessibility
+
+msgid "Published date of the post"
+msgstr "Date de publication du billet"
+
+msgid "Link to previous posts"
+msgstr "Lien vers les billets précédents"
+
+msgid "Link to next posts"
+msgstr "Lien vers les billets suivants"
+
+####### NEW STRINGS TO BE SORTED.
+
+msgid "Latest Posts"
+msgstr "Derniers billets"
+
+msgid "List of posts"
+msgstr "Liste des billets"
+
+msgid "page"
+msgstr "page"

@@ -1,0 +1,13 @@
+<footer class=text-secondary id=site-footer>
+  {{tpl:Widgets type="custom"}}
+
+  {{tpl:SysBehavior behavior="publicFooterContent"}}
+
+  <tpl:SysIf jquery_needed="1">
+    <tpl:Block name="footer-scripts">
+      <script src={{tpl:BlogQmarkURL}}pf={{tpl:BlogJsJQuery}}/jquery.js></script>
+    </tpl:Block>
+  </tpl:SysIf>
+
+  <div>{{tpl:lang Powered by Dotclear}}</div>
+</footer>
