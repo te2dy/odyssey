@@ -69,7 +69,7 @@
   </tpl:Block>
 
   <tpl:Block name="comment-form">
-    <form action={{tpl:EntryURL}}#{{tpl:lang comment}} method=post id=comment-form>
+    <form action={{tpl:EntryURL}}#{{tpl:lang comment}} id=comment-form method=post>
       <tpl:Block name="comment-form-preview">
         <tpl:IfCommentPreview>
           <div id={{tpl:lang comment}} class=comment-preview>
@@ -133,17 +133,17 @@
   </tpl:Block>
 </tpl:EntryIf>
 
-<p class="text-secondary text-small" id="comment-feed-link">
+<p class=text-secondary id=comment-feed-link>
   <tpl:EntryIf operator="and" comments_active="1" pings_active="1">
-    <a href={{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}} rel=nofollow>{{tpl:lang Subscribe to reactions}}</a>
+    <small><a href={{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}} rel=nofollow>{{tpl:lang Subscribe to reactions}}</a></small>
   </tpl:EntryIf>
 
   <tpl:EntryIf operator="and" comments_active="1" pings_active="0">
-    <a href={{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}} rel=nofollow>{{tpl:lang Subscribe to comments}}</a>
+    <small><a href={{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}} rel=nofollow>{{tpl:lang Subscribe to comments}}</a></small>
   </tpl:EntryIf>
 
   <tpl:EntryIf operator="and" comments_active="0" pings_active="1">
-    <a href={{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}} rel=nofollow>{{tpl:lang Subscribe to trackbacks}}</a>
+    <small><a href={{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}} rel=nofollow>{{tpl:lang Subscribe to trackbacks}}</a></small>
   </tpl:EntryIf>
 </p>
 
@@ -166,8 +166,8 @@
     }
   </script>
 
-  <p class="text-secondary text-small" id=trackback-link-container>
-    {{tpl:lang Add a trackback:}}<br><span data-trackback-url={{tpl:EntryPingLink}} id=trackback-url onclick=origineTrackbackURLCopy();>{{tpl:EntryPingLink}}</span>
+  <p class=text-secondary id=trackback-link-container>
+    <small>{{tpl:lang Add a trackback:}}<br><span data-trackback-url={{tpl:EntryPingLink}} id=trackback-url onclick=origineTrackbackURLCopy();>{{tpl:EntryPingLink}}</span></small>
   </p>
 </tpl:EntryIf>
 

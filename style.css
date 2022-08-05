@@ -19,7 +19,7 @@
     --color-link-hover: hsl(var(--color-h), 100%, 85%);
     --color-border: #aaa;
     --color-input-text: #d9d9d9;
-    --color-input-text-hover: #16161D;
+    --color-input-text-hover: #16161d;
     --color-input-background: #333333;
     --color-input-background-hover: #d9d9d9;
   }
@@ -453,6 +453,25 @@ label:hover {
 }
 .page-next {
   margin-left: auto;
+}
+
+/**
+ * Widgets
+ */
+aside .widget {
+  margin-bottom: 2rem;
+}
+aside .widget:last-child {
+  margin-bottom: 0;
+}
+#site-footer :where(.widget, .site-footer-block) {
+  margin-bottom: 1rem;
+}
+#site-footer :where(.widget, .site-footer-block):last-child {
+  margin-bottom: 0;
+}
+.widget h2 {
+  font-size: calc();
 }
 
 /**
