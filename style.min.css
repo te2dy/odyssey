@@ -208,7 +208,6 @@ input,
 textarea {
   background-color: var(--color-input-background);
   border: .063rem solid var(--color-border);
-  border-radius: 0;
   box-sizing: border-box;
   color: var(--color-input-text);
   font-family: inherit;
@@ -322,7 +321,7 @@ label:hover {
   justify-content: space-between;
   margin-bottom: 1rem;
 }
-.selected {
+.post-list .post-selected {
   border: .063rem solid var(--color-border);
   padding: .5rem;
 }
