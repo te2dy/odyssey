@@ -321,6 +321,10 @@ label:hover {
   justify-content: space-between;
   margin-bottom: 1rem;
 }
+.selected {
+  border: .063rem solid var(--color-border);
+  padding: .5rem;
+}
 .post-list .post:last-child {
   margin-bottom: 0;
 }
@@ -340,6 +344,23 @@ label:hover {
  */
 .post-header {
   margin-bottom: 2rem;
+}
+.post-selected {
+  margin-bottom: 1rem;
+}
+.icon-container {
+  display: inline-block;
+  line-height: 1rem;
+}
+.svg-star {
+  fill: var(--color-text-primary);
+  height: 1rem;
+  stroke: none;
+  width: 1rem;
+  vertical-align: bottom;
+}
+.post-date {
+  display: block;
 }
 .post-footer {
   margin-top: 2rem;

@@ -1,9 +1,9 @@
 <tpl:Entries no_content="1">
   <tpl:EntriesHeader>
-    <ul class=post-list>
+    <ul aria-label="{{tpl:lang The post list}}" class=post-list>
   </tpl:EntriesHeader>
 
-  <li id={{tpl:lang post}}-{{tpl:EntryID}} class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}} {{tpl:EntryIfSelected return="post-list-selected"}}">
+  <li id={{tpl:lang post}}-{{tpl:EntryID}} class=<tpl:EntryIf selected="0">post{{tpl:else}}"post selected"</tpl:EntryIf>>
     {{tpl:origineConfigCommentLink}}
 
     <h3 class=post-title><a href={{tpl:EntryURL}}>{{tpl:EntryTitle}}</a></h3>
