@@ -17,53 +17,55 @@
     {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
   </section>
 
-  <footer class=post-footer>
-    {{tpl:include src="_attachments.html"}}
+  <tpl:EntryIf operator="or" has_category="1" has_tag="1">
+    <footer class=post-footer>
+      {{tpl:include src="_attachments.html"}}
 
-    <tpl:EntryIf has_category="1">
-      <div class="post-meta text-secondary">
-        {{tpl:lang Sorted in}} <a href={{tpl:EntryCategoryURL}}>{{tpl:EntryCategory}}</a>
-      </div>
-    </tpl:EntryIf>
-
-    <tpl:EntryTags>
-      <tpl:TagsHeader>
-        <div class="post-meta text-secondary">{{tpl:lang Tags:}}
-      </tpl:TagsHeader>
-
-      <a href={{tpl:TagURL}} rel=tag>{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
-
-      <tpl:TagsFooter>
+      <tpl:EntryIf has_category="1">
+        <div class="post-meta text-secondary">
+          {{tpl:lang Sorted in}} <a href={{tpl:EntryCategoryURL}}>{{tpl:EntryCategory}}</a>
         </div>
-      </tpl:TagsFooter>
-    </tpl:EntryTags>
+      </tpl:EntryIf>
 
-    <div class="post-pagination text-secondary">
-      <tpl:EntryPrevious>
-        <div class=post-pagination-prev>
-          <div class=post-pagination-title>
-            <small>{{tpl:lang Previous post:}}</small>
-          </div>
+      <tpl:EntryTags>
+        <tpl:TagsHeader>
+          <div class="post-meta text-secondary">{{tpl:lang Tags:}}
+        </tpl:TagsHeader>
 
-          <div class=post-pagination-link-container>
-            <a href={{tpl:EntryURL}} rel=prev>{{tpl:EntryTitle}}</a>
-          </div>
-        </div>
-      </tpl:EntryPrevious>
+        <a href={{tpl:TagURL}} rel=tag>{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
 
-      <tpl:EntryNext>
-        <div class=post-pagination-next>
-          <div class=post-pagination-title>
-            <small>{{tpl:lang Next post:}}</small>
+        <tpl:TagsFooter>
           </div>
-
-          <div class=post-pagination-link-container>
-            <a href={{tpl:EntryURL}} rel=next>{{tpl:EntryTitle}}</a>
-          </div>
-        </div>
-      </tpl:EntryNext>
-    </div>
-  </footer>
+        </tpl:TagsFooter>
+      </tpl:EntryTags>
+    </footer>
+  </tpl:EntryIf>
 </article>
+
+<div class="post-pagination text-secondary">
+  <tpl:EntryPrevious>
+    <div class=post-pagination-prev>
+      <div class=post-pagination-title>
+        <small>{{tpl:lang Previous post:}}</small>
+      </div>
+
+      <div class=post-pagination-link-container>
+        <a href={{tpl:EntryURL}} rel=prev>{{tpl:EntryTitle}}</a>
+      </div>
+    </div>
+  </tpl:EntryPrevious>
+
+  <tpl:EntryNext>
+    <div class=post-pagination-next>
+      <div class=post-pagination-title>
+        <small>{{tpl:lang Next post:}}</small>
+      </div>
+
+      <div class=post-pagination-link-container>
+        <a href={{tpl:EntryURL}} rel=next>{{tpl:EntryTitle}}</a>
+      </div>
+    </div>
+  </tpl:EntryNext>
+</div>
 
 {{tpl:include src="_comments.html"}}
