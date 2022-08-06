@@ -11,11 +11,13 @@ if (!defined('DC_RC_PATH')) {
 }
 
 $this->registerModule(
-  /* Name */        'Origine Mini',
-  /* Description */ 'A minimalistic Dotclear theme',
-  /* Author */      'Teddy',
-  /* Version */     '0.1-alpha',
+  'Origine Mini',                  // Name
+  'A minimalistic Dotclear theme', // Description
+  'Teddy',                         // Author
+  '0.1-alpha',                     // Version
   [
-    'type'   => 'theme'
+    'type'                 => 'theme',
+    'widgettitleformat'    => '<h3>%s</h3>', // h3 instead of h2 by default. No class needed.
+    'widgetsubtitleformat' => '<h4>%s</h4>'
   ]
 );
