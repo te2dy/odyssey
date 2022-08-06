@@ -19,7 +19,7 @@
     {{tpl:origineMiniStylesInline}}
 
     <tpl:Block name="head-link">
-      <link rel=stylesheet href={{tpl:BlogThemeURL}}/style.css>
+      <link rel=stylesheet href={{tpl:BlogThemeURL}}/style.min.css>
       <link rel=alternate type=application/atom+xml title="{{tpl:lang Syndicated feed}}" href={{tpl:BlogFeedURL}}>
     </tpl:Block>
 
@@ -31,9 +31,9 @@
       <header id=site-header>
         <tpl:Block name=site-header>
           <h4 id=site-title><a href={{tpl:BlogURL}}>{{tpl:BlogName}}</a></h4>
-
+          
           {{tpl:SimpleMenu id="main-menu"}}
-
+          
           {{tpl:SysBehavior behavior="publicTopAfterContent"}}
         </tpl:Block>
       </header>
