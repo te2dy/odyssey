@@ -219,11 +219,8 @@ msgstr "Aucun résultat."
 
 # 404
 
-msgid "Page not found"
-msgstr "Page non trouvée"
-
-msgid "This is a 404 Error page."
-msgstr "Ceci est une page d’erreur 404."
+msgid "Not found"
+msgstr "Non trouvé"
 
 msgid "The page"
 msgstr "La page"
@@ -231,11 +228,11 @@ msgstr "La page"
 msgid "doesn't exist."
 msgstr "n’existe pas."
 
-msgid "‹ Go to the homepage"
-msgstr "‹ Aller en page d’accueil"
+msgid "‹ Homepage"
+msgstr "‹ Page d’accueil"
 
-msgid "Do a search:"
-msgstr "Faire une recherche&nbsp;:"
+msgid "Search:"
+msgstr "Recherche&nbsp;:"
 
 # Accessibility
 
