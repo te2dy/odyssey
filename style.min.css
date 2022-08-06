@@ -212,9 +212,29 @@ textarea {
   color: var(--color-input-text);
   font-family: inherit;
   font-size: 1em;
+  margin-bottom: 1rem;
   max-width: 100%;
   padding: .5em;
 }
+input:not([type=checkbox]) {
+  display: block;
+}
+
+/* FORM TESTS */
+label {
+  display: inline-block;
+  margin-bottom: .25rem;
+}
+input[type=checkbox] {
+  margin-left: 0;
+}
+input[type=checkbox] + label {
+  display: inline;
+  margin: 0;
+}
+
+
+
 button {
   font-family: inherit;
   font-size: 1em;
@@ -263,20 +283,6 @@ input[type="submit"]:hover:disabled {
 }
 textarea {
   width: 100%;
-}
-.form-entry {
-  margin-bottom: .5rem;
-}
-.form-entry:last-of-type {
-  margin-bottom: 0;
-}
-.form-entry label {
-  display: block;
-  font-size: .8em;
-  margin-bottom: .25rem;
-}
-.form-info {
-  font-size: .8em;
 }
 label:hover {
   cursor: pointer;
@@ -428,6 +434,9 @@ label:hover {
 .comment-date,
 .ping-date {
   font-size: .9em;
+}
+.remember {
+  margin: 0;
 }
 
 /**
