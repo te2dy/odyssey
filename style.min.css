@@ -381,6 +381,7 @@ label:hover {
   margin-top: 4rem;
 }
 .post-pagination-title {
+  display: block;
   margin-bottom: .25rem;
 }
 .post-pagination-next,

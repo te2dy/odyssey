@@ -7,17 +7,17 @@
  */
 
 if (!defined('DC_RC_PATH')) {
-  return;
+    return;
 }
 
 $this->registerModule(
-  'Origine Mini',                  // Name
-  'A minimalistic Dotclear theme', // Description
-  'Teddy',                         // Author
-  '0.1-alpha',                     // Version
-  [
-    'type'                 => 'theme',
-    'widgettitleformat'    => '<h3>%s</h3>', // h3 instead of h2 by default. No class needed.
-    'widgetsubtitleformat' => '<h4>%s</h4>'
-  ]
+    'Origine Mini',                  // Name
+    'A minimalistic Dotclear theme', // Description
+    'Teddy',                         // Author
+    '0.1-alpha',                     // Version
+    [
+        'type'                 => 'theme',
+        'widgettitleformat'    => '<h3>%s</h3>', // h3 instead of h2 by default. No class needed.
+        'widgetsubtitleformat' => '<h4>%s</h4>'
+    ]
 );
