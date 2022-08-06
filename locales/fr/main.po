@@ -217,6 +217,9 @@ msgstr "Votre recherche a retourné <strong>%2$s résultats</strong>&nbsp;:"
 msgid "No results."
 msgstr "Aucun résultat."
 
+msgid "Search this blog"
+msgstr "Rechercher sur ce blog"
+
 # 404
 
 msgid "Not found"

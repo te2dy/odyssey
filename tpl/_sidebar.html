@@ -1,5 +1,15 @@
 <tpl:origineMiniWidgetsNav>
   <aside id=blognav>
+    <tpl:origineMiniWidgetSearchForm>
+      <tpl:Block name="search-form">
+        <h3>{{tpl:lang Search this blog}}</h3>
+
+        <div class=widget>
+          {{tpl:include src="_searchform.html"}}
+        </div>
+      </tpl:Block>
+    </tpl:origineMiniWidgetSearchForm>
+
     {{tpl:Widgets type="nav"}}
   </aside>
 </tpl:origineMiniWidgetsNav>

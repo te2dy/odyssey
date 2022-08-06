@@ -23,6 +23,7 @@ if (!defined('DC_RC_PATH')) {
 \dcCore::app()->tpl->addValue('origineMiniURIRelative', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniURIRelative']);
 
 \dcCore::app()->tpl->addBlock('origineMiniWidgetsNav', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniWidgetsNav']);
+\dcCore::app()->tpl->addBlock('origineMiniWidgetSearchForm', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniWidgetSearchForm']);
 \dcCore::app()->tpl->addBlock('origineMiniWidgetsExtra', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniWidgetsExtra']);
 \dcCore::app()->tpl->addBlock('origineMiniFooter', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniFooter']);
 
@@ -113,8 +114,8 @@ class tplOrigineMiniTheme
     /**
      * Displays navigation widgets.
      *
-     * @param array $attr        Unused.
-     * @param void    $content The content of the widget area.
+     * @param array $attr    Unused.
+     * @param void  $content The content of the widget area.
      *
      * @return void The navigation widget.
      */
@@ -128,10 +129,27 @@ class tplOrigineMiniTheme
     }
 
     /**
+     * Displays a search form at before the navigation widget area.
+     *
+     * @param array $attr    Unused.
+     * @param void  $content The content of the search form.
+     *
+     * @return void The search form.
+     */
+    public static function origineMiniWidgetSearchForm($attr, $content)
+    {
+        $plugin_activated = self::origineConfigActive();
+
+        if ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->widgets_search_form === true) {
+            return $content;
+        }
+    }
+
+    /**
      * Displays extra widgets.
      *
-     * @param array $attr        Unused.
-     * @param void    $content The content of the widget area.
+     * @param array $attr    Unused.
+     * @param void  $content The content of the widget area.
      *
      * @return void The navigation widget.
      */
@@ -147,8 +165,8 @@ class tplOrigineMiniTheme
     /**
      * Displays the footer.
      *
-     * @param array $attr        Unused.
-     * @param void    $content The content of the footer.
+     * @param array $attr    Unused.
+     * @param void  $content The content of the footer.
      *
      * @return void The footer.
      */
