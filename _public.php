@@ -20,6 +20,7 @@ if (!defined('DC_RC_PATH')) {
 \dcCore::app()->tpl->addValue('origineMiniStylesInline', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniStylesInline']);
 \dcCore::app()->tpl->addValue('origineMiniEntryLang', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniEntryLang']);
 \dcCore::app()->tpl->addValue('origineMiniFooterCredits', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniFooterCredits']);
+\dcCore::app()->tpl->addValue('origineMiniURIRelative', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniURIRelative']);
 
 \dcCore::app()->tpl->addBlock('origineMiniWidgetsNav', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniWidgetsNav']);
 \dcCore::app()->tpl->addBlock('origineMiniWidgetsExtra', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniWidgetsExtra']);
@@ -97,6 +98,16 @@ class tplOrigineMiniTheme
   public static function origineMiniFooterCredits()
   {
     return '<div class=site-footer-block>' . sprintf(__('Powered by <a href=%s>Dotclear</a> and <a href=%s>Origine Mini</a>'), __('https://dotclear.org/'), 'https://github.com/te2dy/origine-mini') . '</div>';
+  }
+
+  /**
+   * Returns the relative URI of the current page.
+   * 
+   * @return void
+   */
+  public static function origineMiniURIRelative()
+  {
+    return $_SERVER['REQUEST_URI'];
   }
 
   /**

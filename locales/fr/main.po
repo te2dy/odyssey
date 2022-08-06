@@ -196,11 +196,14 @@ msgstr "mot-clé"
 
 # Search
 
-msgid "Search"
-msgstr "Recherche"
+msgid "Search page"
+msgstr "Page de recherche"
 
-msgid "Search terms"
-msgstr "Termes de la recherche"
+msgid "Search"
+msgstr "Rechercher"
+
+msgid "Terms to search"
+msgstr "Termes à rechercher"
 
 msgid "Search results for"
 msgstr "Résultats de la recherche"
@@ -216,14 +219,23 @@ msgstr "Aucun résultat."
 
 # 404
 
-msgid "There is nothing to display"
-msgstr "Il n’y a rien à afficher"
+msgid "Page not found"
+msgstr "Page non trouvée"
 
-msgid "Page without content"
-msgstr "Page sans contenu"
+msgid "This is a 404 Error page."
+msgstr "Ceci est une page d’erreur 404."
 
-msgid "No content"
-msgstr "Aucun contenu"
+msgid "The page"
+msgstr "La page"
+
+msgid "doesn't exist."
+msgstr "n’existe pas."
+
+msgid "‹ Go to the homepage"
+msgstr "‹ Aller en page d’accueil"
+
+msgid "Do a search:"
+msgstr "Faire une recherche&nbsp;:"
 
 # Accessibility
 

@@ -8,31 +8,9 @@
 
 <tpl:Block name="main-content">
   <header class=content-info>
-    <h1>{{tpl:lang Search}}</h1>
+    <h1>{{tpl:lang Search page}}</h1>
 
-    <form action={{tpl:BlogURL}} id=page-search-form method=get role=search>
-      <div class=form-entry>
-        <input aria-label="{{tpl:lang Search}}" id=page-search-form-input name=q placeholder="{{tpl:lang Search terms}}" value="{{tpl:SysSearchString}}">
-      </div>
-
-      <!-- # Display only if the used type a new search query. -->
-      <div class=form-entry>
-        <input id=page-search-submit type=submit value="{{tpl:lang Search}}" disabled>
-      </div>
-    </form>
-
-    <script>
-      document.getElementById("page-search-form").oninput = function () {
-        let params = (new URL(document.location)).searchParams,
-            searchQuery = params.get("q");
-
-        if (document.getElementById("page-search-form-input").value !== searchQuery) {
-          document.getElementById("page-search-submit").disabled = false;
-        } else {
-          document.getElementById("page-search-submit").disabled = true;
-        }
-      }
-    </script>
+    {{tpl:include src="_searchform.html"}}
 
     <tpl:SysIf search_count="==1">
       <p>{{tpl:SysSearchString encode_html="1" string="Your search returned <strong>one result</strong>:"}}</p>

@@ -1,7 +1,7 @@
 {{tpl:extends parent="__layout.html"}}
 
 <tpl:Block name="head-title">
-  <title>{{tpl:lang Page without content}} – {{tpl:BlogName encode_html="1"}}</title>
+  <title>{{tpl:lang Page not found}} – {{tpl:BlogName encode_html="1"}}</title>
 </tpl:Block>
 
 <tpl:Block name="head-description">
@@ -9,9 +9,17 @@
 </tpl:Block>
 
 <tpl:Block name="main-content">
-  <div id=content-info>
-    <h1 class=content-title>{{tpl:lang No content}}</h1>
+  <div class=text>
+    <h1>{{tpl:lang Page not found}}</h1>
 
-    {{tpl:include src="_entry-empty.html"}}
+    <p>{{tpl:lang This is a 404 Error page.}}</p>
+
+    <p>{{tpl:lang The page}} <code>{{tpl:origineMiniURIRelative}}</code> {{tpl:lang doesn't exist.}}</p>
+
+    <p><a href={{tpl:BlogURL}}>{{tpl:lang ‹ Go to the homepage}}</a> | {{tpl:lang Do a search:}}</p>
+
+    {{tpl:include src="_searchform.html"}}
   </div>
 </tpl:Block>
+
+<tpl:Block name="site-sidebar"></tpl:Block>
