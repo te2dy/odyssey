@@ -4,19 +4,19 @@
   <title>{{tpl:lang Page not found}} – {{tpl:BlogName encode_html="1"}}</title>
 </tpl:Block>
 
-<tpl:Block name="head-description">
-  <meta name=description content="{{tpl:lang There is nothing to display}}" />
-</tpl:Block>
+<tpl:Block name="head-description"></tpl:Block>
 
 <tpl:Block name="main-content">
   <div class=text>
-    <h1>{{tpl:lang Not found}}</h1>
+    <h1>{{tpl:lang 404 Error}}</h1>
 
-    <p>{{tpl:lang The page}} <code>{{tpl:origineMiniURIRelative}}</code> {{tpl:lang doesn't exist.}}</p>
+    <p>{{tpl:lang The requested URL}} <code>{{tpl:origineMiniURIRelative}}</code> {{tpl:lang was not found.}}</p>
 
-    <p><a href={{tpl:BlogURL}}>{{tpl:lang ‹ Homepage}}</a> | {{tpl:lang Search:}}</p>
+    <p>{{tpl:lang The page you are looking for may have been moved.}}</p>
 
     {{tpl:include src="_searchform.html"}}
+
+    <p><a href={{tpl:BlogURL}}>{{tpl:lang ‹ Homepage}}</a></p>
   </div>
 </tpl:Block>
 

@@ -196,6 +196,9 @@ msgstr "mot-clé"
 
 # Search
 
+msgid "Search:"
+msgstr "Recherche&nbsp;:"
+
 msgid "Search page"
 msgstr "Page de recherche"
 
@@ -222,20 +225,20 @@ msgstr "Rechercher sur ce blog"
 
 # 404
 
-msgid "Not found"
-msgstr "Non trouvé"
+msgid "404 Error"
+msgstr "Erreur 404"
 
-msgid "The page"
-msgstr "La page"
+msgid "The requested URL"
+msgstr "L’adresse demandée"
 
-msgid "doesn't exist."
-msgstr "n’existe pas."
+msgid "was not found."
+msgstr "n’a pas été trouvée."
+
+msgid "The page you are looking for may have been moved."
+msgstr "La page que vous cherchez a peut-être été déplacée."
 
 msgid "‹ Homepage"
 msgstr "‹ Page d’accueil"
-
-msgid "Search:"
-msgstr "Recherche&nbsp;:"
 
 # Accessibility
 

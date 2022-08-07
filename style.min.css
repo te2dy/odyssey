@@ -452,6 +452,9 @@ label:hover {
   flex-direction: row;
   
 }
+#search-form input {
+  margin-bottom: 0;
+}
 #search-form-input {
   width: 100%;
 }
