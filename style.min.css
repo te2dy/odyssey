@@ -500,14 +500,18 @@ aside .widget {
 aside .widget:last-child {
   margin-bottom: 0;
 }
+.widget h2 {
+  font-size: calc();
+}
+
+/**
+ * Footer
+ */
 #site-footer :where(.widget, .site-footer-block) {
   margin-bottom: 1rem;
 }
 #site-footer :where(.widget, .site-footer-block):last-child {
   margin-bottom: 0;
-}
-.widget h2 {
-  font-size: calc();
 }
 
 /**

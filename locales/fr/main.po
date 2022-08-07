@@ -162,14 +162,8 @@ msgstr "https://fr.dotclear.org/"
 msgid "Origine"
 msgstr "Origine"
 
-msgid "https://themes.dotaddict.org/galerie-dc2/details/origine"
-msgstr "https://themes.dotaddict.org/galerie-dc2/details/origine"
-
-msgid "https://github.com/te2dy/origine"
-msgstr "https://github.com/te2dy/origine"
-
-msgid "Powered by <a href="%1$s">%2$s</a> and <a href="%3$s">%4$s</a>"
-msgstr "Propulsé par <a href="%1$s">%2$s</a> et <a href="%3$s">%4$s</a>"
+msgid "Powered by <a href=%s>Dotclear</a> | <a href=%s>Origine Mini</a> theme"
+msgstr "Propulsé par <a href=%s>Dotclear</a> | thème <a href=%s>Origine Mini</a>"
 
 # Archives
 

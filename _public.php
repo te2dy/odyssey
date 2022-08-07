@@ -100,7 +100,7 @@ class tplOrigineMiniTheme
      */
     public static function origineMiniFooterCredits()
     {
-        return '<div class=site-footer-block>' . sprintf(__('Powered by <a href=%s>Dotclear</a> and <a href=%s>Origine Mini</a>'), __('https://dotclear.org/'), 'https://github.com/te2dy/origine-mini') . '</div>';
+        return '<div class=site-footer-block>' . sprintf(__('Powered by <a href=%s>Dotclear</a> | <a href=%s>Origine Mini</a> theme'), __('https://dotclear.org/'), 'https://github.com/te2dy/origine-mini') . '</div>';
     }
 
     /**
