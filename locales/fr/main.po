@@ -173,6 +173,9 @@ msgstr "Propulsé par <a href="%1$s">%2$s</a> et <a href="%3$s">%4$s</a>"
 
 # Archives
 
+msgid "Category:"
+msgstr "Catégorie&nbsp;:"
+
 msgid "From"
 msgstr "Du"
 
