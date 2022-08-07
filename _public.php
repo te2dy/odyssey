@@ -59,6 +59,8 @@ class tplOrigineMiniTheme
             $styles    = '<style>';
             $styles .= ':root{';
             $styles .= '--color-h:220;';
+            $styles .= '--color-s:100%;';
+            $styles .= '--color-l:45%;';
             $styles .= '--page-width:30em;';
             $styles .= '--font-family:-apple-system,BlinkMacSystemFont,"Avenir Next",Avenir,"Segoe UI","Helvetica Neue",Helvetica,Ubuntu,Roboto,Noto,Arial,sans-serif;';
             $styles .= '--font-size:1em;';

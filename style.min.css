@@ -1,27 +1,24 @@
 :root {
-  --color-background: hsl(var(--color-h), 75%, 99%);
+  --color-background: hsl(var(--color-h), 0%, 100%);
   --color-text-primary: hsl(var(--color-h), 0%, 0%);
-  --color-text-secondary: hsl(var(--color-h), 0%, 50%);
-  --color-link: hsl(var(--color-h), 100%, 40%);
-  --color-link-hover: hsl(var(--color-h), 100%, 50%);
+  --color-text-secondary: hsl(var(--color-h), 0%, 45%);
+  --color-link: hsl(var(--color-h), var(--color-s), var(--color-l));
+  --color-link-hover: hsl(var(--color-h), var(--color-s), calc(var(--color-l) + 10%));
   --color-border: hsl(var(--color-h), 0%, 75%);
   --color-input-text: hsl(var(--color-h), 0%, 0%);
-  --color-input-text-hover: hsl(var(--color-h), 0%, 100%);
   --color-input-background: hsl(var(--color-h), 0%, 95%);
   --color-input-background-hover: hsl(var(--color-h), 0%, 0%);
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-background: hsl(var(--color-h), 100%, 5%);
+    --color-background: hsl(240, 14%, 10%);
     --color-text-primary: hsl(var(--color-h), 0%, 95%);
     --color-text-secondary: hsl(var(--color-h), 0%, 60%);
     --color-link: hsl(var(--color-h), 100%, 75%);
     --color-link-hover: hsl(var(--color-h), 100%, 85%);
-    --color-border: #aaa;
-    --color-input-text: #d9d9d9;
-    --color-input-text-hover: #16161d;
-    --color-input-background: #333333;
-    --color-input-background-hover: #d9d9d9;
+    --color-border: hsl(var(--color-h), 0%, 70%);
+    --color-input-text: hsl(var(--color-h), 0%, 95%);
+    --color-input-background: hsl(var(--color-h), 0%, 30%);
   }
 }
 
