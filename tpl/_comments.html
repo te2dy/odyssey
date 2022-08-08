@@ -23,7 +23,7 @@
     <tpl:CommentIf is_ping="0">
       <li id={{tpl:lang comment}}-{{tpl:CommentID}} class="reaction comment {{tpl:CommentIfMe}} {{tpl:CommentIfOdd}} {{tpl:CommentIfFirst}}">
         <header class=comment-meta>
-          <cite class=comment-author>{{tpl:CommentAuthorLink}}</cite><span class="comment-date text-secondary">, <a href=#{{tpl:lang comment}}-{{tpl:CommentID}}>{{tpl:CommentDate}} {{tpl:lang at}} {{tpl:CommentTime}}</a>{{tpl:lang :}}</span>
+          <cite class=comment-author>{{tpl:CommentAuthorLink}}</cite><small class="comment-date text-secondary">, <a href=#{{tpl:lang comment}}-{{tpl:CommentID}}>{{tpl:CommentDate}} {{tpl:lang at}} {{tpl:CommentTime}}</a>{{tpl:lang :}}</small>
         </header>
 
         <div class="comment-content text">
@@ -37,7 +37,7 @@
 
     <tpl:CommentIf is_ping="1">
       <li id={{tpl:lang trackback}}-{{tpl:PingID}} class="reaction ping {{tpl:PingIfOdd}} {{tpl:PingIfFirst}}">
-        {{tpl:lang Trackback:}} <a class=ping-link href={{tpl:PingAuthorURL}} {{tpl:PingNoFollow}}>{{tpl:PingTitle}}</a>, <cite class=ping-author>{{tpl:PingBlogName}}</cite><span class="ping-date text-secondary">, <a href=#{{tpl:lang trackback}}-{{tpl:PingID}}>{{tpl:PingDate}}, {{tpl:PingTime}}</a></span>
+        {{tpl:lang Trackback:}} <a class=ping-link href={{tpl:PingAuthorURL}} {{tpl:PingNoFollow}}>{{tpl:PingTitle}}</a>, <cite class=ping-author>{{tpl:PingBlogName}}</cite><small class="ping-date text-secondary">, <a href=#{{tpl:lang trackback}}-{{tpl:PingID}}>{{tpl:PingDate}}, {{tpl:PingTime}}</a></small>
       </li>
     </tpl:CommentIf>
 

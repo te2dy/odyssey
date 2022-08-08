@@ -1,7 +1,7 @@
 <article class=post id={{tpl:lang post}}-{{tpl:EntryID}}{{tpl:origineMiniEntryLang}}>
   <header class=post-header>
     <tpl:EntryIf selected="1">
-      <div class=post-selected><span class=icon-container><svg class=svg-star viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span> <small>{{tpl:lang Selected post}}</small></div>
+      <div class=post-selected><small>{{tpl:lang Selected post}}</small></div>
     </tpl:EntryIf>
 
     <time aria-label="{{tpl:lang Published date of the post}}" class="post-date text-secondary" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%m"}} pubdate>{{tpl:EntryDate}}</time>
