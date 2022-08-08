@@ -12,30 +12,27 @@
   </header>
 
   <article class=post>
-    <header>
-      <h2>{{tpl:lang By date}}</h2>
-    </header>
-
     <div class=text>
-      <p>
-        {{tpl:lang From}} <tpl:Entries no_content="1" order="asc" lastn="1"><a href={{tpl:EntryURL}}>{{tpl:EntryDate}}</a></tpl:Entries> {{tpl:lang to}} <tpl:Entries no_content="1" order="desc" lastn="1"><a href={{tpl:EntryURL}}>{{tpl:EntryDate}}</a></tpl:Entries>
-      </p>
+      <h2>{{tpl:lang By date}}</h2>
 
-      <tpl:Archives order="asc">
-        <tpl:ArchivesYearHeader>
-          <h3>{{tpl:ArchiveDate format="%Y"}}</h3>
+      <ul>
+        <tpl:Archives order="asc">
+          <tpl:ArchivesYearHeader>
+            <li>{{tpl:ArchiveDate format="%Y"}}
 
-          <ul>
-        </tpl:ArchivesYearHeader>
+            <ul>
+          </tpl:ArchivesYearHeader>
 
-        <li>
-          <a href={{tpl:ArchiveURL}} title="{{tpl:ArchiveDate encode_html="1"}}">{{tpl:ArchiveDate encode_html="1" format="%B"}}</a> ({{tpl:ArchiveEntriesCount}})
-        </li>
+          <li>
+            <a href={{tpl:ArchiveURL}} title="{{tpl:ArchiveDate encode_html="1"}}">{{tpl:ArchiveDate encode_html="1" format="%B"}}</a> ({{tpl:ArchiveEntriesCount}})
+          </li>
 
-        <tpl:ArchivesYearFooter>
-          </ul>
-        </tpl:ArchivesYearFooter>
-      </tpl:Archives>
+          <tpl:ArchivesYearFooter>
+            </ul>
+            </li>
+          </tpl:ArchivesYearFooter>
+        </tpl:Archives>
+      </ul>
 
       <tpl:Categories level="1">
         <tpl:CategoriesHeader>
