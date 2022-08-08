@@ -1,3 +1,6 @@
+/**
+ * All colors
+ */
 :root {
   --color-background: hsl(var(--color-h), 0%, 100%);
   --color-text-primary: hsl(var(--color-h), 0%, 0%);
@@ -25,18 +28,20 @@
 body {
   background-color: var(--color-background);
   color: var(--color-text-primary);
-  font-family: var(--font-family);
-  font-size: var(--font-size);
+  font-family: var(--font-family); /* @see _public.php */
+  font-size: var(--font-size); /* @see _public.php */
   margin: 4em 0;
 }
 
-/* Structure */
+/**
+ * Structure
+ */
 #site {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  max-width: var(--page-width);
+  max-width: var(--page-width); /* @see _public.php */
   row-gap: 4rem;
 }
 #site-header {
@@ -48,19 +53,22 @@ body {
   order: 1;
 }
 #site-content {
-  order: var(--order-content);
+  order: var(--order-content); /* @see _public.php */
 }
 #blognav {
-  order: var(--order-widgets-nav);
+  order: var(--order-widgets-nav); /* @see _public.php */
 }
 #blogextra {
-  order: var(--order-widgets-extra);
+  order: var(--order-widgets-extra); /* @see _public.php */
 }
 #site-footer {
   font-size: .8em;
-  order: var(--order-footer);
+  order: var(--order-footer); /* @see _public.php */
 }
 
+/**
+ * Main formatting
+ */
 a {
   color: var(--color-link);
   text-decoration: none;
@@ -70,34 +78,16 @@ a:hover {
   text-decoration: underline;
 }
 
-/* START - Common styles */
+/**
+ * Origine themes common styles
+ *
+ * START
+ */
 p {
   margin: 1em 0;
 }
-h1, h2, h3, h4, h5, h6 {
-  margin: 1rem 0;
-}
-:where(h1, h2, h3, h4, h5, h6):first-child {
-  margin-top: 0;
-}
-h1 {
-  font-size: 1.4em;
-}
-h2 {
-  font-size: 1.2em;
-}
-h3 {
-  font-size: 1em;
-}
-h4 {
-  font-size: .9em;
-}
-h5 {
-  font-size: .8em;
-}
-h6 {
-  font-size: .7em;
-}
+
+
 strong {
   font-weight: 700;
 }
@@ -132,6 +122,32 @@ pre {
 }
 code {
   display: inline;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  margin: 1rem 0;
+}
+:where(h1, h2, h3, h4, h5, h6):first-child {
+  margin-top: 0;
+}
+h1 {
+  font-size: 1.4em;
+}
+h2 {
+  font-size: 1.2em;
+}
+h3 {
+  font-size: 1em;
+}
+h4 {
+  font-size: .9em;
+}
+h5 {
+  font-size: .8em;
+}
+h6 {
+  font-size: .7em;
 }
 
 /* Text content styles */
@@ -216,22 +232,20 @@ textarea {
 input:not([type=checkbox]) {
   display: block;
 }
-
-/* FORM TESTS */
+input[type=checkbox] {
+  margin-left: 0;
+}
 label {
   display: inline-block;
   margin-bottom: .25rem;
 }
-input[type=checkbox] {
-  margin-left: 0;
+label:hover {
+  cursor: pointer;
 }
 input[type=checkbox] + label {
   display: inline;
   margin: 0;
 }
-
-
-
 button {
   font-family: inherit;
   font-size: 1em;
@@ -281,12 +295,15 @@ input[type="submit"]:hover:disabled {
 textarea {
   width: 100%;
 }
-label:hover {
-  cursor: pointer;
-}
-/* END - Common styles */
+/**
+ * Origine themes common styles
+ *
+ * END
+ */
 
-/* Header */
+/**
+ * Header
+ */
 #site-title {
   background-color: var(--color-link);
   color: var(--color-background);
@@ -308,6 +325,10 @@ label:hover {
   display: inline;
   margin-left: .25rem;
 }
+
+/**
+ *
+ */
 
 /**
  * Post list
@@ -379,6 +400,7 @@ label:hover {
   font-weight: 900;
 }
 
+/* Post pagination */
 .post-pagination {
   display: flex;
   margin-top: 4rem;
@@ -399,7 +421,8 @@ label:hover {
   padding-left: .5rem;
   text-align: right;
 }
-.post-pagination-link-container {
+.post-pagination-link {
+  display: block;
   font-style: italic;
 }
 
@@ -437,11 +460,21 @@ label:hover {
 }
 
 /**
- * Search
+ * Archives
  */
 .content-info {
   margin-bottom: 2rem;
 }
+#nav-archive {
+  column-gap: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/**
+ * Search
+ */
 #search-form {
   align-items: baseline;
   column-gap: 1rem;
@@ -454,16 +487,6 @@ label:hover {
 }
 #search-form-input {
   width: 100%;
-}
-
-/**
- * Archives
- */
-#nav-archive {
-  column-gap: 1rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 }
 
 /**
@@ -515,7 +538,7 @@ aside .widget:last-child {
 }
 
 /**
- * Small screen specific styles.
+ * For small screens
  */
 @media (max-width: 34em) { 
   #site {
