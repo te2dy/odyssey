@@ -158,16 +158,6 @@ h6 {
 .text-secondary {
   color: var(--color-text-secondary);
 }
-.text-secondary a {
-  color: var(--color-text-secondary);
-  text-decoration: underline dotted;
-}
-.text-secondary a:active,
-.text-secondary a:focus,
-.text-secondary a:hover {
-  color: var(--color-link-hover);
-  text-decoration: none;
-}
 .text hr {
   border: 0;
   margin: 2em 0;
@@ -239,22 +229,17 @@ textarea {
   max-width: 100%;
   padding: .5em;
 }
-input:not([type=checkbox]) {
-  display: block;
-}
 input[type=checkbox] {
-  margin-left: 0;
-}
-label {
-  display: inline-block;
-  margin-bottom: .25rem;
+  margin: 0;
 }
 label:hover {
   cursor: pointer;
 }
-input[type=checkbox] + label {
-  display: inline;
-  margin: 0;
+.form-entry {
+  margin: 1rem 0;
+}
+.form-entry :where(label + br + input, label + br + textarea, input + br + small) {
+  margin: .25rem 0;
 }
 button {
   font-family: inherit;
@@ -455,6 +440,11 @@ textarea {
 }
 .remember {
   margin: 0;
+}
+.comment-preview {
+  border: .063rem solid var(--color-border);
+  margin-bottom: 2rem;
+  padding: 1rem 1rem 0;
 }
 
 /**

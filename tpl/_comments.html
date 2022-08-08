@@ -73,9 +73,7 @@
       <tpl:Block name="comment-form-preview">
         <tpl:IfCommentPreview>
           <div id={{tpl:lang comment}} class=comment-preview>
-            <div class=comment-preview-info>
-              <h3>{{tpl:lang Previewing}}</h3>
-            </div>
+            <h3>{{tpl:lang Previewing comment}}</h3>
 
             <div class="comment-content text">
               {{tpl:CommentPreviewContent}}
@@ -91,21 +89,33 @@
 
         {{tpl:SysBehavior behavior="publicCommentFormBeforeContent"}}
 
-        <label for=c_name>{{tpl:lang Name or nickname}}</label>
-        <input name=c_name id=c_name maxlength=255 value="{{tpl:CommentPreviewName encode_html="1"}}" required>
+        <div class=form-entry>
+          <label for=c_name>{{tpl:lang Name or nickname}}</label>
+          <br>
+          <input id=c_name name=c_name maxlength=255 value="{{tpl:CommentPreviewName encode_html="1"}}" required>
+        </div>
 
-        <label for=c_mail>{{tpl:lang Email address}}</label>
-        <input name=c_mail id=c_mail type=email maxlength=255 value="{{tpl:CommentPreviewEmail encode_html="1"}}" required>
+        <div class=form-entry>
+          <label for=c_mail>{{tpl:lang Email address}}</label>
+          <br>
+          <input id=c_mail name=c_mail type=email maxlength=255 value="{{tpl:CommentPreviewEmail encode_html="1"}}" required>
+        </div>
 
-        <label for=c_site>{{tpl:lang URL of a personal account or website (optional)}}</label>
-        <input name=c_site id=c_site maxlength=255 placeholder=https://… value="{{tpl:CommentPreviewSite encode_html="1"}}">
+        <div class=form-entry>
+          <label for=c_site>{{tpl:lang URL of a personal account or website (optional)}}</label>
+          <br>
+          <input id=c_site name=c_site maxlength=255 placeholder=https://… value="{{tpl:CommentPreviewSite encode_html="1"}}">
+        </div>
 
-        <label for=c_content>{{tpl:lang Your comment}}</label>
-        <textarea name=c_content id=c_content rows=7 required>{{tpl:CommentPreviewContent raw="1" encode_html="1"}}</textarea>
+        <div class=form-entry>
+          <label for=c_content>{{tpl:lang Your comment}}</label>
+          <br>
+          <textarea id=c_content name=c_content required rows=8>{{tpl:CommentPreviewContent raw="1" encode_html="1"}}</textarea>
+        </div>
 
         {{tpl:SysBehavior behavior="publicCommentFormAfterContent"}}
 
-        <div>
+        <div class=form-entry>
           <input type=submit name=preview value="{{tpl:lang Preview}}">
 
           <tpl:IfCommentPreviewOptional>
