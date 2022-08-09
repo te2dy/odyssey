@@ -15,13 +15,13 @@
       {{tpl:EntryContent}}
 
       <article id={{tpl:lang page}}-{{tpl:EntryID}} class=page{{tpl:origineMiniEntryLang}}>
-        <section class=text>
+        <div class=text>
           {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
 
           {{tpl:EntryContent}}
 
           {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
-        </section>
+        </div>
       </article>
 
       {{tpl:include src="_comments.html"}}

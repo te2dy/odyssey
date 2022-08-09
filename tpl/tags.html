@@ -13,11 +13,13 @@
     <p>{{tpl:lang A list of tags used in this blog.}}</p>
   </header>
 
-  <ul>
-    <tpl:Tags>
-      <li>
-        <a href={{tpl:TagURL}} class=tag{{tpl:TagRoundPercent}}>{{tpl:TagID}}</a>
-      </li>
-    </tpl:Tags>
-  </ul>
+  <div class=text>
+    <ul>
+      <tpl:Tags>
+        <li>
+          <a href={{tpl:TagURL}} class=tag{{tpl:TagRoundPercent}}>{{tpl:TagID}}</a>
+        </li>
+      </tpl:Tags>
+    </ul>
+  </div>
 </tpl:Block>

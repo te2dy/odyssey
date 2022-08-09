@@ -4,18 +4,18 @@
       <div class=post-selected><small>{{tpl:lang Selected post}}</small></div>
     </tpl:EntryIf>
 
-    <time aria-label="{{tpl:lang Published date of the post}}" class="post-date text-secondary" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%m"}} pubdate>{{tpl:EntryDate}}</time>
+    <time aria-label="{{tpl:lang Published date of the post}}" class="post-date text-secondary" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%m"}}>{{tpl:EntryDate}}</time>
 
     <h1>{{tpl:EntryTitle}}</h1>
   </header>
 
-  <section class=text>
+  <div class=text>
     {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
 
     {{tpl:EntryContent}}
 
     {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
-  </section>
+  </div>
 
   <tpl:EntryIf operator="or" has_category="1" has_tag="1">
     <footer class=post-footer>

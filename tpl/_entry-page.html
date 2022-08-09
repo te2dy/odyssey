@@ -3,13 +3,13 @@
     <h1>{{tpl:EntryTitle}}</h1>
   </header>
 
-  <section class=text>
+  <div class=text>
     {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
 
     {{tpl:EntryContent}}
 
     {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
-  </section>
+  </div>
 
   <footer class=post-footer>
     {{tpl:include src="_attachments.html"}}
