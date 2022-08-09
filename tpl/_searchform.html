@@ -6,10 +6,13 @@
 </form>
 
 <script>
+  // Gets the search query if exists.
   let params = (new URL(document.location)).searchParams,
       searchQuery = params.get("q");
 
+  // On input change.
   document.getElementById("search-form").oninput = function () {
+    // If The input is empty or its value is equal to the search, disables the submit button.
     if (document.getElementById("search-form-input").value && document.getElementById("search-form-input").value !== searchQuery) {
       document.getElementById("search-submit").disabled = false;
     } else {
