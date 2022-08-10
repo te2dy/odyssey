@@ -357,6 +357,7 @@ textarea {
 }
 .post-list .post-date {
   display: block;
+  flex-shrink: 0;
   margin-left: 1rem;
   text-align: right;
 }
