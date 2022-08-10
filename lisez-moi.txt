@@ -1,0 +1,25 @@
+= Origine Mini =
+
+Nom du thème : Origine Mini
+Description : Un thème minimaliste pour Dotclear
+Auteur : Teddy
+Licence : GPLv3 ou ultérieure
+Adresse de la licence : https://www.gnu.org/licenses/gpl-3.0.fr.html
+
+== Note ==
+Ce thème n’aurait pu avoir vu le jour sans les ressources mises à disposition librement par la communauté Dotclear.
+Son auteur s’est particulièrement inspiré des travaux réalisés sur les thèmes Ductile et Berlin.
+
+== Notes de version ==
+
+=== 0.1-alpha - 10 août 2022 ===
+- Lancement de la première version du thème.
+
+== Ressources ==
+
+Origine remercie les auteurs des ressources suivantes qui lui ont permis de réaliser ce thème :
+
+System font stack
+Auteur : Tom MacWright
+Adresse : https://github.com/tmcw/systemfontstack
+Licence : inconnue
