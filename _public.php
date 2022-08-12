@@ -16,9 +16,12 @@ if (!defined('DC_RC_PATH')) {
 
 \l10n::set(dirname(__FILE__) . '/locales/' . \dcCore::app()->lang . '/main');
 
+\dcCore::app()->addBehavior('publicHeadContent', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniHeadMeta']);
+
 \dcCore::app()->tpl->addValue('origineConfigActive', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineConfigActive']);
 \dcCore::app()->tpl->addValue('origineMiniStylesInline', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniStylesInline']);
 \dcCore::app()->tpl->addValue('origineMiniEntryLang', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniEntryLang']);
+\dcCore::app()->tpl->addValue('origineMiniScreenReaderLinks', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniScreenReaderLinks']);
 \dcCore::app()->tpl->addValue('origineMiniFooterCredits', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniFooterCredits']);
 \dcCore::app()->tpl->addValue('origineMiniURIRelative', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniURIRelative']);
 
@@ -29,6 +32,30 @@ if (!defined('DC_RC_PATH')) {
 
 class tplOrigineMiniTheme
 {
+    /**
+     * Adds meta tags in the <head> section depending on the blog settings.
+     *
+     * @return void
+     */
+    public static function origineMiniHeadMeta()
+    {
+        // Adds the name of the editor.
+        if (\dcCore::app()->blog->settings->system->editor) {
+            $editor = \dcCore::app()->blog->settings->system->editor;
+            $editor = strpos($editor, ' ') === false ? $editor : '"' . $editor . '"';
+
+            echo '<meta name=author content=', $editor, '>', "\n";
+        }
+
+        // Adds the content of the copyright notice.
+        if (\dcCore::app()->blog->settings->system->copyright_notice) {
+            $notice = \dcCore::app()->blog->settings->system->copyright_notice;
+            $notice = strpos($notice, ' ') === false ? $notice : '"' . $notice . '"';
+
+            echo '<meta name=copyright content=', $notice, '>', "\n";
+        }
+    }
+
     /**
      * Checks if the plugin origineConfig is installed and activated.
      *
@@ -89,6 +116,27 @@ class tplOrigineMiniTheme
     public static function origineMiniEntryLang()
     {
         return '<?php if (\dcCore::app()->ctx->posts->post_lang !== \dcCore::app()->blog->settings->system->lang) { echo " lang=" . dcCore::app()->ctx->posts->post_lang; } ?>';
+    }
+
+    /**
+     * Displays navigation links for screen readers.
+     *
+     * @return void
+     */
+    public static function origineMiniScreenReaderLinks()
+    {
+        $links  = '<a id="skip-content" class="skip-links" href="#site-content">';
+        $links .= __('Skip to content');
+        $links .= '</a>';
+
+        // If simpleMenu exists, is activated and a menu has been set.
+        if (\dcCore::app()->plugins->moduleExists('simpleMenu') && \dcCore::app()->blog->settings->system->simpleMenu_active === true) {
+          $links .= '<a id="skip-menu" class="skip-links" href="#main-menu">';
+          $links .= __('Skip to menu');
+          $links .= '</a>';
+        }
+
+        return $links;
     }
 
     /**
