@@ -190,7 +190,11 @@ class tplOrigineMiniTheme
     {
         $plugin_activated = self::origineConfigActive();
 
-        if ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->widgets_search_form === true) {
+        if (
+            $plugin_activated === true
+            && \dcCore::app()->blog->settings->origineConfig->widgets_search_form === true
+            && \dcCore::app()->url->type !== 'search'
+        ) {
             return $content;
         }
     }
