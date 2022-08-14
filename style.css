@@ -248,8 +248,7 @@ button,
 .button {
   border: .063rem solid var(--color-border);
   display: inline-block;
-  padding-right: .5em;
-  padding-left: .5em;
+  padding: .5rem;
 }
 input[type="submit"],
 .form-submit,
