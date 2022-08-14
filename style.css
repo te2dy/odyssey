@@ -630,4 +630,13 @@ aside .widget:last-child {
     justify-content: unset;
     text-align: center;
   }
+  #search-form {
+    align-items: unset;
+    column-gap: unset;
+    display: block;
+    flex-direction: unset;
+  }
+  #search-form input {
+    margin-bottom: .5rem;
+  }
 }
