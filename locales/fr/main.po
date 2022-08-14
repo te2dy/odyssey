@@ -120,7 +120,7 @@ msgid "Trackback URL:"
 msgstr "Adresse de rétrolien&nbsp;:"
 
 msgid "Copied"
-msgstr "Copiée"
+msgstr "Copié"
 
 msgid "Read this post ›"
 msgstr "Lire ce billet ›"
