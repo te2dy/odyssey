@@ -51,19 +51,19 @@
   <tpl:Block name="comment-alerts">
     <tpl:SysIfCommentPublished>
       <p class=comment-message id={{tpl:lang comment}}>
-        🟢 {{tpl:lang Your comment has been published.}}
+        {{tpl:lang Your comment has been published.}}
       </p>
     </tpl:SysIfCommentPublished>
 
     <tpl:SysIfCommentPending>
       <p class=comment-message id={{tpl:lang comment}}>
-        🟠 {{tpl:lang Your comment has been submitted and will be reviewed for publication.}}
+        {{tpl:lang Your comment has been submitted and will be reviewed for publication.}}
       </p>
     </tpl:SysIfCommentPending>
 
     <tpl:SysIfFormError>
       <p class=comment-message id={{tpl:lang comment}}>
-        🔴 {{tpl:SysFormError}}
+        {{tpl:SysFormError}}
       </p>
     </tpl:SysIfFormError>
   </tpl:Block>

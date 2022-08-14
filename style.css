@@ -250,6 +250,9 @@ button,
   display: inline-block;
   padding: .5rem;
 }
+.button:is(a):where(:active, :focus, :hover) {
+  text-decoration: none;
+}
 input[type="submit"],
 .form-submit,
 .button {
@@ -443,6 +446,13 @@ textarea {
 }
 .remember {
   margin: 0;
+}
+.comment-message {
+  border: .063rem solid var(--color-border);
+  display: block;
+  margin-top: 4rem;
+  padding: .5rem;
+  text-align: center;
 }
 .comment-preview {
   border: .063rem solid var(--color-border);
