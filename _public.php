@@ -147,7 +147,7 @@ class tplOrigineMiniTheme
         $plugin_activated = self::origineConfigActive();
 
         if ($plugin_activated === false || ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->footer_credits === true)) {
-            return '<div class=site-footer-block>' . sprintf(__('Powered by <a href=%s>Dotclear</a> et <a href=%s>Origine Mini</a>'), __('https://dotclear.org/'), 'https://github.com/te2dy/origine-mini') . '</div>';
+            return '<div class=site-footer-block>' . sprintf(__('Powered by <a href=%s>Dotclear</a> and <a href=%s>Origine Mini</a>'), __('https://dotclear.org/'), 'https://github.com/te2dy/origine-mini') . '</div>';
         }
     }
 

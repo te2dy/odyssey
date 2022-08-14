@@ -165,7 +165,7 @@ msgstr ""
 msgid "https://github.com/te2dy/origine"
 msgstr ""
 
-msgid "Powered by <a href="%1$s">%2$s</a> and <a href="%3$s">%4$s</a>"
+msgid "Powered by <a href=%s>Dotclear</a> and <a href=%s>Origine Mini</a>"
 msgstr ""
 
 # Archives

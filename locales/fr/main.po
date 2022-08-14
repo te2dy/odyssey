@@ -162,8 +162,8 @@ msgstr "https://fr.dotclear.org/"
 msgid "Origine"
 msgstr "Origine"
 
-msgid "Powered by <a href=%s>Dotclear</a> | <a href=%s>Origine Mini</a> theme"
-msgstr "Propulsé par <a href=%s>Dotclear</a> | thème <a href=%s>Origine Mini</a>"
+msgid "Powered by <a href=%s>Dotclear</a> and <a href=%s>Origine Mini</a>"
+msgstr "Propulsé par <a href=%s>Dotclear</a> et <a href=%s>Origine Mini</a>"
 
 # Archives
 
