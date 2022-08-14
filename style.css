@@ -450,6 +450,14 @@ textarea {
   margin-bottom: 2rem;
   padding: 1rem 1rem 0;
 }
+#trackback-url {
+  color: var(--color-link);
+}
+#trackback-url:where(:active, :focus, :hover) {
+  cursor: pointer;
+  color: var(--color-link-hover);
+  text-decoration: underline;
+}
 
 /**
  * Archives
@@ -564,6 +572,10 @@ aside .widget:last-child {
  * For small screens
  */
 @media (max-width: 34em) {
+  body {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
   #site {
     row-gap: 2rem;
     margin-right: 2rem;
