@@ -158,7 +158,7 @@ class tplOrigineMiniTheme
      */
     public static function origineMiniURIRelative()
     {
-        return '<?php echo $_SERVER['REQUEST_URI']; ?>';
+        return '<?php echo $_SERVER["REQUEST_URI"]; ?>';
     }
 
     /**

@@ -14,7 +14,7 @@ $this->registerModule(
     'Origine Mini',                  // Name
     'A minimalistic Dotclear theme', // Description
     'Teddy',                         // Author
-    '0.1.0.9',                       // Version
+    '0.1.0.10',                      // Version
     [
         'type'                 => 'theme',
         'widgettitleformat'    => '<h3>%s</h3>', // h3 instead of h2 by default. No class needed.
