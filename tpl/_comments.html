@@ -127,6 +127,8 @@
   </tpl:Block>
 </tpl:EntryIf>
 
+{{tpl:origineConfigEmailAuthor}}
+
 <p class=text-secondary id=comment-feed-link>
   <tpl:EntryIf operator="and" comments_active="1" pings_active="1">
     <small><a href={{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}} rel=nofollow>{{tpl:lang Subscribe to reactions}}</a></small>
