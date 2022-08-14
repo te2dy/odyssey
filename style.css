@@ -149,53 +149,54 @@ h6 {
 }
 
 /* Text content styles */
-.text {
+.content-text {
   line-height: 1.5;
   text-align: var(--text-align);
 }
-.text-secondary {
-  color: var(--color-text-secondary);
-}
-.text hr {
+.content-text hr {
   border: 0;
   margin: 2em 0;
   text-align: center;
 }
-.text hr::after {
+.content-text hr::after {
   color: var(--color-text-primary);
   content: "\002042"; /* ⁂ */
 }
-:where(.text, .widget) :where(ul, ol) {
+:where(.content-text, .widget) :where(ul, ol) {
   display: table;
   margin: 1em 0;
   padding-inline-start: 0;
 }
-:where(.text, .widget) ol {
+:where(.content-text, .widget) ol {
   counter-reset: list;
 }
-:where(.text, .widget) :where(ol ol, ul ul) {
+:where(.content-text, .widget) :where(ol ol, ul ul) {
   margin: .5rem 0;
 }
-:where(.text, .widget) :where(ul li, ol li) {
+:where(.content-text, .widget) :where(ul li, ol li) {
   display: table-row;
 }
-:where(.text, .widget) ul li {
+:where(.content-text, .widget) ul li {
   margin: .5rem 0;
 }
-:where(.text, .widget) ol li {
+:where(.content-text, .widget) ol li {
   counter-increment: list;
   display: table-row;
   list-style: none;
 }
-:where(.text, .widget) :where(ul li, ol li)::before {
+:where(.content-text, .widget) :where(ul li, ol li)::before {
   display: table-cell;
   padding-right: .25rem;
 }
-:where(.text, .widget) ul li::before {
+:where(.content-text, .widget) ul li::before {
   content: "\2022"; /* • */
 }
-:where(.text, .widget) ol li::before {
+:where(.content-text, .widget) ol li::before {
   content: counter(list) ".";
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
 }
 
 /* Images & media */
