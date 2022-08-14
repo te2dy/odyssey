@@ -6,7 +6,7 @@
 
 <tpl:Block name="head-description">
   <tpl:PaginationIf start="1">
-    {{tpl:origineMiniBlogDescription remove_html="1" encode_html="1"}}
+    <meta name=description content="{{tpl:BlogDescription remove_html="1" encode_html="1"}}">
   </tpl:PaginationIf>
 </tpl:Block>
 
