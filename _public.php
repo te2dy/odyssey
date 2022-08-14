@@ -82,29 +82,25 @@ class tplOrigineMiniTheme
     {
         $plugin_activated = self::origineConfigActive();
 
-        if ($plugin_activated === false) {
-            $styles    = '<style>';
-            $styles .= ':root{';
-            $styles .= '--color-h:220;';
-            $styles .= '--color-s:100%;';
-            $styles .= '--color-l:45%;';
-            $styles .= '--page-width:30em;';
-            $styles .= '--font-family:-apple-system,BlinkMacSystemFont,"Avenir Next",Avenir,"Segoe UI","Helvetica Neue",Helvetica,Ubuntu,Roboto,Noto,Arial,sans-serif;';
-            $styles .= '--font-size:1em;';
-            $styles .= '--order-content:2;';
-            $styles .= '--order-widgets-nav:3;';
-            $styles .= '--order-widgets-extra:4;';
-            $styles .= '--order-footer:5;';
-            $styles .= '--text-align:left;';
-            $styles .= '}';
-            $styles .= '</style>';
+        $styles .= ':root{';
+        $styles .= '--page-width:30em;';
+        $styles .= '--order-content:2;';
+        $styles .= '--order-widgets-nav:3;';
+        $styles .= '--order-widgets-extra:4;';
+        $styles .= '--order-footer:5;';
+        $styles .= '--font-family:-apple-system,BlinkMacSystemFont,"Avenir Next",Avenir,"Segoe UI","Helvetica Neue",Helvetica,Ubuntu,Roboto,Noto,Arial,sans-serif;';
+        $styles .= '--font-size:1em;';
+        $styles .= '--color-h:220;';
+        $styles .= '--color-s:100%;';
+        $styles .= '--color-l:45%;';
+        $styles .= '--text-align:left;';
+        $styles .= '}';
 
-            return $styles;
-        } else {
-            if (\dcCore::app()->blog->settings->origineConfig->css !== '') {
-                return '<style>' . \dcCore::app()->blog->settings->origineConfig->css . '</style>';
-            }
+        if ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->css_origine_mini) {
+            $styles = \dcCore::app()->blog->settings->origineConfig->css_origine_mini;
         }
+
+        return '<style>' . $styles . '</style>';
     }
 
     /**
@@ -148,7 +144,11 @@ class tplOrigineMiniTheme
      */
     public static function origineMiniFooterCredits()
     {
-        return '<div class=site-footer-block>' . sprintf(__('Powered by <a href=%s>Dotclear</a> | <a href=%s>Origine Mini</a> theme'), __('https://dotclear.org/'), 'https://github.com/te2dy/origine-mini') . '</div>';
+        $plugin_activated = self::origineConfigActive();
+
+        if ($plugin_activated === false || ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->footer_credits === true)) {
+            return '<div class=site-footer-block>' . sprintf(__('Powered by <a href=%s>Dotclear</a> | <a href=%s>Origine Mini</a> theme'), __('https://dotclear.org/'), 'https://github.com/te2dy/origine-mini') . '</div>';
+        }
     }
 
     /**
