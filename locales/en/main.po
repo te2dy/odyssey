@@ -9,232 +9,232 @@ msgstr ""
 # Head
 
 msgid "page-noun-before-number"
-msgstr ""
+msgstr "page"
 
 msgid "feed-title"
-msgstr ""
+msgstr "Feed"
 
 msgid "feed-comments-title"
-msgstr ""
+msgstr "Comment feed"
 
 # Header
 
 msgid "skip-link-content"
-msgstr ""
+msgstr "Skip to content"
 
 msgid "skip-link-menu"
-msgstr ""
+msgstr "Skip to menu"
 
 # Posts & pages
 
 msgid "post-list-aria-label"
-msgstr ""
+msgstr "The post list"
 
 msgid "post-id"
-msgstr ""
+msgstr "post"
 
 msgid "page-id"
-msgstr ""
+msgstr "page"
 
 msgid "post-selected-label"
-msgstr ""
+msgstr "Selected post"
 
 msgid "post-list-date-aria-label"
-msgstr ""
+msgstr "Date of publication of the post"
 
 msgid "post-category-prefix"
-msgstr ""
+msgstr "Filled under"
 
 msgid "post-tags-prefix"
-msgstr ""
+msgstr "Tags:"
 
 msgid "post-pagination-previous-label"
-msgstr ""
+msgstr "Previous post:"
 
 msgid "post-pagination-next-label"
-msgstr ""
+msgstr "Next post:"
 
 # Reactions
 
 msgid "reactions-id"
-msgstr ""
+msgstr "reactions"
 
 msgid "reactions-comment-id"
-msgstr ""
+msgstr "comment"
 
 msgid "reactions-trackback-id"
-msgstr ""
+msgstr "trackback"
 
 msgid "reactions-comment-datetime-separator"
-msgstr ""
+msgstr "at"
 
 msgid "reactions-comment-datetime-colon"
-msgstr ""
+msgstr ":"
 
 msgid "reactions-trackback-label"
-msgstr ""
+msgstr "Trackback:"
 
 msgid "reactions-comment-alert-published"
-msgstr ""
+msgstr "Your comment has been published."
 
 msgid "reactions-comment-alert-review"
-msgstr ""
+msgstr "Your comment has been submitted. It will be reviewed before being published."
 
 msgid "reactions-comment-previewing"
-msgstr ""
+msgstr "Preview"
 
 msgid "reactions-comment-send-button"
-msgstr ""
+msgstr "Send comment"
 
 msgid "reactions-comment-form-title"
-msgstr ""
+msgstr "Write a comment"
 
 msgid "reactions-comment-form-name-label"
-msgstr ""
+msgstr "Name or pseudo"
 
 msgid "reactions-comment-form-email-label"
-msgstr ""
+msgstr "Email"
 
 msgid "reactions-comment-form-website-label"
-msgstr ""
+msgstr "URL of a personal account or site (optional)"
 
 msgid "reactions-comment-form-comment-label"
-msgstr ""
+msgstr "Comment"
 
 msgid "reactions-comment-form-preview-button"
-msgstr ""
+msgstr "Preview"
 
 msgid "reactions-comment-form-submit-button"
-msgstr ""
+msgstr "Send"
 
 msgid "reactions-subscribe-link-reactions"
-msgstr ""
+msgstr "Subscribe to reactions"
 
 msgid "reactions-subscribe-link-comments"
-msgstr ""
+msgstr "Subscribe to comments"
 
 msgid "reactions-subscribe-link-trackbacks"
-msgstr ""
+msgstr "Subscribe to trackbacks"
 
 msgid "reactions-comment-remember-me"
-msgstr ""
+msgstr "Remember me"
 
 # Pagination
 
 msgid "pagination-separator"
-msgstr ""
+msgstr "of"
 
 msgid "pagination-previous-aria-label"
-msgstr ""
+msgstr "Link to previous posts"
 
 msgid "pagination-next-aria-label"
-msgstr ""
+msgstr "Link to next posts"
 
 msgid "pagination-previous-label"
-msgstr ""
+msgstr "‹ Previous page"
 
 msgid "pagination-next-label"
-msgstr ""
+msgstr "Next page ›"
 
 # Footer
 
 msgid "footer-powered-by"
-msgstr ""
+msgstr "Powered by <a href=%s>Dotclear</a> and <a href=%s>Origine Mini</a>"
 
 # Archives
 
 msgid "archives-title"
-msgstr ""
+msgstr "Archives"
 
 msgid "archives-sort-date"
-msgstr ""
+msgstr "By date"
 
 msgid "archives-sort-category"
-msgstr ""
+msgstr "By category"
 
 msgid "archives-sort-tag"
-msgstr ""
+msgstr "Par tag"
 
 msgid "archives-sort-page"
-msgstr ""
+msgstr "Pages"
 
 msgid "archives-month-title"
-msgstr ""
+msgstr "Monthly archives"
 
 msgid "category-description-prefix"
-msgstr ""
+msgstr "Posts from the category"
 
 msgid "category-title-prefix"
-msgstr ""
+msgstr "Category:"
 
 msgid "tag-description-prefix"
-msgstr ""
+msgstr "Posts with the tag"
 
 msgid "tag-title-prefix"
-msgstr ""
+msgstr "Tag:"
 
 msgid "tags-title"
-msgstr ""
+msgstr "Tags"
 
 msgid "tags-introduction"
-msgstr ""
+msgstr "The list of tags used on this blog:"
 
 # Search
 
 msgid "search-page-title"
-msgstr ""
+msgstr "Search"
 
 msgid "search-widget-title"
-msgstr ""
+msgstr "Search the blog"
 
 msgid "search-input-aria-label"
-msgstr ""
+msgstr "Search field"
 
 msgid "search-input-placeholder"
-msgstr ""
+msgstr "Query"
 
 msgid "search-submit-button"
-msgstr ""
+msgstr "Search"
 
 msgid "search-results-one"
-msgstr ""
+msgstr "Your search returned <strong>1 result</strong>&nbsp;:"
 
 msgid "search-results-multiple"
-msgstr ""
+msgstr "Your search returned <strong>%2$s results</strong>&nbsp;:"
 
 msgid "search-results-none"
-msgstr ""
+msgstr "No results."
 
 # 404
 
 msgid "404-title-head"
-msgstr ""
+msgstr "Page not found"
 
 msgid "404-title"
-msgstr ""
+msgstr "Erreur 404"
 
 msgid "404-url-not-found-before"
-msgstr ""
+msgstr "The requested URL"
 
 msgid "404-url-not-found-after"
-msgstr ""
+msgstr "was not found."
 
 msgid "404-page-moved"
-msgstr ""
+msgstr "The page you are looking for may have been moved."
 
 msgid "404-home-link-text"
-msgstr ""
+msgstr "‹ Home page"
 
 # Password form
 
 msgid "password-needed-title"
-msgstr ""
+msgstr "Password required"
 
 msgid "password-needed-message"
-msgstr ""
+msgstr "You must enter the correct password to access the requested content."
 
 msgid "password-needed-form-label"
-msgstr ""
+msgstr "Password"
 
 msgid "password-needed-form-submit"
-msgstr ""
+msgstr "Send"

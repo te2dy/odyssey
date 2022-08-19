@@ -121,14 +121,14 @@ class tplOrigineMiniTheme
      */
     public static function origineMiniScreenReaderLinks()
     {
-        $links  = '<a id="skip-content" class="skip-links" href="#site-content">';
-        $links .= __('Skip to content');
+        $links  = '<a id=skip-content class=skip-links href=#site-content>';
+        $links .= __('skip-link-content');
         $links .= '</a>';
 
         // If simpleMenu exists, is activated and a menu has been set.
         if (\dcCore::app()->plugins->moduleExists('simpleMenu') && \dcCore::app()->blog->settings->system->simpleMenu_active === true) {
-          $links .= '<a id="skip-menu" class="skip-links" href="#main-menu">';
-          $links .= __('Skip to menu');
+          $links .= '<a id=skip-menu class=skip-links href=#main-menu>';
+          $links .= __('skip-link-menu');
           $links .= '</a>';
         }
 
@@ -147,7 +147,7 @@ class tplOrigineMiniTheme
         $plugin_activated = self::origineConfigActive();
 
         if ($plugin_activated === false || ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->footer_credits === true)) {
-            return '<div class=site-footer-block>' . sprintf(__('Powered by <a href=%s>Dotclear</a> and <a href=%s>Origine Mini</a>'), __('https://dotclear.org/'), 'https://github.com/te2dy/origine-mini') . '</div>';
+            return '<div class=site-footer-block>' . sprintf(__('footer-powered-by'), __('https://dotclear.org/'), 'https://github.com/te2dy/origine-mini') . '</div>';
         }
     }
 

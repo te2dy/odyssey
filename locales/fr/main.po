@@ -8,253 +8,233 @@ msgstr ""
 
 # Head
 
-msgid "Syndicated feed"
+msgid "page-noun-before-number"
+msgstr "page"
+
+msgid "feed-title"
 msgstr "Fil de syndication"
+
+msgid "feed-comments-title"
+msgstr "Fil de syndication des commentaires"
 
 # Header
 
-msgid "Skip to content"
+msgid "skip-link-content"
 msgstr "Aller au contenu"
 
-msgid "Skip to menu"
+msgid "skip-link-menu"
 msgstr "Aller au menu"
 
 # Posts & pages
 
-msgid "post"
+msgid "post-list-aria-label"
+msgstr "La liste des billets"
+
+msgid "post-id"
 msgstr "billet"
 
-msgid "Selected post"
+msgid "page-id"
+msgstr "page"
+
+msgid "post-selected-label"
 msgstr "Billet sélectionné"
 
-msgid "Selected"
-msgstr "Sélectionné"
+msgid "post-list-date-aria-label"
+msgstr "Date de publication du billet"
 
-msgid "Read more"
-msgstr "Lire la suite"
-
-msgid "Read more about"
-msgstr "Lire la suite de"
-
-msgid "Page"
-msgstr "Page"
-
-msgid "Sorted in"
+msgid "post-category-prefix"
 msgstr "Classé dans"
 
-msgid "Tags:"
+msgid "post-tags-prefix"
 msgstr "Mots-clés&nbsp;:"
 
-msgid "Post printed from"
-msgstr "Billet imprimé depuis"
-
-msgid "Previous post:"
+msgid "post-pagination-previous-label"
 msgstr "Billet précédent :"
 
-msgid "Next post:"
+msgid "post-pagination-next-label"
 msgstr "Billet suivant :"
 
-# Comments & trackbacks
+# Reactions
 
-msgid "reactions"
+msgid "reactions-id"
 msgstr "reactions"
 
-msgid "One reaction"
-msgstr "Une réaction"
-
-msgid "%d reactions"
-msgstr "%d réactions"
-
-msgid "One comment"
-msgstr "Un commentaire"
-
-msgid "%d comments"
-msgstr "%d commentaires"
-
-msgid "One trackback"
-msgstr "Un rétrolien"
-
-msgid "%d trackback"
-msgstr "%d rétroliens"
-
-msgid "comment"
+msgid "reactions-comment-id"
 msgstr "commentaire"
 
-msgid "trackback"
+msgid "reactions-trackback-id"
 msgstr "retrolien"
 
-msgid "at"
+msgid "reactions-comment-datetime-separator"
 msgstr "à"
 
-msgid ":"
+msgid "reactions-comment-datetime-colon"
 msgstr "&nbsp;:"
 
-msgid "Trackback:"
+msgid "reactions-trackback-label"
 msgstr "Rétrolien&nbsp;:"
 
-msgid "Markdown language allowed (<a href="https://commonmark.org/help/" rel="nofollow">help</a>)."
-msgstr "Langage Markdown autorisé (<a href="https://commonmark.org/help/" hreflang="en" rel="nofollow">aide</a>)."
+msgid "reactions-comment-alert-published"
+msgstr "Votre commentaire été publié."
 
-msgid "Previewing"
+msgid "reactions-comment-alert-review"
+msgstr "Votre commentaire a été envoyé. Il sera examiné avant d’être publié."
+
+msgid "reactions-comment-previewing"
 msgstr "Prévisualisation"
 
-msgid "Send comment"
+msgid "reactions-comment-send-button"
 msgstr "Envoyer le commentaire"
 
-msgid "Write a comment"
+msgid "reactions-comment-form-title"
 msgstr "Écrire un commentaire"
 
-msgid "Subscribe to reactions"
-msgstr "S’abonner aux réactions"
-
-msgid "Subscribe to comments"
-msgstr "S’abonner aux commentaires"
-
-msgid "Subscribe to trackbacks"
-msgstr "S’abonner aux rétroliens"
-
-msgid "Add a trackback:"
-msgstr "Ajouter un rétrolien&nbsp;:"
-
-msgid "Trackback URL:"
-msgstr "Adresse de rétrolien&nbsp;:"
-
-msgid "Copied"
-msgstr "Copié"
-
-msgid "Read this post ›"
-msgstr "Lire ce billet ›"
-
-msgid "Name or nickname"
+msgid "reactions-comment-form-name-label"
 msgstr "Nom ou pseudonyme"
 
-msgid "Email address"
+msgid "reactions-comment-form-email-label"
 msgstr "Adresse électronique"
 
-msgid "URL of a personal account or website (optional)"
+msgid "reactions-comment-form-website-label"
 msgstr "Adresse d’un compte ou site personnel (facultatif)"
 
-msgid "Your comment"
-msgstr "Votre commentaire"
+msgid "reactions-comment-form-comment-label"
+msgstr "Commentaire"
 
-msgid "Remember me"
+msgid "reactions-comment-form-preview-button"
+msgstr "Prévisualiser"
+
+msgid "reactions-comment-form-submit-button"
+msgstr "Envoyer"
+
+msgid "reactions-subscribe-link-reactions"
+msgstr "S’abonner aux réactions"
+
+msgid "reactions-subscribe-link-comments"
+msgstr "S’abonner aux commentaires"
+
+msgid "reactions-subscribe-link-trackbacks"
+msgstr "S’abonner aux rétroliens"
+
+msgid "reactions-comment-remember-me"
 msgstr "Se souvenir de moi"
 
 # Pagination
 
-msgid "of"
+msgid "pagination-separator"
 msgstr "sur"
 
-msgid "‹ Previous page"
+msgid "pagination-previous-aria-label"
+msgstr "Lien vers les billets précédents"
+
+msgid "pagination-next-aria-label"
+msgstr "Lien vers les billets suivants"
+
+msgid "pagination-previous-label"
 msgstr "‹ Page précédente"
 
-msgid "Next page ›"
+msgid "pagination-next-label"
 msgstr "Page suivante ›"
 
 # Footer
 
-msgid "Dotclear"
-msgstr "Dotclear"
-
-msgid "https://dotclear.org/"
-msgstr "https://fr.dotclear.org/"
-
-msgid "Origine"
-msgstr "Origine"
-
-msgid "Powered by <a href=%s>Dotclear</a> and <a href=%s>Origine Mini</a>"
+msgid "footer-powered-by"
 msgstr "Propulsé par <a href=%s>Dotclear</a> et <a href=%s>Origine Mini</a>"
 
 # Archives
 
-msgid "Category:"
+msgid "archives-title"
+msgstr "Archives"
+
+msgid "archives-sort-date"
+msgstr "Par date"
+
+msgid "archives-sort-category"
+msgstr "Par catégorie"
+
+msgid "archives-sort-tag"
+msgstr "Par mot-clé"
+
+msgid "archives-sort-page"
+msgstr "Pages"
+
+msgid "archives-month-title"
+msgstr "Archives mensuelles"
+
+msgid "category-description-prefix"
+msgstr "Billets appartenant à la catégorie"
+
+msgid "category-title-prefix"
 msgstr "Catégorie&nbsp;:"
 
-msgid "From"
-msgstr "Du"
+msgid "tag-description-prefix"
+msgstr "Billets ayant pour mot-clé"
 
-msgid "to"
-msgstr "au"
+msgid "tag-title-prefix"
+msgstr "Mot-clé&nbsp;:"
 
-msgid "Archives sorted by month"
-msgstr "Archives classées par mois"
+msgid "tags-title"
+msgstr "Mots-clés"
 
-msgid "category"
-msgstr "catégorie"
-
-msgid "Archives:"
-msgstr "Archives&nbsp;:"
-
-msgid "Posts related to the tag"
-msgstr "Billets associés au mot-clé"
-
-msgid "tag"
-msgstr "mot-clé"
+msgid "tags-introduction"
+msgstr "La liste des mots-clés utilisés sur ce blog&nbsp;:"
 
 # Search
 
-msgid "Search:"
-msgstr "Recherche&nbsp;:"
+msgid "search-page-title"
+msgstr "Recherche"
 
-msgid "Search page"
-msgstr "Page de recherche"
+msgid "search-widget-title"
+msgstr "Rechercher sur ce blog"
 
-msgid "Search"
+msgid "search-input-aria-label"
+msgstr "Champ de recherche"
+
+msgid "search-input-placeholder"
+msgstr "Requête"
+
+msgid "search-submit-button"
 msgstr "Rechercher"
 
-msgid "Terms to search"
-msgstr "Termes à rechercher"
+msgid "search-results-one"
+msgstr "Votre recherche a retourné <strong>1 résultat</strong>&nbsp;:"
 
-msgid "Search results for"
-msgstr "Résultats de la recherche"
-
-msgid "Your search returned <strong>one result</strong>:"
-msgstr "Votre recherche a retourné <strong>un résultat</strong>&nbsp;:"
-
-msgid "Your search returned <strong>%2$s results</strong>:"
+msgid "search-results-multiple"
 msgstr "Votre recherche a retourné <strong>%2$s résultats</strong>&nbsp;:"
 
-msgid "No results."
+msgid "search-results-none"
 msgstr "Aucun résultat."
-
-msgid "Search this blog"
-msgstr "Rechercher sur ce blog"
 
 # 404
 
-msgid "404 Error"
+msgid "404-title-head"
+msgstr "Page non trouvée"
+
+msgid "404-title"
 msgstr "Erreur 404"
 
-msgid "The requested URL"
+msgid "404-url-not-found-before"
 msgstr "L’adresse demandée"
 
-msgid "was not found."
+msgid "404-url-not-found-after"
 msgstr "n’a pas été trouvée."
 
-msgid "The page you are looking for may have been moved."
+msgid "404-page-moved"
 msgstr "La page que vous cherchez a peut-être été déplacée."
 
-msgid "‹ Homepage"
+msgid "404-home-link-text"
 msgstr "‹ Page d’accueil"
 
-# Accessibility
+# Password form
 
-msgid "Published date of the post"
-msgstr "Date de publication du billet"
+msgid "password-needed-title"
+msgstr "Mot de passe exigé"
 
-msgid "Link to previous posts"
-msgstr "Lien vers les billets précédents"
+msgid "password-needed-message"
+msgstr "Vous devez saisir le bon mot de passe pour accéder au contenu demandé."
 
-msgid "Link to next posts"
-msgstr "Lien vers les billets suivants"
+msgid "password-needed-form-label"
+msgstr "Mot de passe"
 
-####### NEW STRINGS TO BE SORTED.
-
-msgid "Latest Posts"
-msgstr "Derniers billets"
-
-msgid "List of posts"
-msgstr "Liste des billets"
-
-msgid "page"
-msgstr "page"
+msgid "password-needed-form-submit"
+msgstr "Envoyer"

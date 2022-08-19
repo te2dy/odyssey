@@ -1,10 +1,10 @@
-<article class=post id={{tpl:lang post}}-{{tpl:EntryID}}{{tpl:origineMiniEntryLang}}>
+<article class=post id={{tpl:lang post-id}}-{{tpl:EntryID}}{{tpl:origineMiniEntryLang}}>
   <header class=post-header>
     <tpl:EntryIf selected="1">
-      <div class=post-selected><small>{{tpl:lang Selected post}}</small></div>
+      <div class=post-selected><small>{{tpl:lang post-selected-label}}</small></div>
     </tpl:EntryIf>
 
-    <time aria-label="{{tpl:lang Published date of the post}}" class="post-date text-secondary" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%m"}}>{{tpl:EntryDate}}</time>
+    <time aria-label="{{tpl:lang post-date-aria-label}}" class="post-date text-secondary" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%m"}}>{{tpl:EntryDate}}</time>
 
     <h1>{{tpl:EntryTitle}}</h1>
   </header>
@@ -23,13 +23,13 @@
 
       <tpl:EntryIf has_category="1">
         <div class="post-meta text-secondary">
-          {{tpl:lang Sorted in}} <a href={{tpl:EntryCategoryURL}} rel=tag>{{tpl:EntryCategory}}</a>
+          {{tpl:lang post-category-prefix}} <a href={{tpl:EntryCategoryURL}} rel=tag>{{tpl:EntryCategory}}</a>
         </div>
       </tpl:EntryIf>
 
       <tpl:EntryTags>
         <tpl:TagsHeader>
-          <div class="post-meta text-secondary">{{tpl:lang Tags:}}
+          <div class="post-meta text-secondary">{{tpl:lang post-tags-prefix}}
         </tpl:TagsHeader>
 
         <a href={{tpl:TagURL}} rel=tag>{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
@@ -45,7 +45,7 @@
 <div class="post-pagination text-secondary">
   <tpl:EntryPrevious>
     <div class=post-pagination-prev>
-      <small class=post-pagination-title>{{tpl:lang Previous post:}}</small>
+      <small class=post-pagination-title>{{tpl:lang post-pagination-previous-label}}</small>
 
       <a class="post-pagination-link" href={{tpl:EntryURL}} rel=prev>{{tpl:EntryTitle}}</a>
     </div>
@@ -53,7 +53,7 @@
 
   <tpl:EntryNext>
     <div class=post-pagination-next>
-      <small class=post-pagination-title>{{tpl:lang Next post:}}</small>
+      <small class=post-pagination-title>{{tpl:lang post-pagination-next-label}}</small>
 
       <a class="post-pagination-link" href={{tpl:EntryURL}} rel=next>{{tpl:EntryTitle}}</a>
     </div>

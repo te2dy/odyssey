@@ -1,19 +1,19 @@
 {{tpl:extends parent="__layout.html"}}
 
 <tpl:Block name="head-title">
-  <title>{{tpl:lang Archives}} – {{tpl:BlogName encode_html="1"}}</title>
+  <title>{{tpl:lang archives-title}} – {{tpl:BlogName encode_html="1"}}</title>
 </tpl:Block>
 
 <tpl:Block name="head-description"></tpl:Block>
 
 <tpl:Block name="main-content">
   <header class=content-info>
-    <h1>{{tpl:lang Archives}}</h1>
+    <h1>{{tpl:lang archives-title}}</h1>
   </header>
 
   <article class=post>
     <div class=content-text>
-      <h2>{{tpl:lang By date}}</h2>
+      <h2>{{tpl:lang archives-sort-date}}</h2>
 
       <ul>
         <tpl:Archives order="asc">
@@ -36,7 +36,7 @@
 
       <tpl:Categories level="1">
         <tpl:CategoriesHeader>
-            <h2>{{tpl:lang By category}}</h2>
+            <h2>{{tpl:lang archives-sort-category}}</h2>
 
             <ul>
         </tpl:CategoriesHeader>
@@ -67,7 +67,7 @@
 
       <tpl:Tags sortby="count" order="desc">
         <tpl:TagsHeader>
-          <h2>{{tpl:lang By tag}}</h2>
+          <h2>{{tpl:lang archives-sort-tag}}</h2>
 
           <ul>
         </tpl:TagsHeader>
@@ -81,7 +81,7 @@
 
       <tpl:Entries type="page" no_content="1" lastn="0" selected="0">
         <tpl:EntriesHeader>
-          <h2>{{tpl:lang Pages}}</h2>
+          <h2>{{tpl:lang archives-sort-page}}</h2>
 
           <ul>
         </tpl:EntriesHeader>

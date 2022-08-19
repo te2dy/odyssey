@@ -10,13 +10,13 @@
   </tpl:CategoryIf>
 
   <tpl:CategoryIf has_description="0">
-    <meta name=description content="{{tpl:lang Posts related to the category}} {{tpl:CategoryTitle encode_html="1"}}">
+    <meta name=description content="{{tpl:lang category-description-prefix}} {{tpl:CategoryTitle encode_html="1"}}">
   </tpl:CategoryIf>
 </tpl:Block>
 
 <tpl:Block name="main-content">
   <header class=content-info>
-    <h1 class=archive-title><span class=text-secondary>{{tpl:lang Category:}} </span>{{tpl:CategoryTitle}}</h1>
+    <h1 class=archive-title><span class=text-secondary>{{tpl:lang category-title-prefix}} </span>{{tpl:CategoryTitle}}</h1>
 
     {{tpl:CategoryDescription}}
   </header>

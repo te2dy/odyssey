@@ -1,8 +1,8 @@
 <form action={{tpl:BlogURL}} id=search-form method=get role=search>
-  <input aria-label="{{tpl:lang Search input field}}" id=search-form-input name=q placeholder="{{tpl:lang Terms to search}}" value="{{tpl:SysSearchString}}">
+  <input aria-label="{{tpl:lang search-input-aria-label}}" id=search-form-input name=q placeholder="{{tpl:lang search-input-placeholder}}" value="{{tpl:SysSearchString}}">
 
   <!-- # Display only if the used type a new search query. -->
-  <input id=search-submit type=submit value="{{tpl:lang Search}}" disabled>
+  <input id=search-submit type=submit value="{{tpl:lang search-submit-button}}" disabled>
 </form>
 
 <script>

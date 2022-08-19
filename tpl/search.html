@@ -8,21 +8,21 @@
 
 <tpl:Block name="main-content">
   <header class=content-info>
-    <h1>{{tpl:lang Search page}}</h1>
+    <h1>{{tpl:lang search-page-title}}</h1>
 
     {{tpl:include src="_searchform.html"}}
 
     <tpl:SysIf search_count="==1">
-      <p>{{tpl:SysSearchString encode_html="1" string="Your search returned <strong>one result</strong>:"}}</p>
+      <p>{{tpl:SysSearchString encode_html="1" string="search-results-one"}}</p>
     </tpl:SysIf>
 
     <tpl:SysIf search_count="&gt;1">
-      <p>{{tpl:SysSearchString encode_html="1" string="Your search returned <strong>%2$s results</strong>:"}}</p>
+      <p>{{tpl:SysSearchString encode_html="1" string="search-results-multiple"}}</p>
     </tpl:SysIf>
   </header>
 
   <tpl:SysIf search_count="==0">
-    <p>{{tpl:SysSearchString encode_html="1" string="No results."}}</p>
+    <p>{{tpl:SysSearchString encode_html="1" string="search-results-none"}}</p>
   </tpl:SysIf>
 
   {{tpl:include src="_entry-list.html"}}

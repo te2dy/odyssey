@@ -1,16 +1,16 @@
 {{tpl:extends parent="__layout.html"}}
 
 <tpl:Block name="head-title">
-  <title>{{tpl:lang Tags}} – {{tpl:BlogName encode_html="1"}}</title>
+  <title>{{tpl:lang tags-title}} – {{tpl:BlogName encode_html="1"}}</title>
 </tpl:Block>
 
 <tpl:Block name="head-description"></tpl:Block>
 
 <tpl:Block name="main-content">
   <header class=content-info>
-    <h1>{{tpl:lang Tags}}</h1>
+    <h1>{{tpl:lang tags-title}}</h1>
 
-    <p>{{tpl:lang The list of keywords used on this blog:}}</p>
+    <p>{{tpl:lang tags-introduction}}</p>
   </header>
 
   <div class=content-text>

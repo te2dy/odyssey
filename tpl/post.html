@@ -16,8 +16,8 @@
 
 <tpl:Block name="head-link">
   <link rel=stylesheet href={{tpl:BlogThemeURL}}/style.min.css>
-  <link rel=alternate type=application/atom+xml title="{{tpl:lang Syndicated feed}}" href={{tpl:BlogFeedURL}}>
-  <link rel=alternate type=application/atom+xml title="{{tpl:lang Syndicated comment feed}}" href={{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}}>
+  <link rel=alternate type=application/atom+xml title="{{tpl:lang feed-title}}" href={{tpl:BlogFeedURL}}>
+  <link rel=alternate type=application/atom+xml title="{{tpl:lang feed-comments-title}}" href={{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}}>
   <tpl:EntryIf pings_active="1"><link rel=pingback href={{tpl:BlogXMLRPCURL}}></tpl:EntryIf>
 </tpl:Block>
 
@@ -31,7 +31,7 @@
   <tpl:EntryIf show_comments="1">
     <script src="{{tpl:BlogQmarkURL}}pf=util.js"></script>
     <script type=application/json id=dc_post_remember_str-data>
-      { "post_remember_str": "{{tpl:lang Remember me}}" }
+      { "post_remember_str": "{{tpl:lang reactions-comment-remember-me}}" }
     </script>
     <script src="{{tpl:BlogQmarkURL}}pf=post.js"></script>
   </tpl:EntryIf>

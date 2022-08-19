@@ -1,12 +1,10 @@
 {{tpl:extends parent="__layout.html"}}
 
 <tpl:Block name="head-title">
-  <title>{{tpl:lang Archives}} - {{tpl:ArchiveDate}} – {{tpl:BlogName encode_html="1"}}</title>
+  <title>{{tpl:lang archives-title}} - {{tpl:ArchiveDate}} – {{tpl:BlogName encode_html="1"}}</title>
 </tpl:Block>
 
-<tpl:Block name="head-description">
-  <meta name=description content="{{tpl:lang Archives sorted by month}}" />
-</tpl:Block>
+<tpl:Block name="head-description"></tpl:Block>
 
 <tpl:Block name="main-content">
   <header class=content-info>
@@ -22,7 +20,7 @@
       </tpl:ArchiveNext>
     </nav>
 
-    <h1>{{tpl:lang Monthly archives}}</h1>
+    <h1>{{tpl:lang archives-month-title}}</h1>
   </header>
 
   {{tpl:include src="_entry-list.html"}}

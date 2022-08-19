@@ -5,12 +5,12 @@
 </tpl:Block>
 
 <tpl:Block name="head-description">
-  <meta name=description content="{{tpl:lang Posts related to the tag}} {{tpl:TagID encode_html="1"}}" />
+  <meta name=description content="{{tpl:lang tag-description-prefix}} {{tpl:TagID encode_html="1"}}" />
 </tpl:Block>
 
 <tpl:Block name="main-content">
   <header class=content-info>
-    <h1><span class="text-secondary">{{tpl:lang Tag:}} </span>{{tpl:TagID}}</h1>
+    <h1><span class="text-secondary">{{tpl:lang tag-title-prefix}} </span>{{tpl:TagID}}</h1>
   </header>
 
   {{tpl:include src="_entry-list.html"}}
