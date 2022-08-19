@@ -200,7 +200,7 @@ msgid "search-results-one"
 msgstr "Votre recherche a retourné <strong>1 résultat</strong>&nbsp;:"
 
 msgid "search-results-multiple"
-msgstr "Votre recherche a retourné <strong>%2$s résultats</strong>&nbsp;:"
+msgstr "Votre recherche a retourné <strong>%2$d résultats</strong>&nbsp;:"
 
 msgid "search-results-none"
 msgstr "Aucun résultat."
