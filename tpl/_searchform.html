@@ -11,12 +11,12 @@
       searchQuery = params.get("q");
 
   // On input change.
-  document.getElementsByClassName("search-form").oninput = function () {
+  document.getElementsByClassName("search-form")[0].oninput = function () {
     // If The input is empty or its value is equal to the search, disables the submit button.
-    if (document.getElementsByClassName("search-form-field").value && document.getElementsByClassName("search-form-field").value !== searchQuery) {
-      document.getElementsByClassName("search-form-submit").disabled = false;
+    if (document.getElementsByClassName("search-form-field")[0].value && document.getElementsByClassName("search-form-field")[0].value !== searchQuery) {
+      document.getElementsByClassName("search-form-submit")[0].disabled = false;
     } else {
-      document.getElementsByClassName("search-form-submit").disabled = true;
+      document.getElementsByClassName("search-form-submit")[0].disabled = true;
     }
   }
 </script>
