@@ -113,8 +113,11 @@ msgstr "Subscribe to reactions"
 msgid "reactions-subscribe-link-comments"
 msgstr "Subscribe to comments"
 
-msgid "reactions-subscribe-link-trackbacks"
-msgstr "Subscribe to trackbacks"
+msgid "reactions-trackbacks-add-label"
+msgstr "Add a trackback:"
+
+msgid "reactions-trackback-url-copied"
+msgstr "Copied"
 
 msgid "reactions-comment-remember-me"
 msgstr "Remember me"

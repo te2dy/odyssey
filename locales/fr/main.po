@@ -113,8 +113,11 @@ msgstr "S’abonner aux réactions"
 msgid "reactions-subscribe-link-comments"
 msgstr "S’abonner aux commentaires"
 
-msgid "reactions-subscribe-link-trackbacks"
-msgstr "S’abonner aux rétroliens"
+msgid "reactions-trackbacks-add-label"
+msgstr "Ajouter un rétrolien&nbsp;:"
+
+msgid "reactions-trackback-url-copied"
+msgstr "Copié"
 
 msgid "reactions-comment-remember-me"
 msgstr "Se souvenir de moi"
@@ -168,7 +171,7 @@ msgid "category-title-prefix"
 msgstr "Catégorie&nbsp;:"
 
 msgid "tag-description-prefix"
-msgstr "Billets ayant pour mot-clé"
+msgstr "Billets relatifs au mot-clé"
 
 msgid "tag-title-prefix"
 msgstr "Mot-clé&nbsp;:"

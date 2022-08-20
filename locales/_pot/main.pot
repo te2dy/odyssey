@@ -116,6 +116,9 @@ msgstr ""
 msgid "reactions-subscribe-link-trackbacks"
 msgstr ""
 
+msgid "reactions-trackback-url-copied"
+msgstr ""
+
 msgid "reactions-comment-remember-me"
 msgstr ""
 
