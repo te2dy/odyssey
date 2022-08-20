@@ -1,8 +1,8 @@
-<form action={{tpl:BlogURL}} id=search-form method=get role=search>
-  <input aria-label="{{tpl:lang search-input-aria-label}}" id=search-form-input name=q placeholder="{{tpl:lang search-input-placeholder}}" value="{{tpl:SysSearchString}}">
+<form action={{tpl:BlogURL}} class=search-form method=get role=search>
+  <input aria-label="{{tpl:lang search-input-aria-label}}" class=search-form-field name=q placeholder="{{tpl:lang search-input-placeholder}}" value="{{tpl:SysSearchString}}">
 
   <!-- # Display only if the used type a new search query. -->
-  <input id=search-submit type=submit value="{{tpl:lang search-submit-button}}" disabled>
+  <input class=search-form-submit type=submit value="{{tpl:lang search-submit-button}}" disabled>
 </form>
 
 <script>
@@ -11,12 +11,12 @@
       searchQuery = params.get("q");
 
   // On input change.
-  document.getElementById("search-form").oninput = function () {
+  document.getElementsByClassName("search-form").oninput = function () {
     // If The input is empty or its value is equal to the search, disables the submit button.
-    if (document.getElementById("search-form-input").value && document.getElementById("search-form-input").value !== searchQuery) {
-      document.getElementById("search-submit").disabled = false;
+    if (document.getElementsByClassName("search-form-field").value && document.getElementsByClassName("search-form-field").value !== searchQuery) {
+      document.getElementsByClassName("search-form-submit").disabled = false;
     } else {
-      document.getElementById("search-submit").disabled = true;
+      document.getElementsByClassName("search-form-submit").disabled = true;
     }
   }
 </script>
