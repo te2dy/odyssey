@@ -65,6 +65,24 @@ msgstr "commentaire"
 msgid "reactions-trackback-id"
 msgstr "retrolien"
 
+msgid "reactions-reactions-title-count-one"
+msgstr "Une réaction"
+
+msgid "reactions-reactions-title-count-multiple"
+msgstr "%d réactions"
+
+msgid "reactions-comments-title-count-one"
+msgstr "Un commentaire"
+
+msgid "reactions-comments-title-count-multiple"
+msgstr "%d commentaires"
+
+msgid "reactions-trackbacks-title-count-one"
+msgstr "Un rétrolien"
+
+msgid "reactions-trackbacks-title-count-multiple"
+msgstr "%d rétroliens"
+
 msgid "reactions-comment-datetime-separator"
 msgstr "à"
 
@@ -109,9 +127,6 @@ msgstr "Envoyer"
 
 msgid "reactions-subscribe-link-reactions"
 msgstr "S’abonner aux réactions"
-
-msgid "reactions-subscribe-link-comments"
-msgstr "S’abonner aux commentaires"
 
 msgid "reactions-trackbacks-add-label"
 msgstr "Ajouter un rétrolien&nbsp;:"

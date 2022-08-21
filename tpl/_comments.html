@@ -2,15 +2,15 @@
   <div id={{tpl:lang reactions-id}} class=reactions-block>
 
   <tpl:EntryIf operator="and" has_comment="1" has_ping="1">
-    <h3 class=reaction-title>{{tpl:EntryCommentCount one="One reaction" more="%d reactions" count_all="1"}}</h3>
+    <h3 class=reaction-title>{{tpl:EntryCommentCount one="reactions-reactions-title-count-one" more="reactions-reactions-title-count-multiple" count_all="1"}}</h3>
   </tpl:EntryIf>
 
   <tpl:EntryIf operator="and" has_comment="1" has_ping="0">
-    <h3 class=reaction-title>{{tpl:EntryCommentCount one="One comment" more="%d comments"}}</h3>
+    <h3 class=reaction-title>{{tpl:EntryCommentCount one="reactions-comments-title-count-one" more="reactions-comments-title-count-multiple"}}</h3>
   </tpl:EntryIf>
 
   <tpl:EntryIf operator="and" has_comment="0" has_ping="1">
-    <h3 class=reaction-title>{{tpl:EntryPingCount one="One trackback" more="%d trackbacks"}}</h3>
+    <h3 class=reaction-title>{{tpl:EntryPingCount one="reactions-trackbacks-title-count-one" more="reactions-trackbacks-title-count-multiple"}}</h3>
   </tpl:EntryIf>
 </tpl:EntryIf>
 
@@ -130,17 +130,7 @@
 {{tpl:origineConfigEmailAuthor}}
 
 <p class=text-secondary id=comment-feed-link>
-  <tpl:EntryIf operator="and" comments_active="1" pings_active="1">
-    <small><a href={{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}} rel=nofollow>{{tpl:lang reactions-subscribe-link-reactions}}</a></small>
-  </tpl:EntryIf>
-
-  <tpl:EntryIf operator="and" comments_active="1" pings_active="0">
-    <small><a href={{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}} rel=nofollow>{{tpl:lang reactions-subscribe-link-comments}}</a></small>
-  </tpl:EntryIf>
-
-  <tpl:EntryIf operator="and" comments_active="0" pings_active="1">
-    <small><a href={{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}} rel=nofollow>{{tpl:lang reactions-subscribe-link-trackbacks}}</a></small>
-  </tpl:EntryIf>
+  <small><a href={{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}} rel=nofollow>{{tpl:lang reactions-subscribe-link-reactions}}</a></small>
 </p>
 
 <tpl:EntryIf pings_active="1">

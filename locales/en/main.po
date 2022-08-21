@@ -65,6 +65,24 @@ msgstr "comment"
 msgid "reactions-trackback-id"
 msgstr "trackback"
 
+msgid "reactions-reactions-title-count-one"
+msgstr "One reaction"
+
+msgid "reactions-reactions-title-count-multiple"
+msgstr "%d reactions"
+
+msgid "reactions-comments-title-count-one"
+msgstr "One comment"
+
+msgid "reactions-comments-title-count-multiple"
+msgstr "%d comments"
+
+msgid "reactions-trackbacks-title-count-one"
+msgstr "One trackback"
+
+msgid "reactions-trackbacks-title-count-multiple"
+msgstr "%d trackbacks"
+
 msgid "reactions-comment-datetime-separator"
 msgstr "at"
 
@@ -109,9 +127,6 @@ msgstr "Send"
 
 msgid "reactions-subscribe-link-reactions"
 msgstr "Subscribe to reactions"
-
-msgid "reactions-subscribe-link-comments"
-msgstr "Subscribe to comments"
 
 msgid "reactions-trackbacks-add-label"
 msgstr "Add a trackback:"

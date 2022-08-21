@@ -65,6 +65,24 @@ msgstr ""
 msgid "reactions-trackback-id"
 msgstr ""
 
+msgid "reactions-reactions-title-count-one"
+msgstr ""
+
+msgid "reactions-reactions-title-count-multiple"
+msgstr ""
+
+msgid "reactions-comments-title-count-one"
+msgstr ""
+
+msgid "reactions-comments-title-count-multiple"
+msgstr ""
+
+msgid "reactions-trackbacks-title-count-one"
+msgstr ""
+
+msgid "reactions-trackbacks-title-count-multiple"
+msgstr ""
+
 msgid "reactions-comment-datetime-separator"
 msgstr ""
 
@@ -108,12 +126,6 @@ msgid "reactions-comment-form-submit-button"
 msgstr ""
 
 msgid "reactions-subscribe-link-reactions"
-msgstr ""
-
-msgid "reactions-subscribe-link-comments"
-msgstr ""
-
-msgid "reactions-subscribe-link-trackbacks"
 msgstr ""
 
 msgid "reactions-trackback-url-copied"
