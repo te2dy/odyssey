@@ -191,6 +191,12 @@ h6 {
   color: var(--color-text-primary);
   content: "\002042"; /* ⁂ */
 }
+.content-text :where(h1, h2, h3, h4, h5) {
+  margin-top: 2rem;
+}
+.content-text :where(h1, h2, h3, h4, h5) + :where(h1, h2, h3, h4, h5) {
+  margin-top: 1rem;
+}
 :where(.content-text, .widget) :where(ul, ol) {
   display: table;
   margin: 1em 0;
@@ -245,6 +251,9 @@ img.media {
 }
 
 /* Forms */
+input, textarea, button, .button {
+  line-height: 1;
+}
 input,
 textarea {
   background-color: var(--color-input-background);
@@ -320,6 +329,19 @@ input[type="submit"]:hover:disabled {
 textarea {
   width: 100%;
 }
+
+/* Details */
+details summary {
+  cursor: pointer;
+  text-decoration: underline dotted;
+}
+.details-content {
+  margin-top: .5rem;
+}
+.details-content p {
+  margin: .25rem 0 0;
+}
+
 /**
  * Origine themes common styles
  *
@@ -408,8 +430,9 @@ textarea {
   display: inline-block;
   margin-bottom: 1rem;
 }
-.post-date {
+.post-date summary {
   display: block;
+  list-style: unset;
 }
 .post-footer {
   margin-top: 2rem;
