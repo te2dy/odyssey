@@ -4,7 +4,15 @@
       <div class=post-selected><small>{{tpl:lang post-selected-label}}</small></div>
     </tpl:EntryIf>
 
-    <time aria-label="{{tpl:lang post-date-aria-label}}" class="post-date text-secondary" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%m"}}>{{tpl:EntryDate}}</time>
+    <details class="post-date text-secondary">
+      <summary><time aria-label="{{tpl:lang post-date-aria-label}}" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%m"}}>{{tpl:EntryDate}}</time></summary>
+
+      <div class=details-content>
+        <p><small>Publication&nbsp;: {{tpl:EntryDate}} à {{tpl:EntryTime}}</small></p>
+
+        <p><small>Dernière modification&nbsp;: {{tpl:EntryDate}} à {{tpl:EntryTime}}</small></p>
+      </div>
+    </details>
 
     <h1>{{tpl:EntryTitle}}</h1>
   </header>
@@ -17,7 +25,7 @@
     {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
   </div>
 
-  <tpl:EntryIf operator="or" has_category="1" has_tag="1">
+  <tpl:EntryIf operator="or" has_attachment="1" has_category="1" has_tag="1">
     <footer class=post-footer>
       {{tpl:include src="_attachments.html"}}
 
@@ -27,17 +35,19 @@
         </div>
       </tpl:EntryIf>
 
-      <tpl:EntryTags>
-        <tpl:TagsHeader>
-          <div class="post-meta text-secondary">{{tpl:lang post-tags-prefix}}
-        </tpl:TagsHeader>
+      <tpl:EntryIf has_tag="1">
+        <tpl:EntryTags>
+          <tpl:TagsHeader>
+            <div class="post-meta text-secondary">{{tpl:lang post-tags-prefix}}
+          </tpl:TagsHeader>
 
-        <a href={{tpl:TagURL}} rel=tag>{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
+          <a href={{tpl:TagURL}} rel=tag>{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
 
-        <tpl:TagsFooter>
-          </div>
-        </tpl:TagsFooter>
-      </tpl:EntryTags>
+          <tpl:TagsFooter>
+            </div>
+          </tpl:TagsFooter>
+        </tpl:EntryTags>
+      </tpl:EntryIf>
     </footer>
   </tpl:EntryIf>
 </article>
