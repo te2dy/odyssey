@@ -114,7 +114,7 @@ class tplOrigineMiniTheme
      */
     public static function origineMiniEntryLang()
     {
-        return '<?php if (\dcCore::app()->ctx->posts->post_lang !== \dcCore::app()->blog->settings->system->lang) { echo " lang=" . dcCore::app()->ctx->posts->post_lang; } ?>';
+        return '<?php if (\dcCore::app()->ctx->posts->post_lang !== \dcCore::app()->blog->settings->system->lang) { echo " lang=" , dcCore::app()->ctx->posts->post_lang; } ?>';
     }
 
     /**
@@ -182,7 +182,7 @@ class tplOrigineMiniTheme
     }
 
     /**
-     * Displays a search form at before the navigation widget area.
+     * Displays a search form before the navigation widget area.
      *
      * @param array $attr    Unused.
      * @param void  $content The content of the search form.
