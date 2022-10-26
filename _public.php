@@ -14,7 +14,7 @@ if (!defined('DC_RC_PATH')) {
     return;
 }
 
-\l10n::set(dirname(__FILE__) . '/locales/' . \dcCore::app()->lang . '/main');
+\l10n::set(__DIR__ . '/locales/' . \dcCore::app()->lang . '/main');
 
 \dcCore::app()->addBehavior('publicHeadContent', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniHeadMeta']);
 
@@ -90,9 +90,12 @@ class tplOrigineMiniTheme
         $styles .= '--order-footer:5;';
         $styles .= '--font-family:-apple-system,BlinkMacSystemFont,"Avenir Next",Avenir,"Segoe UI","Helvetica Neue",Helvetica,Ubuntu,Roboto,Noto,Arial,sans-serif;';
         $styles .= '--font-size:1em;';
-        $styles .= '--color-h:220;';
-        $styles .= '--color-s:100%;';
-        $styles .= '--color-l:45%;';
+        $styles .= '--color-primary:#1742cf;';
+        $styles .= '--color-background:#fcfcfd;';
+        $styles .= '--color-text-main:#2e3038;';
+        $styles .= '--color-text-secondary:#797c86;';
+        $styles .= '--color-border:#c2c7d6;';
+        $styles .= '--color-input-background:#f1f2f4;';
         $styles .= '--text-align:left;';
         $styles .= '}';
 

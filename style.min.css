@@ -1,27 +1,15 @@
 /**
  * All colors
  */
-:root {
-  --color-background: hsl(var(--color-h), 0%, 100%);
-  --color-text-primary: hsl(var(--color-h), 0%, 0%);
-  --color-text-secondary: hsl(var(--color-h), 0%, 45%);
-  --color-link: hsl(var(--color-h), var(--color-s), var(--color-l));
-  --color-link-hover: hsl(var(--color-h), var(--color-s), calc(var(--color-l) + 10%));
-  --color-border: hsl(var(--color-h), 0%, 75%);
-  --color-input-text: hsl(var(--color-h), 0%, 0%);
-  --color-input-background: hsl(var(--color-h), 0%, 95%);
-  --color-input-background-hover: hsl(var(--color-h), 0%, 0%);
-}
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-background: hsl(240, 14%, 10%);
-    --color-text-primary: hsl(var(--color-h), 0%, 95%);
-    --color-text-secondary: hsl(var(--color-h), 0%, 60%);
-    --color-link: hsl(var(--color-h), 100%, 75%);
-    --color-link-hover: hsl(var(--color-h), 100%, 85%);
-    --color-border: hsl(var(--color-h), 0%, 70%);
-    --color-input-text: hsl(var(--color-h), 0%, 95%);
-    --color-input-background: hsl(var(--color-h), 0%, 30%);
+    --color-background: #000;
+    --color-text-main: #fff;
+    --color-text-secondary: #969696;
+    --color-primary: var(--color-custom);
+    --color-border: #fff;
+    --color-input-text: #fff;
+    --color-input-background: gray;
   }
 }
 
@@ -32,10 +20,9 @@
        (-ms-high-contrast: black-on-white) {
   :root {
     --color-background: #fff;
-    --color-text-primary: #000;
+    --color-text-main: #000;
     --color-text-secondary: #000;
-    --color-link: #000;
-    --color-link-hover: #000;
+    --color-primary: #000;
     --color-border: #000;
     --color-input-text: #000;
     --color-input-background: #fff;
@@ -45,9 +32,9 @@
 
 body {
   background-color: var(--color-background);
-  color: var(--color-text-primary);
-  font-family: var(--font-family); /* @see _public.php */
-  font-size: var(--font-size); /* @see _public.php */
+  color: var(--color-text-main);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
   margin: 4em 0;
 }
 
@@ -59,7 +46,7 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  max-width: var(--page-width); /* @see _public.php */
+  max-width: var(--page-width);
   row-gap: 4rem;
 }
 #site-header {
@@ -71,28 +58,29 @@ body {
   order: 1;
 }
 #site-content {
-  order: var(--order-content); /* @see _public.php */
+  order: var(--order-content);
 }
 #blognav {
-  order: var(--order-widgets-nav); /* @see _public.php */
+  order: var(--order-widgets-nav);
 }
 #blogextra {
-  order: var(--order-widgets-extra); /* @see _public.php */
+  order: var(--order-widgets-extra);
 }
 #site-footer {
   font-size: .8em;
-  order: var(--order-footer); /* @see _public.php */
+  order: var(--order-footer);
 }
 
 /**
  * Main formatting
  */
 a {
-  color: var(--color-link);
+  color: var(--color-primary);
   text-decoration: none;
 }
 a:where(:active, :focus, :hover) {
-  color: var(--color-link-hover);
+  color: var(--color-primary);
+  filter: brightness(1.5);
   text-decoration: underline;
 }
 @media (prefers-contrast: more),
@@ -188,7 +176,7 @@ h6 {
   text-align: center;
 }
 .content-text hr::after {
-  color: var(--color-text-primary);
+  color: var(--color-text-main);
   content: "\002042"; /* ⁂ */
 }
 .content-text :where(h1, h2, h3, h4, h5) {
@@ -259,7 +247,6 @@ textarea {
   background-color: var(--color-input-background);
   border: .063rem solid var(--color-border);
   box-sizing: border-box;
-  color: var(--color-input-text);
   font-family: inherit;
   font-size: 1em;
   margin-bottom: 1rem;
@@ -296,8 +283,8 @@ input[type="submit"],
 .form-submit,
 .button {
   background-color: var(--color-background);
-  border-color: var(--color-link);
-  color: var(--color-link);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 input[type="submit"]:active,
 input[type="submit"]:focus,
@@ -308,7 +295,7 @@ input[type="submit"]:hover,
 .form-submit:active,
 .form-submit:focus,
 .form-submit:hover {
-  background-color: var(--color-link);
+  background-color: var(--color-primary);
   color: var(--color-background);
   cursor: pointer;
 }
@@ -352,7 +339,7 @@ details summary {
  * Header
  */
 #site-title {
-  background-color: var(--color-link);
+  background-color: var(--color-primary);
   color: var(--color-background);
   display: block;
   flex-shrink: 0;
@@ -516,11 +503,10 @@ details summary {
   padding: 1rem 1rem 0;
 }
 #trackback-url {
-  color: var(--color-link);
+  color: var(--color-primary);
 }
 #trackback-url:where(:active, :focus, :hover) {
   cursor: pointer;
-  color: var(--color-link-hover);
   text-decoration: underline;
 }
 
