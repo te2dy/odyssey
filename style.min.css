@@ -3,7 +3,7 @@
  */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-background: #000;
+    --color-background: #16161d;
     --color-text-main: #fff;
     --color-text-secondary: #969696;
     --color-primary: var(--color-custom);
@@ -15,18 +15,16 @@
 
 /* Accessibility: high contrast mode */
 @media (prefers-contrast: more),
-       (prefers-contrast: less),
+       /*(prefers-contrast: less),*/
        (-ms-high-contrast: active),
        (-ms-high-contrast: black-on-white) {
   :root {
+    --color-primary: #000;
     --color-background: #fff;
     --color-text-main: #000;
     --color-text-secondary: #000;
-    --color-primary: #000;
     --color-border: #000;
-    --color-input-text: #000;
     --color-input-background: #fff;
-    --color-input-background-hover: #000;
   }
 }
 
@@ -80,7 +78,7 @@ a {
 }
 a:where(:active, :focus, :hover) {
   color: var(--color-primary);
-  filter: brightness(1.5);
+  filter: brightness(1.25);
   text-decoration: underline;
 }
 @media (prefers-contrast: more),
@@ -239,9 +237,6 @@ img.media {
 }
 
 /* Forms */
-input, textarea, button, .button {
-  line-height: 1;
-}
 input,
 textarea {
   background-color: var(--color-input-background);
@@ -507,6 +502,7 @@ details summary {
 }
 #trackback-url:where(:active, :focus, :hover) {
   cursor: pointer;
+  filter: brightness(1.25);
   text-decoration: underline;
 }
 
