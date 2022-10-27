@@ -42,6 +42,9 @@ msgstr "Selected post"
 msgid "post-list-date-aria-label"
 msgstr "Date of publication of the post"
 
+msgid "post-link-continue-reading"
+msgstr "Read"
+
 msgid "post-category-prefix"
 msgstr "Filled under"
 

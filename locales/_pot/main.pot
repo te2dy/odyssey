@@ -42,6 +42,9 @@ msgstr ""
 msgid "post-list-date-aria-label"
 msgstr ""
 
+msgid "post-link-continue-reading"
+msgstr ""
+
 msgid "post-category-prefix"
 msgstr ""
 

@@ -22,6 +22,7 @@ if (!defined('DC_RC_PATH')) {
 \dcCore::app()->tpl->addValue('origineMiniStylesInline', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniStylesInline']);
 \dcCore::app()->tpl->addValue('origineMiniEntryLang', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniEntryLang']);
 \dcCore::app()->tpl->addValue('origineMiniScreenReaderLinks', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniScreenReaderLinks']);
+\dcCore::app()->tpl->addValue('origineMiniPostListType', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostListType']);
 \dcCore::app()->tpl->addValue('origineMiniFooterCredits', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniFooterCredits']);
 \dcCore::app()->tpl->addValue('origineMiniURIRelative', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniURIRelative']);
 
@@ -155,6 +156,25 @@ class tplOrigineMiniTheme
     }
 
     /**
+     * Loads the right entry list template based on origineConfig settings.
+     * Default: short
+     *
+     * @return void
+     */
+    public static function origineMiniPostListType()
+    {
+        $plugin_activated = self::origineConfigActive();
+
+        if ($plugin_activated === false) {
+            $tpl = \dcCore::app()->tpl->includeFile(['src' => '_entry-list-short.html']);
+        } elseif ($plugin_activated === true) {
+            $tpl = \dcCore::app()->tpl->includeFile(['src' => '_entry-list-' . \dcCore::app()->blog->settings->origineConfig->content_post_list_type . '.html']);
+        }
+
+        return $tpl;
+    }
+
+    /**
      * Returns the relative URI of the current page.
      *
      * @return void
@@ -193,11 +213,7 @@ class tplOrigineMiniTheme
     {
         $plugin_activated = self::origineConfigActive();
 
-        if (
-            $plugin_activated === true
-            && \dcCore::app()->blog->settings->origineConfig->widgets_search_form === true
-            && \dcCore::app()->url->type !== 'search'
-        ) {
+        if ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->widgets_search_form === true && \dcCore::app()->url->type !== 'search') {
             return $content;
         }
     }

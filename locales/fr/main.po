@@ -42,6 +42,9 @@ msgstr "Billet sélectionné"
 msgid "post-list-date-aria-label"
 msgstr "Date de publication du billet"
 
+msgid "post-link-continue-reading"
+msgstr "Lire"
+
 msgid "post-category-prefix"
 msgstr "Classé dans"
 
