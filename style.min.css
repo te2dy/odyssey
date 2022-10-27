@@ -409,15 +409,7 @@ details summary {
   text-align: right;
 }
 .post-list-extended .post-excerpt {
-  font-size: .9em;
-  font-style: italic;
-  margin: .5rem 0;
-}
-.post-excerpt-link {
-  font-style: normal;
-}
-.post-list-extended .post-comment-link {
-  font-size: .9em;
+  margin: .5rem 0 0;
 }
 
 /**

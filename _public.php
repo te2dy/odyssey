@@ -23,6 +23,7 @@ if (!defined('DC_RC_PATH')) {
 \dcCore::app()->tpl->addValue('origineMiniEntryLang', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniEntryLang']);
 \dcCore::app()->tpl->addValue('origineMiniScreenReaderLinks', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniScreenReaderLinks']);
 \dcCore::app()->tpl->addValue('origineMiniPostListType', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostListType']);
+\dcCore::app()->tpl->addValue('origineMiniEntryExcerpt', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniEntryExcerpt']);
 \dcCore::app()->tpl->addValue('origineMiniFooterCredits', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniFooterCredits']);
 \dcCore::app()->tpl->addValue('origineMiniURIRelative', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniURIRelative']);
 
@@ -172,6 +173,45 @@ class tplOrigineMiniTheme
         }
 
         return $tpl;
+    }
+
+    /**
+     * Returns an excerpt of the post.
+     *
+     * Gets the excerpt defined by the author or, if it does not exists, an excerpt of the content.
+     *
+     * @return void
+     */
+    public static function origineMiniEntryExcerpt($attr)
+    {
+        return '
+            <?php
+            $the_excerpt = "";
+
+            if (' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getExcerpt()') . ' !== "") {
+                $the_excerpt = ' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getExcerpt()') . ';
+                $the_excerpt .= " [<a href=\"" . dcCore::app()->ctx->posts->getURL() . "\">ouvrir ce billet</a>]";
+            } else {
+                $the_excerpt = ' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getContent()') . ';
+                $the_excerpt = substr($the_excerpt, 0, strpos(wordwrap($the_excerpt, 200), "\n"));
+
+                if ($the_excerpt !== "") {
+                    if (ctype_alnum(substr($the_excerpt, -1)) === true) {
+                        $the_excerpt .= "…";
+                    } else {
+                        $the_excerpt = substr($the_excerpt, 0, -1) . "…";
+                    }
+
+                    $the_excerpt .= " [<a href=\"" . dcCore::app()->ctx->posts->getURL() . "\">continuer la lecture</a>]";
+                }
+            }
+
+            if ($the_excerpt !== "") {
+                echo "<p class=\"post-excerpt text-secondary\">" . $the_excerpt . "</p>";
+            }
+            ?>
+        ';
+
     }
 
     /**
