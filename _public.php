@@ -101,6 +101,11 @@ class tplOrigineMiniTheme
         $styles .= '--color-input-background:#f1f2f4;';
         $styles .= '--text-align:left;';
         $styles .= '}';
+        $styles .= '@media (prefers-color-scheme:dark){';
+        $styles .= ':root{';
+        $styles .= '--color-primary:#94c9ff;';
+        $styles .= '}';
+        $styles .= '}';
 
         if ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->css_origine_mini) {
             $styles = \dcCore::app()->blog->settings->origineConfig->css_origine_mini;

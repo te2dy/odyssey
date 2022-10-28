@@ -4,12 +4,10 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --color-background: #16161d;
-    --color-text-main: #fff;
+    --color-text-main: #ccc;
     --color-text-secondary: #969696;
-    --color-primary: var(--color-custom);
-    --color-border: #fff;
-    --color-input-text: #fff;
-    --color-input-background: gray;
+    --color-border: #ccc;
+    --color-input-background: #262626;
   }
 }
 
@@ -243,6 +241,7 @@ textarea {
   background-color: var(--color-input-background);
   border: .063rem solid var(--color-border);
   box-sizing: border-box;
+  color: var(--color-text-main);
   font-family: inherit;
   font-size: 1em;
   margin-bottom: 1rem;
