@@ -255,7 +255,7 @@ class tplOrigineMiniTheme
      */
     public static function origineMiniURIRelative()
     {
-        return '<?php echo $_SERVER["REQUEST_URI"]; ?>';
+        return '<?php echo filter_var($_SERVER["REQUEST_URI"], FILTER_SANITIZE_URL); ?>';
     }
 
     /**
