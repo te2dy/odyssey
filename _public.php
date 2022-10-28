@@ -238,9 +238,9 @@ class tplOrigineMiniTheme
             if ($datetime_creadt < $datetime_upddt) {
                 if ($day_creadt < $day_upddt) {
                     echo "<p><small>", sprintf(__("post-date-time-updated"), \dcCore::app()->ctx->posts->getDate("' . $format_date . '", "upddt"), \dcCore::app()->ctx->posts->getDate("' . $format_time . '", "upddt")), "</small></p>";
-                    } else {
-                        echo "<p><small>", sprintf(__("Last modified at %s"), \dcCore::app()->ctx->posts->getDate("' . $format_time . '", "upddt")), "</small></p>";
-                    }
+                } else {
+                    echo "<p><small>", sprintf(__("Last modified at %s"), \dcCore::app()->ctx->posts->getDate("' . $format_time . '", "upddt")), "</small></p>";
+                }
             }
             ?>
         ';
