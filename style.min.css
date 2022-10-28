@@ -54,6 +54,7 @@ body {
   flex-direction: row;
   justify-content: space-between;
   order: 1;
+  flex-wrap: wrap
 }
 #site-content {
   order: var(--order-content);
