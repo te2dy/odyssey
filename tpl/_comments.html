@@ -139,9 +139,10 @@
   <script>
     function origineTrackbackURLCopy() {
       // Gets the trackback button & URL.
-      var trackbackButton  = document.getElementById("trackback-url"),
-          trackbackURL     = trackbackButton.getAttribute("data-trackback-url");
+      var trackbackButton = document.getElementById("trackback-url"),
+          trackbackURL    = trackbackButton.getAttribute("data-trackback-url");
 
+      // If the URL has already been copied, removes the Copied message.
       if (document.getElementById("trackback-url-copied")) {
         document.getElementById("trackback-url-copied").remove();
       }
