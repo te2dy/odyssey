@@ -48,6 +48,15 @@ msgstr ""
 msgid "post-link-continue-reading"
 msgstr ""
 
+msgid "post-time-created"
+msgstr ""
+
+msgid "post-date-time-updated"
+msgstr ""
+
+msgid "post-time-updated"
+msgstr ""
+
 msgid "post-category-prefix"
 msgstr ""
 

@@ -24,6 +24,7 @@ if (!defined('DC_RC_PATH')) {
 \dcCore::app()->tpl->addValue('origineMiniScreenReaderLinks', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniScreenReaderLinks']);
 \dcCore::app()->tpl->addValue('origineMiniPostListType', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostListType']);
 \dcCore::app()->tpl->addValue('origineMiniEntryExcerpt', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniEntryExcerpt']);
+\dcCore::app()->tpl->addValue('origineMiniPostDateDetails', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostDateDetails']);
 \dcCore::app()->tpl->addValue('origineMiniFooterCredits', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniFooterCredits']);
 \dcCore::app()->tpl->addValue('origineMiniURIRelative', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniURIRelative']);
 
@@ -212,6 +213,37 @@ class tplOrigineMiniTheme
             ?>
         ';
 
+    }
+
+    /**
+     * Displays the publised and modified date and time of a post.
+     *
+     * @return void
+     */
+    public static function origineMiniPostDateDetails()
+    {
+        $format_date = \dcCore::app()->blog->settings->system->date_format;
+        $format_time = \dcCore::app()->blog->settings->system->time_format;
+
+        return '
+            <?php
+            $datetime_creadt = (int) \dcCore::app()->ctx->posts->getDate("%Y%m%d%H%M%S", "creadt");
+            $datetime_upddt  = (int) \dcCore::app()->ctx->posts->getDate("%Y%m%d%H%M%S", "upddt");
+
+            $day_creadt = (int) \dcCore::app()->ctx->posts->getDate("%Y%m%d", "creadt");
+            $day_upddt  = (int) \dcCore::app()->ctx->posts->getDate("%Y%m%d", "upddt");
+
+            echo "<p><small>", sprintf(__("post-time-created"), \dcCore::app()->ctx->posts->getDate("' . $format_time . '", "creadt")), "</small></p>";
+
+            if ($datetime_creadt < $datetime_upddt) {
+                if ($day_creadt < $day_upddt) {
+                    echo "<p><small>", sprintf(__("post-date-time-updated"), \dcCore::app()->ctx->posts->getDate("' . $format_date . '", "upddt"), \dcCore::app()->ctx->posts->getDate("' . $format_time . '", "upddt")), "</small></p>";
+                    } else {
+                        echo "<p><small>", sprintf(__("Last modified at %s"), \dcCore::app()->ctx->posts->getDate("' . $format_time . '", "upddt")), "</small></p>";
+                    }
+            }
+            ?>
+        ';
     }
 
     /**

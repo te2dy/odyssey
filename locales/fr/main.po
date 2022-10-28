@@ -48,6 +48,15 @@ msgstr "Ouvrir le billet pour lire la suite"
 msgid "post-link-continue-reading"
 msgstr "ouvrir"
 
+msgid "post-time-created"
+msgstr "Billet créé à %s"
+
+msgid "post-date-time-updated"
+msgstr "Modifié pour la dernière fois le %s à %s"
+
+msgid "post-time-updated"
+msgstr "Modifié pour la dernière fois à %s"
+
 msgid "post-category-prefix"
 msgstr "Classé dans"
 

@@ -48,6 +48,15 @@ msgstr "Open the post to read the rest"
 msgid "post-link-continue-reading"
 msgstr "open"
 
+msgid "post-time-created"
+msgstr "Post created at %s"
+
+msgid "post-date-time-updated"
+msgstr "Last modified on %s at %s"
+
+msgid "post-time-updated"
+msgstr "Last modified at %s"
+
 msgid "post-category-prefix"
 msgstr "Filled under"
 
