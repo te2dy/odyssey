@@ -6,11 +6,11 @@
 
 <tpl:Block name="head-description">
   <tpl:EntryIf extended="1">
-    <meta name=description{{tpl:origineMiniEntryLang}} content="{{tpl:EntryExcerpt encode_html="1" remove_html="1"}}" />
+    <meta name=description{{tpl:origineMiniEntryLang}} content="{{tpl:EntryExcerpt encode_html="1" remove_html="1"}}">
   </tpl:EntryIf>
 
   <tpl:EntryIf extended="0">
-    <meta name=description{{tpl:origineMiniEntryLang}} content="{{tpl:EntryContent encode_html="1" remove_html="1" cut_string="150"}}<tpl:EntryIfContentCut encode_html="1" remove_html="1" cut_string="150"> […]</tpl:EntryIfContentCut>" />
+    <meta name=description{{tpl:origineMiniEntryLang}} content="{{tpl:EntryContent encode_html="1" remove_html="1" cut_string="150"}}<tpl:EntryIfContentCut encode_html="1" remove_html="1" cut_string="150"> […]</tpl:EntryIfContentCut>">
   </tpl:EntryIf>
 </tpl:Block>
 
