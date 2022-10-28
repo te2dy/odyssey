@@ -181,6 +181,8 @@ class tplOrigineMiniTheme
      *
      * Gets the excerpt defined by the author or, if it does not exists, an excerpt of the content.
      *
+     * @param array $attr Modifying attributes.
+     *
      * @return void
      */
     public static function origineMiniEntryExcerpt($attr)
