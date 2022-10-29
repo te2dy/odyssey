@@ -16,7 +16,7 @@ Origine Mini a été spécialement conçu pour garantir une excellente lisibilit
 
 **[Télécharger la dernière version d’Origine Mini sur GitHub](https://github.com/te2dy/origine-mini/releases/latest)**
 
-**Télécharger la dernière version d’Origine sur DotAddict** (à venir…)
+**[Télécharger la dernière version d’Origine sur DotAddict](https://themes.dotaddict.org/galerie-dc2/details/origine-mini)**
 
 ## Installation
 
