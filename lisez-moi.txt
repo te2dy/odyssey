@@ -8,9 +8,12 @@ Adresse de la licence : https://www.gnu.org/licenses/gpl-3.0.fr.html
 
 == Note ==
 Ce thème n’aurait pu avoir vu le jour sans les ressources mises à disposition librement par la communauté Dotclear.
-Son auteur s’est particulièrement inspiré des travaux réalisés sur les thèmes Ductile et Berlin.
+Son auteur s’est particulièrement inspiré des travaux réalisés sur les thèmes Ductile et Berlin, et des billets de Franck publiés sur https://open-time.net/.
 
 == Notes de version ==
+
+=== 0.1.1 - 29 octobre 2022 ===
+- Lancement d’une première version destinée au répertoire de thème de DotAddict, non dépendante de l’extension origineConfig.
 
 === 0.1 - 10 août 2022 ===
 - Lancement de la première version du thème.
