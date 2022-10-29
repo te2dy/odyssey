@@ -13,7 +13,7 @@ Son auteur s’est particulièrement inspiré des travaux réalisés sur les th�
 == Notes de version ==
 
 === 0.1.1 - 29 octobre 2022 ===
-- Lancement d’une première version destinée au répertoire de thème de DotAddict, non dépendante de l’extension origineConfig.
+- Lancement d’une première version destinée au répertoire de thèmes de DotAddict, non dépendante de l’extension origineConfig.
 
 === 0.1 - 10 août 2022 ===
 - Lancement de la première version du thème.
