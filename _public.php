@@ -24,7 +24,7 @@ if (!defined('DC_RC_PATH')) {
 \dcCore::app()->tpl->addValue('origineMiniScreenReaderLinks', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniScreenReaderLinks']);
 \dcCore::app()->tpl->addValue('origineMiniPostListType', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostListType']);
 \dcCore::app()->tpl->addValue('origineMiniEntryExcerpt', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniEntryExcerpt']);
-\dcCore::app()->tpl->addValue('origineMiniPostDateDetails', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostDateDetails']);
+\dcCore::app()->tpl->addValue('origineMiniPostDate', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostDate']);
 \dcCore::app()->tpl->addValue('origineMiniFooterCredits', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniFooterCredits']);
 \dcCore::app()->tpl->addValue('origineMiniURIRelative', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniURIRelative']);
 
@@ -45,6 +45,8 @@ class tplOrigineMiniTheme
         // Adds the name of the editor.
         if (\dcCore::app()->blog->settings->system->editor) {
             $editor = \dcCore::app()->blog->settings->system->editor;
+
+            // Adds quotes if the value contains one or more spaces.
             $editor = strpos($editor, ' ') === false ? $editor : '"' . $editor . '"';
 
             echo '<meta name=author content=', $editor, '>', "\n";
@@ -53,6 +55,8 @@ class tplOrigineMiniTheme
         // Adds the content of the copyright notice.
         if (\dcCore::app()->blog->settings->system->copyright_notice) {
             $notice = \dcCore::app()->blog->settings->system->copyright_notice;
+
+            // Adds quotes if the value contains one or more spaces.
             $notice = strpos($notice, ' ') === false ? $notice : '"' . $notice . '"';
 
             echo '<meta name=copyright content=', $notice, '>', "\n";
@@ -62,11 +66,13 @@ class tplOrigineMiniTheme
     /**
      * Checks if the plugin origineConfig is installed and activated.
      *
+     * To support the user’s settings, the version of the plugin must be superior or equal to 2.1.
+     *
      * @return bool Returns true if the plugin is installed and activated.
      */
     public static function origineConfigActive()
     {
-        if (\dcCore::app()->plugins->moduleExists('origineConfig') === true && \dcCore::app()->blog->settings->origineConfig->active === true) {
+        if (\dcCore::app()->plugins->moduleExists('origineConfig') === true && version_compare('2.1', \dcCore::app()->plugins->moduleInfo('origineConfig', 'version'), '<=') && \dcCore::app()->blog->settings->origineConfig->active === true) {
             return true;
         } else {
             return false;
@@ -223,34 +229,15 @@ class tplOrigineMiniTheme
     }
 
     /**
-     * Displays the publised and modified date and time of a post.
+     * Displays the date of a post.
      *
      * @return void
      */
-    public static function origineMiniPostDateDetails()
+    public static function origineMiniPostDate()
     {
         $format_date = \dcCore::app()->blog->settings->system->date_format;
-        $format_time = \dcCore::app()->blog->settings->system->time_format;
 
-        return '
-            <?php
-            $datetime_creadt = (int) \dcCore::app()->ctx->posts->getDate("%Y%m%d%H%M%S", "creadt");
-            $datetime_upddt  = (int) \dcCore::app()->ctx->posts->getDate("%Y%m%d%H%M%S", "upddt");
-
-            $day_creadt = (int) \dcCore::app()->ctx->posts->getDate("%Y%m%d", "creadt");
-            $day_upddt  = (int) \dcCore::app()->ctx->posts->getDate("%Y%m%d", "upddt");
-
-            echo "<p><small>", sprintf(__("post-time-created"), \dcCore::app()->ctx->posts->getDate("' . $format_time . '", "creadt")), "</small></p>";
-
-            if ($datetime_creadt < $datetime_upddt) {
-                if ($day_creadt < $day_upddt) {
-                    echo "<p><small>", sprintf(__("post-date-time-updated"), \dcCore::app()->ctx->posts->getDate("' . $format_date . '", "upddt"), \dcCore::app()->ctx->posts->getDate("' . $format_time . '", "upddt")), "</small></p>";
-                } else {
-                    echo "<p><small>", sprintf(__("Last modified at %s"), \dcCore::app()->ctx->posts->getDate("' . $format_time . '", "upddt")), "</small></p>";
-                }
-            }
-            ?>
-        ';
+        return '<?php echo "<time aria-label=\"{{tpl:lang post-date-aria-label}}\" class=\"post-date text-secondary\" datetime=\"" . \dcCore::app()->ctx->posts->getDate("%Y-%m-%dT%H:%m", "creadt") . "\">" . \dcCore::app()->ctx->posts->getDate("' . $format_date . '", "creadt") . "</time>"; ?>';
     }
 
     /**
