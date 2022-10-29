@@ -25,6 +25,7 @@ if (!defined('DC_RC_PATH')) {
 \dcCore::app()->tpl->addValue('origineMiniPostListType', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostListType']);
 \dcCore::app()->tpl->addValue('origineMiniEntryExcerpt', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniEntryExcerpt']);
 \dcCore::app()->tpl->addValue('origineMiniPostDate', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostDate']);
+\dcCore::app()->tpl->addValue('origineMiniAttachmentSize', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniAttachmentSize']);
 \dcCore::app()->tpl->addValue('origineMiniFooterCredits', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniFooterCredits']);
 \dcCore::app()->tpl->addValue('origineMiniURIRelative', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniURIRelative']);
 
@@ -198,8 +199,7 @@ class tplOrigineMiniTheme
      */
     public static function origineMiniEntryExcerpt($attr)
     {
-        return '
-            <?php
+        return '<?php
             $the_excerpt = "";
 
             if (' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getExcerpt()') . ' !== "") {
@@ -223,9 +223,7 @@ class tplOrigineMiniTheme
             if ($the_excerpt !== "") {
                 echo "<p class=\"post-excerpt text-secondary\">" . $the_excerpt . "</p>";
             }
-            ?>
-        ';
-
+            ?>';
     }
 
     /**
@@ -238,6 +236,49 @@ class tplOrigineMiniTheme
         $format_date = \dcCore::app()->blog->settings->system->date_format;
 
         return '<?php echo "<time aria-label=\"{{tpl:lang post-date-aria-label}}\" class=\"post-date text-secondary\" datetime=\"" . \dcCore::app()->ctx->posts->getDate("%Y-%m-%dT%H:%m", "creadt") . "\">" . \dcCore::app()->ctx->posts->getDate("' . $format_date . '", "creadt") . "</time>"; ?>';
+    }
+
+    /**
+     * Displays the attachment size.
+     *
+     * Based on Clearbricks package, Common subpackage, class files
+     *
+     * @return void
+     */
+    public static function origineMiniAttachmentSize()
+    {
+        return '<?php
+            $kb = 1024;
+            $mb = 1024 * $kb;
+            $gb = 1024 * $mb;
+            $tb = 1024 * $gb;
+
+            $size = $attach_f->size;
+
+            // Setting ignored for some reason:
+            // setlocale(LC_ALL, "fr_FR");
+
+            $lang      = \dcCore::app()->blog->settings->system->lang;
+            $lang_conv = localeconv();
+
+            if ($lang === "fr") {
+                $locale_decimal = ",";
+            } else {
+                $locale_decimal = $lang_conv["decimal_point"];
+            }
+
+            if ($size < $kb) {
+                echo sprintf(__("attachment-size-b"), $size);
+            } elseif ($size < $mb) {
+                echo sprintf(__("attachment-size-kb"), number_format($size / $kb, 1, $locale_decimal));
+            } elseif ($size < $gb) {
+                echo sprintf(__("attachment-size-mb"), number_format($size / $mb, 1, $locale_decimal));
+            } elseif ($size < $tb) {
+                echo sprintf(__("attachment-size-gb"), number_format($size / $gb, 1, $locale_decimal));
+            } else {
+                echo sprintf(__("attachment-size-tb"), number_format($size / $tb, 1, $locale_decimal));
+            }
+            ?>';
     }
 
     /**

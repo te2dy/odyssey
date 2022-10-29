@@ -57,6 +57,21 @@ msgstr "Modifié pour la dernière fois le %s à %s"
 msgid "post-time-updated"
 msgstr "Modifié pour la dernière fois à %s"
 
+msgid "attachment-size-b"
+msgstr "%s o"
+
+msgid "attachment-size-kb"
+msgstr "%s Ko"
+
+msgid "attachment-size-mb"
+msgstr "%s Mo"
+
+msgid "attachment-size-gb"
+msgstr "%s Go"
+
+msgid "attachment-size-tb"
+msgstr "%s To"
+
 msgid "post-category-prefix"
 msgstr "Classé dans"
 

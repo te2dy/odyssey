@@ -57,6 +57,21 @@ msgstr "Last modified on %s at %s"
 msgid "post-time-updated"
 msgstr "Last modified at %s"
 
+msgid "attachment-size-b"
+msgstr "%sB"
+
+msgid "attachment-size-kb"
+msgstr "%sKB"
+
+msgid "attachment-size-mb"
+msgstr "%sMB"
+
+msgid "attachment-size-gb"
+msgstr "%sGB"
+
+msgid "attachment-size-tb"
+msgstr "%sTB"
+
 msgid "post-category-prefix"
 msgstr "Filled under"
 

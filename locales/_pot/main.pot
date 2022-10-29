@@ -57,6 +57,21 @@ msgstr ""
 msgid "post-time-updated"
 msgstr ""
 
+msgid "attachment-size-b"
+msgstr ""
+
+msgid "attachment-size-kb"
+msgstr ""
+
+msgid "attachment-size-mb"
+msgstr ""
+
+msgid "attachment-size-gb"
+msgstr ""
+
+msgid "attachment-size-tb"
+msgstr ""
+
 msgid "post-category-prefix"
 msgstr ""
 
