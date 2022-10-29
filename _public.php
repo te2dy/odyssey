@@ -25,6 +25,7 @@ if (!defined('DC_RC_PATH')) {
 \dcCore::app()->tpl->addValue('origineMiniPostListType', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostListType']);
 \dcCore::app()->tpl->addValue('origineMiniEntryExcerpt', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniEntryExcerpt']);
 \dcCore::app()->tpl->addValue('origineMiniPostDate', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostDate']);
+\dcCore::app()->tpl->addValue('origineMiniAttachmentTitle', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniAttachmentTitle']);
 \dcCore::app()->tpl->addValue('origineMiniAttachmentSize', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniAttachmentSize']);
 \dcCore::app()->tpl->addValue('origineMiniFooterCredits', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniFooterCredits']);
 \dcCore::app()->tpl->addValue('origineMiniURIRelative', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniURIRelative']);
@@ -223,7 +224,7 @@ class tplOrigineMiniTheme
             if ($the_excerpt !== "") {
                 echo "<p class=\"post-excerpt text-secondary\">" . $the_excerpt . "</p>";
             }
-            ?>';
+        ?>';
     }
 
     /**
@@ -236,6 +237,24 @@ class tplOrigineMiniTheme
         $format_date = \dcCore::app()->blog->settings->system->date_format;
 
         return '<?php echo "<time aria-label=\"{{tpl:lang post-date-aria-label}}\" class=\"post-date text-secondary\" datetime=\"" . \dcCore::app()->ctx->posts->getDate("%Y-%m-%dT%H:%m", "creadt") . "\">" . \dcCore::app()->ctx->posts->getDate("' . $format_date . '", "creadt") . "</time>"; ?>';
+    }
+
+    /**
+     * Adds a title at the top of post attachment list.
+     *
+     * @return void
+     */
+    public static function origineMiniAttachmentTitle()
+    {
+        return '<?php
+            $attachment_nb = count(\dcCore::app()->ctx->attachments);
+
+            if ($attachment_nb === 1) {
+                echo __("attachments-title-one");
+            } else {
+                echo __("attachments-title-multiple");
+            }
+        ?>';
     }
 
     /**
@@ -278,7 +297,7 @@ class tplOrigineMiniTheme
             } else {
                 echo sprintf(__("attachment-size-tb"), number_format($size / $tb, 1, $locale_decimal));
             }
-            ?>';
+        ?>';
     }
 
     /**

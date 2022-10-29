@@ -57,8 +57,11 @@ msgstr "Modifié pour la dernière fois le %s à %s"
 msgid "post-time-updated"
 msgstr "Modifié pour la dernière fois à %s"
 
-msgid "attachments-title"
-msgstr "Annexe(s)"
+msgid "attachments-title-one"
+msgstr "Annexe"
+
+msgid "attachments-title-multiple"
+msgstr "Annexes"
 
 msgid "attachment-size-b"
 msgstr "%s o"

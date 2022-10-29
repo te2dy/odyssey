@@ -57,8 +57,11 @@ msgstr "Last modified on %s at %s"
 msgid "post-time-updated"
 msgstr "Last modified at %s"
 
-msgid "attachments-title"
-msgstr "Attachment(s)"
+msgid "attachments-title-one"
+msgstr "Attachment"
+
+msgid "attachments-title-multiple"
+msgstr "Attachments"
 
 msgid "attachment-size-b"
 msgstr "%sB"
