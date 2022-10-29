@@ -57,6 +57,9 @@ msgstr ""
 msgid "post-time-updated"
 msgstr ""
 
+msgid "attachments-title"
+msgstr ""
+
 msgid "attachment-size-b"
 msgstr ""
 
