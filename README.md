@@ -1,8 +1,8 @@
-# Origine Mini, un thème minimaliste Dotclear
+# Origine Mini, un thème minimaliste pour Dotclear
 
 ## Présentation
 
-À venir…
+Origine Mini a été spécialement conçu pour garantir une excellente lisibilité à vos textes tout en réduisant, grâce à son apparence minimaliste, les éléments de distraction qui pourraient perturber leur lecture. Il convient parfaitement aux journalistes, aux écrivains et aux simples blogueurs qui souhaitent mettre leurs écrits en valeur.
 
 ## Caractéristiques
 
@@ -24,9 +24,9 @@ Dans l’administration de votre blog, rendez-vous dans _Apparence du blog_ et c
 
 ## Personnalisation
 
-Origine Mini peut-être personnalisé avec l’extension **origineConfig** : modification du schéma de couleurs, de la police d’écriture, ou encore de la taille du texte…
+<strike>Origine Mini peut-être personnalisé avec l’extension **origineConfig** : modification du schéma de couleurs, de la police d’écriture, ou encore de la taille du texte…</strike>
 
-Rendez-vous sur [la page dédiée à origineConfig](https://github.com/te2dy/origineConfig).
+<strike>Rendez-vous sur [la page dédiée à origineConfig](https://github.com/te2dy/origineConfig).</strike>
 
 ## Contribuer, suggérer, signaler
 
