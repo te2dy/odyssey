@@ -158,7 +158,7 @@ class tplOrigineMiniTheme
      * Credits to display at the bottom of the site.
      *
      * They can be removed with the plugin origineConfig.
-     * Dotclear and theme version are shown on dev environment.
+     * Dotclear and theme versions are shown only on dev environment.
      *
      * @return void
      */
@@ -247,7 +247,16 @@ class tplOrigineMiniTheme
     {
         $format_date = \dcCore::app()->blog->settings->system->date_format;
 
-        return '<?php echo "<time aria-label=\"{{tpl:lang post-date-aria-label}}\" class=\"post-date text-secondary\" datetime=\"" . \dcCore::app()->ctx->posts->getDate("%Y-%m-%dT%H:%m", "creadt") . "\">" . \dcCore::app()->ctx->posts->getDate("' . $format_date . '", "creadt") . "</time>"; ?>';
+        $post_time        = '';
+        $plugin_activated = self::origineConfigActive();
+
+        if ($plugin_activated === false || ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->content_post_time === true)) {
+            $format_time = \dcCore::app()->blog->settings->system->time_format;
+
+            $post_time = ' . " " . \dcCore::app()->blog->settings->origineConfig->content_separator . " " . \dcCore::app()->ctx->posts->getDate("' . $format_time . '", "creadt")';
+        }
+
+        return '<?php echo "<time aria-label=\"{{tpl:lang post-date-aria-label}}\" class=\"post-date text-secondary\" datetime=\"" . \dcCore::app()->ctx->posts->getDate("%Y-%m-%dT%H:%m", "creadt") . "\">" . \dcCore::app()->ctx->posts->getDate("' . $format_date . '", "creadt")' . $post_time . ' . "</time>"; ?>';
     }
 
     /**

@@ -8,7 +8,7 @@
 
     <h3 class=post-title{{tpl:origineMiniEntryLang}}><a href={{tpl:EntryURL}} rel=bookmark>{{tpl:EntryTitle}}</a></h3>
 
-    <small class="post-date text-secondary"><time aria-label="{{tpl:lang post-list-date-aria-label}}" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%m"}}>{{tpl:EntryDate}}{{tpl:origineConfigEntryTime prefix="| "}}</time></small>
+    <small class="post-date text-secondary"><time aria-label="{{tpl:lang post-list-date-aria-label}}" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%m"}}>{{tpl:EntryDate}}{{tpl:origineConfigEntryTime context="post-list"}}</time></small>
   </li>
 
   <tpl:EntriesFooter>
