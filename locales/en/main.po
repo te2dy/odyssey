@@ -196,7 +196,7 @@ msgid "footer-powered-by"
 msgstr "Powered by <a href=https://dotclear.org/>Dotclear</a> and <a href=https://themes.dotaddict.org/galerie-dc2/details/origine-mini>Origine Mini</a>"
 
 msgid "footer-powered-by-dev"
-msgstr "Powered by <a href=https://dotclear.org/>Dotclear %s</a> and <a href=https://github.com/te2dy/origine-mini>Origine Mini %s</a>"
+msgstr "Powered by <a href=https://dotclear.org/ title=%s>Dotclear %s</a> and <a href=https://github.com/te2dy/origine-mini>Origine Mini %s</a>"
 
 # Archives
 
