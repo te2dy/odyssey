@@ -4,11 +4,11 @@
   </tpl:EntriesHeader>
 
   <li class="post<tpl:EntryIf selected="1"> post-selected</tpl:EntryIf>{{tpl:origineConfigEntryUpdatedClass}}" id={{tpl:lang post-id}}-{{tpl:EntryID}}>
-    {{tpl:origineConfigCommentLink display="brackets"}}
-
     <h3 class=post-title{{tpl:origineMiniEntryLang}}><a href={{tpl:EntryURL}} rel=bookmark>{{tpl:EntryTitle}}</a></h3>
 
     <small class="post-date text-secondary"><time aria-label="{{tpl:lang post-list-date-aria-label}}" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%m"}}>{{tpl:EntryDate}}{{tpl:origineConfigEntryTime context="post-list"}}</time></small>
+
+    {{tpl:origineConfigCommentLink}}
   </li>
 
   <tpl:EntriesFooter>
