@@ -239,7 +239,7 @@ class tplOrigineMiniTheme
     }
 
     /**
-     * Displays the date of a post.
+     * Displays the date of publication of posts.
      *
      * @return void
      */
@@ -250,7 +250,7 @@ class tplOrigineMiniTheme
         $post_time        = '';
         $plugin_activated = self::origineConfigActive();
 
-        if ($plugin_activated === false || ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->content_post_time === true)) {
+        if ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->content_post_time === true) {
             $format_time = \dcCore::app()->blog->settings->system->time_format;
 
             $post_time = ' . " " . \dcCore::app()->blog->settings->origineConfig->content_separator . " " . \dcCore::app()->ctx->posts->getDate("' . $format_time . '", "creadt")';
