@@ -367,6 +367,9 @@ details summary {
   border: .063rem solid var(--color-border);
   padding: .5rem;
 }
+.post-date {
+  display: block;
+}
 
 /**
  * Post list
@@ -403,7 +406,6 @@ details summary {
   font-weight: 700;
 }
 .post-list .post-date {
-  display: block;
   flex-shrink: 0;
   margin-left: 1rem;
   text-align: right;
@@ -423,22 +425,14 @@ details summary {
   display: inline-block;
   margin-bottom: 1rem;
 }
-.post-date summary {
-  display: block;
-  list-style: unset;
-}
 .post-footer {
   margin-top: 2rem;
 }
+#attachments {
+  margin-bottom: 2rem;
+}
 .post-meta {
   margin: .5rem 0;
-}
-#post-single-excerpt {
-  margin-bottom: 2rem;
-  font-weight: 700;
-}
-#post-single-excerpt strong {
-  font-weight: 900;
 }
 
 /**
