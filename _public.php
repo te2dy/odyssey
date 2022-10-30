@@ -157,7 +157,8 @@ class tplOrigineMiniTheme
     /**
      * Credits to display at the bottom of the site.
      *
-     * They can be remove with the plugin origineConfig.
+     * They can be removed with the plugin origineConfig.
+     * Dotclear and theme version are shown on dev environment.
      *
      * @return void
      */
@@ -166,7 +167,17 @@ class tplOrigineMiniTheme
         $plugin_activated = self::origineConfigActive();
 
         if ($plugin_activated === false || ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->footer_credits === true)) {
-            return '<div class=site-footer-block>' . sprintf(__('footer-powered-by'), __('https://dotclear.org/'), 'https://github.com/te2dy/origine-mini') . '</div>';
+            if (!defined('DC_DEV') || (defined('DC_DEV') && DC_DEV === 'false')) {
+                return '<div class=site-footer-block>' . __('footer-powered-by') . '</div>';
+            } else {
+                $dotclear_version       = \dcCore::app()->getVersion('core');
+                $dotclear_version_parts = explode('-', $dotclear_version);
+                $dc_version             = $dotclear_version_parts[0] ? $dotclear_version_parts[0] : $dotclear_version;
+
+                $theme_version = \dcCore::app()->themes->moduleInfo('origine-mini', 'version');
+
+                return '<div class=site-footer-block>' . sprintf(__('footer-powered-by-dev'), $dc_version, $theme_version) . '</div>';
+            }
         }
     }
 

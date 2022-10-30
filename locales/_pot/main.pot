@@ -192,6 +192,9 @@ msgstr ""
 msgid "footer-powered-by"
 msgstr ""
 
+msgid "footer-powered-by-dev"
+msgstr ""
+
 # Archives
 
 msgid "archives-title"
