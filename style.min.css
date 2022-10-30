@@ -435,15 +435,6 @@ details summary {
   margin: .5rem 0;
 }
 
-/* To move to origineConfig: */
-#post-single-excerpt {
-  margin-bottom: 2rem;
-  font-weight: 700;
-}
-#post-single-excerpt strong {
-  font-weight: 900;
-}
-
 /**
  * Post pagination
  */
