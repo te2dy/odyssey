@@ -75,7 +75,7 @@ a {
   color: var(--color-primary);
   text-decoration: none;
 }
-a:where(:active, :focus, :hover) {
+a:where(:active, :focus, :hover):not(.button) {
   color: var(--color-primary);
   filter: brightness(1.25);
   text-decoration: underline;
