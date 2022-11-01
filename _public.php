@@ -303,16 +303,18 @@ class tplOrigineMiniTheme
                 $locale_decimal = $lang_conv["decimal_point"];
             }
 
-            if ($size < $kb) {
-                printf(__("attachment-size-b"), $size);
-            } elseif ($size < $mb) {
-                printf(__("attachment-size-kb"), number_format($size / $kb, 1, $locale_decimal));
-            } elseif ($size < $gb) {
-                printf(__("attachment-size-mb"), number_format($size / $mb, 1, $locale_decimal));
-            } elseif ($size < $tb) {
-                printf(__("attachment-size-gb"), number_format($size / $gb, 1, $locale_decimal));
-            } else {
-                printf(__("attachment-size-tb"), number_format($size / $tb, 1, $locale_decimal));
+            if ($size > 0) {
+                if ($size < $kb) {
+                    printf(__("attachment-size-b"), $size);
+                } elseif ($size < $mb) {
+                    printf(__("attachment-size-kb"), number_format($size / $kb, 1, $locale_decimal));
+                } elseif ($size < $gb) {
+                    printf(__("attachment-size-mb"), number_format($size / $mb, 1, $locale_decimal));
+                } elseif ($size < $tb) {
+                    printf(__("attachment-size-gb"), number_format($size / $gb, 1, $locale_decimal));
+                } else {
+                    printf(__("attachment-size-tb"), number_format($size / $tb, 1, $locale_decimal));
+                }
             }
         ?>';
     }
