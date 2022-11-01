@@ -42,10 +42,10 @@ msgstr "Selected post"
 msgid "post-list-date-aria-label"
 msgstr "Date of publication of the post"
 
-msgid "post-link-continue-reading-aria"
-msgstr "Open the post to read the rest"
+msgid "post-list-open-aria"
+msgstr "Open “%s” to continue reading"
 
-msgid "post-link-continue-reading"
+msgid "post-list-open"
 msgstr "open"
 
 msgid "post-time-created"

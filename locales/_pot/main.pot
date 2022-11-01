@@ -42,10 +42,10 @@ msgstr ""
 msgid "post-list-date-aria-label"
 msgstr ""
 
-msgid "post-link-continue-reading-aria"
+msgid "post-list-open-aria"
 msgstr ""
 
-msgid "post-link-continue-reading"
+msgid "post-list-open"
 msgstr ""
 
 msgid "post-time-created"

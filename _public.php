@@ -212,25 +212,22 @@ class tplOrigineMiniTheme
             $the_excerpt = "";
 
             if (' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getExcerpt()') . ' !== "") {
-                $the_excerpt = ' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getExcerpt()') . ';
-                $the_excerpt .= " [<a href=\"" . dcCore::app()->ctx->posts->getURL() . "\">ouvrir ce billet</a>]";
+                $the_excerpt = ' . sprintf(\dcCore::app()->tpl->getFilters($attr), '\dcCore::app()->ctx->posts->getExcerpt()') . ';
             } else {
-                $the_excerpt = ' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getContent()') . ';
-                $the_excerpt = substr($the_excerpt, 0, strpos(wordwrap($the_excerpt, 200), "\n"));
+                $the_excerpt = ' . sprintf(\dcCore::app()->tpl->getFilters($attr), '\dcCore::app()->ctx->posts->getContent()') . ';
 
-                if ($the_excerpt !== "") {
-                    if (ctype_alnum(substr($the_excerpt, -1)) === true) {
-                        $the_excerpt .= "…";
-                    } else {
-                        $the_excerpt = substr($the_excerpt, 0, -1) . "…";
-                    }
-
-                    $the_excerpt .= " [<a href=\"" . dcCore::app()->ctx->posts->getURL() . "\">continuer la lecture</a>]";
+                if (strlen($the_excerpt) > 200) {
+                    $the_excerpt  = substr($the_excerpt, 0, 200);
+                    $the_excerpt  = preg_replace("/[^a-z0-9]+\Z/i", "", $the_excerpt);
+                    $the_excerpt .= "…";
                 }
             }
 
             if ($the_excerpt !== "") {
-                echo "<p class=\"post-excerpt text-secondary\">", $the_excerpt, "</p>";
+                echo "<p class=\"post-excerpt text-secondary\">",
+                     $the_excerpt,
+                     " [<a aria-label=\"" . sprintf(__("post-list-open-aria"), \dcCore::app()->ctx->posts->post_title) . "\" href=\"" . \dcCore::app()->ctx->posts->getURL() . "\">" . __("post-list-open") . "</a>]",
+                     "</p>";
             }
         ?>';
     }
