@@ -129,11 +129,13 @@
 
 {{tpl:origineConfigEmailAuthor}}
 
-<tpl:EntryIf operator="or" comments_active="1" pings_active="1" has_comment="1" has_ping="1">
-  <p class=text-secondary id=comment-feed-link>
-    <small><a href={{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}} rel=nofollow>{{tpl:lang reactions-subscribe-link-reactions}}</a></small>
-  </p>
-</tpl:EntryIf>
+<tpl:origineMiniCommentFeedLink>
+  <tpl:EntryIf operator="or" comments_active="1" pings_active="1" has_comment="1" has_ping="1">
+    <p class=text-secondary id=comment-feed-link>
+      <small><a href={{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}} rel=nofollow>{{tpl:lang reactions-subscribe-link-reactions}}</a></small>
+    </p>
+  </tpl:EntryIf>
+</tpl:origineMiniCommentFeedLink>
 
 <tpl:EntryIf pings_active="1">
   <script>
