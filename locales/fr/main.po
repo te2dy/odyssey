@@ -43,10 +43,10 @@ msgid "post-list-date-aria-label"
 msgstr "Date de publication du billet"
 
 msgid "post-list-open-aria"
-msgstr "Ouvrir « %s » pour continuer la lecture"
+msgstr "Ouvrir le billet « %s »"
 
 msgid "post-list-open"
-msgstr "ouvrir"
+msgstr "Lire la suite"
 
 msgid "post-time-created"
 msgstr "Billet créé à %s"

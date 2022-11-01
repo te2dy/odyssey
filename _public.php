@@ -227,7 +227,7 @@ class tplOrigineMiniTheme
             if ($the_excerpt !== "") {
                 echo "<p class=\"post-excerpt text-secondary\">",
                      $the_excerpt,
-                     " [<a aria-label=\"" . sprintf(__("post-list-open-aria"), \dcCore::app()->ctx->posts->post_title) . "\" href=\"" . \dcCore::app()->ctx->posts->getURL() . "\">" . __("post-list-open") . "</a>]",
+                     " <a aria-label=\"" . sprintf(__("post-list-open-aria"), \dcCore::app()->ctx->posts->post_title) . "\" href=\"" . \dcCore::app()->ctx->posts->getURL() . "\">" . __("post-list-open") . "</a>",
                      "</p>";
             }
         ?>';
