@@ -1,6 +1,6 @@
 <?php
 /**
- * Origine Mini, a minimalistic Dotclear theme
+ * Origine Mini, a minimal theme for Dotclear.
  *
  * @copyright Teddy
  * @copyright GPL-3.0
@@ -14,7 +14,7 @@ $this->registerModule(
     'Origine Mini',             // Name
     'A minimal Dotclear theme', // Description
     'Teddy',                    // Author
-    '0.1.1',                    // Version
+    '0.1.2',                    // Version
     [
         'type'                 => 'theme',
         'widgettitleformat'    => '<h3>%s</h3>', // h3 instead of h2 by default. No class needed.

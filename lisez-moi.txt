@@ -12,7 +12,9 @@ Son auteur s’est particulièrement inspiré des travaux réalisés sur les th�
 
 == Notes de version ==
 
-=== 0.1.2 - 30 octobre 2022 ===
+=== 0.1.2 - 31 octobre 2022 ===
+- Ajout : version de Dotclear et du thème dans le pied de page sur les environnements de développement.
+- Correction : absence des fichiers joints dans les billets.
 - Correction : mauvais placement de la date des billets sélectionnés.
 
 === 0.1.1 - 29 octobre 2022 ===
