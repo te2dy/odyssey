@@ -8,11 +8,19 @@ Adresse de la licence : https://www.gnu.org/licenses/gpl-3.0.fr.html
 
 == Note ==
 Ce thème n’aurait pu avoir vu le jour sans les ressources mises à disposition librement par la communauté Dotclear.
-Son auteur s’est particulièrement inspiré des travaux réalisés sur les thèmes Ductile et Berlin, et des billets de Franck publiés sur https://open-time.net/.
+Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://blog.jim-nielsen.com/) des travaux réalisés sur les thèmes Ductile et Berlin, des billets de Franck (https://open-time.net/).
 
 == Notes de version ==
 
-=== 0.1.2 - 31 octobre 2022 ===
+=== 0.1.3 - 5 novembre 2022 ===
+- Ajout : version minimale de Dotclear pour faire fonctionner le thème (https://open-time.net/serie/Adapter%20le%20code%20pour%20Dotclear%202.24).
+- Amélioration : inclusion des règles @media dans le fichier public.php pour rendre le paramètre max-width dynamique.
+- Correction : affichage des extraits quand ces derniers sont courts.
+- Correction : URL contenant un signe = non encadrées par des guillemets.
+- Suppression : taille des fichiers joints quand sa valeur, pour une raison ou une autre, est nulle.
+- Suppression : éclaircissement des liens avec la classe "bouton".
+
+=== 0.1.2 - 1 novembre 2022 ===
 - Ajout : version de Dotclear et du thème dans le pied de page sur les environnements de développement.
 - Correction : absence des fichiers joints dans les billets.
 - Correction : mauvais placement de la date des billets sélectionnés.
