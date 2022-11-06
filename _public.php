@@ -192,7 +192,7 @@ class tplOrigineMiniTheme
         $plugin_activated = self::origineConfigActive();
 
         if ($plugin_activated === false || ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->footer_credits === true)) {
-            if (!defined('DC_DEV') || (defined('DC_DEV') && DC_DEV === 'false')) {
+            if (!defined('DC_DEV') || (defined('DC_DEV') && DC_DEV === false)) {
                 return '<div class=site-footer-block>' . __('footer-powered-by') . '</div>';
             } else {
                 $dc_version       = \dcCore::app()->getVersion('core');
