@@ -212,7 +212,7 @@ msgstr ""
 msgid "archives-sort-page"
 msgstr ""
 
-msgid "archives-month-title"
+msgid "archives-month-title-before"
 msgstr ""
 
 msgid "category-description-prefix"

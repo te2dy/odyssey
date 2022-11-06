@@ -215,8 +215,8 @@ msgstr "Par tag"
 msgid "archives-sort-page"
 msgstr "Pages"
 
-msgid "archives-month-title"
-msgstr "Monthly archives"
+msgid "archives-month-title-before"
+msgstr "Archives:"
 
 msgid "category-description-prefix"
 msgstr "Posts from the category"

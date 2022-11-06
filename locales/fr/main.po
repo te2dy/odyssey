@@ -215,8 +215,8 @@ msgstr "Par mot-clé"
 msgid "archives-sort-page"
 msgstr "Pages"
 
-msgid "archives-month-title"
-msgstr "Archives mensuelles"
+msgid "archives-month-title-before"
+msgstr "Archives&nbsp;:"
 
 msgid "category-description-prefix"
 msgstr "Billets appartenant à la catégorie"

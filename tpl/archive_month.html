@@ -13,14 +13,12 @@
         <a href={{tpl:ArchiveURL}}>‹ {{tpl:ArchiveDate encode_html="1"}}</a>
       </tpl:ArchivePrevious>
 
-      {{tpl:ArchiveDate}}
-
       <tpl:ArchiveNext>
         <a href={{tpl:ArchiveURL}}>{{tpl:ArchiveDate encode_html="1"}} ›</a>
       </tpl:ArchiveNext>
     </nav>
 
-    <h1>{{tpl:lang archives-month-title}}</h1>
+    <h1><span class=text-secondary>{{tpl:lang archives-month-title-before}}</span> {{tpl:ArchiveDate}}</h1>
   </header>
 
   {{tpl:origineMiniPostListType}}
