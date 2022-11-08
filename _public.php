@@ -109,30 +109,11 @@ class tplOrigineMiniTheme
         if ($plugin_activated === false) {
             $styles = '
                 :root {
-                    --page-width: 30em;
-                    --order-content: 2;
-                    --order-widgets-nav: 3;
-                    --order-widgets-extra: 4;
-                    --order-footer: 5;
                     --font-family: -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif;
-                    --font-size: 1em;
-                    --color-primary: #1742cf;
-                    --color-background: #fcfcfd;
-                    --color-text-main: #2e3038;
-                    --color-text-secondary: #797c86;
-                    --color-border: #c2c7d6;
-                    --color-input-background: #f1f2f4;
-                    --text-align: left;
                 }
 
                 a {
                     text-decoration: none;
-                }
-
-                @media (prefers-color-scheme:dark) {
-                    :root{
-                        --color-primary:#94c9ff;
-                    }
                 }
             ';
 
