@@ -64,19 +64,6 @@ class tplOrigineMiniTheme
 
             echo '<meta name=copyright content=', $notice, '>', "\n";
         }
-
-        // Adds styles for a responsive theme.
-        $plugin_activated = self::origineConfigActive();
-
-        if ($plugin_activated === false) {
-            $max_width = 34;
-        } else {
-            $max_width = \dcCore::app()->blog->settings->origineConfig->global_page_width ? (int) \dcCore::app()->blog->settings->origineConfig->global_page_width + 4 : 34;
-        }
-
-        $css_media_url = \dcCore::app()->blog->settings->system->themes_url . '/' . \dcCore::app()->blog->settings->system->theme . '/media.min.css';
-
-        echo '<link rel=stylesheet href=', $css_media_url, ' media="(max-width: 34em)">', "\n";
     }
 
     /**
@@ -106,26 +93,11 @@ class tplOrigineMiniTheme
     {
         $plugin_activated = self::origineConfigActive();
 
-        if ($plugin_activated === false) {
-            $styles = '
-                :root {
-                    --font-family: -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif;
-                }
-
-                a {
-                    text-decoration: none;
-                }
-            ';
-
-            $style_search  = [' {', ': ', ', ', '; ', "\n", "\r", '  ', '@media ('];
-            $style_replace = ['{',  ':',  ',',  ';',  '',   '',   '',   '@media('];
-
-            $styles = str_replace($style_search, $style_replace, $styles);
-        } elseif ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->css_origine_mini) {
+        if ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->css_origine_mini !== '') {
             $styles = \dcCore::app()->blog->settings->origineConfig->css_origine_mini;
-        }
 
-        return '<style>' . $styles . '</style>';
+            return '<style>' . $styles . '</style>';
+        }
     }
 
     /**
