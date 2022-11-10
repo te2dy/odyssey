@@ -2,7 +2,7 @@
   <input aria-label="{{tpl:lang search-input-aria-label}}" class=search-form-field name=q placeholder="{{tpl:lang search-input-placeholder}}" value="{{tpl:SysSearchString}}">
 
   <!-- # Display only if the used type a new search query. -->
-  <input class=search-form-submit type=submit value="{{tpl:lang search-submit-button}}" >
+  <input class=search-form-submit type=submit value="{{tpl:lang search-submit-button}}">
 </form>
 
 <script>let params=(new URL(document.location)).searchParams,searchQuery=params.get("q");if(searchQuery!==""){document.getElementsByClassName("search-form-submit")[0].disabled=!0}
