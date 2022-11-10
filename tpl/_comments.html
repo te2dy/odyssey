@@ -138,24 +138,8 @@
 </tpl:origineMiniCommentFeedLink>
 
 <tpl:EntryIf pings_active="1">
-  <script>
-    function origineTrackbackURLCopy() {
-      // Gets the trackback button & URL.
-      var trackbackButton = document.getElementById("trackback-url"),
-          trackbackURL    = trackbackButton.getAttribute("data-trackback-url");
-
-      // If the URL has already been copied, removes the Copied message.
-      if (document.getElementById("trackback-url-copied")) {
-        document.getElementById("trackback-url-copied").remove();
-      }
-
-      // Copies the trackback URL in the clipboard.
-      navigator.clipboard.writeText(trackbackURL);
-
-      // Displays a message to confirm the copy.
-      trackbackButton.insertAdjacentHTML("afterend", ' <span id=trackback-url-copied>{{tpl:lang reactions-trackback-url-copied}}</span>');
-    }
-  </script>
+  <script>function origineTrackbackURLCopy(){var trackbackButton=document.getElementById("trackback-url"),trackbackURL=trackbackButton.getAttribute("data-trackback-url");if(document.getElementById("trackback-url-copied")){document.getElementById("trackback-url-copied").remove()}
+navigator.clipboard.writeText(trackbackURL);trackbackButton.insertAdjacentHTML("afterend",' <span id=trackback-url-copied>{{tpl:lang reactions-trackback-url-copied}}</span>')}</script>
 
   <p class=text-secondary id=trackback-link-container>
     <small>{{tpl:lang reactions-trackbacks-add-label}}<br><span data-trackback-url={{tpl:EntryPingLink}} id=trackback-url onclick=origineTrackbackURLCopy();>{{tpl:EntryPingLink}}</span></small>
