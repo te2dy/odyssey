@@ -532,7 +532,7 @@ details summary {
  */
 .search-form {
   align-items: baseline;
-  column-gap: 1rem;
+  column-gap: .25rem;
   display: flex;
   flex-direction: row;
 
