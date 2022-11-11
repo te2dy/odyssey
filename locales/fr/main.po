@@ -81,7 +81,10 @@ msgstr "%s To"
 msgid "post-category-prefix"
 msgstr "Classé dans"
 
-msgid "post-tags-prefix"
+msgid "post-tags-prefix-one"
+msgstr "Mot-clé&nbsp;:"
+
+msgid "post-tags-prefix-multiple"
 msgstr "Mots-clés&nbsp;:"
 
 msgid "post-pagination-previous-label"

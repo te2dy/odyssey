@@ -17,9 +17,11 @@
     {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
   </div>
 
-  <tpl:EntryIf operator="or" has_attachment="1" has_category="1" has_tag="1">
+  <tpl:origineMiniPostFooter>
     <footer class=post-footer>
-      {{tpl:include src="_attachments.html"}}
+      <tpl:EntryIf has_attachment="1">
+        {{tpl:include src="_attachments.html"}}
+      </tpl:EntryIf>
 
       <tpl:EntryIf has_category="1">
         <div class="post-meta text-secondary">
@@ -27,10 +29,10 @@
         </div>
       </tpl:EntryIf>
 
-      <tpl:EntryIf has_tag="1">
+      <tpl:EntryIf>
         <tpl:EntryTags>
           <tpl:TagsHeader>
-            <div class="post-meta text-secondary">{{tpl:lang post-tags-prefix}}
+            <div class="post-meta text-secondary">{{tpl:origineMiniPostTagsBefore}}
           </tpl:TagsHeader>
 
           <a href={{tpl:TagURL}} rel=tag>{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
@@ -41,7 +43,7 @@
         </tpl:EntryTags>
       </tpl:EntryIf>
     </footer>
-  </tpl:EntryIf>
+  </tpl:origineMiniPostFooter>
 </article>
 
 <div class="post-pagination text-secondary">

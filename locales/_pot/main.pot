@@ -81,7 +81,10 @@ msgstr ""
 msgid "post-category-prefix"
 msgstr ""
 
-msgid "post-tags-prefix"
+msgid "post-tags-prefix-one"
+msgstr ""
+
+msgid "post-tags-prefix-multiple"
 msgstr ""
 
 msgid "post-pagination-previous-label"

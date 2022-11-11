@@ -81,7 +81,10 @@ msgstr "%sTB"
 msgid "post-category-prefix"
 msgstr "Filled under"
 
-msgid "post-tags-prefix"
+msgid "post-tags-prefix-one"
+msgstr "Tag:"
+
+msgid "post-tags-prefix-multiple"
 msgstr "Tags:"
 
 msgid "post-pagination-previous-label"

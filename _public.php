@@ -25,11 +25,13 @@ if (!defined('DC_RC_PATH')) {
 \dcCore::app()->tpl->addValue('origineMiniPostListType', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostListType']);
 \dcCore::app()->tpl->addValue('origineMiniEntryExcerpt', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniEntryExcerpt']);
 \dcCore::app()->tpl->addValue('origineMiniPostDate', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostDate']);
+\dcCore::app()->tpl->addValue('origineMiniPostTagsBefore', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostTagsBefore']);
 \dcCore::app()->tpl->addValue('origineMiniAttachmentTitle', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniAttachmentTitle']);
 \dcCore::app()->tpl->addValue('origineMiniAttachmentSize', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniAttachmentSize']);
 \dcCore::app()->tpl->addValue('origineMiniFooterCredits', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniFooterCredits']);
 \dcCore::app()->tpl->addValue('origineMiniURIRelative', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniURIRelative']);
 
+\dcCore::app()->tpl->addBlock('origineMiniPostFooter', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostFooter']);
 \dcCore::app()->tpl->addBlock('origineMiniCommentFeedLink', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniCommentFeedLink']);
 \dcCore::app()->tpl->addBlock('origineMiniWidgetsNav', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniWidgetsNav']);
 \dcCore::app()->tpl->addBlock('origineMiniWidgetSearchForm', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniWidgetSearchForm']);
@@ -247,6 +249,23 @@ class tplOrigineMiniTheme
         ?>';
     }
 
+    public static function origineMiniPostTagsBefore()
+    {
+        return '<?php
+            if (\dcCore::app()->ctx->posts->post_meta) {
+                $post_meta = unserialize(\dcCore::app()->ctx->posts->post_meta);
+
+                if (is_array($post_meta) === true && isset($post_meta["tag"]) === true) {
+                    if (count($post_meta["tag"]) > 1) {
+                        echo __("post-tags-prefix-multiple");
+                    } elseif (count($post_meta["tag"]) === 1) {
+                        echo __("post-tags-prefix-one");
+                    }
+                }
+            }
+        ?>';
+    }
+
     /**
      * Adds a title in the plural or singular at the top of post attachment list.
      *
@@ -314,6 +333,43 @@ class tplOrigineMiniTheme
     public static function origineMiniURIRelative()
     {
         return '<?php echo filter_var($_SERVER["REQUEST_URI"], FILTER_SANITIZE_URL); ?>';
+    }
+
+    /**
+     * Displays the footer of the post if it has content.
+     *
+     * @param array $attr    Unused.
+     * @param void  $content The post footer.
+     *
+     * @return void The post footer.
+     */
+    public static function origineMiniPostFooter($attr, $content)
+    {
+        $has_attachment = false;
+
+        if (\dcCore::app()->ctx->posts->countMedia('attachment') > 0) {
+            $has_attachment = true;
+        }
+
+        $has_category = false;
+
+        if (\dcCore::app()->ctx->posts->cat_id) {
+            $has_category = true;
+        }
+
+        $has_tag = false;
+
+        if (\dcCore::app()->ctx->posts->post_meta) {
+            $post_meta = unserialize(\dcCore::app()->ctx->posts->post_meta);
+
+            if (is_array($post_meta) === true && isset($post_meta['tag']) === true && count($post_meta['tag']) > 0) {
+                $has_tag = true;
+            }
+        }
+
+        if ($has_attachment === true || $has_category === true || $has_tag === true) {
+            return $content;
+        }
     }
 
     /**
