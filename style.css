@@ -3,6 +3,7 @@
  */
 :root {
   --font-family-default: -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif;
+  --font-family-mono: Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace;
 }
 @media (prefers-color-scheme: dark) {
   :root {
