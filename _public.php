@@ -227,6 +227,11 @@ class tplOrigineMiniTheme
         ?>';
     }
 
+    /**
+     * Adds a text string before the tag list of posts.
+     *
+     * @return void The text string.
+     */
     public static function origineMiniPostTagsBefore()
     {
         return '<?php
