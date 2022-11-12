@@ -25,6 +25,9 @@ msgstr ""
 msgid "skip-link-menu"
 msgstr ""
 
+msgid "skip-link-footer"
+msgstr ""
+
 # Posts & pages
 
 msgid "post-list-aria-label"

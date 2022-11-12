@@ -24,7 +24,7 @@ if (!defined('DC_RC_PATH')) {
 \dcCore::app()->tpl->addValue('origineMiniScreenReaderLinks', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniScreenReaderLinks']);
 \dcCore::app()->tpl->addValue('origineMiniPostListType', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostListType']);
 \dcCore::app()->tpl->addValue('origineMiniEntryExcerpt', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniEntryExcerpt']);
-\dcCore::app()->tpl->addValue('origineMiniPostDate', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostDate']);
+//\dcCore::app()->tpl->addValue('origineMiniPostDate', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostDate']);
 \dcCore::app()->tpl->addValue('origineMiniPostTagsBefore', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostTagsBefore']);
 \dcCore::app()->tpl->addValue('origineMiniAttachmentTitle', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniAttachmentTitle']);
 \dcCore::app()->tpl->addValue('origineMiniAttachmentSize', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniAttachmentSize']);
@@ -124,11 +124,18 @@ class tplOrigineMiniTheme
      */
     public static function origineMiniScreenReaderLinks()
     {
-        $links  = '<a id=skip-content class=skip-links href=#site-content>' . __('skip-link-content') . '</a>';
+        $links = '<a id=skip-content class=skip-links href=#site-content>' . __('skip-link-content') . '</a>';
 
         // If simpleMenu exists, is activated and a menu has been set, then adds a link to it.
         if (\dcCore::app()->plugins->moduleExists('simpleMenu') && \dcCore::app()->blog->settings->system->simpleMenu_active === true) {
           $links .= '<a id=skip-menu class=skip-links href=#main-menu>' . __('skip-link-menu') . '</a>';
+        }
+
+        $plugin_activated = self::origineConfigActive();
+
+        // Adds a link to the footer, except if it has been disabled in origineConfig.
+        if ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->footer_enabled === true) {
+          $links .= '<a id=skip-menu class=skip-links href=#site-footer>' . __('skip-link-footer') . '</a>';
         }
 
         return $links;
@@ -222,6 +229,8 @@ class tplOrigineMiniTheme
     }
 
     /**
+     * /!\ UNUSED /!\
+     *
      * Displays the date of publication of posts.
      *
      * The time can be added via origineConfig.
