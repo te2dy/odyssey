@@ -24,7 +24,6 @@ if (!defined('DC_RC_PATH')) {
 \dcCore::app()->tpl->addValue('origineMiniScreenReaderLinks', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniScreenReaderLinks']);
 \dcCore::app()->tpl->addValue('origineMiniPostListType', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostListType']);
 \dcCore::app()->tpl->addValue('origineMiniEntryExcerpt', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniEntryExcerpt']);
-//\dcCore::app()->tpl->addValue('origineMiniPostDate', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostDate']);
 \dcCore::app()->tpl->addValue('origineMiniPostTagsBefore', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostTagsBefore']);
 \dcCore::app()->tpl->addValue('origineMiniAttachmentTitle', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniAttachmentTitle']);
 \dcCore::app()->tpl->addValue('origineMiniAttachmentSize', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniAttachmentSize']);
@@ -225,36 +224,6 @@ class tplOrigineMiniTheme
                      " <a aria-label=\"", sprintf(__("post-list-open-aria"), \dcCore::app()->ctx->posts->post_title), "\" href=\"", \dcCore::app()->ctx->posts->getURL(), "\">" . __("post-list-open"), "</a>",
                      "</p>";
             }
-        ?>';
-    }
-
-    /**
-     * /!\ UNUSED /!\
-     *
-     * Displays the date of publication of posts.
-     *
-     * The time can be added via origineConfig.
-     *
-     * @return void The post date (and time).
-     */
-    public static function origineMiniPostDate()
-    {
-        $format_date = \dcCore::app()->blog->settings->system->date_format;
-
-        $post_time        = '';
-        $plugin_activated = self::origineConfigActive();
-
-        if ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->content_post_time === true) {
-            $format_time = \dcCore::app()->blog->settings->system->time_format;
-
-            $post_time = ' . " " . \dcCore::app()->blog->settings->origineConfig->content_separator . " " . \dcCore::app()->ctx->posts->getDate("' . $format_time . '")';
-        }
-
-        return '<?php
-            echo "<time aria-label=\"{{tpl:lang post-date-aria-label}}\" class=\"post-date text-secondary\" datetime=\"",
-                 \dcCore::app()->ctx->posts->getDate("%Y-%m-%dT%H:%m"), "\">",
-                 \dcCore::app()->ctx->posts->getDate("' . $format_date . '")' . $post_time . ',
-                 "</time>";
         ?>';
     }
 

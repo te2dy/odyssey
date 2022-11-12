@@ -4,7 +4,7 @@
       <div class=post-selected><small>{{tpl:lang post-selected-label}}</small></div>
     </tpl:EntryIf>
 
-    {{tpl:origineMiniPostDate}}
+    <time aria-label="{{tpl:lang post-date-aria-label}}" class="post-date text-secondary" datetime="{{tpl:EntryDate format="%Y-%m-%dT%H:%m"}}">{{tpl:EntryDate}}{{tpl:origineConfigEntryTime context="post"}}</time>
 
     <h1>{{tpl:EntryTitle}}</h1>
   </header>
