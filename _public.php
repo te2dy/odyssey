@@ -14,28 +14,28 @@ if (!defined('DC_RC_PATH')) {
     return;
 }
 
-\l10n::set(__DIR__ . '/locales/' . \dcCore::app()->lang . '/main');
+\l10n::set(__DIR__ . '/locales/' . dcCore::app()->lang . '/main');
 
-\dcCore::app()->addBehavior('publicHeadContent', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniHeadMeta']);
+dcCore::app()->addBehavior('publicHeadContent', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniHeadMeta']);
 
-\dcCore::app()->tpl->addValue('origineConfigActive', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineConfigActive']);
-\dcCore::app()->tpl->addValue('origineMiniStylesInline', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniStylesInline']);
-\dcCore::app()->tpl->addValue('origineMiniEntryLang', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniEntryLang']);
-\dcCore::app()->tpl->addValue('origineMiniScreenReaderLinks', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniScreenReaderLinks']);
-\dcCore::app()->tpl->addValue('origineMiniPostListType', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostListType']);
-\dcCore::app()->tpl->addValue('origineMiniEntryExcerpt', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniEntryExcerpt']);
-\dcCore::app()->tpl->addValue('origineMiniPostTagsBefore', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostTagsBefore']);
-\dcCore::app()->tpl->addValue('origineMiniAttachmentTitle', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniAttachmentTitle']);
-\dcCore::app()->tpl->addValue('origineMiniAttachmentSize', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniAttachmentSize']);
-\dcCore::app()->tpl->addValue('origineMiniFooterCredits', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniFooterCredits']);
-\dcCore::app()->tpl->addValue('origineMiniURIRelative', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniURIRelative']);
+dcCore::app()->tpl->addValue('origineConfigActive', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineConfigActive']);
+dcCore::app()->tpl->addValue('origineMiniStylesInline', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniStylesInline']);
+dcCore::app()->tpl->addValue('origineMiniEntryLang', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniEntryLang']);
+dcCore::app()->tpl->addValue('origineMiniScreenReaderLinks', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniScreenReaderLinks']);
+dcCore::app()->tpl->addValue('origineMiniPostListType', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostListType']);
+dcCore::app()->tpl->addValue('origineMiniEntryExcerpt', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniEntryExcerpt']);
+dcCore::app()->tpl->addValue('origineMiniPostTagsBefore', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostTagsBefore']);
+dcCore::app()->tpl->addValue('origineMiniAttachmentTitle', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniAttachmentTitle']);
+dcCore::app()->tpl->addValue('origineMiniAttachmentSize', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniAttachmentSize']);
+dcCore::app()->tpl->addValue('origineMiniFooterCredits', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniFooterCredits']);
+dcCore::app()->tpl->addValue('origineMiniURIRelative', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniURIRelative']);
 
-\dcCore::app()->tpl->addBlock('origineMiniPostFooter', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostFooter']);
-\dcCore::app()->tpl->addBlock('origineMiniCommentFeedLink', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniCommentFeedLink']);
-\dcCore::app()->tpl->addBlock('origineMiniWidgetsNav', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniWidgetsNav']);
-\dcCore::app()->tpl->addBlock('origineMiniWidgetSearchForm', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniWidgetSearchForm']);
-\dcCore::app()->tpl->addBlock('origineMiniWidgetsExtra', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniWidgetsExtra']);
-\dcCore::app()->tpl->addBlock('origineMiniFooter', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniFooter']);
+dcCore::app()->tpl->addBlock('origineMiniPostFooter', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostFooter']);
+dcCore::app()->tpl->addBlock('origineMiniCommentFeedLink', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniCommentFeedLink']);
+dcCore::app()->tpl->addBlock('origineMiniWidgetsNav', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniWidgetsNav']);
+dcCore::app()->tpl->addBlock('origineMiniWidgetSearchForm', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniWidgetSearchForm']);
+dcCore::app()->tpl->addBlock('origineMiniWidgetsExtra', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniWidgetsExtra']);
+dcCore::app()->tpl->addBlock('origineMiniFooter', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniFooter']);
 
 class tplOrigineMiniTheme
 {
@@ -47,8 +47,8 @@ class tplOrigineMiniTheme
     public static function origineMiniHeadMeta()
     {
         // Adds the name of the editor.
-        if (\dcCore::app()->blog->settings->system->editor) {
-            $editor = \dcCore::app()->blog->settings->system->editor;
+        if (dcCore::app()->blog->settings->system->editor) {
+            $editor = dcCore::app()->blog->settings->system->editor;
 
             // Adds quotes if the value contains one or more spaces.
             $editor = strpos($editor, ' ') === false ? $editor : '"' . $editor . '"';
@@ -57,8 +57,8 @@ class tplOrigineMiniTheme
         }
 
         // Adds the content of the copyright notice.
-        if (\dcCore::app()->blog->settings->system->copyright_notice) {
-            $notice = \dcCore::app()->blog->settings->system->copyright_notice;
+        if (dcCore::app()->blog->settings->system->copyright_notice) {
+            $notice = dcCore::app()->blog->settings->system->copyright_notice;
 
             // Adds quotes if the value contains one or more spaces.
             $notice = strpos($notice, ' ') === false ? $notice : '"' . $notice . '"';
@@ -76,7 +76,7 @@ class tplOrigineMiniTheme
      */
     public static function origineConfigActive()
     {
-        if (\dcCore::app()->plugins->moduleExists('origineConfig') === true && version_compare('2.1', \dcCore::app()->plugins->moduleInfo('origineConfig', 'version'), '<=') && \dcCore::app()->blog->settings->origineConfig->active === true) {
+        if (dcCore::app()->plugins->moduleExists('origineConfig') === true && version_compare('2.1', dcCore::app()->plugins->moduleInfo('origineConfig', 'version'), '<=') && dcCore::app()->blog->settings->origineConfig->active === true) {
             return true;
         } else {
             return false;
@@ -94,8 +94,8 @@ class tplOrigineMiniTheme
     {
         $plugin_activated = self::origineConfigActive();
 
-        if ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->css_origine_mini !== '') {
-            $styles = \dcCore::app()->blog->settings->origineConfig->css_origine_mini;
+        if ($plugin_activated === true && dcCore::app()->blog->settings->origineConfig->css_origine_mini !== '') {
+            $styles = dcCore::app()->blog->settings->origineConfig->css_origine_mini;
 
             return '<style>' . $styles . '</style>';
         }
@@ -110,7 +110,7 @@ class tplOrigineMiniTheme
     public static function origineMiniEntryLang()
     {
         return '<?php
-            if (\dcCore::app()->ctx->posts->post_lang !== \dcCore::app()->blog->settings->system->lang) {
+            if (dcCore::app()->ctx->posts->post_lang !== dcCore::app()->blog->settings->system->lang) {
                 echo " lang=", dcCore::app()->ctx->posts->post_lang;
             }
         ?>';
@@ -126,14 +126,14 @@ class tplOrigineMiniTheme
         $links = '<a id=skip-content class=skip-links href=#site-content>' . __('skip-link-content') . '</a>';
 
         // If simpleMenu exists, is activated and a menu has been set, then adds a link to it.
-        if (\dcCore::app()->plugins->moduleExists('simpleMenu') && \dcCore::app()->blog->settings->system->simpleMenu_active === true) {
+        if (dcCore::app()->plugins->moduleExists('simpleMenu') && dcCore::app()->blog->settings->system->simpleMenu_active === true) {
           $links .= '<a id=skip-menu class=skip-links href=#main-menu>' . __('skip-link-menu') . '</a>';
         }
 
         $plugin_activated = self::origineConfigActive();
 
         // Adds a link to the footer, except if it has been disabled in origineConfig.
-        if ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->footer_enabled === true) {
+        if ($plugin_activated === true && dcCore::app()->blog->settings->origineConfig->footer_enabled === true) {
           $links .= '<a id=skip-menu class=skip-links href=#site-footer>' . __('skip-link-footer') . '</a>';
         }
 
@@ -152,15 +152,15 @@ class tplOrigineMiniTheme
     {
         $plugin_activated = self::origineConfigActive();
 
-        if ($plugin_activated === false || ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->footer_credits === true)) {
+        if ($plugin_activated === false || ($plugin_activated === true && dcCore::app()->blog->settings->origineConfig->footer_credits === true)) {
             if (!defined('DC_DEV') || (defined('DC_DEV') && DC_DEV === false)) {
                 return '<div class=site-footer-block>' . __('footer-powered-by') . '</div>';
             } else {
-                $dc_version       = \dcCore::app()->getVersion('core');
+                $dc_version       = dcCore::app()->getVersion('core');
                 $dc_version_parts = explode('-', $dc_version);
                 $dc_version_short = $dc_version_parts[0] ? $dc_version_parts[0] : $dc_version;
 
-                $theme_version = \dcCore::app()->themes->moduleInfo('origine-mini', 'version');
+                $theme_version = dcCore::app()->themes->moduleInfo('origine-mini', 'version');
 
                 return '<div class=site-footer-block>' . sprintf(__('footer-powered-by-dev'), $dc_version, $dc_version_short, $theme_version) . '</div>';
             }
@@ -179,10 +179,10 @@ class tplOrigineMiniTheme
 
         $post_list_types = ['short', 'extended'];
 
-        if ($plugin_activated !== true || ($plugin_activated === true && !in_array(\dcCore::app()->blog->settings->origineConfig->content_post_list_type, $post_list_types))) {
-            return \dcCore::app()->tpl->includeFile(['src' => '_entry-list-short.html']);
+        if ($plugin_activated !== true || ($plugin_activated === true && !in_array(dcCore::app()->blog->settings->origineConfig->content_post_list_type, $post_list_types))) {
+            return dcCore::app()->tpl->includeFile(['src' => '_entry-list-short.html']);
         } else {
-            return \dcCore::app()->tpl->includeFile(['src' => '_entry-list-' . \dcCore::app()->blog->settings->origineConfig->content_post_list_type . '.html']);
+            return dcCore::app()->tpl->includeFile(['src' => '_entry-list-' . dcCore::app()->blog->settings->origineConfig->content_post_list_type . '.html']);
         }
     }
 
@@ -200,10 +200,10 @@ class tplOrigineMiniTheme
         return '<?php
             $the_excerpt = "";
 
-            if (' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getExcerpt()') . ' !== "") {
-                $the_excerpt = ' . sprintf(\dcCore::app()->tpl->getFilters($attr), '\dcCore::app()->ctx->posts->getExcerpt()') . ';
+            if (' . sprintf(dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getExcerpt()') . ' !== "") {
+                $the_excerpt = ' . sprintf(dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getExcerpt()') . ';
             } else {
-                $the_excerpt = ' . sprintf(\dcCore::app()->tpl->getFilters($attr), '\dcCore::app()->ctx->posts->getContent()') . ';
+                $the_excerpt = ' . sprintf(dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getContent()') . ';
 
                 if (strlen($the_excerpt) > 200) {
                     $the_excerpt  = substr($the_excerpt, 0, 200);
@@ -213,7 +213,7 @@ class tplOrigineMiniTheme
             }
 
             if ($the_excerpt !== "") {
-                if (\dcCore::app()->ctx->posts->post_lang === \dcCore::app()->blog->settings->system->lang) {
+                if (dcCore::app()->ctx->posts->post_lang === dcCore::app()->blog->settings->system->lang) {
                     $lang = "";
                 } else {
                     $lang = " lang=" . dcCore::app()->ctx->posts->post_lang;
@@ -221,7 +221,7 @@ class tplOrigineMiniTheme
 
                 echo "<p class=\"post-excerpt text-secondary\"" . $lang . ">",
                      $the_excerpt,
-                     " <a aria-label=\"", sprintf(__("post-list-open-aria"), \dcCore::app()->ctx->posts->post_title), "\" href=\"", \dcCore::app()->ctx->posts->getURL(), "\">" . __("post-list-open"), "</a>",
+                     " <a aria-label=\"", sprintf(__("post-list-open-aria"), dcCore::app()->ctx->posts->post_title), "\" href=\"", dcCore::app()->ctx->posts->getURL(), "\">" . __("post-list-open"), "</a>",
                      "</p>";
             }
         ?>';
@@ -235,8 +235,8 @@ class tplOrigineMiniTheme
     public static function origineMiniPostTagsBefore()
     {
         return '<?php
-            if (\dcCore::app()->ctx->posts->post_meta) {
-                $post_meta = unserialize(\dcCore::app()->ctx->posts->post_meta);
+            if (dcCore::app()->ctx->posts->post_meta) {
+                $post_meta = unserialize(dcCore::app()->ctx->posts->post_meta);
 
                 if (is_array($post_meta) === true && isset($post_meta["tag"]) === true) {
                     if (count($post_meta["tag"]) > 1) {
@@ -257,7 +257,7 @@ class tplOrigineMiniTheme
     public static function origineMiniAttachmentTitle()
     {
         return '<?php
-            if (count(\dcCore::app()->ctx->attachments) === 1) {
+            if (count(dcCore::app()->ctx->attachments) === 1) {
                 echo __("attachments-title-one");
             } else {
                 echo __("attachments-title-multiple");
@@ -285,7 +285,7 @@ class tplOrigineMiniTheme
             // Setting ignored for some reason:
             // setlocale(LC_ALL, "fr_FR");
 
-            if (\dcCore::app()->blog->settings->system->lang === "fr") {
+            if (dcCore::app()->blog->settings->system->lang === "fr") {
                 $locale_decimal = ",";
             } else {
                 $lang_conv      = localeconv();
@@ -330,20 +330,20 @@ class tplOrigineMiniTheme
     {
         $has_attachment = false;
 
-        if (\dcCore::app()->ctx->posts->countMedia('attachment') > 0) {
+        if (dcCore::app()->ctx->posts->countMedia('attachment') > 0) {
             $has_attachment = true;
         }
 
         $has_category = false;
 
-        if (\dcCore::app()->ctx->posts->cat_id) {
+        if (dcCore::app()->ctx->posts->cat_id) {
             $has_category = true;
         }
 
         $has_tag = false;
 
-        if (\dcCore::app()->ctx->posts->post_meta) {
-            $post_meta = unserialize(\dcCore::app()->ctx->posts->post_meta);
+        if (dcCore::app()->ctx->posts->post_meta) {
+            $post_meta = unserialize(dcCore::app()->ctx->posts->post_meta);
 
             if (is_array($post_meta) === true && isset($post_meta['tag']) === true && count($post_meta['tag']) > 0) {
                 $has_tag = true;
@@ -367,7 +367,7 @@ class tplOrigineMiniTheme
     {
         $plugin_activated = self::origineConfigActive();
 
-        if ($plugin_activated === false || ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->content_comment_links === true)) {
+        if ($plugin_activated === false || ($plugin_activated === true && dcCore::app()->blog->settings->origineConfig->content_comment_links === true)) {
             return $content;
         }
     }
@@ -384,7 +384,7 @@ class tplOrigineMiniTheme
     {
         $plugin_activated = self::origineConfigActive();
 
-        if ($plugin_activated === false || ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->widgets_nav_position !== 'disabled')) {
+        if ($plugin_activated === false || ($plugin_activated === true && dcCore::app()->blog->settings->origineConfig->widgets_nav_position !== 'disabled')) {
             return $content;
         }
     }
@@ -401,7 +401,7 @@ class tplOrigineMiniTheme
     {
         $plugin_activated = self::origineConfigActive();
 
-        if ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->widgets_search_form === true && \dcCore::app()->url->type !== 'search') {
+        if ($plugin_activated === true && dcCore::app()->blog->settings->origineConfig->widgets_search_form === true && dcCore::app()->url->type !== 'search') {
             return $content;
         }
     }
@@ -418,7 +418,7 @@ class tplOrigineMiniTheme
     {
         $plugin_activated = self::origineConfigActive();
 
-        if ($plugin_activated === false || ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->widgets_extra_enabled === true)) {
+        if ($plugin_activated === false || ($plugin_activated === true && dcCore::app()->blog->settings->origineConfig->widgets_extra_enabled === true)) {
             return $content;
         }
     }
@@ -435,7 +435,7 @@ class tplOrigineMiniTheme
     {
         $plugin_activated = self::origineConfigActive();
 
-        if ($plugin_activated === false || ($plugin_activated === true && \dcCore::app()->blog->settings->origineConfig->footer_enabled === true)) {
+        if ($plugin_activated === false || ($plugin_activated === true && dcCore::app()->blog->settings->origineConfig->footer_enabled === true)) {
             return $content;
         }
     }
