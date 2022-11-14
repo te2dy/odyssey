@@ -5,6 +5,7 @@
   --font-family-default: -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif;
   --font-family-mono: Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace;
 }
+
 @media (prefers-color-scheme: dark) {
   :root {
     --color-primary: var(--color-primary-dark, #94c9ff);
@@ -79,7 +80,7 @@ a {
   color: var(--color-primary, #1742cf);
   text-decoration: var(--link-text-decoration, none);
 }
-a:where(:active, :focus, :hover):not(.button) {
+a:is(:active, :focus, :hover):not(.button) {
   color: var(--color-primary, #1742cf);
   filter: brightness(1.25);
   text-decoration: underline;
@@ -90,7 +91,7 @@ a:where(:active, :focus, :hover):not(.button) {
   a {
     text-decoration: underline dotted;
   }
-  a:where(:active, :focus, :hover) {
+  a:is(:active, :focus, :hover) {
     text-decoration-style: solid;
   }
 }
@@ -132,6 +133,7 @@ pre {
 }
 pre {
   display: block;
+  line-height: 1.5;
   margin: 1em 0;
   padding: .5em;
 }
@@ -143,7 +145,7 @@ code {
 h1, h2, h3, h4, h5, h6 {
   margin: 1rem 0;
 }
-:where(h1, h2, h3, h4, h5, h6):first-child {
+:is(h1, h2, h3, h4, h5, h6):first-child {
   margin-top: 0;
 }
 h1 {
@@ -166,7 +168,7 @@ h6 {
 }
 
 /* Text content styles */
-.content-text {
+.content-text :not(pre) {
   line-height: 1.5;
   text-align: var(--text-align, left);
 }
@@ -179,42 +181,42 @@ h6 {
   color: var(--color-text-main, #2e3038);
   content: "\002042"; /* ⁂ */
 }
-.content-text :where(h1, h2, h3, h4, h5) {
+.content-text :is(h1, h2, h3, h4, h5) {
   margin-top: 2rem;
 }
-.content-text :where(h1, h2, h3, h4, h5) + :where(h1, h2, h3, h4, h5) {
+.content-text :is(h1, h2, h3, h4, h5) + :is(h1, h2, h3, h4, h5) {
   margin-top: 1rem;
 }
-:where(.content-text, .widget) :where(ul, ol) {
+:is(.content-text, .widget) :is(ul, ol) {
   display: table;
   margin: 1em 0;
   padding-inline-start: 0;
 }
-:where(.content-text, .widget) ol {
+:is(.content-text, .widget) ol {
   counter-reset: list;
 }
-:where(.content-text, .widget) :where(ol ol, ul ul) {
+:is(.content-text, .widget) :is(ol ol, ul ul) {
   margin: .5rem 0;
 }
-:where(.content-text, .widget) :where(ul li, ol li) {
+:is(.content-text, .widget) :is(ul li, ol li) {
   display: table-row;
 }
-:where(.content-text, .widget) ul li {
+:is(.content-text, .widget) ul li {
   margin: .5rem 0;
 }
-:where(.content-text, .widget) ol li {
+:is(.content-text, .widget) ol li {
   counter-increment: list;
   display: table-row;
   list-style: none;
 }
-:where(.content-text, .widget) :where(ul li, ol li)::before {
+:is(.content-text, .widget) :is(ul li, ol li)::before {
   display: table-cell;
   padding-right: .25rem;
 }
-:where(.content-text, .widget) ul li::before {
+:is(.content-text, .widget) ul li::before {
   content: "\2022"; /* • */
 }
-:where(.content-text, .widget) ol li::before {
+:is(.content-text, .widget) ol li::before {
   content: counter(list) ".";
 }
 
@@ -260,7 +262,7 @@ label:hover {
 .form-entry {
   margin: 1rem 0;
 }
-.form-entry :where(label + br + input, label + br + textarea, input + br + small) {
+.form-entry :is(label + br + input, label + br + textarea, input + br + small) {
   margin: .25rem 0;
 }
 button {
@@ -274,7 +276,7 @@ button,
   display: inline-block;
   padding: .5rem;
 }
-.button:is(a):where(:active, :focus, :hover) {
+a.button:is(:active, :focus, :hover) {
   text-decoration: none;
 }
 input[type="submit"],
@@ -284,15 +286,7 @@ input[type="submit"],
   border-color: var(--color-primary, #1742cf);
   color: var(--color-primary, #1742cf);
 }
-input[type="submit"]:active,
-input[type="submit"]:focus,
-input[type="submit"]:hover,
-.button:active,
-.button:focus,
-.button:hover,
-.form-submit:active,
-.form-submit:focus,
-.form-submit:hover {
+:is(input[type="submit"], .button, .form-submit):is(:active, :focus, :hover) {
   background-color: var(--color-primary, #1742cf);
   color: var(--color-background, #fcfcfd);
   cursor: pointer;
@@ -303,9 +297,7 @@ input:disabled {
 input[type="submit"]:disabled {
   border-color: var(--color-border, #c2c7d6);
 }
-input[type="submit"]:active:disabled,
-input[type="submit"]:focus:disabled,
-input[type="submit"]:hover:disabled {
+input[type="submit"]:is(:active, :focus, :hover):disabled {
   background-color: var(--color-background, #fcfcfd);
   color: var(--color-text-secondary, #797c86);
   cursor: default;
@@ -401,7 +393,6 @@ details summary {
   margin: 0 auto 0 0;
 }
 .post-list-extended .post-title {
-  font-size: 1.1em;
   margin: .5rem auto;
 }
 .post-selected .post-title {
@@ -507,7 +498,7 @@ details summary {
 #trackback-url {
   color: var(--color-primary, #1742cf);
 }
-#trackback-url:where(:active, :focus, :hover) {
+#trackback-url:is(:active, :focus, :hover) {
   cursor: pointer;
   filter: brightness(1.25);
   text-decoration: underline;
@@ -582,10 +573,10 @@ aside .widget:last-child {
 /**
  * Footer
  */
-#site-footer :where(.widget, .site-footer-block) {
+#site-footer :is(.widget, .site-footer-block) {
   margin-bottom: 1rem;
 }
-#site-footer :where(.widget, .site-footer-block):last-child {
+#site-footer :is(.widget, .site-footer-block):last-child {
   margin-bottom: 0;
 }
 
