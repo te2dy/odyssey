@@ -8,7 +8,7 @@
 
 namespace themes\origine_mini;
 
-use dcCore;
+use dcCore, html, context;
 
 if (!defined('DC_RC_PATH')) {
     return;
@@ -17,12 +17,16 @@ if (!defined('DC_RC_PATH')) {
 \l10n::set(__DIR__ . '/locales/' . dcCore::app()->lang . '/main');
 
 dcCore::app()->addBehavior('publicHeadContent', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniHeadMeta']);
+dcCore::app()->addBehavior('publicEntryBeforeContent', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostIntro']);
+dcCore::app()->addBehavior('publicFooterContent', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniSocialMarkups']);
 
 dcCore::app()->tpl->addValue('origineConfigActive', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineConfigActive']);
 dcCore::app()->tpl->addValue('origineMiniStylesInline', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniStylesInline']);
 dcCore::app()->tpl->addValue('origineMiniEntryLang', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniEntryLang']);
 dcCore::app()->tpl->addValue('origineMiniScreenReaderLinks', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniScreenReaderLinks']);
+dcCore::app()->tpl->addValue('origineMiniBlogDescription', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniBlogDescription']);
 dcCore::app()->tpl->addValue('origineMiniPostListType', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostListType']);
+dcCore::app()->tpl->addValue('origineMiniEntryTime', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniEntryTime']);
 dcCore::app()->tpl->addValue('origineMiniEntryExcerpt', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniEntryExcerpt']);
 dcCore::app()->tpl->addValue('origineMiniPostTagsBefore', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostTagsBefore']);
 dcCore::app()->tpl->addValue('origineMiniAttachmentTitle', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniAttachmentTitle']);
@@ -65,6 +69,146 @@ class tplOrigineMiniTheme
 
             echo '<meta name=copyright content=', $notice, '>', "\n";
         }
+
+        // Adds the generator of the blog.
+        if (dcCore::app()->blog->settings->originemini->global_meta_generator === true) {
+            echo '<meta name=generator content=Dotclear>', "\n";
+        }
+    }
+
+    /**
+     * Displays the excerpt as an introduction before post content.
+     */
+    public static function origineMiniPostIntro()
+    {
+        //if (dcCore::app()->blog->settings->originemini->content_post_intro === true && dcCore::app()->ctx->posts->post_excerpt) {
+            echo '<div id=post-single-excerpt>' . dcCore::app()->ctx->posts->getExcerpt() . '</div>';
+        //}
+    }
+
+    /**
+     * Displays minimal social markups.
+     *
+     * @link https://meiert.com/en/blog/minimal-social-markup/
+     *
+     * @return void The social markups.
+     */
+    public static function origineMiniSocialMarkups()
+    {
+        $title = '';
+        $desc  = '';
+        $img   = '';
+
+        if (dcCore::app()->blog->settings->originemini->global_meta_social === true) {
+            // Posts and pages.
+            if (dcCore::app()->url->type === 'post' || dcCore::app()->url->type === 'pages') {
+                $title = dcCore::app()->ctx->posts->post_title;
+                $desc  = dcCore::app()->ctx->posts->getExcerpt();
+
+                if ($desc === '') {
+                    $desc = dcCore::app()->ctx->posts->getContent();
+                }
+
+                $desc = html::decodeEntities(html::clean($desc));
+                $desc = preg_replace('/\s+/', ' ', $desc);
+                $desc = html::escapeHTML($desc);
+
+                if (strlen($desc) > 180) {
+                    $desc = text::cutString($desc, 179) . '…';
+                }
+
+                if (context::EntryFirstImageHelper('o', true, '', true)) {
+                    $img = context::EntryFirstImageHelper('o', true, '', true);
+                }
+
+            // Home.
+            } elseif (dcCore::app()->url->type === 'default' || dcCore::app()->url->type === 'default-page') {
+                $title = dcCore::app()->blog->name;
+
+                if (intval(context::PaginationPosition()) > 1 ) {
+                    $desc = sprintf(
+                        __('meta-social-page-with-number'),
+                        context::PaginationPosition()
+                    );
+                }
+
+                if (dcCore::app()->blog->desc !== '') {
+                    if ($desc !== '') {
+                        $desc .= ' – ';
+                    }
+
+                    $desc .= dcCore::app()->blog->desc;
+                    $desc  = html::decodeEntities(html::clean($desc));
+                    $desc  = preg_replace('/\s+/', ' ', $desc);
+                    $desc  = html::escapeHTML($desc);
+
+                    if (strlen($desc) > 180) {
+                        $desc = text::cutString($desc, 179) . '…';
+                    }
+                }
+
+            // Categories.
+            } elseif (dcCore::app()->url->type === 'category') {
+                $title = dcCore::app()->ctx->categories->cat_title;
+
+                if (dcCore::app()->ctx->categories->cat_desc !== '') {
+                    $desc = dcCore::app()->ctx->categories->cat_desc;
+                    $desc = html::decodeEntities(html::clean($desc));
+                    $desc = preg_replace('/\s+/', ' ', $desc);
+                    $desc = html::escapeHTML($desc);
+
+                    if (strlen($desc) > 180) {
+                        $desc = text::cutString($desc, 179) . '…';
+                    }
+                }
+
+            // Tags.
+            } elseif (dcCore::app()->url->type === 'tag' && dcCore::app()->ctx->meta->meta_type === 'tag') {
+                $title = dcCore::app()->ctx->meta->meta_id;
+                $desc    = sprintf(__('meta-social-tags-post-related'), $title);
+            }
+
+            $title = html::escapeHTML($title);
+            $img   = html::escapeURL($img);
+
+            if ($title) {
+                if ($img) {
+                    echo '<meta name=twitter:card content=summary_large_image>', "\n";
+                }
+
+                echo '<meta property=og:title content="', $title, '">', "\n";
+
+                if ($desc) {
+                    echo '<meta property="og:description" name="description" content="', $desc, '">', "\n";
+                }
+
+                if ($img) {
+                    echo '<meta property="og:image" content="', $img, '">', "\n";
+                }
+            }
+        }
+    }
+
+    /**
+     * Displays wide images.
+     *
+     * If the image width is wider than the page width, the image will overflow to be displayed bigger.
+     *
+     * @return void
+     */
+    public static function origineMiniImagesWide()
+    {
+        if (dcCore::app()->blog->settings->origineConfig->active === true && dcCore::app()->blog->settings->origineConfig->content_images_wide === true && (dcCore::app()->url->type === 'post' || dcCore::app()->url->type === 'pages')) {
+                $page_width_em = dcCore::app()->blog->settings->origineConfig->global_page_width ? dcCore::app()->blog->settings->origineConfig->global_page_width : 30;
+                ?>
+                <script>window.addEventListener("load",imageWide);window.addEventListener("resize",imageWide);function getMeta(url,callback){var img=new Image();img.src=url;img.addEventListener("load",function(){callback(this.width,this.height)})}
+function imageWide(){var pageWidthEm=parseInt(<?php echo $page_width_em; ?>),imgWideWidthEm=pageWidthEm+10,pageWidthPx=0,imgWideWidthPx=0,fontSizePx=0;const element=document.createElement('div');element.style.width='1rem';element.style.display='none';document.body.append(element);const widthMatch=window.getComputedStyle(element).getPropertyValue('width').match(/\d+/);element.remove();if(widthMatch&&widthMatch.length>=1){fontSizePx=parseInt(widthMatch[0])}
+if(fontSizePx>0){pageWidthPx=pageWidthEm*fontSizePx;imgWideWidthPx=imgWideWidthEm*fontSizePx}
+var img=document.getElementsByTagName("article")[0].getElementsByTagName("img"),i=0;while(i<img.length){let myImg=img[i];getMeta(myImg.src,function(width,height){let imgWidth=width,imgHeight=height,myImgStyle="";if(imgWidth>pageWidthPx&&imgWidth>imgHeight){if(imgWidth>imgWideWidthPx){imgHeight=parseInt(imgWideWidthPx*imgHeight/imgWidth);imgWidth=imgWideWidthPx}
+myImgStyle="display:block;margin-left:50%;transform:translateX(-50%);max-width:95vw;";myImg.setAttribute("style",myImgStyle);if(imgWidth){myImg.setAttribute("width",imgWidth)}
+if(imgHeight){myImg.setAttribute("height",imgHeight)}}});i++}}</script>
+            <?php
+        }
     }
 
     /**
@@ -92,12 +236,8 @@ class tplOrigineMiniTheme
      */
     public static function origineMiniStylesInline()
     {
-        $plugin_activated = self::origineConfigActive();
-
-        if ($plugin_activated === true && dcCore::app()->blog->settings->origineConfig->css_origine_mini !== '') {
-            $styles = dcCore::app()->blog->settings->origineConfig->css_origine_mini;
-
-            return '<style>' . $styles . '</style>';
+        if (dcCore::app()->blog->settings->originemini->styles) {
+            return '<style>' . dcCore::app()->blog->settings->originemini->styles . '</style>';
         }
     }
 
@@ -141,6 +281,24 @@ class tplOrigineMiniTheme
     }
 
     /**
+     * Displays the blog description.
+     *
+     * @return void The blog description.
+     */
+    public static function origineMiniBlogDescription()
+    {
+        if (dcCore::app()->blog->desc && dcCore::app()->blog->settings->originemini->header_description === true) {
+            $description = html::decodeEntities(html::clean(dcCore::app()->blog->desc));
+            $description = preg_replace('/\s+/', ' ', $description);
+            $description = html::escapeHTML($description);
+
+            if ($description !== '') {
+                return '<h2 id=site-description>' . $description . '</h2>';
+            }
+        }
+    }
+
+    /**
      * Credits to display at the bottom of the site.
      *
      * They can be removed with the plugin origineConfig.
@@ -175,15 +333,35 @@ class tplOrigineMiniTheme
      */
     public static function origineMiniPostListType()
     {
-        $plugin_activated = self::origineConfigActive();
-
         $post_list_types = ['short', 'extended'];
 
-        if ($plugin_activated !== true || ($plugin_activated === true && !in_array(dcCore::app()->blog->settings->origineConfig->content_post_list_type, $post_list_types))) {
+        if (!in_array(dcCore::app()->blog->settings->originemini->content_post_list_type, $post_list_types) || dcCore::app()->blog->settings->originemini->content_post_list_type === 'short') {
             return dcCore::app()->tpl->includeFile(['src' => '_entry-list-short.html']);
         } else {
-            return dcCore::app()->tpl->includeFile(['src' => '_entry-list-' . dcCore::app()->blog->settings->origineConfig->content_post_list_type . '.html']);
+            return dcCore::app()->tpl->includeFile(['src' => '_entry-list-extended.html']);
         }
+    }
+
+    /**
+     * Displays the published time of posts in the post list.
+     *
+     * @param array $attr Attributes to customize the value.
+     *                    Attribute allowed: context
+     *                    Values allowed:
+     *                    - (string) post-list
+     *                    - (string) post
+     *
+     * @return void The published time of the post.
+     */
+    public static function origineMiniEntryTime($attr)
+    {
+        if ( !empty($attr['context']) && (dcCore::app()->blog->settings->originemini->content_post_list_time === true && $attr['context'] === 'post-list') || (dcCore::app()->blog->settings->originemini->content_post_time === true && $attr['context'] === 'post')) {
+            $separator = dcCore::app()->blog->settings->originemini->content_separator ? dcCore::app()->blog->settings->originemini->content_separator : '|';
+
+            return ' <?php
+                echo "' . $separator . '", " ", dcCore::app()->ctx->posts->getDate("' . dcCore::app()->blog->settings->system->time_format . '");
+            ?>';
+       }
     }
 
     /**
