@@ -1,0 +1,32 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Last-Translator: Teddy\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+# Sections
+
+msgid "section-global"
+msgstr ""
+
+msgid "section-global-fonts"
+msgstr ""
+
+# Settings
+
+msgid "settings-option-global-fontsize-title"
+msgstr ""
+
+msgid "settings-option-global-fontsize-description"
+msgstr ""
+
+msgid "settings-option-global-fontsize-80"
+msgstr ""
+
+msgid "settings-option-global-fontsize-100"
+msgstr ""
+
+msgid "settings-option-global-fontsize-120"
+msgstr ""

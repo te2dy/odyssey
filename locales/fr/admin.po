@@ -1,0 +1,46 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Last-Translator: Teddy\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+# Sections
+
+msgid "section-global"
+msgstr "Paramètres globaux"
+
+msgid "section-global-fonts"
+msgstr "Police d’écriture"
+
+# Settings
+
+msgid "settings-option-global-fontsize-title"
+msgstr "Taille de la police"
+
+msgid "settings-option-global-fontsize-description"
+msgstr "Exprimée en pourcentage de la police par défaut du navigateur (peut varier d’un appareil à l’autre). Il est recommandé de laisser la valeur par défaut."
+
+msgid "settings-option-global-fontsize-80"
+msgstr "80 %"
+
+msgid "settings-option-global-fontsize-100"
+msgstr "100 %"
+
+msgid "settings-option-global-fontsize-120"
+msgstr "120 %"
+
+# Page
+
+msgid "config-updated"
+msgstr "La configuration du thème a été enregistrée."
+
+msgid "config-reset"
+msgstr "La configuration du thème a été réinitialisée."
+
+msgid "option-default-checked"
+msgstr "Par défaut&nbsp;: option cochée"
+
+msgid "option-default-unchecked"
+msgstr "Par défaut&nbsp;: option décochée"
