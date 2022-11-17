@@ -22,7 +22,8 @@ class adminConfigOrigineMini
         $page_sections['global'] = [
             'name'         => __('section-global'),
             'sub_sections' => [
-                'fonts' => __('section-global-fonts'),
+                'fonts'  => __('section-global-fonts'),
+                'layout' => __('section-global-layout'),
             ]
         ];
 
@@ -38,16 +39,71 @@ class adminConfigOrigineMini
             'title'       => __('settings-option-global-fontsize-title'),
             'description' => __('settings-option-global-fontsize-description'),
             'type'        => 'select_int',
-            'values'      => [
-                __('settings-option-global-fontsize-80')  => 80,
-                __('settings-option-global-fontsize-100') => 100,
-                __('settings-option-global-fontsize-120') => 120
+            'choices'     => [
+                __('settings-option-global-fontsize-80')          => 80,
+                __('settings-option-global-fontsize-100-default') => 100,
+                __('settings-option-global-fontsize-120')         => 120
             ],
             'default'     => 100,
             'section'     => ['global', 'fonts']
         ];
 
+        $default_settings['global_font_family'] = [
+            'title'       => __('settings-option-global-fontfamily-title'),
+            'description' => __('settings-option-global-fontfamily-description'),
+            'type'        => 'select',
+            'choices'     => [
+                __('settings-option-global-fontfamily-sansserif-default') => 'sans-serif',
+                __('settings-option-global-fontfamily-serif')             => 'serif',
+                __('settings-option-global-fontfamily-mono')              => 'monospace'
+            ],
+            'default'     => 'sans-serif',
+            'section'     => ['global', 'fonts']
+        ];
+
+        $default_settings['global_page_width'] = [
+            'title'       => __('settings-option-global-pagewidth-title'),
+            'description' => __('settings-option-global-pagewidth-description'),
+            'type'        => 'select_int',
+            'choices'     => [
+                __('settings-option-global-pagewidth-title-30-default') => 30,
+                __('settings-option-global-pagewidth-title-35')         => 35,
+                __('settings-option-global-pagewidth-title-40')         => 40
+            ],
+            'default'     => 'system',
+            'section'     => ['global', 'layout']
+        ];
+
         return $default_settings;
+    }
+
+    /**
+     *
+     */
+    public static function saved_settings()
+    {
+        $saved_settings   = [];
+        $default_settings = self::default_settings();
+
+        foreach ($default_settings as $setting_id => $setting_data) {
+            if (dcCore::app()->blog->settings->originemini->settingExists($setting_id) === true) {
+                switch ($setting_data['type']) {
+                    case 'checkbox' :
+                        $saved_settings[$setting_id] = (boolean) dcCore::app()->blog->settings->originemini->$setting_id;
+                        break;
+
+                    case 'select_int' :
+                        $saved_settings[$setting_id] = (integer) dcCore::app()->blog->settings->originemini->$setting_id;
+                        break;
+
+                    default :
+                        $saved_settings[$setting_id] = dcCore::app()->blog->settings->originemini->$setting_id;
+                        break;
+                }
+            }
+        }
+
+        return $saved_settings;
     }
 
     /**
@@ -86,45 +142,56 @@ class adminConfigOrigineMini
     public static function setting_rendering($setting_id = '')
     {
         $default_settings = self::default_settings();
+        $saved_settings   = self::saved_settings();
 
         if ($setting_id !== '' && array_key_exists($setting_id, $default_settings)) {
             echo '<p>';
 
             // If the value of the setting is not set, defines the default value.
-            if (true) { // Here, the value of the setting.
-                $setting_value = $default_settings[$setting_id]['default'];
+            if (isset($saved_settings[$setting_id])) { // Here, the value of the setting.
+                $setting_value = $saved_settings[$setting_id];
             } else {
                 $setting_value = isset($default_settings[$setting_id]['default']) ? $default_settings[$setting_id]['default'] : '';
             }
 
-            if ($default_settings[$setting_id]['type'] === 'checkbox') {
-                echo form::checkbox(
-                     $setting_id,
-                     true,
-                     $setting_value
-                ),
-                '<label class=classic for=' . $setting_id . '>',
-                $default_settings[$setting_id]['title'],
-                '</label>';
-            } elseif ($default_settings[$setting_id]['type'] === 'select' || $default_settings[$setting_id]['type'] === 'select_int') {
-                echo '<label for=' . $setting_id . '>',
-                     $default_settings[$setting_id]['title'],
-                     '</label>',
-                     form::combo(
-                         $setting_id,
-                         $default_settings[$setting_id]['values'],
-                         strval($setting_value)
-                     );
-            } elseif ($default_settings[$setting_id]['type'] === 'text') {
-                echo '<label for=' . $setting_id . '>',
-                     $default_settings[$setting_id]['title'],
-                     '</label>',
-                     form::field(
-                         $setting_id,
-                         30,
-                         255,
-                         $setting_value
-                     );
+            switch ($default_settings[$setting_id]['type']) {
+                case 'checkbox' :
+                    echo form::checkbox(
+                             $setting_id,
+                             true,
+                             $setting_value
+                        ),
+                        '<label class=classic for=' . $setting_id . '>',
+                        $default_settings[$setting_id]['title'],
+                        '</label>';
+
+                    break;
+
+                case 'select' :
+                case 'select_int' :
+                    echo '<label for=' . $setting_id . '>',
+                        $default_settings[$setting_id]['title'],
+                        '</label>',
+                        form::combo(
+                            $setting_id,
+                            $default_settings[$setting_id]['choices'],
+                            strval($setting_value)
+                        );
+
+                    break;
+
+                default :
+                    echo '<label for=' . $setting_id . '>',
+                        $default_settings[$setting_id]['title'],
+                        '</label>',
+                        form::field(
+                            $setting_id,
+                            30,
+                            255,
+                            $setting_value
+                        );
+
+                    break;
             }
 
             echo '</p>';
@@ -147,15 +214,65 @@ class adminConfigOrigineMini
         }
     }
 
-    public static function setting_processing()
+    public static function save_settings()
     {
         if (!empty($_POST)) {
+            $default_settings = self::default_settings();
+            $saved_settings   = self::saved_settings();
+
             try {
                 dcCore::app()->blog->settings->addNamespace('originemini');
 
                 if (isset($_POST['save'])) {
+                    foreach ($default_settings as $setting_id => $setting_value) {
+                        if (isset($_POST[$setting_id])) {
+                            $drop          = false;
+                            $setting_value = '';
+                            $setting_type  = isset($default_settings[$setting_id]['type']) ? $default_settings[$setting_id]['type'] : '';
+                            $setting_title = isset($default_settings[$setting_id]['title']) ? $default_settings[$setting_id]['title'] : '';
+
+                            if ($_POST[$setting_id] && $_POST[$setting_id] != $default_settings[$setting_id]['default']) {
+                                if ($setting_type === 'select') {
+                                    // Checks if the input value is proposed by the setting.
+                                    if (in_array($_POST[$setting_id], $default_settings[$setting_id]['choices'])) {
+                                        $setting_value = $_POST[$setting_id];
+                                    }
+
+                                    $setting_type = 'string';
+                                } elseif ($setting_type === 'select_int') {
+                                    // Checks if the input value is proposed by the setting.
+                                    if (in_array($_POST[$setting_id], $default_settings[$setting_id]['choices'])) {
+                                        $setting_value = (int) $_POST[$setting_id];
+                                    }
+
+                                    $setting_type = 'integer';
+                                }
+
+                            // If the value is equal to the default value, drop the setting.
+                            } elseif ($_POST[$setting_id] == $default_settings[$setting_id]['default']) {
+                                $drop = true;
+                            }
+
+                            if ($drop === false) {
+                                dcCore::app()->blog->settings->originemini->put(
+                                    $setting_id,
+                                    $setting_value,
+                                    $setting_type,
+                                    $setting_title,
+                                    true // ????
+                                );
+                            } else {
+                                dcCore::app()->blog->settings->originemini->drop($setting_id);
+                            }
+                        }
+                    }
+
                     dcPage::addSuccessNotice(__('config-updated'));
                 } if (isset($_POST['reset'])) {
+                    foreach ($default_settings as $setting_id => $setting_value) {
+                        dcCore::app()->blog->settings->originemini->drop($setting_id);
+                    }
+
                     dcPage::addSuccessNotice(__('config-reset'));
                 }
 
@@ -164,6 +281,14 @@ class adminConfigOrigineMini
 
                 // Resets template cache.
                 dcCore::app()->emptyTemplatesCache();
+
+                /**
+                 * Redirects to refresh form values.
+                 *
+                 * With the parameters ['module' => 'origine-mini', 'conf' => '1'],
+                 * the & is interpreted as &amp; causing a wrong redirect.
+                 */
+                http::redirect(dcCore::app()->adminurl->get('admin.blog.theme', ['conf' => '1']) . '&module=origine-mini');
             } catch (Exception $e) {
                 dcCore::app()->error->add($e->getMessage());
             }
@@ -244,5 +369,6 @@ class adminConfigOrigineMini
     }
 }
 
+adminConfigOrigineMini::save_settings();
+var_dump(adminConfigOrigineMini::saved_settings());
 adminConfigOrigineMini::page_rendering();
-adminConfigOrigineMini::setting_processing();
