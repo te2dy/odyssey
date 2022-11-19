@@ -1,0 +1,500 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Last-Translator: Teddy\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+## admin.php, index.php
+
+msgid "admin-title"
+msgstr "Origine Settings"
+
+## _public.php
+
+# Minimal social markups
+msgid "meta-social-page-with-number"
+msgstr "Page %s"
+
+msgid "meta-social-tags-post-related"
+msgstr "Posts related to the tag %s"
+
+# Logo
+msgid "logo-img-alt"
+msgstr "Header image"
+
+# Private comments
+
+msgid "private-comment-title"
+msgstr "Send a private comment"
+
+msgid "private-comment-body-post-url"
+msgstr "Post URL:"
+
+msgid "private-comment-button-text"
+msgstr "Reply to the author by email"
+
+msgid "private-comment-email-prefix"
+msgstr "Re:"
+
+# Comments
+
+msgid "post-list-one-reaction-link-aria-label"
+msgstr "Link to the reaction of this post"
+
+msgid "post-list-multiple-reactions-link-aria-label"
+msgstr "Link to reactions of this post"
+
+msgid "post-list-one-reaction"
+msgstr "1 reaction"
+
+msgid "post-list-multiple-reactions"
+msgstr "%d reactions"
+
+## index.php
+
+msgid "option-default-empty"
+msgstr "Default : empty."
+
+msgid "option-default-checked"
+msgstr "Default : checked."
+
+msgid "option-default-unchecked"
+msgstr "Default : unchecked."
+
+msgid "settings-saved-message"
+msgstr "Settings have been successfully saved."
+
+msgid "admin-access-denied-origine-only"
+msgstr "This plugin is only intended to work with <a href=%s>Origine</a> and <a href=%s>Origine Mini</a> themes."
+msgstr "Cette extension ne fonctionne qu’avec les thèmes <a href=%s>Origine</a> et <a href=%s>Origine Mini</a>."
+
+msgid "admin-save-button-text"
+msgstr "Save"
+
+msgid "admin-reset-button-text"
+msgstr "Reset all settings"
+
+msgid "admin-settings-not-working-message"
+msgstr "Your settings are not working? Don't forget to activate them - check <a href=%s>the first setting</a>."
+
+# settings.php
+
+# Sections
+
+msgid "settings-section-global-name"
+msgstr "Global Settings"
+
+msgid "settings-section-global-fonts-title"
+msgstr "Fonts"
+
+msgid "settings-section-global-layout-title"
+msgstr "Layout"
+
+msgid "settings-section-global-colors-title"
+msgstr "Colors and appearance"
+
+msgid "settings-section-global-advance-title"
+msgstr "Advanced Settings"
+
+msgid "settings-section-header-name"
+msgstr "Header Settings"
+
+msgid "settings-section-header-layout-title"
+msgstr "Layout"
+
+msgid "settings-section-header-content-title"
+msgstr "Content"
+
+msgid "settings-section-header-logo-title"
+msgstr "Logo (beta)"
+
+msgid "settings-section-content-name"
+msgstr "Content Settings"
+
+msgid "settings-section-content-postlist-title"
+msgstr "Post list"
+
+msgid "settings-section-content-textformatting-title"
+msgstr "Text formatting"
+
+msgid "settings-section-content-images-title"
+msgstr "Images"
+
+msgid "settings-section-content-author-title"
+msgstr "Author"
+
+msgid "settings-section-content-reactions-title"
+msgstr "Reactions"
+
+msgid "settings-section-content-other-title"
+msgstr "Other settings"
+
+msgid "settings-section-widgets-name"
+msgstr "Widget Settings"
+
+msgid "settings-section-footer-name"
+msgstr "Footer Settings"
+
+msgid "settings-section-footer-sociallinks-title"
+msgstr "Social links"
+
+# Settings
+
+msgid "settings-option-activation-title"
+msgstr "Enable extension settings"
+
+msgid "settings-option-activation-description"
+msgstr "If you do not check this box, your settings will be ignored."
+
+msgid "settings-option-global-fontfamily-serif-default"
+msgstr "Serif (default)"
+
+msgid "settings-option-global-fontfamily-serif"
+msgstr "Serif"
+
+msgid "settings-option-global-fontfamily-sansserif-default"
+msgstr "Sans serif (default)"
+
+msgid "settings-option-global-fontfamily-sansserif"
+msgstr "Sans serif"
+
+msgid "settings-option-global-fontfamily-mono"
+msgstr "Monospace"
+
+msgid "settings-option-global-fontfamily-title"
+msgstr "Font family"
+
+msgid "settings-option-global-fontfamily-description"
+msgstr "In any case, your theme will load system fonts of the device from which your site is viewed. This allows to reduce loading times and to have a graphic continuity with the system."
+
+msgid "settings-option-global-fontsize-title"
+msgstr "Font size"
+
+msgid "settings-option-global-fontsize-description"
+msgid "It is recommended not to change this setting. A size of 100% means that the texts on your site will be the size defined in the browser settings of each of your visitors."
+
+msgid "settings-option-global-fontsize-80"
+msgstr "80%"
+
+msgid "settings-option-global-fontsize-90"
+msgstr "90%"
+
+msgid "settings-option-global-fontsize-100-default"
+msgstr "100% (recommended)"
+
+msgid "settings-option-global-fontsize-110"
+msgstr "110%"
+
+msgid "settings-option-global-fontsize-120"
+msgstr "120%"
+
+msgid "settings-option-global-fontsize-120"
+msgstr "120%"
+
+msgid "settings-option-global-pagewidth-title"
+msgstr "Page width"
+
+msgid "settings-option-global-pagewidth-description"
+msgstr "The width of the page depends on the font size. By default, 30em corresponds to a page width of 480px."
+
+msgid "settings-option-global-pagewidth-title-30-default"
+msgstr "30em (default)"
+
+msgid "settings-option-global-pagewidth-title-35"
+msgstr "35em"
+
+msgid "settings-option-global-pagewidth-title-40"
+msgstr "40em"
+
+msgid "settings-option-global-colorscheme-title"
+msgstr "Color scheme"
+
+msgid "settings-option-global-colorscheme-description"
+msgstr "When system is selected, the theme will use the color scheme of the user’s settings."
+
+msgid "settings-option-global-colorscheme-system-default"
+msgstr "System (default)"
+
+msgid "settings-option-global-colorscheme-light"
+msgstr "Light"
+
+msgid "settings-option-global-colorscheme-dark"
+msgstr "Dark"
+
+msgid "settings-option-global-secondarycolor-title"
+msgstr "Secondary color"
+
+msgid "settings-option-global-secondarycolor-description"
+msgstr "Particularly used to color the links."
+
+msgid "settings-option-global-secondarycolor-red-default"
+msgstr "Red (default)"
+
+msgid "settings-option-global-secondarycolor-red"
+msgstr "Red"
+
+msgid "settings-option-global-secondarycolor-blue-default"
+msgstr "Blue (default)"
+
+msgid "settings-option-global-secondarycolor-blue"
+msgstr "Blue"
+
+msgid "settings-option-global-secondarycolor-frenchblue"
+msgstr "French blue"
+
+msgid "settings-option-global-secondarycolor-darkblue"
+msgstr "Dark blue"
+
+msgid "settings-option-global-secondarycolor-gray"
+msgstr "Gray"
+
+msgid "settings-option-global-secondarycolor-green"
+msgstr "Green"
+
+msgid "settings-option-global-secondarycolor-orange"
+msgstr "Orange"
+
+msgid "settings-option-global-secondarycolor-purple"
+msgstr "Purple"
+
+msgid "settings-option-global-colortransition-title"
+msgstr "Enable color transitions"
+
+msgid "settings-option-global-colortransition-description"
+msgstr "Appears when hovering over links and buttons."
+
+msgid "settings-option-global-linksunderline-title"
+msgstr "Underline links with dots"
+
+msgid "settings-option-global-linksunderline-description"
+msgstr "Good for accessibility."
+
+msgid "settings-option-global-roundcorner-title"
+msgstr "Round corners"
+
+msgid "settings-option-global-roundcorner-description"
+msgstr "For example, the borders of a form field."
+
+msgid "settings-option-global-minimalsocialmarkups-title"
+msgstr "Add minimal social markups in the document head"
+
+msgid "settings-option-global-minimalsocialmarkups-description"
+msgstr "Invisible during the navigation, they allow a better display of the posts and the pages during when they are shared on the social networks."
+
+msgid "settings-option-global-metagenerator-title"
+msgstr "Add <code>generator</code> meta in head"
+
+msgid "settings-option-global-metagenerator-description"
+msgstr "Displays Dotclear in the source code."
+
+msgid "settings-option-global-metapingback-title"
+msgstr "Add the link the trackbacks in head"
+
+msgid "settings-option-header-align-title"
+msgstr "Header align"
+
+msgid "settings-option-header-align-left-default"
+msgstr "Left (default)"
+
+msgid "settings-option-header-align-center"
+msgstr "Center"
+
+msgid "settings-option-header-logourl-title"
+msgstr "Logo URL"
+
+msgid "settings-option-header-logourl2-title"
+msgstr "Dual pixel density logo URL"
+
+msgid "settings-option-header-logourl2-description"
+msgstr "To ensure proper display on dual pixel density displays (Retina), please provide an image that is twice the size of the sta ndard image."
+
+msgid "settings-option-header-description-title"
+msgstr "Display the blog description."
+
+msgid "settings-option-content-postlisttype-title"
+msgstr "Displaying of the post list"
+
+msgid "settings-option-content-postlisttype-standard-default"
+msgstr "Standard (default)"
+
+msgid "settings-option-content-postlisttype-oneline"
+msgstr "On one single line"
+
+msgid "settings-option-content-postlisttype-full"
+msgstr "Full post"
+
+msgid "settings-option-content-postlisttype-oneline-default"
+msgstr "On one single line (default)"
+
+msgid "settings-option-content-postlisttype-extended"
+msgstr "Extended"
+
+msgid "settings-option-content-postlisttime-title"
+msgstr "Display the time of publication of posts"
+
+msgid "settings-option-content-postlistupdatebadge-title"
+msgstr "Display a notification badge on recently published or updated posts (beta)"
+
+msgid "settings-option-content-postlistupdatebadge-description"
+msgstr "Disappears after 24 hours."
+
+msgid "settings-option-content-firstimage-title"
+msgstr "Highlight the first image of the post in the post list (beta)"
+
+msgid "settings-option-content-fontfamily-title-same-default"
+msgstr "Same as the global theme font (default)"
+
+msgid "settings-option-content-fontfamily-title"
+msgstr "Font for post, page and comment content"
+
+msgid "settings-option-content-textalign-title"
+msgstr "Text align"
+
+msgid "settings-option-content-textalign-left-default"
+msgstr "Left (default)"
+
+msgid "settings-option-content-textalign-justify"
+msgstr "Justify"
+
+msgid "settings-option-content-textalign-justifynotmobile"
+msgstr "Justify, except on small screen"
+
+msgid "settings-option-content-hyphens-title"
+msgstr "Hyphenation"
+
+msgid "settings-option-content-hyphens-disabled-default"
+msgstr "Disabled (default)"
+
+msgid "settings-option-content-hyphens-enabled"
+msgstr "Enabled"
+
+msgid "settings-option-content-hyphens-enablednotmobile"
+msgstr "Enabled, except on small screen"
+
+msgid "settings-option-content-imageswide-title"
+msgstr "Expand images that are large enough"
+
+msgid "settings-option-content-imageswide-description"
+msgstr "Allows photos to be displayed in large size in posts (uses JavaScript)."
+
+msgid "settings-option-content-postauthorname-title"
+msgstr "Author's name in posts"
+
+msgid "settings-option-content-postauthorname-hidden-default"
+msgstr "Hidden (default)"
+
+msgid "settings-option-content-postauthorname-date"
+msgstr "Displayed after the date"
+
+msgid "settings-option-content-postauthorname-signature"
+msgstr "Displayed as a signature"
+
+msgid "settings-option-content-postlistauthorname-title"
+msgstr "Display the author's name in the list of posts"
+
+msgid "settings-option-content-postintro-title"
+msgstr "Display the excerpt as an introduction of posts"
+
+msgid "settings-option-content-postintro-description"
+msgstr "Highlights the excerpt defined by the author between the title and the content of the post."
+
+msgid "settings-option-content-posttime-title"
+msgstr "Display the time of publication of the post"
+
+msgid "settings-option-content-separator-title"
+msgstr "Separator"
+
+msgid "settings-option-content-separator-description"
+msgstr "Used to separate certain elements of the theme. Default: \"%s\""
+
+msgid "settings-option-content-postlistcommentlink-title"
+msgstr "Display a link to the reactions to the post"
+
+msgid "settings-option-content-postcommentfeed-title"
+msgstr "Add a link to subscribe to reactions"
+
+msgid "settings-option-content-privatecomment-title"
+msgstr "Private comments"
+
+msgid "settings-option-content-postlistcommentlink-description"
+msgstr "If this option is enabled, the authors' email addresses will be made public. If you prefer not to reveal their address, try <a href=%s>the Signal extension</a>."
+
+msgid "settings-option-content-postlistcommentlink-no-default"
+msgstr "Disabled (default)"
+
+msgid "settings-option-content-postlistcommentlink-open"
+msgstr "Enabled, only if comments are opened"
+
+msgid "settings-option-content-postlistcommentlink-always"
+msgstr "Always enabled"
+
+msgid "settings-option-widgets-navposition-title"
+msgstr "Positioning of navigation widgets"
+
+msgid "settings-option-widgets-navposition-top"
+msgstr "Between the header and the content"
+
+msgid "settings-option-widgets-navposition-bottom-default"
+msgstr "Between content and footer (default)"
+
+msgid "settings-option-widgets-navposition-disabled"
+msgstr "Disable this widget area"
+
+msgid "settings-option-widgets-searchform-title"
+msgstr "Display a search form at the top of the navigation widget area"
+
+msgid "settings-option-widgets-extra-title"
+msgstr "Enable extra widgets"
+
+msgid "settings-option-footer-activation-title"
+msgstr "Enable the footer"
+
+msgid "settings-option-footer-activation-description"
+msgstr "It is recommended to uncheck this option if the footer does not contain any elements."
+
+msgid "settings-option-footer-credits-title"
+msgstr "Display a mention to Dotclear and the theme"
+
+msgid "settings-option-footer-align-title"
+msgstr "Footer align"
+
+msgid "settings-option-footer-align-left-default"
+msgstr "Left (default)"
+
+msgid "settings-option-footer-align-center"
+msgstr "Center"
+
+msgid "settings-option-footer-sociallinks-diaspora-title"
+msgstr "Diaspora profile URL"
+
+msgid "settings-option-footer-sociallinks-discord-title"
+msgstr "Discord server URL"
+
+msgid "settings-option-footer-sociallinks-facebook-title"
+msgstr "Facebook profile or page URL"
+
+msgid "settings-option-footer-sociallinks-github-title"
+msgstr "GitHub profile or repository URL"
+
+msgid "settings-option-footer-sociallinks-mastodon-title"
+msgstr "Mastodon profile URL"
+
+msgid "settings-option-footer-sociallinks-signal-title"
+msgstr "Signal phone number"
+
+msgid "settings-option-footer-sociallinks-tiktok-title"
+msgstr "TikTok profile URL"
+
+msgid "settings-option-footer-sociallinks-twitter-title"
+msgstr "Twitter account username"
+
+msgid "settings-option-footer-sociallinks-whatsapp-title"
+msgstr "WhatsApp phone number"
+
+msgid "settings-option-footer-originestyles-title"
+msgstr "Origine custom styles"
+
+msgid "settings-option-footer-origineministyles-title"
+msgstr "Origine Mini custom styles"

@@ -11,22 +11,336 @@ msgstr ""
 msgid "section-global"
 msgstr ""
 
+msgid "section-global-layout"
+msgstr ""
+
 msgid "section-global-fonts"
+msgstr ""
+
+msgid "section-global-colors"
+msgstr ""
+
+msgid "section-global-advance"
+msgstr ""
+
+msgid "section-header"
+msgstr ""
+
+msgid "section-header-content"
+msgstr ""
+
+msgid "section-content"
+msgstr ""
+
+msgid "section-content-postlist"
+msgstr ""
+
+msgid "section-content-textformatting"
+msgstr ""
+
+msgid "section-content-images"
+msgstr ""
+
+msgid "section-content-reactions"
+msgstr ""
+
+msgid "section-content-other"
+msgstr ""
+
+msgid "section-widgets"
+msgstr ""
+
+msgid "section-footer"
+msgstr ""
+
+msgid "section-footer-sociallinks"
 msgstr ""
 
 # Settings
 
-msgid "settings-option-global-fontsize-title"
+msgid "settings-global-pagewidth-title"
 msgstr ""
 
-msgid "settings-option-global-fontsize-description"
+msgid "settings-global-pagewidth-description"
 msgstr ""
 
-msgid "settings-option-global-fontsize-80"
+msgid "settings-global-pagewidth-30-default"
 msgstr ""
 
-msgid "settings-option-global-fontsize-100"
+msgid "settings-global-pagewidth-35"
 msgstr ""
 
-msgid "settings-option-global-fontsize-120"
+msgid "settings-global-pagewidth-40"
+msgstr ""
+
+msgid "settings-global-fontsize-title"
+msgstr ""
+
+msgid "settings-global-fontsize-description"
+msgstr ""
+
+msgid "settings-global-fontsize-80"
+msgstr ""
+
+msgid "settings-global-fontsize-90"
+msgstr ""
+
+msgid "settings-global-fontsize-100-default"
+msgstr ""
+
+msgid "settings-global-fontsize-110"
+msgstr ""
+
+msgid "settings-global-fontsize-120"
+msgstr ""
+
+msgid "settings-global-fontsize-120"
+msgstr ""
+
+msgid "settings-global-fontfamily-title"
+msgstr ""
+
+msgid "settings-global-fontfamily-description"
+msgstr ""
+
+msgid "settings-global-fontfamily-sansserif-default"
+msgstr ""
+
+msgid "settings-global-fontfamily-sansserif"
+msgstr ""
+
+msgid "settings-global-fontfamily-serif"
+msgstr ""
+
+msgid "settings-global-fontfamily-mono"
+msgstr ""
+
+msgid "settings-global-primarycolor-title"
+msgstr ""
+
+msgid "settings-global-primarycolor-description"
+msgstr ""
+
+msgid "settings-global-primarycolor-description"
+msgstr ""
+
+msgid "settings-global-primarycolor-blue-default"
+msgstr ""
+
+msgid "settings-global-primarycolor-gray"
+msgstr ""
+
+msgid "settings-global-primarycolor-green"
+msgstr ""
+
+msgid "settings-global-primarycolor-red"
+msgstr ""
+
+msgid "settings-global-colortransition-title"
+msgstr ""
+
+msgid "settings-global-colortransition-description"
+msgstr ""
+
+msgid "settings-global-linksunderline-title"
+msgstr ""
+
+msgid "settings-global-linksunderline-description"
+msgstr ""
+
+msgid "settings-global-roundcorner-title"
+msgstr ""
+
+msgid "settings-global-roundcorner-description"
+msgstr ""
+
+msgid "settings-global-minimalsocialmarkups-title"
+msgstr ""
+
+msgid "settings-global-minimalsocialmarkups-description"
+msgstr ""
+
+msgid "settings-global-metagenerator-title"
+msgstr ""
+
+msgid "settings-global-metagenerator-description"
+msgstr ""
+
+msgid "settings-header-description-title"
+msgstr ""
+
+msgid "settings-content-postlisttype-title"
+msgstr ""
+
+msgid "settings-content-postlisttype-oneline-default"
+msgstr ""
+
+msgid "settings-content-postlisttype-extended"
+msgstr ""
+
+msgid "settings-content-postlisttime-title"
+msgstr ""
+
+msgid "settings-content-fontfamily-same-default"
+msgstr ""
+
+msgid "settings-content-fontfamily-title"
+msgstr ""
+
+msgid "settings-content-textalign-title"
+msgstr ""
+
+msgid "settings-content-textalign-left-default"
+msgstr ""
+
+msgid "settings-content-textalign-justify"
+msgstr ""
+
+msgid "settings-content-textalign-justifynotmobile"
+msgstr ""
+
+msgid "settings-content-hyphens-title"
+msgstr ""
+
+msgid "settings-content-hyphens-disabled-default"
+msgstr ""
+
+msgid "settings-content-hyphens-enabled"
+msgstr ""
+
+msgid "settings-content-hyphens-enablednotmobile"
+msgstr ""
+
+msgid "settings-content-imageswide-title"
+msgstr ""
+
+msgid "settings-content-imageswide-description"
+msgstr ""
+
+msgid "settings-content-posttime-title"
+msgstr ""
+
+msgid "settings-content-postintro-title"
+msgstr ""
+
+msgid "settings-content-postintro-description"
+msgstr ""
+
+msgid "settings-content-separator-title"
+msgstr ""
+
+msgid "settings-content-separator-description"
+msgstr ""
+
+msgid "settings-content-postlistreactionlink-title"
+msgstr ""
+
+msgid "settings-content-postreactionfeed-title"
+msgstr ""
+
+msgid "settings-content-posttrackbacklink-title"
+msgstr ""
+
+msgid "settings-content-privatecomment-title"
+msgstr ""
+
+msgid "settings-content-postlistcommentlink-description"
+msgstr ""
+
+msgid "settings-content-postlistcommentlink-no-default"
+msgstr ""
+
+msgid "settings-content-postlistcommentlink-open"
+msgstr ""
+
+msgid "settings-content-postlistcommentlink-always"
+msgstr ""
+
+msgid "settings-widgets-navposition-title"
+msgstr ""
+
+msgid "settings-widgets-navposition-top"
+msgstr ""
+
+msgid "settings-widgets-navposition-bottom-default"
+msgstr ""
+
+msgid "settings-widgets-navposition-disabled"
+msgstr ""
+
+msgid "settings-widgets-searchform-title"
+msgstr ""
+
+msgid "settings-widgets-extra-title"
+msgstr ""
+
+msgid "settings-footer-activation-title"
+msgstr ""
+
+msgid "settings-footer-activation-description"
+msgstr ""
+
+msgid "settings-footer-credits-title"
+msgstr ""
+
+msgid "settings-footer-align-title"
+msgstr ""
+
+msgid "settings-footer-align-left-default"
+msgstr ""
+
+msgid "settings-footer-align-center"
+msgstr ""
+
+msgid "settings-footer-sociallinks-diaspora-title"
+msgstr ""
+
+msgid "settings-footer-sociallinks-discord-title"
+msgstr ""
+
+msgid "settings-footer-sociallinks-facebook-title"
+msgstr ""
+
+msgid "settings-footer-sociallinks-github-title"
+msgstr ""
+
+msgid "settings-footer-sociallinks-mastodon-title"
+msgstr ""
+
+msgid "settings-footer-sociallinks-signal-title"
+msgstr ""
+
+msgid "settings-footer-sociallinks-tiktok-title"
+msgstr ""
+
+msgid "settings-footer-sociallinks-twitter-title"
+msgstr ""
+
+msgid "settings-footer-sociallinks-whatsapp-title"
+msgstr ""
+
+msgid "settings-footer-origineministyles-title"
+msgstr ""
+
+# Form
+
+msgid "settings-default-checked"
+msgstr ""
+
+msgid "settings-default-unchecked"
+msgstr ""
+
+msgid "settings-save-button-text"
+msgstr ""
+
+msgid "settings-reset-button-text"
+msgstr ""
+
+msgid "settings-settings-not-working-message"
+msgstr ""
+
+msgid "settings-config-updated"
+msgstr ""
+
+msgid "settings-config-reset"
 msgstr ""

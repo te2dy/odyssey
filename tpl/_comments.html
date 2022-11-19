@@ -127,24 +127,26 @@
   </tpl:Block>
 </tpl:EntryIf>
 
-{{tpl:origineConfigEmailAuthor}}
+{{tpl:origineMiniEmailAuthor}}
 
-<tpl:origineMiniCommentFeedLink>
+<tpl:origineMiniReactionFeedLink>
   <tpl:EntryIf operator="or" comments_active="1" pings_active="1" has_comment="1" has_ping="1">
     <p class=text-secondary id=comment-feed-link>
       <small><a href={{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}} rel=nofollow>{{tpl:lang reactions-subscribe-link-reactions}}</a></small>
     </p>
   </tpl:EntryIf>
-</tpl:origineMiniCommentFeedLink>
+</tpl:origineMiniReactionFeedLink>
 
-<tpl:EntryIf pings_active="1">
-  <script>function origineTrackbackURLCopy(){var trackbackButton=document.getElementById("trackback-url"),trackbackURL=trackbackButton.getAttribute("data-trackback-url");if(document.getElementById("trackback-url-copied")){document.getElementById("trackback-url-copied").remove()}
-navigator.clipboard.writeText(trackbackURL);trackbackButton.insertAdjacentHTML("afterend",' <span id=trackback-url-copied>{{tpl:lang reactions-trackback-url-copied}}</span>')}</script>
+<tpl:origineMiniTrackbackLink>
+  <tpl:EntryIf pings_active="1">
+    <script>function origineTrackbackURLCopy(){var trackbackButton=document.getElementById("trackback-url"),trackbackURL=trackbackButton.getAttribute("data-trackback-url");if(document.getElementById("trackback-url-copied")){document.getElementById("trackback-url-copied").remove()}
+  navigator.clipboard.writeText(trackbackURL);trackbackButton.insertAdjacentHTML("afterend",' <span id=trackback-url-copied>{{tpl:lang reactions-trackback-url-copied}}</span>')}</script>
 
-  <p class=text-secondary id=trackback-link-container>
-    <small>{{tpl:lang reactions-trackbacks-add-label}}<br><span data-trackback-url={{tpl:EntryPingLink}} id=trackback-url onclick=origineTrackbackURLCopy();>{{tpl:EntryPingLink}}</span></small>
-  </p>
-</tpl:EntryIf>
+    <p class=text-secondary id=trackback-link-container>
+      <small>{{tpl:lang reactions-trackbacks-add-label}}<br><span data-trackback-url={{tpl:EntryPingLink}} id=trackback-url onclick=origineTrackbackURLCopy();>{{tpl:EntryPingLink}}</span></small>
+    </p>
+  </tpl:EntryIf>
+</tpl:origineMiniTrackbackLink>
 
 <tpl:EntryIf operator="or" comments_active="1" pings_active="1">
   </div>

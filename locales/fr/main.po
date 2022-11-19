@@ -17,6 +17,12 @@ msgstr "Fil de syndication"
 msgid "feed-comments-title"
 msgstr "Fil de syndication des commentaires"
 
+msgid "meta-social-page-with-number"
+msgstr "Page %s"
+
+msgid "meta-social-tags-post-related"
+msgstr "Billets relatifs au mot-clé %s"
+
 # Header
 
 msgid "skip-link-content"
@@ -44,6 +50,18 @@ msgstr "Billet sélectionné"
 
 msgid "post-list-date-aria-label"
 msgstr "Date de publication du billet"
+
+msgid "post-list-one-reaction-link-aria-label"
+msgstr "Lien vers la réaction à ce billet"
+
+msgid "post-list-multiple-reactions-link-aria-label"
+msgstr "Lien vers les réactions à ce billet"
+
+msgid "post-list-one-reaction"
+msgstr "1 réaction"
+
+msgid "post-list-multiple-reactions"
+msgstr "%d réactions"
 
 msgid "post-list-open-aria"
 msgstr "Ouvrir le billet « %s »"
@@ -166,6 +184,18 @@ msgstr "Prévisualiser"
 
 msgid "reactions-comment-form-submit-button"
 msgstr "Envoyer"
+
+msgid "private-comment-title"
+msgstr "Envoyer un commentaire privé"
+
+msgid "private-comment-body-post-url"
+msgstr "Adresse du billet :"
+
+msgid "private-comment-button-text"
+msgstr "Répondre à l’auteur par courriel"
+
+msgid "private-comment-email-prefix"
+msgstr "Re:"
 
 msgid "reactions-subscribe-link-reactions"
 msgstr "S’abonner aux réactions"

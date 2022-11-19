@@ -14,8 +14,15 @@ if (!defined('DC_RC_PATH')) {
 
 l10n::set(__DIR__ . '/locales/' . dcCore::app()->lang . '/admin');
 
+dcCore::app()->addBehavior('adminPageHTMLHead', ['adminConfigOrigineMini', 'load_styles']);
+
 class adminConfigOrigineMini
 {
+    public static function load_styles()
+    {
+        echo dcPage::cssLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/css/admin.min.css');
+        echo dcPage::jsLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/js/admin.min.js');
+    }
     /**
      * Defines the sections of the form in which the settings will be sorted.
      *
@@ -35,48 +42,45 @@ class adminConfigOrigineMini
         $page_sections['global'] = [
             'name'         => __('section-global'),
             'sub_sections' => [
-                'layout' => __('section-global-layout'),
-                'fonts'  => __('section-global-fonts'),
-                'colors'   => __('settings-section-global-colors-title'),
-                'advanced' => __('settings-section-global-advance-title'),
+                'layout'   => __('section-global-layout'),
+                'fonts'    => __('section-global-fonts'),
+                'colors'   => __('section-global-colors'),
+                'advanced' => __('section-global-advance')
             ]
         ];
 
         $page_sections['header'] = [
-            'name'         => __('settings-section-header-name'),
+            'name'         => __('section-header'),
             'sub_sections' => [
-                'layout'  => __('settings-section-header-layout-title'),
-                'content' => __('settings-section-header-content-title'),
-                'logo'    => __('settings-section-header-logo-title'),
-            ],
+                'content' => __('section-header-content')
+            ]
         ];
 
         $page_sections['content'] = [
-            'name'         => __('settings-section-content-name'),
+            'name'         => __('section-content'),
             'sub_sections' => [
-                'post-list'       => __('settings-section-content-postlist-title'),
-                'post'            => __('settings-section-content-post-title'),
-                'text-formatting' => __('settings-section-content-textformatting-title'),
-                'images'          => __('settings-section-content-images-title'),
-                'author'          => __('settings-section-content-author-title'),
-                'comments'        => __('settings-section-content-reactions-title'),
-                'other'           => __('settings-section-content-other-title'),
-            ],
+                'post-list'       => __('section-content-postlist'),
+                'post'            => __('section-content-post'),
+                'text-formatting' => __('section-content-textformatting'),
+                'images'          => __('section-content-images'),
+                'reactions'       => __('section-content-reactions'),
+                'other'           => __('section-content-other')
+            ]
         ];
 
         $page_sections['widgets'] = [
-            'name'         => __('settings-section-widgets-name'),
+            'name'         => __('section-widgets'),
             'sub_sections' => [
-                'no-title' => '',
-            ],
+                'no-title' => ''
+            ]
         ];
 
         $page_sections['footer'] = [
-            'name'         => __('settings-section-footer-name'),
+            'name'         => __('section-footer'),
             'sub_sections' => [
                 'no-title'     => '',
-                'social-links' => __('settings-section-footer-sociallinks-title'),
-            ],
+                'social-links' => __('section-footer-sociallinks')
+            ]
         ];
 
         return $page_sections;
@@ -102,58 +106,58 @@ class adminConfigOrigineMini
     {
         // Global settings.
         $default_settings['global_page_width'] = [
-            'title'       => __('settings-option-global-pagewidth-title'),
-            'description' => __('settings-option-global-pagewidth-description'),
+            'title'       => __('settings-global-pagewidth-title'),
+            'description' => __('settings-global-pagewidth-description'),
             'type'        => 'select_int',
             'choices'     => [
-                __('settings-option-global-pagewidth-title-30-default') => 30,
-                __('settings-option-global-pagewidth-title-35')         => 35,
-                __('settings-option-global-pagewidth-title-40')         => 40
+                __('settings-global-pagewidth-30-default') => 30,
+                __('settings-global-pagewidth-35')         => 35,
+                __('settings-global-pagewidth-40')         => 40
             ],
             'default'     => 30,
             'section'     => ['global', 'layout']
         ];
 
         $default_settings['global_font_size'] = [
-            'title'       => __('settings-option-global-fontsize-title'),
-            'description' => __('settings-option-global-fontsize-description'),
+            'title'       => __('settings-global-fontsize-title'),
+            'description' => __('settings-global-fontsize-description'),
             'type'        => 'select_int',
             'choices'     => [
-                __('settings-option-global-fontsize-80')          => 80,
-                __('settings-option-global-fontsize-90')          => 90,
-                __('settings-option-global-fontsize-100-default') => 100,
-                __('settings-option-global-fontsize-110')         => 110,
-                __('settings-option-global-fontsize-120')         => 120
+                __('settings-global-fontsize-80')          => 80,
+                __('settings-global-fontsize-90')          => 90,
+                __('settings-global-fontsize-100-default') => 100,
+                __('settings-global-fontsize-110')         => 110,
+                __('settings-global-fontsize-120')         => 120
             ],
             'default'     => 100,
             'section'     => ['global', 'fonts']
         ];
 
         $default_settings['global_font_family'] = [
-            'title'       => __('settings-option-global-fontfamily-title'),
-            'description' => __('settings-option-global-fontfamily-description'),
+            'title'       => __('settings-global-fontfamily-title'),
+            'description' => __('settings-global-fontfamily-description'),
             'type'        => 'select',
             'choices'     => [
-                __('settings-option-global-fontfamily-sansserif-default') => 'sans-serif',
-                __('settings-option-global-fontfamily-serif')             => 'serif',
-                __('settings-option-global-fontfamily-mono')              => 'monospace'
+                __('settings-global-fontfamily-sansserif-default') => 'sans-serif',
+                __('settings-global-fontfamily-serif')             => 'serif',
+                __('settings-global-fontfamily-mono')              => 'monospace'
             ],
             'default'     => 'sans-serif',
             'section'     => ['global', 'fonts']
         ];
 
         $global_color_primary_choices = [
-            __('settings-option-global-primarycolor-blue-default') => 'blue',
-            __('settings-option-global-primarycolor-gray')         => 'gray',
-            __('settings-option-global-primarycolor-green')        => 'green',
-            __('settings-option-global-primarycolor-red')          => 'red'
+            __('settings-global-primarycolor-blue-default') => 'blue',
+            __('settings-global-primarycolor-gray')         => 'gray',
+            __('settings-global-primarycolor-green')        => 'green',
+            __('settings-global-primarycolor-red')          => 'red'
         ];
 
         ksort($global_color_primary_choices);
 
         $default_settings['global_color_primary'] = [
-            'title'       => __('settings-option-global-primarycolor-title'),
-            'description' => __('settings-option-global-primarycolor-description'),
+            'title'       => __('settings-global-primarycolor-title'),
+            'description' => __('settings-global-primarycolor-description'),
             'type'        => 'select',
             'choices'     => $global_color_primary_choices,
             'default'     => 'blue',
@@ -161,64 +165,48 @@ class adminConfigOrigineMini
         ];
 
         $default_settings['global_css_transition'] = [
-            'title'       => __('settings-option-global-colortransition-title'),
-            'description' => __('settings-option-global-colortransition-description'),
+            'title'       => __('settings-global-colortransition-title'),
+            'description' => __('settings-global-colortransition-description'),
             'type'        => 'checkbox',
             'default'     => 0,
             'section'     => ['global', 'colors']
         ];
 
         $default_settings['global_css_links_underline'] = [
-            'title'       => __('settings-option-global-linksunderline-title'),
-            'description' => __('settings-option-global-linksunderline-description'),
+            'title'       => __('settings-global-linksunderline-title'),
+            'description' => __('settings-global-linksunderline-description'),
             'type'        => 'checkbox',
             'default'     => 0,
             'section'     => ['global', 'colors']
         ];
 
         $default_settings['global_css_border_radius'] = [
-            'title'       => __('settings-option-global-roundcorner-title'),
-            'description' => __('settings-option-global-roundcorner-description'),
+            'title'       => __('settings-global-roundcorner-title'),
+            'description' => __('settings-global-roundcorner-description'),
             'type'        => 'checkbox',
             'default'     => 0,
             'section'     => ['global', 'colors']
         ];
 
         $default_settings['global_meta_social'] = [
-            'title'       => __('settings-option-global-minimalsocialmarkups-title'),
-            'description' => __('settings-option-global-minimalsocialmarkups-description'),
+            'title'       => __('settings-global-minimalsocialmarkups-title'),
+            'description' => __('settings-global-minimalsocialmarkups-description'),
             'type'        => 'checkbox',
             'default'     => 0,
             'section'     => ['global', 'advanced']
         ];
 
         $default_settings['global_meta_generator'] = [
-            'title'       => __('settings-option-global-metagenerator-title'),
-            'description' => __('settings-option-global-metagenerator-description'),
+            'title'       => __('settings-global-metagenerator-title'),
+            'description' => __('settings-global-metagenerator-description'),
             'type'        => 'checkbox',
             'default'     => 0,
             'section'     => ['global', 'advanced']
         ];
 
         // Header settings.
-        /*$default_settings['header_logo_url'] = [
-            'title'       => __('settings-option-header-logourl-title'),
-            'description' => '',
-            'type'        => 'text',
-            'default'     => '',
-            'section'     => ['header', 'logo']
-        ];
-
-        $default_settings['header_logo_url_2x'] = [
-            'title'       => __('settings-option-header-logourl2-title'),
-            'description' => __('settings-option-header-logourl2-description'),
-            'type'        => 'text',
-            'default'     => '',
-            'section'     => ['header', 'logo']
-        ];*/
-
         $default_settings['header_description'] = [
-            'title'       => __('settings-option-header-description-title'),
+            'title'       => __('settings-header-description-title'),
             'description' => '',
             'type'        => 'checkbox',
             'default'     => 0,
@@ -226,73 +214,76 @@ class adminConfigOrigineMini
         ];
 
         // Content settings.
+        $default_settings['content_post_list_type'] = [
+            'title'       => __('settings-content-postlisttype-title'),
+            'description' => '',
+            'type'        => 'select',
+            'choices'     => [
+                __('settings-content-postlisttype-oneline-default')  => 'short',
+                __('settings-content-postlisttype-extended')         => 'extended'
+            ],
+            'default'     => 'short',
+            'section'     => ['content', 'post-list']
+        ];
+
         $default_settings['content_post_list_time'] = [
-            'title'       => __('settings-option-content-postlisttime-title'),
+            'title'       => __('settings-content-postlisttime-title'),
             'description' => '',
             'type'        => 'checkbox',
             'default'     => 0,
             'section'     => ['content', 'post-list']
         ];
 
-        $default_settings['content_post_list_update_badge'] = [
-            'title'       => __('settings-option-content-postlistupdatebadge-title'),
-            'description' => __('settings-option-content-postlistupdatebadge-description'),
-            'type'        => 'checkbox',
-            'default'     => 0,
-            'section'     => ['content', 'post-list'],
-            'theme'       => ['origine-mini']
-        ];
-
         $default_settings['content_text_font'] = [
-            'title'       => __('settings-option-content-fontfamily-title'),
+            'title'       => __('settings-content-fontfamily-title'),
             'description' => '',
             'type'        => 'select',
             'choices'     => [
-                __('settings-option-content-fontfamily-title-same-default') => 'same',
-                __('settings-option-global-fontfamily-serif')               => 'serif',
-                __('settings-option-global-fontfamily-sansserif')           => 'sans-serif',
-                __('settings-option-global-fontfamily-mono')                => 'monospace'
+                __('settings-content-fontfamily-same-default') => 'same',
+                __('settings-global-fontfamily-serif')               => 'serif',
+                __('settings-global-fontfamily-sansserif')           => 'sans-serif',
+                __('settings-global-fontfamily-mono')                => 'monospace'
             ],
             'default'     => 'same',
             'section'     => ['content', 'text-formatting']
         ];
 
         $default_settings['content_text_align'] = [
-            'title'       => __('settings-option-content-textalign-title'),
+            'title'       => __('settings-content-textalign-title'),
             'description' => '',
             'type'        => 'select',
             'choices'     => [
-                __('settings-option-content-textalign-left-default')     => 'left',
-                __('settings-option-content-textalign-justify')          => 'justify',
-                __('settings-option-content-textalign-justifynotmobile') => 'justify_not_mobile'
+                __('settings-content-textalign-left-default')     => 'left',
+                __('settings-content-textalign-justify')          => 'justify',
+                __('settings-content-textalign-justifynotmobile') => 'justify_not_mobile'
             ],
             'default'     => 'left',
             'section'     => ['content', 'text-formatting']
         ];
 
         $default_settings['content_hyphens'] = [
-            'title'       => __('settings-option-content-hyphens-title'),
+            'title'       => __('settings-content-hyphens-title'),
             'description' => '',
             'type'        => 'select',
             'choices'     => [
-                __('settings-option-content-hyphens-disabled-default') => 'disabled',
-                __('settings-option-content-hyphens-enabled')          => 'enabled',
-                __('settings-option-content-hyphens-enablednotmobile') => 'enabled_not_mobile'
+                __('settings-content-hyphens-disabled-default') => 'disabled',
+                __('settings-content-hyphens-enabled')          => 'enabled',
+                __('settings-content-hyphens-enablednotmobile') => 'enabled_not_mobile'
             ],
             'default'     => 'disabled',
             'section'     => ['content', 'text-formatting']
         ];
 
         $default_settings['content_images_wide'] = [
-            'title'       => __('settings-option-content-imageswide-title'),
-            'description' => __('settings-option-content-imageswide-description'),
+            'title'       => __('settings-content-imageswide-title'),
+            'description' => __('settings-content-imageswide-description'),
             'type'        => 'checkbox',
             'default'     => 0,
             'section'     => ['content', 'images']
         ];
 
         $default_settings['content_post_time'] = [
-            'title'       => __('settings-option-content-posttime-title'),
+            'title'       => __('settings-content-posttime-title'),
             'description' => '',
             'type'        => 'checkbox',
             'default'     => 0,
@@ -300,66 +291,74 @@ class adminConfigOrigineMini
         ];
 
         $default_settings['content_post_intro'] = [
-            'title'       => __('settings-option-content-postintro-title'),
-            'description' => __('settings-option-content-postintro-description'),
+            'title'       => __('settings-content-postintro-title'),
+            'description' => __('settings-content-postintro-description'),
             'type'        => 'checkbox',
             'default'     => 0,
             'section'     => ['content', 'other']
         ];
 
         $default_settings['content_separator'] = [
-            'title'       => __('settings-option-content-separator-title'),
-            'description' => sprintf(__('settings-option-content-separator-description'), '|'),
+            'title'       => __('settings-content-separator-title'),
+            'description' => sprintf(__('settings-content-separator-description'), '|'),
             'type'        => 'text',
             'default'     => '|',
             'section'     => ['content', 'other']
         ];
 
-        $default_settings['content_post_list_comment_link'] = [
-            'title'       => __('settings-option-content-postlistcommentlink-title'),
+        $default_settings['content_post_list_reaction_link'] = [
+            'title'       => __('settings-content-postlistreactionlink-title'),
             'description' => '',
             'type'        => 'checkbox',
             'default'     => 0,
-            'section'     => ['content', 'comments']
+            'section'     => ['content', 'reactions']
         ];
 
-        $default_settings['content_comment_links'] = [
-            'title'       => __('settings-option-content-postcommentfeed-title'),
+        $default_settings['content_reaction_feed'] = [
+            'title'       => __('settings-content-postreactionfeed-title'),
             'description' => '',
             'type'        => 'checkbox',
             'default'     => 1,
-            'section'     => ['content', 'comments']
+            'section'     => ['content', 'reactions']
+        ];
+
+        $default_settings['content_trackback_link'] = [
+            'title'       => __('settings-content-posttrackbacklink-title'),
+            'description' => '',
+            'type'        => 'checkbox',
+            'default'     => 1,
+            'section'     => ['content', 'reactions']
         ];
 
         $default_settings['content_post_email_author'] = [
-            'title'       => __('settings-option-content-privatecomment-title'),
-            'description' => sprintf(__('settings-option-content-postlistcommentlink-description'), 'https://plugins.dotaddict.org/dc2/details/signal'),
+            'title'       => __('settings-content-privatecomment-title'),
+            'description' => sprintf(__('settings-content-postlistcommentlink-description'), 'https://plugins.dotaddict.org/dc2/details/signal'),
             'type'        => 'select',
             'choices'     => [
-                __('settings-option-content-postlistcommentlink-no-default') => 'disabled',
-                __('settings-option-content-postlistcommentlink-open')       => 'comments_open',
-                __('settings-option-content-postlistcommentlink-always')     => 'always'
+                __('settings-content-postlistcommentlink-no-default') => 'disabled',
+                __('settings-content-postlistcommentlink-open')       => 'comments_open',
+                __('settings-content-postlistcommentlink-always')     => 'always'
             ],
             'default'     => 'disabled',
-            'section'     => ['content', 'comments']
+            'section'     => ['content', 'reactions']
         ];
 
         // Widgets.
         $default_settings['widgets_nav_position'] = [
-            'title'       => __('settings-option-widgets-navposition-title'),
+            'title'       => __('settings-widgets-navposition-title'),
             'description' => '',
             'type'        => 'select',
             'choices'     => [
-                __('settings-option-widgets-navposition-top')            => 'header_content',
-                __('settings-option-widgets-navposition-bottom-default') => 'content_footer',
-                __('settings-option-widgets-navposition-disabled')       => 'disabled'
+                __('settings-widgets-navposition-top')            => 'header_content',
+                __('settings-widgets-navposition-bottom-default') => 'content_footer',
+                __('settings-widgets-navposition-disabled')       => 'disabled'
             ],
             'default'     => 'content_footer',
             'section'     => ['widgets', 'no-title']
         ];
 
         $default_settings['widgets_search_form'] = [
-            'title'       => __('settings-option-widgets-searchform-title'),
+            'title'       => __('settings-widgets-searchform-title'),
             'description' => '',
             'type'        => 'checkbox',
             'default'     => 0,
@@ -367,7 +366,7 @@ class adminConfigOrigineMini
         ];
 
         $default_settings['widgets_extra_enabled'] = [
-            'title'       => __('settings-option-widgets-extra-title'),
+            'title'       => __('settings-widgets-extra-title'),
             'description' => '',
             'type'        => 'checkbox',
             'default'     => 1,
@@ -376,15 +375,15 @@ class adminConfigOrigineMini
 
         // Footer.
         $default_settings['footer_enabled'] = [
-            'title'       => __('settings-option-footer-activation-title'),
-            'description' => __('settings-option-footer-activation-description'),
+            'title'       => __('settings-footer-activation-title'),
+            'description' => __('settings-footer-activation-description'),
             'type'        => 'checkbox',
             'default'     => 1,
             'section'     => ['footer', 'no-title']
         ];
 
         $default_settings['footer_credits'] = [
-            'title'       => __('settings-option-footer-credits-title'),
+            'title'       => __('settings-footer-credits-title'),
             'description' => '',
             'type'        => 'checkbox',
             'default'     => 1,
@@ -392,7 +391,7 @@ class adminConfigOrigineMini
         ];
 
         $default_settings['footer_social_links_diaspora'] = [
-            'title'       => __('settings-option-footer-sociallinks-diaspora-title'),
+            'title'       => __('settings-footer-sociallinks-diaspora-title'),
             'description' => '',
             'type'        => 'text',
             'default'     => '',
@@ -400,7 +399,7 @@ class adminConfigOrigineMini
         ];
 
         $default_settings['footer_social_links_discord'] = [
-            'title'       => __('settings-option-footer-sociallinks-discord-title'),
+            'title'       => __('settings-footer-sociallinks-discord-title'),
             'description' => '',
             'type'        => 'text',
             'default'     => '',
@@ -408,7 +407,7 @@ class adminConfigOrigineMini
         ];
 
         $default_settings['footer_social_links_facebook'] = [
-            'title'       => __('settings-option-footer-sociallinks-facebook-title'),
+            'title'       => __('settings-footer-sociallinks-facebook-title'),
             'description' => '',
             'type'        => 'text',
             'default'     => '',
@@ -416,7 +415,7 @@ class adminConfigOrigineMini
         ];
 
         $default_settings['footer_social_links_github'] = [
-            'title'       => __('settings-option-footer-sociallinks-github-title'),
+            'title'       => __('settings-footer-sociallinks-github-title'),
             'description' => '',
             'type'        => 'text',
             'default'     => '',
@@ -424,7 +423,7 @@ class adminConfigOrigineMini
         ];
 
         $default_settings['footer_social_links_mastodon'] = [
-            'title'       => __('settings-option-footer-sociallinks-mastodon-title'),
+            'title'       => __('settings-footer-sociallinks-mastodon-title'),
             'description' => '',
             'type'        => 'text',
             'default'     => '',
@@ -432,7 +431,7 @@ class adminConfigOrigineMini
         ];
 
         $default_settings['footer_social_links_signal'] = [
-            'title'       => __('settings-option-footer-sociallinks-signal-title'),
+            'title'       => __('settings-footer-sociallinks-signal-title'),
             'description' => '',
             'type'        => 'text',
             'default'     => '',
@@ -440,7 +439,7 @@ class adminConfigOrigineMini
         ];
 
         $default_settings['footer_social_links_tiktok'] = [
-            'title'       => __('settings-option-footer-sociallinks-tiktok-title'),
+            'title'       => __('settings-footer-sociallinks-tiktok-title'),
             'description' => '',
             'type'        => 'text',
             'default'     => '',
@@ -448,7 +447,7 @@ class adminConfigOrigineMini
         ];
 
         $default_settings['footer_social_links_twitter'] = [
-            'title'       => __('settings-option-footer-sociallinks-twitter-title'),
+            'title'       => __('settings-footer-sociallinks-twitter-title'),
             'description' => '',
             'type'        => 'text',
             'default'     => '',
@@ -456,7 +455,7 @@ class adminConfigOrigineMini
         ];
 
         $default_settings['footer_social_links_whatsapp'] = [
-            'title'       => __('settings-option-footer-sociallinks-whatsapp-title'),
+            'title'       => __('settings-footer-sociallinks-whatsapp-title'),
             'description' => '',
             'type'        => 'text',
             'default'     => '',
@@ -464,7 +463,7 @@ class adminConfigOrigineMini
         ];
 
         $default_settings['styles'] = [
-            'title'       => __('settings-option-footer-origineministyles-title'),
+            'title'       => __('settings-footer-origineministyles-title'),
             'description' => '',
             'theme'       => ['origine-mini']
         ];
@@ -536,7 +535,7 @@ class adminConfigOrigineMini
         $saved_settings   = self::saved_settings();
 
         if ($setting_id !== '' && array_key_exists($setting_id, $default_settings)) {
-            echo '<p>';
+            echo '<p id=' . $setting_id . '-input>';
 
             // If the value of the setting is not set, defines the default value.
             if (isset($saved_settings[$setting_id])) { // Here, the value of the setting.
@@ -589,14 +588,14 @@ class adminConfigOrigineMini
 
             // If the setting has a description, displays it as a note.
             if ($default_settings[$setting_id]['type'] === 'checkbox' || (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '')) {
-                echo '<p class=form-note>', $default_settings[$setting_id]['description'];
+                echo '<p class=form-note id=' . $setting_id . '-description>', $default_settings[$setting_id]['description'];
 
                 // Displays the default value if the option is a checkbox.
                 if ($default_settings[$setting_id]['type'] === 'checkbox') {
                     if ($default_settings[$setting_id]['default'] === 1) {
-                        echo ' ', __('option-default-checked');
+                        echo ' ', __('settings-default-checked');
                     } else {
-                        echo ' ', __('option-default-unchecked');
+                        echo ' ', __('settings-default-unchecked');
                     }
                 }
 
@@ -697,13 +696,13 @@ class adminConfigOrigineMini
                         }
                     }
 
-                    dcPage::addSuccessNotice(__('config-updated'));
+                    dcPage::addSuccessNotice(__('settings-config-updated'));
                 } if (isset($_POST['reset'])) {
                     foreach ($default_settings as $setting_id => $setting_value) {
                         dcCore::app()->blog->settings->originemini->drop($setting_id);
                     }
 
-                    dcPage::addSuccessNotice(__('config-reset'));
+                    dcPage::addSuccessNotice(__('settings-config-reset'));
                 }
 
                 // Puts styles in the database.
@@ -868,7 +867,7 @@ class adminConfigOrigineMini
 
             // Border radius.
             if (isset($_POST['global_css_border_radius']) && $_POST['global_css_border_radius'] === '1') {
-                $css_border_radius_selector = '#site-title,.button,.post-selected,button,code,input,pre,textarea';
+                $css_border_radius_selector = '#site,.button,.post-selected,button,code,input,pre,textarea';
 
                 if (isset($_POST['footer_social_links_diaspora']) && $_POST['footer_social_links_diaspora'] !== ''
                     || (isset($_POST['footer_social_links_discord']) && $_POST['footer_social_links_discord'] !== '')
@@ -900,15 +899,207 @@ class adminConfigOrigineMini
                 $css_main_array['#site-description']['margin']      = '0';
             }
 
+            // Content font family.
+            if (isset($_POST['content_text_font']) && $_POST['content_text_font'] !== 'same' && $_POST['global_font_family'] !== $_POST['content_text_font']) {
+                if ($_POST['content_text_font'] === 'serif') {
+                    $css_main_array['.content-text']['font-family'] = '"Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
+                } elseif ($_POST['content_text_font'] === 'monospace') {
+                    $css_main_array['.content-text']['font-family'] = 'Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace';
+                }
+            }
+
+            // Text align
+            if (isset($_POST['content_text_align']) && ($_POST['content_text_align'] === 'justify' || $_POST['content_text_align'] === 'justify_not_mobile')) {
+                $css_root_array[':root']['--text-align'] = 'justify';
+
+                if ($_POST['content_text_align'] === 'justify_not_mobile') {
+                    $css_media_array[':root']['--text-align'] = 'left';
+                }
+            }
+
+            // Hyphenation.
+            if (isset($_POST['content_hyphens']) && $_POST['content_hyphens'] !== 'disabled') {
+                $css_main_array['.content-text']['-webkit-hyphens'] = 'auto';
+                $css_main_array['.content-text']['-moz-hyphens']    = 'auto';
+                $css_main_array['.content-text']['-ms-hyphens']     = 'auto';
+                $css_main_array['.content-text']['hyphens']         = 'auto';
+
+                $css_main_array['.content-text']['-webkit-hyphenate-limit-chars'] = '5 2 2';
+                $css_main_array['.content-text']['-moz-hyphenate-limit-chars']    = '5 2 2';
+                $css_main_array['.content-text']['-ms-hyphenate-limit-chars']     = '5 2 2';
+
+                $css_main_array['.content-text']['-moz-hyphenate-limit-lines'] = '2';
+                $css_main_array['.content-text']['-ms-hyphenate-limit-lines']  = '2';
+                $css_main_array['.content-text']['hyphenate-limit-lines']      = '2';
+
+                $css_main_array['.content-text']['-webkit-hyphenate-limit-last'] = 'always';
+                $css_main_array['.content-text']['-moz-hyphenate-limit-last']    = 'always';
+                $css_main_array['.content-text']['-ms-hyphenate-limit-last']     = 'always';
+                $css_main_array['.content-text']['hyphenate-limit-last']         = 'always';
+
+                if ($_POST['content_hyphens'] === 'enabled_not_mobile') {
+                    $css_media_array['.content-text']['-webkit-hyphens'] = 'unset';
+                    $css_media_array['.content-text']['-moz-hyphens']    = 'unset';
+                    $css_media_array['.content-text']['-ms-hyphens']     = 'unset';
+                    $css_media_array['.content-text']['hyphens']         = 'unset';
+
+                    $css_media_array['.content-text']['-webkit-hyphenate-limit-chars'] = 'unset';
+                    $css_media_array['.content-text']['-moz-hyphenate-limit-chars']    = 'unset';
+                    $css_media_array['.content-text']['-ms-hyphenate-limit-chars']     = 'unset';
+
+                    $css_media_array['.content-text']['-moz-hyphenate-limit-lines'] = 'unset';
+                    $css_media_array['.content-text']['-ms-hyphenate-limit-lines']  = 'unset';
+                    $css_media_array['.content-text']['hyphenate-limit-lines']      = 'unset';
+
+                    $css_media_array['.content-text']['-webkit-hyphenate-limit-last'] = 'unset';
+                    $css_media_array['.content-text']['-moz-hyphenate-limit-last']    = 'unset';
+                    $css_media_array['.content-text']['-ms-hyphenate-limit-last']     = 'unset';
+                    $css_media_array['.content-text']['hyphenate-limit-last']         = 'unset';
+                }
+            }
+
+            // Post introduction.
+            if (isset($_POST['content_post_intro']) && $_POST['content_post_intro'] === '1') {
+                $css_main_array['#post-intro']['border-block']  = '.063rem solid var(--color-border, #c2c7d6)';
+                $css_main_array['#post-intro']['font-weight']    = '700';
+                $css_main_array['#post-intro']['margin-bottom']  = '2rem';
+                $css_main_array['#post-intro']['padding']        = '1rem 0';
+
+                $css_main_array['#post-intro strong']['font-weight'] = '900';
+            }
+
+            // Link to reactions in the post list.
+            if (isset($_POST['content_post_list_reaction_link']) && $_POST['content_post_list_reaction_link'] === '1') {
+                $css_main_array['.post-list .post']['flex-wrap'] = 'wrap';
+
+                if (!isset($_POST['content_post_list_type']) || (isset($_POST['content_post_list_type']) && $_POST['content_post_list_type'] !== 'extended')) {
+                    $css_main_array['.post-reaction-link']['margin-right'] = '.2rem';
+                    $css_main_array['.post-reaction-link']['flex-basis']   = '100%';
+
+                    $css_media_array['.post-reaction-link']['order'] = '3';
+                } else {
+                    $css_main_array['.post-reaction-link']['display']    = 'inline-block';
+                    $css_main_array['.post-reaction-link']['flex-basis'] = '100%';
+                    $css_main_array['.post-reaction-link']['font-size']  = '.8em';
+                    $css_main_array['.post-reaction-link']['margin-top'] = '.5rem';
+                }
+            }
+
+            // Private comments.
+            if (isset($_POST['content_post_email_author']) && $_POST['content_post_email_author'] !== 'disabled') {
+                $css_main_array['.comment-private']['margin-bottom'] = '2rem';
+            }
+
+            // Sets the order of the blog elements.
+            $structure_order = [2 => '',];
+
+            if (isset($_POST['widgets_nav_position']) && $_POST['widgets_nav_position'] === 'header_content') {
+                $structure_order[2] = '--order-widgets-nav';
+            }
+
+            if ($structure_order[2] === '') {
+                $structure_order[2] = '--order-content';
+            } else {
+                $structure_order[] = '--order-content';
+            }
+
+            if (isset($_POST['widgets_nav_position']) && $_POST['widgets_nav_position'] === 'content_footer') {
+                $structure_order[] = '--order-widgets-nav';
+            }
+
+            if (isset($_POST['widgets_extra_enabled']) && $_POST['widgets_extra_enabled'] === '1') {
+                $structure_order[] = '--order-widgets-extra';
+            }
+
+            if (isset($_POST['footer_enabled']) && $_POST['footer_enabled'] === '1') {
+                $structure_order[] = '--order-footer';
+            }
+
+            if (array_search('--order-content', $structure_order) !== 2) {
+                $css_root_array[':root']['--order-content'] = array_search('--order-content', $structure_order);
+            }
+
+            if (in_array('--order-widgets-nav', $structure_order, true) && array_search('--order-widgets-nav', $structure_order) !== 3) {
+                $css_root_array[':root']['--order-widgets-nav'] = array_search('--order-widgets-nav', $structure_order);
+            }
+
+            if (in_array('--order-widgets-extra', $structure_order, true) && array_search('--order-widgets-extra', $structure_order) !== 4) {
+                $css_root_array[':root']['--order-widgets-extra'] = array_search('--order-widgets-extra', $structure_order);
+            }
+
+            if (in_array('--order-footer', $structure_order, true) && array_search('--order-footer', $structure_order) !== 5) {
+                $css_root_array[':root']['--order-footer'] = array_search('--order-footer', $structure_order);
+            }
+
+            // Social links.
+            if (
+                (isset($_POST['footer_social_links_diaspora']) && $_POST['footer_social_links_diaspora'] !== '')
+                || (isset($_POST['footer_social_links_discord']) && $_POST['footer_social_links_discord'] !== '')
+                || (isset($_POST['footer_social_links_facebook']) && $_POST['footer_social_links_facebook'] !== '')
+                || (isset($_POST['footer_social_links_github']) && $_POST['footer_social_links_github'] !== '')
+                || (isset($_POST['footer_social_links_mastodon']) && $_POST['footer_social_links_mastodon'] !== '')
+                || (isset($_POST['footer_social_links_signal']) && $_POST['footer_social_links_signal'] !== '')
+                || (isset($_POST['footer_social_links_tiktok']) && $_POST['footer_social_links_tiktok'] !== '')
+                || (isset($_POST['footer_social_links_twitter']) && $_POST['footer_social_links_twitter'] !== '')
+                || (isset($_POST['footer_social_links_whatsapp']) && $_POST['footer_social_links_whatsapp'] !== '')
+            ) {
+                $css_main_array['.footer-social-links']['margin-bottom'] = '1rem';
+
+                $css_main_array['.footer-social-links ul']['list-style']                 = 'none';
+                $css_main_array['.footer-social-links ul']['margin']                     = '0';
+                $css_main_array['.footer-social-links ul']['padding-left']               = '0';
+                $css_main_array['.footer-social-links ul li']['display']                 = 'inline-block';
+                $css_main_array['.footer-social-links ul li']['margin']                  = '.25em';
+                $css_main_array['.footer-social-links ul li:first-child']['margin-left'] = '0';
+                $css_main_array['.footer-social-links ul li:last-child']['margin-right'] = '0';
+
+                $css_main_array['.footer-social-links a']['display'] = 'inline-block';
+
+                $css_main_array['.footer-social-links-icon-container']['align-items']      = 'center';
+                $css_main_array['.footer-social-links-icon-container']['background-color'] = 'var(--color-input-background, #f1f2f4)';
+                $css_main_array['.footer-social-links-icon-container']['display']          = 'flex';
+                $css_main_array['.footer-social-links-icon-container']['justify-content']  = 'center';
+                $css_main_array['.footer-social-links-icon-container']['width']            = '1.5rem';
+                $css_main_array['.footer-social-links-icon-container']['height']           = '1.5rem';
+
+                $css_main_array['.footer-social-links-icon']['border']          = '0';
+                $css_main_array['.footer-social-links-icon']['fill']            = 'var(--color-text-main, #2e3038)';
+                $css_main_array['.footer-social-links-icon']['stroke']          = 'none';
+                $css_main_array['.footer-social-links-icon']['stroke-linecap']  = 'round';
+                $css_main_array['.footer-social-links-icon']['stroke-linejoin'] = 'round';
+                $css_main_array['.footer-social-links-icon']['stroke-width']    = '0';
+                $css_main_array['.footer-social-links-icon']['width']           = '1rem';
+
+                $css_main_array['.footer-social-links a:active .footer-social-links-icon-container, .footer-social-links a:focus .footer-social-links-icon-container, .footer-social-links a:hover .footer-social-links-icon-container']['background-color'] = 'var(--color-primary, #1742cf)';
+
+                $css_main_array['.footer-social-links a']['border-bottom'] = 'none';
+
+                $css_main_array['.footer-social-links a:active, .footer-social-links a:focus, .footer-social-links a:hover']['border-bottom'] = 'none';
+
+                $css_main_array['.footer-social-links a:active .footer-social-links-icon, .footer-social-links a:focus .footer-social-links-icon, .footer-social-links a:hover .footer-social-links-icon']['fill'] = 'var(--color-background, #fcfcfd)';
+
+                if (isset($_POST['global_css_transition']) && $_POST['global_css_transition'] === true) {
+                    $css_main_array['.footer-social-links-icon-container']['transition'] = 'all .2s ease-in-out';
+
+                    $css_main_array['.footer-social-links-icon']['transition'] = 'all .2s ease-in-out';
+
+                    $css_main_array['.footer-social-links a:active .footer-social-links-icon-container, .footer-social-links a:focus .footer-social-links-icon-container, .footer-social-links a:hover .footer-social-links-icon-container']['transition'] = 'all .2s ease-in-out';
+
+                    $css_main_array['.footer-social-links a:active .footer-social-links-icon, .footer-social-links a:focus .footer-social-links-icon, .footer-social-links a:hover .footer-social-links-icon']['transition'] = 'all .2s ease-in-out';
+                }
+
+                $css_media_contrast_array['.footer-social-links-icon-container']['border'] = '1px solid var(--color-border, #c2c7d6)';
+            }
+
             $css .= !empty($css_root_array) ? self::styles_array_to_string($css_root_array) : '';
             $css .= !empty($css_root_media_array) ? '@media (prefers-color-scheme:dark){' . self::styles_array_to_string($css_root_media_array) . '}' : '';
             $css .= !empty($css_main_array) ? self::styles_array_to_string($css_main_array) : '';
+            $css .= !empty($css_media_array) ? '@media (max-width:34em){' . self::styles_array_to_string($css_media_array) . '}' : '';
+            $css .= !empty($css_media_contrast_array) ? '@media (prefers-contrast:more),(-ms-high-contrast:active),(-ms-high-contrast:black-on-white){' . self::styles_array_to_string($css_media_contrast_array) . '}' : '';
 
             /*
             $media_max_width = isset($_POST['global_page_width']) ? (int) $_POST['global_page_width'] + 4 : '34';
 
-            $css .= !empty($css_media_array) ? '@media (max-width:' . $media_max_width . 'em){' . self::styles_array_to_string($css_media_array) . '}' : '';
-            $css .= !empty($css_media_contrast_array) ? '@media (prefers-contrast:more),(-ms-high-contrast:active),(-ms-high-contrast:black-on-white){' . self::styles_array_to_string($css_media_contrast_array) . '}' : '';
             $css .= !empty($css_media_motion_array) ? '@media (prefers-reduced-motion:reduce){' . self::styles_array_to_string($css_media_motion_array) . '}' : '';
             */
 
@@ -971,17 +1162,17 @@ class adminConfigOrigineMini
         $sections_with_settings_id = array_filter($sections_with_settings_id);
         ?>
 
-        <form action="<?php echo dcCore::app()->adminurl->get('admin.blog.theme', ['module' => 'origine-mini', 'conf' => '1']); ?>" enctype=multipart/form-data id=module_config method=post>
+        <form action="<?php echo dcCore::app()->adminurl->get('admin.blog.theme', ['module' => 'origine-mini', 'conf' => '1']); ?>" enctype=multipart/form-data id=theme_config method=post>
             <?php
             // Displays the title of each sections and put the settings inside.
             foreach ($sections_with_settings_id as $section_id => $section_data) {
-                echo '<h3>', $sections[$section_id]['name'], '</h3>',
+                echo '<h3 id=section-' . $section_id . '>', $sections[$section_id]['name'], '</h3>',
                 '<div class=fieldset>';
 
                 foreach ($section_data as $sub_section_id => $setting_id) {
-                    // Shows the sub section name except if its ID is "no-title".
+                    // Shows the sub section name except if its ID is "no".
                     if ($sub_section_id !== 'no-title') {
-                        echo '<h4>', $sections[$section_id]['sub_sections'][$sub_section_id], '</h4>';
+                        echo '<h4 id=sub-section-' . $sub_section_id . '>', $sections[$section_id]['sub_sections'][$sub_section_id], '</h4>';
                     }
 
                     // Displays the option.
@@ -996,8 +1187,8 @@ class adminConfigOrigineMini
 
             <p>
                 <?php echo dcCore::app()->formNonce(); ?>
-                <input name=save type=submit value="<?php echo __('admin-save-button-text'); ?>">
-                <input class=delete name=reset value="<?php echo __('admin-reset-button-text'); ?>" type=submit>
+                <input name=save type=submit value="<?php echo __('settings-save-button-text'); ?>">
+                <input class=delete name=reset value="<?php echo __('settings-reset-button-text'); ?>" type=submit>
             </p>
         </form>
 
@@ -1006,5 +1197,4 @@ class adminConfigOrigineMini
 }
 
 adminConfigOrigineMini::save_settings();
-var_dump(adminConfigOrigineMini::saved_settings());
 adminConfigOrigineMini::page_rendering();
