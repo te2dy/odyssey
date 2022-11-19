@@ -32,11 +32,13 @@
     <div id=site>
       <header id=site-header>
         <tpl:Block name="site-header">
-          <h4 id=site-title><a href={{tpl:BlogURL}} rel=home>{{tpl:BlogName}}</a></h4>
-          
-          {{tpl:SimpleMenu id="main-menu"}}
+          <tpl:origineMiniHeaderIdentity>
+            <h4 id=site-title><a href={{tpl:BlogURL}} rel=home>{{tpl:BlogName}}</a></h4>
 
-          {{tpl:origineMiniBlogDescription}}
+            {{tpl:origineMiniBlogDescription}}
+          </tpl:origineMiniHeaderIdentity>
+
+          {{tpl:SimpleMenu id="main-menu"}}
 
           {{tpl:SysBehavior behavior="publicTopAfterContent"}}
         </tpl:Block>

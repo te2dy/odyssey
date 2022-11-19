@@ -17,8 +17,8 @@ if (!defined('DC_RC_PATH')) {
 \l10n::set(__DIR__ . '/locales/' . dcCore::app()->lang . '/main');
 
 dcCore::app()->addBehavior('publicHeadContent', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniHeadMeta']);
+dcCore::app()->addBehavior('publicHeadContent', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniSocialMarkups']);
 dcCore::app()->addBehavior('publicEntryBeforeContent', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostIntro']);
-dcCore::app()->addBehavior('publicFooterContent', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniSocialMarkups']);
 
 dcCore::app()->tpl->addValue('origineConfigActive', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineConfigActive']);
 dcCore::app()->tpl->addValue('origineMiniStylesInline', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniStylesInline']);
@@ -35,6 +35,7 @@ dcCore::app()->tpl->addValue('origineMiniFooterCredits', [__NAMESPACE__ . '\tplO
 dcCore::app()->tpl->addValue('origineMiniURIRelative', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniURIRelative']);
 
 dcCore::app()->tpl->addBlock('origineMiniPostFooter', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniPostFooter']);
+dcCore::app()->tpl->addBlock('origineMiniHeaderIdentity', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniHeaderIdentity']);
 dcCore::app()->tpl->addBlock('origineMiniCommentFeedLink', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniCommentFeedLink']);
 dcCore::app()->tpl->addBlock('origineMiniWidgetsNav', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniWidgetsNav']);
 dcCore::app()->tpl->addBlock('origineMiniWidgetSearchForm', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniWidgetSearchForm']);
@@ -77,16 +78,6 @@ class tplOrigineMiniTheme
     }
 
     /**
-     * Displays the excerpt as an introduction before post content.
-     */
-    public static function origineMiniPostIntro()
-    {
-        //if (dcCore::app()->blog->settings->originemini->content_post_intro === true && dcCore::app()->ctx->posts->post_excerpt) {
-            echo '<div id=post-single-excerpt>' . dcCore::app()->ctx->posts->getExcerpt() . '</div>';
-        //}
-    }
-
-    /**
      * Displays minimal social markups.
      *
      * @link https://meiert.com/en/blog/minimal-social-markup/
@@ -95,11 +86,11 @@ class tplOrigineMiniTheme
      */
     public static function origineMiniSocialMarkups()
     {
-        $title = '';
-        $desc  = '';
-        $img   = '';
-
         if (dcCore::app()->blog->settings->originemini->global_meta_social === true) {
+            $title = '';
+            $desc  = '';
+            $img   = '';
+
             // Posts and pages.
             if (dcCore::app()->url->type === 'post' || dcCore::app()->url->type === 'pages') {
                 $title = dcCore::app()->ctx->posts->post_title;
@@ -187,6 +178,16 @@ class tplOrigineMiniTheme
                 }
             }
         }
+    }
+
+    /**
+     * Displays the excerpt as an introduction before post content.
+     */
+    public static function origineMiniPostIntro()
+    {
+        //if (dcCore::app()->blog->settings->originemini->content_post_intro === true && dcCore::app()->ctx->posts->post_excerpt) {
+            echo '<div id=post-single-excerpt>' . dcCore::app()->ctx->posts->getExcerpt() . '</div>';
+        //}
     }
 
     /**
@@ -293,7 +294,7 @@ if(imgHeight){myImg.setAttribute("height",imgHeight)}}});i++}}</script>
             $description = html::escapeHTML($description);
 
             if ($description !== '') {
-                return '<h2 id=site-description>' . $description . '</h2>';
+                return '<h2 class=text-secondary id=site-description>' . $description . '</h2>';
             }
         }
     }
@@ -534,6 +535,26 @@ if(imgHeight){myImg.setAttribute("height",imgHeight)}}});i++}}</script>
     }
 
     /**
+     * Displays the header site title and description if the description is shown.
+     *
+     * @param array $attr    Unused.
+     * @param void  $content The header.
+     *
+     * @return void The link.
+     */
+    public static function origineMiniHeaderIdentity($attr, $content)
+    {
+        $plugin_activated = self::origineConfigActive();
+
+        if (dcCore::app()->blog->settings->originemini->header_description !== true) {
+            return $content;
+        } else {
+            return '<div id=site-identity>' . $content . '</div>';
+        }
+
+    }
+
+    /**
      * Displays a link to the comment feed.
      *
      * @param array $attr    Unused.
@@ -611,9 +632,7 @@ if(imgHeight){myImg.setAttribute("height",imgHeight)}}});i++}}</script>
      */
     public static function origineMiniFooter($attr, $content)
     {
-        $plugin_activated = self::origineConfigActive();
-
-        if ($plugin_activated === false || ($plugin_activated === true && dcCore::app()->blog->settings->origineConfig->footer_enabled === true)) {
+        if (dcCore::app()->blog->settings->originemini->footer_enabled !== false) {
             return $content;
         }
     }

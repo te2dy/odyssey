@@ -25,11 +25,26 @@ msgstr "Exprimée en pourcentage de la police par défaut du navigateur (peut va
 msgid "settings-option-global-fontsize-80"
 msgstr "80 %"
 
-msgid "settings-option-global-fontsize-100"
-msgstr "100 %"
+msgid "settings-option-global-fontsize-100-default"
+msgstr "100 % (par défaut)"
 
 msgid "settings-option-global-fontsize-120"
 msgstr "120 %"
+
+msgid "settings-option-global-fontfamily-title"
+msgstr "Famille de polices"
+
+msgid "settings-option-global-fontfamily-description"
+msgstr "Dans tous les cas, votre thème chargera les polices du système de l’appareil à partir duquel votre site est consulté. Cela permet de réduire les temps de chargement et d’avoir une continuité graphique avec le système."
+
+msgid "settings-option-global-fontfamily-sansserif-default"
+msgstr "Sans empattements (par défaut)"
+
+msgid "settings-option-global-fontfamily-serif"
+msgstr "Avec empattements"
+
+msgid "settings-option-global-fontfamily-mono"
+msgstr "À chasse fixe"
 
 # Page
 

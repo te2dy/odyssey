@@ -11,17 +11,19 @@
 </tpl:Block>
 
 <tpl:Block name="site-header">
-  <tpl:PaginationIf start="1">
-    <h1 id=site-title>{{tpl:BlogName}}</h1>
-  </tpl:PaginationIf>
+  <tpl:origineMiniHeaderIdentity>
+    <tpl:PaginationIf start="1">
+      <h1 id=site-title>{{tpl:BlogName}}</h1>
+    </tpl:PaginationIf>
 
-  <tpl:PaginationIf start="0">
-    <h1 id=site-title><a href={{tpl:BlogURL}} rel=home>{{tpl:BlogName}}</a></h1>
-  </tpl:PaginationIf>
+    <tpl:PaginationIf start="0">
+      <h1 id=site-title><a href={{tpl:BlogURL}} rel=home>{{tpl:BlogName}}</a></h1>
+    </tpl:PaginationIf>
+
+    {{tpl:origineMiniBlogDescription}}
+  </tpl:origineMiniHeaderIdentity>
 
   {{tpl:SimpleMenu id="main-menu"}}
-
-  {{tpl:origineMiniBlogDescription}}
 
   {{tpl:SysBehavior behavior="publicTopAfterContent"}}
 </tpl:Block>
