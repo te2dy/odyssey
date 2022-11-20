@@ -581,7 +581,7 @@ if(imgHeight){myImg.setAttribute("height",imgHeight)}}});i++}}</script>
                         <?php $body = "' . __('private-comment-body-post-url') . ' " . dcCore::app()->ctx->posts->getURL(); ?>
 
                         <p>
-                            <a class=button href="mailto:<?php echo urlencode(dcCore::app()->ctx->posts->user_email); ?>?subject=<?php echo htmlentities(__("private-comment-email-prefix"), " ", dcCore::app()->ctx->posts->post_title, "&body=" . $body); ?>">' . __('private-comment-button-text') . '</a>
+                            <a class=button href="mailto:<?php echo urlencode(dcCore::app()->ctx->posts->user_email); ?>?subject=<?php echo htmlentities(__("private-comment-email-prefix") . " ", dcCore::app()->ctx->posts->post_title . "&body=" . $body); ?>">' . __('private-comment-button-text') . '</a>
                         </p>
                     </div>
 
