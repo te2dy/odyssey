@@ -101,7 +101,7 @@ msgid "settings-global-fontfamily-sansserif-default"
 msgstr "Sans empattements (par défaut)"
 
 msgid "settings-global-fontfamily-sansserif"
-msgstr "Avec empattements"
+msgstr "Sans empattements"
 
 msgid "settings-global-fontfamily-serif"
 msgstr "Avec empattements"

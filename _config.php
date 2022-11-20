@@ -229,9 +229,9 @@ class adminConfigOrigineMini
             'type'        => 'select',
             'choices'     => [
                 __('settings-content-fontfamily-same-default') => 'same',
-                __('settings-global-fontfamily-serif')               => 'serif',
-                __('settings-global-fontfamily-sansserif')           => 'sans-serif',
-                __('settings-global-fontfamily-mono')                => 'monospace'
+                __('settings-global-fontfamily-serif')         => 'serif',
+                __('settings-global-fontfamily-sansserif')     => 'sans-serif',
+                __('settings-global-fontfamily-mono')          => 'monospace'
             ],
             'default'     => 'same',
             'section'     => ['content', 'text-formatting']
