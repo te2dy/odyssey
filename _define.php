@@ -14,10 +14,10 @@ $this->registerModule(
     'Origine Mini',             // Name
     'A minimal Dotclear theme', // Description
     'Teddy',                    // Author
-    '1',                        // Version
+    '1.0.1',                    // Version
     [
         'requires'             => [['core', '2.24']],
-        'standalone_config'    => true, // Allows a full control for the configurator.
+        'standalone_config'    => true, // Allows a full control for the theme configurator.
         'type'                 => 'theme',
         'widgettitleformat'    => '<h3>%s</h3>', // h3 instead of h2 by default. No class needed.
         'widgetsubtitleformat' => '<h4>%s</h4>'
