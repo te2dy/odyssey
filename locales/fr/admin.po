@@ -98,13 +98,13 @@ msgid "settings-global-fontfamily-description"
 msgstr "Dans tous les cas, votre thème chargera les polices du système de l’appareil à partir duquel votre blog est consulté. Cela permet de réduire les temps de chargement et d’avoir une continuité graphique avec le système."
 
 msgid "settings-global-fontfamily-sansserif-default"
-msgstr "Avec empattements (par défaut)"
+msgstr "Sans empattements (par défaut)"
 
 msgid "settings-global-fontfamily-sansserif"
 msgstr "Avec empattements"
 
 msgid "settings-global-fontfamily-serif"
-msgstr "Sans empattements"
+msgstr "Avec empattements"
 
 msgid "settings-global-fontfamily-mono"
 msgstr "À chasse fixe"
