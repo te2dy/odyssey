@@ -878,7 +878,7 @@ class adminConfigOrigineMini
                     || (isset($_POST['footer_social_links_twitter']) && $_POST['footer_social_links_twitter'] !== '')
                     || (isset($_POST['footer_social_links_whatsapp']) && $_POST['footer_social_links_whatsapp'] !== '')
                 ) {
-                    $css_border_radius_selector .= '.footer-social-links-icon-container';
+                    $css_border_radius_selector .= ',.footer-social-links-icon-container';
                 }
 
                 $css_main_array[$css_border_radius_selector]['border-radius'] = '.168rem';
