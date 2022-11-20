@@ -746,7 +746,7 @@ class adminConfigOrigineMini
                  * With the parameters ['module' => 'origine-mini', 'conf' => '1'],
                  * the & is interpreted as &amp; causing a wrong redirect.
                  */
-                http::redirect(dcCore::app()->adminurl->get('admin.blog.theme', ['conf' => '1']) . '&module=origine-mini');
+                http::redirect(dcCore::app()->adminurl->get('admin.blog.theme', ['module' => 'origine-mini']) . '&conf=1');
             } catch (Exception $e) {
                 dcCore::app()->error->add($e->getMessage());
             }
