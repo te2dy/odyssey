@@ -866,7 +866,7 @@ class adminConfigOrigineMini
 
             // Border radius.
             if (isset($_POST['global_css_border_radius']) && $_POST['global_css_border_radius'] === '1') {
-                $css_border_radius_selector = '#site,.button,.post-selected,button,code,input,pre,textarea';
+                $css_border_radius_selector = '#site-title,.button,.post-selected,button,code,input,pre,textarea';
 
                 if (isset($_POST['footer_social_links_diaspora']) && $_POST['footer_social_links_diaspora'] !== ''
                     || (isset($_POST['footer_social_links_discord']) && $_POST['footer_social_links_discord'] !== '')
