@@ -229,9 +229,9 @@ class tplOrigineMiniTheme
      */
     public static function origineMiniPostIntro()
     {
-        //if (dcCore::app()->blog->settings->originemini->content_post_intro === true && dcCore::app()->ctx->posts->post_excerpt) {
-            echo '<div id=post-single-excerpt>' . dcCore::app()->ctx->posts->getExcerpt() . '</div>';
-        //}
+        if (dcCore::app()->blog->settings->originemini->content_post_intro === true && dcCore::app()->ctx->posts->post_excerpt) {
+            echo '<div id=post-single-excerpt>', dcCore::app()->ctx->posts->getExcerpt(), '</div>';
+        }
     }
 
     /**
@@ -312,6 +312,8 @@ if(imgHeight){myImg.setAttribute("height",imgHeight)}}});i++}}</script>
                             } else {
                                 $link = $link;
                             }
+                        } elseif ($site === 'WhatsApp') {
+                            $link = 'https://wa.me/' . str_replace('+', '', $link);
                         } elseif ($site === 'Twitter') {
                             $link = 'https://twitter.com/' . str_replace('@', '', $link);
                         }
@@ -379,9 +381,9 @@ if(imgHeight){myImg.setAttribute("height",imgHeight)}}});i++}}</script>
           $links .= '<a id=skip-menu class=skip-links href=#main-menu>' . __('skip-link-menu') . '</a>';
         }
 
-        // Adds a link to the footer, except if it has been disabled in origineConfig.
+        // Adds a link to the footer except if it has been disabled in the configurator.
         if (dcCore::app()->blog->settings->originemini->footer_enabled === true) {
-          $links .= '<a id=skip-menu class=skip-links href=#site-footer>' . __('skip-link-footer') . '</a>';
+          $links .= '<a id=skip-footer class=skip-links href=#site-footer>' . __('skip-link-footer') . '</a>';
         }
 
         return $links;
@@ -531,7 +533,7 @@ if(imgHeight){myImg.setAttribute("height",imgHeight)}}});i++}}</script>
                     $lang = " lang=" . dcCore::app()->ctx->posts->post_lang;
                 }
 
-                echo "<p class=\"post-excerpt text-secondary\"" . $lang . ">",
+                echo "<p class=\"content-text post-excerpt text-secondary\"" . $lang . ">",
                      $the_excerpt,
                      " <a aria-label=\"", sprintf(__("post-list-open-aria"), dcCore::app()->ctx->posts->post_title), "\" href=\"", dcCore::app()->ctx->posts->getURL(), "\">" . __("post-list-open"), "</a>",
                      "</p>";
@@ -579,7 +581,7 @@ if(imgHeight){myImg.setAttribute("height",imgHeight)}}});i++}}</script>
                         <?php $body = "' . __('private-comment-body-post-url') . ' " . dcCore::app()->ctx->posts->getURL(); ?>
 
                         <p>
-                            <a class=button href="mailto:<?php echo urlencode(dcCore::app()->ctx->posts->user_email); ?>?subject=<?php echo htmlentities(__("private-comment-email-prefix") . " " . dcCore::app()->ctx->posts->post_title . "&body=" . $body); ?>">' . __('private-comment-button-text') . '</a>
+                            <a class=button href="mailto:<?php echo urlencode(dcCore::app()->ctx->posts->user_email); ?>?subject=<?php echo htmlentities(__("private-comment-email-prefix"), " ", dcCore::app()->ctx->posts->post_title, "&body=" . $body); ?>">' . __('private-comment-button-text') . '</a>
                         </p>
                     </div>
 

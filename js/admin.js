@@ -3,26 +3,34 @@
  */
 
 function disableInputs() {
-    if (document.getElementById("content_post_list_time").checked || document.getElementById("content_post_time").checked) {
-        document.getElementById("content_separator-input").style.display = "block";
-        document.getElementById("content_separator-description").style.display = "block";
+    if (document.getElementById("global_color_primary").value === "gray") {
+      document.getElementById("setting-linksunderline-recommended").style.display = "inline";
     } else {
-        document.getElementById("content_separator-input").style.display = "none";
-        document.getElementById("content_separator-description").style.display = "none";
+      document.getElementById("setting-linksunderline-recommended").style.display = "none";
     }
 
-    if (document.getElementById("widgets_nav_position").value === 'disabled') {
-        document.getElementById("widgets_search_form-input").style.display = "none";
+    if (document.getElementById("content_post_list_time").checked || document.getElementById("content_post_time").checked) {
+        document.getElementById("content_separator-input").style.display       = "block";
+        document.getElementById("content_separator-description").style.display = "block";
+        document.getElementById("section-content-other").style.display         = "block";
+    } else {
+        document.getElementById("content_separator-input").style.display       = "none";
+        document.getElementById("content_separator-description").style.display = "none";
+        document.getElementById("section-content-other").style.display         = "none";
+    }
+
+    if (document.getElementById("widgets_nav_position").value === "disabled") {
+        document.getElementById("widgets_search_form-input").style.display       = "none";
         document.getElementById("widgets_search_form-description").style.display = "none";
     } else {
-        document.getElementById("widgets_search_form-input").style.display = "block";
+        document.getElementById("widgets_search_form-input").style.display       = "block";
         document.getElementById("widgets_search_form-description").style.display = "block";
     }
 
     if (!document.getElementById("footer_enabled").checked) {
         document.getElementById("footer_credits-input").style.display               = "none";
         document.getElementById("footer_credits-description").style.display         = "none";
-        document.getElementById("sub-section-social-links").style.display           = "none";
+        document.getElementById("section-footer-social-links").style.display        = "none";
         document.getElementById("footer_social_links_diaspora-input").style.display = "none";
         document.getElementById("footer_social_links_discord-input").style.display  = "none";
         document.getElementById("footer_social_links_facebook-input").style.display = "none";
@@ -35,7 +43,7 @@ function disableInputs() {
     } else {
         document.getElementById("footer_credits-input").style.display               = "block";
         document.getElementById("footer_credits-description").style.display         = "block";
-        document.getElementById("sub-section-social-links").style.display           = "block";
+        document.getElementById("section-footer-social-links").style.display        = "block";
         document.getElementById("footer_social_links_diaspora-input").style.display = "block";
         document.getElementById("footer_social_links_discord-input").style.display  = "block";
         document.getElementById("footer_social_links_facebook-input").style.display = "block";
@@ -48,5 +56,10 @@ function disableInputs() {
     }
 }
 
-window.addEventListener("onload", disableInputs);
-window.addEventListener("onchange", disableInputs);
+window.onload = function() {
+  disableInputs();
+};
+
+window.onchange = function() {
+  disableInputs();
+};

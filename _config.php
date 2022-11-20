@@ -14,14 +14,19 @@ if (!defined('DC_RC_PATH')) {
 
 l10n::set(__DIR__ . '/locales/' . dcCore::app()->lang . '/admin');
 
-dcCore::app()->addBehavior('adminPageHTMLHead', ['adminConfigOrigineMini', 'load_styles']);
+dcCore::app()->addBehavior('adminPageHTMLHead', ['adminConfigOrigineMini', 'load_styles_scripts']);
 
 class adminConfigOrigineMini
 {
-    public static function load_styles()
+    /**
+     * Loads custom styles and scripts for the configurator page.
+     *
+     * @return void
+     */
+    public static function load_styles_scripts()
     {
-        echo dcPage::cssLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/css/admin.min.css');
-        echo dcPage::jsLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/js/admin.min.js');
+        echo dcPage::cssLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/css/admin.css'),
+        dcPage::jsLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/js/admin.js');
     }
     /**
      * Defines the sections of the form in which the settings will be sorted.
@@ -52,7 +57,7 @@ class adminConfigOrigineMini
         $page_sections['header'] = [
             'name'         => __('section-header'),
             'sub_sections' => [
-                'content' => __('section-header-content')
+                'no-title' => ''
             ]
         ];
 
@@ -62,8 +67,6 @@ class adminConfigOrigineMini
                 'post-list'       => __('section-content-postlist'),
                 'post'            => __('section-content-post'),
                 'text-formatting' => __('section-content-textformatting'),
-                'images'          => __('section-content-images'),
-                'reactions'       => __('section-content-reactions'),
                 'other'           => __('section-content-other')
             ]
         ];
@@ -188,9 +191,15 @@ class adminConfigOrigineMini
             'section'     => ['global', 'colors']
         ];
 
+        if (dcCore::app()->plugins->moduleExists('socialMeta') === true) {
+            $plugin_social_url = dcCore::app()->adminurl->get('admin.plugin.socialMeta');
+        } else {
+            $plugin_social_url = dcCore::app()->adminurl->get('admin.plugins');
+        }
+
         $default_settings['global_meta_social'] = [
             'title'       => __('settings-global-minimalsocialmarkups-title'),
-            'description' => __('settings-global-minimalsocialmarkups-description'),
+            'description' => sprintf(__('settings-global-minimalsocialmarkups-description'), $plugin_social_url),
             'type'        => 'checkbox',
             'default'     => 0,
             'section'     => ['global', 'advanced']
@@ -210,30 +219,10 @@ class adminConfigOrigineMini
             'description' => '',
             'type'        => 'checkbox',
             'default'     => 0,
-            'section'     => ['header', 'content']
+            'section'     => ['header', 'no-title']
         ];
 
         // Content settings.
-        $default_settings['content_post_list_type'] = [
-            'title'       => __('settings-content-postlisttype-title'),
-            'description' => '',
-            'type'        => 'select',
-            'choices'     => [
-                __('settings-content-postlisttype-oneline-default')  => 'short',
-                __('settings-content-postlisttype-extended')         => 'extended'
-            ],
-            'default'     => 'short',
-            'section'     => ['content', 'post-list']
-        ];
-
-        $default_settings['content_post_list_time'] = [
-            'title'       => __('settings-content-postlisttime-title'),
-            'description' => '',
-            'type'        => 'checkbox',
-            'default'     => 0,
-            'section'     => ['content', 'post-list']
-        ];
-
         $default_settings['content_text_font'] = [
             'title'       => __('settings-content-fontfamily-title'),
             'description' => '',
@@ -274,12 +263,32 @@ class adminConfigOrigineMini
             'section'     => ['content', 'text-formatting']
         ];
 
-        $default_settings['content_images_wide'] = [
-            'title'       => __('settings-content-imageswide-title'),
-            'description' => __('settings-content-imageswide-description'),
+        $default_settings['content_post_list_type'] = [
+            'title'       => __('settings-content-postlisttype-title'),
+            'description' => '',
+            'type'        => 'select',
+            'choices'     => [
+                __('settings-content-postlisttype-oneline-default')  => 'short',
+                __('settings-content-postlisttype-extended')         => 'extended'
+            ],
+            'default'     => 'short',
+            'section'     => ['content', 'post-list']
+        ];
+
+        $default_settings['content_post_list_time'] = [
+            'title'       => __('settings-content-postlisttime-title'),
+            'description' => '',
             'type'        => 'checkbox',
             'default'     => 0,
-            'section'     => ['content', 'images']
+            'section'     => ['content', 'post-list']
+        ];
+
+        $default_settings['content_post_list_reaction_link'] = [
+            'title'       => __('settings-content-postlistreactionlink-title'),
+            'description' => '',
+            'type'        => 'checkbox',
+            'default'     => 0,
+            'section'     => ['content', 'post-list']
         ];
 
         $default_settings['content_post_time'] = [
@@ -287,7 +296,7 @@ class adminConfigOrigineMini
             'description' => '',
             'type'        => 'checkbox',
             'default'     => 0,
-            'section'     => ['content', 'other']
+            'section'     => ['content', 'post']
         ];
 
         $default_settings['content_post_intro'] = [
@@ -295,7 +304,50 @@ class adminConfigOrigineMini
             'description' => __('settings-content-postintro-description'),
             'type'        => 'checkbox',
             'default'     => 0,
-            'section'     => ['content', 'other']
+            'section'     => ['content', 'post']
+        ];
+
+        $default_settings['content_images_wide'] = [
+            'title'       => __('settings-content-imageswide-title'),
+            'description' => __('settings-content-imageswide-description'),
+            'type'        => 'checkbox',
+            'default'     => 0,
+            'section'     => ['content', 'post']
+        ];
+
+        $default_settings['content_reaction_feed'] = [
+            'title'       => __('settings-content-postreactionfeed-title'),
+            'description' => '',
+            'type'        => 'checkbox',
+            'default'     => 1,
+            'section'     => ['content', 'post']
+        ];
+
+        $default_settings['content_trackback_link'] = [
+            'title'       => __('settings-content-posttrackbacklink-title'),
+            'description' => '',
+            'type'        => 'checkbox',
+            'default'     => 1,
+            'section'     => ['content', 'post']
+        ];
+
+        if (dcCore::app()->plugins->moduleExists('signal') === true) {
+            $plugin_signal_url = dcCore::app()->adminurl->get('admin.plugin.signal');
+        } else {
+            $plugin_signal_url = dcCore::app()->adminurl->get('admin.plugins');
+        }
+
+        $default_settings['content_post_email_author'] = [
+            'title'       => __('settings-content-privatecomment-title'),
+            'description' => sprintf(__('settings-content-postlistcommentlink-description'), $plugin_signal_url),
+            'type'        => 'select',
+            'choices'     => [
+                __('settings-content-postlistcommentlink-no-default') => 'disabled',
+                __('settings-content-postlistcommentlink-open')       => 'comments_open',
+                __('settings-content-postlistcommentlink-always')     => 'always'
+            ],
+            'default'     => 'disabled',
+            'section'     => ['content', 'post']
         ];
 
         $default_settings['content_separator'] = [
@@ -306,72 +358,37 @@ class adminConfigOrigineMini
             'section'     => ['content', 'other']
         ];
 
-        $default_settings['content_post_list_reaction_link'] = [
-            'title'       => __('settings-content-postlistreactionlink-title'),
-            'description' => '',
-            'type'        => 'checkbox',
-            'default'     => 0,
-            'section'     => ['content', 'reactions']
-        ];
-
-        $default_settings['content_reaction_feed'] = [
-            'title'       => __('settings-content-postreactionfeed-title'),
-            'description' => '',
-            'type'        => 'checkbox',
-            'default'     => 1,
-            'section'     => ['content', 'reactions']
-        ];
-
-        $default_settings['content_trackback_link'] = [
-            'title'       => __('settings-content-posttrackbacklink-title'),
-            'description' => '',
-            'type'        => 'checkbox',
-            'default'     => 1,
-            'section'     => ['content', 'reactions']
-        ];
-
-        $default_settings['content_post_email_author'] = [
-            'title'       => __('settings-content-privatecomment-title'),
-            'description' => sprintf(__('settings-content-postlistcommentlink-description'), 'https://plugins.dotaddict.org/dc2/details/signal'),
-            'type'        => 'select',
-            'choices'     => [
-                __('settings-content-postlistcommentlink-no-default') => 'disabled',
-                __('settings-content-postlistcommentlink-open')       => 'comments_open',
-                __('settings-content-postlistcommentlink-always')     => 'always'
-            ],
-            'default'     => 'disabled',
-            'section'     => ['content', 'reactions']
-        ];
-
         // Widgets.
-        $default_settings['widgets_nav_position'] = [
-            'title'       => __('settings-widgets-navposition-title'),
-            'description' => '',
-            'type'        => 'select',
-            'choices'     => [
-                __('settings-widgets-navposition-top')            => 'header_content',
-                __('settings-widgets-navposition-bottom-default') => 'content_footer',
-                __('settings-widgets-navposition-disabled')       => 'disabled'
-            ],
-            'default'     => 'content_footer',
-            'section'     => ['widgets', 'no-title']
-        ];
+        if (dcCore::app()->plugins->moduleExists('widgets')) {
+            $default_settings['widgets_nav_position'] = [
+                'title'       => sprintf(__('settings-widgets-navposition-title'), dcCore::app()->adminurl->get('admin.plugin.widgets')),
+                'description' => '',
+                'type'        => 'select',
+                'choices'     => [
+                    __('settings-widgets-navposition-top')            => 'header_content',
+                    __('settings-widgets-navposition-bottom-default') => 'content_footer',
+                    __('settings-widgets-navposition-disabled')       => 'disabled'
+                ],
+                'default'     => 'content_footer',
+                'section'     => ['widgets', 'no-title']
+            ];
 
-        $default_settings['widgets_search_form'] = [
-            'title'       => __('settings-widgets-searchform-title'),
-            'description' => '',
-            'type'        => 'checkbox',
-            'default'     => 0,
-            'section'     => ['widgets', 'no-title']
-        ];
+            $default_settings['widgets_search_form'] = [
+                'title'       => __('settings-widgets-searchform-title'),
+                'description' => __('settings-widgets-searchform-description'),
+                'type'        => 'checkbox',
+                'default'     => 0,
+                'section'     => ['widgets', 'no-title']
+            ];
 
-        $default_settings['widgets_extra_enabled'] = [
-            'title'       => __('settings-widgets-extra-title'),
-            'description' => '',
-            'type'        => 'checkbox',
-            'default'     => 1,
-            'section'     => ['widgets', 'no-title']
-        ];
+            $default_settings['widgets_extra_enabled'] = [
+                'title'       => sprintf(__('settings-widgets-extra-title'), dcCore::app()->adminurl->get('admin.plugin.widgets')),
+                'description' => __('settings-widgets-extra-description'),
+                'type'        => 'checkbox',
+                'default'     => 1,
+                'section'     => ['widgets', 'no-title']
+            ];
+        }
 
         // Footer.
         $default_settings['footer_enabled'] = [
@@ -384,7 +401,7 @@ class adminConfigOrigineMini
 
         $default_settings['footer_credits'] = [
             'title'       => __('settings-footer-credits-title'),
-            'description' => '',
+            'description' => __('settings-footer-credits-description'),
             'type'        => 'checkbox',
             'default'     => 1,
             'section'     => ['footer', 'no-title']
@@ -435,6 +452,7 @@ class adminConfigOrigineMini
             'description' => '',
             'type'        => 'text',
             'default'     => '',
+            'placeholder' => '+1234567890',
             'section'     => ['footer', 'social-links']
         ];
 
@@ -451,6 +469,7 @@ class adminConfigOrigineMini
             'description' => '',
             'type'        => 'text',
             'default'     => '',
+            'placeholder' => '@username',
             'section'     => ['footer', 'social-links']
         ];
 
@@ -459,6 +478,7 @@ class adminConfigOrigineMini
             'description' => '',
             'type'        => 'text',
             'default'     => '',
+            'placeholder' => '+1234567890',
             'section'     => ['footer', 'social-links']
         ];
 
@@ -571,6 +591,8 @@ class adminConfigOrigineMini
                     break;
 
                 default :
+                    $placeholder = isset($default_settings[$setting_id]['placeholder']) ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"' : '';
+
                     echo '<label for=' . $setting_id . '>',
                     $default_settings[$setting_id]['title'],
                     '</label>',
@@ -578,7 +600,11 @@ class adminConfigOrigineMini
                         $setting_id,
                         30,
                         255,
-                        $setting_value
+                        $setting_value,
+                        '',
+                        '',
+                        false,
+                        $placeholder
                     );
 
                     break;
@@ -773,55 +799,28 @@ class adminConfigOrigineMini
             $primary_colors = [
                 'light' => [
                     'gray' => [
-                        /**
-                         * HSL recipe:
-                         * --color-primary: 0, 0%, 10%;
-                         * --color-background: 0, 0%, 99%;
-                         * --color-text-main: 0, 0%, 20%;
-                         * --color-text-secondary: 0, 0%, 50%;
-                         * --color-border: 0, 0%, 80%;
-                         * --color-input-background: 0, 0%, 95%;
-                         */
                         '--color-primary'          => '#1a1a1a',
                         '--color-background'       => '#fcfcfc',
                         '--color-text-main'        => '#333333',
-                        '--color-text-secondary'   => '#808080',
+                        '--color-text-secondary'   => '#6c6f78',
                         '--color-border'           => '#cccccc',
                         '--color-input-background' => '#f2f2f2'
                     ],
 
                     'green' => [
-                        /**
-                         * HSL recipe:
-                         * --color-primary: 120, 75%, 30%;
-                         * --color-background: 120, 10%, 99%;
-                         * --color-text-main: 120, 10%, 20%;
-                         * --color-text-secondary: 120, 10%, 45%;
-                         * --color-border: 120, 0%, 80%;
-                         * --color-input-background: 120, 10%, 95%;
-                         */
                         '--color-primary'          => '#138613',
                         '--color-background'       => '#fcfcfc',
                         '--color-text-main'        => '#2e382e',
-                        '--color-text-secondary'   => '#676d7e',
+                        '--color-text-secondary'   => '#6c6f78',
                         '--color-border'           => '#cccccc',
                         '--color-input-background' => '#f1f4f1'
                     ],
 
                     'red' => [
-                        /**
-                         * HSL recipe:
-                         * --color-primary: 0, 80%, 50%;
-                         * --color-background: 0, 10%, 99%;
-                         * --color-text-main: 0, 10%, 20%;
-                         * --color-text-secondary: 0, 5%, 50%;
-                         * --color-border: 0, 0%, 80%;
-                         * --color-input-background: 0, 5%, 95%;
-                         */
                         '--color-primary'          => '#e61919',
                         '--color-background'       => '#fdfcfc',
                         '--color-text-main'        => '#382e2e',
-                        '--color-text-secondary'   => '#867979',
+                        '--color-text-secondary'   => '#6c6f78',
                         '--color-border'           => '#cccccc',
                         '--color-input-background' => '#f3f2f2'
                     ]
@@ -973,8 +972,8 @@ class adminConfigOrigineMini
                 $css_main_array['.post-list .post']['flex-wrap'] = 'wrap';
 
                 if (!isset($_POST['content_post_list_type']) || (isset($_POST['content_post_list_type']) && $_POST['content_post_list_type'] !== 'extended')) {
-                    $css_main_array['.post-reaction-link']['margin-right'] = '.2rem';
-                    $css_main_array['.post-reaction-link']['flex-basis']   = '100%';
+                    $css_main_array['.post-reaction-link']['margin-top'] = '.2rem';
+                    $css_main_array['.post-reaction-link']['flex-basis'] = '100%';
 
                     $css_media_array['.post-reaction-link']['order'] = '3';
                 } else {
@@ -1172,7 +1171,7 @@ class adminConfigOrigineMini
                 foreach ($section_data as $sub_section_id => $setting_id) {
                     // Shows the sub section name except if its ID is "no".
                     if ($sub_section_id !== 'no-title') {
-                        echo '<h4 id=sub-section-' . $sub_section_id . '>', $sections[$section_id]['sub_sections'][$sub_section_id], '</h4>';
+                        echo '<h4 id=section-' . $section_id . '-' . $sub_section_id . '>', $sections[$section_id]['sub_sections'][$sub_section_id], '</h4>';
                     }
 
                     // Displays the option.
@@ -1187,7 +1186,9 @@ class adminConfigOrigineMini
 
             <p>
                 <?php echo dcCore::app()->formNonce(); ?>
+
                 <input name=save type=submit value="<?php echo __('settings-save-button-text'); ?>">
+
                 <input class=delete name=reset value="<?php echo __('settings-reset-button-text'); ?>" type=submit>
             </p>
         </form>

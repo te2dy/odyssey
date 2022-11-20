@@ -26,22 +26,16 @@ msgstr ""
 msgid "section-header"
 msgstr ""
 
-msgid "section-header-content"
-msgstr ""
-
 msgid "section-content"
-msgstr ""
-
-msgid "section-content-postlist"
 msgstr ""
 
 msgid "section-content-textformatting"
 msgstr ""
 
-msgid "section-content-images"
+msgid "section-content-postlist"
 msgstr ""
 
-msgid "section-content-reactions"
+msgid "section-content-post"
 msgstr ""
 
 msgid "section-content-other"
@@ -121,9 +115,6 @@ msgstr ""
 msgid "settings-global-primarycolor-description"
 msgstr ""
 
-msgid "settings-global-primarycolor-description"
-msgstr ""
-
 msgid "settings-global-primarycolor-blue-default"
 msgstr ""
 
@@ -143,7 +134,7 @@ msgid "settings-global-colortransition-description"
 msgstr ""
 
 msgid "settings-global-linksunderline-title"
-msgstr ""
+msgstr ""display:none;">(recommandé lorsque le gris est la couleur principale)</strong>"
 
 msgid "settings-global-linksunderline-description"
 msgstr ""
@@ -169,22 +160,10 @@ msgstr ""
 msgid "settings-header-description-title"
 msgstr ""
 
-msgid "settings-content-postlisttype-title"
-msgstr ""
-
-msgid "settings-content-postlisttype-oneline-default"
-msgstr ""
-
-msgid "settings-content-postlisttype-extended"
-msgstr ""
-
-msgid "settings-content-postlisttime-title"
+msgid "settings-content-fontfamily-title"
 msgstr ""
 
 msgid "settings-content-fontfamily-same-default"
-msgstr ""
-
-msgid "settings-content-fontfamily-title"
 msgstr ""
 
 msgid "settings-content-textalign-title"
@@ -211,10 +190,19 @@ msgstr ""
 msgid "settings-content-hyphens-enablednotmobile"
 msgstr ""
 
-msgid "settings-content-imageswide-title"
+msgid "settings-content-postlisttype-title"
 msgstr ""
 
-msgid "settings-content-imageswide-description"
+msgid "settings-content-postlisttype-oneline-default"
+msgstr ""
+
+msgid "settings-content-postlisttype-extended"
+msgstr ""
+
+msgid "settings-content-postlisttime-title"
+msgstr ""
+
+msgid "settings-content-postlistreactionlink-title"
 msgstr ""
 
 msgid "settings-content-posttime-title"
@@ -226,13 +214,10 @@ msgstr ""
 msgid "settings-content-postintro-description"
 msgstr ""
 
-msgid "settings-content-separator-title"
+msgid "settings-content-imageswide-title"
 msgstr ""
 
-msgid "settings-content-separator-description"
-msgstr ""
-
-msgid "settings-content-postlistreactionlink-title"
+msgid "settings-content-imageswide-description"
 msgstr ""
 
 msgid "settings-content-postreactionfeed-title"
@@ -256,6 +241,12 @@ msgstr ""
 msgid "settings-content-postlistcommentlink-always"
 msgstr ""
 
+msgid "settings-content-separator-title"
+msgstr ""
+
+msgid "settings-content-separator-description"
+msgstr ""
+
 msgid "settings-widgets-navposition-title"
 msgstr ""
 
@@ -271,7 +262,13 @@ msgstr ""
 msgid "settings-widgets-searchform-title"
 msgstr ""
 
+msgid "settings-widgets-searchform-description"
+msgstr ""
+
 msgid "settings-widgets-extra-title"
+msgstr ""
+
+msgid "settings-widgets-extra-description"
 msgstr ""
 
 msgid "settings-footer-activation-title"
@@ -283,13 +280,7 @@ msgstr ""
 msgid "settings-footer-credits-title"
 msgstr ""
 
-msgid "settings-footer-align-title"
-msgstr ""
-
-msgid "settings-footer-align-left-default"
-msgstr ""
-
-msgid "settings-footer-align-center"
+msgid "settings-footer-credits-description"
 msgstr ""
 
 msgid "settings-footer-sociallinks-diaspora-title"
@@ -334,9 +325,6 @@ msgid "settings-save-button-text"
 msgstr ""
 
 msgid "settings-reset-button-text"
-msgstr ""
-
-msgid "settings-settings-not-working-message"
 msgstr ""
 
 msgid "settings-config-updated"

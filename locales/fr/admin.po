@@ -24,31 +24,25 @@ msgid "section-global-advance"
 msgstr "Paramètres avancés"
 
 msgid "section-header"
-msgstr "Paramètres d’en-tête"
-
-msgid "section-header-content"
-msgstr "Contenu"
+msgstr "Paramètres de l’en-tête"
 
 msgid "section-content"
 msgstr "Paramètres du contenu"
 
-msgid "section-content-postlist"
-msgstr "Liste des billets"
-
 msgid "section-content-textformatting"
 msgstr "Mise en forme du texte"
 
-msgid "section-content-images"
-msgstr "Images"
+msgid "section-content-postlist"
+msgstr "Liste des billets"
 
-msgid "section-content-reactions"
-msgstr "Réactions"
+msgid "section-content-post"
+msgstr "Billets"
 
 msgid "section-content-other"
 msgstr "Autres paramètres"
 
 msgid "section-widgets"
-msgstr "Paramètres de widgets"
+msgstr "Paramètres des widgets"
 
 msgid "section-footer"
 msgstr "Paramètres du pied de page"
@@ -59,10 +53,10 @@ msgstr "Liens sociaux"
 # Settings
 
 msgid "settings-global-pagewidth-title"
-msgstr "Largeur de la page"
+msgstr "Largeur des pages"
 
 msgid "settings-global-pagewidth-description"
-msgstr "La largeur de la page dépend de la taille de la police. Par défaut, 30 em correspond à une largeur de page de 480 px."
+msgstr "La largeur de la page dépend de la taille de la police définie dans le navigateur. Votre blog peut donc s’afficher différemment d’un appareil à l’autre. Par défaut, 30 em correspondent à une largeur de page de 480 px."
 
 msgid "settings-global-pagewidth-30-default"
 msgstr "30 em (par défaut)"
@@ -74,10 +68,10 @@ msgid "settings-global-pagewidth-40"
 msgstr "40 em"
 
 msgid "settings-global-fontsize-title"
-msgstr "Taille de la police"
+msgstr "Taille"
 
 msgid "settings-global-fontsize-description"
-msgstr "Il est recommandé de ne pas modifier ce paramètre. Une taille de 100 % signifie que les textes de votre site auront la taille définie dans les paramètres du navigateur de chacun de vos visiteurs."
+msgstr "Il est recommandé de ne pas modifier ce paramètre. 100 %, cela signifie que la taille de vos textes correspondra à celle définie dans votre navigateur. Elle peut donc varier, là aussi, d’un appareil à l’autre."
 
 msgid "settings-global-fontsize-80"
 msgstr "80 %"
@@ -86,7 +80,7 @@ msgid "settings-global-fontsize-90"
 msgstr "90 %"
 
 msgid "settings-global-fontsize-100-default"
-msgstr "100 % (recommandé)"
+msgstr "100 % (par défaut)"
 
 msgid "settings-global-fontsize-110"
 msgstr "110 %"
@@ -98,10 +92,10 @@ msgid "settings-global-fontsize-120"
 msgstr "120 %"
 
 msgid "settings-global-fontfamily-title"
-msgstr "Famille de polices"
+msgstr "Famille"
 
 msgid "settings-global-fontfamily-description"
-msgstr "Dans tous les cas, votre thème chargera les polices du système de l’appareil à partir duquel votre site est consulté. Cela permet de réduire les temps de chargement et d’avoir une continuité graphique avec le système."
+msgstr "Dans tous les cas, votre thème chargera les polices du système de l’appareil à partir duquel votre blog est consulté. Cela permet de réduire les temps de chargement et d’avoir une continuité graphique avec le système."
 
 msgid "settings-global-fontfamily-sansserif-default"
 msgstr "Avec empattements (par défaut)"
@@ -119,10 +113,7 @@ msgid "settings-global-primarycolor-title"
 msgstr "Couleur principale"
 
 msgid "settings-global-primarycolor-description"
-msgstr "Notamment utilisée pour colorer les liens."
-
-msgid "settings-global-primarycolor-description"
-msgstr "Notamment utilisée pour colorer les liens."
+msgstr "Notamment utilisée pour les liens."
 
 msgid "settings-global-primarycolor-blue-default"
 msgstr "Bleu (par défaut)"
@@ -140,55 +131,43 @@ msgid "settings-global-colortransition-title"
 msgstr "Activer les transitions de couleur"
 
 msgid "settings-global-colortransition-description"
-msgstr "Se manifestent lors du survol des liens et des boutons."
+msgstr "Les transitions s’activent lors du survol des liens et des boutons."
 
 msgid "settings-global-linksunderline-title"
-msgstr "Souligner les liens avec des points"
+msgstr "Souligner les liens avec des points <strong class=setting-recommended id=setting-linksunderline-recommended style="display:none;">(recommandé lorsque le gris est la couleur principale)</strong>"
 
 msgid "settings-global-linksunderline-description"
-msgstr "Bon pour l’accessibilité."
+msgstr "Lors du survol, ils seront surlignés avec une ligne pleine."
 
 msgid "settings-global-roundcorner-title"
 msgstr "Arrondir les coins"
 
 msgid "settings-global-roundcorner-description"
-msgstr "Par exemple les bordures d’un champ de formulaire."
+msgstr "Ce paramètre concerne notamment le titre du site et les boutons."
 
 msgid "settings-global-minimalsocialmarkups-title"
-msgstr "Ajouter les balises sociales minimalistes dans l’en-tête"
+msgstr "Ajouter des balises sociales minimalistes dans l’en-tête"
 
 msgid "settings-global-minimalsocialmarkups-description"
-msgstr "Invisibles lors de la navigation, elles permettent un meilleur affichage des billets et des pages lors de leur diffusion sur les réseaux sociaux."
+msgstr "Invisibles lors de la navigation, elles permettent un affichage avantageux des billets et des pages lors de leur partage sur les réseaux sociaux. Pour une utilisation avancée, il est recommandé d’utiliser l’extension <a href=%s>socialMeta</a> et de désactiver ce paramètres qui ferait doublon."
 
 msgid "settings-global-metagenerator-title"
-msgstr "Ajouter le métaélément <code>generator</code> à l’en-tête"
+msgstr "Ajouter la balise meta <code>generator</code> dans l’en-tête"
 
 msgid "settings-global-metagenerator-description"
-msgstr "Permet d’afficher Dotclear dans le code source."
+msgstr "Permet d’afficher dans le code source du blog que Dotclear est son moteur."
 
 msgid "settings-header-description-title"
 msgstr "Afficher la description du blog"
 
-msgid "settings-content-postlisttype-title"
-msgstr "Affichage de la liste des billets"
-
-msgid "settings-content-postlisttype-oneline-default"
-msgstr "Sur une seule ligne (par défaut)"
-
-msgid "settings-content-postlisttype-extended"
-msgstr "Étendu"
-
-msgid "settings-content-postlisttime-title"
-msgstr "Afficher l’heure de publication des billets"
+msgid "settings-content-fontfamily-title"
+msgstr "Police d’écriture"
 
 msgid "settings-content-fontfamily-same-default"
 msgstr "Identique à la police globale du thème (par défaut)"
 
-msgid "settings-content-fontfamily-title"
-msgstr "Police d’écriture du contenu des billets, des pages et des commentaires"
-
 msgid "settings-content-textalign-title"
-msgstr "Alignement du texte"
+msgstr "Alignement"
 
 msgid "settings-content-textalign-left-default"
 msgstr "À gauche (par défaut)"
@@ -211,29 +190,35 @@ msgstr "Activées"
 msgid "settings-content-hyphens-enablednotmobile"
 msgstr "Activées, sauf sur les petits écrans"
 
-msgid "settings-content-imageswide-title"
-msgstr "Agrandir les images suffisamment larges"
+msgid "settings-content-postlisttype-title"
+msgstr "Affichage"
 
-msgid "settings-content-imageswide-description"
-msgstr "Permet aux photos de s’afficher en grand dans les billets (utilise JavaScript)."
+msgid "settings-content-postlisttype-oneline-default"
+msgstr "Sur une seule ligne (par défaut)"
+
+msgid "settings-content-postlisttype-extended"
+msgstr "Étendu"
+
+msgid "settings-content-postlisttime-title"
+msgstr "Afficher l’heure de publication"
+
+msgid "settings-content-postlistreactionlink-title"
+msgstr "Afficher un lien vers les réactions"
 
 msgid "settings-content-posttime-title"
-msgstr "Affiche l’heure de publication des billets lorsqu’il sont ouverts"
+msgstr "Afficher l’heure de publication"
 
 msgid "settings-content-postintro-title"
-msgstr "Afficher l’extrait comme une introduction des billets"
+msgstr "Afficher l’extrait comme introduction"
 
 msgid "settings-content-postintro-description"
 msgstr "Met en avant l’extrait défini par l’auteur entre le titre et le contenu du billet."
 
-msgid "settings-content-separator-title"
-msgstr "Caractère de séparation"
+msgid "settings-content-imageswide-title"
+msgstr "Agrandir les images suffisamment larges"
 
-msgid "settings-content-separator-description"
-msgstr "Utilisé pour séparer certains éléments du thème. Par défaut&nbsp;: « %s »"
-
-msgid "settings-content-postlistreactionlink-title"
-msgstr "Afficher un lien vers les réactions au billet"
+msgid "settings-content-imageswide-description"
+msgstr "Les photos suffisamment grandes déborderont de la page (utilise JavaScript)."
 
 msgid "settings-content-postreactionfeed-title"
 msgstr "Ajouter un lien pour s’abonner aux réactions"
@@ -245,7 +230,7 @@ msgid "settings-content-privatecomment-title"
 msgstr "Commentaires privés"
 
 msgid "settings-content-postlistcommentlink-description"
-msgstr "Si cette option est activée, l’adresse électronique des auteurs sera rendue publique. Si vous préférez ne pas révéler leur adresse, essayez <a href=%s>l’extension Signal</a>."
+msgstr "Si cette option est activée, <strong>l’adresse électronique des auteurs sera rendue publique</strong>. Si vous préférez ne pas révéler leur adresse, essayez <a href=%s>l’extension Signal</a>."
 
 msgid "settings-content-postlistcommentlink-no-default"
 msgstr "Désactivés (par défaut)"
@@ -256,8 +241,14 @@ msgstr "Activés, seulement si les commentaires sont ouverts"
 msgid "settings-content-postlistcommentlink-always"
 msgstr "Toujours activés"
 
+msgid "settings-content-separator-title"
+msgstr "Caractère de séparation"
+
+msgid "settings-content-separator-description"
+msgstr "Utilisé pour séparer certains éléments du thème. Par défaut&nbsp;: « %s »"
+
 msgid "settings-widgets-navposition-title"
-msgstr "Positionnement des widgets de navigation"
+msgstr "Positionnement des <a href=%s>widgets de navigation</a>"
 
 msgid "settings-widgets-navposition-top"
 msgstr "Entre l’en-tête et le contenu"
@@ -269,28 +260,28 @@ msgid "settings-widgets-navposition-disabled"
 msgstr "Désactiver cette zone de widgets"
 
 msgid "settings-widgets-searchform-title"
-msgstr "Afficher un formulaire de recherche en haut de la zone de widgets de navigation"
+msgstr "Afficher un formulaire de recherche avant les widgets de navigation"
+
+msgid "settings-widgets-searchform-description"
+msgstr "Il s’agit d’un formulaire spécifique au thème différent du widget de recherche par défaut."
 
 msgid "settings-widgets-extra-title"
-msgstr "Activer les widgets extra"
+msgstr "Activer les <a href=%s>widgets extra</a>"
+
+msgid "settings-widgets-extra-description"
+msgstr "Il est conseillé de décocher ce paramètre si aucun widget extra n’est configuré."
 
 msgid "settings-footer-activation-title"
 msgstr "Activer le pied de page"
 
 msgid "settings-footer-activation-description"
-msgstr "Il est recommandé de décocher cette option si le pied de page ne contient aucun élément."
+msgstr "Il est recommandé de décocher cet paramètre si le pied de page ne contient aucun élément."
 
 msgid "settings-footer-credits-title"
 msgstr "Afficher une mention à Dotclear et au thème"
 
-msgid "settings-footer-align-title"
-msgstr "Alignement du pied de page"
-
-msgid "settings-footer-align-left-default"
-msgstr "À gauche (par défaut)"
-
-msgid "settings-footer-align-center"
-msgstr "Centré"
+msgid "settings-footer-credits-description"
+msgstr "Permet de faire de la publicité pour Dotclear et ce thème."
 
 msgid "settings-footer-sociallinks-diaspora-title"
 msgstr "Adresse d’un profil Diaspora"
@@ -302,7 +293,7 @@ msgid "settings-footer-sociallinks-facebook-title"
 msgstr "Adresse d’un profil ou d’une page Facebook"
 
 msgid "settings-footer-sociallinks-github-title"
-msgstr "Adresse d’un profil ou d’une répertoire sur GitHub"
+msgstr "Adresse d’un profil ou d’un répertoire GitHub"
 
 msgid "settings-footer-sociallinks-mastodon-title"
 msgstr "Adresse d’un profil Mastodon"
@@ -325,19 +316,16 @@ msgstr "Styles personnalisés pour Origine Mini"
 # Form
 
 msgid "settings-default-checked"
-msgstr "Par défaut : coché."
+msgstr "Par défaut&nbsp;: coché."
 
 msgid "settings-default-unchecked"
-msgstr "Par défaut : décoché."
+msgstr "Par défaut&nbsp;: décoché."
 
 msgid "settings-save-button-text"
 msgstr "Enregistrer"
 
 msgid "settings-reset-button-text"
 msgstr "Réinitialiser tous les paramètres"
-
-msgid "settings-settings-not-working-message"
-msgstr "Vos paramètres ne fonctionnent pas ? N’oubliez pas de cocher l’option <a href=%s>Activer les paramètres de l’extension</a>."
 
 msgid "settings-config-updated"
 msgstr "La configuration du thème a été mise à jour."
