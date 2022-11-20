@@ -307,6 +307,9 @@ msgstr "Adresse d’un profil TikTok"
 msgid "settings-footer-sociallinks-twitter-title"
 msgstr "Nom d’utilisateur d’un compte Twitter"
 
+msgid "settings-footer-sociallinks-twitter-placeholder"
+msgstr "@nomdutilisateur"
+
 msgid "settings-footer-sociallinks-whatsapp-title"
 msgstr "Numéro de téléphone WhatsApp"
 

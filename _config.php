@@ -469,7 +469,7 @@ class adminConfigOrigineMini
             'description' => '',
             'type'        => 'text',
             'default'     => '',
-            'placeholder' => '@username',
+            'placeholder' => __('settings-footer-sociallinks-twitter-placeholder'),
             'section'     => ['footer', 'social-links']
         ];
 

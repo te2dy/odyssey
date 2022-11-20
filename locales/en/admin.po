@@ -307,6 +307,9 @@ msgstr "URL of a TikTok profile"
 msgid "settings-footer-sociallinks-twitter-title"
 msgstr "Twitter account username"
 
+msgid "settings-footer-sociallinks-twitter-placeholder"
+msgstr "@username"
+
 msgid "settings-footer-sociallinks-whatsapp-title"
 msgstr "WhatsApp phone number"
 

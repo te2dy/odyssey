@@ -307,6 +307,9 @@ msgstr ""
 msgid "settings-footer-sociallinks-twitter-title"
 msgstr ""
 
+msgid "settings-footer-sociallinks-twitter-placeholder"
+msgstr ""
+
 msgid "settings-footer-sociallinks-whatsapp-title"
 msgstr ""
 
