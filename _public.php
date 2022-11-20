@@ -8,7 +8,7 @@
 
 namespace themes\origine_mini;
 
-use dcCore, html, context;
+use context, dcCore, html, text;
 
 if (!defined('DC_RC_PATH')) {
     return;
