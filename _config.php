@@ -502,7 +502,7 @@ class adminConfigOrigineMini
         $default_settings = self::default_settings();
 
         foreach ($default_settings as $setting_id => $setting_data) {
-            if (dcCore::app()->blog->settings->originemini->settingExists($setting_id) === true) {
+            if (dcCore::app()->blog->settings->originemini->$setting_id !== null) {
                 if (isset($setting_data['type']) && $setting_data['type'] === 'checkbox') {
                     $saved_settings[$setting_id] = (boolean) dcCore::app()->blog->settings->originemini->$setting_id;
                 } elseif (isset($setting_data['type']) && $setting_data['type'] === 'select_int') {
