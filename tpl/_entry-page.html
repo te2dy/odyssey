@@ -11,9 +11,11 @@
     {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
   </div>
 
-  <footer class=post-footer>
-    {{tpl:include src="_attachments.html"}}
-  </footer>
+  <tpl:EntryIf has_attachment="1">
+    <footer class=post-footer>
+      {{tpl:include src="_attachments.html"}}
+    </footer>
+  </tpl:EntryIf>
 </article>
 
 {{tpl:include src="_comments.html"}}
