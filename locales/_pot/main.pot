@@ -17,6 +17,12 @@ msgstr ""
 msgid "feed-comments-title"
 msgstr ""
 
+msgid "meta-social-page-with-number"
+msgstr ""
+
+msgid "meta-social-tags-post-related"
+msgstr ""
+
 # Header
 
 msgid "skip-link-content"
@@ -43,6 +49,18 @@ msgid "post-selected-label"
 msgstr ""
 
 msgid "post-list-date-aria-label"
+msgstr ""
+
+msgid "post-list-one-reaction-link-aria-label"
+msgstr ""
+
+msgid "post-list-multiple-reactions-link-aria-label"
+msgstr ""
+
+msgid "post-list-one-reaction"
+msgstr ""
+
+msgid "post-list-multiple-reactions"
 msgstr ""
 
 msgid "post-list-open-aria"
@@ -167,7 +185,22 @@ msgstr ""
 msgid "reactions-comment-form-submit-button"
 msgstr ""
 
+msgid "private-comment-title"
+msgstr ""
+
+msgid "private-comment-body-post-url"
+msgstr ""
+
+msgid "private-comment-button-text"
+msgstr ""
+
+msgid "private-comment-email-prefix"
+msgstr ""
+
 msgid "reactions-subscribe-link-reactions"
+msgstr ""
+
+msgid "reactions-trackbacks-add-label"
 msgstr ""
 
 msgid "reactions-trackback-url-copied"

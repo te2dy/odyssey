@@ -54,11 +54,12 @@ body {
   align-items: center;
   column-gap: 1rem;
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
+  row-gap: .5rem;
   order: 1;
 }
+
 #site-content {
   order: var(--order-content, 2);
 }
@@ -168,9 +169,12 @@ h6 {
 }
 
 /* Text content styles */
-.content-text :not(pre) {
+.content-text {
   line-height: 1.5;
   text-align: var(--text-align, left);
+}
+.content-text pre {
+  text-align: left;
 }
 .content-text hr {
   border: 0;
@@ -221,7 +225,7 @@ h6 {
 }
 
 .text-secondary {
-  color: var(--color-text-secondary, #797c86);
+  color: var(--color-text-secondary, #6c6f78);
 }
 
 /* Images & media */
@@ -292,14 +296,14 @@ input[type="submit"],
   cursor: pointer;
 }
 input:disabled {
-  color: var(--color-text-secondary, #797c86);
+  color: var(--color-text-secondary, #6c6f78);
 }
 input[type="submit"]:disabled {
   border-color: var(--color-border, #c2c7d6);
 }
 input[type="submit"]:is(:active, :focus, :hover):disabled {
   background-color: var(--color-background, #fcfcfd);
-  color: var(--color-text-secondary, #797c86);
+  color: var(--color-text-secondary, #6c6f78);
   cursor: default;
 }
 textarea {
@@ -333,7 +337,7 @@ details summary {
   display: block;
   flex-shrink: 0;
   font-size: 1em;
-  margin: 0 auto 0 0;
+  margin: 0;
   padding: .5em;
 }
 #site-title a {
@@ -348,7 +352,7 @@ details summary {
 }
 #main-menu li {
   display: inline-block;
-  margin: .25rem .5rem .25rem 0;
+  margin-right: .5rem;
 }
 #main-menu li:last-child {
   margin-right: 0;
@@ -359,6 +363,8 @@ details summary {
  */
 .post-selected {
   border: .063rem solid var(--color-border, #c2c7d6);
+}
+.post .post-selected {
   padding: .5rem;
 }
 .post-date {
@@ -386,6 +392,12 @@ details summary {
 }
 .post-list .post:last-child {
   margin-bottom: 0;
+}
+.post-list .post-selected {
+  padding: .5rem;
+}
+.post-list-extended .post-selected {
+  padding: 1rem;
 }
 .post-list .post-title {
   font-size: 1em;
@@ -616,9 +628,6 @@ aside .widget:last-child {
     margin-top: 2rem;
     margin-bottom: 2rem;
     row-gap: 2rem;
-  }
-  #site-header {
-    row-gap: .5rem;
   }
   .post-list .post {
     flex-direction: column;
