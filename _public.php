@@ -382,7 +382,7 @@ if(imgHeight){myImg.setAttribute("height",imgHeight)}}});i++}}</script>
         }
 
         // Adds a link to the footer except if it has been disabled in the configurator.
-        if (dcCore::app()->blog->settings->originemini->footer_enabled === true) {
+        if (dcCore::app()->blog->settings->originemini->footer_enabled !== false) {
           $links .= '<a id=skip-footer class=skip-links href=#site-footer>' . __('skip-link-footer') . '</a>';
         }
 
@@ -439,7 +439,7 @@ if(imgHeight){myImg.setAttribute("height",imgHeight)}}});i++}}</script>
      */
     public static function origineMiniPostListType()
     {
-        if (!dcCore::app()->blog->settings->originemini->content_post_list_type || dcCore::app()->blog->settings->originemini->content_post_list_type === 'short') {
+        if (dcCore::app()->blog->settings->originemini->content_post_list_type !== null || dcCore::app()->blog->settings->originemini->content_post_list_type === 'short') {
             return dcCore::app()->tpl->includeFile(['src' => '_entry-list-short.html']);
         } else {
             return dcCore::app()->tpl->includeFile(['src' => '_entry-list-extended.html']);
@@ -493,7 +493,7 @@ if(imgHeight){myImg.setAttribute("height",imgHeight)}}});i++}}</script>
      */
     public static function origineMiniEntryTime($attr)
     {
-        if ( !empty($attr['context']) && (dcCore::app()->blog->settings->originemini->content_post_list_time === true && $attr['context'] === 'post-list') || (dcCore::app()->blog->settings->originemini->content_post_time === true && $attr['context'] === 'post')) {
+        if (!empty($attr['context']) && (dcCore::app()->blog->settings->originemini->content_post_list_time === true && $attr['context'] === 'post-list') || (dcCore::app()->blog->settings->originemini->content_post_time === true && $attr['context'] === 'post')) {
             return ' <?php
                 echo "' . dcCore::app()->blog->settings->originemini->content_separator . '", " ", dcCore::app()->ctx->posts->getDate("' . dcCore::app()->blog->settings->system->time_format . '");
             ?>';
