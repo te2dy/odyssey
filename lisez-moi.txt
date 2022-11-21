@@ -12,6 +12,9 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
+=== 1.0.2 - 21 novembre 2022 ===
+- Corrections : multiples petites erreurs et oublis minimes lors de l’intégrétion des options au configurateur.
+
 === 1.0.1 - 20 novembre 2022 ===
 - Ajout : configurateur de thème intégré sans recours à l’extension origineConfig.
 - Ajout : feuilles de scripts originales qui sont ensuite intégrées minifiée dans le code PHP.
