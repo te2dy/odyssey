@@ -439,7 +439,7 @@ if(imgHeight){myImg.setAttribute("height",imgHeight)}}});i++}}</script>
      */
     public static function origineMiniPostListType()
     {
-        if (dcCore::app()->blog->settings->originemini->content_post_list_type !== null || dcCore::app()->blog->settings->originemini->content_post_list_type === 'short') {
+        if (dcCore::app()->blog->settings->originemini->content_post_list_type === null || dcCore::app()->blog->settings->originemini->content_post_list_type === 'short') {
             return dcCore::app()->tpl->includeFile(['src' => '_entry-list-short.html']);
         } else {
             return dcCore::app()->tpl->includeFile(['src' => '_entry-list-extended.html']);
@@ -494,8 +494,14 @@ if(imgHeight){myImg.setAttribute("height",imgHeight)}}});i++}}</script>
     public static function origineMiniEntryTime($attr)
     {
         if (!empty($attr['context']) && (dcCore::app()->blog->settings->originemini->content_post_list_time === true && $attr['context'] === 'post-list') || (dcCore::app()->blog->settings->originemini->content_post_time === true && $attr['context'] === 'post')) {
-            return ' <?php
-                echo "' . dcCore::app()->blog->settings->originemini->content_separator . '", " ", dcCore::app()->ctx->posts->getDate("' . dcCore::app()->blog->settings->system->time_format . '");
+            if (dcCore::app()->blog->settings->originemini->content_separator !== null) {
+                $content_separator = ' ' . dcCore::app()->blog->settings->originemini->content_separator;
+            } else {
+                $content_separator = ' |';
+            }
+
+            return '<?php
+                echo "' . $content_separator . '", " ", dcCore::app()->ctx->posts->getDate("' . dcCore::app()->blog->settings->system->time_format . '");
             ?>';
        }
     }

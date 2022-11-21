@@ -509,6 +509,7 @@ details summary {
 }
 #trackback-url {
   color: var(--color-primary, #1742cf);
+  text-decoration: var(--link-text-decoration, none);
 }
 #trackback-url:is(:active, :focus, :hover) {
   cursor: pointer;

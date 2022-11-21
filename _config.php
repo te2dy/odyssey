@@ -484,8 +484,6 @@ class adminConfigOrigineMini
 
         $default_settings['styles'] = [
             'title'       => __('settings-footer-origineministyles-title'),
-            'description' => '',
-            'theme'       => ['origine-mini']
         ];
 
         return $default_settings;
@@ -694,8 +692,8 @@ class adminConfigOrigineMini
                                         $setting_id,
                                         $setting_value,
                                         $setting_type,
-                                        $setting_title,
-                                        true // ????
+                                        html::clean($setting_title),
+                                        true
                                     );
                                 } else {
                                     dcCore::app()->blog->settings->originemini->drop($setting_id);
@@ -710,8 +708,8 @@ class adminConfigOrigineMini
                                         $setting_id,
                                         false,
                                         'boolean',
-                                        $setting_title,
-                                        true // ????
+                                        html::clean($setting_title),
+                                        true
                                     );
                                 } else {
                                     dcCore::app()->blog->settings->originemini->drop($setting_id);
@@ -862,6 +860,8 @@ class adminConfigOrigineMini
             // Links underline.
             if (isset($_POST['global_css_links_underline']) && $_POST['global_css_links_underline'] === '1') {
                 $css_main_array[':root']['--link-text-decoration'] = 'underline dotted';
+
+                $css_main_array['.button']['text-decoration'] = 'none';
             }
 
             // Border radius.
@@ -900,7 +900,9 @@ class adminConfigOrigineMini
 
             // Content font family.
             if (isset($_POST['content_text_font']) && $_POST['content_text_font'] !== 'same' && $_POST['global_font_family'] !== $_POST['content_text_font']) {
-                if ($_POST['content_text_font'] === 'serif') {
+                if ($_POST['content_text_font'] === 'sans-serif') {
+                    $css_main_array['.content-text']['font-family'] = '-apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif';
+                } elseif ($_POST['content_text_font'] === 'serif') {
                     $css_main_array['.content-text']['font-family'] = '"Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
                 } elseif ($_POST['content_text_font'] === 'monospace') {
                     $css_main_array['.content-text']['font-family'] = 'Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace';
@@ -960,9 +962,8 @@ class adminConfigOrigineMini
             // Post introduction.
             if (isset($_POST['content_post_intro']) && $_POST['content_post_intro'] === '1') {
                 $css_main_array['#post-intro']['border-block']  = '.063rem solid var(--color-border, #c2c7d6)';
-                $css_main_array['#post-intro']['font-weight']    = '700';
-                $css_main_array['#post-intro']['margin-bottom']  = '2rem';
-                $css_main_array['#post-intro']['padding']        = '1rem 0';
+                $css_main_array['#post-intro']['font-weight']   = '700';
+                $css_main_array['#post-intro']['margin-bottom'] = '2rem';
 
                 $css_main_array['#post-intro strong']['font-weight'] = '900';
             }
@@ -972,14 +973,12 @@ class adminConfigOrigineMini
                 $css_main_array['.post-list .post']['flex-wrap'] = 'wrap';
 
                 if (!isset($_POST['content_post_list_type']) || (isset($_POST['content_post_list_type']) && $_POST['content_post_list_type'] !== 'extended')) {
-                    $css_main_array['.post-reaction-link']['margin-top'] = '.2rem';
                     $css_main_array['.post-reaction-link']['flex-basis'] = '100%';
 
                     $css_media_array['.post-reaction-link']['order'] = '3';
                 } else {
                     $css_main_array['.post-reaction-link']['display']    = 'inline-block';
                     $css_main_array['.post-reaction-link']['flex-basis'] = '100%';
-                    $css_main_array['.post-reaction-link']['font-size']  = '.8em';
                     $css_main_array['.post-reaction-link']['margin-top'] = '.5rem';
                 }
             }
@@ -994,6 +993,8 @@ class adminConfigOrigineMini
 
             if (isset($_POST['widgets_nav_position']) && $_POST['widgets_nav_position'] === 'header_content') {
                 $structure_order[2] = '--order-widgets-nav';
+
+                $css_main_array['#blognav']['margin'] = '-2rem 0';
             }
 
             if ($structure_order[2] === '') {
@@ -1192,6 +1193,8 @@ class adminConfigOrigineMini
                 <input class=delete name=reset value="<?php echo __('settings-reset-button-text'); ?>" type=submit>
             </p>
         </form>
+
+        <p><?php echo __("Vous souhaitez proposer un nouveau paramètre à ajouter au thème ?"); ?></p>
 
         <?php
     }
