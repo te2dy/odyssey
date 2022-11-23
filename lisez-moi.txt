@@ -12,6 +12,11 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
+=== 1.0.3 - 23 novembre 2022 ===
+- Ajout : prise en charge de la réduction des animations pour l’accessibilité.
+- Amélioration : documentation.
+- Simplification : système de personnalisation des couleurs.
+
 === 1.0.2 - 21 novembre 2022 ===
 - Corrections : multiples petites erreurs et oublis minimes lors de l’intégrétion des options au configurateur.
 
