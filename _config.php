@@ -799,7 +799,7 @@ class adminConfigOrigineMini
             }
 
             // Primary color.
-            $primary_colors_allowed = ['blue', 'gray', 'green', 'red'];
+            $primary_colors_allowed = ['gray', 'green', 'red'];
 
             $primary_colors = [
                 'light' => [
@@ -811,7 +811,6 @@ class adminConfigOrigineMini
                         '--color-border'           => '#cccccc',
                         '--color-input-background' => '#f2f2f2'
                     ],
-
                     'green' => [
                         '--color-primary'          => '#138613',
                         '--color-background'       => '#fcfcfc',
@@ -820,7 +819,6 @@ class adminConfigOrigineMini
                         '--color-border'           => '#cccccc',
                         '--color-input-background' => '#f1f4f1'
                     ],
-
                     'red' => [
                         '--color-primary'          => '#e61919',
                         '--color-background'       => '#fdfcfc',
@@ -838,20 +836,12 @@ class adminConfigOrigineMini
                 ]
             ];
 
-            if (isset($_POST['global_color_primary']) && $_POST['global_color_primary'] !== 'blue') {
-                if (in_array($_POST['global_color_primary'], $primary_colors_allowed, true)) {
-                    foreach ($primary_colors['light'][$_POST['global_color_primary']] as $key => $value) {
-                        $css_root_array[':root'][$key] = $value;
-                    }
-
-                    $css_root_media_array[':root']['--color-primary-dark'] = $primary_colors['dark'][$_POST['global_color_primary']];
-                } else {
-                    foreach ($primary_colors['light']['blue'] as $key => $value) {
-                        $css_root_array[':root'][$key] = $value;
-                    }
-
-                    $css_root_media_array[':root']['--color-primary-dark'] = $primary_colors['dark']['blue'];
+            if (isset($_POST['global_color_primary']) && in_array($_POST['global_color_primary'], $primary_colors_allowed, true)) {
+                foreach ($primary_colors['light'][$_POST['global_color_primary']] as $key => $value) {
+                    $css_root_array[':root'][$key] = $value;
                 }
+
+                $css_root_media_array[':root']['--color-primary-dark'] = $primary_colors['dark'][$_POST['global_color_primary']];
             }
 
             // Transitions.
