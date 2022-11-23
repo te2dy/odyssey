@@ -1120,7 +1120,7 @@ class adminConfigOrigineMini
                     htmlspecialchars($css, ENT_NOQUOTES),
                     'string',
                     $default_settings['styles']['title'],
-                    true // ????
+                    true
                 );
             } else {
                 dcCore::app()->blog->settings->originemini->drop('styles');
@@ -1160,7 +1160,7 @@ class adminConfigOrigineMini
         // Puts all parameters in their section.
         foreach($settings as $setting_id => $setting_data) {
             if ($setting_id !== 'styles') {
-                // If a sub section has been set.
+                // If a sub-section is set.
                 if (isset($setting_data['section'][1])) {
                     $sections_with_settings_id[$setting_data['section'][0]][$setting_data['section'][1]][] = $setting_id;
                 } else {
@@ -1204,8 +1204,6 @@ class adminConfigOrigineMini
                 <input class=delete name=reset value="<?php echo __('settings-reset-button-text'); ?>" type=submit>
             </p>
         </form>
-
-        <p><?php echo __("Vous souhaitez proposer un nouveau paramètre à ajouter au thème ?"); ?></p>
 
         <?php
     }
