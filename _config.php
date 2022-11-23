@@ -2,7 +2,7 @@
 /**
  * Origine Mini, a minimal theme for Dotclear.
  *
- * This file sets up the theme configuration page.
+ * This file sets up the theme configuration page and settings.
  *
  * @copyright Teddy
  * @copyright GPL-3.0
@@ -19,7 +19,7 @@ dcCore::app()->addBehavior('adminPageHTMLHead', ['adminConfigOrigineMini', 'load
 class adminConfigOrigineMini
 {
     /**
-     * Loads custom styles and scripts for the configurator page.
+     * Loads styles and scripts of the theme configurator.
      *
      * @return void
      */
@@ -29,18 +29,18 @@ class adminConfigOrigineMini
         dcPage::jsLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/js/admin.js');
     }
     /**
-     * Defines the sections of the form in which the settings will be sorted.
+     * Defines the sections in which the theme settings will be sorted.
      *
-     * Sections and sub-sections are put in an array following this pattern:
+     * The sections and sub-sections are placed in an array following this pattern:
      * $page_sections['section_id'] = [
-     *     'name'         => 'The name of the section',
+     *     'name'         => 'The name of this section',
      *     'sub_sections' => [
-     *         'sub_section1_id' => 'The name of the sub section',
-     *         'sub_section2_id' => …
+     *         'sub_section_1_id' => 'The name of this subsection',
+     *         'sub_section_2_id' => …
      *     ]
      * ];
      *
-     * @return array The sections and sub-sections.
+     * @return array Sections and sub-sections.
      */
     public static function page_sections()
     {
@@ -90,7 +90,7 @@ class adminConfigOrigineMini
     }
 
     /**
-     * Defines all the settings to customize the theme.
+     * Defines all customization settings of the theme.
      *
      * $default_settings['setting_id'] = [
      *     'title'       => (string) The title of the setting,
@@ -358,8 +358,8 @@ class adminConfigOrigineMini
             'section'     => ['content', 'other']
         ];
 
-        // Widgets.
-        if (dcCore::app()->plugins->moduleExists('widgets')) {
+        // Widgets settings.
+        if (dcCore::app()->plugins->moduleExists('widgets') === true) {
             $default_settings['widgets_nav_position'] = [
                 'title'       => sprintf(__('settings-widgets-navposition-title'), dcCore::app()->adminurl->get('admin.plugin.widgets')),
                 'description' => '',
@@ -390,7 +390,7 @@ class adminConfigOrigineMini
             ];
         }
 
-        // Footer.
+        // Footer settings.
         $default_settings['footer_enabled'] = [
             'title'       => __('settings-footer-activation-title'),
             'description' => __('settings-footer-activation-description'),
@@ -490,9 +490,9 @@ class adminConfigOrigineMini
     }
 
     /**
-     * Gets all the theme settings saved in the database.
+     * Retrieves all theme settings stored in the database.
      *
-     * @return array Settings id associated with their value.
+     * @return array The id of the saved parameters associated with their values.
      */
     public static function saved_settings()
     {
@@ -515,11 +515,11 @@ class adminConfigOrigineMini
     }
 
     /**
-     * Converts an array of styles to a string without spaces and line breaks.
+     * Converts a style array into a minified style string.
      *
-     * @param array $rules An array of CSS rules.
+     * @param array $rules An array of styles.
      *
-     * @return string $css All the CSS in a single line.
+     * @return string $css The minified styles.
      */
     public static function styles_array_to_string($rules)
     {
@@ -547,6 +547,13 @@ class adminConfigOrigineMini
         return $css;
     }
 
+    /**
+     * Displays each parameter according to its type.
+     *
+     * @param strong $setting_id The id of the setting to display.
+     *
+     * @return void The parameter.
+     */
     public static function setting_rendering($setting_id = '')
     {
         $default_settings = self::default_settings();
@@ -555,8 +562,8 @@ class adminConfigOrigineMini
         if ($setting_id !== '' && array_key_exists($setting_id, $default_settings)) {
             echo '<p id=' . $setting_id . '-input>';
 
-            // If the value of the setting is not set, defines the default value.
-            if (isset($saved_settings[$setting_id])) { // Here, the value of the setting.
+            // Displays the default value of the parameter if it is not defined.
+            if (isset($saved_settings[$setting_id])) {
                 $setting_value = $saved_settings[$setting_id];
             } else {
                 $setting_value = isset($default_settings[$setting_id]['default']) ? $default_settings[$setting_id]['default'] : '';
@@ -610,11 +617,11 @@ class adminConfigOrigineMini
 
             echo '</p>';
 
-            // If the setting has a description, displays it as a note.
+            // Displays the description of the parameter as a note.
             if ($default_settings[$setting_id]['type'] === 'checkbox' || (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '')) {
                 echo '<p class=form-note id=' . $setting_id . '-description>', $default_settings[$setting_id]['description'];
 
-                // Displays the default value if the option is a checkbox.
+                // If the parameter is a checkbox, displays its default value as a note.
                 if ($default_settings[$setting_id]['type'] === 'checkbox') {
                     if ($default_settings[$setting_id]['default'] === 1) {
                         echo ' ', __('settings-default-checked');
@@ -629,9 +636,9 @@ class adminConfigOrigineMini
     }
 
     /**
-     * Save all custom settings in the database.
+     * Saves the settings to the database.
      *
-     * If the setting value equals to the default one, it will drop the setting from the database.
+     * If the parameter value is equal to the default value, the parameter is removed from the database.
      *
      * @return void
      */
@@ -653,7 +660,7 @@ class adminConfigOrigineMini
                                 $setting_type  = isset($default_settings[$setting_id]['type']) ? $default_settings[$setting_id]['type'] : 'string';
                                 $setting_title = isset($default_settings[$setting_id]['title']) ? $default_settings[$setting_id]['title'] : '';
 
-                                // If the setting has a new value that is different than the default one (and is not an unchecked checkbox).
+                                // If the parameter has a new value that is different from the default (and is not an unchecked checkbox).
                                 if ($_POST[$setting_id] != $default_settings[$setting_id]['default']) {
                                     if ($setting_type === 'select') {
                                         // Checks if the input value is proposed by the setting.
@@ -682,7 +689,7 @@ class adminConfigOrigineMini
                                         $setting_value = html::escapeHTML($_POST[$setting_id]);
                                     }
 
-                                // If the value is equal to the default value, drop the setting.
+                                // If the value is equal to the default value, removes the parameter.
                                 } elseif ($_POST[$setting_id] == $default_settings[$setting_id]['default']) {
                                     $drop = true;
                                 }
@@ -699,7 +706,7 @@ class adminConfigOrigineMini
                                     dcCore::app()->blog->settings->originemini->drop($setting_id);
                                 }
 
-                            // For unchecked checkboxes (no POST request), does a specific action.
+                            // For unchecked checkboxes (= no POST request), does a specific action.
                             } elseif (!isset($_POST[$setting_id]) && $default_settings[$setting_id]['type'] === 'checkbox') {
                                 $setting_title = isset($default_settings[$setting_id]['title']) ? $default_settings[$setting_id]['title'] : '';
 
@@ -752,7 +759,7 @@ class adminConfigOrigineMini
     }
 
     /**
-     * Adds custom styles to the theme when visiting the blog.
+     * Adds custom styles to the theme to apply the settings.
      *
      * @return void
      */
@@ -1120,14 +1127,14 @@ class adminConfigOrigineMini
     }
 
     /**
-     * Renders the page for the configuration page.
+     * Displays the theme configuration page.
      *
      * @return void
      */
     public static function page_rendering()
     {
         /**
-         * Creates an array which will contain all the settings and their title following this below:
+         * Creates a table that contains all the parameters and their titles according to the following pattern:
          *
          * $sections_with_settings_id = [
          *     'section_1_id' => [
@@ -1146,7 +1153,7 @@ class adminConfigOrigineMini
             $sections_with_settings_id[$section_id] = [];
         }
 
-        // Puts all settings in their sections.
+        // Puts all parameters in their section.
         foreach($settings as $setting_id => $setting_data) {
             if ($setting_id !== 'styles') {
                 // If a sub section has been set.
@@ -1158,24 +1165,24 @@ class adminConfigOrigineMini
             }
         }
 
-        // Removes titles if they are associated with any setting.
+        // Removes the titles if they are not associated with any parameter.
         $sections_with_settings_id = array_filter($sections_with_settings_id);
         ?>
 
         <form action="<?php echo dcCore::app()->adminurl->get('admin.blog.theme', ['module' => 'origine-mini', 'conf' => '1']); ?>" enctype=multipart/form-data id=theme_config method=post>
             <?php
-            // Displays the title of each sections and put the settings inside.
+            // Displays the title of each section and places the corresponding parameters under each one.
             foreach ($sections_with_settings_id as $section_id => $section_data) {
                 echo '<h3 id=section-' . $section_id . '>', $sections[$section_id]['name'], '</h3>',
                 '<div class=fieldset>';
 
                 foreach ($section_data as $sub_section_id => $setting_id) {
-                    // Shows the sub section name except if its ID is "no".
+                    // Displays the name of the sub-section unless its ID is "no-title".
                     if ($sub_section_id !== 'no-title') {
                         echo '<h4 id=section-' . $section_id . '-' . $sub_section_id . '>', $sections[$section_id]['sub_sections'][$sub_section_id], '</h4>';
                     }
 
-                    // Displays the option.
+                    // Displays the parameter.
                     foreach ($setting_id as $setting_id_value) {
                         self::setting_rendering($setting_id_value);
                     }
