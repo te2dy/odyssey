@@ -5,7 +5,6 @@
   --font-family-default: -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif;
   --font-family-mono: Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace;
 
-  --color-primary: var(--color-primary-custom, #1742cf);
   --color-background: #fcfcfd;
   --color-text-main: #303030;
   --color-text-secondary: #6c6f78;
@@ -85,11 +84,11 @@ body {
  * Main formatting
  */
 a {
-  color: var(--color-primary);
+  color: var(--color-primary, #1742cf);
   text-decoration: var(--link-text-decoration, none);
 }
 a:is(:active, :focus, :hover):not(.button) {
-  color: var(--color-primary);
+  color: var(--color-primary, #1742cf);
   filter: brightness(1.25);
   text-decoration: underline;
 }
@@ -294,11 +293,11 @@ input[type="submit"],
 .form-submit,
 .button {
   background-color: var(--color-background);
-  border-color: var(--color-primary);
-  color: var(--color-primary);
+  border-color: var(--color-primary, #1742cf);
+  color: var(--color-primary, #1742cf);
 }
 :is(input[type="submit"], .button, .form-submit):is(:active, :focus, :hover) {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary, #1742cf);
   color: var(--color-background);
   cursor: pointer;
 }
@@ -339,7 +338,7 @@ details summary {
  * Header
  */
 #site-title {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary, #1742cf);
   color: var(--color-background);
   display: block;
   flex-shrink: 0;
@@ -363,6 +362,13 @@ details summary {
 }
 #main-menu li:last-child {
   margin-right: 0;
+}
+#main-menu .active a {
+  text-decoration: underline;
+}
+#main-menu .active a:is(:focus, :hover) {
+  cursor: default;
+  filter: unset;
 }
 
 /**
@@ -515,7 +521,7 @@ details summary {
   padding: 1rem 1rem 0;
 }
 #trackback-url {
-  color: var(--color-primary);
+  color: var(--color-primary, #1742cf);
   text-decoration: var(--link-text-decoration, none);
 }
 #trackback-url:is(:active, :focus, :hover) {
