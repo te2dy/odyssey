@@ -4,11 +4,18 @@
 :root {
   --font-family-default: -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif;
   --font-family-mono: Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace;
+
+  --color-primary: var(--color-primary-custom, #1742cf);
+  --color-background: #fcfcfd;
+  --color-text-main: #303030;
+  --color-text-secondary: #6c6f78;
+  --color-border: #c2c7d6;
+  --color-input-background: #f2f2f2;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-primary: var(--color-primary-dark, #94c9ff);
+    --color-primary: var(--color-primary-dark, #f7baba);
     --color-background: #16161d;
     --color-text-main: #ccc;
     --color-text-secondary: #969696;
@@ -32,8 +39,8 @@
 }
 
 body {
-  background-color: var(--color-background, #fcfcfd);
-  color: var(--color-text-main, #2e3038);
+  background-color: var(--color-background);
+  color: var(--color-text-main);
   font-family: var(--font-family, var(--font-family-default));
   font-size: var(--font-size, 1em);
   margin: 0;
@@ -78,11 +85,11 @@ body {
  * Main formatting
  */
 a {
-  color: var(--color-primary, #1742cf);
+  color: var(--color-primary);
   text-decoration: var(--link-text-decoration, none);
 }
 a:is(:active, :focus, :hover):not(.button) {
-  color: var(--color-primary, #1742cf);
+  color: var(--color-primary);
   filter: brightness(1.25);
   text-decoration: underline;
 }
@@ -121,13 +128,13 @@ mark {
   background-color: #fbf7a6;
 }
 blockquote {
-  border-left: .063rem solid var(--color-border, #c2c7d6);
+  border-left: .063rem solid var(--color-border);
   margin: 1rem 0 1rem 1rem;
   padding: 0 0 0 .5rem;
 }
 code,
 pre {
-  background-color: var(--color-input-background, #f1f2f4);
+  background-color: var(--color-input-background);
   font-family: var(--font-family-mono);
   font-size: 1em;
   white-space: pre-wrap;
@@ -182,7 +189,7 @@ h6 {
   text-align: center;
 }
 .content-text hr::after {
-  color: var(--color-text-main, #2e3038);
+  color: var(--color-text-main);
   content: "\002042"; /* ⁂ */
 }
 .content-text :is(h1, h2, h3, h4, h5) {
@@ -225,7 +232,7 @@ h6 {
 }
 
 .text-secondary {
-  color: var(--color-text-secondary, #6c6f78);
+  color: var(--color-text-secondary);
 }
 
 /* Images & media */
@@ -247,10 +254,10 @@ img.media {
 /* Forms */
 input,
 textarea {
-  background-color: var(--color-input-background, #f1f2f4);
-  border: .063rem solid var(--color-border, #c2c7d6);
+  background-color: var(--color-input-background);
+  border: .063rem solid var(--color-border);
   box-sizing: border-box;
-  color: var(--color-text-main, #2e3038);
+  color: var(--color-text-main);
   font-family: inherit;
   font-size: 1em;
   margin-bottom: 1rem;
@@ -276,7 +283,7 @@ button {
 }
 button,
 .button {
-  border: .063rem solid var(--color-border, #c2c7d6);
+  border: .063rem solid var(--color-border);
   display: inline-block;
   padding: .5rem;
 }
@@ -286,24 +293,24 @@ a.button:is(:active, :focus, :hover) {
 input[type="submit"],
 .form-submit,
 .button {
-  background-color: var(--color-background, #fcfcfd);
-  border-color: var(--color-primary, #1742cf);
-  color: var(--color-primary, #1742cf);
+  background-color: var(--color-background);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 :is(input[type="submit"], .button, .form-submit):is(:active, :focus, :hover) {
-  background-color: var(--color-primary, #1742cf);
-  color: var(--color-background, #fcfcfd);
+  background-color: var(--color-primary);
+  color: var(--color-background);
   cursor: pointer;
 }
 input:disabled {
-  color: var(--color-text-secondary, #6c6f78);
+  color: var(--color-text-secondary);
 }
 input[type="submit"]:disabled {
-  border-color: var(--color-border, #c2c7d6);
+  border-color: var(--color-border);
 }
 input[type="submit"]:is(:active, :focus, :hover):disabled {
-  background-color: var(--color-background, #fcfcfd);
-  color: var(--color-text-secondary, #6c6f78);
+  background-color: var(--color-background);
+  color: var(--color-text-secondary);
   cursor: default;
 }
 textarea {
@@ -332,8 +339,8 @@ details summary {
  * Header
  */
 #site-title {
-  background-color: var(--color-primary, #1742cf);
-  color: var(--color-background, #fcfcfd);
+  background-color: var(--color-primary);
+  color: var(--color-background);
   display: block;
   flex-shrink: 0;
   font-size: 1em;
@@ -362,7 +369,7 @@ details summary {
  * Posts
  */
 .post-selected {
-  border: .063rem solid var(--color-border, #c2c7d6);
+  border: .063rem solid var(--color-border);
 }
 .post .post-selected {
   padding: .5rem;
@@ -485,7 +492,7 @@ details summary {
   margin: 2rem 0;
 }
 .comment {
-  border-left: .063rem solid var(--color-border, #c2c7d6);
+  border-left: .063rem solid var(--color-border);
   padding-left: 1rem;
 }
 .comment-author {
@@ -496,19 +503,19 @@ details summary {
   margin: 0;
 }
 .comment-message {
-  border: .063rem solid var(--color-border, #c2c7d6);
+  border: .063rem solid var(--color-border);
   display: block;
   margin-top: 4rem;
   padding: .5rem;
   text-align: center;
 }
 .comment-preview {
-  border: .063rem solid var(--color-border, #c2c7d6);
+  border: .063rem solid var(--color-border);
   margin-bottom: 2rem;
   padding: 1rem 1rem 0;
 }
 #trackback-url {
-  color: var(--color-primary, #1742cf);
+  color: var(--color-primary);
   text-decoration: var(--link-text-decoration, none);
 }
 #trackback-url:is(:active, :focus, :hover) {
