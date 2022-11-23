@@ -856,12 +856,21 @@ class adminConfigOrigineMini
 
             // Transitions.
             if (isset($_POST['global_css_transition']) && $_POST['global_css_transition'] === '1') {
-                $css_main_array['a']['transition']                 = 'all .2s ease-in-out';
+                $css_main_array['a']['transition'] = 'all .2s ease-in-out';
+
                 $css_main_array['a:active, a:hover']['transition'] = 'all .2s ease-in-out';
 
                 $css_main_array['input[type="submit"], .form-submit, .button']['transition'] = 'all .2s ease-in-out';
 
                 $css_main_array['input[type="submit"]:hover, .button:hover, .form-submit:hover']['transition'] = 'all .2s ease-in-out';
+
+                $css_media_motion_array['a']['transition'] = 'unset';
+
+                $css_media_motion_array['a:active, a:hover']['transition'] = 'unset';
+
+                $css_media_motion_array['input[type="submit"], .form-submit, .button']['transition'] = 'unset';
+
+                $css_media_motion_array['input[type="submit"]:hover, .button:hover, .form-submit:hover']['transition'] = 'unset';
             }
 
             // Links underline.
@@ -1103,12 +1112,7 @@ class adminConfigOrigineMini
             $css .= !empty($css_main_array) ? self::styles_array_to_string($css_main_array) : '';
             $css .= !empty($css_media_array) ? '@media (max-width:34em){' . self::styles_array_to_string($css_media_array) . '}' : '';
             $css .= !empty($css_media_contrast_array) ? '@media (prefers-contrast:more),(-ms-high-contrast:active),(-ms-high-contrast:black-on-white){' . self::styles_array_to_string($css_media_contrast_array) . '}' : '';
-
-            /*
-            $media_max_width = isset($_POST['global_page_width']) ? (int) $_POST['global_page_width'] + 4 : '34';
-
             $css .= !empty($css_media_motion_array) ? '@media (prefers-reduced-motion:reduce){' . self::styles_array_to_string($css_media_motion_array) . '}' : '';
-            */
 
             if (!empty($css)) {
                 dcCore::app()->blog->settings->originemini->put(
