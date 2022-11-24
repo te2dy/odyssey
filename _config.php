@@ -149,6 +149,14 @@ class adminConfigOrigineMini
             'section'     => ['global', 'fonts']
         ];
 
+        $default_settings['global_font_antialiasing'] = [
+            'title'       => __('settings-global-fontantialiasing-title'),
+            'description' => __('settings-global-fontantialiasing-description'),
+            'type'        => 'checkbox',
+            'default'     => 0,
+            'section'     => ['global', 'fonts']
+        ];
+
         $global_color_primary_choices = [
             __('settings-global-primarycolor-blue-default') => 'blue',
             __('settings-global-primarycolor-gray')         => 'gray',
@@ -202,6 +210,14 @@ class adminConfigOrigineMini
             'description' => sprintf(__('settings-global-minimalsocialmarkups-description'), $plugin_social_url),
             'type'        => 'checkbox',
             'default'     => 0,
+            'section'     => ['global', 'advanced']
+        ];
+
+        $default_settings['global_meta_home_description'] = [
+            'title'       => __('settings-global-metahomedescription-title'),
+            'description' => __('settings-global-metahomedescription-description'),
+            'type'        => 'textarea',
+            'default'     => '',
             'section'     => ['global', 'advanced']
         ];
 
@@ -595,6 +611,25 @@ class adminConfigOrigineMini
 
                     break;
 
+                case 'textarea' :
+                    $placeholder = isset($default_settings[$setting_id]['placeholder']) ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"' : '';
+
+                    echo '<label for=' . $setting_id . '>',
+                    $default_settings[$setting_id]['title'],
+                    '</label>',
+                    form::textArea(
+                        $setting_id,
+                        60,
+                        3,
+                        $setting_value,
+                        '',
+                        '',
+                        false,
+                        $placeholder
+                    );
+
+                    break;
+
                 default :
                     $placeholder = isset($default_settings[$setting_id]['placeholder']) ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"' : '';
 
@@ -604,7 +639,7 @@ class adminConfigOrigineMini
                     form::field(
                         $setting_id,
                         30,
-                        255,
+                        1,
                         $setting_value,
                         '',
                         '',
@@ -685,7 +720,7 @@ class adminConfigOrigineMini
                                             $setting_value = true;
                                             $setting_type  = 'boolean';
                                         }
-                                    } elseif ($setting_type === 'text') {
+                                    } else {
                                         $setting_value = html::escapeHTML($_POST[$setting_id]);
                                     }
 
@@ -792,10 +827,17 @@ class adminConfigOrigineMini
             }
 
             // Font family.
-            if ($_POST['global_font_family'] === 'serif') {
+            if (isset($_POST['global_font_family']) && $_POST['global_font_family'] === 'serif') {
                 $css_root_array[':root']['--font-family'] = '"Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
             } elseif ($_POST['global_font_family'] === 'monospace') {
                 $css_root_array[':root']['--font-family'] = 'Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace';
+            }
+
+            // Font family.
+            if (isset($_POST['global_font_antialiasing']) && $_POST['global_font_antialiasing'] === '1') {
+                $css_root_array['body']['-moz-osx-font-smoothing'] = 'grayscale';
+                $css_root_array['body']['-webkit-font-smoothing']  = 'antialiased';
+                $css_root_array['body']['font-smooth']             = 'always';
             }
 
             // Primary color.
@@ -815,7 +857,7 @@ class adminConfigOrigineMini
             ];
 
             if (isset($_POST['global_color_primary']) && in_array($_POST['global_color_primary'], $primary_colors_allowed, true)) {
-                $css_root_array[':root']['--color-primary-custom'] = $primary_colors['light'][$_POST['global_color_primary']];
+                $css_root_array[':root']['--color-primary'] = $primary_colors['light'][$_POST['global_color_primary']];
 
                 $css_root_media_array[':root']['--color-primary-dark'] = $primary_colors['dark'][$_POST['global_color_primary']];
             }

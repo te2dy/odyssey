@@ -97,6 +97,12 @@ msgstr "Famille"
 msgid "settings-global-fontfamily-description"
 msgstr "Dans tous les cas, votre thème chargera les polices du système de l’appareil à partir duquel votre blog est consulté. Cela permet de réduire les temps de chargement et d’avoir une continuité graphique avec le système."
 
+msgid "settings-global-fontantialiasing-title"
+msgstr "Activer le lissage des caractères"
+
+msgid "settings-global-fontantialiasing-description"
+msgstr "Prévient l’effet de crénelage mais peut rendre les caractères très fins."
+
 msgid "settings-global-fontfamily-sansserif-default"
 msgstr "Sans empattements (par défaut)"
 
@@ -150,6 +156,12 @@ msgstr "Ajouter des balises sociales minimalistes dans l’en-tête"
 
 msgid "settings-global-minimalsocialmarkups-description"
 msgstr "Invisibles lors de la navigation, elles permettent un affichage avantageux des billets et des pages lors de leur partage sur les réseaux sociaux. Pour une utilisation avancée, il est recommandé d’utiliser l’extension <a href=%s>socialMeta</a> et de désactiver ce paramètres qui ferait doublon."
+
+msgid "settings-global-metahomedescription-title"
+msgstr "Description de la page d’accueil"
+
+msgid "settings-global-metahomedescription-description"
+msgstr "Ce texte est utilisé comme description de votre blog pour des moteurs de recherche. Sa taille idéale est d’environ 200 caractères."
 
 msgid "settings-global-metagenerator-title"
 msgstr "Ajouter la balise meta <code>generator</code> dans l’en-tête"

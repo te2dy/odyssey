@@ -22,6 +22,7 @@ dcCore::app()->addBehavior('publicEntryBeforeContent', [__NAMESPACE__ . '\tplOri
 dcCore::app()->addBehavior('publicFooterContent', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniImagesWide']);
 dcCore::app()->addBehavior('publicFooterContent', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniSocialLinks']);
 
+dcCore::app()->tpl->addValue('origineMiniMetaDescriptionHome', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniMetaDescriptionHome']);
 dcCore::app()->tpl->addValue('origineMiniStylesInline', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniStylesInline']);
 dcCore::app()->tpl->addValue('origineMiniEntryLang', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniEntryLang']);
 dcCore::app()->tpl->addValue('origineMiniScreenReaderLinks', [__NAMESPACE__ . '\tplOrigineMiniTheme', 'origineMiniScreenReaderLinks']);
@@ -167,12 +168,15 @@ class tplOrigineMiniTheme
                     );
                 }
 
-                if (dcCore::app()->blog->desc !== '') {
-                    if ($desc !== '') {
-                        $desc .= ' – ';
+                if (dcCore::app()->blog->settings->originemini->global_meta_home_description !== null || dcCore::app()->blog->desc !== '') {
+                    $desc .= ' – ';
+
+                    if (dcCore::app()->blog->settings->originemini->global_meta_home_description !== null) {
+                        $desc .= dcCore::app()->blog->desc;
+                    } elseif(dcCore::app()->blog->desc !== '') {
+                        $desc .= dcCore::app()->blog->desc;
                     }
 
-                    $desc .= dcCore::app()->blog->desc;
                     $desc  = html::decodeEntities(html::clean($desc));
                     $desc  = preg_replace('/\s+/', ' ', $desc);
                     $desc  = html::escapeHTML($desc);
@@ -340,12 +344,20 @@ if(imgHeight){myImg.setAttribute("height",imgHeight)}}});i++}}</script>
         }
     }
 
+    public static function origineMiniMetaDescriptionHome($attr) {
+        if (dcCore::app()->blog->settings->originemini->global_meta_home_description) {
+            return '<?php echo ' . sprintf(dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->blog->settings->originemini->global_meta_home_description') . '; ?>';
+        } else {
+            return '<?php echo ' . sprintf(dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->blog->desc') . '; ?>';
+        }
+    }
+
     /**
      * Adds styles in the head.
      *
      * @return string The styles.
      */
-    public static function origineMiniStylesInline()
+    public static function origineMiniStylesInline($attr, $content)
     {
         if (dcCore::app()->blog->settings->originemini->styles) {
             return '<style>' . dcCore::app()->blog->settings->originemini->styles . '</style>';
