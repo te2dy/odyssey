@@ -223,6 +223,9 @@ msgstr "Display the time of publication"
 msgid "settings-content-postintro-title"
 msgstr "Display the excerpt as an introduction"
 
+msgid "settings-content-linksunderline-title"
+msgstr "Underline links in the text body"
+
 msgid "settings-content-postintro-description"
 msgstr "Highlights the excerpt defined by the author between the title and the content of the post."
 

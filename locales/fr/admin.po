@@ -223,6 +223,9 @@ msgstr "Afficher l’heure de publication"
 msgid "settings-content-postintro-title"
 msgstr "Afficher l’extrait comme introduction"
 
+msgid "settings-content-linksunderline-title"
+msgstr "Souligner les liens du corps du texte"
+
 msgid "settings-content-postintro-description"
 msgstr "Met en avant l’extrait défini par l’auteur entre le titre et le contenu du billet."
 

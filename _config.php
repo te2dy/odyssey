@@ -323,6 +323,14 @@ class adminConfigOrigineMini
             'section'     => ['content', 'post']
         ];
 
+        $default_settings['content_links_underline'] = [
+            'title'       => __('settings-content-linksunderline-title'),
+            'description' => '',
+            'type'        => 'checkbox',
+            'default'     => 1,
+            'section'     => ['content', 'post']
+        ];
+
         $default_settings['content_images_wide'] = [
             'title'       => __('settings-content-imageswide-title'),
             'description' => __('settings-content-imageswide-description'),
@@ -883,9 +891,9 @@ class adminConfigOrigineMini
 
             // Links underline.
             if (isset($_POST['global_css_links_underline']) && $_POST['global_css_links_underline'] === '1') {
-                $css_main_array[':root']['--link-text-decoration'] = 'underline dotted';
+                $css_root_array[':root']['--link-text-decoration'] = 'underline dotted';
 
-                $css_main_array['.button']['text-decoration'] = 'none';
+                $css_root_array['.button']['text-decoration'] = 'none';
             }
 
             // Border radius.
@@ -990,6 +998,12 @@ class adminConfigOrigineMini
                 $css_main_array['#post-intro']['margin-bottom'] = '2rem';
 
                 $css_main_array['#post-intro strong']['font-weight'] = '900';
+            }
+
+            // Content links.
+            if (!isset($_POST['content_links_underline'])) {
+                $css_root_array[':root']['--content-link-text-decoration-line']  = 'none';
+                $css_root_array[':root']['--content-link-text-decoration-style'] = 'unset';
             }
 
             // Link to reactions in the post list.
