@@ -9,6 +9,6 @@
 #theme_config input[type="checkbox"] + label {
   cursor: pointer;
 }
-#theme_config select {
+#theme_config :is(select, textarea) {
   padding: .5rem;
 }
