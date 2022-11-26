@@ -817,6 +817,7 @@ class adminConfigOrigineMini
             $css_media_array          = [];
             $css_media_contrast_array = [];
             $css_media_motion_array   = [];
+            $css_media_print_array    = [];
 
             $default_settings = adminConfigOrigineMini::default_settings();
 
@@ -850,6 +851,10 @@ class adminConfigOrigineMini
                 $css_media_contrast_array['body']['-moz-osx-font-smoothing'] = 'unset';
                 $css_media_contrast_array['body']['-webkit-font-smoothing']  = 'unset';
                 $css_media_contrast_array['body']['font-smooth']             = 'unset';
+
+                $css_media_print_array['body']['-moz-osx-font-smoothing'] = 'unset';
+                $css_media_print_array['body']['-webkit-font-smoothing']  = 'unset';
+                $css_media_print_array['body']['font-smooth']             = 'unset';
             }
 
             // Primary color.
@@ -1010,6 +1015,16 @@ class adminConfigOrigineMini
                 $css_root_array[':root']['--content-link-text-decoration-style'] = 'unset';
             }
 
+            // Reaction feed link.
+            if (isset($_POST['content_reaction_feed']) && $_POST['content_reaction_feed'] === '1') {
+                $css_media_print_array['#comment-feed-link']['display'] = 'none';
+            }
+
+            // Trackback link.
+            if (isset($_POST['content_trackback_link']) && $_POST['content_trackback_link'] === '1') {
+                $css_media_print_array['#trackback-link-container']['display'] = 'none';
+            }
+
             // Link to reactions in the post list.
             if (isset($_POST['content_post_list_reaction_link']) && $_POST['content_post_list_reaction_link'] === '1') {
                 $css_main_array['.post-list .post']['flex-wrap'] = 'wrap';
@@ -1139,6 +1154,7 @@ class adminConfigOrigineMini
             $css .= !empty($css_media_array) ? '@media (max-width:34em){' . self::styles_array_to_string($css_media_array) . '}' : '';
             $css .= !empty($css_media_contrast_array) ? '@media (prefers-contrast:more),(-ms-high-contrast:active),(-ms-high-contrast:black-on-white){' . self::styles_array_to_string($css_media_contrast_array) . '}' : '';
             $css .= !empty($css_media_motion_array) ? '@media (prefers-reduced-motion:reduce){' . self::styles_array_to_string($css_media_motion_array) . '}' : '';
+            $css .= !empty($css_media_print_array) ? '@media print{' . self::styles_array_to_string($css_media_print_array) . '}' : '';
 
             if (!empty($css)) {
                 dcCore::app()->blog->settings->originemini->put(

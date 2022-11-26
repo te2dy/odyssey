@@ -179,6 +179,10 @@ h6 {
   line-height: 1.5;
   text-align: var(--text-align, left);
 }
+.content-text a {
+  text-decoration-line: var(--content-link-text-decoration-line, underline);
+  text-decoration-style: var(--content-link-text-decoration-style, dotted);
+}
 .content-text pre {
   text-align: left;
 }
@@ -348,7 +352,6 @@ details summary {
 }
 #site-title a {
   color: inherit;
-  display: block;
   text-decoration: var(--link-text-decoration, none);
 }
 #main-menu {
@@ -457,6 +460,7 @@ details summary {
  * Post pagination
  */
 .post-pagination {
+  column-gap: 1rem;
   display: flex;
   margin-top: 4rem;
 }
@@ -468,12 +472,8 @@ details summary {
 .post-pagination-prev {
   width: 50%;
 }
-.post-pagination-prev {
-  padding-right: .5rem;
-}
 .post-pagination-next {
   margin-left: auto;
-  padding-left: .5rem;
   text-align: right;
 }
 .post-pagination-link {
@@ -658,6 +658,19 @@ aside .widget:last-child {
     margin-left: 0;
     order: 1;
   }
+  .post-pagination {
+    column-gap: unset;
+    display: block;
+  }
+  .post-pagination-prev,
+  .post-pagination-next {
+    width: 100%;
+  }
+  .post-pagination-next {
+    margin-top: 1rem;
+    margin-left: 0;
+    text-align: left;
+  }
   #nav-archive {
     justify-content: center;
   }
@@ -677,5 +690,50 @@ aside .widget:last-child {
   }
   #search-form input {
     margin-bottom: .5rem;
+  }
+}
+
+@media print {
+  :root {
+    --color-primary: #000;
+    --color-background: transparent;
+    --color-text-main: #000;
+    --color-text-secondary: #000;
+    --color-border: #000;
+    --color-input-background: #fff;
+  }
+  @page {
+    margin: 2cm 3cm;
+    size: portrait;
+  }
+  #site {
+    font-size: initial;
+    margin: 0;
+    width: unset;
+  }
+  #site-title {
+    background-color: unset;
+    border: .063rem solid var(--color-border);
+    color: var(--color-text-main);
+  }
+  .content-text a {
+    text-decoration: none;
+  }
+  .content-text a[href^=http]:after {
+    content: " [" attr(href) "]";
+  }
+  #comment-form,
+  .pagination-links,
+  .post-pagination,
+  .simple-menu {
+    display: none;
+  }
+}
+
+@media print and (orientation: landscape) and (min-width: 20cm) {
+  body {
+    columns: 2;
+    column-fill: auto;
+    column-gap: 10%;
   }
 }
