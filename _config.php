@@ -928,7 +928,7 @@ class adminConfigOrigineMini
             // Blog description.
             if (isset($_POST['header_description']) && $_POST['header_description'] === '1') {
                 $css_main_array['#site-identity']['align-items'] = 'center';
-                $css_main_array['#site-identity']['column-gap']  = '1rem';
+                $css_main_array['#site-identity']['column-gap']  = '.5rem';
                 $css_main_array['#site-identity']['display']     = 'flex';
                 $css_main_array['#site-identity']['flex-wrap']   = 'wrap';
                 $css_main_array['#site-identity']['row-gap']     = '.5rem';

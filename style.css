@@ -62,7 +62,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  row-gap: .5rem;
+  row-gap: 1rem;
   order: 1;
 }
 
@@ -642,6 +642,9 @@ aside .widget:last-child {
     margin-top: 2rem;
     margin-bottom: 2rem;
     row-gap: 2rem;
+  }
+  blockquote {
+    margin-left: 0;
   }
   .post-list .post {
     flex-direction: column;
