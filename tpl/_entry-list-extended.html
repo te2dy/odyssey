@@ -6,7 +6,7 @@
   <li class="post<tpl:EntryIf selected="1"> post-selected</tpl:EntryIf>{{tpl:origineConfigEntryUpdatedClass}}" id={{tpl:lang post-id}}-{{tpl:EntryID}}>
     <small class="post-date text-secondary"><time aria-label="{{tpl:lang post-list-date-aria-label}}" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%m"}}>{{tpl:EntryDate}}{{tpl:origineMiniEntryTime context="post-list"}}</time></small>
 
-    <h3 class=post-title{{tpl:origineMiniEntryLang}}><a href={{tpl:EntryURL}} rel=bookmark>{{tpl:EntryTitle}}</a></h3>
+    <h3 class=post-title{{tpl:origineMiniEntryLang}}><a href="{{tpl:EntryURL}}" rel=bookmark>{{tpl:EntryTitle}}</a></h3>
 
     {{tpl:origineMiniEntryExcerpt encode_html="1" remove_html="1"}}
 

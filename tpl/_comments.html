@@ -23,7 +23,7 @@
     <tpl:CommentIf is_ping="0">
       <li id={{tpl:lang reactions-comment-id}}-{{tpl:CommentID}} class="reaction comment {{tpl:CommentIfMe}} {{tpl:CommentIfOdd}} {{tpl:CommentIfFirst}}">
         <header class=comment-meta>
-          <cite class=comment-author>{{tpl:CommentAuthorLink}}</cite><small class="comment-date text-secondary">, <a href=#{{tpl:lang reactions-comment-id}}-{{tpl:CommentID}}>{{tpl:CommentDate}} {{tpl:lang reactions-comment-datetime-separator}} {{tpl:CommentTime}}</a>{{tpl:lang reactions-comment-datetime-colon}}</small>
+          <cite class=comment-author>{{tpl:CommentAuthorLink}}</cite><small class="comment-date text-secondary">, <a href="#{{tpl:lang reactions-comment-id}}-{{tpl:CommentID}}">{{tpl:CommentDate}} {{tpl:lang reactions-comment-datetime-separator}} {{tpl:CommentTime}}</a>{{tpl:lang reactions-comment-datetime-colon}}</small>
         </header>
 
         <div class="comment-content content-text">
@@ -37,7 +37,7 @@
 
     <tpl:CommentIf is_ping="1">
       <li id={{tpl:lang reactions-trackback-id}}-{{tpl:PingID}} class="reaction ping {{tpl:PingIfOdd}} {{tpl:PingIfFirst}}">
-        {{tpl:lang reactions-trackback-label}} <a class=ping-link href={{tpl:PingAuthorURL}} {{tpl:PingNoFollow}}>{{tpl:PingTitle}}</a>, <cite class=ping-author>{{tpl:PingBlogName}}</cite><small class="ping-date text-secondary">, <a href=#{{tpl:lang reactions-trackback-id}}-{{tpl:PingID}}>{{tpl:PingDate}}, {{tpl:PingTime}}</a></small>
+        {{tpl:lang reactions-trackback-label}} <a class=ping-link href="{{tpl:PingAuthorURL}}" {{tpl:PingNoFollow}}>{{tpl:PingTitle}}</a>, <cite class=ping-author>{{tpl:PingBlogName}}</cite><small class="ping-date text-secondary">, <a href="#{{tpl:lang reactions-trackback-id}}-{{tpl:PingID}}">{{tpl:PingDate}}, {{tpl:PingTime}}</a></small>
       </li>
     </tpl:CommentIf>
 
@@ -132,7 +132,7 @@
 <tpl:origineMiniReactionFeedLink>
   <tpl:EntryIf operator="or" comments_active="1" pings_active="1" has_comment="1" has_ping="1">
     <p class=text-secondary id=comment-feed-link>
-      <small><a href={{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}} rel=nofollow>{{tpl:lang reactions-subscribe-link-reactions}}</a></small>
+      <small><a href="{{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}}" rel=nofollow>{{tpl:lang reactions-subscribe-link-reactions}}</a></small>
     </p>
   </tpl:EntryIf>
 </tpl:origineMiniReactionFeedLink>

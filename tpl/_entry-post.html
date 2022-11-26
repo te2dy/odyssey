@@ -25,7 +25,7 @@
 
       <tpl:EntryIf has_category="1">
         <div class="post-meta text-secondary">
-          {{tpl:lang post-category-prefix}} <a href={{tpl:EntryCategoryURL}} rel=tag>{{tpl:EntryCategory}}</a>
+          {{tpl:lang post-category-prefix}} <a href="{{tpl:EntryCategoryURL}}" rel=tag>{{tpl:EntryCategory}}</a>
         </div>
       </tpl:EntryIf>
 
@@ -35,7 +35,7 @@
             <div class="post-meta text-secondary">{{tpl:origineMiniPostTagsBefore}}
           </tpl:TagsHeader>
 
-          <a href={{tpl:TagURL}} rel=tag>{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
+          <a href="{{tpl:TagURL}}" rel=tag>{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
 
           <tpl:TagsFooter>
             </div>
@@ -51,7 +51,7 @@
     <div class=post-pagination-prev>
       <small class=post-pagination-title>{{tpl:lang post-pagination-previous-label}}</small>
 
-      <a class="post-pagination-link" href={{tpl:EntryURL}} rel=prev>{{tpl:EntryTitle}}</a>
+      <a class="post-pagination-link" href="{{tpl:EntryURL}}" rel=prev>{{tpl:EntryTitle}}</a>
     </div>
   </tpl:EntryPrevious>
 
@@ -59,7 +59,7 @@
     <div class=post-pagination-next>
       <small class=post-pagination-title>{{tpl:lang post-pagination-next-label}}</small>
 
-      <a class="post-pagination-link" href={{tpl:EntryURL}} rel=next>{{tpl:EntryTitle}}</a>
+      <a class="post-pagination-link" href="{{tpl:EntryURL}}" rel=next>{{tpl:EntryTitle}}</a>
     </div>
   </tpl:EntryNext>
 </div>

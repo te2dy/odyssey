@@ -324,7 +324,7 @@ if(imgHeight){myImg.setAttribute("height",imgHeight)}}});i++}}</script>
                         ?>
 
                         <li>
-                            <a href=<?php echo html::escapeURL($link); ?> rel=me>
+                            <a href="<?php echo html::escapeURL($link); ?>" rel=me>
                                 <span class=footer-social-links-icon-container>
                                     <svg class=footer-social-links-icon role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>
                                         <title><?php echo html::escapeHTML($site); ?></title>
@@ -478,7 +478,7 @@ if(imgHeight){myImg.setAttribute("height",imgHeight)}}});i++}}</script>
                         echo __("post-list-one-reaction-link-aria-label");
                     }
 
-                    echo "\" class=post-reaction-link href=", html::escapeURL(dcCore::app()->ctx->posts->getURL()), "#", __("reactions-id"), "><small>";
+                    echo "\" class=post-reaction-link href=\"", html::escapeURL(dcCore::app()->ctx->posts->getURL()), "#", __("reactions-id"), "\"><small>";
 
                     if ((int) dcCore::app()->ctx->posts->nb_comment > 1) {
                         printf(__("post-list-multiple-reactions"), dcCore::app()->ctx->posts->nb_comment);
