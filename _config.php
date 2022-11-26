@@ -907,22 +907,7 @@ class adminConfigOrigineMini
 
             // Border radius.
             if (isset($_POST['global_css_border_radius']) && $_POST['global_css_border_radius'] === '1') {
-                $css_border_radius_selector = '#site-title,.button,.post-selected,button,code,input,pre,textarea';
-
-                if (isset($_POST['footer_social_links_diaspora']) && $_POST['footer_social_links_diaspora'] !== ''
-                    || (isset($_POST['footer_social_links_discord']) && $_POST['footer_social_links_discord'] !== '')
-                    || (isset($_POST['footer_social_links_facebook']) && $_POST['footer_social_links_facebook'] !== '')
-                    || (isset($_POST['footer_social_links_github']) && $_POST['footer_social_links_github'] !== '')
-                    || (isset($_POST['footer_social_links_mastodon']) && $_POST['footer_social_links_mastodon'] !== '')
-                    || (isset($_POST['footer_social_links_signal']) && $_POST['footer_social_links_signal'] !== '')
-                    || (isset($_POST['footer_social_links_tiktok']) && $_POST['footer_social_links_tiktok'] !== '')
-                    || (isset($_POST['footer_social_links_twitter']) && $_POST['footer_social_links_twitter'] !== '')
-                    || (isset($_POST['footer_social_links_whatsapp']) && $_POST['footer_social_links_whatsapp'] !== '')
-                ) {
-                    $css_border_radius_selector .= ',.footer-social-links-icon-container';
-                }
-
-                $css_main_array[$css_border_radius_selector]['border-radius'] = '.168rem';
+                $css_root_array[':root']['--border-radius'] = '.168rem';
             }
 
             // Blog description.
@@ -1134,6 +1119,7 @@ class adminConfigOrigineMini
 
                 $css_main_array['.footer-social-links-icon-container']['align-items']      = 'center';
                 $css_main_array['.footer-social-links-icon-container']['background-color'] = 'var(--color-input-background, #f1f2f4)';
+                $css_main_array['.footer-social-links-icon-container']['border-radius']    = 'var(--border-radius, unset)';
                 $css_main_array['.footer-social-links-icon-container']['display']          = 'flex';
                 $css_main_array['.footer-social-links-icon-container']['justify-content']  = 'center';
                 $css_main_array['.footer-social-links-icon-container']['width']            = '1.5rem';
