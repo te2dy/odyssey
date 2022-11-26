@@ -647,7 +647,7 @@ class adminConfigOrigineMini
                     form::field(
                         $setting_id,
                         30,
-                        1,
+                        255,
                         $setting_value,
                         '',
                         '',
