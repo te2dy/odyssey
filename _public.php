@@ -169,10 +169,13 @@ class tplOrigineMiniTheme
                 }
 
                 if (dcCore::app()->blog->settings->originemini->global_meta_home_description !== null || dcCore::app()->blog->desc !== '') {
-                    $desc .= ' – ';
+
+                    if ($desc !== '') {
+                        $desc .= ' – ';
+                    }
 
                     if (dcCore::app()->blog->settings->originemini->global_meta_home_description !== null) {
-                        $desc .= dcCore::app()->blog->desc;
+                        $desc .= dcCore::app()->blog->settings->originemini->global_meta_home_description;
                     } elseif(dcCore::app()->blog->desc !== '') {
                         $desc .= dcCore::app()->blog->desc;
                     }
