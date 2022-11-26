@@ -7,18 +7,14 @@
  */
 
 function origineTrackbackURLCopy() {
-  // Gets the trackback button & URL.
-  var trackbackButton = document.getElementById("trackback-url"),
-      trackbackURL    = trackbackButton.getAttribute("data-trackback-url");
-
   // If the URL has already been copied, removes the Copied message.
   if (document.getElementById("trackback-url-copied")) {
     document.getElementById("trackback-url-copied").remove();
   }
 
   // Copies the trackback URL in the clipboard.
-  navigator.clipboard.writeText(trackbackURL);
+  navigator.clipboard.writeText("{{tpl:EntryPingLink}}");
 
   // Displays a message to confirm the copy.
-  trackbackButton.insertAdjacentHTML("afterend", ' <span id=trackback-url-copied>{{tpl:lang reactions-trackback-url-copied}}</span>');
+  document.getElementById("trackback-url").insertAdjacentHTML("afterend", ' <span id=trackback-url-copied>{{tpl:lang reactions-trackback-url-copied}}</span>');
 }
