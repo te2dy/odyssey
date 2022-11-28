@@ -139,11 +139,8 @@
 
 <tpl:origineMiniTrackbackLink>
   <tpl:EntryIf pings_active="1">
-    <script>function origineTrackbackURLCopy(){if(document.getElementById("trackback-url-copied")){document.getElementById("trackback-url-copied").remove()}
-navigator.clipboard.writeText("{{tpl:EntryPingLink}}");document.getElementById("trackback-url").insertAdjacentHTML("afterend",' <span id=trackback-url-copied>{{tpl:lang reactions-trackback-url-copied}}</span>')}</script>
-
     <p class=text-secondary id=trackback-link-container>
-      <small>{{tpl:lang reactions-trackbacks-add-label}}<br><span id=trackback-url onclick=origineTrackbackURLCopy();>{{tpl:EntryPingLink}}</span></small>
+      <small>{{tpl:lang reactions-trackbacks-add-label}}<br><span id=trackback-url>{{tpl:EntryPingLink}}</span>{{tpl:origineMiniScriptTrackbackURLCopied}}</small>
     </p>
   </tpl:EntryIf>
 </tpl:origineMiniTrackbackLink>

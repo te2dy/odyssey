@@ -163,6 +163,12 @@ msgstr ""
 msgid "settings-global-metahomedescription-description"
 msgstr ""
 
+msgid "settings-global-js-title"
+msgstr ""
+
+msgid "settings-global-js-description"
+msgstr ""
+
 msgid "settings-global-metagenerator-title"
 msgstr ""
 

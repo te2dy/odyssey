@@ -163,6 +163,12 @@ msgstr "Description of the home page"
 msgid "settings-global-metahomedescription-description"
 msgstr "This text is used as a description of your blog for search engines. Its ideal size is about 200 characters."
 
+msgid "settings-global-js-title"
+msgstr "Enable JavaScript features"
+
+msgid "settings-global-js-description"
+msgstr "Allows you to copy the URL of trackbacks in one click, disable the search button when the query is unchanged or empty, and enable the wide images setting."
+
 msgid "settings-global-metagenerator-title"
 msgstr "Add the meta tag <code>generator</code> in head"
 

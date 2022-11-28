@@ -221,6 +221,14 @@ class adminConfigOrigineMini
             'section'     => ['global', 'advanced']
         ];
 
+        $default_settings['global_js'] = [
+            'title'       => __('settings-global-js-title'),
+            'description' => __('settings-global-js-description'),
+            'type'        => 'checkbox',
+            'default'     => 0,
+            'section'     => ['global', 'advanced']
+        ];
+
         $default_settings['global_meta_generator'] = [
             'title'       => __('settings-global-metagenerator-title'),
             'description' => __('settings-global-metagenerator-description'),
@@ -507,7 +515,7 @@ class adminConfigOrigineMini
         ];
 
         $default_settings['styles'] = [
-            'title'       => __('settings-footer-origineministyles-title'),
+            'title' => __('settings-footer-origineministyles-title'),
         ];
 
         return $default_settings;
@@ -900,14 +908,30 @@ class adminConfigOrigineMini
 
             // Links underline.
             if (isset($_POST['global_css_links_underline']) && $_POST['global_css_links_underline'] === '1') {
-                $css_root_array[':root']['--link-text-decoration'] = 'underline dotted';
+                $css_root_array[':root']['--link-text-decoration']       = 'underline';
+                $css_root_array[':root']['--link-text-decoration-style'] = 'dotted';
 
-                $css_root_array['.button']['text-decoration'] = 'none';
+                $css_root_array['.button']['text-decoration']       = 'none';
+                $css_root_array['.button']['text-decoration-style'] = 'none';
             }
 
             // Border radius.
             if (isset($_POST['global_css_border_radius']) && $_POST['global_css_border_radius'] === '1') {
                 $css_root_array[':root']['--border-radius'] = '.168rem';
+            }
+
+            // JS.
+            if (isset($_POST['global_js']) && $_POST['global_js'] === '1') {
+                if (isset($_POST['content_trackback_link']) && $_POST['content_trackback_link'] === '1') {
+                    $css_main_array['#trackback-url']['color'] = 'var(--color-primary, #1742cf)';
+
+                    $css_main_array['#trackback-url:is(:active, :focus, :hover)']['cursor']                = 'pointer';
+                    $css_main_array['#trackback-url:is(:active, :focus, :hover)']['filter']                = 'brightness(1.25)';
+                    $css_main_array['#trackback-url:is(:active, :focus, :hover)']['text-decoration']       = 'underline';
+                    $css_main_array['#trackback-url:is(:active, :focus, :hover)']['text-decoration-style'] = 'solid';
+
+                    $css_main_array['#trackback-url-copied']['display'] = 'none';
+                }
             }
 
             // Blog description.

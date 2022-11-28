@@ -163,6 +163,12 @@ msgstr "Description de la page d’accueil"
 msgid "settings-global-metahomedescription-description"
 msgstr "Ce texte est utilisé comme description de votre blog pour des moteurs de recherche. Sa taille idéale est d’environ 200 caractères."
 
+msgid "settings-global-js-title"
+msgstr "Activer les fonctionnalités JavaScript"
+
+msgid "settings-global-js-description"
+msgstr "Permet de copier l’adresse des rétroliens en un clic, de désactiver le bouton de recherche lorsque la requête est inchangée ou vide, et d’activer le paramètre des images larges."
+
 msgid "settings-global-metagenerator-title"
 msgstr "Ajouter la balise meta <code>generator</code> dans l’en-tête"
 

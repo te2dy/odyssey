@@ -134,6 +134,7 @@ blockquote {
 code,
 pre {
   background-color: var(--color-input-background);
+  border-radius: var(--border-radius, unset);
   font-family: var(--font-family-mono);
   font-size: 1em;
   white-space: pre-wrap;
@@ -259,6 +260,7 @@ input,
 textarea {
   background-color: var(--color-input-background);
   border: .063rem solid var(--color-border);
+  border-radius: var(--border-radius, unset);
   box-sizing: border-box;
   color: var(--color-text-main);
   font-family: inherit;
@@ -287,6 +289,7 @@ button {
 button,
 .button {
   border: .063rem solid var(--color-border);
+  border-radius: var(--border-radius, unset);
   display: inline-block;
   padding: .5rem;
 }
@@ -343,6 +346,7 @@ details summary {
  */
 #site-title {
   background-color: var(--color-primary, #1742cf);
+  border-radius: var(--border-radius, unset);
   color: var(--color-background);
   display: block;
   flex-shrink: 0;
@@ -379,6 +383,7 @@ details summary {
  */
 .post-selected {
   border: .063rem solid var(--color-border);
+  border-radius: var(--border-radius, unset);
 }
 .post .post-selected {
   padding: .5rem;
