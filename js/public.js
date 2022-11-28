@@ -36,7 +36,6 @@ window.onload = function(){
    */
   if (document.getElementById("trackback-url")) {
     document.getElementById("trackback-url").onclick = function() {
-      console.log("ok");
       var host         = window.location.protocol + "//" + window.location.host,
           trackbackURL = document.getElementById("trackback-url").innerHTML;
 
@@ -51,7 +50,7 @@ window.onload = function(){
 
       // If the URL is valid.
       if (url.href !== false) {
-        // Copies the trackback URL in the clipboard.
+        // Copies the trackback URL in the clipboard and show a message.
         navigator.clipboard.writeText(url).then(
           () => {
             document.getElementById("trackback-url-copied").style.display = "inline";
@@ -72,7 +71,7 @@ window.onload = function(){
  * This file is not directly loaded. Its content has been minimized
  * and integrated into the _public.php file.
  */
-if (document.getElementById('script-theme') && document.getElementsByTagName("article")[0]) {
+if (document.getElementById('script-theme').getAttribute('data-pagewidth') && document.getElementsByTagName("article")[0]) {
   window.addEventListener("load", imageWide);
   window.addEventListener("resize", imageWide);
 }
