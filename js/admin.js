@@ -9,6 +9,14 @@ function disableInputs() {
       document.getElementById("setting-linksunderline-recommended").style.display = "none";
     }
 
+    if (document.getElementById("global_js").checked) {
+        document.getElementById("content_images_wide-input").style.display       = "block";
+        document.getElementById("content_images_wide-description").style.display = "block";
+    } else {
+        document.getElementById("content_images_wide-input").style.display       = "none";
+        document.getElementById("content_images_wide-description").style.display = "none";
+    }
+
     if (document.getElementById("content_post_list_time").checked || document.getElementById("content_post_time").checked) {
         document.getElementById("content_separator-input").style.display       = "block";
         document.getElementById("content_separator-description").style.display = "block";
