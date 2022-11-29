@@ -344,7 +344,7 @@ class publicOrigineMini
     public static function origineMiniScriptSearchForm()
     {
         if (\dcCore::app()->blog->settings->originemini->global_js === true && (\dcCore::app()->blog->settings->originemini->widgets_search_form === true || (\dcCore::app()->blog->settings->originemini->widgets_search_form === null && \dcCore::app()->url->type === 'search'))) {
-            $script = 'window.onload=function(){if(document.getElementsByClassName("search-form-submit")[0]){var e=new URL(document.location).searchParams.get("q");""!==e&&(document.getElementsByClassName("search-form-submit")[0].disabled=!0),document.getElementsByClassName("search-form")[0].oninput=function(){document.getElementsByClassName("search-form-field")[0].value&&document.getElementsByClassName("search-form-field")[0].value!==e?document.getElementsByClassName("search-form-submit")[0].disabled=!1:document.getElementsByClassName("search-form-submit")[0].disabled=!0}}}' . "\n";
+            $script = 'window.onload=function(){if(document.getElementsByClassName("search-form-submit")[0]){var e=new URL(document.location).searchParams.get("q");""!==e&&(document.getElementsByClassName("search-form-submit")[0].disabled=!0),document.getElementsByClassName("search-form")[0].oninput=function(){document.getElementsByClassName("search-form-field")[0].value&&document.getElementsByClassName("search-form-field")[0].value!==e?document.getElementsByClassName("search-form-submit")[0].disabled=!1:document.getElementsByClassName("search-form-submit")[0].disabled=!0}}};' . "\n";
 
             echo '<script>' . $script . '</script>' . "\n";
         }
