@@ -196,7 +196,7 @@ class publicOrigineMini
 
                 if (\dcCore::app()->ctx->categories->cat_desc !== '') {
                     $desc = \dcCore::app()->ctx->categories->cat_desc;
-                    $desc = \html::decodeEntities(html::clean($desc));
+                    $desc = \html::decodeEntities(\html::clean($desc));
                     $desc = preg_replace('/\s+/', ' ', $desc);
                     $desc = \html::escapeHTML($desc);
 
@@ -208,7 +208,7 @@ class publicOrigineMini
             // Tags.
             } elseif (\dcCore::app()->url->type === 'tag' && \dcCore::app()->ctx->meta->meta_type === 'tag') {
                 $title = \dcCore::app()->ctx->meta->meta_id;
-                $desc    = sprintf(__('meta-social-tags-post-related'), $title);
+                $desc  = sprintf(__('meta-social-tags-post-related'), $title);
             }
 
             $title = \html::escapeHTML($title);
