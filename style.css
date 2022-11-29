@@ -86,15 +86,15 @@ body {
 a {
   color: var(--color-primary, #1742cf);
   text-decoration: var(--link-text-decoration, none);
+  text-decoration-style: var(--link-text-decoration-style, unset);
 }
 a:is(:active, :focus, :hover):not(.button) {
   color: var(--color-primary, #1742cf);
   filter: brightness(1.25);
   text-decoration: underline;
+  text-decoration-style: solid;  /* Needed for Safari when .content-text a decoration is set. */
 }
-@media (prefers-contrast: more),
-       (-ms-high-contrast: active),
-       (-ms-high-contrast: black-on-white) {
+@media (prefers-contrast: more), (-ms-high-contrast: active), (-ms-high-contrast: black-on-white) {
   a {
     text-decoration: underline dotted;
   }
@@ -326,7 +326,8 @@ textarea {
 /* Details */
 details summary {
   cursor: pointer;
-  text-decoration: underline dotted;
+  text-decoration: underline;
+  text-decoration-style: dotted;
 }
 .details-content {
   margin-top: .5rem;
@@ -357,6 +358,7 @@ details summary {
 #site-title a {
   color: inherit;
   text-decoration: var(--link-text-decoration, none);
+  text-decoration-style: var(--link-text-decoration-style, unset);
 }
 #main-menu {
   list-style: none;
@@ -526,13 +528,8 @@ details summary {
   padding: 1rem 1rem 0;
 }
 #trackback-url {
-  color: var(--color-primary, #1742cf);
   text-decoration: var(--link-text-decoration, none);
-}
-#trackback-url:is(:active, :focus, :hover) {
-  cursor: pointer;
-  filter: brightness(1.25);
-  text-decoration: underline;
+  text-decoration-style: var(--link-text-decoration-style, unset);
 }
 
 /**
@@ -730,7 +727,9 @@ aside .widget:last-child {
   .content-text a[href^=http]:after {
     content: " [" attr(href) "]";
   }
+  #comment-feed-link,
   #comment-form,
+  #trackback-link-container,
   .pagination-links,
   .post-pagination,
   .simple-menu {
