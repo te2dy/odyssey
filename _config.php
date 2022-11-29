@@ -25,8 +25,8 @@ class adminConfigOrigineMini
      */
     public static function load_styles_scripts()
     {
-        echo dcPage::cssLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/css/admin.css'),
-        dcPage::jsLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/js/admin.js');
+        echo dcPage::cssLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/css/admin.min.css'),
+        dcPage::jsLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/js/admin.min.js');
     }
     /**
      * Defines the sections in which the theme settings will be sorted.
@@ -1044,16 +1044,6 @@ class adminConfigOrigineMini
                 $css_root_array[':root']['--content-link-text-decoration-style'] = 'unset';
             }
 
-            // Reaction feed link.
-            if (isset($_POST['content_reaction_feed']) && $_POST['content_reaction_feed'] === '1') {
-                $css_media_print_array['#comment-feed-link']['display'] = 'none';
-            }
-
-            // Trackback link.
-            if (isset($_POST['content_trackback_link']) && $_POST['content_trackback_link'] === '1') {
-                $css_media_print_array['#trackback-link-container']['display'] = 'none';
-            }
-
             // Link to reactions in the post list.
             if (isset($_POST['content_post_list_reaction_link']) && $_POST['content_post_list_reaction_link'] === '1') {
                 $css_main_array['.post-list .post']['flex-wrap'] = 'wrap';
@@ -1275,6 +1265,42 @@ class adminConfigOrigineMini
 
                 <input class=delete name=reset value="<?php echo __('settings-reset-button-text'); ?>" type=submit>
             </p>
+
+            <div class=warning-msg id=origine-mini-message-js>
+                <p>Vous avez activé des fonctionnalités JavaScript qui ajoutent du code dans les pages publiques de votre blog.</p>
+
+                <p>Pour plus de sécurité, il est recommandé de configurer une <a href=https://developer.mozilla.org/fr/docs/Web/HTTP/CSP title="Content Security Policy (CSP)">stratégie de sécurité du contenu</a> (ou <em>Content Security Policy</em> [CSP]) qui interdit l’exécution des scripts, sauf lorsqu’une empreinte numérique valide est fournie.</p>
+
+                <p>Pour cela, ajoutez à la directive <code>'script-src'</code> les empreintes numériques suivantes&nbsp;:
+
+                <?php
+                if (dcCore::app()->blog->settings->originemini->js_hash !== null) {
+                    $hashes = dcCore::app()->blog->settings->originemini->js_hash;
+
+                    if (!empty($hashes)) {
+                        echo '<ul>';
+
+                        foreach ($hashes as $script_id => $hash) {
+                            $hash = '<code>' . $hash . '</code>';
+
+                            if ($script_id === 'searchform') {
+                                echo '<li id=hash-searchform>', __("Script du formulaire de recherche&nbsp;:") . '<br>' . $hash, '</li>';
+                            } elseif ($script_id === 'trackbackurl') {
+                                echo '<li id=hash-trackbackurl>',__("Script de copie de l’adresse des rétroliens&nbsp;:") . '<br>' . $hash, '</li>';
+                            } elseif ($script_id === 'imagewide') {
+                                echo '<li id=hash-imagewide>',__("Script d’agrandissement des images&nbsp;:") . '<br>' . $hash, '</li>';
+                            }
+                        }
+
+                        echo '</ul>';
+                    }
+                }
+                ?>
+
+                <p>Un exemple de mise en place est disponible sur <a href=https://open-time.net/post/2022/08/15/CSP-mon-amour-en-public hreflang=fr title="CSP mon amour en public">le blog de Franck, <em>Open Time</em></a>.</p>
+
+                <p>Attention&nbsp;: ces empreintes sont susceptibles d’être modifiées lors de la prochaine mise à jour d’Origine Mini ; il faudra alors penser à les actualiser dans la stratégie.</p>
+            </div>
         </form>
 
         <?php

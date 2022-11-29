@@ -17,7 +17,6 @@ if (!defined('DC_RC_PATH')) {
 \dcCore::app()->addBehavior('publicHeadContent', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniHeadMeta']);
 \dcCore::app()->addBehavior('publicHeadContent', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniSocialMarkups']);
 \dcCore::app()->addBehavior('publicEntryBeforeContent', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniPostIntro']);
-\dcCore::app()->addBehavior('publicFooterContent', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniFooterScript']);
 \dcCore::app()->addBehavior('publicFooterContent', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniSocialLinks']);
 
 \dcCore::app()->tpl->addValue('origineMiniMetaDescriptionHome', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniMetaDescriptionHome']);
@@ -47,6 +46,9 @@ if (!defined('DC_RC_PATH')) {
 
 // TEST.
 \dcCore::app()->tpl->addValue('origineMiniScriptTrackbackURLCopied', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniScriptTrackbackURLCopied']);
+\dcCore::app()->addBehavior('publicFooterContent', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniScriptSearchForm']);
+\dcCore::app()->tpl->addValue('origineMiniScriptTrackbackURL', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniScriptTrackbackURL']);
+\dcCore::app()->addBehavior('publicFooterContent', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniScriptImagesWide']);
 
 class publicOrigineMini
 {
@@ -239,29 +241,6 @@ class publicOrigineMini
     {
         if (\dcCore::app()->blog->settings->originemini->content_post_intro === true && \dcCore::app()->ctx->posts->post_excerpt) {
             echo '<div id=post-single-excerpt>', \dcCore::app()->ctx->posts->getExcerpt(), '</div>';
-        }
-    }
-
-    public static function origineMiniFooterScript()
-    {
-        if (\dcCore::app()->blog->settings->originemini->global_js === true) {
-            if (\dcCore::app()->blog->settings->originemini->content_images_wide === null) {
-                $data = '';
-            } else {
-                if (\dcCore::app()->blog->settings->originemini->global_page_width === null) {
-                    $page_width = 30;
-                } else {
-                    $page_width = \dcCore::app()->blog->settings->originemini->global_page_width;
-                }
-
-                $data = ' data-pagewidth=' . $page_width;
-            }
-
-            $js_url = \dcCore::app()->blog->settings->system->themes_path . '/' . \dcCore::app()->blog->settings->system->theme . '/js/public.min.js';
-
-            $integrity = ' integrity="' . \dcCore::app()->blog->settings->originemini->public_js_sha256 . '"';
-
-            echo '<script crossorigin=anonymous' . $data . ' id=script-theme' . $integrity . ' src="' . $js_url . '"></script>' . "\n";
         }
     }
 
@@ -831,6 +810,45 @@ class publicOrigineMini
     {
         if (\dcCore::app()->blog->settings->originemini->global_js === true) {
             return ' <span id=trackback-url-copied>' . __('reactions-trackback-url-copied') . '</span>';
+        }
+    }
+
+    // Only on search page or all pages if searchform in the widget nav area.
+    public static function origineMiniScriptSearchForm()
+    {
+        if (\dcCore::app()->blog->settings->originemini->global_js === true && (\dcCore::app()->blog->settings->originemini->widgets_search_form === true || (\dcCore::app()->blog->settings->originemini->widgets_search_form === null && \dcCore::app()->url->type === 'search'))) {
+            $script = 'window.onload=function(){if(document.getElementsByClassName("search-form-submit")[0]){var e=new URL(document.location).searchParams.get("q");""!==e&&(document.getElementsByClassName("search-form-submit")[0].disabled=!0),document.getElementsByClassName("search-form")[0].oninput=function(){document.getElementsByClassName("search-form-field")[0].value&&document.getElementsByClassName("search-form-field")[0].value!==e?document.getElementsByClassName("search-form-submit")[0].disabled=!1:document.getElementsByClassName("search-form-submit")[0].disabled=!0}}}' . "\n";
+
+            echo '<script>' . $script . '</script>' . "\n";
+        }
+    }
+
+    public static function origineMiniScriptTrackbackURL()
+    {
+        if (\dcCore::app()->blog->settings->originemini->global_js === true) {
+            $script = 'window.onload=function(){document.getElementById("trackback-url")&&(document.getElementById("trackback-url").onclick=function(){window.location.protocol,window.location.host;var e,t=document.getElementById("trackback-url").innerHTML;try{e=new URL(t).href}catch(c){return!1}!1!==e.href&&navigator.clipboard.writeText(e).then(()=>{document.getElementById("trackback-url-copied").style.display="inline"},()=>{document.getElementById("trackback-url-copied").style.display="none"})})};' . "\n";
+
+            return '<script>' . $script . '</script>' . "\n";
+        }
+    }
+
+    public static function origineMiniScriptImagesWide()
+    {
+        if (\dcCore::app()->blog->settings->originemini->content_images_wide === true) {
+
+            if (\dcCore::app()->url->type === 'post' || \dcCore::app()->url->type === 'pages') {
+                $page_width_allowed = [30, 35, 40];
+
+                if (in_array(\dcCore::app()->blog->settings->originemini->global_page_width, $page_width_allowed, true)) {
+                    $page_width = \dcCore::app()->blog->settings->originemini->global_page_width;
+                } else {
+                    $page_width = 30;
+                }
+
+                $script = 'function getMeta(e,t){var i=new Image;i.src=e,i.addEventListener("load",function(){t(this.width,this.height)})}function imageWide(){var e=parseInt(document.getElementById("script-images-wide").getAttribute("data-pagewidth")),t=e+10,i=0,a=0,d=0;-1===[30,35,40].indexOf(e)&&(e=30);let n=document.createElement("div");n.style.width="1rem",n.style.display="none",document.body.append(n);var r=window.getComputedStyle(n).getPropertyValue("width").match(/\d+/);n.remove(),(d=r&&r.length>=1?parseInt(r[0]):16)>0&&(i=e*d,a=t*d);for(var g=document.getElementsByTagName("article")[0].getElementsByTagName("img"),l=0;l<g.length;){let s=g[l];getMeta(s.src,function(e,t){let d=e,n=t,r="";d>i&&d>n&&(d>a&&(n=parseInt(a*n/d),d=a),r="display:block;margin-left:50%;transform:translateX(-50%);max-width:95vw;",s.setAttribute("style",r),d&&s.setAttribute("width",d),n&&s.setAttribute("height",n))}),l++}}document.getElementById("script-images-wide").getAttribute("data-pagewidth")&&document.getElementsByTagName("article")[0]&&(window.addEventListener("load",imageWide),window.addEventListener("resize",imageWide));' . "\n";
+
+                echo '<script data-pagewidth=' . $page_width . ' id=script-images-wide>' . $script . '</script>' . "\n";
+            }
         }
     }
 }
