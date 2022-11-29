@@ -363,7 +363,7 @@ class publicOrigineMini
      */
     public static function origineMiniScriptTrackbackURL()
     {
-        if (\dcCore::app()->blog->settings->originemini->global_js === true) {
+        if (\dcCore::app()->blog->settings->originemini->global_js === true && (\dcCore::app()->url->type === 'post' || \dcCore::app()->url->type === 'pages')) {
             $script = 'window.onload=function(){document.getElementById("trackback-url")&&(document.getElementById("trackback-url").onclick=function(){window.location.protocol,window.location.host;var e,t=document.getElementById("trackback-url").innerHTML;try{e=new URL(t).href}catch(c){return!1}!1!==e.href&&navigator.clipboard.writeText(e).then(()=>{document.getElementById("trackback-url-copied").style.display="inline"},()=>{document.getElementById("trackback-url-copied").style.display="none"})})};' . "\n";
 
             echo '<script>' . $script . '</script>' . "\n";
