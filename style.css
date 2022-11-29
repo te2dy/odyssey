@@ -182,7 +182,12 @@ h6 {
 }
 .content-text a {
   text-decoration-line: var(--content-link-text-decoration-line, underline);
-  text-decoration-style: var(--content-link-text-decoration-style, dotted);
+  text-decoration-style: var(--content-link-text-decoration-style, solid);
+}
+.content-text a:is(:active, :focus, :hover) {
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-thickness: var(--content-link-text-decoration-thickness, .168rem);
 }
 .content-text pre {
   text-align: left;

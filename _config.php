@@ -1040,8 +1040,9 @@ class adminConfigOrigineMini
 
             // Content links.
             if (!isset($_POST['content_links_underline'])) {
-                $css_root_array[':root']['--content-link-text-decoration-line']  = 'none';
-                $css_root_array[':root']['--content-link-text-decoration-style'] = 'unset';
+                $css_root_array[':root']['--content-link-text-decoration-line']      = 'none';
+                $css_root_array[':root']['--content-link-text-decoration-style']     = 'unset';
+                $css_root_array[':root']['--content-link-text-decoration-thickness'] = '.063rem';
             }
 
             // Link to reactions in the post list.
