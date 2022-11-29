@@ -18,6 +18,9 @@ if (!defined('DC_RC_PATH')) {
 \dcCore::app()->addBehavior('publicHeadContent', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniSocialMarkups']);
 \dcCore::app()->addBehavior('publicEntryBeforeContent', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniPostIntro']);
 \dcCore::app()->addBehavior('publicFooterContent', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniSocialLinks']);
+\dcCore::app()->addBehavior('publicFooterContent', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniScriptSearchForm']);
+\dcCore::app()->addBehavior('publicFooterContent', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniScriptTrackbackURL']);
+\dcCore::app()->addBehavior('publicFooterContent', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniScriptImagesWide']);
 
 \dcCore::app()->tpl->addValue('origineMiniMetaDescriptionHome', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniMetaDescriptionHome']);
 \dcCore::app()->tpl->addValue('origineMiniStylesInline', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniStylesInline']);
@@ -29,6 +32,7 @@ if (!defined('DC_RC_PATH')) {
 \dcCore::app()->tpl->addValue('origineMiniEntryTime', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniEntryTime']);
 \dcCore::app()->tpl->addValue('origineMiniEntryExcerpt', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniEntryExcerpt']);
 \dcCore::app()->tpl->addValue('origineMiniPostTagsBefore', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniPostTagsBefore']);
+\dcCore::app()->tpl->addValue('origineMiniScriptTrackbackURLCopied', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniScriptTrackbackURLCopied']);
 \dcCore::app()->tpl->addValue('origineMiniEmailAuthor', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniEmailAuthor']);
 \dcCore::app()->tpl->addValue('origineMiniAttachmentTitle', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniAttachmentTitle']);
 \dcCore::app()->tpl->addValue('origineMiniAttachmentSize', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniAttachmentSize']);
@@ -43,12 +47,6 @@ if (!defined('DC_RC_PATH')) {
 \dcCore::app()->tpl->addBlock('origineMiniWidgetSearchForm', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniWidgetSearchForm']);
 \dcCore::app()->tpl->addBlock('origineMiniWidgetsExtra', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniWidgetsExtra']);
 \dcCore::app()->tpl->addBlock('origineMiniFooter', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniFooter']);
-
-// TEST.
-\dcCore::app()->tpl->addValue('origineMiniScriptTrackbackURLCopied', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniScriptTrackbackURLCopied']);
-\dcCore::app()->addBehavior('publicFooterContent', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniScriptSearchForm']);
-\dcCore::app()->tpl->addValue('origineMiniScriptTrackbackURL', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniScriptTrackbackURL']);
-\dcCore::app()->addBehavior('publicFooterContent', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniScriptImagesWide']);
 
 class publicOrigineMini
 {
@@ -236,6 +234,8 @@ class publicOrigineMini
 
     /**
      * Displays the excerpt as an introduction before post content.
+     *
+     * @return void The excerpt in a div.
      */
     public static function origineMiniPostIntro()
     {
@@ -246,6 +246,8 @@ class publicOrigineMini
 
     /**
      * Displays social links in the footer.
+     *
+     * @return void A list of social links displayed as icons.
      */
     public static function origineMiniSocialLinks()
     {
@@ -328,6 +330,84 @@ class publicOrigineMini
         }
     }
 
+    /**
+     * Loads a script in the footer to improve the search form.
+     *
+     * Loaded only on the search page or on all pages if the search form is in the widget nav area.
+     *
+     * The content of the variable $script must be exactly the same as the content of the corresponding JS file.
+     *
+     * @see ./js/searchform.min.js
+     *
+     * @return void The script.
+     */
+    public static function origineMiniScriptSearchForm()
+    {
+        if (\dcCore::app()->blog->settings->originemini->global_js === true && (\dcCore::app()->blog->settings->originemini->widgets_search_form === true || (\dcCore::app()->blog->settings->originemini->widgets_search_form === null && \dcCore::app()->url->type === 'search'))) {
+            $script = 'window.onload=function(){if(document.getElementsByClassName("search-form-submit")[0]){var e=new URL(document.location).searchParams.get("q");""!==e&&(document.getElementsByClassName("search-form-submit")[0].disabled=!0),document.getElementsByClassName("search-form")[0].oninput=function(){document.getElementsByClassName("search-form-field")[0].value&&document.getElementsByClassName("search-form-field")[0].value!==e?document.getElementsByClassName("search-form-submit")[0].disabled=!1:document.getElementsByClassName("search-form-submit")[0].disabled=!0}}}' . "\n";
+
+            echo '<script>' . $script . '</script>' . "\n";
+        }
+    }
+
+    /**
+     * Loads a script in the footer to copy the trackback URL in one click.
+     *
+     * Loaded only on posts or pages.
+     *
+     * The content of the variable $script must be exactly the same as the content of the corresponding JS file.
+     *
+     * @see ./js/trackbackurl.min.js
+     *
+     * @return void The script.
+     */
+    public static function origineMiniScriptTrackbackURL()
+    {
+        if (\dcCore::app()->blog->settings->originemini->global_js === true) {
+            $script = 'window.onload=function(){document.getElementById("trackback-url")&&(document.getElementById("trackback-url").onclick=function(){window.location.protocol,window.location.host;var e,t=document.getElementById("trackback-url").innerHTML;try{e=new URL(t).href}catch(c){return!1}!1!==e.href&&navigator.clipboard.writeText(e).then(()=>{document.getElementById("trackback-url-copied").style.display="inline"},()=>{document.getElementById("trackback-url-copied").style.display="none"})})};' . "\n";
+
+            echo '<script>' . $script . '</script>' . "\n";
+        }
+    }
+
+    /**
+     * Loads a script in the footer to enlarge big images in posts and pages.
+     *
+     * Loaded only on posts or pages.
+     *
+     * The content of the variable $script must be exactly the same as the content of the corresponding JS file.
+     *
+     * @see ./js/imagewide.min.js
+     *
+     * @return void The script.
+     */
+    public static function origineMiniScriptImagesWide()
+    {
+        if (\dcCore::app()->blog->settings->originemini->content_images_wide === true) {
+
+            if (\dcCore::app()->url->type === 'post' || \dcCore::app()->url->type === 'pages') {
+                $page_width_allowed = [30, 35, 40];
+
+                if (in_array(\dcCore::app()->blog->settings->originemini->global_page_width, $page_width_allowed, true)) {
+                    $page_width = \dcCore::app()->blog->settings->originemini->global_page_width;
+                } else {
+                    $page_width = 30;
+                }
+
+                $script = 'function getMeta(e,t){var i=new Image;i.src=e,i.addEventListener("load",function(){t(this.width,this.height)})}function imageWide(){var e=parseInt(document.getElementById("script-images-wide").getAttribute("data-pagewidth")),t=e+10,i=0,a=0,d=0;-1===[30,35,40].indexOf(e)&&(e=30);let n=document.createElement("div");n.style.width="1rem",n.style.display="none",document.body.append(n);var r=window.getComputedStyle(n).getPropertyValue("width").match(/\d+/);n.remove(),(d=r&&r.length>=1?parseInt(r[0]):16)>0&&(i=e*d,a=t*d);for(var g=document.getElementsByTagName("article")[0].getElementsByTagName("img"),l=0;l<g.length;){let s=g[l];getMeta(s.src,function(e,t){let d=e,n=t,r="";d>i&&d>n&&(d>a&&(n=parseInt(a*n/d),d=a),r="display:block;margin-left:50%;transform:translateX(-50%);max-width:95vw;",s.setAttribute("style",r),d&&s.setAttribute("width",d),n&&s.setAttribute("height",n))}),l++}}document.getElementById("script-images-wide").getAttribute("data-pagewidth")&&document.getElementsByTagName("article")[0]&&(window.addEventListener("load",imageWide),window.addEventListener("resize",imageWide));' . "\n";
+
+                echo '<script data-pagewidth=' . $page_width . ' id=script-images-wide>' . $script . '</script>' . "\n";
+            }
+        }
+    }
+
+    /**
+     * Displays the description of the blog homepage to add in a meta description tag.
+     *
+     * If a custom description is not set in the configurator, displays the blog description.
+     *
+     * @return void The description.
+     */
     public static function origineMiniMetaDescriptionHome($attr) {
         if (\dcCore::app()->blog->settings->originemini->global_meta_home_description) {
             return '<?php echo ' . sprintf(\dcCore::app()->tpl->getFilters($attr), '\dcCore::app()->blog->settings->originemini->global_meta_home_description') . '; ?>';
@@ -563,6 +643,20 @@ class publicOrigineMini
                 }
             }
         ?>';
+    }
+
+    /**
+     * Displays "copied" after the trackback URL in posts.
+     *
+     * Should only be displayed when a visitor click on the URL.
+     *
+     * @return void The private comment section.
+     */
+    public static function origineMiniScriptTrackbackURLCopied()
+    {
+        if (\dcCore::app()->blog->settings->originemini->global_js === true) {
+            return ' <span id=trackback-url-copied>' . __('reactions-trackback-url-copied') . '</span>';
+        }
     }
 
     /**
@@ -802,53 +896,6 @@ class publicOrigineMini
     {
         if (\dcCore::app()->blog->settings->originemini->footer_enabled !== false) {
             return $content;
-        }
-    }
-
-    // TEST.
-    public static function origineMiniScriptTrackbackURLCopied()
-    {
-        if (\dcCore::app()->blog->settings->originemini->global_js === true) {
-            return ' <span id=trackback-url-copied>' . __('reactions-trackback-url-copied') . '</span>';
-        }
-    }
-
-    // Only on search page or all pages if searchform in the widget nav area.
-    public static function origineMiniScriptSearchForm()
-    {
-        if (\dcCore::app()->blog->settings->originemini->global_js === true && (\dcCore::app()->blog->settings->originemini->widgets_search_form === true || (\dcCore::app()->blog->settings->originemini->widgets_search_form === null && \dcCore::app()->url->type === 'search'))) {
-            $script = 'window.onload=function(){if(document.getElementsByClassName("search-form-submit")[0]){var e=new URL(document.location).searchParams.get("q");""!==e&&(document.getElementsByClassName("search-form-submit")[0].disabled=!0),document.getElementsByClassName("search-form")[0].oninput=function(){document.getElementsByClassName("search-form-field")[0].value&&document.getElementsByClassName("search-form-field")[0].value!==e?document.getElementsByClassName("search-form-submit")[0].disabled=!1:document.getElementsByClassName("search-form-submit")[0].disabled=!0}}}' . "\n";
-
-            echo '<script>' . $script . '</script>' . "\n";
-        }
-    }
-
-    public static function origineMiniScriptTrackbackURL()
-    {
-        if (\dcCore::app()->blog->settings->originemini->global_js === true) {
-            $script = 'window.onload=function(){document.getElementById("trackback-url")&&(document.getElementById("trackback-url").onclick=function(){window.location.protocol,window.location.host;var e,t=document.getElementById("trackback-url").innerHTML;try{e=new URL(t).href}catch(c){return!1}!1!==e.href&&navigator.clipboard.writeText(e).then(()=>{document.getElementById("trackback-url-copied").style.display="inline"},()=>{document.getElementById("trackback-url-copied").style.display="none"})})};' . "\n";
-
-            return '<script>' . $script . '</script>' . "\n";
-        }
-    }
-
-    public static function origineMiniScriptImagesWide()
-    {
-        if (\dcCore::app()->blog->settings->originemini->content_images_wide === true) {
-
-            if (\dcCore::app()->url->type === 'post' || \dcCore::app()->url->type === 'pages') {
-                $page_width_allowed = [30, 35, 40];
-
-                if (in_array(\dcCore::app()->blog->settings->originemini->global_page_width, $page_width_allowed, true)) {
-                    $page_width = \dcCore::app()->blog->settings->originemini->global_page_width;
-                } else {
-                    $page_width = 30;
-                }
-
-                $script = 'function getMeta(e,t){var i=new Image;i.src=e,i.addEventListener("load",function(){t(this.width,this.height)})}function imageWide(){var e=parseInt(document.getElementById("script-images-wide").getAttribute("data-pagewidth")),t=e+10,i=0,a=0,d=0;-1===[30,35,40].indexOf(e)&&(e=30);let n=document.createElement("div");n.style.width="1rem",n.style.display="none",document.body.append(n);var r=window.getComputedStyle(n).getPropertyValue("width").match(/\d+/);n.remove(),(d=r&&r.length>=1?parseInt(r[0]):16)>0&&(i=e*d,a=t*d);for(var g=document.getElementsByTagName("article")[0].getElementsByTagName("img"),l=0;l<g.length;){let s=g[l];getMeta(s.src,function(e,t){let d=e,n=t,r="";d>i&&d>n&&(d>a&&(n=parseInt(a*n/d),d=a),r="display:block;margin-left:50%;transform:translateX(-50%);max-width:95vw;",s.setAttribute("style",r),d&&s.setAttribute("width",d),n&&s.setAttribute("height",n))}),l++}}document.getElementById("script-images-wide").getAttribute("data-pagewidth")&&document.getElementsByTagName("article")[0]&&(window.addEventListener("load",imageWide),window.addEventListener("resize",imageWide));' . "\n";
-
-                echo '<script data-pagewidth=' . $page_width . ' id=script-images-wide>' . $script . '</script>' . "\n";
-            }
         }
     }
 }
