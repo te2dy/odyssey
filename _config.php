@@ -1267,11 +1267,11 @@ class adminConfigOrigineMini
             </p>
 
             <div class=warning-msg id=origine-mini-message-js>
-                <p>Vous avez activé des fonctionnalités JavaScript qui ajoutent du code dans les pages publiques de votre blog.</p>
+                <p><?php echo __('settings-scripts-message-intro'); ?></p>
 
-                <p>Pour plus de sécurité, il est recommandé de configurer une <a href=https://developer.mozilla.org/fr/docs/Web/HTTP/CSP title="Content Security Policy (CSP)">stratégie de sécurité du contenu</a> (ou <em>Content Security Policy</em> [CSP]) qui interdit l’exécution des scripts, sauf lorsqu’une empreinte numérique valide est fournie.</p>
+                <p><?php printf(__('settings-scripts-message-csp'), __('settings-scripts-message-csp-href'), __('settings-scripts-message-csp-title')); ?></p>
 
-                <p>Pour cela, ajoutez à la directive <code>'script-src'</code> les empreintes numériques suivantes&nbsp;:
+                <p><?php echo __('settings-scripts-message-hash-intro'); ?></p>
 
                 <?php
                 if (dcCore::app()->blog->settings->originemini->js_hash !== null) {
@@ -1284,11 +1284,11 @@ class adminConfigOrigineMini
                             $hash = '<code>' . $hash . '</code>';
 
                             if ($script_id === 'searchform') {
-                                echo '<li id=hash-searchform>', __("Script du formulaire de recherche&nbsp;:") . '<br>' . $hash, '</li>';
+                                echo '<li id=hash-searchform>', __('settings-scripts-message-hash-searchform') . '<br>' . $hash, '</li>';
                             } elseif ($script_id === 'trackbackurl') {
-                                echo '<li id=hash-trackbackurl>',__("Script de copie de l’adresse des rétroliens&nbsp;:") . '<br>' . $hash, '</li>';
+                                echo '<li id=hash-trackbackurl>', __('settings-scripts-message-hash-trackbackurl') . '<br>' . $hash, '</li>';
                             } elseif ($script_id === 'imagewide') {
-                                echo '<li id=hash-imagewide>',__("Script d’agrandissement des images&nbsp;:") . '<br>' . $hash, '</li>';
+                                echo '<li id=hash-imagewide>', __('settings-scripts-message-hash-imagewide') . '<br>' . $hash, '</li>';
                             }
                         }
 
@@ -1297,9 +1297,9 @@ class adminConfigOrigineMini
                 }
                 ?>
 
-                <p>Un exemple de mise en place est disponible sur <a href=https://open-time.net/post/2022/08/15/CSP-mon-amour-en-public hreflang=fr title="CSP mon amour en public">le blog de Franck, <em>Open Time</em></a>.</p>
+                <p><?php printf(__('settings-scripts-message-example'), 'https://open-time.net/post/2022/08/15/CSP-mon-amour-en-public', 'fr', 'CSP mon amour en public'); ?></p>
 
-                <p>Attention&nbsp;: ces empreintes sont susceptibles d’être modifiées lors de la prochaine mise à jour d’Origine Mini ; il faudra alors penser à les actualiser dans la stratégie.</p>
+                <p><?php echo __('settings-scripts-message-note'); ?></p>
             </div>
         </form>
 

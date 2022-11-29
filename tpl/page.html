@@ -18,14 +18,20 @@
   {{tpl:include src="_entry-page.html"}}
 </tpl:Block>
 
-<tpl:Block name="footer-scripts">
+<tpl:Block name="footer-scripts-jquery">
   <script src="{{tpl:BlogQmarkURL}}pf={{tpl:BlogJsJQuery}}/jquery.js"></script>
 
   <tpl:EntryIf show_comments="1">
     <script src="{{tpl:BlogQmarkURL}}pf=util.js"></script>
     <script type=application/json id=dc_post_remember_str-data>
-      { "post_remember_str": "{{tpl:lang reactions-comment-remember-me}}" }
+      {"post_remember_str": "{{tpl:lang reactions-comment-remember-me}}"}
     </script>
     <script src="{{tpl:BlogQmarkURL}}pf=post.js"></script>
+  </tpl:EntryIf>
+</tpl:Block>
+
+<tpl:Block name="footer-scripts-javascript">
+  <tpl:EntryIf pings_active="1">
+    {{tpl:origineMiniScriptTrackbackURL}}
   </tpl:EntryIf>
 </tpl:Block>

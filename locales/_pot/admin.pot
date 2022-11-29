@@ -356,3 +356,33 @@ msgstr ""
 
 msgid "settings-config-reset"
 msgstr ""
+
+msgid "settings-scripts-message-intro"
+msgstr ""
+
+msgid "settings-scripts-message-csp"
+msgstr ""
+
+msgid "settings-scripts-message-csp-href"
+msgstr ""
+
+msgid "settings-scripts-message-csp-title"
+msgstr ""
+
+msgid "settings-scripts-message-hash-intro"
+msgstr ""
+
+msgid "settings-scripts-message-hash-searchform"
+msgstr ""
+
+msgid "settings-scripts-message-hash-trackbackurl"
+msgstr ""
+
+msgid "settings-scripts-message-hash-imagewide"
+msgstr ""
+
+msgid "settings-scripts-message-example"
+msgstr ""
+
+msgid "settings-scripts-message-note"
+msgstr ""

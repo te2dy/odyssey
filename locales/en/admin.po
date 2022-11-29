@@ -236,7 +236,7 @@ msgid "settings-content-postintro-description"
 msgstr "Highlights the excerpt defined by the author between the title and the content of the post."
 
 msgid "settings-content-imageswide-title"
-msgstr "Enlarge images wide enough"
+msgstr "Enlarge big images"
 
 msgid "settings-content-imageswide-description"
 msgstr "Photos that are large enough will overflow the page (uses JavaScript)."
@@ -356,3 +356,33 @@ msgstr "The theme configuration has been updated."
 
 msgid "settings-config-reset"
 msgstr "The theme configuration has been reset."
+
+msgid "settings-scripts-message-intro"
+msgstr "You have enabled JavaScript features that add code to the public pages of your blog."
+
+msgid "settings-scripts-message-csp"
+msgstr "For increased security, it is recommended to configure a <a href="%s" title="%s">Content Security Policy (CSP)</a> that prohibits the execution of scripts except when a valid digital fingerprint is provided."
+
+msgid "settings-scripts-message-csp-href"
+msgstr "https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP"
+
+msgid "settings-scripts-message-csp-title"
+msgstr "Content Security Policy (CSP)"
+
+msgid "settings-scripts-message-hash-intro"
+msgstr "To this purpose, add to the <code>'script-src'</code> directive the following digital fingerprints:"
+
+msgid "settings-scripts-message-hash-searchform"
+msgstr "Search form script:"
+
+msgid "settings-scripts-message-hash-trackbackurl"
+msgstr "Script to copy the URL of trackbacks:"
+
+msgid "settings-scripts-message-hash-imagewide"
+msgstr "Image enlargement script:"
+
+msgid "settings-scripts-message-example"
+msgstr "An example of implementation is available on <a href="%s" hreflang="%s" title="%s">Franck's blog, <em>Open Time</em></a>."
+
+msgid "settings-scripts-message-note"
+msgstr "Please note: these fingerprints may be modified in the next update of Origine Mini; you will then have to update them in the CSP."

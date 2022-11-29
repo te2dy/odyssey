@@ -164,10 +164,10 @@ msgid "settings-global-metahomedescription-description"
 msgstr "Ce texte est utilisé comme description de votre blog pour des moteurs de recherche. Sa taille idéale est d’environ 200 caractères."
 
 msgid "settings-global-js-title"
-msgstr "Activer les fonctionnalités JavaScript"
+msgstr "Rendre le thème plus interactif avec JavaScript"
 
 msgid "settings-global-js-description"
-msgstr "Permet de copier l’adresse des rétroliens en un clic, de désactiver le bouton de recherche lorsque la requête est inchangée ou vide, et d’activer le paramètre des images larges."
+msgstr "Permet de copier l’adresse des rétroliens en un clic et de désactiver le bouton de recherche lorsque la requête est inchangée ou vide."
 
 msgid "settings-global-metagenerator-title"
 msgstr "Ajouter la balise meta <code>generator</code> dans l’en-tête"
@@ -356,3 +356,33 @@ msgstr "La configuration du thème a été mise à jour."
 
 msgid "settings-config-reset"
 msgstr "La configuration du thème a été réinitialisée."
+
+msgid "settings-scripts-message-intro"
+msgstr "Vous avez activé des fonctionnalités JavaScript qui ajoutent du code dans les pages publiques de votre blog."
+
+msgid "settings-scripts-message-csp"
+msgstr "Pour plus de sécurité, il est recommandé de configurer une <a href="%s" title="%s">stratégie de sécurité du contenu</a> (ou <em>Content Security Policy</em> [CSP]) qui interdit l’exécution des scripts, sauf lorsqu’une empreinte numérique valide est fournie."
+
+msgid "settings-scripts-message-csp-href"
+msgstr "https://developer.mozilla.org/fr/docs/Web/HTTP/CSP"
+
+msgid "settings-scripts-message-csp-title"
+msgstr "Content Security Policy (CSP)"
+
+msgid "settings-scripts-message-hash-intro"
+msgstr "Pour cela, ajoutez à la directive <code>'script-src'</code> les empreintes numériques suivantes&nbsp;:"
+
+msgid "settings-scripts-message-hash-searchform"
+msgstr "Script du formulaire de recherche&nbsp;:"
+
+msgid "settings-scripts-message-hash-trackbackurl"
+msgstr "Script de copie de l’adresse des rétroliens&nbsp;:"
+
+msgid "settings-scripts-message-hash-imagewide"
+msgstr "Script d’agrandissement des images&nbsp;:"
+
+msgid "settings-scripts-message-example"
+msgstr "Un exemple de mise en place est disponible sur <a href="%s" hreflang="%s" title="%s">le blog de Franck, <em>Open Time</em></a>."
+
+msgid "settings-scripts-message-note"
+msgstr "Attention&nbsp;: ces empreintes sont susceptibles d’être modifiées lors de la prochaine mise à jour d’Origine Mini ; il faudra alors penser à les actualiser dans la stratégie."

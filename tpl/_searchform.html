@@ -4,6 +4,3 @@
   <!-- # Display only if the used type a new search query. -->
   <input class=search-form-submit type=submit value="{{tpl:lang search-submit-button}}">
 </form>
-
-<script>let params=(new URL(document.location)).searchParams,searchQuery=params.get("q");if(searchQuery!==""){document.getElementsByClassName("search-form-submit")[0].disabled=!0}
-document.getElementsByClassName("search-form")[0].oninput=function(){if(document.getElementsByClassName("search-form-field")[0].value&&document.getElementsByClassName("search-form-field")[0].value!==searchQuery){document.getElementsByClassName("search-form-submit")[0].disabled=!1}else{document.getElementsByClassName("search-form-submit")[0].disabled=!0}}</script>
