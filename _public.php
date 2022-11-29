@@ -341,9 +341,9 @@ class publicOrigineMini
      *
      * @return string The styles.
      */
-    public static function origineMiniStylesInline($attr, $content)
+    public static function origineMiniStylesInline()
     {
-        if (\dcCore::app()->blog->settings->originemini->styles) {
+        if (\dcCore::app()->blog->settings->originemini->styles !== null) {
             return '<style>' . \dcCore::app()->blog->settings->originemini->styles . '</style>';
         }
     }
