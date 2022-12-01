@@ -1284,13 +1284,17 @@ class adminConfigOrigineMini
                         foreach ($hashes as $script_id => $hash) {
                             $hash = '<code>' . $hash . '</code>';
 
+                            echo '<li id=hash-' . $script_id . '>';
+
                             if ($script_id === 'searchform') {
-                                echo '<li id=hash-searchform>', __('settings-scripts-message-hash-searchform') . '<br>' . $hash, '</li>';
+                                echo __('settings-scripts-message-hash-searchform'), '<br>', $hash;
                             } elseif ($script_id === 'trackbackurl') {
-                                echo '<li id=hash-trackbackurl>', __('settings-scripts-message-hash-trackbackurl') . '<br>' . $hash, '</li>';
+                                echo __('settings-scripts-message-hash-trackbackurl'), '<br>', $hash;
                             } elseif ($script_id === 'imagewide') {
-                                echo '<li id=hash-imagewide>', __('settings-scripts-message-hash-imagewide') . '<br>' . $hash, '</li>';
+                                echo __('settings-scripts-message-hash-imagewide'), '<br>', $hash;
                             }
+
+                            echo '</li>';
                         }
 
                         echo '</ul>';
