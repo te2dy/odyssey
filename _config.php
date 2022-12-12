@@ -4,7 +4,7 @@
  *
  * This file sets up the theme configuration page and settings.
  *
- * @copyright Teddy
+ * @author Teddy
  * @copyright GPL-3.0
  */
 
@@ -788,7 +788,7 @@ class adminConfigOrigineMini
                 }
 
                 // Puts styles in the database.
-                adminConfigOrigineMini::add_theme_styles();
+                self::add_theme_styles();
 
                 // Refreshes the blog.
                 dcCore::app()->blog->triggerBlog();
@@ -827,7 +827,7 @@ class adminConfigOrigineMini
             $css_media_motion_array   = [];
             $css_media_print_array    = [];
 
-            $default_settings = adminConfigOrigineMini::default_settings();
+            $default_settings = self::default_settings();
 
             // Page width.
             $page_width_allowed = [35, 40];
