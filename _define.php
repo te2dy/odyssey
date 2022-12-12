@@ -2,7 +2,7 @@
 /**
  * Origine Mini, a minimal theme for Dotclear.
  *
- * @copyright Teddy
+ * @author Teddy
  * @copyright GPL-3.0
  */
 
@@ -14,7 +14,7 @@ $this->registerModule(
     'Origine Mini',             // Name
     'A minimal Dotclear theme', // Description
     'Teddy',                    // Author
-    '1.0.4',                    // Version
+    '1.0.4.14',                 // Version
     [
         'requires'             => [['core', '2.24']],
         'standalone_config'    => true, // Allows a full control for the theme configurator.
