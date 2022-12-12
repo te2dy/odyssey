@@ -3,9 +3,9 @@
  * Origine Mini, a minimal theme for Dotclear.
  *
  * The purpose of this file is to generate, at each update of the theme,
- * a digital fingerprint of the JS files to save them in the database.
+ * a digital fingerprint of the JS files and save them in the database.
  *
- * @copyright Teddy
+ * @author Teddy
  * @copyright GPL-3.0
  */
 
@@ -17,8 +17,8 @@ if (!defined('DC_CONTEXT_ADMIN')) {
  * Gets the new version number of the theme and the old one.
  * If the old version number does not exists, sets it to 0.
  */
-$new_version = dcCore::app()->themes->moduleInfo('origine-mini', 'version');
-$old_version = dcCore::app()->getVersion('origine-mini') ? dcCore::app()->getVersion('origine-mini') : 0;
+$old_version = (string) dcCore::app()->getVersion(basename(__DIR__));
+$new_version = (string) dcCore::app()->themes->moduleInfo('origine-mini', 'version');
 
 if (version_compare($old_version, $new_version, '<')) {
     dcCore::app()->blog->settings->addNamespace('originemini');
