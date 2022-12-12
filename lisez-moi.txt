@@ -12,13 +12,17 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
-=== 1.0.5 - X ===
+=== 1.1 - 12 décembre 2022 ===
+- Ajout : génération d’empreintes numériques pour les scripts afin de les insérer dans une stratégie de sécurité du contenu (CSP).
+- Ajout : option pour activer ou désactiver les scripts.
 - Ajout : balisage des adresses href pour éviter les erreurs.
 - Correction : description de la page d’accueil dans les balises sociales.
 - Correction : longueur des entrées de texte du configurateur bloquée à un seul caractère.
 - Modification : code servant à copier l’adresse des rétroliens (plus de sécurité).
 - Modification : suppression de la justification du texte sur les systèmes réglés avec des contrastes élevés.
 - Modification : styles sur les petits écrans.
+- Modification : utilisation des espaces de nom dans le fichier _public.php.
+- Modification : minification des styles et des scripts de l’administration.
 
 === 1.0.4 - 26 novembre 2022 ===
 - Ajout : soulignement des liens de menus actifs.
