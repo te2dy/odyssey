@@ -608,7 +608,7 @@ class adminConfigOrigineMini
                          true,
                          $setting_value
                     ),
-                    '<label class=classic for=' . $setting_id . '>',
+                    '<label class=classic for=', $setting_id, '>',
                     $default_settings[$setting_id]['title'],
                     '</label>';
 
@@ -616,7 +616,7 @@ class adminConfigOrigineMini
 
                 case 'select' :
                 case 'select_int' :
-                    echo '<label for=' . $setting_id . '>',
+                    echo '<label for=', $setting_id, '>',
                     $default_settings[$setting_id]['title'],
                     '</label>',
                     form::combo(
@@ -630,7 +630,7 @@ class adminConfigOrigineMini
                 case 'textarea' :
                     $placeholder = isset($default_settings[$setting_id]['placeholder']) ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"' : '';
 
-                    echo '<label for=' . $setting_id . '>',
+                    echo '<label for=', $setting_id, '>',
                     $default_settings[$setting_id]['title'],
                     '</label>',
                     form::textArea(
@@ -649,7 +649,7 @@ class adminConfigOrigineMini
                 default :
                     $placeholder = isset($default_settings[$setting_id]['placeholder']) ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"' : '';
 
-                    echo '<label for=' . $setting_id . '>',
+                    echo '<label for=', $setting_id, '>',
                     $default_settings[$setting_id]['title'],
                     '</label>',
                     form::field(
@@ -670,7 +670,7 @@ class adminConfigOrigineMini
 
             // Displays the description of the parameter as a note.
             if ($default_settings[$setting_id]['type'] === 'checkbox' || (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '')) {
-                echo '<p class=form-note id=' . $setting_id . '-description>', $default_settings[$setting_id]['description'];
+                echo '<p class=form-note id=', $setting_id, '-description>', $default_settings[$setting_id]['description'];
 
                 // If the parameter is a checkbox, displays its default value as a note.
                 if ($default_settings[$setting_id]['type'] === 'checkbox') {
@@ -1240,13 +1240,13 @@ class adminConfigOrigineMini
             <?php
             // Displays the title of each section and places the corresponding parameters under each one.
             foreach ($sections_with_settings_id as $section_id => $section_data) {
-                echo '<h3 id=section-' . $section_id . '>', $sections[$section_id]['name'], '</h3>',
+                echo '<h3 id=section-', $section_id, '>', $sections[$section_id]['name'], '</h3>',
                 '<div class=fieldset>';
 
                 foreach ($section_data as $sub_section_id => $setting_id) {
                     // Displays the name of the sub-section unless its ID is "no-title".
                     if ($sub_section_id !== 'no-title') {
-                        echo '<h4 id=section-' . $section_id . '-' . $sub_section_id . '>', $sections[$section_id]['sub_sections'][$sub_section_id], '</h4>';
+                        echo '<h4 id=section-', $section_id, '-', $sub_section_id, '>', $sections[$section_id]['sub_sections'][$sub_section_id], '</h4>';
                     }
 
                     // Displays the parameter.
@@ -1284,7 +1284,7 @@ class adminConfigOrigineMini
                         foreach ($hashes as $script_id => $hash) {
                             $hash = '<code>' . $hash . '</code>';
 
-                            echo '<li id=hash-' . $script_id . '>';
+                            echo '<li id=hash-', $script_id, '>';
 
                             if ($script_id === 'searchform') {
                                 echo __('settings-scripts-message-hash-searchform'), '<br>', $hash;
