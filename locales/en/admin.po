@@ -345,10 +345,10 @@ msgstr "Custom styles for Origine Mini"
 # Form
 
 msgid "settings-default-checked"
-msgstr "Default : checked."
+msgstr "Default: checked."
 
 msgid "settings-default-unchecked"
-msgstr "Default : unchecked."
+msgstr "Default: unchecked."
 
 msgid "settings-save-button-text"
 msgstr "Save"
