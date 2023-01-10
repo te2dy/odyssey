@@ -12,6 +12,10 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
+=== 1.2 - 10 janvier 2023 ===
+- Ajout : option pour modifier l’interligne des textes.
+- Correction : oubli d’une barre oblique inversée pour appeler la classe html.
+
 === 1.1 - 12 décembre 2022 ===
 - Ajout : génération d’empreintes numériques pour les scripts afin de les insérer dans une stratégie de sécurité du contenu (CSP).
 - Ajout : option pour activer ou désactiver les scripts.
