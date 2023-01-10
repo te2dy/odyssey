@@ -464,7 +464,7 @@ class publicOrigineMini
     public static function origineMiniBlogDescription()
     {
         if (\dcCore::app()->blog->desc && \dcCore::app()->blog->settings->originemini->header_description === true) {
-            $description = \html::decodeEntities(html::clean(\dcCore::app()->blog->desc));
+            $description = \html::decodeEntities(\html::clean(\dcCore::app()->blog->desc));
             $description = preg_replace('/\s+/', ' ', $description);
             $description = \html::escapeHTML($description);
 
