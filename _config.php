@@ -1090,8 +1090,6 @@ class adminConfigOrigineMini
 
             if (isset($_POST['widgets_nav_position']) && $_POST['widgets_nav_position'] === 'header_content') {
                 $structure_order[2] = '--order-widgets-nav';
-
-                $css_main_array['#blognav']['margin'] = '-2rem 0';
             }
 
             if ($structure_order[2] === '') {
