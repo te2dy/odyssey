@@ -189,6 +189,18 @@ msgstr ""
 msgid "settings-content-fontfamily-same-default"
 msgstr ""
 
+msgid "settings-content-lineheight-title"
+msgstr ""
+
+msgid "settings-content-lineheight-small"
+msgstr ""
+
+msgid "settings-content-lineheight-standard-default"
+msgstr ""
+
+msgid "settings-content-lineheight-big"
+msgstr ""
+
 msgid "settings-content-textalign-title"
 msgstr ""
 

@@ -189,6 +189,18 @@ msgstr "Font"
 msgid "settings-content-fontfamily-same-default"
 msgstr "Same as the global theme font (default)"
 
+msgid "settings-content-lineheight-title"
+msgstr "Line space"
+
+msgid "settings-content-lineheight-small"
+msgstr "Small"
+
+msgid "settings-content-lineheight-standard-default"
+msgstr "Standard (default)"
+
+msgid "settings-content-lineheight-big"
+msgstr "Big"
+
 msgid "settings-content-textalign-title"
 msgstr "Alignment"
 

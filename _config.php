@@ -261,6 +261,19 @@ class adminConfigOrigineMini
             'section'     => ['content', 'text-formatting']
         ];
 
+        $default_settings['content_line_height'] = [
+            'title'       => __('settings-content-lineheight-title'),
+            'description' => '',
+            'type'        => 'select_int',
+            'choices'     => [
+                __('settings-content-lineheight-small')            => 125,
+                __('settings-content-lineheight-standard-default') => 150,
+                __('settings-content-lineheight-big')              => 175
+            ],
+            'default'     => 150,
+            'section'     => ['content', 'text-formatting']
+        ];
+
         $default_settings['content_text_align'] = [
             'title'       => __('settings-content-textalign-title'),
             'description' => '',
@@ -957,6 +970,13 @@ class adminConfigOrigineMini
                 } elseif ($_POST['content_text_font'] === 'monospace') {
                     $css_main_array['.content-text']['font-family'] = 'Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace';
                 }
+            }
+
+            // Line Height
+            $line_height_allowed = [125, 175];
+
+            if (isset($_POST['content_line_height']) && in_array((int) $_POST['content_line_height'], $line_height_allowed, true)) {
+                $css_root_array[':root']['--text-line-height'] = ((int) $_POST['content_line_height']) / 100;
             }
 
             // Text align

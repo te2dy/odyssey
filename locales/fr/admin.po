@@ -192,6 +192,18 @@ msgstr "Identique à la police globale du thème (par défaut)"
 msgid "settings-content-textalign-title"
 msgstr "Alignement"
 
+msgid "settings-content-lineheight-title"
+msgstr "Interligne"
+
+msgid "settings-content-lineheight-small"
+msgstr "Petit"
+
+msgid "settings-content-lineheight-standard-default"
+msgstr "Standard (par défaut)"
+
+msgid "settings-content-lineheight-big"
+msgstr "Grand"
+
 msgid "settings-content-textalign-left-default"
 msgstr "À gauche (par défaut)"
 
