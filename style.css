@@ -141,7 +141,7 @@ pre {
 }
 pre {
   display: block;
-  line-height: 1.5;
+  line-height: var(--text-line-height, 1.5);
   margin: 1em 0;
   padding: .5em;
 }
@@ -177,7 +177,7 @@ h6 {
 
 /* Text content styles */
 .content-text {
-  line-height: 1.5;
+  line-height: var(--text-line-height, 1.5);
   text-align: var(--text-align, left);
 }
 .content-text a {
