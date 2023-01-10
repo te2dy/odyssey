@@ -1295,6 +1295,11 @@ class adminConfigOrigineMini
                 <p><?php echo __('settings-scripts-message-hash-intro'); ?></p>
 
                 <?php
+                /**
+                 * Displays the list of script hashes if they are loaded.
+                 *
+                 * @see /_prepend.php
+                 */
                 if (dcCore::app()->blog->settings->originemini->js_hash !== null) {
                     $hashes = dcCore::app()->blog->settings->originemini->js_hash;
 

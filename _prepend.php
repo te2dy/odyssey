@@ -2,7 +2,7 @@
 /**
  * Origine Mini, a minimal theme for Dotclear.
  *
- * The purpose of this file is to generate, at each update of the theme,
+ * The purpose of this file is to generate, at each version change of the theme,
  * a digital fingerprint of the JS files and save them in the database.
  *
  * @author Teddy
@@ -31,7 +31,11 @@ if (version_compare($old_version, $new_version, '<')) {
         'imagewide'    => htmlspecialchars($imagewide_hash, ENT_COMPAT, 'UTF-8')
     ];
 
-    // Saves the hashes in the database as an array.
+    /**
+     * Saves the hashes in the database as an array.
+     *
+     * @see adminConfigOrigineMini::page_rendering() (/_config.php)
+     */
     dcCore::app()->blog->settings->originemini->put('js_hash', $hashes, 'array', __('prepend-hashes-save'), true);
 
     // Pushes the new version of the theme in the database.
