@@ -12,6 +12,9 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
+=== 1.2.1 - 10 janvier 2023 ===
+- Suppression : marges négatives dans la zone de navigation des widgets.
+
 === 1.2 - 10 janvier 2023 ===
 - Ajout : option pour modifier l’interligne des textes.
 - Correction : oubli d’une barre oblique inversée pour appeler la classe html.

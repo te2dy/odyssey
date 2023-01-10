@@ -14,7 +14,7 @@ $this->registerModule(
     'Origine Mini',             // Name
     'A minimal Dotclear theme', // Description
     'Teddy',                    // Author
-    '1.2',                      // Version
+    '1.2.1',                    // Version
     [
         'requires'             => [['core', '2.24']],
         'standalone_config'    => true, // Allows a full control for the theme configurator.
