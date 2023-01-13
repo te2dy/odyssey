@@ -26,7 +26,8 @@ class adminConfigOrigineMini
     public static function load_styles_scripts()
     {
         echo dcPage::cssLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/css/admin.min.css'),
-        dcPage::jsLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/js/admin.min.js');
+        dcPage::jsLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/js/admin.min.js'),
+        dcPage::jsLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/js/popup_media.js');
     }
     /**
      * Defines the sections in which the theme settings will be sorted.
@@ -57,6 +58,7 @@ class adminConfigOrigineMini
         $page_sections['header'] = [
             'name'         => __('section-header'),
             'sub_sections' => [
+                'image'    => __('section-image'),
                 'no-title' => ''
             ]
         ];
@@ -244,6 +246,14 @@ class adminConfigOrigineMini
             'type'        => 'checkbox',
             'default'     => 0,
             'section'     => ['header', 'no-title']
+        ];
+
+        $default_settings['header_banner'] = [
+            'title'       => __('settings-header-banner-title'),
+            'description' => '',
+            'type'        => 'image',
+            'default'     => dcCore::app()->blog->settings->system->themes_url . '/' . dcCore::app()->blog->settings->system->theme . '/img/home.png' ,
+            'section'     => ['header', 'image']
         ];
 
         // Content settings.
@@ -656,6 +666,18 @@ class adminConfigOrigineMini
                         false,
                         $placeholder
                     );
+
+                    break;
+
+                case 'image' :
+                    echo '<img id="freelancer_user_image_src" alt="" src="' . $setting_value . '">';
+
+                    echo '<div><button type="button" id="freelancer_user_image_selector">' . __('Change') . '</button>' .
+                    '<button class="delete" type="button" id="freelancer_user_image_reset">' . __('Reset') . '</button></div>';
+
+                    echo '<div class="hidden-if-js">' . form::field('freelancer_user_image', 30, 255, $setting_value) . '</div>';
+
+                    echo form::hidden(['theme-url'], dcCore::app()->blog->settings->system->themes_url, '/' . dcCore::app()->blog->settings->system->theme);
 
                     break;
 
