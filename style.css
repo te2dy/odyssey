@@ -448,9 +448,9 @@ details summary {
 }
 
 /**
- * Full posts
+ * Full posts and pages
  */
-.post-header {
+:is(.post, .page) header {
   margin-bottom: 2rem;
 }
 .post .post-selected {
