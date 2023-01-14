@@ -865,7 +865,7 @@ class adminConfigOrigineMini
                                 if (file_exists($image_path) === true && getimagesize($image_path) !== false) {
 
                                     // Gets the dimensions of the image.
-                                    list($width, $height) = getimagesize($image_path);
+                                    list($banner_width) = getimagesize($image_path);
 
                                     /**
                                      * Limits the maximum width value of the image if its superior to the page width,
@@ -877,16 +877,16 @@ class adminConfigOrigineMini
                                         $page_width = 480;
                                     }
 
-                                    if ($width > $page_width) {
-                                        $width  = $page_width;
-                                        $height = $height * $page_width / $width;
+                                    if ($banner_width > $page_width) {
+                                        $banner_width = 100;
+                                    } else {
+                                        $banner_width = $banner_width * 100 / $page_width;
                                     }
 
                                     // Sets the array which contains the image data.
                                     $image_data = [
                                         'url'    => html::escapeURL($image_url),
-                                        'width'  => intval($width),
-                                        'height' => intval($height)
+                                        'width'  => intval($banner_width),
                                     ];
 
                                     // Saves the setting in the database as an array.
@@ -899,9 +899,10 @@ class adminConfigOrigineMini
                                     );
 
                                     // Builds the path to an hypothetical double sized image.
-                                    if (pathinfo($image_path, PATHINFO_EXTENSION)) {
-                                        $image_path_2x = str_replace('.' . pathinfo($image_path, PATHINFO_EXTENSION), '-2x.' . pathinfo($image_path, PATHINFO_EXTENSION), $image_path);
-                                    } else {
+                                    $image_info    = path::info($image_path);
+                                    $image_path_2x = $image_info['dirname'] . '/' . $image_info['base'] . '-2x.' . $image_info['extension'];
+
+                                    if (file_exists($image_path_2x) === false) {
                                         $image_path_2x = '';
                                     }
 
@@ -918,6 +919,8 @@ class adminConfigOrigineMini
                                                 true
                                             );
                                         }
+                                    } else {
+                                        dcCore::app()->blog->settings->originemini->drop('header_banner2');
                                     }
                                 } else {
                                     dcCore::app()->blog->settings->originemini->drop('header_banner');
@@ -930,10 +933,6 @@ class adminConfigOrigineMini
                         }
                     }
 
-                    var_dump(dcCore::app()->blog->settings->originemini->get('header_banner'));
-                    echo '<br>';
-                    var_dump(dcCore::app()->blog->settings->originemini->get('header_banner2'));
-
                     dcPage::addSuccessNotice(__('settings-config-updated'));
                 } if (isset($_POST['reset'])) {
                     foreach ($default_settings as $setting_id => $setting_value) {
@@ -944,7 +943,7 @@ class adminConfigOrigineMini
                 }
 
                 // Puts styles in the database.
-                self::add_theme_styles();
+                self::add_theme_styles($banner_width);
 
                 // Refreshes the blog.
                 dcCore::app()->blog->triggerBlog();
@@ -970,7 +969,7 @@ class adminConfigOrigineMini
      *
      * @return void
      */
-    public static function add_theme_styles()
+    public static function add_theme_styles($banner_width)
     {
         if (isset($_POST['save'])) {
             $css = '';
@@ -1087,6 +1086,17 @@ class adminConfigOrigineMini
                     $css_main_array['#trackback-url:is(:active, :focus, :hover)']['text-decoration-style'] = 'solid';
 
                     $css_main_array['#trackback-url-copied']['display'] = 'none';
+                }
+            }
+
+            // Header banner
+            if (isset($_POST['header_banner'])) {
+                $css_main_array['#site-banner']['width'] = '100%';
+
+                if (isset($banner_width) && $banner_width < 100) {
+                    $css_main_array['#site-banner img']['width'] = intval($banner_width) . '%';
+                } else {
+                    $css_main_array['#site-banner img']['width'] = '100%';
                 }
             }
 

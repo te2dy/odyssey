@@ -462,10 +462,8 @@ class publicOrigineMini
      */
     public static function origineMiniHeaderBanner()
     {
-        if (\dcCore::app()->blog->settings->originemini->header_banner !== null && \dcCore::app()->blog->settings->originemini->header_banner['url'] !== '') {
+        if (\dcCore::app()->blog->settings->originemini->header_banner !== null && \dcCore::app()->blog->settings->originemini->header_banner['url']) {
             $image_url = \dcCore::app()->blog->settings->originemini->header_banner['url'];
-
-            $dimensions = '';
 
             if (\dcCore::app()->blog->settings->originemini->header_banner2 !== null) {
                 $image_url2 = \dcCore::app()->blog->settings->originemini->header_banner2;
@@ -478,7 +476,7 @@ class publicOrigineMini
                 $srcset     = '';
             }
 
-            return '<img src="' . \html::escapeURL($image_url) . '"' . $srcset . $dimensions . '>';
+            return '<div id=site-banner><img src="' . \html::escapeURL($image_url) . '"' . $srcset . '></div>';
         }
     }
 
