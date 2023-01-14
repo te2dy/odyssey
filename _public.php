@@ -26,6 +26,7 @@ if (!defined('DC_RC_PATH')) {
 \dcCore::app()->tpl->addValue('origineMiniStylesInline', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniStylesInline']);
 \dcCore::app()->tpl->addValue('origineMiniEntryLang', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniEntryLang']);
 \dcCore::app()->tpl->addValue('origineMiniScreenReaderLinks', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniScreenReaderLinks']);
+\dcCore::app()->tpl->addValue('origineMiniHeaderBanner', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniHeaderBanner']);
 \dcCore::app()->tpl->addValue('origineMiniBlogDescription', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniBlogDescription']);
 \dcCore::app()->tpl->addValue('origineMiniPostListType', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniPostListType']);
 \dcCore::app()->tpl->addValue('origineMiniPostListReactionLink', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniPostListReactionLink']);
@@ -454,6 +455,31 @@ class publicOrigineMini
         }
 
         return $links;
+    }
+
+    /**
+     * DEV
+     */
+    public static function origineMiniHeaderBanner()
+    {
+        if (\dcCore::app()->blog->settings->originemini->header_banner !== null && \dcCore::app()->blog->settings->originemini->header_banner['url'] !== '') {
+            $image_url = \dcCore::app()->blog->settings->originemini->header_banner['url'];
+
+            $dimensions = '';
+
+            if (\dcCore::app()->blog->settings->originemini->header_banner2 !== null) {
+                $image_url2 = \dcCore::app()->blog->settings->originemini->header_banner2;
+                $srcset     = ' srcset="';
+                $srcset    .= \html::escapeURL($image_url) . ' 1x, ';
+                $srcset    .= \html::escapeURL($image_url2) . ' 2x';
+                $srcset    .= '"';
+            } else {
+                $image_url2 = '';
+                $srcset     = '';
+            }
+
+            return '<img src="' . \html::escapeURL($image_url) . '"' . $srcset . $dimensions . '>';
+        }
     }
 
     /**

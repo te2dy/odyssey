@@ -26,8 +26,7 @@ class adminConfigOrigineMini
     public static function load_styles_scripts()
     {
         echo dcPage::cssLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/css/admin.min.css'),
-        dcPage::jsLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/js/admin.min.js'),
-        dcPage::jsLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/js/popup_media.js');
+        dcPage::jsLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/js/admin.min.js');
     }
     /**
      * Defines the sections in which the theme settings will be sorted.
@@ -252,7 +251,16 @@ class adminConfigOrigineMini
             'title'       => __('settings-header-banner-title'),
             'description' => '',
             'type'        => 'image',
-            'default'     => dcCore::app()->blog->settings->system->themes_url . '/' . dcCore::app()->blog->settings->system->theme . '/img/home.png' ,
+            'placeholder' => html::escapeURL(dcCore::app()->blog->settings->system->public_url . '/' . __('settings-header-banner-placeholder')),
+            'default'     => '',
+            'section'     => ['header', 'image']
+        ];
+
+        $default_settings['header_banner2'] = [
+            'title'       => __('settings-header-banner2-title'),
+            'description' => '',
+            'type'        => 'text',
+            'default'     => '',
             'section'     => ['header', 'image']
         ];
 
@@ -670,14 +678,28 @@ class adminConfigOrigineMini
                     break;
 
                 case 'image' :
-                    echo '<img id="freelancer_user_image_src" alt="" src="' . $setting_value . '">';
+                    $placeholder = isset($default_settings[$setting_id]['placeholder']) ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"' : '';
 
-                    echo '<div><button type="button" id="freelancer_user_image_selector">' . __('Change') . '</button>' .
-                    '<button class="delete" type="button" id="freelancer_user_image_reset">' . __('Reset') . '</button></div>';
+                    if (!empty($setting_value) && $setting_value['url'] !== '') {
+                        $image_src = $setting_value['url'];
+                    } else {
+                        $image_src = '';
+                    }
 
-                    echo '<div class="hidden-if-js">' . form::field('freelancer_user_image', 30, 255, $setting_value) . '</div>';
-
-                    echo form::hidden(['theme-url'], dcCore::app()->blog->settings->system->themes_url, '/' . dcCore::app()->blog->settings->system->theme);
+                    echo '<label for=', $setting_id, '>',
+                    $default_settings[$setting_id]['title'],
+                    '</label>',
+                    '<img alt="" id=', $setting_id, '-src src="', $image_src, '">',
+                    form::field(
+                        $setting_id,
+                        30,
+                        255,
+                        $image_src,
+                        '',
+                        '',
+                        false,
+                        $placeholder
+                    );
 
                     break;
 
@@ -739,7 +761,9 @@ class adminConfigOrigineMini
 
                 if (isset($_POST['save'])) {
                     foreach ($default_settings as $setting_id => $setting_value) {
-                        if ($setting_id !== 'styles') {
+                        $ignore_setting_id = ['styles', 'header_banner', 'header_banner2'];
+
+                        if (!in_array($setting_id, $ignore_setting_id, true)) {
                             if (isset($_POST[$setting_id])) {
                                 $drop          = false;
                                 $setting_value = '';
@@ -810,8 +834,105 @@ class adminConfigOrigineMini
                             } else {
                                 dcCore::app()->blog->settings->originemini->drop($setting_id);
                             }
+
+                        /**
+                         * Saves the banner.
+                         *
+                         * The image is saved as an array which contains:
+                         * 'url'        => (string) The URL of the image.
+                         * 'max-width'  => (int) The maximum width of the image (inferior or equal to the page width).
+                         * 'max-height' => (int) The maximum height of the image.
+                         */
+                        } elseif ($setting_id === 'header_banner') {
+
+                            // If an URL is set.
+                            if (isset($_POST['header_banner'])) {
+
+                                // Gets relative url and path of the public folder.
+                                $public_url  = dcCore::app()->blog->settings->system->public_url;
+                                $public_path = dcCore::app()->blog->public_path;
+
+                                // The URL of the image.
+                                $image_url = $_POST['header_banner'];
+
+                                // Converts the absolute URL in a relative one if necessary.
+                                $image_url = substr($image_url, strpos($image_url, $public_url));
+
+                                // Retrieves the image path.
+                                $image_path = $public_path . str_replace($public_url . '/', '/', $image_url);
+
+                                // If the file exists and is an image.
+                                if (file_exists($image_path) === true && getimagesize($image_path) !== false) {
+
+                                    // Gets the dimensions of the image.
+                                    list($width, $height) = getimagesize($image_path);
+
+                                    /**
+                                     * Limits the maximum width value of the image if its superior to the page width,
+                                     * and sets its height proportionally.
+                                     */
+                                    if (isset($_POST['global_page_width'])) {
+                                        $page_width = intval($_POST['global_page_width']) * 16;
+                                    } else {
+                                        $page_width = 480;
+                                    }
+
+                                    if ($width > $page_width) {
+                                        $width  = $page_width;
+                                        $height = $height * $page_width / $width;
+                                    }
+
+                                    // Sets the array which contains the image data.
+                                    $image_data = [
+                                        'url'    => html::escapeURL($image_url),
+                                        'width'  => intval($width),
+                                        'height' => intval($height)
+                                    ];
+
+                                    // Saves the setting in the database as an array.
+                                    dcCore::app()->blog->settings->originemini->put(
+                                        'header_banner',
+                                        $image_data,
+                                        'array',
+                                        html::clean($setting_title),
+                                        true
+                                    );
+
+                                    // Builds the path to an hypothetical double sized image.
+                                    if (pathinfo($image_path, PATHINFO_EXTENSION)) {
+                                        $image_path_2x = str_replace('.' . pathinfo($image_path, PATHINFO_EXTENSION), '-2x.' . pathinfo($image_path, PATHINFO_EXTENSION), $image_path);
+                                    } else {
+                                        $image_path_2x = '';
+                                    }
+
+                                    // If the double sized image exists.
+                                    if ($image_path_2x !== '') {
+                                        $image_url_2x = str_replace($public_path, $public_url, $image_path_2x);
+
+                                        if (file_exists($image_path_2x) !== false && getimagesize($image_path_2x) !== false) {
+                                            dcCore::app()->blog->settings->originemini->put(
+                                                'header_banner2',
+                                                html::escapeURL($image_url_2x),
+                                                'string',
+                                                html::clean($setting_title),
+                                                true
+                                            );
+                                        }
+                                    }
+                                } else {
+                                    dcCore::app()->blog->settings->originemini->drop('header_banner');
+                                    dcCore::app()->blog->settings->originemini->drop('header_banner2');
+                                }
+                            } else {
+                                dcCore::app()->blog->settings->originemini->drop('header_banner');
+                                dcCore::app()->blog->settings->originemini->drop('header_banner2');
+                            }
                         }
                     }
+
+                    var_dump(dcCore::app()->blog->settings->originemini->get('header_banner'));
+                    echo '<br>';
+                    var_dump(dcCore::app()->blog->settings->originemini->get('header_banner2'));
 
                     dcPage::addSuccessNotice(__('settings-config-updated'));
                 } if (isset($_POST['reset'])) {
@@ -1262,7 +1383,7 @@ class adminConfigOrigineMini
 
         // Puts all parameters in their section.
         foreach($settings as $setting_id => $setting_data) {
-            if ($setting_id !== 'styles') {
+            if ($setting_id !== 'header_banner2' && $setting_id !== 'styles') {
                 // If a sub-section is set.
                 if (isset($setting_data['section'][1])) {
                     $sections_with_settings_id[$setting_data['section'][0]][$setting_data['section'][1]][] = $setting_id;
