@@ -462,20 +462,20 @@ class publicOrigineMini
      */
     public static function origineMiniHeaderBanner($attr)
     {
-        if (\dcCore::app()->blog->settings->originemini->header_banner !== null && \dcCore::app()->blog->settings->originemini->header_banner['url']) {
+        if (\dcCore::app()->blog->settings->originemini->header_image !== null && \dcCore::app()->blog->settings->originemini->header_image['url']) {
             if (
                 !empty($attr['position'])
                 && (
-                    ($attr['position'] === 'bottom' && \dcCore::app()->blog->settings->originemini->header_banner_position === 'bottom')
-                    || ($attr['position'] === 'top' && \dcCore::app()->blog->settings->originemini->header_banner_position === null)
+                    ($attr['position'] === 'bottom' && \dcCore::app()->blog->settings->originemini->header_image_position === 'bottom')
+                    || ($attr['position'] === 'top' && \dcCore::app()->blog->settings->originemini->header_image_position === null)
 
                 )
             ) {
-                $image_url = \dcCore::app()->blog->settings->originemini->header_banner['url'];
+                $image_url = \dcCore::app()->blog->settings->originemini->header_image['url'];
                 $srcset    = '';
 
-                if (\dcCore::app()->blog->settings->originemini->header_banner2x !== null) {
-                    $image2x_url = \dcCore::app()->blog->settings->originemini->header_banner2x;
+                if (\dcCore::app()->blog->settings->originemini->header_image2x !== null) {
+                    $image2x_url = \dcCore::app()->blog->settings->originemini->header_image2x;
 
                     $srcset  = ' srcset="';
                     $srcset .= \html::escapeURL($image_url) . ' 1x, ';
@@ -484,9 +484,9 @@ class publicOrigineMini
                 }
 
                 if (\dcCore::app()->url->type === 'default') {
-                    return '<div id=site-banner><img alt="' . __('Header Image') . '" src="' . \html::escapeURL($image_url) . '"' . $srcset . '></div>';
+                    return '<div id=site-image><img alt="' . __('Header Image') . '" src="' . \html::escapeURL($image_url) . '"' . $srcset . '></div>';
                 } else {
-                    return '<div id=site-banner><a alt="' . __('Header Image') . '" href="' . \dcCore::app()->blog->url . '" rel=home><img src="' . \html::escapeURL($image_url) . '"' . $srcset . '></a></div>';
+                    return '<div id=site-image><a alt="' . __('Header Image') . '" href="' . \dcCore::app()->blog->url . '" rel=home><img src="' . \html::escapeURL($image_url) . '"' . $srcset . '></a></div>';
                 }
             }
         }
