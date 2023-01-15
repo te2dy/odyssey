@@ -88,7 +88,7 @@ a {
   text-decoration: var(--link-text-decoration, none);
   text-decoration-style: var(--link-text-decoration-style, unset);
 }
-a:is(:active, :focus, :hover):not(.button) {
+a:is(:active, :focus, :hover):not(.button) *:not(img) {
   color: var(--color-primary, #1742cf);
   filter: brightness(1.25);
   text-decoration: underline;

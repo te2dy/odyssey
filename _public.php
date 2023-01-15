@@ -483,7 +483,11 @@ class publicOrigineMini
                     $srcset .= '"';
                 }
 
-                return '<div id=site-banner><img src="' . \html::escapeURL($image_url) . '"' . $srcset . '></div>';
+                if (\dcCore::app()->url->type === 'default') {
+                    return '<div id=site-banner><img alt="' . __('Header Image') . '" src="' . \html::escapeURL($image_url) . '"' . $srcset . '></div>';
+                } else {
+                    return '<div id=site-banner><a alt="' . __('Header Image') . '" href="' . \dcCore::app()->blog->url . '" rel=home><img src="' . \html::escapeURL($image_url) . '"' . $srcset . '></a></div>';
+                }
             }
         }
     }
