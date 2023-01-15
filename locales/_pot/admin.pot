@@ -123,6 +123,21 @@ msgstr ""
 msgid "settings-global-fontfamily-mono"
 msgstr ""
 
+msgid "settings-global-fontfamily-sansserifbrowser"
+msgstr ""
+
+msgid "settings-global-fontfamily-serifbrowser"
+msgstr ""
+
+msgid "settings-global-fontfamily-monobrowser"
+msgstr ""
+
+msgid "settings-global-fontfamily-atkinson"
+msgstr ""
+
+msgid "settings-global-fontfamily-luciole"
+msgstr ""
+
 msgid "settings-global-primarycolor-title"
 msgstr ""
 
@@ -186,22 +201,25 @@ msgstr ""
 msgid "settings-header-description-title"
 msgstr ""
 
-msgid "settings-header-banner-title"
+msgid "settings-header-image-title"
 msgstr ""
 
-msgid "settings-header-banner-description"
+msgid "settings-header-image-description"
 msgstr ""
 
-msgid "settings-header-banner-placeholder"
+msgid "settings-header-image-placeholder"
+msgstr ""
+
+msgid "header-image-preview-alt"
 msgstr ""
 
 msgid "settings-header-layout-title"
 msgstr ""
 
-msgid "settings-header-bannerposition-top-default"
+msgid "settings-header-imageposition-top-default"
 msgstr ""
 
-msgid "settings-header-bannerposition-bottom"
+msgid "settings-header-imageposition-bottom"
 msgstr ""
 
 msgid "settings-content-fontfamily-title"

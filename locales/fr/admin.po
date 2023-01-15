@@ -100,10 +100,10 @@ msgid "settings-global-fontsize-120"
 msgstr "120 %"
 
 msgid "settings-global-fontfamily-title"
-msgstr "Famille"
+msgstr "Type"
 
 msgid "settings-global-fontfamily-description"
-msgstr "Dans tous les cas, votre thème chargera les polices du système de l’appareil à partir duquel votre blog est consulté. Cela permet de réduire les temps de chargement et d’avoir une continuité graphique avec le système."
+msgstr "Vous avez le choix d’utiliser des polices système (susceptibles de changer d’un appareil à un autre), des polices du navigateur (susceptibles de changer d’un navigateur à un autre, y compris sur le même système), ou des polices sélectionnées pour leur lisibilité, conçues pour faciliter la lecture des personnes malvoyantes (à noter que ces polices sont plus gourmandes en ressources)."
 
 msgid "settings-global-fontantialiasing-title"
 msgstr "Activer le lissage des caractères"
@@ -112,16 +112,31 @@ msgid "settings-global-fontantialiasing-description"
 msgstr "Prévient l’effet de crénelage mais peut rendre les caractères très fins."
 
 msgid "settings-global-fontfamily-sansserif-default"
-msgstr "Sans empattements (par défaut)"
+msgstr "Police sans empattements du système (par défaut)"
 
 msgid "settings-global-fontfamily-sansserif"
-msgstr "Sans empattements"
+msgstr "Police sans empattement du système"
 
 msgid "settings-global-fontfamily-serif"
-msgstr "Avec empattements"
+msgstr "Police avec empattements du système"
 
 msgid "settings-global-fontfamily-mono"
-msgstr "À chasse fixe"
+msgstr "Police à chasse fixe du système"
+
+msgid "settings-global-fontfamily-sansserifbrowser"
+msgstr "Police sans empattements du navigateur"
+
+msgid "settings-global-fontfamily-serifbrowser"
+msgstr "Police avec empattements du navigateur"
+
+msgid "settings-global-fontfamily-monobrowser"
+msgstr "Police à chasse fixe du navigateur"
+
+msgid "settings-global-fontfamily-atkinson"
+msgstr "Atkinson Hyperlegible"
+
+msgid "settings-global-fontfamily-luciole"
+msgstr "Luciole"
 
 msgid "settings-global-primarycolor-title"
 msgstr "Couleur principale"
@@ -186,25 +201,25 @@ msgstr "Permet d’afficher dans le code source du blog que Dotclear est son mot
 msgid "settings-header-description-title"
 msgstr "Afficher la description du blog"
 
-msgid "settings-header-banner-title"
-msgstr "Adresse d’un logo ou d’une bannière"
+msgid "settings-header-image-title"
+msgstr "Adresse d’une image"
 
-msgid "settings-header-banner-description"
+msgid "settings-header-image-description"
 msgstr "Facultatif : pour assurer un rendu optimal de votre image sur les écrans à double densité de pixels (Retina), assurez-vous d’avoir téléversé dans la médiathèque la même image, aux dimensions deux fois plus grandes, avec le suffixe <code>-2x</code>.<br>Exemple&nbsp;: vous souhaitez afficher un logo nommé <code>logo.png</code> (200 px × 200 px) que vous avez téléversé à la racine de votre médiathèque (adresse&nbsp;: <code>/public/logo.png</code>). Téléversez la même image en 400 px × 400 px dans le même dossier en ajoutant <code>-2x</code> à la fin de son nom (adresse&nbsp;: <code>/public/logo-2x.png</code>) ; le thème et le navigateur se chargeront du reste."
 
-msgid "settings-header-banner-placeholder"
+msgid "settings-header-image-placeholder"
 msgstr "image.png"
 
-msgid "header-banner-preview-alt"
+msgid "header-image-preview-alt"
 msgstr "Aperçu de l’image"
 
 msgid "settings-header-layout-title"
 msgstr "Position de l’image"
 
-msgid "settings-header-bannerposition-top-default"
+msgid "settings-header-imageposition-top-default"
 msgstr "En haut de l’en-tête (par défaut)"
 
-msgid "settings-header-bannerposition-bottom"
+msgid "settings-header-imageposition-bottom"
 msgstr "En bas de l’en-tête"
 
 msgid "settings-content-fontfamily-title"
