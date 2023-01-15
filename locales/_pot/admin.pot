@@ -31,6 +31,9 @@ msgstr ""
 msgid "section-header"
 msgstr ""
 
+msgid "section-header-image"
+msgstr ""
+
 msgid "section-content"
 msgstr ""
 
@@ -120,6 +123,21 @@ msgstr ""
 msgid "settings-global-fontfamily-mono"
 msgstr ""
 
+msgid "settings-global-fontfamily-sansserifbrowser"
+msgstr ""
+
+msgid "settings-global-fontfamily-serifbrowser"
+msgstr ""
+
+msgid "settings-global-fontfamily-monobrowser"
+msgstr ""
+
+msgid "settings-global-fontfamily-atkinson"
+msgstr ""
+
+msgid "settings-global-fontfamily-luciole"
+msgstr ""
+
 msgid "settings-global-primarycolor-title"
 msgstr ""
 
@@ -181,6 +199,27 @@ msgid "settings-global-metagenerator-description"
 msgstr ""
 
 msgid "settings-header-description-title"
+msgstr ""
+
+msgid "settings-header-image-title"
+msgstr ""
+
+msgid "settings-header-image-description"
+msgstr ""
+
+msgid "settings-header-image-placeholder"
+msgstr ""
+
+msgid "header-image-preview-alt"
+msgstr ""
+
+msgid "settings-header-layout-title"
+msgstr ""
+
+msgid "settings-header-imageposition-top-default"
+msgstr ""
+
+msgid "settings-header-imageposition-bottom"
 msgstr ""
 
 msgid "settings-content-fontfamily-title"

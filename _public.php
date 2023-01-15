@@ -26,6 +26,7 @@ if (!defined('DC_RC_PATH')) {
 \dcCore::app()->tpl->addValue('origineMiniStylesInline', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniStylesInline']);
 \dcCore::app()->tpl->addValue('origineMiniEntryLang', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniEntryLang']);
 \dcCore::app()->tpl->addValue('origineMiniScreenReaderLinks', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniScreenReaderLinks']);
+\dcCore::app()->tpl->addValue('origineMiniHeaderBanner', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniHeaderBanner']);
 \dcCore::app()->tpl->addValue('origineMiniBlogDescription', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniBlogDescription']);
 \dcCore::app()->tpl->addValue('origineMiniPostListType', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniPostListType']);
 \dcCore::app()->tpl->addValue('origineMiniPostListReactionLink', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniPostListReactionLink']);
@@ -454,6 +455,41 @@ class publicOrigineMini
         }
 
         return $links;
+    }
+
+    /**
+     * DEV
+     */
+    public static function origineMiniHeaderBanner($attr)
+    {
+        if (\dcCore::app()->blog->settings->originemini->header_image !== null && \dcCore::app()->blog->settings->originemini->header_image['url']) {
+            if (
+                !empty($attr['position'])
+                && (
+                    ($attr['position'] === 'bottom' && \dcCore::app()->blog->settings->originemini->header_image_position === 'bottom')
+                    || ($attr['position'] === 'top' && \dcCore::app()->blog->settings->originemini->header_image_position === null)
+
+                )
+            ) {
+                $image_url = \dcCore::app()->blog->settings->originemini->header_image['url'];
+                $srcset    = '';
+
+                if (\dcCore::app()->blog->settings->originemini->header_image2x !== null) {
+                    $image2x_url = \dcCore::app()->blog->settings->originemini->header_image2x;
+
+                    $srcset  = ' srcset="';
+                    $srcset .= \html::escapeURL($image_url) . ' 1x, ';
+                    $srcset .= \html::escapeURL($image2x_url) . ' 2x';
+                    $srcset .= '"';
+                }
+
+                if (\dcCore::app()->url->type === 'default') {
+                    return '<div id=site-image><img alt="' . __('Header Image') . '" src="' . \html::escapeURL($image_url) . '"' . $srcset . '></div>';
+                } else {
+                    return '<div id=site-image><a alt="' . __('Header Image') . '" href="' . \dcCore::app()->blog->url . '" rel=home><img src="' . \html::escapeURL($image_url) . '"' . $srcset . '></a></div>';
+                }
+            }
+        }
     }
 
     /**

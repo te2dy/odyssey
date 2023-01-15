@@ -1,7 +1,6 @@
 /**
  * Shows or hides settings depending on others.
  */
-
 function disableInputs() {
   if (document.getElementById("global_color_primary").value === "gray") {
     document.getElementById("setting-linksunderline-recommended").style.display = "inline";
@@ -16,17 +15,23 @@ function disableInputs() {
   }
 
   if (document.getElementById("global_js").checked) {
-    document.getElementById("hash-searchform").style.display         = "block";
-    document.getElementById("hash-trackbackurl").style.display       = "block";
+    document.getElementById("hash-searchform").style.display   = "block";
+    document.getElementById("hash-trackbackurl").style.display = "block";
   } else {
-    document.getElementById("hash-searchform").style.display         = "none";
-    document.getElementById("hash-trackbackurl").style.display       = "none";
+    document.getElementById("hash-searchform").style.display   = "none";
+    document.getElementById("hash-trackbackurl").style.display = "none";
+  }
+
+  if (document.getElementById("header_image").value !== "") {
+    document.getElementById("header_image_position-input").style.display = "block";
+  } else {
+    document.getElementById("header_image_position-input").style.display = "none";
   }
 
   if (document.getElementById("content_images_wide").checked) {
-    document.getElementById("hash-imagewide").style.display          = "block";
+    document.getElementById("hash-imagewide").style.display = "block";
   } else {
-    document.getElementById("hash-imagewide").style.display          = "none";
+    document.getElementById("hash-imagewide").style.display = "none";
   }
 
   if (document.getElementById("content_post_list_time").checked || document.getElementById("content_post_time").checked) {
@@ -76,10 +81,24 @@ function disableInputs() {
   }
 }
 
+/**
+ * Displays the image with the URL typed by the user.
+ */
+function changeImage() {
+  if (document.getElementById("header_image").value !== "") {
+    document.getElementById("header_image-src").removeAttribute("style");
+    document.getElementById("header_image-src").setAttribute("src", encodeURI(document.getElementById("header_image").value));
+  } else {
+    document.getElementById("header_image-src").style.display = "none";
+  }
+}
+
 window.onload = function() {
   disableInputs();
+  changeImage();
 };
 
 window.onchange = function() {
   disableInputs();
+  changeImage();
 };

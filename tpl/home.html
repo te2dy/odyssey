@@ -11,6 +11,8 @@
 </tpl:Block>
 
 <tpl:Block name="site-header">
+  {{tpl:origineMiniHeaderBanner position="top"}}
+
   <tpl:origineMiniHeaderIdentity>
     <tpl:PaginationIf start="1">
       <h1 id=site-title>{{tpl:BlogName}}</h1>
@@ -24,6 +26,8 @@
   </tpl:origineMiniHeaderIdentity>
 
   {{tpl:SimpleMenu id="main-menu"}}
+
+  {{tpl:origineMiniHeaderBanner position="bottom"}}
 
   {{tpl:SysBehavior behavior="publicTopAfterContent"}}
 </tpl:Block>

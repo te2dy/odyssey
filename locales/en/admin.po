@@ -31,6 +31,9 @@ msgstr "Advanced settings"
 msgid "section-header"
 msgstr "Header Settings"
 
+msgid "section-header-image"
+msgstr "Image"
+
 msgid "section-content"
 msgstr "Content Settings"
 
@@ -97,10 +100,10 @@ msgid "settings-global-fontsize-120"
 msgstr "120%"
 
 msgid "settings-global-fontfamily-title"
-msgstr "Family"
+msgstr "Type"
 
 msgid "settings-global-fontfamily-description"
-msgstr "In any case, your theme will load the fonts of the system of the device from which your blog is viewed. This reduces loading times and provides graphical continuity with the system."
+msgstr "You have the choice of using system fonts (which may change from device to device), browser fonts (which may change from browser to browser, even on the same system), or fonts selected for their readability, designed to make reading easier for visually impaired people (note that these fonts are more resource intensive)."
 
 msgid "settings-global-fontantialiasing-title"
 msgstr "Enable font smoothing"
@@ -109,16 +112,31 @@ msgid "settings-global-fontantialiasing-description"
 msgstr "Prevents aliasing but can make characters very thin."
 
 msgid "settings-global-fontfamily-sansserif-default"
-msgstr "Sans serif (default)"
+msgstr "System sans serif font (default)"
 
 msgid "settings-global-fontfamily-sansserif"
-msgstr "Sans serif"
+msgstr "System sans serif font"
 
 msgid "settings-global-fontfamily-serif"
-msgstr "Serif"
+msgstr "System serif font (default)"
 
 msgid "settings-global-fontfamily-mono"
-msgstr "Mono"
+msgstr "System monospace font (default)"
+
+msgid "settings-global-fontfamily-sansserifbrowser"
+msgstr "Browser sans serif font"
+
+msgid "settings-global-fontfamily-serifbrowser"
+msgstr "Browser serif font"
+
+msgid "settings-global-fontfamily-monobrowser"
+msgstr "Browser monospace font"
+
+msgid "settings-global-fontfamily-atkinson"
+msgstr "Atkinson Hyperlegible"
+
+msgid "settings-global-fontfamily-luciole"
+msgstr "Luciole"
 
 msgid "settings-global-primarycolor-title"
 msgstr "Primary color"
@@ -182,6 +200,27 @@ msgstr "Allows you to display in the blog's source code that Dotclear is its eng
 
 msgid "settings-header-description-title"
 msgstr "Display the blog description"
+
+msgid "settings-header-image-title"
+msgstr "URL of an image"
+
+msgid "settings-header-image-description"
+msgstr "Optional: to ensure that your image renders optimally on double pixel density screens (Retina), make sure you have uploaded the same image to the media library, at twice the size, with the suffix <code>-2x</code>.<br>Example: you want to display a logo named <code>logo.png</code> (200px × 200px) that you uploaded to the root of your media library (URL: <code>/public/logo.png</code>). Upload the same image in 400px × 400px in the same folder and add <code>-2x</code> at the end of its name (URL: <code>/public/logo-2x.png</code>); the theme and the browser will take care of the rest."
+
+msgid "settings-header-image-placeholder"
+msgstr "/public/image.png"
+
+msgid "header-image-preview-alt"
+msgstr "Image preview"
+
+msgid "settings-header-layout-title"
+msgstr "Image position"
+
+msgid "settings-header-imageposition-top-default"
+msgstr "At the top of the header (default)"
+
+msgid "settings-header-imageposition-bottom"
+msgstr "At the bottom of the header"
 
 msgid "settings-content-fontfamily-title"
 msgstr "Font"

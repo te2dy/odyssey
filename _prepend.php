@@ -41,3 +41,4 @@ if (version_compare($old_version, $new_version, '<')) {
     // Pushes the new version of the theme in the database.
     dcCore::app()->setVersion('origine-mini', $new_version);
 }
+
