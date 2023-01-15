@@ -142,9 +142,11 @@ class adminConfigOrigineMini
             'description' => __('settings-global-fontfamily-description'),
             'type'        => 'select',
             'choices'     => [
-                __('settings-global-fontfamily-sansserif-default')  => 'sans-serif',
-                __('settings-global-fontfamily-serif')              => 'serif',
-                __('settings-global-fontfamily-mono')               => 'monospace'
+                __('settings-global-fontfamily-sansserif-default')   => 'sans-serif',
+                __('settings-global-fontfamily-serif')               => 'serif',
+                __('settings-global-fontfamily-mono')                => 'monospace',
+                __('settings-global-fontfamily-accessible-luciole')  => 'luciole',
+                __('settings-global-fontfamily-accessible-atkinson') => 'atkinson'
             ],
             'default'     => 'sans-serif',
             'section'     => ['global', 'fonts']
@@ -601,21 +603,42 @@ class adminConfigOrigineMini
         $css = '';
 
         foreach ($rules as $key => $value) {
-            if (is_array($value) && !empty($value)) {
-                $selector   = $key;
-                $properties = $value;
+            if (!is_int($key)) {
+                if (is_array($value) && !empty($value)) {
+                    $selector   = $key;
+                    $properties = $value;
 
-                $css .= str_replace(', ', ',', $selector) . '{';
+                    $css .= str_replace(', ', ',', $selector) . '{';
 
-                if (is_array($properties) && !empty($properties)) {
-                    foreach ($properties as $property => $rule) {
-                        if ($rule !== '') {
-                            $css .= $property . ':' . str_replace(', ', ',', $rule) . ';';
+                    if (is_array($properties) && !empty($properties)) {
+                        foreach ($properties as $property => $rule) {
+                            if ($rule !== '') {
+                                $css .= $property . ':' . str_replace(', ', ',', $rule) . ';';
+                            }
                         }
                     }
-                }
 
-                $css .= '}';
+                    $css .= '}';
+                }
+            } else {
+                foreach ($value as $key_2 => $value_2) {
+                    if (is_array($value) && !empty($value_2)) {
+                        $selector   = $key_2;
+                        $properties = $value_2;
+
+                        $css .= str_replace(', ', ',', $selector) . '{';
+
+                        if (is_array($properties) && !empty($properties)) {
+                            foreach ($properties as $property => $rule) {
+                                if ($rule !== '') {
+                                    $css .= $property . ':' . str_replace(', ', ',', $rule) . ';';
+                                }
+                            }
+                        }
+
+                        $css .= '}';
+                    }
+                }
             }
         }
 
@@ -1027,6 +1050,50 @@ class adminConfigOrigineMini
                 $css_root_array[':root']['--font-family'] = '"Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
             } elseif ($_POST['global_font_family'] === 'monospace') {
                 $css_root_array[':root']['--font-family'] = 'Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace';
+            } elseif ($_POST['global_font_family'] === 'luciole') {
+                $css_root_array[':root']['--font-family'] = 'Luciole';
+
+                $css_main_array[0]['@font-face']['font-family'] = '"Luciole"';
+                $css_main_array[0]['@font-face']['src']         = 'url("/themes/origine-mini/fonts/Luciole-Regular.ttf") format("truetype")';
+                $css_main_array[0]['@font-face']['font-style']  = 'normal';
+                $css_main_array[0]['@font-face']['font-weight'] = '400';
+
+                $css_main_array[1]['@font-face']['font-family'] = '"Luciole"';
+                $css_main_array[1]['@font-face']['src']         = 'url("/themes/origine-mini/fonts/Luciole-Regular-Italic.ttf") format("truetype")';
+                $css_main_array[1]['@font-face']['font-style']  = 'italic';
+                $css_main_array[1]['@font-face']['font-weight'] = '400';
+
+                $css_main_array[2]['@font-face']['font-family'] = '"Luciole"';
+                $css_main_array[2]['@font-face']['src']         = 'url("/themes/origine-mini/fonts/Luciole-Bold.ttf") format("truetype")';
+                $css_main_array[2]['@font-face']['font-style']  = 'normal';
+                $css_main_array[2]['@font-face']['font-weight'] = '700';
+
+                $css_main_array[3]['@font-face']['font-family'] = '"Luciole"';
+                $css_main_array[3]['@font-face']['src']         = 'url("/themes/origine-mini/fonts/Luciole-Bold-Italic.ttf") format("truetype")';
+                $css_main_array[3]['@font-face']['font-style']  = 'italic';
+                $css_main_array[3]['@font-face']['font-weight'] = '700';
+            } elseif ($_POST['global_font_family'] === 'atkinson') {
+                $css_root_array[':root']['--font-family'] = 'Atkinson';
+
+                $css_main_array[0]['@font-face']['font-family'] = '"Atkinson"';
+                $css_main_array[0]['@font-face']['src']         = 'url("/themes/origine-mini/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2")';
+                $css_main_array[0]['@font-face']['font-style']  = 'normal';
+                $css_main_array[0]['@font-face']['font-weight'] = '400';
+
+                $css_main_array[1]['@font-face']['font-family'] = '"Atkinson"';
+                $css_main_array[1]['@font-face']['src']         = 'url("/themes/origine-mini/fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2")';
+                $css_main_array[1]['@font-face']['font-style']  = 'italic';
+                $css_main_array[1]['@font-face']['font-weight'] = '400';
+
+                $css_main_array[2]['@font-face']['font-family'] = '"Atkinson"';
+                $css_main_array[2]['@font-face']['src']         = 'url("/themes/origine-mini/fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2")';
+                $css_main_array[2]['@font-face']['font-style']  = 'normal';
+                $css_main_array[2]['@font-face']['font-weight'] = '700';
+
+                $css_main_array[3]['@font-face']['font-family'] = '"Atkinson"';
+                $css_main_array[3]['@font-face']['src']         = 'url("/themes/origine-mini/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("woff2")';
+                $css_main_array[3]['@font-face']['font-style']  = 'italic';
+                $css_main_array[3]['@font-face']['font-weight'] = '700';
             }
 
             // Font family.

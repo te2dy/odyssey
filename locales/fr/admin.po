@@ -31,6 +31,9 @@ msgstr "Paramètres avancés"
 msgid "section-header"
 msgstr "Paramètres de l’en-tête"
 
+msgid "section-header-image"
+msgstr "Image"
+
 msgid "section-content"
 msgstr "Paramètres du contenu"
 
@@ -182,6 +185,27 @@ msgstr "Permet d’afficher dans le code source du blog que Dotclear est son mot
 
 msgid "settings-header-description-title"
 msgstr "Afficher la description du blog"
+
+msgid "settings-header-banner-title"
+msgstr "Adresse d’un logo ou d’une bannière"
+
+msgid "settings-header-banner-description"
+msgstr "Facultatif : pour assurer un rendu optimal de votre image sur les écrans à double densité de pixels (Retina), assurez-vous d’avoir téléversé dans la médiathèque la même image, aux dimensions deux fois plus grandes, avec le suffixe <code>-2x</code>.<br>Exemple&nbsp;: vous souhaitez afficher un logo nommé <code>logo.png</code> (200 px × 200 px) que vous avez téléversé à la racine de votre médiathèque (adresse&nbsp;: <code>/public/logo.png</code>). Téléversez la même image en 400 px × 400 px dans le même dossier en ajoutant <code>-2x</code> à la fin de son nom (adresse&nbsp;: <code>/public/logo-2x.png</code>) ; le thème et le navigateur se chargeront du reste."
+
+msgid "settings-header-banner-placeholder"
+msgstr "image.png"
+
+msgid "header-banner-preview-alt"
+msgstr "Aperçu de l’image"
+
+msgid "settings-header-layout-title"
+msgstr "Position de l’image"
+
+msgid "settings-header-bannerposition-top-default"
+msgstr "En haut de l’en-tête (par défaut)"
+
+msgid "settings-header-bannerposition-bottom"
+msgstr "En bas de l’en-tête"
 
 msgid "settings-content-fontfamily-title"
 msgstr "Police d’écriture"
