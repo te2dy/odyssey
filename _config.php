@@ -142,11 +142,14 @@ class adminConfigOrigineMini
             'description' => __('settings-global-fontfamily-description'),
             'type'        => 'select',
             'choices'     => [
-                __('settings-global-fontfamily-sansserif-default')   => 'sans-serif',
-                __('settings-global-fontfamily-serif')               => 'serif',
-                __('settings-global-fontfamily-mono')                => 'monospace',
-                __('settings-global-fontfamily-accessible-luciole')  => 'luciole',
-                __('settings-global-fontfamily-accessible-atkinson') => 'atkinson'
+                __('settings-global-fontfamily-sansserif-default') => 'sans-serif',
+                __('settings-global-fontfamily-serif')             => 'serif',
+                __('settings-global-fontfamily-mono')              => 'monospace',
+                __('settings-global-fontfamily-sansserifbrowser')  => 'sans-serif-browser',
+                __('settings-global-fontfamily-serifbrowser')      => 'serif-browser',
+                __('settings-global-fontfamily-monobrowser')       => 'monospace-browser',
+                __('settings-global-fontfamily-atkinson')          => 'atkinson',
+                __('settings-global-fontfamily-luciole')           => 'luciole'
             ],
             'default'     => 'sans-serif',
             'section'     => ['global', 'fonts']
@@ -249,16 +252,16 @@ class adminConfigOrigineMini
             'section'     => ['header', 'no-title']
         ];
 
-        $default_settings['header_banner'] = [
-            'title'       => __('settings-header-banner-title'),
-            'description' => __('settings-header-banner-description'),
+        $default_settings['header_image'] = [
+            'title'       => __('settings-header-image-title'),
+            'description' => __('settings-header-image-description'),
             'type'        => 'image',
-            'placeholder' => html::escapeURL(dcCore::app()->blog->settings->system->public_url . '/' . __('settings-header-banner-placeholder')),
+            'placeholder' => html::escapeURL(dcCore::app()->blog->settings->system->public_url . '/' . __('settings-header-image-placeholder')),
             'default'     => '',
             'section'     => ['header', 'image']
         ];
 
-        $default_settings['header_banner2x'] = [
+        $default_settings['header_image2x'] = [
             'title'       => '',
             'description' => '',
             'type'        => 'text',
@@ -266,13 +269,13 @@ class adminConfigOrigineMini
             'section'     => ['header', 'image']
         ];
 
-        $default_settings['header_banner_position'] = [
+        $default_settings['header_image_position'] = [
             'title'       => __('settings-header-layout-title'),
             'description' => '',
             'type'        => 'select',
             'choices'     => [
-                __('settings-header-bannerposition-top-default') => 'top',
-                __('settings-header-bannerposition-bottom')      => 'bottom',
+                __('settings-header-imageposition-top-default') => 'top',
+                __('settings-header-imageposition-bottom')      => 'bottom',
             ],
             'default'     => 'top',
             'section'     => ['header', 'image']
@@ -284,10 +287,15 @@ class adminConfigOrigineMini
             'description' => '',
             'type'        => 'select',
             'choices'     => [
-                __('settings-content-fontfamily-same-default') => 'same',
-                __('settings-global-fontfamily-serif')         => 'serif',
-                __('settings-global-fontfamily-sansserif')     => 'sans-serif',
-                __('settings-global-fontfamily-mono')          => 'monospace'
+                __('settings-content-fontfamily-same-default')    => 'same',
+                __('settings-global-fontfamily-sansserif')        => 'sans-serif',
+                __('settings-global-fontfamily-serif')            => 'serif',
+                __('settings-global-fontfamily-mono')             => 'monospace',
+                __('settings-global-fontfamily-sansserifbrowser') => 'sans-serif-browser',
+                __('settings-global-fontfamily-serifbrowser')     => 'serif-browser',
+                __('settings-global-fontfamily-monobrowser')      => 'monospace-browser',
+                __('settings-global-fontfamily-atkinson')         => 'atkinson',
+                __('settings-global-fontfamily-luciole')          => 'luciole'
             ],
             'default'     => 'same',
             'section'     => ['content', 'text-formatting']
@@ -620,6 +628,8 @@ class adminConfigOrigineMini
 
                     $css .= '}';
                 }
+
+            // For @font-face.
             } else {
                 foreach ($value as $key_2 => $value_2) {
                     if (is_array($value) && !empty($value_2)) {
@@ -643,6 +653,32 @@ class adminConfigOrigineMini
         }
 
         return $css;
+    }
+
+    /**
+     * Checks if a file path returns a valid image.
+     *
+     * @param array $path The path to the image.
+     *
+     * @return bool true if it's an image..
+     */
+    public static function image_exists($path_to_img)
+    {
+        // Extensions allowed for image files in Dotclear.
+        $img_ext_allowed = ['bmp', 'gif', 'ico', 'jpeg', 'jpg', 'jpe', 'png', 'svg', 'tiff', 'tif', 'webp', 'xbm'];
+
+        if (
+            // The file exists.
+            file_exists($path_to_img) === true
+            // The file has an image extension.
+            && in_array(strtolower(files::getExtension($path_to_img)), $img_ext_allowed, true) === true
+            // The MIME type returns an image.
+            && substr(mime_content_type($path_to_img), 0, 6) === 'image/'
+        ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -776,14 +812,14 @@ class adminConfigOrigineMini
             }
 
             // Header image preview.
-            if ($setting_id === 'header_banner') {
+            if ($setting_id === 'header_image') {
                 if (!empty($setting_value) && $setting_value['url'] !== '') {
                     $image_src = $setting_value['url'];
                 } else {
                     $image_src = '';
                 }
 
-                echo '<img alt="' . __('header-banner-preview-alt') . '" id=', $setting_id, '-src src="', $image_src, '">';
+                echo '<img alt="' . __('header-image-preview-alt') . '" id=', $setting_id, '-src src="', $image_src, '">';
             }
         }
     }
@@ -808,7 +844,7 @@ class adminConfigOrigineMini
 
                 if (isset($_POST['save'])) {
                     foreach ($default_settings as $setting_id => $setting_value) {
-                        $ignore_setting_id = ['styles', 'header_banner', 'header_banner2x'];
+                        $ignore_setting_id = ['styles', 'header_image', 'header_image2x'];
 
                         if (in_array($setting_id, $ignore_setting_id, true) === false) {
                             if (isset($_POST[$setting_id])) {
@@ -890,17 +926,17 @@ class adminConfigOrigineMini
                          * 'max-width'  => (int) The maximum width of the image (inferior or equal to the page width).
                          * 'max-height' => (int) The maximum height of the image.
                          */
-                        } elseif ($setting_id === 'header_banner') {
+                        } elseif ($setting_id === 'header_image') {
 
                             // If an URL is set.
-                            if (isset($_POST['header_banner'])) {
+                            if (isset($_POST['header_image'])) {
 
                                 // Gets relative url and path of the public folder.
                                 $public_url  = dcCore::app()->blog->settings->system->public_url;
                                 $public_path = dcCore::app()->blog->public_path;
 
                                 // The URL of the image.
-                                $image_url = $_POST['header_banner'];
+                                $image_url = $_POST['header_image'];
 
                                 // Converts the absolute URL in a relative one if necessary.
                                 $image_url = substr($image_url, strpos($image_url, $public_url));
@@ -909,7 +945,7 @@ class adminConfigOrigineMini
                                 $image_path = $public_path . str_replace($public_url . '/', '/', $image_url);
 
                                 // If the file exists and is an image.
-                                if (file_exists($image_path) === true && @getimagesize($image_path) !== false) {
+                                if (self::image_exists($image_path) === true) {
 
                                     // Gets the dimensions of the image.
                                     list($banner_width) = getimagesize($image_path);
@@ -938,7 +974,7 @@ class adminConfigOrigineMini
 
                                     // Saves the setting in the database as an array.
                                     dcCore::app()->blog->settings->originemini->put(
-                                        'header_banner',
+                                        'header_image',
                                         $image_data,
                                         'array',
                                         html::clean($setting_title),
@@ -959,7 +995,7 @@ class adminConfigOrigineMini
 
                                         if (file_exists($image_path_2x) !== false && getimagesize($image_path_2x) !== false) {
                                             dcCore::app()->blog->settings->originemini->put(
-                                                'header_banner2x',
+                                                'header_image2x',
                                                 html::escapeURL($image_url_2x),
                                                 'string',
                                                 html::clean($setting_title),
@@ -967,15 +1003,15 @@ class adminConfigOrigineMini
                                             );
                                         }
                                     } else {
-                                        dcCore::app()->blog->settings->originemini->drop('header_banner2x');
+                                        dcCore::app()->blog->settings->originemini->drop('header_image2x');
                                     }
                                 } else {
-                                    dcCore::app()->blog->settings->originemini->drop('header_banner');
-                                    dcCore::app()->blog->settings->originemini->drop('header_banner2x');
+                                    dcCore::app()->blog->settings->originemini->drop('header_image');
+                                    dcCore::app()->blog->settings->originemini->drop('header_image2x');
                                 }
                             } else {
-                                dcCore::app()->blog->settings->originemini->drop('header_banner');
-                                dcCore::app()->blog->settings->originemini->drop('header_banner2x');
+                                dcCore::app()->blog->settings->originemini->drop('header_image');
+                                dcCore::app()->blog->settings->originemini->drop('header_image2x');
                             }
                         }
                     }
@@ -1050,8 +1086,14 @@ class adminConfigOrigineMini
                 $css_root_array[':root']['--font-family'] = '"Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
             } elseif ($_POST['global_font_family'] === 'monospace') {
                 $css_root_array[':root']['--font-family'] = 'Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace';
+            } elseif ($_POST['global_font_family'] === 'sans-serif-browser') {
+                $css_root_array[':root']['--font-family'] = 'sans-serif';
+            } elseif ($_POST['global_font_family'] === 'serif-browser') {
+                $css_root_array[':root']['--font-family'] = 'serif';
+            } elseif ($_POST['global_font_family'] === 'monospace-browser') {
+                $css_root_array[':root']['--font-family'] = 'monospace';
             } elseif ($_POST['global_font_family'] === 'luciole') {
-                $css_root_array[':root']['--font-family'] = 'Luciole';
+                $css_root_array[':root']['--font-family'] = 'Luciole, sans-serif';
 
                 $css_main_array[0]['@font-face']['font-family'] = '"Luciole"';
                 $css_main_array[0]['@font-face']['src']         = 'url("/themes/origine-mini/fonts/Luciole-Regular.ttf") format("truetype")';
@@ -1073,24 +1115,24 @@ class adminConfigOrigineMini
                 $css_main_array[3]['@font-face']['font-style']  = 'italic';
                 $css_main_array[3]['@font-face']['font-weight'] = '700';
             } elseif ($_POST['global_font_family'] === 'atkinson') {
-                $css_root_array[':root']['--font-family'] = 'Atkinson';
+                $css_root_array[':root']['--font-family'] = 'Atkinson Hyperlegible, sans-serif';
 
-                $css_main_array[0]['@font-face']['font-family'] = '"Atkinson"';
+                $css_main_array[0]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
                 $css_main_array[0]['@font-face']['src']         = 'url("/themes/origine-mini/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2")';
                 $css_main_array[0]['@font-face']['font-style']  = 'normal';
                 $css_main_array[0]['@font-face']['font-weight'] = '400';
 
-                $css_main_array[1]['@font-face']['font-family'] = '"Atkinson"';
+                $css_main_array[1]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
                 $css_main_array[1]['@font-face']['src']         = 'url("/themes/origine-mini/fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2")';
                 $css_main_array[1]['@font-face']['font-style']  = 'italic';
                 $css_main_array[1]['@font-face']['font-weight'] = '400';
 
-                $css_main_array[2]['@font-face']['font-family'] = '"Atkinson"';
+                $css_main_array[2]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
                 $css_main_array[2]['@font-face']['src']         = 'url("/themes/origine-mini/fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2")';
                 $css_main_array[2]['@font-face']['font-style']  = 'normal';
                 $css_main_array[2]['@font-face']['font-weight'] = '700';
 
-                $css_main_array[3]['@font-face']['font-family'] = '"Atkinson"';
+                $css_main_array[3]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
                 $css_main_array[3]['@font-face']['src']         = 'url("/themes/origine-mini/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("woff2")';
                 $css_main_array[3]['@font-face']['font-style']  = 'italic';
                 $css_main_array[3]['@font-face']['font-weight'] = '700';
@@ -1181,7 +1223,7 @@ class adminConfigOrigineMini
             }
 
             // Header banner
-            if (isset($_POST['header_banner'])) {
+            if (isset($_POST['header_image'])) {
                 $css_main_array['#site-banner']['width'] = '100%';
 
                 $css_main_array['#site-banner img']['border-radius'] = 'var(--border-radius, unset)';
@@ -1484,7 +1526,7 @@ class adminConfigOrigineMini
 
         // Puts all settings in their section.
         foreach($settings as $setting_id => $setting_data) {
-            $ignore_setting_id = ['header_banner2x', 'styles'];
+            $ignore_setting_id = ['header_image2x', 'styles'];
 
             if (in_array($setting_id, $ignore_setting_id, true) === false) {
                 // If a sub-section is set.
