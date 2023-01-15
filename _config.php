@@ -57,7 +57,7 @@ class adminConfigOrigineMini
         $page_sections['header'] = [
             'name'         => __('section-header'),
             'sub_sections' => [
-                'image'    => __('section-image'),
+                'image'    => __('section-header-image'),
                 'no-title' => ''
             ]
         ];
@@ -142,9 +142,9 @@ class adminConfigOrigineMini
             'description' => __('settings-global-fontfamily-description'),
             'type'        => 'select',
             'choices'     => [
-                __('settings-global-fontfamily-sansserif-default') => 'sans-serif',
-                __('settings-global-fontfamily-serif')             => 'serif',
-                __('settings-global-fontfamily-mono')              => 'monospace'
+                __('settings-global-fontfamily-sansserif-default')  => 'sans-serif',
+                __('settings-global-fontfamily-serif')              => 'serif',
+                __('settings-global-fontfamily-mono')               => 'monospace'
             ],
             'default'     => 'sans-serif',
             'section'     => ['global', 'fonts']
@@ -249,18 +249,30 @@ class adminConfigOrigineMini
 
         $default_settings['header_banner'] = [
             'title'       => __('settings-header-banner-title'),
-            'description' => '',
+            'description' => __('settings-header-banner-description'),
             'type'        => 'image',
             'placeholder' => html::escapeURL(dcCore::app()->blog->settings->system->public_url . '/' . __('settings-header-banner-placeholder')),
             'default'     => '',
             'section'     => ['header', 'image']
         ];
 
-        $default_settings['header_banner2'] = [
-            'title'       => __('settings-header-banner2-title'),
+        $default_settings['header_banner2x'] = [
+            'title'       => '',
             'description' => '',
             'type'        => 'text',
             'default'     => '',
+            'section'     => ['header', 'image']
+        ];
+
+        $default_settings['header_banner_position'] = [
+            'title'       => __('settings-header-layout-title'),
+            'description' => '',
+            'type'        => 'select',
+            'choices'     => [
+                __('settings-header-bannerposition-top-default') => 'top',
+                __('settings-header-bannerposition-bottom')      => 'bottom',
+            ],
+            'default'     => 'top',
             'section'     => ['header', 'image']
         ];
 
@@ -689,7 +701,6 @@ class adminConfigOrigineMini
                     echo '<label for=', $setting_id, '>',
                     $default_settings[$setting_id]['title'],
                     '</label>',
-                    '<img alt="" id=', $setting_id, '-src src="', $image_src, '">',
                     form::field(
                         $setting_id,
                         30,
@@ -740,6 +751,17 @@ class adminConfigOrigineMini
 
                 echo '</p>';
             }
+
+            // Header image preview.
+            if ($setting_id === 'header_banner') {
+                if (!empty($setting_value) && $setting_value['url'] !== '') {
+                    $image_src = $setting_value['url'];
+                } else {
+                    $image_src = '';
+                }
+
+                echo '<img alt="' . __('header-banner-preview-alt') . '" id=', $setting_id, '-src src="', $image_src, '">';
+            }
         }
     }
 
@@ -759,11 +781,13 @@ class adminConfigOrigineMini
             try {
                 dcCore::app()->blog->settings->addNamespace('originemini');
 
+                $banner_width = 0;
+
                 if (isset($_POST['save'])) {
                     foreach ($default_settings as $setting_id => $setting_value) {
-                        $ignore_setting_id = ['styles', 'header_banner', 'header_banner2'];
+                        $ignore_setting_id = ['styles', 'header_banner', 'header_banner2x'];
 
-                        if (!in_array($setting_id, $ignore_setting_id, true)) {
+                        if (in_array($setting_id, $ignore_setting_id, true) === false) {
                             if (isset($_POST[$setting_id])) {
                                 $drop          = false;
                                 $setting_value = '';
@@ -862,7 +886,7 @@ class adminConfigOrigineMini
                                 $image_path = $public_path . str_replace($public_url . '/', '/', $image_url);
 
                                 // If the file exists and is an image.
-                                if (file_exists($image_path) === true && getimagesize($image_path) !== false) {
+                                if (file_exists($image_path) === true && @getimagesize($image_path) !== false) {
 
                                     // Gets the dimensions of the image.
                                     list($banner_width) = getimagesize($image_path);
@@ -912,7 +936,7 @@ class adminConfigOrigineMini
 
                                         if (file_exists($image_path_2x) !== false && getimagesize($image_path_2x) !== false) {
                                             dcCore::app()->blog->settings->originemini->put(
-                                                'header_banner2',
+                                                'header_banner2x',
                                                 html::escapeURL($image_url_2x),
                                                 'string',
                                                 html::clean($setting_title),
@@ -920,15 +944,15 @@ class adminConfigOrigineMini
                                             );
                                         }
                                     } else {
-                                        dcCore::app()->blog->settings->originemini->drop('header_banner2');
+                                        dcCore::app()->blog->settings->originemini->drop('header_banner2x');
                                     }
                                 } else {
                                     dcCore::app()->blog->settings->originemini->drop('header_banner');
-                                    dcCore::app()->blog->settings->originemini->drop('header_banner2');
+                                    dcCore::app()->blog->settings->originemini->drop('header_banner2x');
                                 }
                             } else {
                                 dcCore::app()->blog->settings->originemini->drop('header_banner');
-                                dcCore::app()->blog->settings->originemini->drop('header_banner2');
+                                dcCore::app()->blog->settings->originemini->drop('header_banner2x');
                             }
                         }
                     }
@@ -1093,9 +1117,9 @@ class adminConfigOrigineMini
             if (isset($_POST['header_banner'])) {
                 $css_main_array['#site-banner']['width'] = '100%';
 
-                if (isset($banner_width) && $banner_width < 100) {
-                    $css_main_array['#site-banner img']['width'] = intval($banner_width) . '%';
-                } else {
+                $css_main_array['#site-banner img']['border-radius'] = 'var(--border-radius, unset)';
+
+                if (isset($banner_width) && $banner_width >= 100) {
                     $css_main_array['#site-banner img']['width'] = '100%';
                 }
             }
@@ -1391,9 +1415,11 @@ class adminConfigOrigineMini
             $sections_with_settings_id[$section_id] = [];
         }
 
-        // Puts all parameters in their section.
+        // Puts all settings in their section.
         foreach($settings as $setting_id => $setting_data) {
-            if ($setting_id !== 'header_banner2' && $setting_id !== 'styles') {
+            $ignore_setting_id = ['header_banner2x', 'styles'];
+
+            if (in_array($setting_id, $ignore_setting_id, true) === false) {
                 // If a sub-section is set.
                 if (isset($setting_data['section'][1])) {
                     $sections_with_settings_id[$setting_data['section'][0]][$setting_data['section'][1]][] = $setting_id;

@@ -460,23 +460,31 @@ class publicOrigineMini
     /**
      * DEV
      */
-    public static function origineMiniHeaderBanner()
+    public static function origineMiniHeaderBanner($attr)
     {
         if (\dcCore::app()->blog->settings->originemini->header_banner !== null && \dcCore::app()->blog->settings->originemini->header_banner['url']) {
-            $image_url = \dcCore::app()->blog->settings->originemini->header_banner['url'];
+            if (
+                !empty($attr['position'])
+                && (
+                    ($attr['position'] === 'bottom' && \dcCore::app()->blog->settings->originemini->header_banner_position === 'bottom')
+                    || ($attr['position'] === 'top' && \dcCore::app()->blog->settings->originemini->header_banner_position === null)
 
-            if (\dcCore::app()->blog->settings->originemini->header_banner2 !== null) {
-                $image_url2 = \dcCore::app()->blog->settings->originemini->header_banner2;
-                $srcset     = ' srcset="';
-                $srcset    .= \html::escapeURL($image_url) . ' 1x, ';
-                $srcset    .= \html::escapeURL($image_url2) . ' 2x';
-                $srcset    .= '"';
-            } else {
-                $image_url2 = '';
-                $srcset     = '';
+                )
+            ) {
+                $image_url = \dcCore::app()->blog->settings->originemini->header_banner['url'];
+                $srcset    = '';
+
+                if (\dcCore::app()->blog->settings->originemini->header_banner2x !== null) {
+                    $image2x_url = \dcCore::app()->blog->settings->originemini->header_banner2x;
+
+                    $srcset  = ' srcset="';
+                    $srcset .= \html::escapeURL($image_url) . ' 1x, ';
+                    $srcset .= \html::escapeURL($image2x_url) . ' 2x';
+                    $srcset .= '"';
+                }
+
+                return '<div id=site-banner><img src="' . \html::escapeURL($image_url) . '"' . $srcset . '></div>';
             }
-
-            return '<div id=site-banner><img src="' . \html::escapeURL($image_url) . '"' . $srcset . '></div>';
         }
     }
 

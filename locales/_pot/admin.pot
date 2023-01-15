@@ -31,6 +31,9 @@ msgstr ""
 msgid "section-header"
 msgstr ""
 
+msgid "section-header-image"
+msgstr ""
+
 msgid "section-content"
 msgstr ""
 
@@ -181,6 +184,24 @@ msgid "settings-global-metagenerator-description"
 msgstr ""
 
 msgid "settings-header-description-title"
+msgstr ""
+
+msgid "settings-header-banner-title"
+msgstr ""
+
+msgid "settings-header-banner-description"
+msgstr ""
+
+msgid "settings-header-banner-placeholder"
+msgstr ""
+
+msgid "settings-header-layout-title"
+msgstr ""
+
+msgid "settings-header-bannerposition-top-default"
+msgstr ""
+
+msgid "settings-header-bannerposition-bottom"
 msgstr ""
 
 msgid "settings-content-fontfamily-title"
