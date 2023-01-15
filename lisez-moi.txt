@@ -15,6 +15,7 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 === 1.3 - 15 janvier 2023 ===
 - Ajout : option pour ajouter une image dans l’en-tête du blog avec prise en charge des écrans type Retina.
 - Ajout : nouvelles options de polices d’écriture (polices du navigateur et deux nouvelles polices : Atkinson Hyperlegible et Luciole).
+- Correction : marges différentes sous l’en-tête des billets et des pages.
 
 === 1.2.1 - 10 janvier 2023 ===
 - Suppression : marges négatives dans la zone de navigation des widgets.
