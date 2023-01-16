@@ -26,7 +26,7 @@ if (!defined('DC_RC_PATH')) {
 \dcCore::app()->tpl->addValue('origineMiniStylesInline', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniStylesInline']);
 \dcCore::app()->tpl->addValue('origineMiniEntryLang', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniEntryLang']);
 \dcCore::app()->tpl->addValue('origineMiniScreenReaderLinks', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniScreenReaderLinks']);
-\dcCore::app()->tpl->addValue('origineMiniHeaderBanner', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniHeaderBanner']);
+\dcCore::app()->tpl->addValue('origineMiniHeaderImage', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniHeaderImage']);
 \dcCore::app()->tpl->addValue('origineMiniBlogDescription', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniBlogDescription']);
 \dcCore::app()->tpl->addValue('origineMiniPostListType', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniPostListType']);
 \dcCore::app()->tpl->addValue('origineMiniPostListReactionLink', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniPostListReactionLink']);
@@ -460,7 +460,7 @@ class publicOrigineMini
     /**
      * DEV
      */
-    public static function origineMiniHeaderBanner($attr)
+    public static function origineMiniHeaderImage($attr)
     {
         if (\dcCore::app()->blog->settings->originemini->header_image !== null && \dcCore::app()->blog->settings->originemini->header_image['url']) {
             if (
