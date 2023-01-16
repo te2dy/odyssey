@@ -219,7 +219,7 @@ h6 {
   counter-reset: list;
 }
 :is(.content-text, .widget) :is(ol ol, ul ul) {
-  margin: .5rem 0;
+  margin: 0 0 .5rem;
 }
 :is(.content-text, .widget) :is(ul li, ol li) {
   display: table-row;
