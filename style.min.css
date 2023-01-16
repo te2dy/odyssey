@@ -440,7 +440,7 @@ details summary {
 .post-selected .post-title {
   font-weight: 700;
 }
-.post-list .post-date {
+.post-list :is(.post-date, .page-info) {
   flex-shrink: 0;
   margin-left: 1rem;
   text-align: right;
