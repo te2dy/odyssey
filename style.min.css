@@ -384,7 +384,7 @@ details summary {
 }
 #main-menu .active a:is(:focus, :hover) {
   cursor: default;
-  filter: unset;
+  color: var(--color-primary, #1742cf);
 }
 
 /**
