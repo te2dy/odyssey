@@ -459,7 +459,15 @@ class publicOrigineMini
     }
 
     /**
-     * DEV
+     * Displays in the header an image defined in the theme configuration page.
+     *
+     * @param array $attr Attributes to customize the value.
+     *                    Attribute allowed: position, to define the place of the image in the header.
+     *                    Values allowed:
+     *                    - (string) top
+     *                    - (string) bottom
+     *
+     * @return void
      */
     public static function origineMiniHeaderImage($attr)
     {
@@ -838,7 +846,7 @@ class publicOrigineMini
     }
 
     /**
-     * Displays the comment form, eventually inside a wrapper to toggle it on a click.
+     * Displays the comment form, possibly inside a wrapper to toggle it.
      *
      * @param array $attr    Unused.
      * @param void  $content The comment form.
