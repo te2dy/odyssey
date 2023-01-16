@@ -1177,17 +1177,29 @@ class adminConfigOrigineMini
                     'green' => '#138613',
                     'red'   => '#e61919',
                 ],
+                'light-amplified' => [
+                    'gray'  => '#474747',
+                    'green' => '#429e42',
+                    'red'   => '#eb4747',
+                ],
                 'dark' => [
                     'gray'  => '#fcfcfc',
                     'green' => '#adebad',
                     'red'   => '#f7baba',
+                ],
+                'dark-amplified' => [
+                    'gray'  => '#fff',
+                    'green' => '#c5f1c5',
+                    'red'   => '#fad5d5',
                 ]
             ];
 
             if (isset($_POST['global_color_primary']) && in_array($_POST['global_color_primary'], $primary_colors_allowed, true)) {
                 $css_root_array[':root']['--color-primary'] = $primary_colors['light'][$_POST['global_color_primary']];
+                $css_root_array[':root']['--color-primary-amplified'] = $primary_colors['light-amplified'][$_POST['global_color_primary']];
 
                 $css_root_media_array[':root']['--color-primary-dark'] = $primary_colors['dark'][$_POST['global_color_primary']];
+                $css_root_media_array[':root']['--color-primary-amplified-dark'] = $primary_colors['dark-amplified'][$_POST['global_color_primary']];
             }
 
             // Transitions.

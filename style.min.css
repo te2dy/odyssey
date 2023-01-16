@@ -15,6 +15,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --color-primary: var(--color-primary-dark, #94c9ff);
+    --color-primary-amplified: var(--color-primary-amplified-dark, #b4d9ff);
     --color-background: #16161d;
     --color-text-main: #ccc;
     --color-text-secondary: #969696;
@@ -29,6 +30,7 @@
        (-ms-high-contrast: black-on-white) {
   :root {
     --color-primary: #000;
+    --color-primary-amplified: #333333;
     --color-background: #fff;
     --color-text-main: #000;
     --color-text-secondary: #000;
@@ -89,10 +91,9 @@ body {
   text-decoration-style: var(--link-text-decoration-style, unset);
 }
 :is(a, details summary):is(:active, :focus, :hover):not(.button) {
-  color: var(--color-primary, #1742cf);
-  filter: brightness(1.25);
+  color: var(--color-primary-amplified, #4567d8);
   text-decoration: underline;
-  text-decoration-style: solid;  /* Needed for Safari when .content-text a decoration is set. */
+  text-decoration-style: solid;  /* Needed for Safari when ".content-text a" decoration is set. */
 }
 @media (prefers-contrast: more), (-ms-high-contrast: active), (-ms-high-contrast: black-on-white) {
   :is(a, details summary) {
@@ -102,6 +103,8 @@ body {
     text-decoration-style: solid;
   }
 }
+
+
 
 /**
  * Origine themes common styles
