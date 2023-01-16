@@ -68,6 +68,7 @@ class adminConfigOrigineMini
                 'post-list'       => __('section-content-postlist'),
                 'post'            => __('section-content-post'),
                 'text-formatting' => __('section-content-textformatting'),
+                'reactions'       => __('section-content-reactions'),
                 'other'           => __('section-content-other')
             ]
         ];
@@ -400,12 +401,20 @@ class adminConfigOrigineMini
             'section'     => ['content', 'post']
         ];
 
+        $default_settings['content_commentform_hide'] = [
+            'title'       => __('settings-content-commentformhide-title'),
+            'description' => __('settings-content-commentformhide-description'),
+            'type'        => 'checkbox',
+            'default'     => 0,
+            'section'     => ['content', 'reactions']
+        ];
+
         $default_settings['content_reaction_feed'] = [
             'title'       => __('settings-content-postreactionfeed-title'),
             'description' => '',
             'type'        => 'checkbox',
             'default'     => 1,
-            'section'     => ['content', 'post']
+            'section'     => ['content', 'reactions']
         ];
 
         $default_settings['content_trackback_link'] = [
@@ -413,7 +422,7 @@ class adminConfigOrigineMini
             'description' => '',
             'type'        => 'checkbox',
             'default'     => 1,
-            'section'     => ['content', 'post']
+            'section'     => ['content', 'reactions']
         ];
 
         if (dcCore::app()->plugins->moduleExists('signal') === true) {
@@ -432,7 +441,7 @@ class adminConfigOrigineMini
                 __('settings-content-postlistcommentlink-always')     => 'always'
             ],
             'default'     => 'disabled',
-            'section'     => ['content', 'post']
+            'section'     => ['content', 'reactions']
         ];
 
         $default_settings['content_separator'] = [

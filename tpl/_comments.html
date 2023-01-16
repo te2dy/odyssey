@@ -85,43 +85,43 @@
       </tpl:Block>
 
       <tpl:Block name="comment-form-add">
-        <h3 class=reaction-title>{{tpl:lang reactions-comment-form-title}}</h3>
+        <tpl:origineMiniCommentFormWrapper>
+          {{tpl:SysBehavior behavior="publicCommentFormBeforeContent"}}
 
-        {{tpl:SysBehavior behavior="publicCommentFormBeforeContent"}}
+          <div class=form-entry>
+            <label for=c_name>{{tpl:lang reactions-comment-form-name-label}}</label>
+            <br>
+            <input id=c_name name=c_name maxlength=255 value="{{tpl:CommentPreviewName encode_html="1"}}" required>
+          </div>
 
-        <div class=form-entry>
-          <label for=c_name>{{tpl:lang reactions-comment-form-name-label}}</label>
-          <br>
-          <input id=c_name name=c_name maxlength=255 value="{{tpl:CommentPreviewName encode_html="1"}}" required>
-        </div>
+          <div class=form-entry>
+            <label for=c_mail>{{tpl:lang reactions-comment-form-email-label}}</label>
+            <br>
+            <input id=c_mail name=c_mail type=email maxlength=255 value="{{tpl:CommentPreviewEmail encode_html="1"}}" required>
+          </div>
 
-        <div class=form-entry>
-          <label for=c_mail>{{tpl:lang reactions-comment-form-email-label}}</label>
-          <br>
-          <input id=c_mail name=c_mail type=email maxlength=255 value="{{tpl:CommentPreviewEmail encode_html="1"}}" required>
-        </div>
+          <div class=form-entry>
+            <label for=c_site>{{tpl:lang reactions-comment-form-website-label}}</label>
+            <br>
+            <input id=c_site name=c_site maxlength=255 placeholder=https://… value="{{tpl:CommentPreviewSite encode_html="1"}}">
+          </div>
 
-        <div class=form-entry>
-          <label for=c_site>{{tpl:lang reactions-comment-form-website-label}}</label>
-          <br>
-          <input id=c_site name=c_site maxlength=255 placeholder=https://… value="{{tpl:CommentPreviewSite encode_html="1"}}">
-        </div>
+          <div class=form-entry>
+            <label for=c_content>{{tpl:lang reactions-comment-form-comment-label}}</label>
+            <br>
+            <textarea id=c_content name=c_content required rows=8>{{tpl:CommentPreviewContent raw="1" encode_html="1"}}</textarea>
+          </div>
 
-        <div class=form-entry>
-          <label for=c_content>{{tpl:lang reactions-comment-form-comment-label}}</label>
-          <br>
-          <textarea id=c_content name=c_content required rows=8>{{tpl:CommentPreviewContent raw="1" encode_html="1"}}</textarea>
-        </div>
+          {{tpl:SysBehavior behavior="publicCommentFormAfterContent"}}
 
-        {{tpl:SysBehavior behavior="publicCommentFormAfterContent"}}
+          <div class=form-entry>
+            <input type=submit name=preview value="{{tpl:lang reactions-comment-form-preview-button}}">
 
-        <div class=form-entry>
-          <input type=submit name=preview value="{{tpl:lang reactions-comment-form-preview-button}}">
-
-          <tpl:IfCommentPreviewOptional>
-            <input type=submit value="{{tpl:lang reactions-comment-form-submit-button}}">
-          </tpl:IfCommentPreviewOptional>
-        </div>
+            <tpl:IfCommentPreviewOptional>
+              <input type=submit value="{{tpl:lang reactions-comment-form-submit-button}}">
+            </tpl:IfCommentPreviewOptional>
+          </div>
+        </tpl:origineMiniCommentFormWrapper>
       </tpl:Block>
     </form>
   </tpl:Block>

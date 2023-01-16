@@ -46,6 +46,9 @@ msgstr ""
 msgid "section-content-post"
 msgstr ""
 
+msgid "section-content-reactions"
+msgstr ""
+
 msgid "section-content-other"
 msgstr ""
 
@@ -295,6 +298,12 @@ msgid "settings-content-imageswide-title"
 msgstr ""
 
 msgid "settings-content-imageswide-description"
+msgstr ""
+
+msgid "settings-content-commentformhide-title"
+msgstr ""
+
+msgid "settings-content-commentformhide-description"
 msgstr ""
 
 msgid "settings-content-postreactionfeed-title"

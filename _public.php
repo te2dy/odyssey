@@ -42,6 +42,7 @@ if (!defined('DC_RC_PATH')) {
 
 \dcCore::app()->tpl->addBlock('origineMiniPostFooter', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniPostFooter']);
 \dcCore::app()->tpl->addBlock('origineMiniHeaderIdentity', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniHeaderIdentity']);
+\dcCore::app()->tpl->addBlock('origineMiniCommentFormWrapper', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniCommentFormWrapper']);
 \dcCore::app()->tpl->addBlock('origineMiniReactionFeedLink', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniReactionFeedLink']);
 \dcCore::app()->tpl->addBlock('origineMiniTrackbackLink', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniTrackbackLink']);
 \dcCore::app()->tpl->addBlock('origineMiniWidgetsNav', [__NAMESPACE__ . '\publicOrigineMini', 'origineMiniWidgetsNav']);
@@ -834,6 +835,25 @@ class publicOrigineMini
             return '<div id=site-identity>' . $content . '</div>';
         }
 
+    }
+
+    /**
+     * Displays the comment form, eventually inside a wrapper to toggle it on a click.
+     *
+     * @param array $attr    Unused.
+     * @param void  $content The comment form.
+     *
+     * @return void The comment form.
+     */
+    public static function origineMiniCommentFormWrapper($attr, $content)
+    {
+        $comment_form_title = __('reactions-comment-form-title');
+
+        if (\dcCore::app()->blog->settings->originemini->content_commentform_hide === null) {
+            return '<h3 class=reaction-title>' . \html::escapeHTML($comment_form_title) . '</h3>' . $content;
+        } else {
+            return ' <details><summary><small>' . \html::escapeHTML($comment_form_title) . '</small></summary>' . $content . '</details>';
+        }
     }
 
     /**

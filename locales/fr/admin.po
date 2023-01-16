@@ -46,6 +46,9 @@ msgstr "Liste des billets"
 msgid "section-content-post"
 msgstr "Billets"
 
+msgid "section-content-reactions"
+msgstr "Réactions"
+
 msgid "section-content-other"
 msgstr "Autres paramètres"
 
@@ -296,6 +299,12 @@ msgstr "Agrandir les images suffisamment larges"
 
 msgid "settings-content-imageswide-description"
 msgstr "Les photos suffisamment grandes déborderont de la page (utilise JavaScript)."
+
+msgid "settings-content-commentformhide-title"
+msgstr "Dévoiler le formulaire de commentaires en cliquant sur un lien"
+
+msgid "settings-content-commentformhide-description"
+msgstr "Permet d’alléger visuellement les pages du blog."
 
 msgid "settings-content-postreactionfeed-title"
 msgstr "Ajouter un lien pour s’abonner aux réactions"

@@ -46,6 +46,9 @@ msgstr "Post list"
 msgid "section-content-post"
 msgstr "Posts"
 
+msgid "section-content-reactions"
+msgstr "Reactions"
+
 msgid "section-content-other"
 msgstr "Other settings"
 
@@ -296,6 +299,12 @@ msgstr "Enlarge big images"
 
 msgid "settings-content-imageswide-description"
 msgstr "Photos that are large enough will overflow the page (uses JavaScript)."
+
+msgid "settings-content-commentformhide-title"
+msgstr "Unveil the comment form by clicking on a link"
+
+msgid "settings-content-commentformhide-description"
+msgstr "Allows to lighten visually the pages of the blog."
 
 msgid "settings-content-postreactionfeed-title"
 msgstr "Add a link to subscribe to reactions"
