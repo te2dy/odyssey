@@ -216,6 +216,9 @@ msgstr "image.png"
 msgid "header-image-preview-alt"
 msgstr "Aperçu de l’image"
 
+msgid "header-image-retina-ready"
+msgstr "✅ Image adaptée aux écrans à double densité de pixels."
+
 msgid "settings-header-layout-title"
 msgstr "Position de l’image"
 

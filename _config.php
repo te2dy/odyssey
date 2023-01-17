@@ -814,15 +814,19 @@ class adminConfigOrigineMini
                 echo '</p>';
             }
 
-            // Header image preview.
+            // Header image.
             if ($setting_id === 'header_image') {
-                if (!empty($setting_value) && isset($setting_value['url']) && $setting_value['url'] !== '') {
+                if (!empty($setting_value) && isset($setting_value['url'])) {
                     $image_src = $setting_value['url'];
                 } else {
                     $image_src = '';
                 }
 
                 echo '<img alt="' . __('header-image-preview-alt') . '" id=', $setting_id, '-src src="', $image_src, '">';
+
+                if (isset($saved_settings['header_image2x'])) {
+                    echo '<p>' . __('header-image-retina-ready') . '</p>';
+                }
             }
         }
     }

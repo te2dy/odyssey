@@ -216,6 +216,9 @@ msgstr "/public/image.png"
 msgid "header-image-preview-alt"
 msgstr "Image preview"
 
+msgid "header-image-retina-ready"
+msgstr "✅ Image adapted to double pixel density screens."
+
 msgid "settings-header-layout-title"
 msgstr "Image position"
 

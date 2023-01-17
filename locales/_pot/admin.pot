@@ -216,6 +216,9 @@ msgstr ""
 msgid "header-image-preview-alt"
 msgstr ""
 
+msgid "header-image-retina-ready"
+msgstr ""
+
 msgid "settings-header-layout-title"
 msgstr ""
 
