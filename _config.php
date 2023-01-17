@@ -28,6 +28,7 @@ class adminConfigOrigineMini
         echo dcPage::cssLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/css/admin.min.css'),
         dcPage::jsLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/js/admin.min.js');
     }
+
     /**
      * Defines the sections in which the theme settings will be sorted.
      *
@@ -206,7 +207,7 @@ class adminConfigOrigineMini
             'section'     => ['global', 'colors']
         ];
 
-        if (dcCore::app()->plugins->moduleExists('socialMeta') === true) {
+        if (dcCore::app()->plugins->moduleExists('socialMeta')) {
             $plugin_social_url = dcCore::app()->adminurl->get('admin.plugin.socialMeta');
         } else {
             $plugin_social_url = dcCore::app()->adminurl->get('admin.plugins');
@@ -257,7 +258,7 @@ class adminConfigOrigineMini
             'title'       => __('settings-header-image-title'),
             'description' => __('settings-header-image-description'),
             'type'        => 'image',
-            'placeholder' => html::escapeURL(dcCore::app()->blog->settings->system->public_url . '/' . __('settings-header-image-placeholder')),
+            'placeholder' => dcCore::app()->blog->settings->system->public_url . '/' . __('settings-header-image-placeholder'),
             'default'     => '',
             'section'     => ['header', 'image']
         ];
@@ -425,7 +426,7 @@ class adminConfigOrigineMini
             'section'     => ['content', 'reactions']
         ];
 
-        if (dcCore::app()->plugins->moduleExists('signal') === true) {
+        if (dcCore::app()->plugins->moduleExists('signal')) {
             $plugin_signal_url = dcCore::app()->adminurl->get('admin.plugin.signal');
         } else {
             $plugin_signal_url = dcCore::app()->adminurl->get('admin.plugins');
@@ -453,7 +454,7 @@ class adminConfigOrigineMini
         ];
 
         // Widgets settings.
-        if (dcCore::app()->plugins->moduleExists('widgets') === true) {
+        if (dcCore::app()->plugins->moduleExists('widgets')) {
             $default_settings['widgets_nav_position'] = [
                 'title'       => sprintf(__('settings-widgets-navposition-title'), dcCore::app()->adminurl->get('admin.plugin.widgets')),
                 'description' => '',
@@ -594,11 +595,11 @@ class adminConfigOrigineMini
         $default_settings = self::default_settings();
 
         foreach ($default_settings as $setting_id => $setting_data) {
-            if (dcCore::app()->blog->settings->originemini->$setting_id !== null) {
+            if (dcCore::app()->blog->settings->originemini->$setting_id) {
                 if (isset($setting_data['type']) && $setting_data['type'] === 'checkbox') {
-                    $saved_settings[$setting_id] = (boolean) dcCore::app()->blog->settings->originemini->$setting_id;
+                    $saved_settings[$setting_id] = (bool) dcCore::app()->blog->settings->originemini->$setting_id;
                 } elseif (isset($setting_data['type']) && $setting_data['type'] === 'select_int') {
-                    $saved_settings[$setting_id] = (integer) dcCore::app()->blog->settings->originemini->$setting_id;
+                    $saved_settings[$setting_id] = (int) dcCore::app()->blog->settings->originemini->$setting_id;
                 } else {
                     $saved_settings[$setting_id] = dcCore::app()->blog->settings->originemini->$setting_id;
                 }
@@ -676,14 +677,7 @@ class adminConfigOrigineMini
         // Extensions allowed for image files in Dotclear.
         $img_ext_allowed = ['bmp', 'gif', 'ico', 'jpeg', 'jpg', 'jpe', 'png', 'svg', 'tiff', 'tif', 'webp', 'xbm'];
 
-        if (
-            // The file exists.
-            file_exists($path_to_img) === true
-            // The file has an image extension.
-            && in_array(strtolower(files::getExtension($path_to_img)), $img_ext_allowed, true) === true
-            // The MIME type returns an image.
-            && substr(mime_content_type($path_to_img), 0, 6) === 'image/'
-        ) {
+        if (file_exists($path_to_img) && in_array(strtolower(files::getExtension($path_to_img)), $img_ext_allowed, true) && substr(mime_content_type($path_to_img), 0, 6) === 'image/') {
             return true;
         } else {
             return false;
@@ -702,7 +696,7 @@ class adminConfigOrigineMini
         $default_settings = self::default_settings();
         $saved_settings   = self::saved_settings();
 
-        if ($setting_id !== '' && array_key_exists($setting_id, $default_settings)) {
+        if ($setting_id && array_key_exists($setting_id, $default_settings)) {
             echo '<p id=' . $setting_id . '-input>';
 
             // Displays the default value of the parameter if it is not defined.
@@ -822,7 +816,7 @@ class adminConfigOrigineMini
 
             // Header image preview.
             if ($setting_id === 'header_image') {
-                if (!empty($setting_value) && $setting_value['url'] !== '') {
+                if (!empty($setting_value) && isset($setting_value['url']) && $setting_value['url'] !== '') {
                     $image_src = $setting_value['url'];
                 } else {
                     $image_src = '';
@@ -855,7 +849,7 @@ class adminConfigOrigineMini
                     foreach ($default_settings as $setting_id => $setting_value) {
                         $ignore_setting_id = ['styles', 'header_image', 'header_image2x'];
 
-                        if (in_array($setting_id, $ignore_setting_id, true) === false) {
+                        if (!in_array($setting_id, $ignore_setting_id, true)) {
                             if (isset($_POST[$setting_id])) {
                                 $drop          = false;
                                 $setting_value = '';
@@ -954,7 +948,7 @@ class adminConfigOrigineMini
                                 $image_path = $public_path . str_replace($public_url . '/', '/', $image_url);
 
                                 // If the file exists and is an image.
-                                if (self::image_exists($image_path) === true) {
+                                if (self::image_exists($image_path)) {
 
                                     // Gets the dimensions of the image.
                                     list($banner_width) = getimagesize($image_path);
@@ -964,7 +958,7 @@ class adminConfigOrigineMini
                                      * and sets its height proportionally.
                                      */
                                     if (isset($_POST['global_page_width'])) {
-                                        $page_width = intval($_POST['global_page_width']) * 16;
+                                        $page_width = (int) $_POST['global_page_width'] * 16;
                                     } else {
                                         $page_width = 480;
                                     }
@@ -978,7 +972,7 @@ class adminConfigOrigineMini
                                     // Sets the array which contains the image data.
                                     $image_data = [
                                         'url'    => html::escapeURL($image_url),
-                                        'width'  => intval($banner_width),
+                                        'width'  => (int) $banner_width,
                                     ];
 
                                     // Saves the setting in the database as an array.
@@ -994,15 +988,11 @@ class adminConfigOrigineMini
                                     $image_info    = path::info($image_path);
                                     $image_path_2x = $image_info['dirname'] . '/' . $image_info['base'] . '-2x.' . $image_info['extension'];
 
-                                    if (file_exists($image_path_2x) === false) {
-                                        $image_path_2x = '';
-                                    }
-
                                     // If the double sized image exists.
-                                    if ($image_path_2x !== '') {
+                                    if (file_exists($image_path_2x)) {
                                         $image_url_2x = str_replace($public_path, $public_url, $image_path_2x);
 
-                                        if (file_exists($image_path_2x) !== false && getimagesize($image_path_2x) !== false) {
+                                        if (file_exists($image_path_2x) && getimagesize($image_path_2x) !== false) {
                                             dcCore::app()->blog->settings->originemini->put(
                                                 'header_image2x',
                                                 html::escapeURL($image_url_2x),
@@ -1103,7 +1093,7 @@ class adminConfigOrigineMini
                 } elseif ($_POST['global_font_family'] === 'monospace-browser') {
                     $css_root_array[':root']['--font-family'] = 'monospace';
                 } elseif ($_POST['global_font_family'] === 'atkinson') {
-                    $themes_url = html::escapeURL(dcCore::app()->blog->settings->system->themes_url);
+                    $themes_url = dcCore::app()->blog->settings->system->themes_url;
 
                     $css_root_array[':root']['--font-family'] = '"Atkinson Hyperlegible", sans-serif';
 
@@ -1127,7 +1117,7 @@ class adminConfigOrigineMini
                     $css_main_array[3]['@font-face']['font-style']  = 'italic';
                     $css_main_array[3]['@font-face']['font-weight'] = '700';
                 } elseif ($_POST['global_font_family'] === 'luciole') {
-                    $themes_url = html::escapeURL(dcCore::app()->blog->settings->system->themes_url);
+                    $themes_url = dcCore::app()->blog->settings->system->themes_url;
 
                     $css_root_array[':root']['--font-family'] = 'Luciole, sans-serif';
 
@@ -1291,7 +1281,7 @@ class adminConfigOrigineMini
                 } elseif ($_POST['content_text_font'] === 'monospace-browser') {
                     $css_main_array['.content-text']['font-family'] = 'monospace';
                 } elseif ($_POST['content_text_font'] === 'atkinson') {
-                    $themes_url = html::escapeURL(dcCore::app()->blog->settings->system->themes_url);
+                    $themes_url = dcCore::app()->blog->settings->system->themes_url;
 
                     $css_main_array[4]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
                     $css_main_array[4]['@font-face']['src']         = 'url("' . $themes_url . '/origine-mini/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2")';
@@ -1315,7 +1305,7 @@ class adminConfigOrigineMini
 
                     $css_root_array['.content-text']['font-family'] = '"Atkinson Hyperlegible", sans-serif';
                 } elseif ($_POST['content_text_font'] === 'luciole') {
-                    $themes_url = html::escapeURL(dcCore::app()->blog->settings->system->themes_url);
+                    $themes_url = dcCore::app()->blog->settings->system->themes_url;
 
                     $css_main_array[4]['@font-face']['font-family'] = '"Luciole"';
                     $css_main_array[4]['@font-face']['src']         = 'url("' . $themes_url . '/origine-mini/fonts/Luciole-Regular.ttf") format("truetype")';
@@ -1345,7 +1335,7 @@ class adminConfigOrigineMini
             $line_height_allowed = [125, 175];
 
             if (isset($_POST['content_line_height']) && in_array((int) $_POST['content_line_height'], $line_height_allowed, true)) {
-                $css_root_array[':root']['--text-line-height'] = ((int) $_POST['content_line_height']) / 100;
+                $css_root_array[':root']['--text-line-height'] = (int) $_POST['content_line_height'] / 100;
             }
 
             // Text align
@@ -1611,7 +1601,7 @@ class adminConfigOrigineMini
         foreach($settings as $setting_id => $setting_data) {
             $ignore_setting_id = ['header_image2x', 'styles'];
 
-            if (in_array($setting_id, $ignore_setting_id, true) === false) {
+            if (!in_array($setting_id, $ignore_setting_id, true)) {
                 // If a sub-section is set.
                 if (isset($setting_data['section'][1])) {
                     $sections_with_settings_id[$setting_data['section'][0]][$setting_data['section'][1]][] = $setting_id;
@@ -1669,7 +1659,7 @@ class adminConfigOrigineMini
                  *
                  * @see /_prepend.php
                  */
-                if (dcCore::app()->blog->settings->originemini->js_hash !== null) {
+                if (dcCore::app()->blog->settings->originemini->js_hash) {
                     $hashes = dcCore::app()->blog->settings->originemini->js_hash;
 
                     if (!empty($hashes)) {
