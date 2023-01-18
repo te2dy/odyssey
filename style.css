@@ -15,6 +15,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --color-primary: var(--color-primary-dark, #94c9ff);
+    --color-primary-amplified: var(--color-primary-amplified-dark, #b4d9ff);
     --color-background: #16161d;
     --color-text-main: #ccc;
     --color-text-secondary: #969696;
@@ -29,6 +30,7 @@
        (-ms-high-contrast: black-on-white) {
   :root {
     --color-primary: #000;
+    --color-primary-amplified: #333333;
     --color-background: #fff;
     --color-text-main: #000;
     --color-text-secondary: #000;
@@ -83,25 +85,26 @@ body {
 /**
  * Main formatting
  */
-a {
+:is(a, details summary) {
   color: var(--color-primary, #1742cf);
   text-decoration: var(--link-text-decoration, none);
   text-decoration-style: var(--link-text-decoration-style, unset);
 }
-a:is(:active, :focus, :hover):not(.button) {
-  color: var(--color-primary, #1742cf);
-  filter: brightness(1.25);
+:is(a, details summary):is(:active, :focus, :hover):not(.button) {
+  color: var(--color-primary-amplified, #4567d8);
   text-decoration: underline;
-  text-decoration-style: solid;  /* Needed for Safari when .content-text a decoration is set. */
+  text-decoration-style: solid;  /* Needed for Safari when ".content-text a" decoration is set. */
 }
 @media (prefers-contrast: more), (-ms-high-contrast: active), (-ms-high-contrast: black-on-white) {
-  a {
+  :is(a, details summary) {
     text-decoration: underline dotted;
   }
-  a:is(:active, :focus, :hover) {
+  :is(a, details summary):is(:active, :focus, :hover) {
     text-decoration-style: solid;
   }
 }
+
+
 
 /**
  * Origine themes common styles
@@ -216,7 +219,7 @@ h6 {
   counter-reset: list;
 }
 :is(.content-text, .widget) :is(ol ol, ul ul) {
-  margin: .5rem 0;
+  margin: 0 0 .5rem;
 }
 :is(.content-text, .widget) :is(ul li, ol li) {
   display: table-row;
@@ -331,8 +334,7 @@ textarea {
 /* Details */
 details summary {
   cursor: pointer;
-  text-decoration: underline;
-  text-decoration-style: dotted;
+  display: inline list-item;
 }
 .details-content {
   margin-top: .5rem;
@@ -382,7 +384,7 @@ details summary {
 }
 #main-menu .active a:is(:focus, :hover) {
   cursor: default;
-  filter: unset;
+  color: var(--color-primary, #1742cf);
 }
 
 /**
@@ -438,7 +440,7 @@ details summary {
 .post-selected .post-title {
   font-weight: 700;
 }
-.post-list .post-date {
+.post-list :is(.post-date, .page-info) {
   flex-shrink: 0;
   margin-left: 1rem;
   text-align: right;

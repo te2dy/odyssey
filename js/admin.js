@@ -88,6 +88,10 @@ function changeImage() {
   if (document.getElementById("header_image").value !== "") {
     document.getElementById("header_image-src").removeAttribute("style");
     document.getElementById("header_image-src").setAttribute("src", encodeURI(document.getElementById("header_image").value));
+
+    if (document.getElementById("header_image-url").value !== document.getElementById("header_image").value) {
+      document.getElementById("header_image-retina").style.display = "none";
+    }
   } else {
     document.getElementById("header_image-src").style.display = "none";
   }
