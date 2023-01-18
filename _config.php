@@ -4,26 +4,30 @@
  *
  * This file sets up the theme configuration page and settings.
  *
- * @author Teddy
- * @copyright GPL-3.0
+ * @author    Teddy <zozxebpyr@mozmail.com>
+ * @copyright 2022-2023 Teddy
+ * @license   GPL-3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
  */
 
 if (!defined('DC_RC_PATH')) {
     return;
 }
 
+require_once 'inc/functions.php';
+use OrigineMiniUtils as omUtils;
+
 l10n::set(__DIR__ . '/locales/' . dcCore::app()->lang . '/admin');
 
-dcCore::app()->addBehavior('adminPageHTMLHead', ['adminConfigOrigineMini', 'load_styles_scripts']);
+dcCore::app()->addBehavior('adminPageHTMLHead', ['OrigineMiniConfig', 'loadStylesScripts']);
 
-class adminConfigOrigineMini
+class OrigineMiniConfig
 {
     /**
      * Loads styles and scripts of the theme configurator.
      *
      * @return void
      */
-    public static function load_styles_scripts()
+    public static function loadStylesScripts()
     {
         echo dcPage::cssLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/css/admin.min.css'),
         dcPage::jsLoad(dcCore::app()->blog->settings->system->themes_url . '/origine-mini/js/admin.min.js');
@@ -43,7 +47,7 @@ class adminConfigOrigineMini
      *
      * @return array Sections and sub-sections.
      */
-    public static function page_sections()
+    public static function pageSections()
     {
         $page_sections['global'] = [
             'name'         => __('section-global'),
@@ -108,7 +112,7 @@ class adminConfigOrigineMini
      *
      * @return array The settings.
      */
-    public static function default_settings()
+    public static function defaultSettings()
     {
         // Global settings.
         $default_settings['global_page_width'] = [
@@ -589,10 +593,10 @@ class adminConfigOrigineMini
      *
      * @return array The id of the saved parameters associated with their values.
      */
-    public static function saved_settings()
+    public static function savedSettings()
     {
         $saved_settings   = [];
-        $default_settings = self::default_settings();
+        $default_settings = self::defaultSettings();
 
         foreach ($default_settings as $setting_id => $setting_data) {
             if (dcCore::app()->blog->settings->originemini->$setting_id) {
@@ -610,91 +614,16 @@ class adminConfigOrigineMini
     }
 
     /**
-     * Converts a style array into a minified style string.
-     *
-     * @param array $rules An array of styles.
-     *
-     * @return string $css The minified styles.
-     */
-    public static function styles_array_to_string($rules)
-    {
-        $css = '';
-
-        foreach ($rules as $key => $value) {
-            if (!is_int($key)) {
-                if (is_array($value) && !empty($value)) {
-                    $selector   = $key;
-                    $properties = $value;
-
-                    $css .= str_replace(', ', ',', $selector) . '{';
-
-                    if (is_array($properties) && !empty($properties)) {
-                        foreach ($properties as $property => $rule) {
-                            if ($rule !== '') {
-                                $css .= $property . ':' . str_replace(', ', ',', $rule) . ';';
-                            }
-                        }
-                    }
-
-                    $css .= '}';
-                }
-
-            // For @font-face.
-            } else {
-                foreach ($value as $key_2 => $value_2) {
-                    if (is_array($value) && !empty($value_2)) {
-                        $selector   = $key_2;
-                        $properties = $value_2;
-
-                        $css .= str_replace(', ', ',', $selector) . '{';
-
-                        if (is_array($properties) && !empty($properties)) {
-                            foreach ($properties as $property => $rule) {
-                                if ($rule !== '') {
-                                    $css .= $property . ':' . str_replace(', ', ',', $rule) . ';';
-                                }
-                            }
-                        }
-
-                        $css .= '}';
-                    }
-                }
-            }
-        }
-
-        return $css;
-    }
-
-    /**
-     * Checks if a file path returns a valid image.
-     *
-     * @param array $path The path to the image.
-     *
-     * @return bool true if it's an image..
-     */
-    public static function image_exists($path_to_img)
-    {
-        // Extensions allowed for image files in Dotclear.
-        $img_ext_allowed = ['bmp', 'gif', 'ico', 'jpeg', 'jpg', 'jpe', 'png', 'svg', 'tiff', 'tif', 'webp', 'xbm'];
-
-        if (file_exists($path_to_img) && in_array(strtolower(files::getExtension($path_to_img)), $img_ext_allowed, true) && substr(mime_content_type($path_to_img), 0, 6) === 'image/') {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * Displays each parameter according to its type.
      *
      * @param strong $setting_id The id of the setting to display.
      *
      * @return void The parameter.
      */
-    public static function setting_rendering($setting_id = '')
+    public static function settingRendering($setting_id = '')
     {
-        $default_settings = self::default_settings();
-        $saved_settings   = self::saved_settings();
+        $default_settings = self::defaultSettings();
+        $saved_settings   = self::savedSettings();
 
         if ($setting_id && array_key_exists($setting_id, $default_settings)) {
             echo '<p id=' . $setting_id . '-input>';
@@ -709,9 +638,9 @@ class adminConfigOrigineMini
             switch ($default_settings[$setting_id]['type']) {
                 case 'checkbox' :
                     echo form::checkbox(
-                         $setting_id,
-                         true,
-                         $setting_value
+                        $setting_id,
+                        true,
+                        $setting_value
                     ),
                     '<label class=classic for=', $setting_id, '>',
                     $default_settings[$setting_id]['title'],
@@ -825,8 +754,10 @@ class adminConfigOrigineMini
                 echo '<img alt="' . __('header-image-preview-alt') . '" id=', $setting_id, '-src src="', $image_src, '">';
 
                 if (isset($saved_settings['header_image2x'])) {
-                    echo '<p>' . __('header-image-retina-ready') . '</p>';
+                    echo '<p id=', $setting_id, '-retina>' . __('header-image-retina-ready') . '</p>';
                 }
+
+                echo \form::hidden('header_image-url', $image_src);
             }
         }
     }
@@ -834,20 +765,21 @@ class adminConfigOrigineMini
     /**
      * Saves the settings to the database.
      *
-     * If the parameter value is equal to the default value, the parameter is removed from the database.
+     * If the parameter value is equal to the default value,
+     * the parameter is removed from the database.
      *
      * @return void
      */
-    public static function save_settings()
+    public static function saveSettings()
     {
         if (!empty($_POST)) {
-            $default_settings = self::default_settings();
-            $saved_settings   = self::saved_settings();
+            $default_settings = self::defaultSettings();
+            $saved_settings   = self::savedSettings();
 
             try {
                 dcCore::app()->blog->settings->addNamespace('originemini');
 
-                $banner_width = 0;
+                $header_image_width = 0;
 
                 if (isset($_POST['save'])) {
                     foreach ($default_settings as $setting_id => $setting_value) {
@@ -860,11 +792,12 @@ class adminConfigOrigineMini
                                 $setting_type  = isset($default_settings[$setting_id]['type']) ? $default_settings[$setting_id]['type'] : 'string';
                                 $setting_title = isset($default_settings[$setting_id]['title']) ? $default_settings[$setting_id]['title'] : '';
 
-                                // If the parameter has a new value that is different from the default (and is not an unchecked checkbox).
                                 if ($_POST[$setting_id] != $default_settings[$setting_id]['default']) {
+                                    // If the parameter has a new value that is different from the default (and is not an unchecked checkbox).
+
                                     if ($setting_type === 'select') {
-                                        // Checks if the input value is proposed by the setting.
                                         if (in_array($_POST[$setting_id], $default_settings[$setting_id]['choices'])) {
+                                            // Checks if the input value is proposed by the setting.
                                             $setting_value = $_POST[$setting_id];
                                         } else {
                                             $drop = true;
@@ -872,8 +805,8 @@ class adminConfigOrigineMini
 
                                         $setting_type = 'string';
                                     } elseif ($setting_type === 'select_int') {
-                                        // Checks if the input value is proposed by the setting.
                                         if (in_array((int) $_POST[$setting_id], $default_settings[$setting_id]['choices'], true)) {
+                                            // Checks if the input value is proposed by the setting.
                                             $setting_value = (int) $_POST[$setting_id];
                                         } else {
                                             $drop = true;
@@ -888,9 +821,8 @@ class adminConfigOrigineMini
                                     } else {
                                         $setting_value = html::escapeHTML($_POST[$setting_id]);
                                     }
-
-                                // If the value is equal to the default value, removes the parameter.
                                 } elseif ($_POST[$setting_id] == $default_settings[$setting_id]['default']) {
+                                    // If the value is equal to the default value, removes the parameter.
                                     $drop = true;
                                 }
 
@@ -905,9 +837,8 @@ class adminConfigOrigineMini
                                 } else {
                                     dcCore::app()->blog->settings->originemini->drop($setting_id);
                                 }
-
-                            // For unchecked checkboxes (= no POST request), does a specific action.
                             } elseif (!isset($_POST[$setting_id]) && $default_settings[$setting_id]['type'] === 'checkbox') {
+                                // For unchecked checkboxes (= no POST request), does a specific action.
                                 $setting_title = isset($default_settings[$setting_id]['title']) ? $default_settings[$setting_id]['title'] : '';
 
                                 if ($default_settings[$setting_id]['default'] !== 0) {
@@ -924,16 +855,15 @@ class adminConfigOrigineMini
                             } else {
                                 dcCore::app()->blog->settings->originemini->drop($setting_id);
                             }
-
-                        /**
-                         * Saves the banner.
-                         *
-                         * The image is saved as an array which contains:
-                         * 'url'        => (string) The URL of the image.
-                         * 'max-width'  => (int) The maximum width of the image (inferior or equal to the page width).
-                         * 'max-height' => (int) The maximum height of the image.
-                         */
                         } elseif ($setting_id === 'header_image') {
+                            /**
+                             * Saves the banner.
+                             *
+                             * The image is saved as an array which contains:
+                             * 'url'        => (string) The URL of the image.
+                             * 'max-width'  => (int) The maximum width of the image (inferior or equal to the page width).
+                             * 'max-height' => (int) The maximum height of the image.
+                             */
 
                             // If an URL is set.
                             if (isset($_POST['header_image'])) {
@@ -946,16 +876,16 @@ class adminConfigOrigineMini
                                 $image_url = $_POST['header_image'];
 
                                 // Converts the absolute URL in a relative one if necessary.
-                                $image_url = substr($image_url, strpos($image_url, $public_url));
+                                $image_url = html::stripHostURL($image_url);
 
                                 // Retrieves the image path.
                                 $image_path = $public_path . str_replace($public_url . '/', '/', $image_url);
 
                                 // If the file exists and is an image.
-                                if (self::image_exists($image_path)) {
+                                if (omUtils::imageExists($image_path)) {
 
                                     // Gets the dimensions of the image.
-                                    list($banner_width) = getimagesize($image_path);
+                                    list($header_image_width) = getimagesize($image_path);
 
                                     /**
                                      * Limits the maximum width value of the image if its superior to the page width,
@@ -967,16 +897,16 @@ class adminConfigOrigineMini
                                         $page_width = 480;
                                     }
 
-                                    if ($banner_width > $page_width) {
-                                        $banner_width = 100;
+                                    if ($header_image_width > $page_width) {
+                                        $header_image_width = 100;
                                     } else {
-                                        $banner_width = $banner_width * 100 / $page_width;
+                                        $header_image_width = $header_image_width * 100 / $page_width;
                                     }
 
                                     // Sets the array which contains the image data.
                                     $image_data = [
-                                        'url'    => html::escapeURL($image_url),
-                                        'width'  => (int) $banner_width,
+                                        'url'    => html::sanitizeURL($image_url),
+                                        'width'  => (int) $header_image_width,
                                     ];
 
                                     // Saves the setting in the database as an array.
@@ -999,7 +929,7 @@ class adminConfigOrigineMini
                                         if (file_exists($image_path_2x) && getimagesize($image_path_2x) !== false) {
                                             dcCore::app()->blog->settings->originemini->put(
                                                 'header_image2x',
-                                                html::escapeURL($image_url_2x),
+                                                html::sanitizeURL($image_url_2x),
                                                 'string',
                                                 html::clean($setting_title),
                                                 true
@@ -1029,7 +959,7 @@ class adminConfigOrigineMini
                 }
 
                 // Puts styles in the database.
-                self::add_theme_styles($banner_width);
+                self::addThemeStyles($header_image_width);
 
                 // Refreshes the blog.
                 dcCore::app()->blog->triggerBlog();
@@ -1053,9 +983,11 @@ class adminConfigOrigineMini
     /**
      * Adds custom styles to the theme to apply the settings.
      *
+     * @param int $header_image_width The width if the header image.
+     *
      * @return void
      */
-    public static function add_theme_styles($banner_width)
+    public static function addThemeStyles($header_image_width)
     {
         if (isset($_POST['save'])) {
             $css = '';
@@ -1068,7 +1000,7 @@ class adminConfigOrigineMini
             $css_media_motion_array   = [];
             $css_media_print_array    = [];
 
-            $default_settings = self::default_settings();
+            $default_settings = self::defaultSettings();
 
             // Page width.
             $page_width_allowed = [35, 40];
@@ -1251,7 +1183,7 @@ class adminConfigOrigineMini
                     $css_main_array['#site-image img']['border-radius'] = 'var(--border-radius)';
                 }
 
-                if (isset($banner_width) && $banner_width >= 100) {
+                if (isset($header_image_width) && $header_image_width >= 100) {
                     $css_main_array['#site-image img']['width'] = '100%';
                 }
             }
@@ -1550,13 +1482,13 @@ class adminConfigOrigineMini
                 $css_media_contrast_array['.footer-social-links-icon-container']['border'] = '1px solid var(--color-border, #c2c7d6)';
             }
 
-            $css .= !empty($css_root_array) ? self::styles_array_to_string($css_root_array) : '';
-            $css .= !empty($css_root_media_array) ? '@media (prefers-color-scheme:dark){' . self::styles_array_to_string($css_root_media_array) . '}' : '';
-            $css .= !empty($css_main_array) ? self::styles_array_to_string($css_main_array) : '';
-            $css .= !empty($css_media_array) ? '@media (max-width:34em){' . self::styles_array_to_string($css_media_array) . '}' : '';
-            $css .= !empty($css_media_contrast_array) ? '@media (prefers-contrast:more),(-ms-high-contrast:active),(-ms-high-contrast:black-on-white){' . self::styles_array_to_string($css_media_contrast_array) . '}' : '';
-            $css .= !empty($css_media_motion_array) ? '@media (prefers-reduced-motion:reduce){' . self::styles_array_to_string($css_media_motion_array) . '}' : '';
-            $css .= !empty($css_media_print_array) ? '@media print{' . self::styles_array_to_string($css_media_print_array) . '}' : '';
+            $css .= !empty($css_root_array) ? omUtils::stylesArrayToString($css_root_array) : '';
+            $css .= !empty($css_root_media_array) ? '@media (prefers-color-scheme:dark){' . omUtils::stylesArrayToString($css_root_media_array) . '}' : '';
+            $css .= !empty($css_main_array) ? omUtils::stylesArrayToString($css_main_array) : '';
+            $css .= !empty($css_media_array) ? '@media (max-width:34em){' . omUtils::stylesArrayToString($css_media_array) . '}' : '';
+            $css .= !empty($css_media_contrast_array) ? '@media (prefers-contrast:more),(-ms-high-contrast:active),(-ms-high-contrast:black-on-white){' . omUtils::stylesArrayToString($css_media_contrast_array) . '}' : '';
+            $css .= !empty($css_media_motion_array) ? '@media (prefers-reduced-motion:reduce){' . omUtils::stylesArrayToString($css_media_motion_array) . '}' : '';
+            $css .= !empty($css_media_print_array) ? '@media print{' . omUtils::stylesArrayToString($css_media_print_array) . '}' : '';
 
             if (!empty($css)) {
                 dcCore::app()->blog->settings->originemini->put(
@@ -1579,7 +1511,7 @@ class adminConfigOrigineMini
      *
      * @return void
      */
-    public static function page_rendering()
+    public static function pageRendering()
     {
         /**
          * Creates a table that contains all the parameters and their titles according to the following pattern:
@@ -1593,16 +1525,16 @@ class adminConfigOrigineMini
          */
         $sections_with_settings_id = [];
 
-        $sections = self::page_sections();
-        $settings = self::default_settings();
+        $sections = self::pageSections();
+        $settings = self::defaultSettings();
 
         // Puts titles in the setting array.
-        foreach($sections as $section_id => $section_data) {
+        foreach ($sections as $section_id => $section_data) {
             $sections_with_settings_id[$section_id] = [];
         }
 
         // Puts all settings in their section.
-        foreach($settings as $setting_id => $setting_data) {
+        foreach ($settings as $setting_id => $setting_data) {
             $ignore_setting_id = ['header_image2x', 'styles'];
 
             if (!in_array($setting_id, $ignore_setting_id, true)) {
@@ -1634,7 +1566,7 @@ class adminConfigOrigineMini
 
                     // Displays the parameter.
                     foreach ($setting_id as $setting_id_value) {
-                        self::setting_rendering($setting_id_value);
+                        self::settingRendering($setting_id_value);
                     }
                 }
 
@@ -1700,5 +1632,5 @@ class adminConfigOrigineMini
     }
 }
 
-adminConfigOrigineMini::save_settings();
-adminConfigOrigineMini::page_rendering();
+OrigineMiniConfig::saveSettings();
+OrigineMiniConfig::pageRendering();

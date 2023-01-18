@@ -5,8 +5,9 @@
  * The purpose of this file is to generate, at each version change of the theme,
  * a digital fingerprint of the JS files and save them in the database.
  *
- * @author Teddy
- * @copyright GPL-3.0
+ * @author    Teddy <zozxebpyr@mozmail.com>
+ * @copyright 2022-2023 Teddy
+ * @license   GPL-3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
  */
 
 if (!defined('DC_CONTEXT_ADMIN')) {
