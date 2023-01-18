@@ -121,13 +121,23 @@
               <input type=submit value="{{tpl:lang reactions-comment-form-submit-button}}">
             </tpl:IfCommentPreviewOptional>
           </div>
+
+          {{tpl:origineMiniEmailAuthor}}
+
+          <tpl:origineMiniTrackbackLink>
+            <tpl:EntryIf pings_active="1">
+              <h3>{{tpl:lang reactions-trackbacks-add-title}}</h3>
+
+              <p class=text-secondary id=trackback-link-container>
+                <span id=trackback-url>{{tpl:EntryPingLink}}</span>{{tpl:origineMiniScriptTrackbackURLCopied}}
+              </p>
+            </tpl:EntryIf>
+          </tpl:origineMiniTrackbackLink>
         </tpl:origineMiniCommentFormWrapper>
       </tpl:Block>
     </form>
   </tpl:Block>
 </tpl:EntryIf>
-
-{{tpl:origineMiniEmailAuthor}}
 
 <tpl:origineMiniReactionFeedLink>
   <tpl:EntryIf operator="or" comments_active="1" pings_active="1" has_comment="1" has_ping="1">
@@ -136,14 +146,6 @@
     </p>
   </tpl:EntryIf>
 </tpl:origineMiniReactionFeedLink>
-
-<tpl:origineMiniTrackbackLink>
-  <tpl:EntryIf pings_active="1">
-    <p class=text-secondary id=trackback-link-container>
-      <small>{{tpl:lang reactions-trackbacks-add-label}}<br><span id=trackback-url>{{tpl:EntryPingLink}}</span>{{tpl:origineMiniScriptTrackbackURLCopied}}</small>
-    </p>
-  </tpl:EntryIf>
-</tpl:origineMiniTrackbackLink>
 
 <tpl:EntryIf operator="or" comments_active="1" pings_active="1">
   </div>

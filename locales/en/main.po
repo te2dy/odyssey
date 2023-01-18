@@ -146,6 +146,9 @@ msgstr "Preview"
 msgid "reactions-comment-send-button"
 msgstr "Send comment"
 
+msgid "reactions-react-link-title"
+msgstr "React"
+
 msgid "reactions-comment-form-title"
 msgstr "Write a comment"
 
@@ -170,8 +173,8 @@ msgstr "Send"
 msgid "reactions-subscribe-link-reactions"
 msgstr "Subscribe to reactions"
 
-msgid "reactions-trackbacks-add-label"
-msgstr "Add a trackback:"
+msgid "reactions-trackbacks-add-title"
+msgstr "Add a trackback"
 
 msgid "reactions-trackback-url-copied"
 msgstr "Copied"

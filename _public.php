@@ -46,7 +46,7 @@ class OrigineMiniPublicBehaviors
             // Adds quotes if the value contains one or more spaces.
             $editor = strpos($editor, ' ') === false ? $editor : '"' . $editor . '"';
 
-            echo '<meta name=author content=', \html::escapeHTML($editor), '>', "\n";
+            echo '<meta name=author content=', $editor, '>', "\n";
         }
 
         // Adds the content of the copyright notice.
@@ -56,7 +56,7 @@ class OrigineMiniPublicBehaviors
             // Adds quotes if the value contains one or more spaces.
             $notice = strpos($notice, ' ') === false ? $notice : '"' . $notice . '"';
 
-            echo '<meta name=copyright content=', \html::escapeHTML($notice), '>', "\n";
+            echo '<meta name=copyright content=', $notice, '>', "\n";
         }
 
         // Adds the generator of the blog.
@@ -842,12 +842,10 @@ class OrigineMiniPublicBlocks
      */
     public static function origineMiniCommentFormWrapper($attr, $content)
     {
-        $comment_form_title = __('reactions-comment-form-title');
-
         if (!\dcCore::app()->blog->settings->originemini->content_commentform_hide) {
-            return '<h3 class=reaction-title>' . $comment_form_title . '</h3>' . $content;
+            return '<h3 class=reaction-title>' . __('reactions-comment-form-title') . '</h3>' . $content;
         } else {
-            return '<details><summary><small>' . $comment_form_title . '</small></summary>' . $content . '</details>';
+            return '<details id=react-wrapper><summary><small>' . __('reactions-react-link-title') . '</small></summary><h3 class=reaction-title>' . __('reactions-comment-form-title') . '</h3>' . $content . '</details>';
         }
     }
 

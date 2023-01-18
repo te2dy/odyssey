@@ -164,6 +164,9 @@ msgstr ""
 msgid "reactions-comment-send-button"
 msgstr ""
 
+msgid "reactions-react-link-title"
+msgstr ""
+
 msgid "reactions-comment-form-title"
 msgstr ""
 
@@ -200,7 +203,7 @@ msgstr ""
 msgid "reactions-subscribe-link-reactions"
 msgstr ""
 
-msgid "reactions-trackbacks-add-label"
+msgid "reactions-trackbacks-add"
 msgstr ""
 
 msgid "reactions-trackback-url-copied"

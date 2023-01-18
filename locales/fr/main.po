@@ -164,6 +164,9 @@ msgstr "Prévisualisation"
 msgid "reactions-comment-send-button"
 msgstr "Envoyer le commentaire"
 
+msgid "reactions-react-link-title"
+msgstr "Réagir"
+
 msgid "reactions-comment-form-title"
 msgstr "Écrire un commentaire"
 
@@ -200,8 +203,8 @@ msgstr "Re:"
 msgid "reactions-subscribe-link-reactions"
 msgstr "S’abonner aux réactions"
 
-msgid "reactions-trackbacks-add-label"
-msgstr "Ajouter un rétrolien&nbsp;:"
+msgid "reactions-trackbacks-add-title"
+msgstr "Ajouter un rétrolien"
 
 msgid "reactions-trackback-url-copied"
 msgstr "Copié"
