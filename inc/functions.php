@@ -112,4 +112,30 @@ class OrigineMiniUtils
             return false;
         }
     }
+
+    /**
+     * Surrounds a string by quotes if it does not contains a space,
+     * and an equal sign if the string is an URL.
+     *
+     * @param string $content The content to which quotation marks need to be added or not.
+     * @param string $type    The type of string. Allowed values: 'default' and 'url'.
+     *
+     * @return voir The string with quotes… or not.
+     */
+    public static function autoQuotes($content = '', $type = false)
+    {
+        if ($type === true) {
+            if (strpos($content, ' ') === false) {
+                return $content;
+            } else {
+                return '"' . $content . '"';
+            }
+        } else {
+            if (strpos($content, ' ') === false && strpos($content, '=') === false) {
+                return $content;
+            } else {
+                return '"' . $content . '"';
+            }
+        }
+    }
 }
