@@ -357,6 +357,7 @@ class OrigineMiniPublicBehaviors
 \dcCore::app()->tpl->addValue('origineMiniEmailAuthor', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniEmailAuthor']);
 \dcCore::app()->tpl->addValue('origineMiniAttachmentTitle', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniAttachmentTitle']);
 \dcCore::app()->tpl->addValue('origineMiniAttachmentSize', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniAttachmentSize']);
+\dcCore::app()->tpl->addValue('origineMiniCategoryDescription', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniCategoryDescription']);
 \dcCore::app()->tpl->addValue('origineMiniFooterCredits', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniFooterCredits']);
 \dcCore::app()->tpl->addValue('origineMiniURIRelative', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniURIRelative']);
 
@@ -377,9 +378,9 @@ class OrigineMiniPublicValues
     public static function origineMiniMetaDescriptionHome($attr)
     {
         if (\dcCore::app()->blog->settings->originemini->global_meta_home_description) {
-            return '<?php echo ' . sprintf(\dcCore::app()->tpl->getFilters($attr), '\dcCore::app()->blog->settings->originemini->global_meta_home_description') . '; ?>';
+            return '<?php echo ' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->blog->settings->originemini->global_meta_home_description') . '; ?>';
         } else {
-            return '<?php echo ' . sprintf(\dcCore::app()->tpl->getFilters($attr), '\dcCore::app()->blog->desc') . '; ?>';
+            return '<?php echo ' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->blog->desc') . '; ?>';
         }
     }
 
@@ -405,8 +406,8 @@ class OrigineMiniPublicValues
     public static function origineMiniEntryLang()
     {
         return '<?php
-            if (\dcCore::app()->ctx->posts->post_lang !== \dcCore::app()->blog->settings->system->lang) {
-                echo " lang=", \dcCore::app()->ctx->posts->post_lang;
+            if (dcCore::app()->ctx->posts->post_lang !== dcCore::app()->blog->settings->system->lang) {
+                echo " lang=", dcCore::app()->ctx->posts->post_lang;
             }
         ?>';
     }
@@ -492,6 +493,18 @@ class OrigineMiniPublicValues
     }
 
     /**
+     * Displays the category description in a block only if a description is set.
+     *
+     * @return void The category description.
+     */
+    public static function origineMiniCategoryDescription()
+    {
+        if (\dcCore::app()->ctx->categories->cat_desc) {
+            return '<div class=content-text>' . \dcCore::app()->ctx->categories->cat_desc . '</div>';
+        }
+    }
+
+    /**
      * Credits to display at the bottom of the site.
      *
      * Dotclear and theme versions are shown only on dev environments.
@@ -541,19 +554,19 @@ class OrigineMiniPublicValues
     {
         if (\dcCore::app()->blog->settings->originemini->content_post_list_reaction_link === true) {
             return '<?php
-                if ((int) \dcCore::app()->ctx->posts->nb_comment > 0) {
+                if ((int) dcCore::app()->ctx->posts->nb_comment > 0) {
                     echo "<a aria-label=\"";
 
-                    if ((int) \dcCore::app()->ctx->posts->nb_comment > 1) {
-                        printf(__("post-list-multiple-reactions-link-aria-label"), \dcCore::app()->ctx->posts->nb_comment);
+                    if ((int) dcCore::app()->ctx->posts->nb_comment > 1) {
+                        printf(__("post-list-multiple-reactions-link-aria-label"), dcCore::app()->ctx->posts->nb_comment);
                     } else {
                         echo __("post-list-one-reaction-link-aria-label");
                     }
 
-                    echo "\" class=post-reaction-link href=\"", html::escapeURL(\dcCore::app()->ctx->posts->getURL()), "#", __("reactions-id"), "\"><small>";
+                    echo "\" class=post-reaction-link href=\"", html::escapeURL(dcCore::app()->ctx->posts->getURL()), "#", __("reactions-id"), "\"><small>";
 
-                    if ((int) \dcCore::app()->ctx->posts->nb_comment > 1) {
-                        printf(__("post-list-multiple-reactions"), \dcCore::app()->ctx->posts->nb_comment);
+                    if ((int) dcCore::app()->ctx->posts->nb_comment > 1) {
+                        printf(__("post-list-multiple-reactions"), dcCore::app()->ctx->posts->nb_comment);
                     } else {
                         echo __("post-list-one-reaction");
                     }
@@ -585,7 +598,7 @@ class OrigineMiniPublicValues
             }
 
             return '<?php
-                echo "' . $content_separator . '", " ", \dcCore::app()->ctx->posts->getDate("' . \dcCore::app()->blog->settings->system->time_format . '");
+                echo "' . $content_separator . '", " ", dcCore::app()->ctx->posts->getDate("' . \dcCore::app()->blog->settings->system->time_format . '");
             ?>';
         }
     }
@@ -605,10 +618,10 @@ class OrigineMiniPublicValues
         return '<?php
             $the_excerpt = "";
 
-            if (' . sprintf(\dcCore::app()->tpl->getFilters($attr), '\dcCore::app()->ctx->posts->getExcerpt()') . ') {
-                $the_excerpt = ' . sprintf(\dcCore::app()->tpl->getFilters($attr), '\dcCore::app()->ctx->posts->getExcerpt()') . ';
+            if (' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getExcerpt()') . ') {
+                $the_excerpt = ' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getExcerpt()') . ';
             } else {
-                $the_excerpt = ' . sprintf(\dcCore::app()->tpl->getFilters($attr), '\dcCore::app()->ctx->posts->getContent()') . ';
+                $the_excerpt = ' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getContent()') . ';
 
                 if (strlen($the_excerpt) > 200) {
                     $the_excerpt  = substr($the_excerpt, 0, 200);
@@ -618,15 +631,15 @@ class OrigineMiniPublicValues
             }
 
             if ($the_excerpt) {
-                if (\dcCore::app()->ctx->posts->post_lang === \dcCore::app()->blog->settings->system->lang) {
+                if (dcCore::app()->ctx->posts->post_lang === dcCore::app()->blog->settings->system->lang) {
                     $lang = "";
                 } else {
-                    $lang = " lang=" . \dcCore::app()->ctx->posts->post_lang;
+                    $lang = " lang=" . dcCore::app()->ctx->posts->post_lang;
                 }
 
                 echo "<p class=\"content-text post-excerpt text-secondary\"" . $lang . ">",
                 $the_excerpt,
-                " <a aria-label=\"", sprintf(__("post-list-open-aria"), \dcCore::app()->ctx->posts->post_title), "\" href=\"", \dcCore::app()->ctx->posts->getURL(), "\">" . __("post-list-open"), "</a>",
+                " <a aria-label=\"", sprintf(__("post-list-open-aria"), dcCore::app()->ctx->posts->post_title), "\" href=\"", dcCore::app()->ctx->posts->getURL(), "\">" . __("post-list-open"), "</a>",
                 "</p>";
             }
         ?>';
@@ -640,8 +653,8 @@ class OrigineMiniPublicValues
     public static function origineMiniPostTagsBefore()
     {
         return '<?php
-            if (\dcCore::app()->ctx->posts->post_meta) {
-                $post_meta = unserialize(\dcCore::app()->ctx->posts->post_meta);
+            if (dcCore::app()->ctx->posts->post_meta) {
+                $post_meta = unserialize(dcCore::app()->ctx->posts->post_meta);
 
                 if (is_array($post_meta) && isset($post_meta["tag"])) {
                     if (count($post_meta["tag"]) > 1) {
@@ -677,16 +690,16 @@ class OrigineMiniPublicValues
     {
         if (\dcCore::app()->blog->settings->originemini->content_post_email_author !== 'disabled') {
             return '<?php
-                if (isset(\dcCore::app()->ctx->posts->user_email) && \dcCore::app()->ctx->posts->user_email && (\dcCore::app()->blog->settings->originemini->content_post_email_author === "always" || (\dcCore::app()->blog->settings->originemini->content_post_email_author === "comments_open" && \dcCore::app()->ctx->posts->post_open_comment === "1"))
+                if (isset(dcCore::app()->ctx->posts->user_email) && dcCore::app()->ctx->posts->user_email && (dcCore::app()->blog->settings->originemini->content_post_email_author === "always" || (dcCore::app()->blog->settings->originemini->content_post_email_author === "comments_open" && dcCore::app()->ctx->posts->post_open_comment === "1"))
                 ) {
                 ?>
                     <div class=comment-private>
                         <h3 class=reaction-title>' . __('private-comment-title') . '</h3>
 
-                        <?php $body = "' . __('private-comment-body-post-url') . ' " . \dcCore::app()->ctx->posts->getURL(); ?>
+                        <?php $body = "' . __('private-comment-body-post-url') . ' " . dcCore::app()->ctx->posts->getURL(); ?>
 
                         <p>
-                            <a class=button href="mailto:<?php echo urlencode(\dcCore::app()->ctx->posts->user_email); ?>?subject=<?php echo htmlentities("' . __("private-comment-email-prefix") . ' " . \dcCore::app()->ctx->posts->post_title . "&body=" . $body); ?>">' . __('private-comment-button-text') . '</a>
+                            <a class=button href="mailto:<?php echo urlencode(dcCore::app()->ctx->posts->user_email); ?>?subject=<?php echo htmlentities("' . __("private-comment-email-prefix") . ' " . dcCore::app()->ctx->posts->post_title . "&body=" . $body); ?>">' . __('private-comment-button-text') . '</a>
                         </p>
                     </div>
                 <?php }
@@ -702,7 +715,7 @@ class OrigineMiniPublicValues
     public static function origineMiniAttachmentTitle()
     {
         return '<?php
-            if (count(\dcCore::app()->ctx->attachments) === 1) {
+            if (count(dcCore::app()->ctx->attachments) === 1) {
                 echo __("attachments-title-one");
             } else {
                 echo __("attachments-title-multiple");
@@ -730,7 +743,7 @@ class OrigineMiniPublicValues
             // Setting ignored for some reason:
             // setlocale(LC_ALL, "fr_FR");
 
-            if (\dcCore::app()->blog->settings->system->lang === "fr") {
+            if (dcCore::app()->blog->settings->system->lang === "fr") {
                 $locale_decimal = ",";
             } else {
                 $lang_conv      = localeconv();
