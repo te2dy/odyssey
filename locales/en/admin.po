@@ -228,6 +228,12 @@ msgstr "At the top of the header (default)"
 msgid "settings-header-imageposition-bottom"
 msgstr "At the bottom of the header"
 
+msgid "settings-header-imagedescription-title"
+msgstr "Description of the header image"
+
+msgid "settings-header-imagedescription-description"
+msgstr "Useful for accessibility."
+
 msgid "settings-content-fontfamily-title"
 msgstr "Font"
 

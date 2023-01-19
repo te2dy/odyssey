@@ -228,6 +228,12 @@ msgstr ""
 msgid "settings-header-imageposition-bottom"
 msgstr ""
 
+msgid "settings-header-imagedescription-title"
+msgstr ""
+
+msgid "settings-header-imagedescription-description"
+msgstr ""
+
 msgid "settings-content-fontfamily-title"
 msgstr ""
 

@@ -228,6 +228,12 @@ msgstr "En haut de l’en-tête (par défaut)"
 msgid "settings-header-imageposition-bottom"
 msgstr "En bas de l’en-tête"
 
+msgid "settings-header-imagedescription-title"
+msgstr "Description de l’image d’en-tête"
+
+msgid "settings-header-imagedescription-description"
+msgstr "Utile pour l’accessibilité."
+
 msgid "settings-content-fontfamily-title"
 msgstr "Police d’écriture"
 

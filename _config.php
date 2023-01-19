@@ -287,6 +287,14 @@ class OrigineMiniConfig
             'section'     => ['header', 'image']
         ];
 
+        $default_settings['header_image_description'] = [
+            'title'       => __('settings-header-imagedescription-title'),
+            'description' => __('settings-header-imagedescription-description'),
+            'type'        => 'text',
+            'default'     => '',
+            'section'     => ['header', 'image']
+        ];
+
         // Content settings.
         $default_settings['content_text_font'] = [
             'title'       => __('settings-content-fontfamily-title'),

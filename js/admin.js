@@ -23,9 +23,13 @@ function disableInputs() {
   }
 
   if (document.getElementById("header_image").value !== "") {
-    document.getElementById("header_image_position-input").style.display = "block";
+    document.getElementById("header_image_position-input").style.display          = "block";
+    document.getElementById("header_image_description-input").style.display       = "block";
+    document.getElementById("header_image_description-description").style.display = "block";
   } else {
-    document.getElementById("header_image_position-input").style.display = "none";
+    document.getElementById("header_image_position-input").style.display          = "none";
+    document.getElementById("header_image_description-input").style.display       = "none";
+    document.getElementById("header_image_description-description").style.display = "none";
   }
 
   if (document.getElementById("content_images_wide").checked) {

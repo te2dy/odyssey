@@ -456,6 +456,12 @@ class OrigineMiniPublicValues
                 $image_url = \html::escapeURL(\dcCore::app()->blog->settings->originemini->header_image['url']);
                 $srcset    = '';
 
+                if (\dcCore::app()->blog->settings->originemini->header_image_description) {
+                    $alt = ' alt="' . \html::escapeHTML(\dcCore::app()->blog->settings->originemini->header_image_description) . '"';
+                } else {
+                    $alt = ' alt="' . __('Header Image') . '"';
+                }
+
                 if (\dcCore::app()->blog->settings->originemini->header_image2x) {
                     $image2x_url = \html::escapeURL(\dcCore::app()->blog->settings->originemini->header_image2x);
 
@@ -465,10 +471,11 @@ class OrigineMiniPublicValues
                     $srcset .= '"';
                 }
 
+                // Does not add a link to the home page on home page.
                 if (\dcCore::app()->url->type === 'default') {
-                    return '<div id=site-image><img alt="' . __('Header Image') . '" src="' . $image_url . '"' . $srcset . '></div>';
+                    return '<div id=site-image><img' . $alt . ' src="' . $image_url . '"' . $srcset . '></div>';
                 } else {
-                    return '<div id=site-image><a alt="' . __('Header Image') . '" href="' . \dcCore::app()->blog->url . '" rel=home><img src="' . $image_url . '"' . $srcset . '></a></div>';
+                    return '<div id=site-image><a href="' . \dcCore::app()->blog->url . '" rel=home><img' . $alt . ' src="' . $image_url . '"' . $srcset . '></a></div>';
                 }
             }
         }
