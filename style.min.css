@@ -556,9 +556,6 @@ details summary {
 /**
  * Search
  */
-.content-info .search-form {
-  margin-top: 2rem;
-}
 .search-form {
   align-items: baseline;
   column-gap: .25rem;
