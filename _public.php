@@ -43,14 +43,20 @@ class OrigineMiniPublicBehaviors
         if (\dcCore::app()->blog->settings->system->editor) {
             $editor = \dcCore::app()->blog->settings->system->editor;
 
-            echo '<meta name=author content=', omUtils::autoQuotes($editor), '>', "\n";
+            // Adds quotes if the value contains one or more spaces.
+            $editor = strpos($editor, ' ') === false ? $editor : '"' . $editor . '"';
+
+            echo '<meta name=author content=', $editor, '>', "\n";
         }
 
         // Adds the content of the copyright notice.
         if (\dcCore::app()->blog->settings->system->copyright_notice) {
             $notice = \dcCore::app()->blog->settings->system->copyright_notice;
 
-            echo '<meta name=copyright content=', omUtils::autoQuotes($notice), '>', "\n";
+            // Adds quotes if the value contains one or more spaces.
+            $notice = strpos($notice, ' ') === false ? $notice : '"' . $notice . '"';
+
+            echo '<meta name=copyright content=', $notice, '>', "\n";
         }
 
         // Adds the generator of the blog.
@@ -242,7 +248,7 @@ class OrigineMiniPublicBehaviors
                         ?>
 
                         <li>
-                            <a href=<?php echo omUtils::autoQuotes(\html::escapeURL($link), true); ?>" rel=me>
+                            <a href="<?php echo \html::escapeURL($link); ?>" rel=me>
                                 <span class=footer-social-links-icon-container>
                                     <svg class=footer-social-links-icon role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>
                                         <title><?php echo \html::escapeHTML($site); ?></title>
@@ -401,7 +407,7 @@ class OrigineMiniPublicValues
     {
         return '<?php
             if (dcCore::app()->ctx->posts->post_lang !== dcCore::app()->blog->settings->system->lang) {
-                echo " lang=" . ' . omUtils::autoQuotes('dcCore::app()->ctx->posts->post_lang;') . '
+                echo " lang=", dcCore::app()->ctx->posts->post_lang;
             }
         ?>';
     }
@@ -451,9 +457,9 @@ class OrigineMiniPublicValues
                 $srcset    = '';
 
                 if (\dcCore::app()->blog->settings->originemini->header_image_description) {
-                    $alt = ' alt=' . omUtils::autoQuotes(\html::escapeHTML(\dcCore::app()->blog->settings->originemini->header_image_description));
+                    $alt = ' alt="' . \html::escapeHTML(\dcCore::app()->blog->settings->originemini->header_image_description) . '"';
                 } else {
-                    $alt = ' alt=' . omUtils::autoQuotes(__('Header Image'));
+                    $alt = ' alt="' . __('Header Image') . '"';
                 }
 
                 if (\dcCore::app()->blog->settings->originemini->header_image2x) {
@@ -467,9 +473,9 @@ class OrigineMiniPublicValues
 
                 // Does not add a link to the home page on home page.
                 if (\dcCore::app()->url->type === 'default') {
-                    return '<div id=site-image><img' . $alt . ' src=' . omUtils::autoQuotes($image_url, true) . $srcset . '></div>';
+                    return '<div id=site-image><img' . $alt . ' src="' . $image_url . '"' . $srcset . '></div>';
                 } else {
-                    return '<div id=site-image><a href=' . omUtils::autoQuotes(\dcCore::app()->blog->url, true) . ' rel=home><img' . $alt . ' src=' . omUtils::autoQuotes($image_url, true) . $srcset . '></a></div>';
+                    return '<div id=site-image><a href="' . \dcCore::app()->blog->url . '" rel=home><img' . $alt . ' src="' . $image_url . '"' . $srcset . '></a></div>';
                 }
             }
         }
@@ -556,15 +562,15 @@ class OrigineMiniPublicValues
         if (\dcCore::app()->blog->settings->originemini->content_post_list_reaction_link === true) {
             return '<?php
                 if ((int) dcCore::app()->ctx->posts->nb_comment > 0) {
-                    echo "<a aria-label=";
+                    echo "<a aria-label=\"";
 
                     if ((int) dcCore::app()->ctx->posts->nb_comment > 1) {
-                        echo ' . omUtils::autoQuotes(sprintf(__("post-list-multiple-reactions-link-aria-label"), 'dcCore::app()->ctx->posts->nb_comment')) . ';
+                        printf(__("post-list-multiple-reactions-link-aria-label"), dcCore::app()->ctx->posts->nb_comment);
                     } else {
-                        echo ' . omUtils::autoQuotes(__('post-list-one-reaction-link-aria-label')) . ';
+                        echo __("post-list-one-reaction-link-aria-label");
                     }
 
-                    echo " class=post-reaction-link href=" . ' . omUtils::autoQuotes('dcCore::app()->ctx->posts->getURL()', true) . ' . "#' . __("reactions-id") . '><small>";
+                    echo "\" class=post-reaction-link href=\"", html::escapeURL(dcCore::app()->ctx->posts->getURL()), "#", __("reactions-id"), "\"><small>";
 
                     if ((int) dcCore::app()->ctx->posts->nb_comment > 1) {
                         printf(__("post-list-multiple-reactions"), dcCore::app()->ctx->posts->nb_comment);
