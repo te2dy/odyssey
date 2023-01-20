@@ -505,6 +505,9 @@ details summary {
   margin: 0;
   padding: 0;
 }
+#react-content {
+  margin: 1rem 0 3rem;
+}
 #comment-form {
   margin-top: 4rem;
 }
