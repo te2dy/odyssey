@@ -1213,17 +1213,17 @@ class OrigineMiniConfig
             // Content font family.
             if (isset($_POST['content_text_font']) && $_POST['content_text_font'] !== 'same' && $_POST['global_font_family'] !== $_POST['content_text_font']) {
                 if ($_POST['content_text_font'] === 'sans-serif') {
-                    $css_main_array['.content-text']['font-family'] = '-apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif';
+                    $css_root_array[':root']['--font-family-content'] = '-apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif';
                 } elseif ($_POST['content_text_font'] === 'serif') {
-                    $css_main_array['.content-text']['font-family'] = '"Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
+                    $css_main_array[':root']['--font-family-content'] = '"Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
                 } elseif ($_POST['content_text_font'] === 'monospace') {
-                    $css_main_array['.content-text']['font-family'] = 'Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace';
+                    $css_main_array[':root']['--font-family-content'] = 'Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace';
                 } elseif ($_POST['content_text_font'] === 'sans-serif-browser') {
-                    $css_main_array['.content-text']['font-family'] = 'sans-serif';
+                    $css_main_array[':root']['--font-family-content'] = 'sans-serif';
                 } elseif ($_POST['content_text_font'] === 'serif-browser') {
-                    $css_main_array['.content-text']['font-family'] = 'serif';
+                    $css_main_array[':root']['--font-family-content'] = 'serif';
                 } elseif ($_POST['content_text_font'] === 'monospace-browser') {
-                    $css_main_array['.content-text']['font-family'] = 'monospace';
+                    $css_main_array[':root']['--font-family-content'] = 'monospace';
                 } elseif ($_POST['content_text_font'] === 'atkinson') {
                     $themes_url = dcCore::app()->blog->settings->system->themes_url;
 
@@ -1247,7 +1247,7 @@ class OrigineMiniConfig
                     $css_main_array[7]['@font-face']['font-style']  = 'italic';
                     $css_main_array[7]['@font-face']['font-weight'] = '700';
 
-                    $css_root_array['.content-text']['font-family'] = '"Atkinson Hyperlegible", sans-serif';
+                    $css_root_array[':root']['--font-family-content'] = '"Atkinson Hyperlegible", sans-serif';
                 } elseif ($_POST['content_text_font'] === 'luciole') {
                     $themes_url = dcCore::app()->blog->settings->system->themes_url;
 
@@ -1271,7 +1271,7 @@ class OrigineMiniConfig
                     $css_main_array[7]['@font-face']['font-style']  = 'italic';
                     $css_main_array[7]['@font-face']['font-weight'] = '700';
 
-                    $css_root_array['.content-text']['font-family'] = 'Luciole, sans-serif';
+                    $css_root_array[':root']['--font-family-content'] = 'Luciole, sans-serif';
                 }
             }
 

@@ -180,6 +180,7 @@ h6 {
 
 /* Text content styles */
 .content-text {
+  font-family: var(--font-family-content, var(--font-family, var(--font-family-default)));
   line-height: var(--text-line-height, 1.5);
   text-align: var(--text-align, left);
 }
@@ -335,12 +336,6 @@ textarea {
 details summary {
   cursor: pointer;
   display: inline list-item;
-}
-.details-content {
-  margin-top: .5rem;
-}
-.details-content p {
-  margin: .25rem 0 0;
 }
 
 /**
@@ -536,6 +531,9 @@ details summary {
   border: .063rem solid var(--color-border);
   margin-bottom: 2rem;
   padding: 1rem 1rem 0;
+}
+#c_content {
+  font-family: var(--font-family-content, var(--font-family, var(--font-family-default)));
 }
 #trackback-url {
   text-decoration: var(--link-text-decoration, none);
