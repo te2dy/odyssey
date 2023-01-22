@@ -86,27 +86,79 @@ function disableInputs() {
 }
 
 /**
+ * Checks if an image exists via its URL.
+ *
+ * @link https://stackoverflow.com/a/14651421
+ */
+function imageExists(url) {
+    var image = new Image();
+
+    image.src = url;
+
+    if (!image.complete || image.height === 0) {
+      return false;
+    } else {
+      return true;
+    }
+
+    image.reset();
+}
+
+/**
  * Displays the image with the URL typed by the user.
  */
 function changeImage() {
-  if (document.getElementById("header_image").value !== "") {
+  if (imageExists(document.getElementById("header_image").value) === true) {
     document.getElementById("header_image-src").removeAttribute("style");
     document.getElementById("header_image-src").setAttribute("src", encodeURI(document.getElementById("header_image").value));
 
-    if (document.getElementById("header_image-url").value !== document.getElementById("header_image").value) {
+    if (document.getElementById("header_image_position-retina") && document.getElementById("header_image-url").value !== document.getElementById("header_image").value) {
       document.getElementById("header_image-retina").style.display = "none";
     }
+
+    document.getElementById("header_image_position-input").style.display = "block";
+    document.getElementById("header_image_description-input").style.display = "block";
+    document.getElementById("header_image_description-description").style.display = "block";
   } else {
     document.getElementById("header_image-src").style.display = "none";
+    document.getElementById("header_image_position-input").style.display = "none";
+    document.getElementById("header_image_description-input").style.display = "none";
+    document.getElementById("header_image_description-description").style.display = "none";
+  }
+
+  if (document.getElementById("header_image_position-retina")) {
+    document.getElementById("header_image_position-retina").style.display = "none";
   }
 }
 
 window.onload = function() {
   disableInputs();
   changeImage();
-};
 
-window.onchange = function() {
-  disableInputs();
-  changeImage();
+  window.onchange = function() {
+    disableInputs();
+  };
+
+  document.getElementById("header_image").onchange = function() {
+    disableInputs();
+    changeImage();
+  };
+
+  document.getElementById("header_image").oncut = function() {
+    changeImage();
+  };
+
+  document.getElementById("header_image").onpaste = function() {
+    changeImage();
+  };
+
+  document.getElementById("header_image").addEventListener("input", (e) => {
+    let searchtimer;
+
+    clearTimeout(searchtimer);
+
+    searchtimer = setTimeout(() => {
+      changeImage();
+    }, 1000);
+  });
 };
