@@ -15,7 +15,7 @@ $this->registerModule(
     'Origine Mini',             // Name
     'A minimal Dotclear theme', // Description
     'Teddy',                    // Author
-    '1.3.2-beta',               // Version
+    '1.3.3-beta',               // Version
     [
         'requires'             => [['core', '2.24']],
         'type'                 => 'theme',
