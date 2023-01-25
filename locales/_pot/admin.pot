@@ -159,6 +159,30 @@ msgstr ""
 msgid "settings-global-primarycolor-red"
 msgstr ""
 
+msgid "settings-global-backgroundcolor-title"
+msgstr ""
+
+msgid "settings-global-backgroundcolor-description"
+msgstr ""
+
+msgid "settings-global-backgroundcolor-none-default"
+msgstr ""
+
+msgid "settings-global-backgroundcolor-beige"
+msgstr ""
+
+msgid "settings-global-backgroundcolor-blue"
+msgstr ""
+
+msgid "settings-global-backgroundcolor-gray"
+msgstr ""
+
+msgid "settings-global-backgroundcolor-green"
+msgstr ""
+
+msgid "settings-global-backgroundcolor-red"
+msgstr ""
+
 msgid "settings-global-colortransition-title"
 msgstr ""
 

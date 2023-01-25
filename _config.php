@@ -187,6 +187,26 @@ class OrigineMiniConfig
             'section'     => ['global', 'colors']
         ];
 
+        $global_color_background_choices = [
+            __('settings-global-backgroundcolor-none-default') => 'none',
+            __('settings-global-backgroundcolor-beige')        => 'beige',
+            __('settings-global-backgroundcolor-blue')         => 'blue',
+            __('settings-global-backgroundcolor-gray')         => 'gray',
+            __('settings-global-backgroundcolor-green')        => 'green',
+            __('settings-global-backgroundcolor-red')          => 'red'
+        ];
+
+        ksort($global_color_primary_choices);
+
+        $default_settings['global_color_background'] = [
+            'title'       => __('settings-global-backgroundcolor-title'),
+            'description' => __('settings-global-backgroundcolor-description'),
+            'type'        => 'select',
+            'choices'     => $global_color_background_choices,
+            'default'     => 'none',
+            'section'     => ['global', 'colors']
+        ];
+
         $default_settings['global_css_transition'] = [
             'title'       => __('settings-global-colortransition-title'),
             'description' => __('settings-global-colortransition-description'),
@@ -1107,33 +1127,176 @@ class OrigineMiniConfig
 
             $primary_colors = [
                 'light' => [
-                    'gray'  => '#1a1a1a',
-                    'green' => '#138613',
-                    'red'   => '#e61919',
+                    'gray'  => [
+                        'h' => '0',
+                        's' => '0%',
+                        'l' => '10%'
+                    ],
+                    'green' => [
+                        'h' => '120',
+                        's' => '75%',
+                        'l' => '30%'
+                    ],
+                    'red'   => [
+                        'h' => '0',
+                        's' => '90%',
+                        'l' => '45%'
+                    ]
                 ],
                 'light-amplified' => [
-                    'gray'  => '#474747',
-                    'green' => '#429e42',
-                    'red'   => '#eb4747',
+                    'gray'  => [
+                        'l' => '28%'
+                    ],
+                    'green' => [
+                        's' => '60%',
+                        'l' => '40%'
+                    ],
+                    'red'   => [
+                        's' => '100%',
+                        'l' => '55%'
+                    ]
                 ],
                 'dark' => [
-                    'gray'  => '#fcfcfc',
-                    'green' => '#adebad',
-                    'red'   => '#f7baba',
+                    'gray'  => [
+                        'h' => '0%',
+                        'l' => '99%'
+                    ],
+                    'green' => [
+                        's' => '60%',
+                        'l' => '80%'
+                    ],
+                    'red'   => [
+                        's' => '70%',
+                        'l' => '85%'
+                    ]
                 ],
                 'dark-amplified' => [
-                    'gray'  => '#fff',
-                    'green' => '#c5f1c5',
-                    'red'   => '#fad5d5',
+                    'gray'  => [
+                        'l' => '80%'
+                    ],
+                    'green' => [
+                        's' => '50%',
+                        'l' => '60%'
+                    ],
+                    'red'   => [
+                        'l' => '70%'
+                    ]
                 ]
             ];
 
             if (isset($_POST['global_color_primary']) && in_array($_POST['global_color_primary'], $primary_colors_allowed, true)) {
-                $css_root_array[':root']['--color-primary'] = $primary_colors['light'][$_POST['global_color_primary']];
-                $css_root_array[':root']['--color-primary-amplified'] = $primary_colors['light-amplified'][$_POST['global_color_primary']];
 
-                $css_root_media_array[':root']['--color-primary-dark'] = $primary_colors['dark'][$_POST['global_color_primary']];
-                $css_root_media_array[':root']['--color-primary-amplified-dark'] = $primary_colors['dark-amplified'][$_POST['global_color_primary']];
+                // Light.
+                $css_root_array[':root']['--color-primary-h-custom'] = $primary_colors['light'][$_POST['global_color_primary']]['h'];
+                $css_root_array[':root']['--color-primary-s-custom'] = $primary_colors['light'][$_POST['global_color_primary']]['s'];
+                $css_root_array[':root']['--color-primary-l-custom'] = $primary_colors['light'][$_POST['global_color_primary']]['l'];
+
+                // Light & amplified.
+                if (isset($primary_colors['light-amplified'][$_POST['global_color_primary']]['s'])) {
+                    $css_root_array[':root']['--color-primary-amplified-s-custom'] = $primary_colors['light-amplified'][$_POST['global_color_primary']]['s'];
+                }
+
+                if (isset($primary_colors['light-amplified'][$_POST['global_color_primary']]['l'])) {
+                    $css_root_array[':root']['--color-primary-amplified-l-custom'] = $primary_colors['light-amplified'][$_POST['global_color_primary']]['l'];
+                }
+
+                // Dark.
+                if (isset($primary_colors['dark'][$_POST['global_color_primary']]['h'])) {
+                    $css_root_array[':root']['--color-primary-dark-h-custom'] = $primary_colors['dark'][$_POST['global_color_primary']]['h'];
+                }
+
+                if (isset($primary_colors['dark'][$_POST['global_color_primary']]['s'])) {
+                    $css_root_array[':root']['--color-primary-dark-s-custom'] = $primary_colors['dark'][$_POST['global_color_primary']]['s'];
+                }
+
+                if (isset($primary_colors['dark'][$_POST['global_color_primary']]['l'])) {
+                    $css_root_array[':root']['--color-primary-dark-l-custom'] = $primary_colors['dark'][$_POST['global_color_primary']]['l'];
+                }
+
+                // Dark & amplified.
+                if (isset($primary_colors['dark-amplified'][$_POST['global_color_primary']]['s'])) {
+                    $css_root_array[':root']['--color-primary-dark-amplified-s-custom'] = $primary_colors['dark-amplified'][$_POST['global_color_primary']]['s'];
+                }
+
+                if (isset($primary_colors['dark-amplified'][$_POST['global_color_primary']]['l'])) {
+                    $css_root_array[':root']['--color-primary-dark-amplified-l-custom'] = $primary_colors['dark-amplified'][$_POST['global_color_primary']]['l'];
+                }
+            }
+
+            // Background color.
+            $background_colors_allowed = ['beige', 'blue', 'gray', 'green', 'red'];
+
+            $background_colors = [
+                'main'  => [
+                    'beige' => [
+                        'h' => '45',
+                        's' => '60%',
+                        'l' => '96%'
+                    ],
+                    'blue'  => [
+                        's' => '100%',
+                        'l' => '98%'
+                    ],
+                    'gray'  => [
+                        'h' => '0',
+                        's' => '0%',
+                        'l' => '97%'
+                    ],
+                    'green' => [
+                        'h' => '105',
+                        's' => '90%',
+                        'l' => '98%'
+                    ],
+                    'red'   => [
+                        'h' => '0',
+                        's' => '90%',
+                        'l' => '98%'
+                    ]
+                ],
+                'input' => [
+                    'beige' => [
+                        'l' => '98%'
+                    ],
+                    'blue'  => [
+                        'l' => '99%'
+                    ],
+                    'gray'  => [
+                        'l' => '98%'
+                    ],
+                    'green' => [
+                        's' => '80%',
+                        'l' => '99%'
+                    ],
+                    'red'   => [
+                        's' => '80%',
+                        'l' => '99%'
+                    ]
+                ]
+            ];
+
+            if (isset($_POST['global_color_background']) && in_array($_POST['global_color_background'], $background_colors_allowed, true)) {
+
+                // Main background.
+                if (isset($background_colors['main'][$_POST['global_color_background']]['h'])) {
+                    $css_root_array[':root']['--color-background-h-custom'] = $background_colors['main'][$_POST['global_color_background']]['h'];
+                }
+
+                if (isset($background_colors['main'][$_POST['global_color_background']]['s'])) {
+                    $css_root_array[':root']['--color-background-s-custom'] = $background_colors['main'][$_POST['global_color_background']]['s'];
+                }
+
+                if (isset($background_colors['main'][$_POST['global_color_background']]['l'])) {
+                    $css_root_array[':root']['--color-background-l-custom'] = $background_colors['main'][$_POST['global_color_background']]['l'];
+                }
+
+                // Input background.
+                if (isset($background_colors['input'][$_POST['global_color_background']]['s'])) {
+                    $css_root_array[':root']['--color-input-background-s-custom'] = $background_colors['input'][$_POST['global_color_background']]['s'];
+                }
+
+                if (isset($background_colors['input'][$_POST['global_color_background']]['l'])) {
+                    $css_root_array[':root']['--color-input-background-l-custom'] = $background_colors['input'][$_POST['global_color_background']]['l'];
+                }
             }
 
             // Transitions.

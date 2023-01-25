@@ -159,6 +159,30 @@ msgstr "Green"
 msgid "settings-global-primarycolor-red"
 msgstr "Red"
 
+msgid "settings-global-backgroundcolor-title"
+msgstr "Background color"
+
+msgid "settings-global-backgroundcolor-description"
+msgstr "Useful to reduce visual fatigue when reading."
+
+msgid "settings-global-backgroundcolor-none-default"
+msgstr "None"
+
+msgid "settings-global-backgroundcolor-beige"
+msgstr "Beige"
+
+msgid "settings-global-backgroundcolor-blue"
+msgstr "Blue"
+
+msgid "settings-global-backgroundcolor-gray"
+msgstr "Gray"
+
+msgid "settings-global-backgroundcolor-green"
+msgstr "Green"
+
+msgid "settings-global-backgroundcolor-red"
+msgstr "Red"
+
 msgid "settings-global-colortransition-title"
 msgstr "Enable color transitions"
 

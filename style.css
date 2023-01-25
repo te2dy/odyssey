@@ -5,17 +5,49 @@
   --font-family-default: -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif;
   --font-family-mono: Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace;
 
-  --color-background: #fcfcfd;
+  --color-primary: hsl(
+    var(--color-primary-h-custom, 226),
+    var(--color-primary-s-custom, 80%),
+    var(--color-primary-l-custom, 45%)
+  );
+
+  --color-primary-amplified: hsl(
+    var(--color-primary-amplified-h-custom, var(--color-primary-h-custom, 226)),
+    var(--color-primary-amplified-s-custom, var(--color-primary-s-custom, 95%)),
+    var(--color-primary-amplified-l-custom, 55%)
+  );
+
+  --color-background: hsl(
+    var(--color-background-h-custom, var(--color-primary-h-custom, 226)),
+    var(--color-background-s-custom, var(--color-primary-s-custom, 0%)),
+    var(--color-background-l-custom, 100%)
+  );
+
   --color-text-main: #303030;
   --color-text-secondary: #6c6f78;
-  --color-border: #c2c7d6;
-  --color-input-background: #f2f2f2;
+  --color-border: #cccccc;
+
+  --color-input-background: hsl(
+    var(--color-input-background-h-custom, var(--color-background-h-custom, 226)),
+    var(--color-input-background-s-custom, var(--color-background-s-custom, 20%)),
+    var(--color-input-background-l-custom, var(--color-background-l-custom, 95%))
+  );
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-primary: var(--color-primary-dark, #94c9ff);
-    --color-primary-amplified: var(--color-primary-amplified-dark, #b4d9ff);
+    --color-primary: hsl(
+      var(--color-primary-dark-h-custom, var(--color-primary-h-custom, 226)),
+      var(--color-primary-dark-s-custom, var(--color-primary-s-custom, 100%)),
+      var(--color-primary-dark-l-custom, var(--color-primary-l-custom, 85%))
+    );
+
+    --color-primary-amplified: hsl(
+      var(--color-primary-dark-amplified-h-custom, var(--color-primary-h-custom, 226)),
+      var(--color-primary-dark-amplified-s-custom, var(--color-primary-s-custom, 100%)),
+      var(--color-primary-dark-amplified-l-custom, var(--color-primary-l-custom, 78%))
+    );
+
     --color-background: #16161d;
     --color-text-main: #ccc;
     --color-text-secondary: #969696;
@@ -31,7 +63,7 @@
   :root {
     --color-primary: #000;
     --color-primary-amplified: #333333;
-    --color-background: #fff;
+    --color-background-default: #fff;
     --color-text-main: #000;
     --color-text-secondary: #000;
     --color-border: #000;
@@ -86,12 +118,12 @@ body {
  * Main formatting
  */
 :is(a, details summary) {
-  color: var(--color-primary, #1742cf);
+  color: var(--color-primary);
   text-decoration: var(--link-text-decoration, none);
   text-decoration-style: var(--link-text-decoration-style, unset);
 }
 :is(a, details summary):is(:active, :focus, :hover):not(.button) {
-  color: var(--color-primary-amplified, #4567d8);
+  color: var(--color-primary-amplified);
   text-decoration: underline;
   text-decoration-style: solid;  /* Needed for Safari when ".content-text a" decoration is set. */
 }
@@ -103,8 +135,6 @@ body {
     text-decoration-style: solid;
   }
 }
-
-
 
 /**
  * Origine themes common styles
@@ -308,13 +338,13 @@ a.button:is(:active, :focus, :hover) {
 input[type="submit"],
 .form-submit,
 .button {
-  background-color: var(--color-background);
-  border-color: var(--color-primary, #1742cf);
-  color: var(--color-primary, #1742cf);
+  background-color: var(--color-background, #fcfcfd);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 :is(input[type="submit"], .button, .form-submit):is(:active, :focus, :hover) {
-  background-color: var(--color-primary, #1742cf);
-  color: var(--color-background);
+  background-color: var(--color-primary);
+  color: var(--color-background, #fcfcfd);
   cursor: pointer;
 }
 input:disabled {
@@ -324,7 +354,7 @@ input[type="submit"]:disabled {
   border-color: var(--color-border);
 }
 input[type="submit"]:is(:active, :focus, :hover):disabled {
-  background-color: var(--color-background);
+  background-color: var(--color-background, #fcfcfd);
   color: var(--color-text-secondary);
   cursor: default;
 }
@@ -348,9 +378,9 @@ details summary {
  * Header
  */
 #site-title {
-  background-color: var(--color-primary, #1742cf);
+  background-color: var(--color-primary);
   border-radius: var(--border-radius, unset);
-  color: var(--color-background);
+  color: var(--color-background, #fcfcfd);
   display: block;
   flex-shrink: 0;
   font-size: 1em;
@@ -379,7 +409,7 @@ details summary {
 }
 #main-menu .active a:is(:focus, :hover) {
   cursor: default;
-  color: var(--color-primary, #1742cf);
+  color: var(--color-primary);
 }
 
 /**
