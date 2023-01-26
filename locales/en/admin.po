@@ -300,6 +300,12 @@ msgstr "Disabled (default)"
 msgid "settings-content-hyphens-enablednotmobile"
 msgstr "Enabled, except on small screens"
 
+msgid "settings-content-initialletter-title"
+msgstr "Add a letterhead to the first paragraph of posts and pages."
+
+msgid "settings-content-initialletter-description"
+msgstr "Works only on recent versions of Safari and Chrome (January 2023)."
+
 msgid "settings-content-postlisttype-title"
 msgstr "Display"
 

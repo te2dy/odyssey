@@ -300,6 +300,12 @@ msgstr ""
 msgid "settings-content-hyphens-enablednotmobile"
 msgstr ""
 
+msgid "settings-content-initialletter-title"
+msgstr ""
+
+msgid "settings-content-initialletter-description"
+msgstr ""
+
 msgid "settings-content-postlisttype-title"
 msgstr ""
 

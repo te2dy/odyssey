@@ -374,6 +374,14 @@ class OrigineMiniConfig
             'section'     => ['content', 'text-formatting']
         ];
 
+        $default_settings['content_initial_letter'] = [
+            'title'       => __('settings-content-initialletter-title'),
+            'description' => __('settings-content-initialletter-description'),
+            'type'        => 'checkbox',
+            'default'     => 0,
+            'section'     => ['content', 'text-formatting']
+        ];
+
         $default_settings['content_post_list_type'] = [
             'title'       => __('settings-content-postlisttype-title'),
             'description' => '',
@@ -1020,13 +1028,14 @@ class OrigineMiniConfig
         if (isset($_POST['save'])) {
             $css = '';
 
-            $css_root_array           = [];
-            $css_root_media_array     = [];
-            $css_main_array           = [];
-            $css_media_array          = [];
-            $css_media_contrast_array = [];
-            $css_media_motion_array   = [];
-            $css_media_print_array    = [];
+            $css_root_array                    = [];
+            $css_root_media_array              = [];
+            $css_main_array                    = [];
+            $css_supports_initial_letter_array = [];
+            $css_media_array                   = [];
+            $css_media_contrast_array          = [];
+            $css_media_motion_array            = [];
+            $css_media_print_array             = [];
 
             $default_settings = self::defaultSettings();
 
@@ -1518,6 +1527,14 @@ class OrigineMiniConfig
                 }
             }
 
+            // Initial letter.
+            if (isset($_POST['content_initial_letter']) && $_POST['content_initial_letter'] === '1') {
+                $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['-moz-initial-letter']    = '2';
+                $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['-webkit-initial-letter'] = '2';
+                $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['initial-letter']         = '2';
+                $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['margin-right']           = '.25rem';
+            }
+
             // Post introduction.
             if (isset($_POST['content_post_intro']) && $_POST['content_post_intro'] === '1') {
                 $css_main_array['#post-intro']['border-block']  = '.063rem solid var(--color-border, #c2c7d6)';
@@ -1659,6 +1676,7 @@ class OrigineMiniConfig
             $css .= !empty($css_root_array) ? omUtils::stylesArrayToString($css_root_array) : '';
             $css .= !empty($css_root_media_array) ? '@media (prefers-color-scheme:dark){' . omUtils::stylesArrayToString($css_root_media_array) . '}' : '';
             $css .= !empty($css_main_array) ? omUtils::stylesArrayToString($css_main_array) : '';
+            $css .= !empty($css_supports_initial_letter_array) ? '@supports (initial-letter: 2) or (-webkit-initial-letter: 2) or (-moz-initial-letter: 2){' . omUtils::stylesArrayToString($css_supports_initial_letter_array) . '}' : '';
             $css .= !empty($css_media_array) ? '@media (max-width:34em){' . omUtils::stylesArrayToString($css_media_array) . '}' : '';
             $css .= !empty($css_media_contrast_array) ? '@media (prefers-contrast:more),(-ms-high-contrast:active),(-ms-high-contrast:black-on-white){' . omUtils::stylesArrayToString($css_media_contrast_array) . '}' : '';
             $css .= !empty($css_media_motion_array) ? '@media (prefers-reduced-motion:reduce){' . omUtils::stylesArrayToString($css_media_motion_array) . '}' : '';
@@ -1667,7 +1685,7 @@ class OrigineMiniConfig
             if (!empty($css)) {
                 dcCore::app()->blog->settings->originemini->put(
                     'styles',
-                    htmlspecialchars($css, ENT_NOQUOTES),
+                    str_replace('&gt;', ">", htmlspecialchars($css, ENT_NOQUOTES)),
                     'string',
                     $default_settings['styles']['title'],
                     true

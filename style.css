@@ -5,48 +5,24 @@
   --font-family-default: -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif;
   --font-family-mono: Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace;
 
-  --color-primary: hsl(
-    var(--color-primary-h-custom, 226),
-    var(--color-primary-s-custom, 80%),
-    var(--color-primary-l-custom, 45%)
-  );
+  --color-primary: hsl(var(--color-primary-h-custom, 226), var(--color-primary-s-custom, 80%), var(--color-primary-l-custom, 45%));
 
-  --color-primary-amplified: hsl(
-    var(--color-primary-amplified-h-custom, var(--color-primary-h-custom, 226)),
-    var(--color-primary-amplified-s-custom, var(--color-primary-s-custom, 95%)),
-    var(--color-primary-amplified-l-custom, 55%)
-  );
+  --color-primary-amplified: hsl(var(--color-primary-amplified-h-custom, var(--color-primary-h-custom, 226)), var(--color-primary-amplified-s-custom, var(--color-primary-s-custom, 95%)), var(--color-primary-amplified-l-custom, 55%));
 
-  --color-background: hsl(
-    var(--color-background-h-custom, var(--color-primary-h-custom, 226)),
-    var(--color-background-s-custom, var(--color-primary-s-custom, 0%)),
-    var(--color-background-l-custom, 100%)
-  );
+  --color-background: hsl(var(--color-background-h-custom, var(--color-primary-h-custom, 226)), var(--color-background-s-custom, var(--color-primary-s-custom, 0%)), var(--color-background-l-custom, 100%));
 
   --color-text-main: #303030;
   --color-text-secondary: #6c6f78;
   --color-border: #cccccc;
 
-  --color-input-background: hsl(
-    var(--color-input-background-h-custom, var(--color-background-h-custom, 226)),
-    var(--color-input-background-s-custom, var(--color-background-s-custom, 20%)),
-    var(--color-input-background-l-custom, var(--color-background-l-custom, 95%))
-  );
+  --color-input-background: hsl(var(--color-input-background-h-custom, var(--color-background-h-custom, 226)), var(--color-input-background-s-custom, var(--color-background-s-custom, 20%)), var(--color-input-background-l-custom, var(--color-background-l-custom, 95%)));
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-primary: hsl(
-      var(--color-primary-dark-h-custom, var(--color-primary-h-custom, 226)),
-      var(--color-primary-dark-s-custom, var(--color-primary-s-custom, 100%)),
-      var(--color-primary-dark-l-custom, var(--color-primary-l-custom, 85%))
-    );
+    --color-primary: hsl(var(--color-primary-dark-h-custom, var(--color-primary-h-custom, 226)), var(--color-primary-dark-s-custom, var(--color-primary-s-custom, 100%)), var(--color-primary-dark-l-custom, var(--color-primary-l-custom, 85%)));
 
-    --color-primary-amplified: hsl(
-      var(--color-primary-dark-amplified-h-custom, var(--color-primary-h-custom, 226)),
-      var(--color-primary-dark-amplified-s-custom, var(--color-primary-s-custom, 100%)),
-      var(--color-primary-dark-amplified-l-custom, var(--color-primary-l-custom, 78%))
-    );
+    --color-primary-amplified: hsl(var(--color-primary-dark-amplified-h-custom, var(--color-primary-h-custom, 226)), var(--color-primary-dark-amplified-s-custom, var(--color-primary-s-custom, 100%)), var(--color-primary-dark-amplified-l-custom, var(--color-primary-l-custom, 78%)));
 
     --color-background: #16161d;
     --color-text-main: #ccc;
