@@ -12,16 +12,21 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
-=== 1.3.3-beta - 22 janvier 2023 ===
+=== 1.3.4-beta - 26 janvier 2023 ===
 - Ajout : option pour ajouter une image dans l’en-tête du blog avec prise en charge des écrans type Retina.
 - Ajout : option pour masquer le formulaire de commentaires.
+- Ajout : option lettrine.
 - Ajout : nouvelles options de polices d’écriture (polices du navigateur et deux nouvelles polices : Atkinson Hyperlegible et Luciole).
+- Ajout : option pour ajouter une couleur d’arrière-plan.
 - Amélioration : différenciation des billets et des pages dans les résultats de recherche.
 - Amélioration : organisation, documentation et syntaxe PHP.
 - Amélioration : utilisation de fonctions intégrées à Dotclear plutôt que de fonctions spéciales.
 - Amélioration : utilisation de la police d’écriture du contenu dans le champ de commentaire plutôt que la police globale.
+- Amélioration : dans les pages d’archives mensuelles, le bouton pour aller au mois suivant est forcément aligné à droite.
+- Amélioration : ajout ou suppression de préfixes pour certaines propriétés CSS.
 - Correction : marges différentes sous l’en-tête des billets et des pages.
 - Modification : couleur au survol des liens.
+- Modification : utilisation de couleurs suivant le modèle HSL (ou TSL en français).
 
 === 1.2.1 - 10 janvier 2023 ===
 - Suppression : marges négatives dans la zone de navigation des widgets.
