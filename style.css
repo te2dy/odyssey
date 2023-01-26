@@ -559,6 +559,9 @@ details summary {
   flex-wrap: wrap;
   justify-content: space-between;
 }
+.nav-archive-next {
+  margin-left: auto;
+}
 
 /**
  * Search
