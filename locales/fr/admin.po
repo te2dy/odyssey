@@ -166,7 +166,7 @@ msgid "settings-global-backgroundcolor-description"
 msgstr "Utile pour réduire la fatigue visuelle lors de la lecture."
 
 msgid "settings-global-backgroundcolor-none-default"
-msgstr "Aucune"
+msgstr "Aucune (par défaut)"
 
 msgid "settings-global-backgroundcolor-beige"
 msgstr "Beige"
