@@ -12,7 +12,7 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
-=== 1.3.5-beta - 28 janvier 2023 ===
+=== 1.3.6-beta - 28 janvier 2023 ===
 - Ajout : option pour ajouter une image dans l’en-tête du blog avec prise en charge des écrans type Retina.
 - Ajout : option pour masquer le formulaire de commentaires.
 - Ajout : option lettrine.
@@ -26,7 +26,7 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 - Amélioration : dans les pages d’archives mensuelles, le bouton pour aller au mois suivant est forcément aligné à droite.
 - Amélioration : ajout ou suppression de préfixes pour certaines propriétés CSS.
 - Correction : marges différentes sous l’en-tête des billets et des pages.
-- Modification : couleur au survol des liens.
+- Modification : couleur des liens au survol et lors de la navigation par clavier.
 - Modification : utilisation de couleurs suivant le modèle HSL (ou TSL en français).
 
 === 1.2.1 - 10 janvier 2023 ===
