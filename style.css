@@ -101,6 +101,12 @@ body {
   text-decoration: underline;
   text-decoration-style: solid;  /* Needed for Safari when ".content-text a" decoration is set. */
 }
+:is(a, details summary):is(:focus-visible):not(.button) { /* For navigation with keyboard. */
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  text-decoration: none;
+  outline: .168rem solid var(--color-primary);
+}
 @media (prefers-contrast: more), (-ms-high-contrast: active), (-ms-high-contrast: black-on-white) {
   :is(a, details summary) {
     text-decoration: underline dotted;
@@ -384,6 +390,10 @@ details summary {
 #main-menu .active a:is(:focus, :hover) {
   cursor: default;
   color: var(--color-primary);
+}
+#main-menu .active a:is(:focus-visible) {
+  background: unset;
+  outline: none;
 }
 
 /**
