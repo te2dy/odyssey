@@ -387,10 +387,11 @@ class OrigineMiniConfig
             'description' => '',
             'type'        => 'select',
             'choices'     => [
-                __('settings-content-postlisttype-oneline-default')  => 'short',
-                __('settings-content-postlisttype-extended')         => 'extended'
+                __('settings-content-postlisttype-short-default') => 'short',
+                __('settings-content-postlisttype-excerpt')       => 'excerpt',
+                __('settings-content-postlisttype-content')       => 'content'
             ],
-            'default'     => 'short',
+            'default'     => 'title',
             'section'     => ['content', 'post-list']
         ];
 
@@ -1236,76 +1237,48 @@ class OrigineMiniConfig
             $background_colors_allowed = ['beige', 'blue', 'gray', 'green', 'red'];
 
             $background_colors = [
-                'main'  => [
-                    'beige' => [
-                        'h' => '45',
-                        's' => '60%',
-                        'l' => '96%'
-                    ],
-                    'blue'  => [
-                        's' => '100%',
-                        'l' => '98%'
-                    ],
-                    'gray'  => [
-                        'h' => '0',
-                        's' => '0%',
-                        'l' => '97%'
-                    ],
-                    'green' => [
-                        'h' => '105',
-                        's' => '90%',
-                        'l' => '98%'
-                    ],
-                    'red'   => [
-                        'h' => '0',
-                        's' => '90%',
-                        'l' => '98%'
-                    ]
+                'beige' => [
+                    'h' => '45',
+                    's' => '65%',
+                    'l' => '96%'
                 ],
-                'input' => [
-                    'beige' => [
-                        'l' => '98%'
-                    ],
-                    'blue'  => [
-                        'l' => '99%'
-                    ],
-                    'gray'  => [
-                        'l' => '98%'
-                    ],
-                    'green' => [
-                        's' => '80%',
-                        'l' => '99%'
-                    ],
-                    'red'   => [
-                        's' => '80%',
-                        'l' => '99%'
-                    ]
+                'blue'  => [
+                    's' => '100%',
+                    'l' => '98%'
+                ],
+                'gray'  => [
+                    'h' => '0',
+                    's' => '0%',
+                    'l' => '97%'
+                ],
+                'green' => [
+                    'h' => '105',
+                    's' => '90%',
+                    'l' => '98%'
+                ],
+                'red'   => [
+                    'h' => '0',
+                    's' => '90%',
+                    'l' => '98%'
                 ]
             ];
 
             if (isset($_POST['global_color_background']) && in_array($_POST['global_color_background'], $background_colors_allowed, true)) {
 
                 // Main background.
-                if (isset($background_colors['main'][$_POST['global_color_background']]['h'])) {
-                    $css_root_array[':root']['--color-background-h-custom'] = $background_colors['main'][$_POST['global_color_background']]['h'];
+                if (isset($background_colors[$_POST['global_color_background']]['h'])) {
+                    $css_root_array[':root']['--color-background-h-custom'] = $background_colors[$_POST['global_color_background']]['h'];
                 }
 
-                if (isset($background_colors['main'][$_POST['global_color_background']]['s'])) {
-                    $css_root_array[':root']['--color-background-s-custom'] = $background_colors['main'][$_POST['global_color_background']]['s'];
+                if (isset($background_colors[$_POST['global_color_background']]['s'])) {
+                    $css_root_array[':root']['--color-background-s-custom'] = $background_colors[$_POST['global_color_background']]['s'];
                 }
 
-                if (isset($background_colors['main'][$_POST['global_color_background']]['l'])) {
-                    $css_root_array[':root']['--color-background-l-custom'] = $background_colors['main'][$_POST['global_color_background']]['l'];
+                if (isset($background_colors[$_POST['global_color_background']]['l'])) {
+                    $css_root_array[':root']['--color-background-l-custom'] = $background_colors[$_POST['global_color_background']]['l'];
                 }
 
-                // Input background.
-                if (isset($background_colors['input'][$_POST['global_color_background']]['s'])) {
-                    $css_root_array[':root']['--color-input-background-s-custom'] = $background_colors['input'][$_POST['global_color_background']]['s'];
-                }
-
-                if (isset($background_colors['input'][$_POST['global_color_background']]['l'])) {
-                    $css_root_array[':root']['--color-input-background-l-custom'] = $background_colors['input'][$_POST['global_color_background']]['l'];
-                }
+                $css_root_array[':root']['--color-input-background'] = '#fff';
             }
 
             // Transitions.
@@ -1544,6 +1517,14 @@ class OrigineMiniConfig
                 $css_main_array['#post-intro strong']['font-weight'] = '900';
             }
 
+            // Post list appearence.
+            if (isset($_POST['content_post_list_type']) && $_POST['content_post_list_type'] === 'content') {
+                $css_main_array['.post-list-content .post']['margin-bottom']            = '4rem';
+                $css_main_array['.post-list-content .post:last-child']['margin-bottom'] = '0';
+
+                $css_main_array['.post-list-content .post-title']['font-size'] = '1.4em';
+            }
+
             // Content links.
             if (!isset($_POST['content_links_underline'])) {
                 $css_root_array[':root']['--content-link-text-decoration-line']      = 'none';
@@ -1555,7 +1536,7 @@ class OrigineMiniConfig
             if (isset($_POST['content_post_list_reaction_link']) && $_POST['content_post_list_reaction_link'] === '1') {
                 $css_main_array['.post-list .post']['flex-wrap'] = 'wrap';
 
-                if (!isset($_POST['content_post_list_type']) || (isset($_POST['content_post_list_type']) && $_POST['content_post_list_type'] !== 'extended')) {
+                if (!isset($_POST['content_post_list_type']) || (isset($_POST['content_post_list_type']) && $_POST['content_post_list_type'] !== 'excerpt')) {
                     $css_main_array['.post-reaction-link']['flex-basis'] = '100%';
 
                     $css_media_array['.post-reaction-link']['order'] = '3';

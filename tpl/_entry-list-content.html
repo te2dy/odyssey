@@ -1,0 +1,37 @@
+<tpl:Entries>
+  <tpl:EntriesHeader>
+    <div aria-label="{{tpl:lang post-list-aria-label}}" class=post-list-content>
+  </tpl:EntriesHeader>
+
+  <article class="post<tpl:EntryIf selected="1"> post-selected</tpl:EntryIf>{{tpl:origineConfigEntryUpdatedClass}}" id={{tpl:lang post-id}}-{{tpl:EntryID}}>
+    <header>
+      <tpl:EntryIf selected="1">
+        <div class=post-selected><small>{{tpl:lang post-selected-label}}</small></div>
+      </tpl:EntryIf>
+
+      <tpl:EntryIf type="post">
+        <time aria-label="{{tpl:lang post-list-date-aria-label}}" class="post-date text-secondary" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%m"}}>{{tpl:EntryDate}}{{tpl:origineMiniEntryTime context="post-list"}}</time>
+      </tpl:EntryIf>
+
+      <h3 class=post-title{{tpl:origineMiniEntryLang}}><a href="{{tpl:EntryURL}}" rel=bookmark>{{tpl:EntryTitle}}</a></h3>
+    </header>
+
+    <div class=content-text>
+      {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
+
+      {{tpl:EntryContent}}
+
+      {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
+    </div>
+
+    <footer>
+      {{tpl:origineMiniPostListReactionLink}}
+    </footer>
+  </article>
+
+  <tpl:EntriesFooter>
+    </div>
+
+    {{tpl:include src="_pagination.html"}}
+  </tpl:EntriesFooter>
+</tpl:Entries>

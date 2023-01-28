@@ -14,8 +14,6 @@
   --color-text-main: #303030;
   --color-text-secondary: #6c6f78;
   --color-border: #cccccc;
-
-  --color-input-background: hsl(var(--color-input-background-h-custom, var(--color-background-h-custom, 226)), var(--color-input-background-s-custom, var(--color-background-s-custom, 20%)), var(--color-input-background-l-custom, var(--color-background-l-custom, 95%)));
 }
 
 @media (prefers-color-scheme: dark) {
@@ -142,7 +140,7 @@ blockquote {
 }
 code,
 pre {
-  background-color: var(--color-input-background);
+  background-color: var(--color-input-background, #f2f2f2);
   border-radius: var(--border-radius, unset);
   font-family: var(--font-family-mono);
   font-size: 1em;
@@ -273,7 +271,7 @@ img.media {
 /* Forms */
 input,
 textarea {
-  background-color: var(--color-input-background);
+  background-color: var(--color-input-background, #f2f2f2);
   border: .063rem solid var(--color-border);
   border-radius: var(--border-radius, unset);
   box-sizing: border-box;
@@ -391,7 +389,7 @@ details summary {
 /**
  * Posts
  */
-.post-selected {
+:not(.post-list-content) .post-selected {
   border: .063rem solid var(--color-border);
   border-radius: var(--border-radius, unset);
 }

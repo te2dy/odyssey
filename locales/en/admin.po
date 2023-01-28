@@ -309,11 +309,14 @@ msgstr "Works only on recent versions of Safari and Chrome (January 2023)."
 msgid "settings-content-postlisttype-title"
 msgstr "Display"
 
-msgid "settings-content-postlisttype-oneline-default"
-msgstr "On a single line (default)"
+msgid "settings-content-postlisttype-short-default"
+msgstr "Title only (default)"
 
-msgid "settings-content-postlisttype-extended"
-msgstr "Extended"
+msgid "settings-content-postlisttype-excerpt"
+msgstr "Title and excerpt"
+
+msgid "settings-content-postlisttype-content"
+msgstr "Title and full content"
 
 msgid "settings-content-postlisttime-title"
 msgstr "Display the time of publication"

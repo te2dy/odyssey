@@ -546,7 +546,12 @@ class OrigineMiniPublicValues
         if (!\dcCore::app()->blog->settings->originemini->content_post_list_type || \dcCore::app()->blog->settings->originemini->content_post_list_type === 'short') {
             return \dcCore::app()->tpl->includeFile(['src' => '_entry-list-short.html']);
         } else {
-            return \dcCore::app()->tpl->includeFile(['src' => '_entry-list-extended.html']);
+            $postlist_type_allowed = ['short', 'excerpt', 'content'];
+
+            $postlist_type = \dcCore::app()->blog->settings->originemini->content_post_list_type;
+            $postlist_type = in_array($postlist_type, $postlist_type_allowed, true) ? $postlist_type : 'short';
+
+            return \dcCore::app()->tpl->includeFile(['src' => '_entry-list-' . $postlist_type . '.html']);
         }
     }
 

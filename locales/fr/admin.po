@@ -309,11 +309,14 @@ msgstr "Ne fonctionne que sur des versions récentes de Safari et Chrome (janvie
 msgid "settings-content-postlisttype-title"
 msgstr "Affichage"
 
-msgid "settings-content-postlisttype-oneline-default"
-msgstr "Sur une seule ligne (par défaut)"
+msgid "settings-content-postlisttype-short-default"
+msgstr "Titre seulement (par défaut)"
 
-msgid "settings-content-postlisttype-extended"
-msgstr "Étendu"
+msgid "settings-content-postlisttype-excerpt"
+msgstr "Titre et extrait"
+
+msgid "settings-content-postlisttype-content"
+msgstr "Titre et contenu complet"
 
 msgid "settings-content-postlisttime-title"
 msgstr "Afficher l’heure de publication"
