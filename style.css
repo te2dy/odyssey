@@ -515,7 +515,7 @@ details summary {
   padding: 0;
 }
 #react-content {
-  margin: 1rem 0 3rem;
+  margin-top: 1rem;
 }
 #comment-form {
   margin-top: 4rem;
@@ -552,6 +552,9 @@ details summary {
 #trackback-url {
   text-decoration: var(--link-text-decoration, none);
   text-decoration-style: var(--link-text-decoration-style, unset);
+}
+#comment-feed-link {
+  margin-top: 2rem;
 }
 
 /**
