@@ -96,7 +96,7 @@ class OrigineMiniPublicBehaviors
                 }
 
                 if (\context::EntryFirstImageHelper('o', true, '', true)) {
-                    $img = \context::EntryFirstImageHelper('o', true, '', true);
+                    $img = \dcCore::app()->blog->host . \context::EntryFirstImageHelper('o', true, '', true);
                 }
 
             // Home.
