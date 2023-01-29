@@ -170,6 +170,9 @@ msgstr "Réagir"
 msgid "reactions-comment-form-title"
 msgstr "Écrire un commentaire"
 
+msgid "reactions-comment-form-preview-title"
+msgstr "Modifier le commentaire saisi"
+
 msgid "reactions-comment-form-name-label"
 msgstr "Nom ou pseudonyme"
 

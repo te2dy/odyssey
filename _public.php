@@ -870,7 +870,13 @@ class OrigineMiniPublicBlocks
         if (!\dcCore::app()->blog->settings->originemini->content_commentform_hide) {
             return '<h3 class=reaction-title>' . __('reactions-comment-form-title') . '</h3>' . $content;
         } else {
-            return '<details><summary><small>' . __('reactions-react-link-title') . '</small></summary><div id=react-content><h3 class=reaction-title>' . __('reactions-comment-form-title') . '</h3>' . $content . '</div></details>';
+            if (\dcCore::app()->ctx->comment_preview !== null && \dcCore::app()->ctx->comment_preview["preview"]) {
+                return '<div id=react-content><h3 class=reaction-title>' . __('reactions-comment-form-preview-title') . '</h3>' . $content . '</div>';
+            } else {
+                return '<details><summary><small>' . __('reactions-react-link-title') . '</small></summary><div id=react-content><h3 class=reaction-title>' . __('reactions-comment-form-title') . '</h3>' . $content . '</div></details>';
+            }
+
+
         }
     }
 

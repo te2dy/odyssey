@@ -152,6 +152,9 @@ msgstr "React"
 msgid "reactions-comment-form-title"
 msgstr "Write a comment"
 
+msgid "reactions-comment-form-preview-title"
+msgstr "Edit the entered comment"
+
 msgid "reactions-comment-form-name-label"
 msgstr "Name or pseudo"
 
