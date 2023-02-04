@@ -324,19 +324,30 @@ class OrigineMiniPublicBehaviors
      */
     public static function origineMiniScriptImagesWide()
     {
-        if (\dcCore::app()->blog->settings->originemini->content_images_wide === true) {
-            if (\dcCore::app()->url->type === 'post' || \dcCore::app()->url->type === 'pages') {
-                $page_width_allowed = [30, 35, 40];
+        $om_settings = \dcCore::app()->blog->settings->originemini;
+        $page_type   = \dcCore::app()->url->type;
 
-                if (in_array(\dcCore::app()->blog->settings->originemini->global_page_width, $page_width_allowed, true)) {
-                    $page_width = \dcCore::app()->blog->settings->originemini->global_page_width;
-                } else {
-                    $page_width = 30;
-                }
+        if ($om_settings->content_images_wide === true) {
+            $context = 'entry';
 
-                $script = 'function getMeta(e,t){var i=new Image;i.src=e,i.addEventListener("load",function(){t(this.width,this.height)})}function imageWide(){for(var e=parseInt(document.getElementById("script-images-wide").getAttribute("data-pagewidth")),t=e+10,d=0,r=0,i=0,a=(-1===[30,35,40].indexOf(e)&&(e=30),document.createElement("div")),n=(a.style.width="1rem",a.style.display="none",document.body.append(a),window.getComputedStyle(a).getPropertyValue("width").match(/\d+/)),m=(a.remove(),0<(i=n&&1<=n.length?parseInt(n[0]):16)&&(d=e*i,r=t*i),document.getElementsByTagName("article")[0].getElementsByTagName("img")),g=0;g<m.length;){let n=m[g];getMeta(n.src,function(e,t){let i=e,a=t;i>d&&i>a&&(i>r&&(a=parseInt(r*a/i),i=r),n.setAttribute("style","display:block;margin-left:50%;transform:translateX(-50%);max-width:95vw;"),i&&n.setAttribute("width",i),a)&&n.setAttribute("height",a)}),g++}}document.getElementById("script-images-wide").getAttribute("data-pagewidth")&&document.getElementsByTagName("article")[0]&&(window.addEventListener("load",imageWide),window.addEventListener("resize",imageWide));' . "\n";
+            if ($om_settings->content_post_list_type === 'content') {
+                $context .= '-list';
+            }
 
-                echo '<script data-pagewidth=' . $page_width . ' id=script-images-wide>' . $script . '</script>' . "\n";
+            if ($context === 'entry-list' || ($context === 'entry' && ($page_type === 'post' || $page_type === 'pages'))) {
+                $page_width = in_array(
+                    $om_settings->global_page_width,
+                    [30, 35, 40],
+                    true
+                ) ? $om_settings->global_page_width : 30;
+
+                $script = 'function getMeta(e,t){var i=new Image;i.src=e,i.addEventListener("load",function(){t(this.width,this.height)})}function imageWide(){var e=parseInt(document.getElementById("script-images-wide").getAttribute("data-pagewidth")),t=e+10,d=0,m=0,i=0,n=(-1===[30,35,40].indexOf(e)&&(e=30),document.createElement("div")),a=(n.style.width="1rem",n.style.display="none",document.body.append(n),window.getComputedStyle(n).getPropertyValue("width").match(/\d+/));n.remove(),0<(i=a&&1<=a.length?parseInt(a[0]):16)&&(d=e*i,m=t*i);for(var r=0,s=("entry"===document.getElementById("script-images-wide").getAttribute("data-context")?document.getElementsByTagName("article"):document.getElementsByClassName("entry-list-content"))[0].getElementsByTagName("img");r<s.length;){let a=s[r];getMeta(a.src,function(e,t){let i=e,n=t;i>d&&i>n&&(i>m&&(n=parseInt(m*n/i),i=m),a.setAttribute("style","display:block;margin-left:50%;transform:translateX(-50%);max-width:95vw;"),i&&a.setAttribute("width",i),n)&&a.setAttribute("height",n)}),r++}}document.getElementById("script-images-wide").getAttribute("data-pagewidth")&&document.getElementsByTagName("article")[0]&&(window.addEventListener("load",imageWide),window.addEventListener("resize",imageWide));' . "\n";
+
+                echo '<script data-context=', $context,
+                ' data-pagewidth=', $page_width,
+                ' id=script-images-wide>',
+                $script,
+                '</script>', "\n";
             }
         }
     }

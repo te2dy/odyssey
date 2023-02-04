@@ -63,8 +63,14 @@ function imageWide() {
   }
 
   // Gets all images of the post.
-  var img = document.getElementsByTagName("article")[0].getElementsByTagName("img"),
-    i = 0;
+  var img,
+      i = 0;
+
+  if (document.getElementById('script-images-wide').getAttribute('data-context') === 'entry') {
+    img = document.getElementsByTagName("article")[0].getElementsByTagName("img");
+  } else {
+    img = document.getElementsByClassName("entry-list-content")[0].getElementsByTagName("img");
+  }
 
   // Expands each image.
   while (i < img.length) {
