@@ -31,6 +31,7 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 - Correction : les images ne s’affichent pas dans les cartes Twitter (besoin d’une adresse absolue, pas relative).
 - Modification : couleur des liens au survol et lors de la navigation par clavier.
 - Modification : utilisation de couleurs suivant le modèle HSL (ou TSL en français).
+- Modification : renommage des classes de la liste des billets ou des pages pour plus de cohérence.
 
 === 1.2.1 - 10 janvier 2023 ===
 - Suppression : marges négatives dans la zone de navigation des widgets.
