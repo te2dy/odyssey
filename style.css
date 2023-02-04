@@ -4,28 +4,18 @@
 :root {
   --font-family-default: -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif;
   --font-family-mono: Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace;
-
   --color-primary: hsl(var(--color-primary-h-custom, 226), var(--color-primary-s-custom, 80%), var(--color-primary-l-custom, 45%));
-
   --color-primary-amplified: hsl(var(--color-primary-amplified-h-custom, var(--color-primary-h-custom, 226)), var(--color-primary-amplified-s-custom, var(--color-primary-s-custom, 95%)), var(--color-primary-amplified-l-custom, 55%));
-
   --color-background: hsl(var(--color-background-h-custom, var(--color-primary-h-custom, 226)), var(--color-background-s-custom, var(--color-primary-s-custom, 0%)), var(--color-background-l-custom, 100%));
-
-  --color-text-main: #303030;
-  --color-text-secondary: #6c6f78;
-  --color-border: #cccccc;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --color-primary: hsl(var(--color-primary-dark-h-custom, var(--color-primary-h-custom, 226)), var(--color-primary-dark-s-custom, var(--color-primary-s-custom, 100%)), var(--color-primary-dark-l-custom, var(--color-primary-l-custom, 85%)));
-
     --color-primary-amplified: hsl(var(--color-primary-dark-amplified-h-custom, var(--color-primary-h-custom, 226)), var(--color-primary-dark-amplified-s-custom, var(--color-primary-s-custom, 100%)), var(--color-primary-dark-amplified-l-custom, var(--color-primary-l-custom, 78%)));
-
     --color-background: #16161d;
     --color-text-main: #ccc;
     --color-text-secondary: #969696;
-    --color-border: #ccc;
     --color-input-background: #262626;
   }
 }
@@ -47,7 +37,7 @@
 
 body {
   background-color: var(--color-background);
-  color: var(--color-text-main);
+  color: var(--color-text-main, #303030);
   font-family: var(--font-family, var(--font-family-default));
   font-size: var(--font-size, 1em);
   margin: 0;
@@ -107,7 +97,14 @@ body {
   text-decoration: none;
   outline: .168rem solid var(--color-primary);
 }
-@media (prefers-contrast: more), (-ms-high-contrast: active), (-ms-high-contrast: black-on-white) {
+#site-title a:is(:focus-visible) {
+  background-color: var(--color-background);
+  color: var(--color-primary);
+  outline: calc(.5rem - .063rem) solid var(--color-background);
+}
+@media (prefers-contrast: more),
+       (-ms-high-contrast: active),
+       (-ms-high-contrast: black-on-white) {
   :is(a, details summary) {
     text-decoration: underline dotted;
   }
@@ -140,7 +137,7 @@ mark {
   background-color: #fbf7a6;
 }
 blockquote {
-  border-left: .063rem solid var(--color-border);
+  border-left: .063rem solid var(--color-border, #ccc);
   margin: 1rem 0 1rem 1rem;
   padding: 0 0 0 .5rem;
 }
@@ -212,7 +209,7 @@ h6 {
   text-align: center;
 }
 .content-text hr::after {
-  color: var(--color-text-main);
+  color: var(--color-text-main, #303030);
   content: "\002042"; /* ⁂ */
 }
 .content-text :is(h1, h2, h3, h4, h5) {
@@ -253,9 +250,8 @@ h6 {
 :is(.content-text, .widget) ol li::before {
   content: counter(list) ".";
 }
-
 .text-secondary {
-  color: var(--color-text-secondary);
+  color: var(--color-text-secondary, #6c6f78);
 }
 
 /* Images & media */
@@ -278,10 +274,10 @@ img.media {
 input,
 textarea {
   background-color: var(--color-input-background, #f2f2f2);
-  border: .063rem solid var(--color-border);
+  border: .063rem solid var(--color-border, #ccc);
   border-radius: var(--border-radius, unset);
   box-sizing: border-box;
-  color: var(--color-text-main);
+  color: var(--color-text-main, #303030);
   font-family: inherit;
   font-size: 1em;
   margin-bottom: 1rem;
@@ -295,10 +291,10 @@ label:hover {
   cursor: pointer;
 }
 .form-entry {
-  margin: 1rem 0;
+  margin-block: 1rem;
 }
 .form-entry :is(label + br + input, label + br + textarea, input + br + small) {
-  margin: .25rem 0;
+  margin-block: .25rem;
 }
 button {
   font-family: inherit;
@@ -307,7 +303,7 @@ button {
 }
 button,
 .button {
-  border: .063rem solid var(--color-border);
+  border: .063rem solid var(--color-border, #ccc);
   border-radius: var(--border-radius, unset);
   display: inline-block;
   padding: .5rem;
@@ -328,14 +324,14 @@ input[type="submit"],
   cursor: pointer;
 }
 input:disabled {
-  color: var(--color-text-secondary);
+  color: var(--color-text-secondary, #6c6f78);
 }
 input[type="submit"]:disabled {
-  border-color: var(--color-border);
+  border-color: var(--color-border, #ccc);
 }
 input[type="submit"]:is(:active, :focus, :hover):disabled {
   background-color: var(--color-background, #fcfcfd);
-  color: var(--color-text-secondary);
+  color: var(--color-text-secondary, #6c6f78);
   cursor: default;
 }
 textarea {
@@ -400,7 +396,7 @@ details summary {
  * Posts
  */
 :not(.post-list-content) .post-selected {
-  border: .063rem solid var(--color-border);
+  border: .063rem solid var(--color-border, #ccc);
   border-radius: var(--border-radius, unset);
 }
 .post .post-selected {
@@ -444,7 +440,7 @@ details summary {
   margin: 0 auto 0 0;
 }
 .post-list-extended .post-title {
-  margin: .5rem auto;
+  margin-block: .5rem;
 }
 .post-selected .post-title {
   font-weight: 700;
@@ -476,7 +472,7 @@ details summary {
   margin-bottom: 2rem;
 }
 .post-meta {
-  margin: .5rem 0;
+  margin-block: .5rem;
 }
 
 /**
@@ -521,10 +517,10 @@ details summary {
   margin-top: 4rem;
 }
 .reaction {
-  margin: 2rem 0;
+  margin-block: 2rem;
 }
 .comment {
-  border-left: .063rem solid var(--color-border);
+  border-left: .063rem solid var(--color-border, #ccc);
   padding-left: 1rem;
 }
 .comment-author {
@@ -535,14 +531,14 @@ details summary {
   margin: 0;
 }
 .comment-message {
-  border: .063rem solid var(--color-border);
+  border: .063rem solid var(--color-border, #ccc);
   display: block;
   margin-top: 4rem;
   padding: .5rem;
   text-align: center;
 }
 .comment-preview {
-  border: .063rem solid var(--color-border);
+  border: .063rem solid var(--color-border, #ccc);
   margin-bottom: 2rem;
   padding: 1rem 1rem 0;
 }
@@ -582,7 +578,6 @@ details summary {
   column-gap: .25rem;
   display: flex;
   flex-direction: row;
-
 }
 .search-form input {
   margin-bottom: 0;
@@ -669,8 +664,7 @@ aside .widget:last-child {
 
 @media (max-width: 34em) {
   #site {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-block: 2rem;
     row-gap: 2rem;
   }
   blockquote {
@@ -708,7 +702,7 @@ aside .widget:last-child {
     justify-content: center;
   }
   #nav-archive a {
-    margin: .25rem 0;
+    margin-block: .25rem;
   }
   .pagination-links {
     display: block;
@@ -746,8 +740,8 @@ aside .widget:last-child {
   }
   #site-title {
     background-color: unset;
-    border: .063rem solid var(--color-border);
-    color: var(--color-text-main);
+    border: .063rem solid var(--color-border, #ccc);
+    color: var(--color-text-main, #303030);
   }
   .content-text a {
     text-decoration: none;
