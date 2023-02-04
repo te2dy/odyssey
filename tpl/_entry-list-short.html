@@ -1,13 +1,13 @@
 <tpl:Entries no_content="1">
   <tpl:EntriesHeader>
-    <ul aria-label="{{tpl:lang post-list-aria-label}}" class=post-list>
+    <ul aria-label="{{tpl:lang entry-list-aria-label}}" class=entry-list>
   </tpl:EntriesHeader>
 
   <li class="post<tpl:EntryIf selected="1"> post-selected</tpl:EntryIf>{{tpl:origineConfigEntryUpdatedClass}}" id={{tpl:lang post-id}}-{{tpl:EntryID}}>
-    <h3 class=post-title{{tpl:origineMiniEntryLang}}><a href="{{tpl:EntryURL}}" rel=bookmark>{{tpl:EntryTitle}}</a></h3>
+    <h3 class=entry-title{{tpl:origineMiniEntryLang}}><a href="{{tpl:EntryURL}}" rel=bookmark>{{tpl:EntryTitle}}</a></h3>
 
     <tpl:EntryIf type="post">
-      <small class="post-date text-secondary"><time aria-label="{{tpl:lang post-list-date-aria-label}}" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%m"}}>{{tpl:EntryDate}}{{tpl:origineMiniEntryTime context="post-list"}}</time></small>
+      <small class="post-date text-secondary"><time aria-label="{{tpl:lang entry-list-date-aria-label}}" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%m"}}>{{tpl:EntryDate}}{{tpl:origineMiniEntryTime context="entry-list"}}</time></small>
     </tpl:EntryIf>
 
     {{tpl:origineMiniPostListReactionLink}}

@@ -70,7 +70,7 @@ class OrigineMiniConfig
         $page_sections['content'] = [
             'name'         => __('section-content'),
             'sub_sections' => [
-                'post-list'       => __('section-content-postlist'),
+                'entry-list'       => __('section-content-postlist'),
                 'post'            => __('section-content-post'),
                 'text-formatting' => __('section-content-textformatting'),
                 'reactions'       => __('section-content-reactions'),
@@ -392,7 +392,7 @@ class OrigineMiniConfig
                 __('settings-content-postlisttype-content')       => 'content'
             ],
             'default'     => 'title',
-            'section'     => ['content', 'post-list']
+            'section'     => ['content', 'entry-list']
         ];
 
         $default_settings['content_post_list_time'] = [
@@ -400,7 +400,7 @@ class OrigineMiniConfig
             'description' => '',
             'type'        => 'checkbox',
             'default'     => 0,
-            'section'     => ['content', 'post-list']
+            'section'     => ['content', 'entry-list']
         ];
 
         $default_settings['content_post_list_reaction_link'] = [
@@ -408,7 +408,7 @@ class OrigineMiniConfig
             'description' => '',
             'type'        => 'checkbox',
             'default'     => 0,
-            'section'     => ['content', 'post-list']
+            'section'     => ['content', 'entry-list']
         ];
 
         $default_settings['content_post_time'] = [
@@ -1519,10 +1519,10 @@ class OrigineMiniConfig
 
             // Post list appearence.
             if (isset($_POST['content_post_list_type']) && $_POST['content_post_list_type'] === 'content') {
-                $css_main_array['.post-list-content .post']['margin-bottom']            = '4rem';
-                $css_main_array['.post-list-content .post:last-child']['margin-bottom'] = '0';
+                $css_main_array['.entry-list-content .post']['margin-bottom']            = '4rem';
+                $css_main_array['.entry-list-content .post:last-child']['margin-bottom'] = '0';
 
-                $css_main_array['.post-list-content .post-title']['font-size'] = '1.4em';
+                $css_main_array['.entry-list-content .entry-title']['font-size'] = '1.4em';
             }
 
             // Content links.
@@ -1534,7 +1534,7 @@ class OrigineMiniConfig
 
             // Link to reactions in the post list.
             if (isset($_POST['content_post_list_reaction_link']) && $_POST['content_post_list_reaction_link'] === '1') {
-                $css_main_array['.post-list .post']['flex-wrap'] = 'wrap';
+                $css_main_array['.entry-list .post']['flex-wrap'] = 'wrap';
 
                 if (!isset($_POST['content_post_list_type']) || (isset($_POST['content_post_list_type']) && $_POST['content_post_list_type'] !== 'excerpt')) {
                     $css_main_array['.post-reaction-link']['flex-basis'] = '100%';

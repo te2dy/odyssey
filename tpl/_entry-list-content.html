@@ -1,6 +1,6 @@
 <tpl:Entries>
   <tpl:EntriesHeader>
-    <div aria-label="{{tpl:lang post-list-aria-label}}" class=post-list-content>
+    <div aria-label="{{tpl:lang entry-list-aria-label}}" class=entry-list-content>
   </tpl:EntriesHeader>
 
   <article class="post<tpl:EntryIf selected="1"> post-selected</tpl:EntryIf>{{tpl:origineConfigEntryUpdatedClass}}" id={{tpl:lang post-id}}-{{tpl:EntryID}}>
@@ -10,10 +10,10 @@
       </tpl:EntryIf>
 
       <tpl:EntryIf type="post">
-        <time aria-label="{{tpl:lang post-list-date-aria-label}}" class="post-date text-secondary" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%m"}}>{{tpl:EntryDate}}{{tpl:origineMiniEntryTime context="post-list"}}</time>
+        <time aria-label="{{tpl:lang entry-list-date-aria-label}}" class="post-date text-secondary" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%m"}}>{{tpl:EntryDate}}{{tpl:origineMiniEntryTime context="entry-list"}}</time>
       </tpl:EntryIf>
 
-      <h3 class=post-title{{tpl:origineMiniEntryLang}}><a href="{{tpl:EntryURL}}" rel=bookmark>{{tpl:EntryTitle}}</a></h3>
+      <h3 class=entry-title{{tpl:origineMiniEntryLang}}><a href="{{tpl:EntryURL}}" rel=bookmark>{{tpl:EntryTitle}}</a></h3>
     </header>
 
     <div class=content-text>

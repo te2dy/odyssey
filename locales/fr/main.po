@@ -36,7 +36,7 @@ msgstr "Aller au pied de page"
 
 # Posts & pages
 
-msgid "post-list-aria-label"
+msgid "entry-list-aria-label"
 msgstr "La liste des billets"
 
 msgid "post-id"
@@ -48,25 +48,25 @@ msgstr "page"
 msgid "post-selected-label"
 msgstr "Billet sélectionné"
 
-msgid "post-list-date-aria-label"
+msgid "entry-list-date-aria-label"
 msgstr "Date de publication du billet"
 
-msgid "post-list-one-reaction-link-aria-label"
+msgid "entry-list-one-reaction-link-aria-label"
 msgstr "Lien vers la réaction à ce billet"
 
-msgid "post-list-multiple-reactions-link-aria-label"
+msgid "entry-list-multiple-reactions-link-aria-label"
 msgstr "Lien vers les réactions à ce billet"
 
-msgid "post-list-one-reaction"
+msgid "entry-list-one-reaction"
 msgstr "1 réaction"
 
-msgid "post-list-multiple-reactions"
+msgid "entry-list-multiple-reactions"
 msgstr "%d réactions"
 
-msgid "post-list-open-aria"
+msgid "entry-list-open-aria"
 msgstr "Ouvrir le billet « %s »"
 
-msgid "post-list-open"
+msgid "entry-list-open"
 msgstr "Lire la suite"
 
 msgid "post-time-created"

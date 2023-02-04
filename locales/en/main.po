@@ -30,7 +30,7 @@ msgstr "Skip to footer"
 
 # Posts & pages
 
-msgid "post-list-aria-label"
+msgid "entry-list-aria-label"
 msgstr "The post list"
 
 msgid "post-id"
@@ -42,13 +42,13 @@ msgstr "page"
 msgid "post-selected-label"
 msgstr "Selected post"
 
-msgid "post-list-date-aria-label"
+msgid "entry-list-date-aria-label"
 msgstr "Date of publication of the post"
 
-msgid "post-list-open-aria"
+msgid "entry-list-open-aria"
 msgstr "Open the post “%s”"
 
-msgid "post-list-open"
+msgid "entry-list-open"
 msgstr "Read more"
 
 msgid "post-time-created"

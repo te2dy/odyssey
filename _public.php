@@ -570,17 +570,17 @@ class OrigineMiniPublicValues
                     echo "<a aria-label=\"";
 
                     if ((int) dcCore::app()->ctx->posts->nb_comment > 1) {
-                        printf(__("post-list-multiple-reactions-link-aria-label"), dcCore::app()->ctx->posts->nb_comment);
+                        printf(__("entry-list-multiple-reactions-link-aria-label"), dcCore::app()->ctx->posts->nb_comment);
                     } else {
-                        echo __("post-list-one-reaction-link-aria-label");
+                        echo __("entry-list-one-reaction-link-aria-label");
                     }
 
                     echo "\" class=post-reaction-link href=\"", html::escapeURL(dcCore::app()->ctx->posts->getURL()), "#", __("reactions-id"), "\"><small>";
 
                     if ((int) dcCore::app()->ctx->posts->nb_comment > 1) {
-                        printf(__("post-list-multiple-reactions"), dcCore::app()->ctx->posts->nb_comment);
+                        printf(__("entry-list-multiple-reactions"), dcCore::app()->ctx->posts->nb_comment);
                     } else {
-                        echo __("post-list-one-reaction");
+                        echo __("entry-list-one-reaction");
                     }
 
                     echo "</small></a>";
@@ -595,14 +595,14 @@ class OrigineMiniPublicValues
      * @param array $attr Attributes to customize the value.
      *                    Attribute allowed: context
      *                    Values allowed:
-     *                    - (string) post-list
+     *                    - (string) entry-list
      *                    - (string) post
      *
      * @return void The published time of the post.
      */
     public static function origineMiniEntryTime($attr)
     {
-        if (!empty($attr['context']) && (\dcCore::app()->blog->settings->originemini->content_post_list_time === true && $attr['context'] === 'post-list') || (\dcCore::app()->blog->settings->originemini->content_post_time === true && $attr['context'] === 'post')) {
+        if (!empty($attr['context']) && (\dcCore::app()->blog->settings->originemini->content_post_list_time === true && $attr['context'] === 'entry-list') || (\dcCore::app()->blog->settings->originemini->content_post_time === true && $attr['context'] === 'post')) {
             if (\dcCore::app()->blog->settings->originemini->content_separator) {
                 $content_separator = ' ' . \html::escapeHTML(\dcCore::app()->blog->settings->originemini->content_separator);
             } else {
@@ -651,7 +651,7 @@ class OrigineMiniPublicValues
 
                 echo "<p class=\"content-text post-excerpt text-secondary\"" . $lang . ">",
                 $the_excerpt,
-                " <a aria-label=\"", sprintf(__("post-list-open-aria"), dcCore::app()->ctx->posts->post_title), "\" href=\"", dcCore::app()->ctx->posts->getURL(), "\">" . __("post-list-open"), "</a>",
+                " <a aria-label=\"", sprintf(__("entry-list-open-aria"), dcCore::app()->ctx->posts->post_title), "\" href=\"", dcCore::app()->ctx->posts->getURL(), "\">" . __("entry-list-open"), "</a>",
                 "</p>";
             }
         ?>';

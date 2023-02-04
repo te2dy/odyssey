@@ -395,7 +395,7 @@ details summary {
 /**
  * Posts
  */
-:not(.post-list-content) .post-selected {
+:not(.entry-list-content) .post-selected {
   border: .063rem solid var(--color-border, #ccc);
   border-radius: var(--border-radius, unset);
 }
@@ -409,48 +409,48 @@ details summary {
 /**
  * Post list
  */
-.post-list,
-.post-list-extended {
+.entry-list,
+.entry-list-extended {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-.post-list .post {
+.entry-list .post {
   align-items: baseline;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 1rem;
 }
-.post-list-extended .post {
+.entry-list-extended .post {
   margin-bottom: 2rem;
 }
-.post-list .post:last-child {
+.entry-list .post:last-child {
   margin-bottom: 0;
 }
-.post-list .post-selected {
+.entry-list .post-selected {
   padding: .5rem;
 }
-.post-list-extended .post-selected {
+.entry-list-extended .post-selected {
   padding: 1rem;
 }
-.post-list .post-title {
+.entry-list .entry-title {
   font-size: 1em;
   font-weight: 400;
   margin: 0 auto 0 0;
 }
-.post-list-extended .post-title {
+.entry-list-extended .entry-title {
   margin-block: .5rem;
 }
-.post-selected .post-title {
+.post-selected .entry-title {
   font-weight: 700;
 }
-.post-list :is(.post-date, .page-info) {
+.entry-list :is(.post-date, .page-info) {
   flex-shrink: 0;
   margin-left: 1rem;
   text-align: right;
 }
-.post-list-extended .post-excerpt {
+.entry-list-extended .post-excerpt {
   margin: .5rem 0 0;
 }
 
@@ -670,18 +670,18 @@ aside .widget:last-child {
   blockquote {
     margin-left: 0;
   }
-  .post-list .post {
+  .entry-list .post {
     flex-direction: column;
     row-gap: .25rem;
   }
   .post-comment-link {
     order: 3;
   }
-  .post-list .post-title {
+  .entry-list .entry-title {
     margin-right: 0;
     order: 2;
   }
-  .post-list .post-date {
+  .entry-list .post-date {
     margin-left: 0;
     order: 1;
   }
