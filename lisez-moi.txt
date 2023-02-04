@@ -12,7 +12,7 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
-=== 1.3.9 - 4 février 2023 ===
+=== 1.3.9.1 - 4 février 2023 ===
 - Ajout : option pour ajouter une image dans l’en-tête du blog avec prise en charge des écrans type Retina.
 - Ajout : option pour masquer le formulaire de commentaires.
 - Ajout : option lettrine.
