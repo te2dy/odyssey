@@ -70,7 +70,7 @@ class OrigineMiniConfig
         $page_sections['content'] = [
             'name'         => __('section-content'),
             'sub_sections' => [
-                'entry-list'       => __('section-content-postlist'),
+                'entry-list'      => __('section-content-postlist'),
                 'post'            => __('section-content-post'),
                 'text-formatting' => __('section-content-textformatting'),
                 'reactions'       => __('section-content-reactions'),
