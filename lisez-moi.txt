@@ -12,6 +12,12 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
+=== 1.3.10 - 5 février 2023 ===
+- Ajout : option pour toujours afficher un lien vers les réactions dans la liste des billets.
+- Correction : erreur dans l’affichage des billets sélectionnés quand la liste affiche tout leur contenu.
+- Correction : oubli de traduction de chaînes anglaises.
+- Correction : affichage bizarre des liens lors de la navigation par clavier sur les navigateurs Chromium.
+
 === 1.3.9.1 - 4 février 2023 ===
 - Ajout : option pour ajouter une image dans l’en-tête du blog avec prise en charge des écrans type Retina.
 - Ajout : option pour masquer le formulaire de commentaires.
