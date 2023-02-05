@@ -45,6 +45,24 @@ msgstr "Selected post"
 msgid "entry-list-date-aria-label"
 msgstr "Date of publication of the post"
 
+msgid "entry-list-one-reaction-link-aria-label"
+msgstr "Link to publish a reaction to this post"
+
+msgid "entry-list-one-reaction-link-aria-label"
+msgstr "Link to the reaction to this post"
+
+msgid "entry-list-multiple-reactions-link-aria-label"
+msgstr "Link to the reactions to this post"
+
+msgid "entry-list-no-reaction"
+msgstr "React"
+
+msgid "entry-list-one-reaction"
+msgstr "1 reaction"
+
+msgid "entry-list-multiple-reactions"
+msgstr "%d reactions"
+
 msgid "entry-list-open-aria"
 msgstr "Open the post “%s”"
 

@@ -52,10 +52,16 @@ msgid "entry-list-date-aria-label"
 msgstr "Date de publication du billet"
 
 msgid "entry-list-one-reaction-link-aria-label"
+msgstr "Lien vers la publication d’une réaction à ce billet"
+
+msgid "entry-list-one-reaction-link-aria-label"
 msgstr "Lien vers la réaction à ce billet"
 
 msgid "entry-list-multiple-reactions-link-aria-label"
 msgstr "Lien vers les réactions à ce billet"
+
+msgid "entry-list-no-reaction"
+msgstr "Réagir"
 
 msgid "entry-list-one-reaction"
 msgstr "1 réaction"

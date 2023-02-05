@@ -575,27 +575,33 @@ class OrigineMiniPublicValues
      */
     public static function origineMiniPostListReactionLink()
     {
-        if (\dcCore::app()->blog->settings->originemini->content_post_list_reaction_link === true) {
+        if (\dcCore::app()->blog->settings->originemini->content_post_list_reaction_link && \dcCore::app()->blog->settings->originemini->content_post_list_reaction_link !== 'disabled') {
             return '<?php
-                if ((int) dcCore::app()->ctx->posts->nb_comment > 0) {
+                $nb_reactions = intval((int) dcCore::app()->ctx->posts->nb_comment + (int) dcCore::app()->ctx->posts->nb_trackback);
+
+                if ($nb_reactions > 0 || dcCore::app()->blog->settings->originemini->content_post_list_reaction_link === "always") {
                     echo "<a aria-label=\"";
 
-                    if ((int) dcCore::app()->ctx->posts->nb_comment > 1) {
-                        printf(__("entry-list-multiple-reactions-link-aria-label"), dcCore::app()->ctx->posts->nb_comment);
-                    } else {
+                    if ($nb_reactions > 1) {
+                        printf(__("entry-list-multiple-reactions-link-aria-label"), $nb_reactions);
+                    } elseif ($nb_reactions === 1) {
                         echo __("entry-list-one-reaction-link-aria-label");
+                    } elseif ($nb_reactions === 0 && dcCore::app()->blog->settings->originemini->content_post_list_reaction_link === "always") {
+                        echo __("entry-list-no-reaction-link-aria-label");
                     }
 
                     echo "\" class=post-reaction-link href=\"", html::escapeURL(dcCore::app()->ctx->posts->getURL()), "#", __("reactions-id"), "\"><small>";
 
-                    if ((int) dcCore::app()->ctx->posts->nb_comment > 1) {
-                        printf(__("entry-list-multiple-reactions"), dcCore::app()->ctx->posts->nb_comment);
-                    } else {
+                    if ($nb_reactions > 1) {
+                        printf(__("entry-list-multiple-reactions"), $nb_reactions);
+                    } elseif ($nb_reactions === 1) {
                         echo __("entry-list-one-reaction");
+                    } elseif ($nb_reactions === 0 && dcCore::app()->blog->settings->originemini->content_post_list_reaction_link === "always") {
+                        echo __("entry-list-no-reaction");
                     }
 
                     echo "</small></a>";
-                };
+                }
             ?>';
         }
     }

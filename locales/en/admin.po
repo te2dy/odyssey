@@ -324,6 +324,15 @@ msgstr "Display the time of publication"
 msgid "settings-content-postlistreactionlink-title"
 msgstr "Display a link to the reactions"
 
+msgid "settings-content-postlistreactionlink-disabled-default"
+msgstr "Disabled (default)"
+
+msgid "settings-content-postlistreactionlink-whenexist"
+msgstr "When at least a reaction exists"
+
+msgid "settings-content-postlistreactionlink-always"
+msgstr "Always"
+
 msgid "settings-content-posttime-title"
 msgstr "Display the time of publication"
 

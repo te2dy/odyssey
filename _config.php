@@ -406,8 +406,13 @@ class OrigineMiniConfig
         $default_settings['content_post_list_reaction_link'] = [
             'title'       => __('settings-content-postlistreactionlink-title'),
             'description' => '',
-            'type'        => 'checkbox',
-            'default'     => 0,
+            'type'        => 'select',
+            'choices'     => [
+                __('settings-content-postlistreactionlink-disabled-default') => 'disabled',
+                __('settings-content-postlistreactionlink-whenexist')        => 'when_exist',
+                __('settings-content-postlistreactionlink-always')           => 'always'
+            ],
+            'default'     => 'disabled',
             'section'     => ['content', 'entry-list']
         ];
 
@@ -1518,11 +1523,25 @@ class OrigineMiniConfig
             }
 
             // Post list appearence.
-            if (isset($_POST['content_post_list_type']) && $_POST['content_post_list_type'] === 'content') {
-                $css_main_array['.entry-list-content .post']['margin-bottom']            = '4rem';
-                $css_main_array['.entry-list-content .post:last-child']['margin-bottom'] = '0';
+            if (isset($_POST['content_post_list_type'])) {
+                if ($_POST['content_post_list_type'] === 'excerpt') {
+                    $css_main_array['.entry-list-extended']['list-style'] = 'none';
+                    $css_main_array['.entry-list-extended']['margin']     = '0';
+                    $css_main_array['.entry-list-extended']['padding']    = '0';
 
-                $css_main_array['.entry-list-content .entry-title']['font-size'] = '1.4em';
+                    $css_main_array['.entry-list-extended .post']['margin-bottom'] = '3rem';
+
+                    $css_main_array['.entry-list-extended .post-selected']['padding'] = '1rem';
+
+                    $css_main_array['.entry-list-extended .entry-title']['margin-block'] = '.5rem';
+
+                    $css_main_array['.entry-list-extended .post-excerpt']['margin'] = '.5rem 0 0';
+                } elseif ($_POST['content_post_list_type'] === 'content') {
+                    $css_main_array['.entry-list-content .post']['margin-bottom']            = '4rem';
+                    $css_main_array['.entry-list-content .post:last-child']['margin-bottom'] = '0';
+
+                    $css_main_array['.entry-list-content .entry-title']['font-size'] = '1.4em';
+                }
             }
 
             // Content links.
@@ -1533,7 +1552,7 @@ class OrigineMiniConfig
             }
 
             // Link to reactions in the post list.
-            if (isset($_POST['content_post_list_reaction_link']) && $_POST['content_post_list_reaction_link'] === '1') {
+            if (isset($_POST['content_post_list_reaction_link']) && $_POST['content_post_list_reaction_link'] !== 'disabled') {
                 $css_main_array['.entry-list .post']['flex-wrap'] = 'wrap';
 
                 if (!isset($_POST['content_post_list_type']) || (isset($_POST['content_post_list_type']) && $_POST['content_post_list_type'] !== 'excerpt')) {

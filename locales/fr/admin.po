@@ -324,6 +324,15 @@ msgstr "Afficher l’heure de publication"
 msgid "settings-content-postlistreactionlink-title"
 msgstr "Afficher un lien vers les réactions"
 
+msgid "settings-content-postlistreactionlink-disabled-default"
+msgstr "Désactivé (par défaut)"
+
+msgid "settings-content-postlistreactionlink-whenexist"
+msgstr "Quand il existe au moins une réaction"
+
+msgid "settings-content-postlistreactionlink-always"
+msgstr "Toujours"
+
 msgid "settings-content-posttime-title"
 msgstr "Afficher l’heure de publication"
 

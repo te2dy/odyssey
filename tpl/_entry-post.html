@@ -1,7 +1,7 @@
 <article class=post id={{tpl:lang post-id}}-{{tpl:EntryID}}{{tpl:origineMiniEntryLang}}>
   <header>
     <tpl:EntryIf selected="1">
-      <div class=post-selected><small>{{tpl:lang post-selected-label}}</small></div>
+      <small class=post-selected-label>{{tpl:lang post-selected-label}}</small>
     </tpl:EntryIf>
 
     <time aria-label="{{tpl:lang post-date-aria-label}}" class="post-date text-secondary" datetime="{{tpl:EntryDate format="%Y-%m-%dT%H:%m"}}">{{tpl:EntryDate}}{{tpl:origineMiniEntryTime context="post"}}</time>

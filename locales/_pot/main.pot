@@ -51,10 +51,16 @@ msgstr ""
 msgid "entry-list-date-aria-label"
 msgstr ""
 
+msgid "entry-list-no-reaction-link-aria-label"
+msgstr ""
+
 msgid "entry-list-one-reaction-link-aria-label"
 msgstr ""
 
 msgid "entry-list-multiple-reactions-link-aria-label"
+msgstr ""
+
+msgid "entry-list-no-reaction"
 msgstr ""
 
 msgid "entry-list-one-reaction"

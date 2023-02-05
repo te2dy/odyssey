@@ -324,6 +324,15 @@ msgstr ""
 msgid "settings-content-postlistreactionlink-title"
 msgstr ""
 
+msgid "settings-content-postlistreactionlink-disabled-default"
+msgstr ""
+
+msgid "settings-content-postlistreactionlink-whenexist"
+msgstr ""
+
+msgid "settings-content-postlistreactionlink-always"
+msgstr ""
+
 msgid "settings-content-posttime-title"
 msgstr ""
 
