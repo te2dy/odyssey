@@ -1322,7 +1322,7 @@ class OrigineMiniConfig
             // JS.
             if (isset($_POST['global_js']) && $_POST['global_js'] === '1') {
                 if (isset($_POST['content_trackback_link']) && $_POST['content_trackback_link'] === '1') {
-                    $css_main_array['#trackback-url']['color'] = 'var(--color-primary, #1742cf)';
+                    $css_main_array['#trackback-url']['color'] = 'var(--color-primary)';
 
                     $css_main_array['#trackback-url:is(:active, :focus, :hover)']['cursor']                = 'pointer';
                     $css_main_array['#trackback-url:is(:active, :focus, :hover)']['filter']                = 'brightness(1.25)';
@@ -1515,7 +1515,7 @@ class OrigineMiniConfig
 
             // Post introduction.
             if (isset($_POST['content_post_intro']) && $_POST['content_post_intro'] === '1') {
-                $css_main_array['#post-intro']['border-block']  = '.063rem solid var(--color-border, #c2c7d6)';
+                $css_main_array['#post-intro']['border-block']  = '.063rem solid var(--color-border, #ccc)';
                 $css_main_array['#post-intro']['font-weight']   = '700';
                 $css_main_array['#post-intro']['margin-bottom'] = '2rem';
 
@@ -1637,40 +1637,26 @@ class OrigineMiniConfig
                 $css_main_array['.footer-social-links a']['display'] = 'inline-block';
 
                 $css_main_array['.footer-social-links-icon-container']['align-items']      = 'center';
-                $css_main_array['.footer-social-links-icon-container']['background-color'] = 'var(--color-input-background, #f1f2f4)';
+                $css_main_array['.footer-social-links-icon-container']['background-color'] = 'var(--color-primary)';
                 $css_main_array['.footer-social-links-icon-container']['border-radius']    = 'var(--border-radius, unset)';
                 $css_main_array['.footer-social-links-icon-container']['display']          = 'flex';
+                $css_main_array['.footer-social-links-icon-container']['height']           = '1.5rem';
                 $css_main_array['.footer-social-links-icon-container']['justify-content']  = 'center';
                 $css_main_array['.footer-social-links-icon-container']['width']            = '1.5rem';
-                $css_main_array['.footer-social-links-icon-container']['height']           = '1.5rem';
 
-                $css_main_array['.footer-social-links-icon']['border']          = '0';
-                $css_main_array['.footer-social-links-icon']['fill']            = 'var(--color-text-main, #2e3038)';
+                $css_main_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['background-color'] = 'var(--color-primary-amplified)';
+
+                $css_main_array['.footer-social-links-icon']['fill']            = 'var(--color-background, #fcfcfd)';
                 $css_main_array['.footer-social-links-icon']['stroke']          = 'none';
-                $css_main_array['.footer-social-links-icon']['stroke-linecap']  = 'round';
-                $css_main_array['.footer-social-links-icon']['stroke-linejoin'] = 'round';
-                $css_main_array['.footer-social-links-icon']['stroke-width']    = '0';
                 $css_main_array['.footer-social-links-icon']['width']           = '1rem';
 
-                $css_main_array['.footer-social-links a:active .footer-social-links-icon-container, .footer-social-links a:focus .footer-social-links-icon-container, .footer-social-links a:hover .footer-social-links-icon-container']['background-color'] = 'var(--color-primary, #1742cf)';
-
-                $css_main_array['.footer-social-links a']['border-bottom'] = 'none';
-
-                $css_main_array['.footer-social-links a:active, .footer-social-links a:focus, .footer-social-links a:hover']['border-bottom'] = 'none';
-
-                $css_main_array['.footer-social-links a:active .footer-social-links-icon, .footer-social-links a:focus .footer-social-links-icon, .footer-social-links a:hover .footer-social-links-icon']['fill'] = 'var(--color-background, #fcfcfd)';
-
-                if (isset($_POST['global_css_transition']) && $_POST['global_css_transition'] === true) {
+                if (isset($_POST['global_css_transition']) && $_POST['global_css_transition'] === '1') {
                     $css_main_array['.footer-social-links-icon-container']['transition'] = 'all .2s ease-in-out';
 
-                    $css_main_array['.footer-social-links-icon']['transition'] = 'all .2s ease-in-out';
-
-                    $css_main_array['.footer-social-links a:active .footer-social-links-icon-container, .footer-social-links a:focus .footer-social-links-icon-container, .footer-social-links a:hover .footer-social-links-icon-container']['transition'] = 'all .2s ease-in-out';
-
-                    $css_main_array['.footer-social-links a:active .footer-social-links-icon, .footer-social-links a:focus .footer-social-links-icon, .footer-social-links a:hover .footer-social-links-icon']['transition'] = 'all .2s ease-in-out';
+                    $css_main_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['transition'] = 'all .2s ease-in-out';
                 }
 
-                $css_media_contrast_array['.footer-social-links-icon-container']['border'] = '1px solid var(--color-border, #c2c7d6)';
+                $css_media_contrast_array['.footer-social-links-icon-container']['border-color'] = '#000';
             }
 
             $css .= !empty($css_root_array) ? omUtils::stylesArrayToString($css_root_array) : '';
