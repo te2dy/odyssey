@@ -890,7 +890,7 @@ class OrigineMiniPublicBlocks
             if (\dcCore::app()->ctx->comment_preview !== null && \dcCore::app()->ctx->comment_preview["preview"]) {
                 return '<div id=react-content><h3 class=reaction-title>' . __('reactions-comment-form-preview-title') . '</h3>' . $content . '</div>';
             } else {
-                return '<details><summary><small>' . __('reactions-react-link-title') . '</small></summary><div id=react-content><h3 class=reaction-title>' . __('reactions-comment-form-title') . '</h3>' . $content . '</div></details>';
+                return '<details><summary class=button>' . __('reactions-react-link-title') . '</summary><div id=react-content><h3 class=reaction-title>' . __('reactions-comment-form-title') . '</h3>' . $content . '</div></details>';
             }
 
 

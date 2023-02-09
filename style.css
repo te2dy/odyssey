@@ -492,8 +492,13 @@ details summary {
   margin: 0;
   padding: 0;
 }
+#comment-form > details summary::-webkit-details-marker {
+  display: none;
+}
 #react-content {
   margin-top: 1rem;
+  border-left: .063rem solid var(--color-border, #ccc);
+  padding-left: 1rem;
 }
 #comment-form {
   margin-top: 4rem;
