@@ -1754,7 +1754,7 @@ class OrigineMiniConfig
 
             <p>
                 <details id=origine-mini-message-js>
-                    <summary>Sécurité du blog ⚠️</summary>
+                    <summary><?php echo __('settings-scripts-title'); ?></summary>
 
                     <div class=warning-msg>
                         <p><?php echo __('settings-scripts-message-intro'); ?></p>

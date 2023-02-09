@@ -473,6 +473,9 @@ msgstr ""
 msgid "settings-config-reset"
 msgstr ""
 
+msgid "settings-scripts-title"
+msgstr ""
+
 msgid "settings-scripts-message-intro"
 msgstr ""
 

@@ -473,6 +473,9 @@ msgstr "La configuration du thème a été mise à jour."
 msgid "settings-config-reset"
 msgstr "La configuration du thème a été réinitialisée."
 
+msgid "settings-scripts-title"
+msgstr "Sécurité du blog ⚠️"
+
 msgid "settings-scripts-message-intro"
 msgstr "Vous avez activé des fonctionnalités JavaScript qui ajoutent du code dans les pages publiques de votre blog."
 
