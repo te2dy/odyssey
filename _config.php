@@ -1753,57 +1753,63 @@ class OrigineMiniConfig
             ?>
 
             <p>
+                <details id=origine-mini-message-js>
+                    <summary>Sécurité du blog ⚠️</summary>
+
+                    <div class=warning-msg>
+                        <p><?php echo __('settings-scripts-message-intro'); ?></p>
+
+                        <p><?php printf(__('settings-scripts-message-csp'), __('settings-scripts-message-csp-href'), __('settings-scripts-message-csp-title')); ?></p>
+
+                        <p><?php echo __('settings-scripts-message-hash-intro'); ?></p>
+
+                        <?php
+                        /**
+                         * Displays the list of script hashes if they are loaded.
+                         *
+                         * @see /_prepend.php
+                         */
+                        if (dcCore::app()->blog->settings->originemini->js_hash) {
+                            $hashes = dcCore::app()->blog->settings->originemini->js_hash;
+
+                            if (!empty($hashes)) {
+                                echo '<ul>';
+
+                                foreach ($hashes as $script_id => $hash) {
+                                    $hash = '<code>' . $hash . '</code>';
+
+                                    echo '<li id=hash-', $script_id, '>';
+
+                                    if ($script_id === 'searchform') {
+                                        echo __('settings-scripts-message-hash-searchform'), '<br>', $hash;
+                                    } elseif ($script_id === 'trackbackurl') {
+                                        echo __('settings-scripts-message-hash-trackbackurl'), '<br>', $hash;
+                                    } elseif ($script_id === 'imagewide') {
+                                        echo __('settings-scripts-message-hash-imagewide'), '<br>', $hash;
+                                    }
+
+                                    echo '</li>';
+                                }
+
+                                echo '</ul>';
+                            }
+                        }
+                        ?>
+
+                        <p><?php printf(__('settings-scripts-message-example'), 'https://open-time.net/post/2022/08/15/CSP-mon-amour-en-public', 'fr', 'CSP mon amour en public'); ?></p>
+
+                        <p><?php echo __('settings-scripts-message-note'); ?></p>
+                    </div>
+                </details>
+            </p>
+
+            <p>
                 <?php echo dcCore::app()->formNonce(); ?>
 
                 <input name=save type=submit value="<?php echo __('settings-save-button-text'); ?>">
 
                 <input class=delete name=reset value="<?php echo __('settings-reset-button-text'); ?>" type=submit>
             </p>
-
-            <div class=warning-msg id=origine-mini-message-js>
-                <p><?php echo __('settings-scripts-message-intro'); ?></p>
-
-                <p><?php printf(__('settings-scripts-message-csp'), __('settings-scripts-message-csp-href'), __('settings-scripts-message-csp-title')); ?></p>
-
-                <p><?php echo __('settings-scripts-message-hash-intro'); ?></p>
-
-                <?php
-                /**
-                 * Displays the list of script hashes if they are loaded.
-                 *
-                 * @see /_prepend.php
-                 */
-                if (dcCore::app()->blog->settings->originemini->js_hash) {
-                    $hashes = dcCore::app()->blog->settings->originemini->js_hash;
-
-                    if (!empty($hashes)) {
-                        echo '<ul>';
-
-                        foreach ($hashes as $script_id => $hash) {
-                            $hash = '<code>' . $hash . '</code>';
-
-                            echo '<li id=hash-', $script_id, '>';
-
-                            if ($script_id === 'searchform') {
-                                echo __('settings-scripts-message-hash-searchform'), '<br>', $hash;
-                            } elseif ($script_id === 'trackbackurl') {
-                                echo __('settings-scripts-message-hash-trackbackurl'), '<br>', $hash;
-                            } elseif ($script_id === 'imagewide') {
-                                echo __('settings-scripts-message-hash-imagewide'), '<br>', $hash;
-                            }
-
-                            echo '</li>';
-                        }
-
-                        echo '</ul>';
-                    }
-                }
-                ?>
-
-                <p><?php printf(__('settings-scripts-message-example'), 'https://open-time.net/post/2022/08/15/CSP-mon-amour-en-public', 'fr', 'CSP mon amour en public'); ?></p>
-
-                <p><?php echo __('settings-scripts-message-note'); ?></p>
-            </div>
         </form>
 
         <?php
