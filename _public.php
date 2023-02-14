@@ -417,9 +417,9 @@ class OrigineMiniPublicValues
     public static function origineMiniEntryLang()
     {
         return '<?php
-            if (dcCore::app()->ctx->posts->post_lang !== dcCore::app()->blog->settings->system->lang) {
-                echo " lang=", dcCore::app()->ctx->posts->post_lang;
-            }
+        if (dcCore::app()->ctx->posts->post_lang !== dcCore::app()->blog->settings->system->lang) {
+            echo " lang=", dcCore::app()->ctx->posts->post_lang;
+        }
         ?>';
     }
 
@@ -577,31 +577,31 @@ class OrigineMiniPublicValues
     {
         if (\dcCore::app()->blog->settings->originemini->content_post_list_reaction_link && \dcCore::app()->blog->settings->originemini->content_post_list_reaction_link !== 'disabled') {
             return '<?php
-                $nb_reactions = intval((int) dcCore::app()->ctx->posts->nb_comment + (int) dcCore::app()->ctx->posts->nb_trackback);
+            $nb_reactions = intval((int) dcCore::app()->ctx->posts->nb_comment + (int) dcCore::app()->ctx->posts->nb_trackback);
 
-                if ($nb_reactions > 0 || dcCore::app()->blog->settings->originemini->content_post_list_reaction_link === "always") {
-                    echo "<a aria-label=\"";
+            if ($nb_reactions > 0 || dcCore::app()->blog->settings->originemini->content_post_list_reaction_link === "always") {
+                echo "<a aria-label=\"";
 
-                    if ($nb_reactions > 1) {
-                        printf(__("entry-list-multiple-reactions-link-aria-label"), $nb_reactions);
-                    } elseif ($nb_reactions === 1) {
-                        echo __("entry-list-one-reaction-link-aria-label");
-                    } elseif ($nb_reactions === 0 && dcCore::app()->blog->settings->originemini->content_post_list_reaction_link === "always") {
-                        echo __("entry-list-no-reaction-link-aria-label");
-                    }
-
-                    echo "\" class=post-reaction-link href=\"", html::escapeURL(dcCore::app()->ctx->posts->getURL()), "#", __("reactions-id"), "\"><small>";
-
-                    if ($nb_reactions > 1) {
-                        printf(__("entry-list-multiple-reactions"), $nb_reactions);
-                    } elseif ($nb_reactions === 1) {
-                        echo __("entry-list-one-reaction");
-                    } elseif ($nb_reactions === 0 && dcCore::app()->blog->settings->originemini->content_post_list_reaction_link === "always") {
-                        echo __("entry-list-no-reaction");
-                    }
-
-                    echo "</small></a>";
+                if ($nb_reactions > 1) {
+                    printf(__("entry-list-multiple-reactions-link-aria-label"), $nb_reactions);
+                } elseif ($nb_reactions === 1) {
+                    echo __("entry-list-one-reaction-link-aria-label");
+                } elseif ($nb_reactions === 0 && dcCore::app()->blog->settings->originemini->content_post_list_reaction_link === "always") {
+                    echo __("entry-list-no-reaction-link-aria-label");
                 }
+
+                echo "\" class=post-reaction-link href=\"", html::escapeURL(dcCore::app()->ctx->posts->getURL()), "#", __("reactions-id"), "\"><small>";
+
+                if ($nb_reactions > 1) {
+                    printf(__("entry-list-multiple-reactions"), $nb_reactions);
+                } elseif ($nb_reactions === 1) {
+                    echo __("entry-list-one-reaction");
+                } elseif ($nb_reactions === 0 && dcCore::app()->blog->settings->originemini->content_post_list_reaction_link === "always") {
+                    echo __("entry-list-no-reaction");
+                }
+
+                echo "</small></a>";
+            }
             ?>';
         }
     }
@@ -645,32 +645,32 @@ class OrigineMiniPublicValues
     public static function origineMiniEntryExcerpt($attr)
     {
         return '<?php
-            $the_excerpt = "";
+        $the_excerpt = "";
 
-            if (' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getExcerpt()') . ') {
-                $the_excerpt = ' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getExcerpt()') . ';
+        if (' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getExcerpt()') . ') {
+            $the_excerpt = ' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getExcerpt()') . ';
+        } else {
+            $the_excerpt = ' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getContent()') . ';
+
+            if (strlen($the_excerpt) > 200) {
+                $the_excerpt  = substr($the_excerpt, 0, 200);
+                $the_excerpt  = preg_replace("/[^a-z0-9]+\Z/i", "", $the_excerpt);
+                $the_excerpt .= "…";
+            }
+        }
+
+        if ($the_excerpt) {
+            if (dcCore::app()->ctx->posts->post_lang === dcCore::app()->blog->settings->system->lang) {
+                $lang = "";
             } else {
-                $the_excerpt = ' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getContent()') . ';
-
-                if (strlen($the_excerpt) > 200) {
-                    $the_excerpt  = substr($the_excerpt, 0, 200);
-                    $the_excerpt  = preg_replace("/[^a-z0-9]+\Z/i", "", $the_excerpt);
-                    $the_excerpt .= "…";
-                }
+                $lang = " lang=" . dcCore::app()->ctx->posts->post_lang;
             }
 
-            if ($the_excerpt) {
-                if (dcCore::app()->ctx->posts->post_lang === dcCore::app()->blog->settings->system->lang) {
-                    $lang = "";
-                } else {
-                    $lang = " lang=" . dcCore::app()->ctx->posts->post_lang;
-                }
-
-                echo "<p class=\"content-text post-excerpt text-secondary\"" . $lang . ">",
-                $the_excerpt,
-                " <a aria-label=\"", sprintf(__("entry-list-open-aria"), dcCore::app()->ctx->posts->post_title), "\" href=\"", dcCore::app()->ctx->posts->getURL(), "\">" . __("entry-list-open"), "</a>",
-                "</p>";
-            }
+            echo "<p class=\"content-text post-excerpt text-secondary\"" . $lang . ">",
+            $the_excerpt,
+            " <a aria-label=\"", sprintf(__("entry-list-open-aria"), dcCore::app()->ctx->posts->post_title), "\" href=\"", dcCore::app()->ctx->posts->getURL(), "\">" . __("entry-list-open"), "</a>",
+            "</p>";
+        }
         ?>';
     }
 
@@ -682,17 +682,17 @@ class OrigineMiniPublicValues
     public static function origineMiniPostTagsBefore()
     {
         return '<?php
-            if (dcCore::app()->ctx->posts->post_meta) {
-                $post_meta = unserialize(dcCore::app()->ctx->posts->post_meta);
+        if (dcCore::app()->ctx->posts->post_meta) {
+            $post_meta = unserialize(dcCore::app()->ctx->posts->post_meta);
 
-                if (is_array($post_meta) && isset($post_meta["tag"])) {
-                    if (count($post_meta["tag"]) > 1) {
-                        echo __("post-tags-prefix-multiple");
-                    } elseif (count($post_meta["tag"]) === 1) {
-                        echo __("post-tags-prefix-one");
-                    }
+            if (is_array($post_meta) && isset($post_meta["tag"])) {
+                if (count($post_meta["tag"]) > 1) {
+                    echo __("post-tags-prefix-multiple");
+                } elseif (count($post_meta["tag"]) === 1) {
+                    echo __("post-tags-prefix-one");
                 }
             }
+        }
         ?>';
     }
 
@@ -719,19 +719,19 @@ class OrigineMiniPublicValues
     {
         if (\dcCore::app()->blog->settings->originemini->content_post_email_author !== 'disabled') {
             return '<?php
-                if (isset(dcCore::app()->ctx->posts->user_email) && dcCore::app()->ctx->posts->user_email && (dcCore::app()->blog->settings->originemini->content_post_email_author === "always" || (dcCore::app()->blog->settings->originemini->content_post_email_author === "comments_open" && dcCore::app()->ctx->posts->post_open_comment === "1"))
-                ) {
-                ?>
-                    <div class=comment-private>
-                        <h3 class=reaction-title>' . __('private-comment-title') . '</h3>
+            if (isset(dcCore::app()->ctx->posts->user_email) && dcCore::app()->ctx->posts->user_email && (dcCore::app()->blog->settings->originemini->content_post_email_author === "always" || (dcCore::app()->blog->settings->originemini->content_post_email_author === "comments_open" && dcCore::app()->ctx->posts->post_open_comment === "1"))
+            ) {
+            ?>
+                <div class=comment-private>
+                    <h3 class=reaction-title>' . __('private-comment-title') . '</h3>
 
-                        <?php $body = "' . __('private-comment-body-post-url') . ' " . dcCore::app()->ctx->posts->getURL(); ?>
+                    <?php $body = "' . __('private-comment-body-post-url') . ' " . dcCore::app()->ctx->posts->getURL(); ?>
 
-                        <p>
-                            <a class=button href="mailto:<?php echo urlencode(dcCore::app()->ctx->posts->user_email); ?>?subject=<?php echo htmlentities("' . __("private-comment-email-prefix") . ' " . dcCore::app()->ctx->posts->post_title . "&body=" . $body); ?>">' . __('private-comment-button-text') . '</a>
-                        </p>
-                    </div>
-                <?php }
+                    <p>
+                        <a class=button href="mailto:<?php echo urlencode(dcCore::app()->ctx->posts->user_email); ?>?subject=<?php echo htmlentities("' . __("private-comment-email-prefix") . ' " . dcCore::app()->ctx->posts->post_title . "&body=" . $body); ?>">' . __('private-comment-button-text') . '</a>
+                    </p>
+                </div>
+            <?php }
             ?>';
         }
     }
@@ -744,11 +744,11 @@ class OrigineMiniPublicValues
     public static function origineMiniAttachmentTitle()
     {
         return '<?php
-            if (count(dcCore::app()->ctx->attachments) === 1) {
-                echo __("attachments-title-one");
-            } else {
-                echo __("attachments-title-multiple");
-            }
+        if (count(dcCore::app()->ctx->attachments) === 1) {
+            echo __("attachments-title-one");
+        } else {
+            echo __("attachments-title-multiple");
+        }
         ?>';
     }
 
@@ -762,36 +762,36 @@ class OrigineMiniPublicValues
     public static function origineMiniAttachmentSize()
     {
         return '<?php
-            $kb = 1024;
-            $mb = 1024 * $kb;
-            $gb = 1024 * $mb;
-            $tb = 1024 * $gb;
+        $kb = 1024;
+        $mb = 1024 * $kb;
+        $gb = 1024 * $mb;
+        $tb = 1024 * $gb;
 
-            $size = $attach_f->size;
+        $size = $attach_f->size;
 
-            // Setting ignored for some reason:
-            // setlocale(LC_ALL, "fr_FR");
+        // Setting ignored for some reason:
+        // setlocale(LC_ALL, "fr_FR");
 
-            if (dcCore::app()->blog->settings->system->lang === "fr") {
-                $locale_decimal = ",";
+        if (dcCore::app()->blog->settings->system->lang === "fr") {
+            $locale_decimal = ",";
+        } else {
+            $lang_conv      = localeconv();
+            $locale_decimal = $lang_conv["decimal_point"];
+        }
+
+        if ($size > 0) {
+            if ($size < $kb) {
+                printf(__("attachment-size-b"), $size);
+            } elseif ($size < $mb) {
+                printf(__("attachment-size-kb"), number_format($size / $kb, 1, $locale_decimal));
+            } elseif ($size < $gb) {
+                printf(__("attachment-size-mb"), number_format($size / $mb, 1, $locale_decimal));
+            } elseif ($size < $tb) {
+                printf(__("attachment-size-gb"), number_format($size / $gb, 1, $locale_decimal));
             } else {
-                $lang_conv      = localeconv();
-                $locale_decimal = $lang_conv["decimal_point"];
+                printf(__("attachment-size-tb"), number_format($size / $tb, 1, $locale_decimal));
             }
-
-            if ($size > 0) {
-                if ($size < $kb) {
-                    printf(__("attachment-size-b"), $size);
-                } elseif ($size < $mb) {
-                    printf(__("attachment-size-kb"), number_format($size / $kb, 1, $locale_decimal));
-                } elseif ($size < $gb) {
-                    printf(__("attachment-size-mb"), number_format($size / $mb, 1, $locale_decimal));
-                } elseif ($size < $tb) {
-                    printf(__("attachment-size-gb"), number_format($size / $gb, 1, $locale_decimal));
-                } else {
-                    printf(__("attachment-size-tb"), number_format($size / $tb, 1, $locale_decimal));
-                }
-            }
+        }
         ?>';
     }
 

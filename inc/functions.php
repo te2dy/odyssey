@@ -61,7 +61,8 @@ class OrigineMiniUtils
                     if (is_array($properties) && !empty($properties)) {
                         foreach ($properties as $property => $rule) {
                             if ($rule !== '') {
-                                $css .= $property . ':' . str_replace(', ', ',', $rule) . ';';
+                                $css .= $property . ':';
+                                $css .= str_replace(', ', ',', $rule) . ';';
                             }
                         }
                     }
@@ -80,7 +81,8 @@ class OrigineMiniUtils
                         if (is_array($properties) && !empty($properties)) {
                             foreach ($properties as $property => $rule) {
                                 if ($rule !== '') {
-                                    $css .= $property . ':' . str_replace(', ', ',', $rule) . ';';
+                                    $css .= $property . ':';
+                                    $css .= str_replace(', ', ',', $rule) . ';';
                                 }
                             }
                         }
@@ -97,16 +99,37 @@ class OrigineMiniUtils
     /**
      * Checks if a file path returns a valid image.
      *
-     * @param array $path_to_img The path to the image.
+     * @param array $path The path to the image.
      *
      * @return bool true if the image exists.
      */
-    public static function imageExists($path_to_img)
+    public static function imageExists($path)
     {
         // Extensions allowed for image files in Dotclear.
-        $img_ext_allowed = ['bmp', 'gif', 'ico', 'jpeg', 'jpg', 'jpe', 'png', 'svg', 'tiff', 'tif', 'webp', 'xbm'];
+        $img_ext_allowed = [
+            'bmp',
+            'gif',
+            'ico',
+            'jpeg',
+            'jpg',
+            'jpe',
+            'png',
+            'svg',
+            'tiff',
+            'tif',
+            'webp',
+            'xbm'
+        ];
 
-        if (file_exists($path_to_img) && in_array(strtolower(files::getExtension($path_to_img)), $img_ext_allowed, true) && substr(mime_content_type($path_to_img), 0, 6) === 'image/') {
+        // Returns true if the file exists and is an allowed type of image.
+        if (file_exists($path)
+            && in_array(
+                strtolower(files::getExtension($path)),
+                $img_ext_allowed,
+                true
+            )
+            && substr(mime_content_type($path), 0, 6) === 'image/'
+        ) {
             return true;
         } else {
             return false;
