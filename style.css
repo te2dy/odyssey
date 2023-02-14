@@ -1,5 +1,5 @@
 /**
- * All colors
+ * Color definition.
  */
 :root {
   --font-family-default: -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif;
@@ -20,13 +20,13 @@
   }
 }
 
-/* Accessibility: high contrast mode */
+/* Accessibility: high contrast mode. */
 @media (prefers-contrast: more),
        (-ms-high-contrast: active),
        (-ms-high-contrast: black-on-white) {
   :root {
     --color-primary: #000;
-    --color-primary-amplified: #333333;
+    --color-primary-amplified: #000;
     --color-background-default: #fff;
     --color-text-main: #000;
     --color-text-secondary: #000;
@@ -35,6 +35,9 @@
   }
 }
 
+/**
+ * Site structure and main elements.
+ */
 body {
   background-color: var(--color-background);
   color: var(--color-text-main, #303030);
@@ -42,10 +45,6 @@ body {
   font-size: var(--font-size, 1em);
   margin: 0;
 }
-
-/**
- * Structure
- */
 #site {
   box-sizing: border-box;
   display: flex;
@@ -63,7 +62,6 @@ body {
   row-gap: 1rem;
   order: 1;
 }
-
 #site-content {
   order: var(--order-content, 2);
 }
@@ -79,41 +77,10 @@ body {
 }
 
 /**
- * Main formatting
+ * Text formatting.
  */
-:is(a, details summary) {
-  color: var(--color-primary);
-  text-decoration: var(--link-text-decoration, none);
-  text-decoration-style: var(--link-text-decoration-style, unset);
-}
-:is(a, details summary):is(:active, :focus, :hover):not(.button) {
-  color: var(--color-primary-amplified);
-  text-decoration: underline;
-  text-decoration-style: solid;  /* Needed for Safari when ".content-text a" decoration is set. */
-}
-:is(a, details summary):is(:focus-visible):not(.button) { /* For navigation with keyboard. */
-  background-color: var(--color-primary-amplified);
-  color: var(--color-background);
-  text-decoration: none;
-  outline: .168rem solid var(--color-primary-amplified);
-  outline-offset: 0;
-}
-@media (prefers-contrast: more),
-       (-ms-high-contrast: active),
-       (-ms-high-contrast: black-on-white) {
-  :is(a, details summary) {
-    text-decoration: underline dotted;
-  }
-  :is(a, details summary):is(:active, :focus, :hover) {
-    text-decoration-style: solid;
-  }
-}
 
-/**
- * Origine themes common styles
- *
- * START
- */
+/* Main. */
 p {
   margin: 1em 0;
 }
@@ -155,7 +122,43 @@ code {
   display: inline;
 }
 
-/* Headings */
+/* Links */
+:is(a, details summary) {
+  color: var(--color-primary);
+  text-decoration: var(--link-text-decoration, none);
+  text-decoration-style: var(--link-text-decoration-style, unset);
+}
+:is(a, details summary):is(:active, :focus, :hover):not(.button) {
+  color: var(--color-primary-amplified);
+  text-decoration: underline;
+  text-decoration-style: solid;  /* Needed for Safari when ".content-text a" decoration is set. */
+}
+:is(a, details summary):is(:focus-visible):not(.button) { /* For navigation with keyboard. */
+  background-color: var(--color-primary-amplified);
+  color: var(--color-background);
+  outline: .168rem solid var(--color-primary-amplified);
+  outline-offset: 0;
+  text-decoration: none;
+}
+@media (prefers-contrast: more),
+       (-ms-high-contrast: active),
+       (-ms-high-contrast: black-on-white) {
+  :is(a, details summary) {
+    text-decoration: underline dotted;
+  }
+  :is(a, details summary):is(:active, :focus, :hover) {
+    text-decoration-style: solid;
+  }
+  :is(a, details summary):is(:active, :focus, :hover):not(.button) {
+    background-color: var(--color-primary-amplified);
+    color: var(--color-background);
+    outline: .168rem solid var(--color-primary-amplified);
+    outline-offset: 0;
+    text-decoration: none;
+  }
+}
+
+/* Headings. */
 h1, h2, h3, h4, h5, h6 {
   margin: 1rem 0;
 }
@@ -181,7 +184,10 @@ h6 {
   font-size: .7em;
 }
 
-/* Text content styles */
+/* Text. */
+.text-secondary {
+  color: var(--color-text-secondary, #6c6f78);
+}
 .content-text {
   font-family: var(--font-family-content, var(--font-family, var(--font-family-default)));
   line-height: var(--text-line-height, 1.5);
@@ -246,11 +252,8 @@ h6 {
 :is(.content-text, .widget) ol li::before {
   content: counter(list) ".";
 }
-.text-secondary {
-  color: var(--color-text-secondary, #6c6f78);
-}
 
-/* Images & media */
+/* Images & media. */
 figure {
   margin: 1em 0;
 }
@@ -265,8 +268,12 @@ img {
 img.media {
   display: block;
 }
+img + em { /* Image caption */
+  display: block;
+  margin-top: .5rem;
+}
 
-/* Forms */
+/* Forms & buttons. */
 input,
 textarea {
   background-color: var(--color-input-background, #f2f2f2);
@@ -318,6 +325,15 @@ input[type="submit"],
   background-color: var(--color-primary-amplified);
   cursor: pointer;
 }
+@media (prefers-contrast: more),
+       (-ms-high-contrast: active),
+       (-ms-high-contrast: black-on-white) {
+  :is(input[type="submit"], .button, .form-submit):is(:active, :focus, :hover) {
+    background-color: var(--color-background);
+    color: var(--color-text-main);
+    outline: .168rem solid var(--color-text-main);
+  }
+}
 input:disabled {
   color: var(--color-text-secondary, #6c6f78);
 }
@@ -333,20 +349,14 @@ textarea {
   width: 100%;
 }
 
-/* Details */
+/* Details. */
 details summary {
   cursor: pointer;
   display: inline list-item;
 }
 
 /**
- * Origine themes common styles
- *
- * END
- */
-
-/**
- * Header
+ * Site header.
  */
 #site-title {
   background-color: var(--color-primary);
@@ -363,6 +373,16 @@ details summary {
   background-color: var(--color-primary-amplified);
   cursor: pointer;
   text-decoration: none;
+}
+@media (prefers-contrast: more),
+       (-ms-high-contrast: active),
+       (-ms-high-contrast: black-on-white) {
+  #site-title:is(a:active, a:focus, a:hover) {
+    background-color: var(--color-background);
+    color: var(--color-text-main);
+    outline: .168rem solid var(--color-text-main);
+    text-decoration: none;
+  }
 }
 #site-title :is(h1, h4) {
   margin: 0;
@@ -386,12 +406,19 @@ details summary {
 #main-menu .active a {
   text-decoration: underline;
 }
+@media (prefers-contrast: more),
+       (-ms-high-contrast: active),
+       (-ms-high-contrast: black-on-white) {
+  #main-menu .active a:is(:active, :focus, :hover) {
+    text-decoration: none;
+  }
+}
 #main-menu .active a:is(:focus-visible) {
   text-decoration: none;
 }
 
 /**
- * Posts
+ * Posts.
  */
 .post-selected,
 .post-selected-label {
@@ -408,7 +435,7 @@ details summary {
 }
 
 /**
- * Post list
+ * Post list only.
  */
 .entry-list {
   list-style: none;
@@ -440,7 +467,7 @@ details summary {
 }
 
 /**
- * Full posts and pages
+ * Full posts and pages.
  */
 :is(.post, .page) header {
   margin-bottom: 2rem;
@@ -460,9 +487,7 @@ details summary {
   margin-block: .5rem;
 }
 
-/**
- * Post pagination
- */
+/* Post pagination */
 .post-pagination {
   column-gap: 1rem;
   display: flex;
@@ -482,7 +507,7 @@ details summary {
 }
 
 /**
- * Reactions
+ * Reactions.
  */
 .reactions-block {
   margin-top: 4rem;
@@ -491,14 +516,6 @@ details summary {
   list-style: none;
   margin: 0;
   padding: 0;
-}
-#comment-form > details summary::-webkit-details-marker {
-  display: none;
-}
-#react-content {
-  margin-top: 1rem;
-  border-left: .063rem solid var(--color-border, #ccc);
-  padding-left: 1rem;
 }
 #comment-form {
   margin-top: 4rem;

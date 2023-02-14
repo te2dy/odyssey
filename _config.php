@@ -1330,12 +1330,19 @@ class OrigineMiniConfig
                     $css_main_array['#trackback-url:is(:active, :focus, :hover)']['text-decoration-style'] = 'solid';
 
                     $css_main_array['#trackback-url-copied']['display'] = 'none';
+
+                    $css_media_contrast_array['#trackback-url:is(:active, :focus, :hover)']['background-color'] = 'var(--color-text-main)';
+                    $css_media_contrast_array['#trackback-url:is(:active, :focus, :hover)']['color']            = 'var(--color-background)';
+                    $css_media_contrast_array['#trackback-url:is(:active, :focus, :hover)']['outline']          = '.168rem solid var(--color-text-main)';
+                    $css_media_contrast_array['#trackback-url:is(:active, :focus, :hover)']['text-decoration']  = 'none';
                 }
             }
 
             // Header banner
             if (isset($_POST['header_image']) && $_POST['header_image'] !== '') {
                 $css_main_array['#site-image']['width'] = '100%';
+
+                $css_media_contrast_array['#site-image a']['outline'] = 'inherit';
 
                 if (isset($_POST['global_css_border_radius']) && $_POST['global_css_border_radius'] === '1') {
                     $css_main_array['#site-image img']['border-radius'] = 'var(--border-radius)';
@@ -1656,7 +1663,13 @@ class OrigineMiniConfig
                     $css_main_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['transition'] = 'all .2s ease-in-out';
                 }
 
-                $css_media_contrast_array['.footer-social-links-icon-container']['border-color'] = '#000';
+
+
+                $css_media_contrast_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['background-color'] = 'var(--color-background)';
+                $css_media_contrast_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['color']            = 'var(--color-text-main)';
+                $css_media_contrast_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['outline']          = '.168rem solid var(--color-text-main)';
+
+                $css_media_contrast_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon']['fill'] = 'var(--color-text-main)';
             }
 
             $css .= !empty($css_root_array) ? omUtils::stylesArrayToString($css_root_array) : '';
