@@ -590,10 +590,9 @@ class OrigineMiniConfig
 
         $default_settings['footer_social_links_signal'] = [
             'title'       => __('settings-footer-sociallinks-signal-title'),
-            'description' => '',
+            'description' => __('settings-footer-sociallinks-signal-description'),
             'type'        => 'text',
             'default'     => '',
-            'placeholder' => '+1234567890',
             'section'     => ['footer', 'social-links']
         ];
 

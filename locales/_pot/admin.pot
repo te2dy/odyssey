@@ -438,6 +438,9 @@ msgstr ""
 msgid "settings-footer-sociallinks-signal-title"
 msgstr ""
 
+msgid "settings-footer-sociallinks-signal-description"
+msgstr ""
+
 msgid "settings-footer-sociallinks-tiktok-title"
 msgstr ""
 

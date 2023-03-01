@@ -436,7 +436,10 @@ msgid "settings-footer-sociallinks-mastodon-title"
 msgstr "URL of a Mastodon profile"
 
 msgid "settings-footer-sociallinks-signal-title"
-msgstr "Signal phone number"
+msgstr "Signal account URL or phone number"
+
+msgid "settings-footer-sociallinks-signal-description"
+msgstr "If you prefer to provide your phone number directly, it must be entered in the format +1234567890."
 
 msgid "settings-footer-sociallinks-tiktok-title"
 msgstr "URL of a TikTok profile"

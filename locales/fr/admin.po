@@ -436,7 +436,10 @@ msgid "settings-footer-sociallinks-mastodon-title"
 msgstr "Adresse d’un profil Mastodon"
 
 msgid "settings-footer-sociallinks-signal-title"
-msgstr "Numéro de téléphone Signal"
+msgstr "Lien vers un compte ou un numéro de téléphone Signal"
+
+msgid "settings-footer-sociallinks-signal-description"
+msgstr "Si vous préférez fournir directement votre numéro de téléphone, il doit être saisi au format +1234567890."
 
 msgid "settings-footer-sociallinks-tiktok-title"
 msgstr "Adresse d’un profil TikTok"
