@@ -14,6 +14,9 @@ if (!defined('DC_CONTEXT_ADMIN')) {
     return;
 }
 
+require_once 'inc/settings.php';
+use \OrigineMiniSettings as omSettings;
+
 // Gets the new version number of the theme and the old one.
 $old_version = (string) dcCore::app()->getVersion(basename(__DIR__));
 $new_version = (string) dcCore::app()->themes->moduleInfo('origine-mini', 'version');

@@ -122,7 +122,8 @@ class OrigineMiniUtils
         ];
 
         // Returns true if the file exists and is an allowed type of image.
-        if (file_exists($path)
+        if ($path
+            && file_exists($path)
             && in_array(
                 strtolower(files::getExtension($path)),
                 $img_ext_allowed,

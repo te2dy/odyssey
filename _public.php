@@ -27,6 +27,11 @@ use \OrigineMiniUtils as omUtils;
 \dcCore::app()->addBehavior('publicFooterContent', [__NAMESPACE__ . '\OrigineMiniPublicBehaviors', 'origineMiniScriptTrackbackURL']);
 \dcCore::app()->addBehavior('publicFooterContent', [__NAMESPACE__ . '\OrigineMiniPublicBehaviors', 'origineMiniScriptImagesWide']);
 
+
+
+require_once 'inc/settings.php';
+use \OrigineMiniSettings as omSettings;
+
 /**
  * Adds behaviors to the theme's template files.
  */
