@@ -32,7 +32,7 @@ class Prepend extends dcNsProcess
 
         // Gets the new version number of the theme and the old one.
         $old_version = (string) dcCore::app()->getVersion(basename(__DIR__));
-        $new_version = (string) dcCore::app()->themes->moduleInfo('origine-mini', 'version');
+        $new_version = (string) dcCore::app()->themes->moduleInfo('originemini', 'version');
 
         if (version_compare($old_version, $new_version, '<')) {
             dcCore::app()->blog->settings->addNamespace('originemini');
@@ -56,7 +56,7 @@ class Prepend extends dcNsProcess
             dcCore::app()->blog->settings->originemini->put('js_hash', $hashes, 'array', __('prepend-hashes-save'), true);
 
             // Pushes the new version of the theme in the database.
-            dcCore::app()->setVersion('origine-mini', $new_version);
+            dcCore::app()->setVersion('originemini', $new_version);
         }
 
         return true;

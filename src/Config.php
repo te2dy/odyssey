@@ -248,10 +248,10 @@ class Config extends dcNsProcess
                 /**
                  * Redirects to refresh form values.
                  *
-                 * With the parameters ['module' => 'origine-mini', 'conf' => '1'],
+                 * With the parameters ['module' => 'originemini', 'conf' => '1'],
                  * the & is interpreted as &amp; causing a wrong redirect.
                  */
-                http::redirect(dcCore::app()->adminurl->get('admin.blog.theme', ['module' => 'origine-mini']) . '&conf=1');
+                Http::redirect(dcCore::app()->adminurl->get('admin.blog.theme', ['module' => 'originemini']) . '&conf=1');
             } catch (Exception $e) {
                 dcCore::app()->error->add($e->getMessage());
             }
@@ -315,22 +315,22 @@ class Config extends dcNsProcess
                     $css_root_array[':root']['--font-family'] = '"Atkinson Hyperlegible", sans-serif';
 
                     $css_main_array[0]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                    $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/origine-mini/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2")';
+                    $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2")';
                     $css_main_array[0]['@font-face']['font-style']  = 'normal';
                     $css_main_array[0]['@font-face']['font-weight'] = '400';
 
                     $css_main_array[1]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                    $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/origine-mini/fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2")';
+                    $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2")';
                     $css_main_array[1]['@font-face']['font-style']  = 'italic';
                     $css_main_array[1]['@font-face']['font-weight'] = '400';
 
                     $css_main_array[2]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                    $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/origine-mini/fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2")';
+                    $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2")';
                     $css_main_array[2]['@font-face']['font-style']  = 'normal';
                     $css_main_array[2]['@font-face']['font-weight'] = '700';
 
                     $css_main_array[3]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                    $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/origine-mini/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("woff2")';
+                    $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("woff2")';
                     $css_main_array[3]['@font-face']['font-style']  = 'italic';
                     $css_main_array[3]['@font-face']['font-weight'] = '700';
                 } elseif ($_POST['global_font_family'] === 'luciole') {
@@ -339,22 +339,22 @@ class Config extends dcNsProcess
                     $css_root_array[':root']['--font-family'] = 'Luciole, sans-serif';
 
                     $css_main_array[0]['@font-face']['font-family'] = '"Luciole"';
-                    $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/origine-mini/fonts/Luciole-Regular.ttf") format("truetype")';
+                    $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Regular.ttf") format("truetype")';
                     $css_main_array[0]['@font-face']['font-style']  = 'normal';
                     $css_main_array[0]['@font-face']['font-weight'] = '400';
 
                     $css_main_array[1]['@font-face']['font-family'] = '"Luciole"';
-                    $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/origine-mini/fonts/Luciole-Regular-Italic.ttf") format("truetype")';
+                    $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Regular-Italic.ttf") format("truetype")';
                     $css_main_array[1]['@font-face']['font-style']  = 'italic';
                     $css_main_array[1]['@font-face']['font-weight'] = '400';
 
                     $css_main_array[2]['@font-face']['font-family'] = '"Luciole"';
-                    $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/origine-mini/fonts/Luciole-Bold.ttf") format("truetype")';
+                    $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Bold.ttf") format("truetype")';
                     $css_main_array[2]['@font-face']['font-style']  = 'normal';
                     $css_main_array[2]['@font-face']['font-weight'] = '700';
 
                     $css_main_array[3]['@font-face']['font-family'] = '"Luciole"';
-                    $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/origine-mini/fonts/Luciole-Bold-Italic.ttf") format("truetype")';
+                    $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Bold-Italic.ttf") format("truetype")';
                     $css_main_array[3]['@font-face']['font-style']  = 'italic';
                     $css_main_array[3]['@font-face']['font-weight'] = '700';
                 }
@@ -623,22 +623,22 @@ class Config extends dcNsProcess
                     $themes_url = dcCore::app()->blog->settings->system->themes_url;
 
                     $css_main_array[4]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                    $css_main_array[4]['@font-face']['src']         = 'url("' . $themes_url . '/origine-mini/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2")';
+                    $css_main_array[4]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2")';
                     $css_main_array[4]['@font-face']['font-style']  = 'normal';
                     $css_main_array[4]['@font-face']['font-weight'] = '400';
 
                     $css_main_array[5]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                    $css_main_array[5]['@font-face']['src']         = 'url("' . $themes_url . '/origine-mini/fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2")';
+                    $css_main_array[5]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2")';
                     $css_main_array[5]['@font-face']['font-style']  = 'italic';
                     $css_main_array[5]['@font-face']['font-weight'] = '400';
 
                     $css_main_array[6]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                    $css_main_array[6]['@font-face']['src']         = 'url("' . $themes_url . '/origine-mini/fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2")';
+                    $css_main_array[6]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2")';
                     $css_main_array[6]['@font-face']['font-style']  = 'normal';
                     $css_main_array[6]['@font-face']['font-weight'] = '700';
 
                     $css_main_array[7]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                    $css_main_array[7]['@font-face']['src']         = 'url("' . $themes_url . '/origine-mini/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("woff2")';
+                    $css_main_array[7]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("woff2")';
                     $css_main_array[7]['@font-face']['font-style']  = 'italic';
                     $css_main_array[7]['@font-face']['font-weight'] = '700';
 
@@ -647,22 +647,22 @@ class Config extends dcNsProcess
                     $themes_url = dcCore::app()->blog->settings->system->themes_url;
 
                     $css_main_array[4]['@font-face']['font-family'] = '"Luciole"';
-                    $css_main_array[4]['@font-face']['src']         = 'url("' . $themes_url . '/origine-mini/fonts/Luciole-Regular.ttf") format("truetype")';
+                    $css_main_array[4]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Regular.ttf") format("truetype")';
                     $css_main_array[4]['@font-face']['font-style']  = 'normal';
                     $css_main_array[4]['@font-face']['font-weight'] = '400';
 
                     $css_main_array[5]['@font-face']['font-family'] = '"Luciole"';
-                    $css_main_array[5]['@font-face']['src']         = 'url("' . $themes_url . '/origine-mini/fonts/Luciole-Regular-Italic.ttf") format("truetype")';
+                    $css_main_array[5]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Regular-Italic.ttf") format("truetype")';
                     $css_main_array[5]['@font-face']['font-style']  = 'italic';
                     $css_main_array[5]['@font-face']['font-weight'] = '400';
 
                     $css_main_array[6]['@font-face']['font-family'] = '"Luciole"';
-                    $css_main_array[6]['@font-face']['src']         = 'url("' . $themes_url . '/origine-mini/fonts/Luciole-Bold.ttf") format("truetype")';
+                    $css_main_array[6]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Bold.ttf") format("truetype")';
                     $css_main_array[6]['@font-face']['font-style']  = 'normal';
                     $css_main_array[6]['@font-face']['font-weight'] = '700';
 
                     $css_main_array[7]['@font-face']['font-family'] = '"Luciole"';
-                    $css_main_array[7]['@font-face']['src']         = 'url("' . $themes_url . '/origine-mini/fonts/Luciole-Bold-Italic.ttf") format("truetype")';
+                    $css_main_array[7]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Bold-Italic.ttf") format("truetype")';
                     $css_main_array[7]['@font-face']['font-style']  = 'italic';
                     $css_main_array[7]['@font-face']['font-weight'] = '700';
 
@@ -1754,7 +1754,7 @@ class Config extends dcNsProcess
         $sections_with_settings_id = array_filter($sections_with_settings_id);
         ?>
 
-        <form action="<?php echo dcCore::app()->adminurl->get('admin.blog.theme', ['module' => 'origine-mini', 'conf' => '1']); ?>" enctype=multipart/form-data id=theme_config method=post>
+        <form action="<?php echo dcCore::app()->adminurl->get('admin.blog.theme', ['module' => 'originemini', 'conf' => '1']); ?>" enctype=multipart/form-data id=theme_config method=post>
             <?php
             // Displays the title of each section and places the corresponding parameters under each one.
             foreach ($sections_with_settings_id as $section_id => $section_data) {
@@ -1778,7 +1778,7 @@ class Config extends dcNsProcess
             ?>
 
             <p>
-                <details id=origine-mini-message-js>
+                <details id=originemini-message-js>
                     <summary><?php echo __('settings-scripts-title'); ?></summary>
 
                     <div class=warning-msg>

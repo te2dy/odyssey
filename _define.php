@@ -7,18 +7,14 @@
  * @license   GPL-3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
  */
 
-if (!defined('DC_RC_PATH')) {
-    return;
-}
-
 $this->registerModule(
     'Origine Mini',             // Name
     'A minimal Dotclear theme', // Description
     'Teddy',                    // Author
-    '1.4',                      // Version
+    '2',                        // Version
     [
-        'requires'             => [['core', '2.24']],
-        'tplset'               => 'mustek',
+        // Properties.
+        'requires'             => [['core', '2.26']],
         'type'                 => 'theme',
 
         // Allows a full control for the theme configurator.

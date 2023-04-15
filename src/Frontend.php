@@ -83,7 +83,7 @@ class Frontend extends dcNsProcess
      *
      * @return void The head meta.
      */
-    public static function origineMiniHeadMeta()
+    public static function origineMiniHeadMeta(): void
     {
         // Adds the name of the editor.
         if (dcCore::app()->blog->settings->system->editor) {
@@ -105,7 +105,7 @@ class Frontend extends dcNsProcess
             echo '<meta name=copyright content=', $notice, '>', "\n";
         }
 
-        // Adds the generator of the blog.
+        // Adds the generator name of the blog.
         if (dcCore::app()->blog->settings->originemini->global_meta_generator === true) {
             echo '<meta name=generator content=Dotclear>', "\n";
         }
@@ -118,7 +118,7 @@ class Frontend extends dcNsProcess
      *
      * @return void The social markups.
      */
-    public static function origineMiniSocialMarkups()
+    public static function origineMiniSocialMarkups(): void
     {
         if (dcCore::app()->blog->settings->originemini->global_meta_social === true) {
             $title = '';
@@ -224,7 +224,7 @@ class Frontend extends dcNsProcess
      *
      * @return void The excerpt in a div.
      */
-    public static function origineMiniPostIntro()
+    public static function origineMiniPostIntro(): void
     {
         if (dcCore::app()->blog->settings->originemini->content_post_intro === true && dcCore::app()->ctx->posts->post_excerpt) {
             echo '<div id=post-single-excerpt>', dcCore::app()->ctx->posts->getExcerpt(), '</div>';
@@ -236,7 +236,7 @@ class Frontend extends dcNsProcess
      *
      * @return void A list of social links displayed as icons.
      */
-    public static function origineMiniSocialLinks()
+    public static function origineMiniSocialLinks(): void
     {
         $social_links = [];
 
@@ -278,6 +278,7 @@ class Frontend extends dcNsProcess
 
         if (!empty($social_links)) {
             ?>
+
             <div class=footer-social-links>
                 <ul>
                     <?php
@@ -294,7 +295,7 @@ class Frontend extends dcNsProcess
                         ?>
 
                         <li>
-                            <a href="<?php echo \html::escapeURL($link); ?>" rel=me>
+                            <a href="<?php echo Html::escapeURL($link); ?>" rel=me>
                                 <span class=footer-social-links-icon-container>
                                     <svg class=footer-social-links-icon role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>
                                         <title><?php echo Html::escapeHTML($site); ?></title>
@@ -309,6 +310,7 @@ class Frontend extends dcNsProcess
                     ?>
                 </ul>
             </div>
+
             <?php
         }
     }
@@ -326,7 +328,7 @@ class Frontend extends dcNsProcess
      *
      * @return void The script.
      */
-    public static function origineMiniScriptSearchForm()
+    public static function origineMiniScriptSearchForm(): void
     {
         if (dcCore::app()->blog->settings->originemini->global_js === true && (dcCore::app()->blog->settings->originemini->widgets_search_form === true || (!dcCore::app()->blog->settings->originemini->widgets_search_form && dcCore::app()->url->type === 'search'))) {
             $script = 'window.onload=function(){var e;document.getElementsByClassName("search-form-submit")[0]&&(""!==(e=new URL(document.location).searchParams.get("q"))&&(document.getElementsByClassName("search-form-submit")[0].disabled=!0),document.getElementsByClassName("search-form")[0].oninput=function(){document.getElementsByClassName("search-form-field")[0].value&&document.getElementsByClassName("search-form-field")[0].value!==e?document.getElementsByClassName("search-form-submit")[0].disabled=!1:document.getElementsByClassName("search-form-submit")[0].disabled=!0})};' . "\n";
@@ -347,7 +349,7 @@ class Frontend extends dcNsProcess
      *
      * @return void The script.
      */
-    public static function origineMiniScriptTrackbackURL()
+    public static function origineMiniScriptTrackbackURL(): void
     {
         if (dcCore::app()->blog->settings->originemini->global_js === true && (dcCore::app()->url->type === 'post' || dcCore::app()->url->type === 'pages')) {
             $script = 'window.onload=function(){document.getElementById("trackback-url")&&(document.getElementById("trackback-url").onclick=function(){window.location.protocol,window.location.host;var t,e=document.getElementById("trackback-url").innerHTML;try{t=new URL(e).href}catch(t){return!1}!1!==t.href&&navigator.clipboard.writeText(t).then(()=>{document.getElementById("trackback-url-copied").style.display="inline"},()=>{document.getElementById("trackback-url-copied").style.display="none"})})};' . "\n";
@@ -368,7 +370,7 @@ class Frontend extends dcNsProcess
      *
      * @return void The script.
      */
-    public static function origineMiniScriptImagesWide()
+    public static function origineMiniScriptImagesWide(): void
     {
         $om_settings = dcCore::app()->blog->settings->originemini;
         $page_type   = dcCore::app()->url->type;
@@ -405,9 +407,9 @@ class Frontend extends dcNsProcess
      *
      * @param array $attr Unused.
      *
-     * @return void The description.
+     * @return string The description.
      */
-    public static function origineMiniMetaDescriptionHome($attr)
+    public static function origineMiniMetaDescriptionHome($attr): string
     {
         if (dcCore::app()->blog->settings->originemini->global_meta_home_description) {
             return '<?php echo ' . sprintf(dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->blog->settings->originemini->global_meta_home_description') . '; ?>';
@@ -433,9 +435,9 @@ class Frontend extends dcNsProcess
      * of the current post is different from the language defined
      * for the whole blog.
      *
-     * @return void The lang attribute.
+     * @return string The lang attribute.
      */
-    public static function origineMiniEntryLang()
+    public static function origineMiniEntryLang(): string
     {
         return '<?php
         if (dcCore::app()->ctx->posts->post_lang !== dcCore::app()->blog->settings->system->lang) {
@@ -447,9 +449,9 @@ class Frontend extends dcNsProcess
     /**
      * Displays navigation links for screen readers.
      *
-     * @return void The navigation links.
+     * @return string The navigation links.
      */
-    public static function origineMiniScreenReaderLinks()
+    public static function origineMiniScreenReaderLinks(): string
     {
         $links = '<a id=skip-content class=skip-links href=#site-content>' . __('skip-link-content') . '</a>';
 
@@ -476,7 +478,7 @@ class Frontend extends dcNsProcess
      *                    - (string) top
      *                    - (string) bottom
      *
-     * @return void
+     * @return string
      */
     public static function origineMiniHeaderImage($attr)
     {
@@ -516,7 +518,7 @@ class Frontend extends dcNsProcess
     /**
      * Displays the blog description.
      *
-     * @return void The blog description.
+     * @return string The blog description.
      */
     public static function origineMiniBlogDescription()
     {
@@ -535,9 +537,9 @@ class Frontend extends dcNsProcess
      * Loads the right entry-list template based on theme settings.
      * Default: short
      *
-     * @return void The entry-list template.
+     * @return string The entry-list template.
      */
-    public static function origineMiniPostListType()
+    public static function origineMiniPostListType(): string
     {
         if (!dcCore::app()->blog->settings->originemini->content_post_list_type || dcCore::app()->blog->settings->originemini->content_post_list_type === 'short') {
             return dcCore::app()->tpl->includeFile(['src' => '_entry-list-short.html']);
@@ -556,7 +558,7 @@ class Frontend extends dcNsProcess
      *
      * Only if at least a comment has been published.
      *
-     * @return void
+     * @return string
      */
     public static function origineMiniPostListReactionLink()
     {
@@ -600,7 +602,7 @@ class Frontend extends dcNsProcess
      *                    - (string) entry-list
      *                    - (string) post
      *
-     * @return void The published time of the post.
+     * @return string The published time of the post.
      */
     public static function origineMiniEntryTime($attr)
     {
@@ -625,9 +627,9 @@ class Frontend extends dcNsProcess
      *
      * @param array $attr Modifying attributes.
      *
-     * @return void The entry excerpt.
+     * @return string The entry excerpt.
      */
-    public static function origineMiniEntryExcerpt($attr)
+    public static function origineMiniEntryExcerpt($attr): string
     {
         return '<?php
         $the_excerpt = "";
@@ -662,7 +664,7 @@ class Frontend extends dcNsProcess
     /**
      * Adds a text string before the tag list of posts.
      *
-     * @return void The text string.
+     * @return string The text string.
      */
     public static function origineMiniPostTagsBefore()
     {
@@ -686,7 +688,7 @@ class Frontend extends dcNsProcess
      *
      * Should only be displayed when a visitor click on the URL.
      *
-     * @return void The private comment section.
+     * @return string The private comment section.
      */
     public static function origineMiniScriptTrackbackURLCopied()
     {
@@ -698,7 +700,7 @@ class Frontend extends dcNsProcess
     /**
      * Displays a link to reply to the author of the post by email.
      *
-     * @return void The private comment section.
+     * @return string The private comment section.
      */
     public static function origineMiniEmailAuthor()
     {
@@ -724,9 +726,9 @@ class Frontend extends dcNsProcess
     /**
      * Adds a title in the plural or singular at the top of post attachment list.
      *
-     * @return void The attachment area title.
+     * @return string The attachment area title.
      */
-    public static function origineMiniAttachmentTitle()
+    public static function origineMiniAttachmentTitle(): string
     {
         return '<?php
         if (count(dcCore::app()->ctx->attachments) === 1) {
@@ -742,9 +744,9 @@ class Frontend extends dcNsProcess
      *
      * Based on Clearbricks package, Common subpackage and files class.
      *
-     * @return void The attachment size.
+     * @return string The attachment size.
      */
-    public static function origineMiniAttachmentSize()
+    public static function origineMiniAttachmentSize(): string
     {
         return '<?php
         $kb = 1024;
@@ -783,7 +785,7 @@ class Frontend extends dcNsProcess
     /**
      * Displays the category description in a block only if a description is set.
      *
-     * @return void The category description.
+     * @return string The category description.
      */
     public static function origineMiniCategoryDescription()
     {
@@ -797,7 +799,7 @@ class Frontend extends dcNsProcess
      *
      * Dotclear and theme versions are shown only on dev environments.
      *
-     * @return void The footer credits.
+     * @return string The footer credits.
      */
     public static function origineMiniFooterCredits()
     {
@@ -819,9 +821,9 @@ class Frontend extends dcNsProcess
     /**
      * Returns the relative URI of the current page.
      *
-     * @return void The relative URI.
+     * @return string The relative URI.
      */
-    public static function origineMiniURIRelative()
+    public static function origineMiniURIRelative(): string
     {
         return '<?php echo filter_var($_SERVER["REQUEST_URI"], FILTER_SANITIZE_URL); ?>';
     }
@@ -832,7 +834,7 @@ class Frontend extends dcNsProcess
      * @param array $attr    Unused.
      * @param void  $content The post footer.
      *
-     * @return void The post footer.
+     * @return string The post footer.
      */
     public static function origineMiniPostFooter($attr, $content)
     {
@@ -867,9 +869,9 @@ class Frontend extends dcNsProcess
      * @param array $attr    Unused.
      * @param void  $content The header.
      *
-     * @return void The link.
+     * @return string The link.
      */
-    public static function origineMiniHeaderIdentity($attr, $content)
+    public static function origineMiniHeaderIdentity($attr, $content): string
     {
         if (dcCore::app()->blog->settings->originemini->header_description !== true) {
             return $content;
@@ -884,9 +886,9 @@ class Frontend extends dcNsProcess
      * @param array $attr    Unused.
      * @param void  $content The comment form.
      *
-     * @return void The comment form.
+     * @return string The comment form.
      */
-    public static function origineMiniCommentFormWrapper($attr, $content)
+    public static function origineMiniCommentFormWrapper($attr, $content): string
     {
         if (!dcCore::app()->blog->settings->originemini->content_commentform_hide) {
             return '<h3 class=reaction-title>' . __('reactions-comment-form-title') . '</h3>' . $content;
@@ -905,7 +907,7 @@ class Frontend extends dcNsProcess
      * @param array $attr    Unused.
      * @param void  $content The link.
      *
-     * @return void The link.
+     * @return string The link.
      */
     public static function origineMiniReactionFeedLink($attr, $content)
     {
@@ -920,7 +922,7 @@ class Frontend extends dcNsProcess
      * @param array $attr    Unused.
      * @param void  $content The link.
      *
-     * @return void The link.
+     * @return string The link.
      */
     public static function origineMiniTrackbackLink($attr, $content)
     {
@@ -935,7 +937,7 @@ class Frontend extends dcNsProcess
      * @param array $attr    Unused.
      * @param void  $content The content of the widget area.
      *
-     * @return void The navigation widget.
+     * @return string The navigation widget.
      */
     public static function origineMiniWidgetsNav($attr, $content)
     {
@@ -950,7 +952,7 @@ class Frontend extends dcNsProcess
      * @param array $attr    Unused.
      * @param void  $content The content of the search form.
      *
-     * @return void The search form.
+     * @return string The search form.
      */
     public static function origineMiniWidgetSearchForm($attr, $content)
     {
@@ -965,7 +967,7 @@ class Frontend extends dcNsProcess
      * @param array $attr    Unused.
      * @param void  $content The content of the widget area.
      *
-     * @return void The navigation widget.
+     * @return string The navigation widget.
      */
     public static function origineMiniWidgetsExtra($attr, $content)
     {
@@ -980,7 +982,7 @@ class Frontend extends dcNsProcess
      * @param array $attr    Unused.
      * @param void  $content The content of the footer.
      *
-     * @return void The footer.
+     * @return string The footer.
      */
     public static function origineMiniFooter($attr, $content)
     {
