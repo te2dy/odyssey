@@ -5,13 +5,11 @@
 
 namespace Dotclear\Theme\originemini;
 
-use ArrayObject;
 use dcCore;
 use dcNsProcess;
-use dcThemeConfig;
+use context;
 use Dotclear\Helper\Html\Html;
 use Dotclear\Helper\Text;
-use Dotclear\Public\Context; // Vérifier chemin
 use Dotclear\Helper\L10n;
 
 // Lets prepare to use custom functions.
@@ -134,25 +132,25 @@ class Frontend extends dcNsProcess
                     $desc = dcCore::app()->ctx->posts->getContent();
                 }
 
-                $desc = Html::decodeEntities(\Html::clean($desc));
+                $desc = Html::decodeEntities(Html::clean($desc));
                 $desc = preg_replace('/\s+/', ' ', $desc);
 
                 if (strlen($desc) > 180) {
                     $desc = Text::cutString($desc, 179) . '…';
                 }
 
-                if (Context::EntryFirstImageHelper('o', true, '', true)) {
-                    $img = dcCore::app()->blog->host . Context::EntryFirstImageHelper('o', true, '', true);
+                if (context::EntryFirstImageHelper('o', true, '', true)) {
+                    $img = dcCore::app()->blog->host . context::EntryFirstImageHelper('o', true, '', true);
                 }
 
             // Home.
             } elseif (dcCore::app()->url->type === 'default' || dcCore::app()->url->type === 'default-page') {
                 $title = dcCore::app()->blog->name;
 
-                if ((int) Context::PaginationPosition() > 1 ) {
+                if ((int) context::PaginationPosition() > 1 ) {
                     $desc = sprintf(
                         __('meta-social-page-with-number'),
-                        Context::PaginationPosition()
+                        context::PaginationPosition()
                     );
                 }
 
@@ -167,7 +165,7 @@ class Frontend extends dcNsProcess
                         $desc .= dcCore::app()->blog->desc;
                     }
 
-                    $desc  = Html::decodeEntities(\Html::clean($desc));
+                    $desc  = Html::decodeEntities(Html::clean($desc));
                     $desc  = preg_replace('/\s+/', ' ', $desc);
 
                     if (strlen($desc) > 180) {
@@ -181,7 +179,7 @@ class Frontend extends dcNsProcess
 
                 if (dcCore::app()->ctx->categories->cat_desc) {
                     $desc = dcCore::app()->ctx->categories->cat_desc;
-                    $desc = Html::decodeEntities(\Html::clean($desc));
+                    $desc = Html::decodeEntities(Html::clean($desc));
                     $desc = preg_replace('/\s+/', ' ', $desc);
 
                     if (strlen($desc) > 180) {
