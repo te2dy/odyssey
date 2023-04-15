@@ -9,21 +9,21 @@
 </tpl:Block>
 
 <tpl:Block name="main-content">
-    {{tpl:BlogStaticEntryURL}}
+  {{tpl:BlogStaticEntryURL}}
 
-    <tpl:Entries>
-      {{tpl:EntryContent}}
+  <tpl:Entries>
+    {{tpl:EntryContent}}
 
-      <article id={{tpl:lang page-id}}-{{tpl:EntryID}} class=page{{tpl:origineMiniEntryLang}}>
-        <div class=content-text>
-          {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
+    <article id={{tpl:lang page-id}}-{{tpl:EntryID}} class=page{{tpl:origineMiniEntryLang}}>
+      <div class=content-text>
+        {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
 
-          {{tpl:EntryContent}}
+        {{tpl:EntryContent}}
 
-          {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
-        </div>
-      </article>
+        {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
+      </div>
+    </article>
 
-      {{tpl:include src="_comments.html"}}
-    </tpl:Entries>
+    {{tpl:include src="_comments.html"}}
+  </tpl:Entries>
 </tpl:Block>
