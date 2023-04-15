@@ -18,6 +18,7 @@ $this->registerModule(
     '1.4',                      // Version
     [
         'requires'             => [['core', '2.24']],
+        'tplset'               => 'mustek',
         'type'                 => 'theme',
 
         // Allows a full control for the theme configurator.

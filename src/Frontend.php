@@ -1,37 +1,83 @@
 <?php
 /**
- * Origine Mini, a minimal theme for Dotclear.
- *
- * @author    Teddy <zozxebpyr@mozmail.com>
- * @copyright 2022-2023 Teddy
- * @license   GPL-3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
+ * À RÉDIGER.
  */
 
-namespace themes\origine_mini;
+namespace Dotclear\Theme\originemini;
 
-if (!defined('DC_RC_PATH')) {
-    return;
-}
+use ArrayObject;
+use dcCore;
+use dcNsProcess;
+use dcThemeConfig;
+use Dotclear\Helper\Html\Html;
+use Dotclear\Helper\Text;
+use Dotclear\Public\Context; // Vérifier chemin
+use Dotclear\Helper\L10n;
 
 // Lets prepare to use custom functions.
-require_once 'inc/functions.php';
-use \OrigineMiniUtils as omUtils;
+require_once 'functions.php';
+use OrigineMiniUtils as omUtils;
 
-\l10n::set(__DIR__ . '/locales/' . \dcCore::app()->lang . '/main');
-
-\dcCore::app()->addBehavior('publicHeadContent', [__NAMESPACE__ . '\OrigineMiniPublicBehaviors', 'origineMiniHeadMeta']);
-\dcCore::app()->addBehavior('publicHeadContent', [__NAMESPACE__ . '\OrigineMiniPublicBehaviors', 'origineMiniSocialMarkups']);
-\dcCore::app()->addBehavior('publicEntryBeforeContent', [__NAMESPACE__ . '\OrigineMiniPublicBehaviors', 'origineMiniPostIntro']);
-\dcCore::app()->addBehavior('publicFooterContent', [__NAMESPACE__ . '\OrigineMiniPublicBehaviors', 'origineMiniSocialLinks']);
-\dcCore::app()->addBehavior('publicFooterContent', [__NAMESPACE__ . '\OrigineMiniPublicBehaviors', 'origineMiniScriptSearchForm']);
-\dcCore::app()->addBehavior('publicFooterContent', [__NAMESPACE__ . '\OrigineMiniPublicBehaviors', 'origineMiniScriptTrackbackURL']);
-\dcCore::app()->addBehavior('publicFooterContent', [__NAMESPACE__ . '\OrigineMiniPublicBehaviors', 'origineMiniScriptImagesWide']);
-
-/**
- * Adds behaviors to the theme's template files.
- */
-class OrigineMiniPublicBehaviors
+class Frontend extends dcNsProcess
 {
+    public static function init(): bool
+    {
+        static::$init = defined('DC_RC_PATH');
+
+        return static::$init;
+    }
+
+    public static function process(): bool
+    {
+        if (!static::$init) {
+            return false;
+        }
+
+        L10n::set(__DIR__ . '/../locales/' . dcCore::app()->lang . '/main');
+
+        // Behaviors.
+        dcCore::app()->addBehavior('publicHeadContent', [self::class, 'origineMiniHeadMeta']);
+        dcCore::app()->addBehavior('publicHeadContent', [self::class, 'origineMiniSocialMarkups']);
+        dcCore::app()->addBehavior('publicEntryBeforeContent', [self::class, 'origineMiniPostIntro']);
+        dcCore::app()->addBehavior('publicFooterContent', [self::class, 'origineMiniSocialLinks']);
+        dcCore::app()->addBehavior('publicFooterContent', [self::class, 'origineMiniScriptSearchForm']);
+        dcCore::app()->addBehavior('publicFooterContent', [self::class, 'origineMiniScriptTrackbackURL']);
+        dcCore::app()->addBehavior('publicFooterContent', [self::class, 'origineMiniScriptImagesWide']);
+
+        // Values.
+        dcCore::app()->tpl->addValue('origineMiniMetaDescriptionHome', [self::class, 'origineMiniMetaDescriptionHome']);
+        dcCore::app()->tpl->addValue('origineMiniStylesInline', [self::class, 'origineMiniStylesInline']);
+        dcCore::app()->tpl->addValue('origineMiniEntryLang', [self::class, 'origineMiniEntryLang']);
+        dcCore::app()->tpl->addValue('origineMiniScreenReaderLinks', [self::class, 'origineMiniScreenReaderLinks']);
+        dcCore::app()->tpl->addValue('origineMiniHeaderImage', [self::class, 'origineMiniHeaderImage']);
+        dcCore::app()->tpl->addValue('origineMiniBlogDescription', [self::class, 'origineMiniBlogDescription']);
+        dcCore::app()->tpl->addValue('origineMiniPostListType', [self::class, 'origineMiniPostListType']);
+        dcCore::app()->tpl->addValue('origineMiniPostListReactionLink', [self::class, 'origineMiniPostListReactionLink']);
+        dcCore::app()->tpl->addValue('origineMiniEntryTime', [self::class, 'origineMiniEntryTime']);
+        dcCore::app()->tpl->addValue('origineMiniEntryExcerpt', [self::class, 'origineMiniEntryExcerpt']);
+        dcCore::app()->tpl->addValue('origineMiniPostTagsBefore', [self::class, 'origineMiniPostTagsBefore']);
+        dcCore::app()->tpl->addValue('origineMiniScriptTrackbackURLCopied', [self::class, 'origineMiniScriptTrackbackURLCopied']);
+        dcCore::app()->tpl->addValue('origineMiniEmailAuthor', [self::class, 'origineMiniEmailAuthor']);
+        dcCore::app()->tpl->addValue('origineMiniAttachmentTitle', [self::class, 'origineMiniAttachmentTitle']);
+        dcCore::app()->tpl->addValue('origineMiniAttachmentSize', [self::class, 'origineMiniAttachmentSize']);
+        dcCore::app()->tpl->addValue('origineMiniCategoryDescription', [self::class, 'origineMiniCategoryDescription']);
+        dcCore::app()->tpl->addValue('origineMiniFooterCredits', [self::class, 'origineMiniFooterCredits']);
+        dcCore::app()->tpl->addValue('origineMiniURIRelative', [self::class, 'origineMiniURIRelative']);
+
+        // Blocks.
+        dcCore::app()->tpl->addBlock('origineMiniPostFooter', [self::class, 'origineMiniPostFooter']);
+        dcCore::app()->tpl->addBlock('origineMiniHeaderIdentity', [self::class, 'origineMiniHeaderIdentity']);
+        dcCore::app()->tpl->addBlock('origineMiniCommentFormWrapper', [self::class, 'origineMiniCommentFormWrapper']);
+        dcCore::app()->tpl->addBlock('origineMiniReactionFeedLink', [self::class, 'origineMiniReactionFeedLink']);
+        dcCore::app()->tpl->addBlock('origineMiniTrackbackLink', [self::class, 'origineMiniTrackbackLink']);
+        dcCore::app()->tpl->addBlock('origineMiniWidgetsNav', [self::class, 'origineMiniWidgetsNav']);
+        dcCore::app()->tpl->addBlock('origineMiniWidgetSearchForm', [self::class, 'origineMiniWidgetSearchForm']);
+        dcCore::app()->tpl->addBlock('origineMiniWidgetsExtra', [self::class, 'origineMiniWidgetsExtra']);
+        dcCore::app()->tpl->addBlock('origineMiniFooter', [self::class, 'origineMiniFooter']);
+
+        return true;
+    }
+
     /**
      * Adds meta tags in the <head> section depending on the blog settings.
      *
@@ -40,8 +86,8 @@ class OrigineMiniPublicBehaviors
     public static function origineMiniHeadMeta()
     {
         // Adds the name of the editor.
-        if (\dcCore::app()->blog->settings->system->editor) {
-            $editor = \dcCore::app()->blog->settings->system->editor;
+        if (dcCore::app()->blog->settings->system->editor) {
+            $editor = dcCore::app()->blog->settings->system->editor;
 
             // Adds quotes if the value contains one or more spaces.
             $editor = strpos($editor, ' ') === false ? $editor : '"' . $editor . '"';
@@ -50,8 +96,8 @@ class OrigineMiniPublicBehaviors
         }
 
         // Adds the content of the copyright notice.
-        if (\dcCore::app()->blog->settings->system->copyright_notice) {
-            $notice = \dcCore::app()->blog->settings->system->copyright_notice;
+        if (dcCore::app()->blog->settings->system->copyright_notice) {
+            $notice = dcCore::app()->blog->settings->system->copyright_notice;
 
             // Adds quotes if the value contains one or more spaces.
             $notice = strpos($notice, ' ') === false ? $notice : '"' . $notice . '"';
@@ -60,7 +106,7 @@ class OrigineMiniPublicBehaviors
         }
 
         // Adds the generator of the blog.
-        if (\dcCore::app()->blog->settings->originemini->global_meta_generator === true) {
+        if (dcCore::app()->blog->settings->originemini->global_meta_generator === true) {
             echo '<meta name=generator content=Dotclear>', "\n";
         }
     }
@@ -74,86 +120,86 @@ class OrigineMiniPublicBehaviors
      */
     public static function origineMiniSocialMarkups()
     {
-        if (\dcCore::app()->blog->settings->originemini->global_meta_social === true) {
+        if (dcCore::app()->blog->settings->originemini->global_meta_social === true) {
             $title = '';
             $desc  = '';
             $img   = '';
 
             // Posts and pages.
-            if (\dcCore::app()->url->type === 'post' || \dcCore::app()->url->type === 'pages') {
-                $title = \dcCore::app()->ctx->posts->post_title;
-                $desc  = \dcCore::app()->ctx->posts->getExcerpt();
+            if (dcCore::app()->url->type === 'post' || dcCore::app()->url->type === 'pages') {
+                $title = dcCore::app()->ctx->posts->post_title;
+                $desc  = dcCore::app()->ctx->posts->getExcerpt();
 
                 if ($desc === '') {
-                    $desc = \dcCore::app()->ctx->posts->getContent();
+                    $desc = dcCore::app()->ctx->posts->getContent();
                 }
 
-                $desc = \html::decodeEntities(\html::clean($desc));
+                $desc = Html::decodeEntities(\Html::clean($desc));
                 $desc = preg_replace('/\s+/', ' ', $desc);
 
                 if (strlen($desc) > 180) {
-                    $desc = \text::cutString($desc, 179) . '…';
+                    $desc = Text::cutString($desc, 179) . '…';
                 }
 
-                if (\context::EntryFirstImageHelper('o', true, '', true)) {
-                    $img = \dcCore::app()->blog->host . \context::EntryFirstImageHelper('o', true, '', true);
+                if (Context::EntryFirstImageHelper('o', true, '', true)) {
+                    $img = dcCore::app()->blog->host . Context::EntryFirstImageHelper('o', true, '', true);
                 }
 
             // Home.
-            } elseif (\dcCore::app()->url->type === 'default' || \dcCore::app()->url->type === 'default-page') {
-                $title = \dcCore::app()->blog->name;
+            } elseif (dcCore::app()->url->type === 'default' || dcCore::app()->url->type === 'default-page') {
+                $title = dcCore::app()->blog->name;
 
-                if ((int) \context::PaginationPosition() > 1 ) {
+                if ((int) Context::PaginationPosition() > 1 ) {
                     $desc = sprintf(
                         __('meta-social-page-with-number'),
-                        \context::PaginationPosition()
+                        Context::PaginationPosition()
                     );
                 }
 
-                if (\dcCore::app()->blog->settings->originemini->global_meta_home_description || \dcCore::app()->blog->desc) {
+                if (dcCore::app()->blog->settings->originemini->global_meta_home_description || dcCore::app()->blog->desc) {
                     if ($desc) {
                         $desc .= ' – ';
                     }
 
-                    if (\dcCore::app()->blog->settings->originemini->global_meta_home_description) {
-                        $desc .= \dcCore::app()->blog->settings->originemini->global_meta_home_description;
-                    } elseif (\dcCore::app()->blog->desc) {
-                        $desc .= \dcCore::app()->blog->desc;
+                    if (dcCore::app()->blog->settings->originemini->global_meta_home_description) {
+                        $desc .= dcCore::app()->blog->settings->originemini->global_meta_home_description;
+                    } elseif (dcCore::app()->blog->desc) {
+                        $desc .= dcCore::app()->blog->desc;
                     }
 
-                    $desc  = \html::decodeEntities(\html::clean($desc));
+                    $desc  = Html::decodeEntities(\Html::clean($desc));
                     $desc  = preg_replace('/\s+/', ' ', $desc);
 
                     if (strlen($desc) > 180) {
-                        $desc = \text::cutString($desc, 179) . '…';
+                        $desc = Text::cutString($desc, 179) . '…';
                     }
                 }
 
             // Categories.
-            } elseif (\dcCore::app()->url->type === 'category') {
-                $title = \dcCore::app()->ctx->categories->cat_title;
+            } elseif (dcCore::app()->url->type === 'category') {
+                $title = dcCore::app()->ctx->categories->cat_title;
 
-                if (\dcCore::app()->ctx->categories->cat_desc) {
-                    $desc = \dcCore::app()->ctx->categories->cat_desc;
-                    $desc = \html::decodeEntities(\html::clean($desc));
+                if (dcCore::app()->ctx->categories->cat_desc) {
+                    $desc = dcCore::app()->ctx->categories->cat_desc;
+                    $desc = Html::decodeEntities(\Html::clean($desc));
                     $desc = preg_replace('/\s+/', ' ', $desc);
 
                     if (strlen($desc) > 180) {
-                        $desc = \text::cutString($desc, 179) . '…';
+                        $desc = Text::cutString($desc, 179) . '…';
                     }
                 }
 
             // Tags.
-            } elseif (\dcCore::app()->url->type === 'tag' && \dcCore::app()->ctx->meta->meta_type === 'tag') {
-                $title = \dcCore::app()->ctx->meta->meta_id;
+            } elseif (dcCore::app()->url->type === 'tag' && dcCore::app()->ctx->meta->meta_type === 'tag') {
+                $title = dcCore::app()->ctx->meta->meta_id;
                 $desc  = sprintf(__('meta-social-tags-post-related'), $title);
             }
 
-            $title = \html::escapeHTML($title);
+            $title = Html::escapeHTML($title);
 
             if ($title) {
-                $desc = \html::escapeHTML($desc);
-                $img  = \html::escapeURL($img);
+                $desc = Html::escapeHTML($desc);
+                $img  = Html::escapeURL($img);
 
                 if ($img) {
                     echo '<meta name=twitter:card content=summary_large_image>', "\n";
@@ -180,8 +226,8 @@ class OrigineMiniPublicBehaviors
      */
     public static function origineMiniPostIntro()
     {
-        if (\dcCore::app()->blog->settings->originemini->content_post_intro === true && \dcCore::app()->ctx->posts->post_excerpt) {
-            echo '<div id=post-single-excerpt>', \dcCore::app()->ctx->posts->getExcerpt(), '</div>';
+        if (dcCore::app()->blog->settings->originemini->content_post_intro === true && dcCore::app()->ctx->posts->post_excerpt) {
+            echo '<div id=post-single-excerpt>', dcCore::app()->ctx->posts->getExcerpt(), '</div>';
         }
     }
 
@@ -194,40 +240,40 @@ class OrigineMiniPublicBehaviors
     {
         $social_links = [];
 
-        if (\dcCore::app()->blog->settings->originemini->footer_social_links_diaspora) {
-            $social_links['Diaspora'] = \dcCore::app()->blog->settings->originemini->footer_social_links_diaspora;
+        if (dcCore::app()->blog->settings->originemini->footer_social_links_diaspora) {
+            $social_links['Diaspora'] = dcCore::app()->blog->settings->originemini->footer_social_links_diaspora;
         }
 
-        if (\dcCore::app()->blog->settings->originemini->footer_social_links_discord) {
-            $social_links['Discord'] = \dcCore::app()->blog->settings->originemini->footer_social_links_discord;
+        if (dcCore::app()->blog->settings->originemini->footer_social_links_discord) {
+            $social_links['Discord'] = dcCore::app()->blog->settings->originemini->footer_social_links_discord;
         }
 
-        if (\dcCore::app()->blog->settings->originemini->footer_social_links_facebook) {
-            $social_links['Facebook'] = \dcCore::app()->blog->settings->originemini->footer_social_links_facebook;
+        if (dcCore::app()->blog->settings->originemini->footer_social_links_facebook) {
+            $social_links['Facebook'] = dcCore::app()->blog->settings->originemini->footer_social_links_facebook;
         }
 
-        if (\dcCore::app()->blog->settings->originemini->footer_social_links_github) {
-            $social_links['GitHub'] = \dcCore::app()->blog->settings->originemini->footer_social_links_github;
+        if (dcCore::app()->blog->settings->originemini->footer_social_links_github) {
+            $social_links['GitHub'] = dcCore::app()->blog->settings->originemini->footer_social_links_github;
         }
 
-        if (\dcCore::app()->blog->settings->originemini->footer_social_links_mastodon) {
-            $social_links['Mastodon'] = \dcCore::app()->blog->settings->originemini->footer_social_links_mastodon;
+        if (dcCore::app()->blog->settings->originemini->footer_social_links_mastodon) {
+            $social_links['Mastodon'] = dcCore::app()->blog->settings->originemini->footer_social_links_mastodon;
         }
 
-        if (\dcCore::app()->blog->settings->originemini->footer_social_links_signal) {
-            $social_links['Signal'] = \dcCore::app()->blog->settings->originemini->footer_social_links_signal;
+        if (dcCore::app()->blog->settings->originemini->footer_social_links_signal) {
+            $social_links['Signal'] = dcCore::app()->blog->settings->originemini->footer_social_links_signal;
         }
 
-        if (\dcCore::app()->blog->settings->originemini->footer_social_links_tiktok) {
-            $social_links['TikTok'] = \dcCore::app()->blog->settings->originemini->footer_social_links_tiktok;
+        if (dcCore::app()->blog->settings->originemini->footer_social_links_tiktok) {
+            $social_links['TikTok'] = dcCore::app()->blog->settings->originemini->footer_social_links_tiktok;
         }
 
-        if (\dcCore::app()->blog->settings->originemini->footer_social_links_twitter) {
-            $social_links['Twitter'] = \dcCore::app()->blog->settings->originemini->footer_social_links_twitter;
+        if (dcCore::app()->blog->settings->originemini->footer_social_links_twitter) {
+            $social_links['Twitter'] = dcCore::app()->blog->settings->originemini->footer_social_links_twitter;
         }
 
-        if (\dcCore::app()->blog->settings->originemini->footer_social_links_whatsapp) {
-            $social_links['WhatsApp'] = \dcCore::app()->blog->settings->originemini->footer_social_links_whatsapp;
+        if (dcCore::app()->blog->settings->originemini->footer_social_links_whatsapp) {
+            $social_links['WhatsApp'] = dcCore::app()->blog->settings->originemini->footer_social_links_whatsapp;
         }
 
         if (!empty($social_links)) {
@@ -251,7 +297,7 @@ class OrigineMiniPublicBehaviors
                             <a href="<?php echo \html::escapeURL($link); ?>" rel=me>
                                 <span class=footer-social-links-icon-container>
                                     <svg class=footer-social-links-icon role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>
-                                        <title><?php echo \html::escapeHTML($site); ?></title>
+                                        <title><?php echo Html::escapeHTML($site); ?></title>
 
                                         <?php echo strip_tags(omUtils::origineMiniSocialIcons($site), '<path>'); ?>
                                     </svg>
@@ -282,7 +328,7 @@ class OrigineMiniPublicBehaviors
      */
     public static function origineMiniScriptSearchForm()
     {
-        if (\dcCore::app()->blog->settings->originemini->global_js === true && (\dcCore::app()->blog->settings->originemini->widgets_search_form === true || (!\dcCore::app()->blog->settings->originemini->widgets_search_form && \dcCore::app()->url->type === 'search'))) {
+        if (dcCore::app()->blog->settings->originemini->global_js === true && (dcCore::app()->blog->settings->originemini->widgets_search_form === true || (!dcCore::app()->blog->settings->originemini->widgets_search_form && dcCore::app()->url->type === 'search'))) {
             $script = 'window.onload=function(){var e;document.getElementsByClassName("search-form-submit")[0]&&(""!==(e=new URL(document.location).searchParams.get("q"))&&(document.getElementsByClassName("search-form-submit")[0].disabled=!0),document.getElementsByClassName("search-form")[0].oninput=function(){document.getElementsByClassName("search-form-field")[0].value&&document.getElementsByClassName("search-form-field")[0].value!==e?document.getElementsByClassName("search-form-submit")[0].disabled=!1:document.getElementsByClassName("search-form-submit")[0].disabled=!0})};' . "\n";
 
             echo '<script>' . $script . '</script>' . "\n";
@@ -303,7 +349,7 @@ class OrigineMiniPublicBehaviors
      */
     public static function origineMiniScriptTrackbackURL()
     {
-        if (\dcCore::app()->blog->settings->originemini->global_js === true && (\dcCore::app()->url->type === 'post' || \dcCore::app()->url->type === 'pages')) {
+        if (dcCore::app()->blog->settings->originemini->global_js === true && (dcCore::app()->url->type === 'post' || dcCore::app()->url->type === 'pages')) {
             $script = 'window.onload=function(){document.getElementById("trackback-url")&&(document.getElementById("trackback-url").onclick=function(){window.location.protocol,window.location.host;var t,e=document.getElementById("trackback-url").innerHTML;try{t=new URL(e).href}catch(t){return!1}!1!==t.href&&navigator.clipboard.writeText(t).then(()=>{document.getElementById("trackback-url-copied").style.display="inline"},()=>{document.getElementById("trackback-url-copied").style.display="none"})})};' . "\n";
 
             echo '<script>' . $script . '</script>' . "\n";
@@ -324,8 +370,8 @@ class OrigineMiniPublicBehaviors
      */
     public static function origineMiniScriptImagesWide()
     {
-        $om_settings = \dcCore::app()->blog->settings->originemini;
-        $page_type   = \dcCore::app()->url->type;
+        $om_settings = dcCore::app()->blog->settings->originemini;
+        $page_type   = dcCore::app()->url->type;
 
         if ($om_settings->content_images_wide === true) {
             $context = 'entry';
@@ -351,32 +397,7 @@ class OrigineMiniPublicBehaviors
             }
         }
     }
-}
 
-\dcCore::app()->tpl->addValue('origineMiniMetaDescriptionHome', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniMetaDescriptionHome']);
-\dcCore::app()->tpl->addValue('origineMiniStylesInline', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniStylesInline']);
-\dcCore::app()->tpl->addValue('origineMiniEntryLang', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniEntryLang']);
-\dcCore::app()->tpl->addValue('origineMiniScreenReaderLinks', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniScreenReaderLinks']);
-\dcCore::app()->tpl->addValue('origineMiniHeaderImage', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniHeaderImage']);
-\dcCore::app()->tpl->addValue('origineMiniBlogDescription', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniBlogDescription']);
-\dcCore::app()->tpl->addValue('origineMiniPostListType', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniPostListType']);
-\dcCore::app()->tpl->addValue('origineMiniPostListReactionLink', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniPostListReactionLink']);
-\dcCore::app()->tpl->addValue('origineMiniEntryTime', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniEntryTime']);
-\dcCore::app()->tpl->addValue('origineMiniEntryExcerpt', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniEntryExcerpt']);
-\dcCore::app()->tpl->addValue('origineMiniPostTagsBefore', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniPostTagsBefore']);
-\dcCore::app()->tpl->addValue('origineMiniScriptTrackbackURLCopied', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniScriptTrackbackURLCopied']);
-\dcCore::app()->tpl->addValue('origineMiniEmailAuthor', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniEmailAuthor']);
-\dcCore::app()->tpl->addValue('origineMiniAttachmentTitle', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniAttachmentTitle']);
-\dcCore::app()->tpl->addValue('origineMiniAttachmentSize', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniAttachmentSize']);
-\dcCore::app()->tpl->addValue('origineMiniCategoryDescription', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniCategoryDescription']);
-\dcCore::app()->tpl->addValue('origineMiniFooterCredits', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniFooterCredits']);
-\dcCore::app()->tpl->addValue('origineMiniURIRelative', [__NAMESPACE__ . '\OrigineMiniPublicValues', 'origineMiniURIRelative']);
-
-/**
- * Adds custom values to the theme's template files.
- */
-class OrigineMiniPublicValues
-{
     /**
      * Displays the description of the blog homepage to add in a meta description tag.
      *
@@ -388,10 +409,10 @@ class OrigineMiniPublicValues
      */
     public static function origineMiniMetaDescriptionHome($attr)
     {
-        if (\dcCore::app()->blog->settings->originemini->global_meta_home_description) {
-            return '<?php echo ' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->blog->settings->originemini->global_meta_home_description') . '; ?>';
+        if (dcCore::app()->blog->settings->originemini->global_meta_home_description) {
+            return '<?php echo ' . sprintf(dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->blog->settings->originemini->global_meta_home_description') . '; ?>';
         } else {
-            return '<?php echo ' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->blog->desc') . '; ?>';
+            return '<?php echo ' . sprintf(dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->blog->desc') . '; ?>';
         }
     }
 
@@ -402,8 +423,8 @@ class OrigineMiniPublicValues
      */
     public static function origineMiniStylesInline()
     {
-        if (\dcCore::app()->blog->settings->originemini->styles) {
-            return '<style>' . \dcCore::app()->blog->settings->originemini->styles . '</style>';
+        if (dcCore::app()->blog->settings->originemini->styles) {
+            return '<style>' . dcCore::app()->blog->settings->originemini->styles . '</style>';
         }
     }
 
@@ -433,12 +454,12 @@ class OrigineMiniPublicValues
         $links = '<a id=skip-content class=skip-links href=#site-content>' . __('skip-link-content') . '</a>';
 
         // If simpleMenu exists, is activated and a menu has been set, then adds a link to it.
-        if (\dcCore::app()->plugins->moduleExists('simpleMenu') && \dcCore::app()->blog->settings->system->simpleMenu_active === true) {
+        if (dcCore::app()->plugins->moduleExists('simpleMenu') && dcCore::app()->blog->settings->system->simpleMenu_active === true) {
             $links .= '<a id=skip-menu class=skip-links href=#main-menu>' . __('skip-link-menu') . '</a>';
         }
 
         // Adds a link to the footer except if it has been disabled in the configurator.
-        if (\dcCore::app()->blog->settings->originemini->footer_enabled !== false) {
+        if (dcCore::app()->blog->settings->originemini->footer_enabled !== false) {
             $links .= '<a id=skip-footer class=skip-links href=#site-footer>' . __('skip-link-footer') . '</a>';
         }
 
@@ -459,22 +480,22 @@ class OrigineMiniPublicValues
      */
     public static function origineMiniHeaderImage($attr)
     {
-        if (\dcCore::app()->blog->settings->originemini->header_image && \dcCore::app()->blog->settings->originemini->header_image['url']) {
+        if (dcCore::app()->blog->settings->originemini->header_image && dcCore::app()->blog->settings->originemini->header_image['url']) {
             if (!empty($attr['position'])
-                && (($attr['position'] === 'bottom' && \dcCore::app()->blog->settings->originemini->header_image_position === 'bottom')
-                || ($attr['position'] === 'top' && !\dcCore::app()->blog->settings->originemini->header_image_position))
+                && (($attr['position'] === 'bottom' && dcCore::app()->blog->settings->originemini->header_image_position === 'bottom')
+                || ($attr['position'] === 'top' && !dcCore::app()->blog->settings->originemini->header_image_position))
             ) {
-                $image_url = \html::escapeURL(\dcCore::app()->blog->settings->originemini->header_image['url']);
+                $image_url = Html::escapeURL(dcCore::app()->blog->settings->originemini->header_image['url']);
                 $srcset    = '';
 
-                if (\dcCore::app()->blog->settings->originemini->header_image_description) {
-                    $alt = ' alt="' . \html::escapeHTML(\dcCore::app()->blog->settings->originemini->header_image_description) . '"';
+                if (dcCore::app()->blog->settings->originemini->header_image_description) {
+                    $alt = ' alt="' . Html::escapeHTML(dcCore::app()->blog->settings->originemini->header_image_description) . '"';
                 } else {
                     $alt = ' alt="' . __('Header Image') . '"';
                 }
 
-                if (\dcCore::app()->blog->settings->originemini->header_image2x) {
-                    $image2x_url = \html::escapeURL(\dcCore::app()->blog->settings->originemini->header_image2x);
+                if (dcCore::app()->blog->settings->originemini->header_image2x) {
+                    $image2x_url = Html::escapeURL(dcCore::app()->blog->settings->originemini->header_image2x);
 
                     $srcset  = ' srcset="';
                     $srcset .= $image_url . ' 1x, ';
@@ -483,10 +504,10 @@ class OrigineMiniPublicValues
                 }
 
                 // Does not add a link to the home page on home page.
-                if (\dcCore::app()->url->type === 'default') {
+                if (dcCore::app()->url->type === 'default') {
                     return '<div id=site-image><img' . $alt . ' src="' . $image_url . '"' . $srcset . '></div>';
                 } else {
-                    return '<div id=site-image><a href="' . \dcCore::app()->blog->url . '" rel=home><img' . $alt . ' src="' . $image_url . '"' . $srcset . '></a></div>';
+                    return '<div id=site-image><a href="' . dcCore::app()->blog->url . '" rel=home><img' . $alt . ' src="' . $image_url . '"' . $srcset . '></a></div>';
                 }
             }
         }
@@ -499,49 +520,13 @@ class OrigineMiniPublicValues
      */
     public static function origineMiniBlogDescription()
     {
-        if (\dcCore::app()->blog->desc && \dcCore::app()->blog->settings->originemini->header_description === true) {
-            $description = \html::decodeEntities(\html::clean(\dcCore::app()->blog->desc));
+        if (dcCore::app()->blog->desc && dcCore::app()->blog->settings->originemini->header_description === true) {
+            $description = Html::decodeEntities(Html::clean(dcCore::app()->blog->desc));
             $description = preg_replace('/\s+/', ' ', $description);
-            $description = \html::escapeHTML($description);
+            $description = Html::escapeHTML($description);
 
             if ($description) {
                 return '<h2 class=text-secondary id=site-description>' . $description . '</h2>';
-            }
-        }
-    }
-
-    /**
-     * Displays the category description in a block only if a description is set.
-     *
-     * @return void The category description.
-     */
-    public static function origineMiniCategoryDescription()
-    {
-        if (\dcCore::app()->ctx->categories->cat_desc) {
-            return '<div class=content-text>' . \dcCore::app()->ctx->categories->cat_desc . '</div>';
-        }
-    }
-
-    /**
-     * Credits to display at the bottom of the site.
-     *
-     * Dotclear and theme versions are shown only on dev environments.
-     *
-     * @return void The footer credits.
-     */
-    public static function origineMiniFooterCredits()
-    {
-        if (\dcCore::app()->blog->settings->originemini->footer_credits !== false) {
-            if (!defined('DC_DEV') || (defined('DC_DEV') && DC_DEV === false)) {
-                return '<div class=site-footer-block>' . __('footer-powered-by') . '</div>';
-            } else {
-                $dc_version       = \dcCore::app()->getVersion('core');
-                $dc_version_parts = explode('-', $dc_version);
-                $dc_version_short = $dc_version_parts[0] ?? $dc_version;
-
-                $theme_version = \dcCore::app()->themes->moduleInfo('origine-mini', 'version');
-
-                return '<div class=site-footer-block>' . sprintf(__('footer-powered-by-dev'), $dc_version, $dc_version_short, $theme_version) . '</div>';
             }
         }
     }
@@ -554,15 +539,15 @@ class OrigineMiniPublicValues
      */
     public static function origineMiniPostListType()
     {
-        if (!\dcCore::app()->blog->settings->originemini->content_post_list_type || \dcCore::app()->blog->settings->originemini->content_post_list_type === 'short') {
-            return \dcCore::app()->tpl->includeFile(['src' => '_entry-list-short.html']);
+        if (!dcCore::app()->blog->settings->originemini->content_post_list_type || dcCore::app()->blog->settings->originemini->content_post_list_type === 'short') {
+            return dcCore::app()->tpl->includeFile(['src' => '_entry-list-short.html']);
         } else {
             $postlist_type_allowed = ['short', 'excerpt', 'content'];
 
-            $postlist_type = \dcCore::app()->blog->settings->originemini->content_post_list_type;
+            $postlist_type = dcCore::app()->blog->settings->originemini->content_post_list_type;
             $postlist_type = in_array($postlist_type, $postlist_type_allowed, true) ? $postlist_type : 'short';
 
-            return \dcCore::app()->tpl->includeFile(['src' => '_entry-list-' . $postlist_type . '.html']);
+            return dcCore::app()->tpl->includeFile(['src' => '_entry-list-' . $postlist_type . '.html']);
         }
     }
 
@@ -575,7 +560,7 @@ class OrigineMiniPublicValues
      */
     public static function origineMiniPostListReactionLink()
     {
-        if (\dcCore::app()->blog->settings->originemini->content_post_list_reaction_link && \dcCore::app()->blog->settings->originemini->content_post_list_reaction_link !== 'disabled') {
+        if (dcCore::app()->blog->settings->originemini->content_post_list_reaction_link && dcCore::app()->blog->settings->originemini->content_post_list_reaction_link !== 'disabled') {
             return '<?php
             $nb_reactions = intval((int) dcCore::app()->ctx->posts->nb_comment + (int) dcCore::app()->ctx->posts->nb_trackback);
 
@@ -590,7 +575,7 @@ class OrigineMiniPublicValues
                     echo __("entry-list-no-reaction-link-aria-label");
                 }
 
-                echo "\" class=post-reaction-link href=\"", html::escapeURL(dcCore::app()->ctx->posts->getURL()), "#", __("reactions-id"), "\"><small>";
+                echo "\" class=post-reaction-link href=\"", Html::escapeURL(dcCore::app()->ctx->posts->getURL()), "#", __("reactions-id"), "\"><small>";
 
                 if ($nb_reactions > 1) {
                     printf(__("entry-list-multiple-reactions"), $nb_reactions);
@@ -619,15 +604,15 @@ class OrigineMiniPublicValues
      */
     public static function origineMiniEntryTime($attr)
     {
-        if (!empty($attr['context']) && (\dcCore::app()->blog->settings->originemini->content_post_list_time === true && $attr['context'] === 'entry-list') || (\dcCore::app()->blog->settings->originemini->content_post_time === true && $attr['context'] === 'post')) {
-            if (\dcCore::app()->blog->settings->originemini->content_separator) {
-                $content_separator = ' ' . \html::escapeHTML(\dcCore::app()->blog->settings->originemini->content_separator);
+        if (!empty($attr['context']) && (dcCore::app()->blog->settings->originemini->content_post_list_time === true && $attr['context'] === 'entry-list') || (dcCore::app()->blog->settings->originemini->content_post_time === true && $attr['context'] === 'post')) {
+            if (dcCore::app()->blog->settings->originemini->content_separator) {
+                $content_separator = ' ' . Html::escapeHTML(dcCore::app()->blog->settings->originemini->content_separator);
             } else {
                 $content_separator = ' |';
             }
 
             return '<?php
-                echo "' . $content_separator . '", " ", dcCore::app()->ctx->posts->getDate("' . \dcCore::app()->blog->settings->system->time_format . '");
+                echo "' . $content_separator . '", " ", dcCore::app()->ctx->posts->getDate("' . dcCore::app()->blog->settings->system->time_format . '");
             ?>';
         }
     }
@@ -647,10 +632,10 @@ class OrigineMiniPublicValues
         return '<?php
         $the_excerpt = "";
 
-        if (' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getExcerpt()') . ') {
-            $the_excerpt = ' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getExcerpt()') . ';
+        if (' . sprintf(dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getExcerpt()') . ') {
+            $the_excerpt = ' . sprintf(dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getExcerpt()') . ';
         } else {
-            $the_excerpt = ' . sprintf(\dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getContent()') . ';
+            $the_excerpt = ' . sprintf(dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->ctx->posts->getContent()') . ';
 
             if (strlen($the_excerpt) > 200) {
                 $the_excerpt  = substr($the_excerpt, 0, 200);
@@ -705,7 +690,7 @@ class OrigineMiniPublicValues
      */
     public static function origineMiniScriptTrackbackURLCopied()
     {
-        if (\dcCore::app()->blog->settings->originemini->global_js === true) {
+        if (dcCore::app()->blog->settings->originemini->global_js === true) {
             return ' <span id=trackback-url-copied>' . __('reactions-trackback-url-copied') . '</span>';
         }
     }
@@ -717,7 +702,7 @@ class OrigineMiniPublicValues
      */
     public static function origineMiniEmailAuthor()
     {
-        if (\dcCore::app()->blog->settings->originemini->content_post_email_author !== 'disabled') {
+        if (dcCore::app()->blog->settings->originemini->content_post_email_author !== 'disabled') {
             return '<?php
             if (isset(dcCore::app()->ctx->posts->user_email) && dcCore::app()->ctx->posts->user_email && (dcCore::app()->blog->settings->originemini->content_post_email_author === "always" || (dcCore::app()->blog->settings->originemini->content_post_email_author === "comments_open" && dcCore::app()->ctx->posts->post_open_comment === "1"))
             ) {
@@ -796,6 +781,42 @@ class OrigineMiniPublicValues
     }
 
     /**
+     * Displays the category description in a block only if a description is set.
+     *
+     * @return void The category description.
+     */
+    public static function origineMiniCategoryDescription()
+    {
+        if (dcCore::app()->ctx->categories->cat_desc) {
+            return '<div class=content-text>' . dcCore::app()->ctx->categories->cat_desc . '</div>';
+        }
+    }
+
+    /**
+     * Credits to display at the bottom of the site.
+     *
+     * Dotclear and theme versions are shown only on dev environments.
+     *
+     * @return void The footer credits.
+     */
+    public static function origineMiniFooterCredits()
+    {
+        if (dcCore::app()->blog->settings->originemini->footer_credits !== false) {
+            if (!defined('DC_DEV') || (defined('DC_DEV') && DC_DEV === false)) {
+                return '<div class=site-footer-block>' . __('footer-powered-by') . '</div>';
+            } else {
+                $dc_version       = dcCore::app()->getVersion('core');
+                $dc_version_parts = explode('-', $dc_version);
+                $dc_version_short = $dc_version_parts[0] ?? $dc_version;
+
+                $theme_version = dcCore::app()->themes->moduleInfo('origine-mini', 'version');
+
+                return '<div class=site-footer-block>' . sprintf(__('footer-powered-by-dev'), $dc_version, $dc_version_short, $theme_version) . '</div>';
+            }
+        }
+    }
+
+    /**
      * Returns the relative URI of the current page.
      *
      * @return void The relative URI.
@@ -804,23 +825,7 @@ class OrigineMiniPublicValues
     {
         return '<?php echo filter_var($_SERVER["REQUEST_URI"], FILTER_SANITIZE_URL); ?>';
     }
-}
 
-\dcCore::app()->tpl->addBlock('origineMiniPostFooter', [__NAMESPACE__ . '\OrigineMiniPublicBlocks', 'origineMiniPostFooter']);
-\dcCore::app()->tpl->addBlock('origineMiniHeaderIdentity', [__NAMESPACE__ . '\OrigineMiniPublicBlocks', 'origineMiniHeaderIdentity']);
-\dcCore::app()->tpl->addBlock('origineMiniCommentFormWrapper', [__NAMESPACE__ . '\OrigineMiniPublicBlocks', 'origineMiniCommentFormWrapper']);
-\dcCore::app()->tpl->addBlock('origineMiniReactionFeedLink', [__NAMESPACE__ . '\OrigineMiniPublicBlocks', 'origineMiniReactionFeedLink']);
-\dcCore::app()->tpl->addBlock('origineMiniTrackbackLink', [__NAMESPACE__ . '\OrigineMiniPublicBlocks', 'origineMiniTrackbackLink']);
-\dcCore::app()->tpl->addBlock('origineMiniWidgetsNav', [__NAMESPACE__ . '\OrigineMiniPublicBlocks', 'origineMiniWidgetsNav']);
-\dcCore::app()->tpl->addBlock('origineMiniWidgetSearchForm', [__NAMESPACE__ . '\OrigineMiniPublicBlocks', 'origineMiniWidgetSearchForm']);
-\dcCore::app()->tpl->addBlock('origineMiniWidgetsExtra', [__NAMESPACE__ . '\OrigineMiniPublicBlocks', 'origineMiniWidgetsExtra']);
-\dcCore::app()->tpl->addBlock('origineMiniFooter', [__NAMESPACE__ . '\OrigineMiniPublicBlocks', 'origineMiniFooter']);
-
-/**
- * Adds blocks to the theme's template files.
- */
-class OrigineMiniPublicBlocks
-{
     /**
      * Displays the footer of the post if it has content.
      *
@@ -835,16 +840,16 @@ class OrigineMiniPublicBlocks
         $has_category   = false;
         $has_tag        = false;
 
-        if (\dcCore::app()->ctx->posts->countMedia('attachment') > 0) {
+        if (dcCore::app()->ctx->posts->countMedia('attachment') > 0) {
             $has_attachment = true;
         }
 
-        if (\dcCore::app()->ctx->posts->cat_id) {
+        if (dcCore::app()->ctx->posts->cat_id) {
             $has_category = true;
         }
 
-        if (\dcCore::app()->ctx->posts->post_meta) {
-            $post_meta = unserialize(\dcCore::app()->ctx->posts->post_meta);
+        if (dcCore::app()->ctx->posts->post_meta) {
+            $post_meta = unserialize(dcCore::app()->ctx->posts->post_meta);
 
             if (is_array($post_meta) && isset($post_meta['tag']) && count($post_meta['tag']) > 0) {
                 $has_tag = true;
@@ -866,12 +871,11 @@ class OrigineMiniPublicBlocks
      */
     public static function origineMiniHeaderIdentity($attr, $content)
     {
-        if (\dcCore::app()->blog->settings->originemini->header_description !== true) {
+        if (dcCore::app()->blog->settings->originemini->header_description !== true) {
             return $content;
         } else {
             return '<div id=site-identity>' . $content . '</div>';
         }
-
     }
 
     /**
@@ -884,16 +888,14 @@ class OrigineMiniPublicBlocks
      */
     public static function origineMiniCommentFormWrapper($attr, $content)
     {
-        if (!\dcCore::app()->blog->settings->originemini->content_commentform_hide) {
+        if (!dcCore::app()->blog->settings->originemini->content_commentform_hide) {
             return '<h3 class=reaction-title>' . __('reactions-comment-form-title') . '</h3>' . $content;
         } else {
-            if (\dcCore::app()->ctx->comment_preview !== null && \dcCore::app()->ctx->comment_preview["preview"]) {
+            if (dcCore::app()->ctx->comment_preview !== null && dcCore::app()->ctx->comment_preview["preview"]) {
                 return '<div id=react-content><h3 class=reaction-title>' . __('reactions-comment-form-preview-title') . '</h3>' . $content . '</div>';
             } else {
                 return '<details><summary class=button>' . __('reactions-react-link-title') . '</summary><div id=react-content><h3 class=reaction-title>' . __('reactions-comment-form-title') . '</h3>' . $content . '</div></details>';
             }
-
-
         }
     }
 
@@ -907,7 +909,7 @@ class OrigineMiniPublicBlocks
      */
     public static function origineMiniReactionFeedLink($attr, $content)
     {
-        if (\dcCore::app()->blog->settings->originemini->content_reaction_feed !== false) {
+        if (dcCore::app()->blog->settings->originemini->content_reaction_feed !== false) {
             return $content;
         }
     }
@@ -922,7 +924,7 @@ class OrigineMiniPublicBlocks
      */
     public static function origineMiniTrackbackLink($attr, $content)
     {
-        if (\dcCore::app()->blog->settings->originemini->content_trackback_link !== false) {
+        if (dcCore::app()->blog->settings->originemini->content_trackback_link !== false) {
             return $content;
         }
     }
@@ -937,7 +939,7 @@ class OrigineMiniPublicBlocks
      */
     public static function origineMiniWidgetsNav($attr, $content)
     {
-        if (\dcCore::app()->blog->settings->originemini->widgets_nav_position !== 'disabled') {
+        if (dcCore::app()->blog->settings->originemini->widgets_nav_position !== 'disabled') {
             return $content;
         }
     }
@@ -952,7 +954,7 @@ class OrigineMiniPublicBlocks
      */
     public static function origineMiniWidgetSearchForm($attr, $content)
     {
-        if (\dcCore::app()->blog->settings->originemini->widgets_search_form === true && \dcCore::app()->url->type !== 'search') {
+        if (dcCore::app()->blog->settings->originemini->widgets_search_form === true && \dcCore::app()->url->type !== 'search') {
             return $content;
         }
     }
@@ -967,7 +969,7 @@ class OrigineMiniPublicBlocks
      */
     public static function origineMiniWidgetsExtra($attr, $content)
     {
-        if (\dcCore::app()->blog->settings->originemini->widgets_extra_enabled !== false) {
+        if (dcCore::app()->blog->settings->originemini->widgets_extra_enabled !== false) {
             return $content;
         }
     }
@@ -982,7 +984,7 @@ class OrigineMiniPublicBlocks
      */
     public static function origineMiniFooter($attr, $content)
     {
-        if (\dcCore::app()->blog->settings->originemini->footer_enabled !== false) {
+        if (dcCore::app()->blog->settings->originemini->footer_enabled !== false) {
             return $content;
         }
     }
