@@ -826,6 +826,11 @@ class Config extends dcNsProcess
                 }
             }
 
+            // Hide comment form.
+            if (isset($_POST['content_commentform_hide']) && $_POST['content_commentform_hide'] === '1') {
+                $css_main_array['#react-content']['margin-top'] = '1rem';
+            }
+
             // Private comments.
             if (isset($_POST['content_post_email_author']) && $_POST['content_post_email_author'] !== 'disabled') {
                 $css_main_array['.comment-private']['margin-bottom'] = '2rem';
