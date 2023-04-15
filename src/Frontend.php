@@ -227,7 +227,7 @@ class Frontend extends dcNsProcess
     public static function origineMiniPostIntro(): void
     {
         if (dcCore::app()->blog->settings->originemini->content_post_intro === true && dcCore::app()->ctx->posts->post_excerpt) {
-            echo '<div id=post-single-excerpt>', dcCore::app()->ctx->posts->getExcerpt(), '</div>';
+            echo '<div id=post-intro>', dcCore::app()->ctx->posts->getExcerpt(), '</div>';
         }
     }
 
