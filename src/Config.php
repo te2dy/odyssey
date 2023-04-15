@@ -50,6 +50,10 @@ class Config extends dcNsProcess
             return false;
         }
 
+        // Behavior.
+        dcCore::app()->addBehavior('adminPageHTMLHead', [self::class, 'loadStylesScripts']);
+
+        // On form submit.
         if (!empty($_POST)) {
             $default_settings = self::defaultSettings();
             $saved_settings   = self::savedSettings();
@@ -258,6 +262,17 @@ class Config extends dcNsProcess
         }
 
         return true;
+    }
+
+    /**
+     * Loads styles and scripts of the theme configurator.
+     *
+     * @return void
+     */
+    public static function loadStylesScripts()
+    {
+        echo dcPage::cssLoad(dcCore::app()->blog->settings->system->themes_url . '/originemini/css/admin.min.css'),
+        dcPage::jsLoad(dcCore::app()->blog->settings->system->themes_url . '/originemini/js/admin.min.js');
     }
 
     /**

@@ -9,9 +9,9 @@ function disableInputs() {
   }
 
   if (document.getElementById("global_js").checked || document.getElementById("content_images_wide").checked) {
-    document.getElementById("origine-mini-message-js").style.display = "block";
+    document.getElementById("originemini-message-js").style.display = "block";
   } else {
-    document.getElementById("origine-mini-message-js").style.display = "none";
+    document.getElementById("originemini-message-js").style.display = "none";
   }
 
   if (document.getElementById("global_js").checked) {
