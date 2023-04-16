@@ -14,7 +14,7 @@ $this->registerModule(
     '2.0.1',                    // Version
     [
         // Properties.
-        'requires'             => [['core', '2.24']],
+        'requires'             => [['core', '2.26']],
         'type'                 => 'theme',
 
         // Allows a full control for the theme configurator.
