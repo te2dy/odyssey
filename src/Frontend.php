@@ -809,7 +809,7 @@ class Frontend extends dcNsProcess
                 $dc_version_parts = explode('-', $dc_version);
                 $dc_version_short = $dc_version_parts[0] ?? $dc_version;
 
-                $theme_version = dcCore::app()->themes->moduleInfo('origine-mini', 'version');
+                $theme_version = dcCore::app()->themes->moduleInfo('originemini', 'version');
 
                 return '<div class=site-footer-block>' . sprintf(__('footer-powered-by-dev'), $dc_version, $dc_version_short, $theme_version) . '</div>';
             }
