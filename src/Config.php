@@ -1010,8 +1010,9 @@ class Config extends dcNsProcess
         $page_sections['footer'] = [
             'name'         => __('section-footer'),
             'sub_sections' => [
-                'no-title'     => '',
-                'social-links' => __('section-footer-sociallinks')
+                'no-title'         => '',
+                'social-links'     => __('section-footer-sociallinks'),
+                'social-links-new' => __('section-footer-sociallinksnew')
             ]
         ];
 
@@ -1544,6 +1545,24 @@ class Config extends dcNsProcess
             'section'     => ['footer', 'social-links']
         ];
 
+        $default_settings['footer_social_links_new_name'] = [
+            'title'       => __('settings-footer-sociallinksnew-title'),
+            'description' => __('settings-footer-sociallinksnew-description'),
+            'type'        => 'text',
+            'default'     => '',
+            'placeholder' => '',
+            'section'     => ['footer', 'social-links-new']
+        ];
+
+        $default_settings['footer_social_links_new_shape'] = [
+            'title'       => __('settings-footer-sociallinksshape-title'),
+            'description' => __('settings-footer-sociallinksshape-description'),
+            'type'        => 'file',
+            'default'     => '',
+            'placeholder' => '',
+            'section'     => ['footer', 'social-links-new']
+        ];
+
         $default_settings['styles'] = [
             'title' => __('settings-footer-origineministyles-title'),
         ];
@@ -1668,6 +1687,19 @@ class Config extends dcNsProcess
 
                     break;
 
+                case 'file' :
+                    $placeholder = isset($default_settings[$setting_id]['placeholder']) ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"' : '';
+
+                    echo Form::file(
+                        $setting_id,
+                        '',
+                        '', // class
+                        '', // tabindex
+                        false, // disabled
+                        'accept="image/svg+xml"'
+                    );
+
+                    break;
                 default :
                     $placeholder = isset($default_settings[$setting_id]['placeholder']) ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"' : '';
 
