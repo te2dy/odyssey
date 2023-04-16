@@ -11,10 +11,10 @@ $this->registerModule(
     'Origine Mini',             // Name
     'A minimal Dotclear theme', // Description
     'Teddy',                    // Author
-    '2',                        // Version
+    '2.0.1',                    // Version
     [
         // Properties.
-        'requires'             => [['core', '2.26']],
+        'requires'             => [['core', '2.24']],
         'type'                 => 'theme',
 
         // Allows a full control for the theme configurator.

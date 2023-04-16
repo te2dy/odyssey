@@ -15,6 +15,7 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 === 2 - 15 avril 2023 ===
 - Amélioration : possibilité de saisir un lien vers Signal, et pas seulement un numéro de téléphone.
 - Modification : compatibilité avec la version 2.26 de Dotclear.
+- Correction : mauvaises couleurs à l’affichage des boutons désactivés.
 
 === 1.4.1 - 9 février 2023 ===
 - Modification : transformation du lien « Réagir » en bouton dans les billets.
