@@ -6,7 +6,7 @@ Origine Mini a été spécialement conçu pour garantir une excellente lisibilit
 
 ## Téléchargement
 
-**[Télécharger la dernière version d’Origine Mini sur GitHub](https://github.com/te2dy/origine-mini/releases/latest)**
+**[Télécharger la dernière version d’Origine Mini sur GitHub](https://github.com/te2dy/originemini/releases/latest)**
 
 **[Télécharger la dernière version d’Origine sur DotAddict](https://themes.dotaddict.org/galerie-dc2/details/origine-mini)**
 
@@ -20,7 +20,7 @@ Origine Mini intègre de nombreuses options de personnalisation. Elles sont acce
 
 ## Contribuer, suggérer, signaler
 
-N’hésitez pas à [contribuer](https://github.com/te2dy/origine-mini/pulls) à ce projet, à [suggérer](https://github.com/te2dy/origine-mini/issues) des nouvelles fonctionnalités ou à [signaler](https://github.com/te2dy/origine-mini/issues) des problèmes directement depuis GitHub. Vous pouvez aussi [m’écrire](mailto:zozxebpyr@mozmail.com).
+N’hésitez pas à [contribuer](https://github.com/te2dy/originemini/pulls) à ce projet, à [suggérer](https://github.com/te2dy/originemini/issues) des nouvelles fonctionnalités ou à [signaler](https://github.com/te2dy/originemini/issues) des problèmes directement depuis GitHub. Vous pouvez aussi [m’écrire](mailto:zozxebpyr@mozmail.com).
 
 ## Licence
 
