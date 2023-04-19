@@ -28,6 +28,9 @@ msgstr "Skip to menu"
 msgid "skip-link-footer"
 msgstr "Skip to footer"
 
+msgid "header-image-alt"
+msgstr "Header Image"
+
 # Posts & pages
 
 msgid "entry-list-aria-label"

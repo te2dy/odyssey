@@ -34,6 +34,9 @@ msgstr "Aller au menu"
 msgid "skip-link-footer"
 msgstr "Aller au pied de page"
 
+msgid "header-image-alt"
+msgstr "Image d’en-tête"
+
 # Posts & pages
 
 msgid "entry-list-aria-label"

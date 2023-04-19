@@ -34,6 +34,9 @@ msgstr ""
 msgid "skip-link-footer"
 msgstr ""
 
+msgid "header-image-alt"
+msgstr ""
+
 # Posts & pages
 
 msgid "entry-list-aria-label"
