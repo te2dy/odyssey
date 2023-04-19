@@ -135,4 +135,20 @@ class OrigineMiniUtils
             return false;
         }
     }
+
+    /**
+     * Gets the URL of the blog without any path or query.
+     *
+     * @return string The URL of the blog without any path or query.
+     */
+    public static function blogBaseURL(): string
+    {
+        $parsed_url = parse_url(dcCore::app()->blog->url);
+
+        $scheme = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
+        $host   = isset($parsed_url['host']) ? $parsed_url['host'] : '';
+        $port   = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
+
+        return $scheme . $host . $port;
+    }
 }
