@@ -46,7 +46,7 @@ class OrigineMiniUtils
      *
      * @return string $css The minified styles.
      */
-    public static function stylesArrayToString($rules)
+    public static function stylesArrayToString($rules): string
     {
         $css = '';
 
@@ -103,7 +103,7 @@ class OrigineMiniUtils
      *
      * @return bool true if the image exists.
      */
-    public static function imageExists($path)
+    public static function imageExists($path): bool
     {
         // Extensions allowed for image files in Dotclear.
         $img_ext_allowed = [
