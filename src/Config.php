@@ -16,6 +16,7 @@ use dcNsProcess;
 use dcPage;
 use dcThemeConfig;
 use Dotclear\Helper\File\Files;
+use Dotclear\Helper\File\Path;
 use Dotclear\Helper\Html\Html;
 use Dotclear\Helper\L10n;
 use Dotclear\Helper\Network\Http;
@@ -41,7 +42,7 @@ class Config extends dcNsProcess
     }
 
     /**
-     * Processes the request(s).
+     * Processes the requests of the configurator.
      */
     public static function process(): bool
     {
@@ -100,7 +101,7 @@ class Config extends dcNsProcess
                                             $setting_type  = 'boolean';
                                         }
                                     } else {
-                                        $setting_value = html::escapeHTML($_POST[$setting_id]);
+                                        $setting_value = Html::escapeHTML($_POST[$setting_id]);
                                     }
                                 } elseif ($_POST[$setting_id] == $default_settings[$setting_id]['default']) {
                                     // If the value is equal to the default value, removes the parameter.
@@ -112,7 +113,7 @@ class Config extends dcNsProcess
                                         $setting_id,
                                         $setting_value,
                                         $setting_type,
-                                        html::clean($setting_title),
+                                        Html::clean($setting_title),
                                         true
                                     );
                                 } else {
@@ -127,7 +128,7 @@ class Config extends dcNsProcess
                                         $setting_id,
                                         false,
                                         'boolean',
-                                        html::clean($setting_title),
+                                        Html::clean($setting_title),
                                         true
                                     );
                                 } else {
@@ -157,7 +158,7 @@ class Config extends dcNsProcess
                                 $image_url = $_POST['header_image'];
 
                                 // Converts the absolute URL in a relative one if necessary.
-                                $image_url = html::stripHostURL($image_url);
+                                $image_url = Html::stripHostURL($image_url);
 
                                 // Retrieves the image path.
                                 $image_path = $public_path . str_replace($public_url . '/', '/', $image_url);
@@ -186,7 +187,7 @@ class Config extends dcNsProcess
 
                                     // Sets the array which contains the image data.
                                     $image_data = [
-                                        'url'    => html::sanitizeURL($image_url),
+                                        'url'    => Html::sanitizeURL($image_url),
                                         'width'  => (int) $header_image_width,
                                     ];
 
@@ -195,12 +196,12 @@ class Config extends dcNsProcess
                                         'header_image',
                                         $image_data,
                                         'array',
-                                        html::clean($setting_title),
+                                        Html::clean($setting_title),
                                         true
                                     );
 
                                     // Builds the path to an hypothetical double sized image.
-                                    $image_info    = path::info($image_path);
+                                    $image_info    = Path::info($image_path);
                                     $image_path_2x = $image_info['dirname'] . '/' . $image_info['base'] . '-2x.' . $image_info['extension'];
 
                                     // If the double sized image exists.
@@ -210,9 +211,9 @@ class Config extends dcNsProcess
                                         if (file_exists($image_path_2x) && getimagesize($image_path_2x) !== false) {
                                             dcCore::app()->blog->settings->originemini->put(
                                                 'header_image2x',
-                                                html::sanitizeURL($image_url_2x),
+                                                Html::sanitizeURL($image_url_2x),
                                                 'string',
-                                                html::clean($setting_title),
+                                                Html::clean($setting_title),
                                                 true
                                             );
                                         }
@@ -500,6 +501,7 @@ class Config extends dcNsProcess
                     'l' => '96%'
                 ],
                 'blue'  => [
+                    'h' => '226',
                     's' => '100%',
                     'l' => '98%'
                 ],
@@ -796,7 +798,10 @@ class Config extends dcNsProcess
 
                     $css_main_array['.entry-list-extended .post-excerpt']['margin'] = '.5rem 0 0';
                 } elseif ($_POST['content_post_list_type'] === 'content') {
-                    $css_main_array['.entry-list-content .post']['margin-bottom']            = '4rem';
+                    $css_main_array['.entry-list-content .post']['margin-bottom']  = '4rem';
+                    $css_main_array['.entry-list-content .post']['border-bottom']  = '.063rem solid var(--color-border, #ccc)';
+                    $css_main_array['.entry-list-content .post']['padding-bottom'] = '4rem';
+
                     $css_main_array['.entry-list-content .post:last-child']['margin-bottom'] = '0';
 
                     $css_main_array['.entry-list-content .entry-title']['font-size'] = '1.4em';
@@ -1312,7 +1317,7 @@ class Config extends dcNsProcess
                 __('settings-content-postlisttype-excerpt')       => 'excerpt',
                 __('settings-content-postlisttype-content')       => 'content'
             ],
-            'default'     => 'title',
+            'default'     => 'short',
             'section'     => ['content', 'entry-list']
         ];
 
