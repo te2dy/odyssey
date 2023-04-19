@@ -51,7 +51,7 @@ class Prepend extends dcNsProcess
             /**
              * Saves the hashes in the database as an array.
              *
-             * @see adminConfigOrigineMini::page_rendering() (/_config.php)
+             * @see Config::render() (/src/Config.php)
              */
             dcCore::app()->blog->settings->originemini->put('js_hash', $hashes, 'array', __('prepend-hashes-save'), true);
 

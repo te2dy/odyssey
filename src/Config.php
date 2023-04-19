@@ -11,7 +11,6 @@
 
 namespace Dotclear\Theme\originemini;
 
-// Vérifier
 use dcCore;
 use dcNsProcess;
 use dcPage;
