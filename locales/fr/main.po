@@ -194,6 +194,12 @@ msgstr "Adresse d’un compte ou site personnel (facultatif)"
 msgid "reactions-comment-form-comment-label"
 msgstr "Commentaire"
 
+msgid "reactions-comment-markdown-support"
+msgstr "Le balisage <a href=%s hreflang=en rel=external target=_blank>Markdown</a> est autorisé."
+
+msgid "reactions-comment-markdown-support-link"
+msgstr "https://www.markdownguide.org/basic-syntax"
+
 msgid "reactions-comment-form-preview-button"
 msgstr "Prévisualiser"
 

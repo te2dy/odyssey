@@ -60,6 +60,7 @@ class Frontend extends dcNsProcess
         dcCore::app()->tpl->addValue('origineMiniEntryTime', [self::class, 'origineMiniEntryTime']);
         dcCore::app()->tpl->addValue('origineMiniEntryExcerpt', [self::class, 'origineMiniEntryExcerpt']);
         dcCore::app()->tpl->addValue('origineMiniPostTagsBefore', [self::class, 'origineMiniPostTagsBefore']);
+        dcCore::app()->tpl->addValue('origineMiniMarkdownSupportInfo', [self::class, 'origineMiniMarkdownSupportInfo']);
         dcCore::app()->tpl->addValue('origineMiniScriptTrackbackURLCopied', [self::class, 'origineMiniScriptTrackbackURLCopied']);
         dcCore::app()->tpl->addValue('origineMiniEmailAuthor', [self::class, 'origineMiniEmailAuthor']);
         dcCore::app()->tpl->addValue('origineMiniAttachmentTitle', [self::class, 'origineMiniAttachmentTitle']);
@@ -701,6 +702,23 @@ class Frontend extends dcNsProcess
             }
         }
         ?>';
+    }
+
+    /**
+     * Displays a notice informing about the support of the Markdown syntax.
+     *
+     * @return string The notice.
+     */
+    public static function origineMiniMarkdownSupportInfo()
+    {
+        if (dcCore::app()->blog->settings->system->markdown_comments === true) {
+            $markdown_notice = sprintf(
+                __('reactions-comment-markdown-support'),
+                __('reactions-comment-markdown-support-link')
+            );
+
+            return '<br><small class=text-secondary><em>' . $markdown_notice . '</em></small>';
+        }
     }
 
     /**

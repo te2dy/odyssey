@@ -194,6 +194,12 @@ msgstr ""
 msgid "reactions-comment-form-comment-label"
 msgstr ""
 
+msgid "reactions-comment-markdown-support"
+msgstr ""
+
+msgid "reactions-comment-markdown-support-link"
+msgstr ""
+
 msgid "reactions-comment-form-preview-button"
 msgstr ""
 

@@ -188,6 +188,12 @@ msgstr "URL of a personal account or site (optional)"
 msgid "reactions-comment-form-comment-label"
 msgstr "Comment"
 
+msgid "reactions-comment-markdown-support"
+msgstr "<a href=%s rel=external target=_blank>Markdown</a> syntax is allowed."
+
+msgid "reactions-comment-markdown-support-link"
+msgstr "https://www.markdownguide.org/basic-syntax"
+
 msgid "reactions-comment-form-preview-button"
 msgstr "Preview"
 

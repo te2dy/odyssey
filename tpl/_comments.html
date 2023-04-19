@@ -109,7 +109,7 @@
           <div class=form-entry>
             <label for=c_content>{{tpl:lang reactions-comment-form-comment-label}}</label>
             <br>
-            <textarea id=c_content name=c_content required rows=8>{{tpl:CommentPreviewContent raw="1" encode_html="1"}}</textarea>
+            <textarea id=c_content name=c_content required rows=8>{{tpl:CommentPreviewContent raw="1" encode_html="1"}}</textarea>{{tpl:origineMiniMarkdownSupportInfo}}
           </div>
 
           {{tpl:SysBehavior behavior="publicCommentFormAfterContent"}}
