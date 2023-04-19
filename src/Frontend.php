@@ -146,7 +146,7 @@ class Frontend extends dcNsProcess
                 }
 
                 if (context::EntryFirstImageHelper('o', true, '', true)) {
-                    $img = dcCore::app()->blog->host . context::EntryFirstImageHelper('o', true, '', true);
+                    $img = omUtils::blogBaseURL() . context::EntryFirstImageHelper('o', true, '', true);
                 }
 
             // Home.
@@ -171,8 +171,8 @@ class Frontend extends dcNsProcess
                         $desc .= dcCore::app()->blog->desc;
                     }
 
-                    $desc  = Html::decodeEntities(Html::clean($desc));
-                    $desc  = preg_replace('/\s+/', ' ', $desc);
+                    $desc = Html::decodeEntities(Html::clean($desc));
+                    $desc = preg_replace('/\s+/', ' ', $desc);
 
                     if (strlen($desc) > 180) {
                         $desc = Text::cutString($desc, 179) . '…';
@@ -203,6 +203,11 @@ class Frontend extends dcNsProcess
 
             if ($title) {
                 $desc = Html::escapeHTML($desc);
+
+                if (!$img && dcCore::app()->blog->settings->originemini->header_image['url']) {
+                    $img = omUtils::blogBaseURL() . dcCore::app()->blog->settings->originemini->header_image['url'];
+                }
+
                 $img  = Html::escapeURL($img);
 
                 if ($img) {
@@ -497,7 +502,7 @@ class Frontend extends dcNsProcess
                 if (dcCore::app()->blog->settings->originemini->header_image_description) {
                     $alt = ' alt="' . Html::escapeHTML(dcCore::app()->blog->settings->originemini->header_image_description) . '"';
                 } else {
-                    $alt = ' alt="' . __('Header Image') . '"';
+                    $alt = ' alt="' . __('header-image-alt') . '"';
                 }
 
                 if (dcCore::app()->blog->settings->originemini->header_image2x) {
@@ -567,6 +572,17 @@ class Frontend extends dcNsProcess
     public static function origineMiniPostListReactionLink()
     {
         if (dcCore::app()->blog->settings->originemini->content_post_list_reaction_link && dcCore::app()->blog->settings->originemini->content_post_list_reaction_link !== 'disabled') {
+            $class = 'class=post-reaction-link';
+
+            $small_open  = '<small>';
+            $small_close = '</small>';
+
+            if (dcCore::app()->blog->settings->originemini->content_post_list_type === 'content') {
+                $class = 'class=\"post-reaction-link button\"';
+
+                $small_open = $small_close = '';
+            }
+
             return '<?php
             $nb_reactions = intval((int) dcCore::app()->ctx->posts->nb_comment + (int) dcCore::app()->ctx->posts->nb_trackback);
 
@@ -581,7 +597,7 @@ class Frontend extends dcNsProcess
                     echo __("entry-list-no-reaction-link-aria-label");
                 }
 
-                echo "\" class=post-reaction-link href=\"", Html::escapeURL(dcCore::app()->ctx->posts->getURL()), "#", __("reactions-id"), "\"><small>";
+                echo "\" ' . $class . ' href=\"", Html::escapeURL(dcCore::app()->ctx->posts->getURL()), "#", __("reactions-id"), "\">' . $small_open . '";
 
                 if ($nb_reactions > 1) {
                     printf(__("entry-list-multiple-reactions"), $nb_reactions);
@@ -591,7 +607,7 @@ class Frontend extends dcNsProcess
                     echo __("entry-list-no-reaction");
                 }
 
-                echo "</small></a>";
+                echo "' . $small_close . '</a>";
             }
             ?>';
         }
@@ -692,7 +708,7 @@ class Frontend extends dcNsProcess
      *
      * Should only be displayed when a visitor click on the URL.
      *
-     * @return string The private comment section.
+     * @return string Copied alert.
      */
     public static function origineMiniScriptTrackbackURLCopied()
     {
