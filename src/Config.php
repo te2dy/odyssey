@@ -1696,7 +1696,8 @@ class Config extends dcNsProcess
 
             // Displays the description of the parameter as a note.
             if ($default_settings[$setting_id]['type'] === 'checkbox' || (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '')) {
-                echo '<p class=form-note id=', $setting_id, '-description>', $default_settings[$setting_id]['description'];
+                echo '<p class=form-note id=', $setting_id, '-description>',
+                $default_settings[$setting_id]['description'];
 
                 // If the parameter is a checkbox, displays its default value as a note.
                 if ($default_settings[$setting_id]['type'] === 'checkbox') {
@@ -1718,10 +1719,12 @@ class Config extends dcNsProcess
                     $image_src = '';
                 }
 
-                echo '<img alt="' . __('header-image-preview-alt') . '" id=', $setting_id, '-src src="', $image_src, '">';
+                echo '<img alt="' . __('header-image-preview-alt'), '" id=', $setting_id, '-src src="', $image_src, '">';
 
                 if (isset($saved_settings['header_image2x'])) {
-                    echo '<p id=', $setting_id, '-retina>' . __('header-image-retina-ready') . '</p>';
+                    echo '<p id=', $setting_id, '-retina>',
+                    __('header-image-retina-ready'),
+                    '</p>';
                 }
 
                 echo Form::hidden('header_image-url', $image_src);
@@ -1782,13 +1785,17 @@ class Config extends dcNsProcess
             <?php
             // Displays the title of each section and places the corresponding parameters under each one.
             foreach ($sections_with_settings_id as $section_id => $section_data) {
-                echo '<h3 id=section-', $section_id, '>', $sections[$section_id]['name'], '</h3>',
+                echo '<h3 id=section-', $section_id, '>',
+                $sections[$section_id]['name'],
+                '</h3>',
                 '<div class=fieldset>';
 
                 foreach ($section_data as $sub_section_id => $setting_id) {
                     // Displays the name of the sub-section unless its ID is "no-title".
                     if ($sub_section_id !== 'no-title') {
-                        echo '<h4 id=section-', $section_id, '-', $sub_section_id, '>', $sections[$section_id]['sub_sections'][$sub_section_id], '</h4>';
+                        echo '<h4 id=section-', $section_id, '-', $sub_section_id, '>',
+                        $sections[$section_id]['sub_sections'][$sub_section_id],
+                        '</h4>';
                     }
 
                     // Displays the parameter.
@@ -1808,7 +1815,13 @@ class Config extends dcNsProcess
                     <div class=warning-msg>
                         <p><?php echo __('settings-scripts-message-intro'); ?></p>
 
-                        <p><?php printf(__('settings-scripts-message-csp'), __('settings-scripts-message-csp-href'), __('settings-scripts-message-csp-title')); ?></p>
+                        <p>
+                            <?php printf(
+                                __('settings-scripts-message-csp'),
+                                __('settings-scripts-message-csp-href'),
+                                __('settings-scripts-message-csp-title')
+                            ); ?>
+                        </p>
 
                         <p><?php echo __('settings-scripts-message-hash-intro'); ?></p>
 
@@ -1830,11 +1843,17 @@ class Config extends dcNsProcess
                                     echo '<li id=hash-', $script_id, '>';
 
                                     if ($script_id === 'searchform') {
-                                        echo __('settings-scripts-message-hash-searchform'), '<br>', $hash;
+                                        echo __('settings-scripts-message-hash-searchform'),
+                                        '<br>',
+                                        $hash;
                                     } elseif ($script_id === 'trackbackurl') {
-                                        echo __('settings-scripts-message-hash-trackbackurl'), '<br>', $hash;
+                                        echo __('settings-scripts-message-hash-trackbackurl'),
+                                        '<br>',
+                                        $hash;
                                     } elseif ($script_id === 'imagewide') {
-                                        echo __('settings-scripts-message-hash-imagewide'), '<br>', $hash;
+                                        echo __('settings-scripts-message-hash-imagewide'),
+                                        '<br>',
+                                        $hash;
                                     }
 
                                     echo '</li>';
@@ -1845,7 +1864,14 @@ class Config extends dcNsProcess
                         }
                         ?>
 
-                        <p><?php printf(__('settings-scripts-message-example'), 'https://open-time.net/post/2022/08/15/CSP-mon-amour-en-public', 'fr', 'CSP mon amour en public'); ?></p>
+                        <p>
+                            <?php printf(
+                                __('settings-scripts-message-example'),
+                                'https://open-time.net/post/2022/08/15/CSP-mon-amour-en-public',
+                                'fr',
+                                'CSP mon amour en public'
+                            ); ?>
+                        </p>
 
                         <p><?php echo __('settings-scripts-message-note'); ?></p>
                     </div>
