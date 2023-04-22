@@ -195,7 +195,7 @@ msgid "reactions-comment-form-comment-label"
 msgstr "Commentaire"
 
 msgid "reactions-comment-markdown-support"
-msgstr "Le balisage <a href=%s hreflang=en rel=external target=_blank>Markdown</a> est autorisé."
+msgstr "Vous pouvez mettre en forme votre commentaire avec le balisage <a href=%s hreflang=en rel=external target=_blank>Markdown</a>."
 
 msgid "reactions-comment-markdown-support-link"
 msgstr "https://www.markdownguide.org/basic-syntax"
