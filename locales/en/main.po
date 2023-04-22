@@ -17,6 +17,12 @@ msgstr "Feed"
 msgid "feed-comments-title"
 msgstr "Comment feed"
 
+msgid "meta-social-page-with-number"
+msgstr "Page %s"
+
+msgid "meta-social-tags-post-related"
+msgstr "Posts related to the tag %s"
+
 # Header
 
 msgid "skip-link-content"
@@ -199,6 +205,18 @@ msgstr "Preview"
 
 msgid "reactions-comment-form-submit-button"
 msgstr "Send"
+
+msgid "reactions-comment-private-title"
+msgstr "Send a private comment"
+
+msgid "reactions-comment-private-body-post-url"
+msgstr "URL of the post:"
+
+msgid "reactions-comment-private-button-text"
+msgstr "Reply to the author by email"
+
+msgid "reactions-comment-private-email-prefix"
+msgstr "Re:"
 
 msgid "reactions-subscribe-link-reactions"
 msgstr "Subscribe to reactions"

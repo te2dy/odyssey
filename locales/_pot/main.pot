@@ -54,7 +54,7 @@ msgstr ""
 msgid "entry-list-date-aria-label"
 msgstr ""
 
-msgid "entry-list-no-reaction-link-aria-label"
+msgid "entry-list-one-reaction-link-aria-label"
 msgstr ""
 
 msgid "entry-list-one-reaction-link-aria-label"
@@ -206,22 +206,22 @@ msgstr ""
 msgid "reactions-comment-form-submit-button"
 msgstr ""
 
-msgid "private-comment-title"
+msgid "reactions-comment-private-title"
 msgstr ""
 
-msgid "private-comment-body-post-url"
+msgid "reactions-comment-private-body-post-url"
 msgstr ""
 
-msgid "private-comment-button-text"
+msgid "reactions-comment-private-button-text"
 msgstr ""
 
-msgid "private-comment-email-prefix"
+msgid "reactions-comment-private-email-prefix"
 msgstr ""
 
 msgid "reactions-subscribe-link-reactions"
 msgstr ""
 
-msgid "reactions-trackbacks-add"
+msgid "reactions-trackbacks-add-title"
 msgstr ""
 
 msgid "reactions-trackback-url-copied"

@@ -206,16 +206,16 @@ msgstr "Prévisualiser"
 msgid "reactions-comment-form-submit-button"
 msgstr "Envoyer"
 
-msgid "private-comment-title"
+msgid "reactions-comment-private-title"
 msgstr "Envoyer un commentaire privé"
 
-msgid "private-comment-body-post-url"
-msgstr "Adresse du billet :"
+msgid "reactions-comment-private-body-post-url"
+msgstr "Adresse du billet&nbsp;:"
 
-msgid "private-comment-button-text"
+msgid "reactions-comment-private-button-text"
 msgstr "Répondre à l’auteur par courriel"
 
-msgid "private-comment-email-prefix"
+msgid "reactions-comment-private-email-prefix"
 msgstr "Re:"
 
 msgid "reactions-subscribe-link-reactions"

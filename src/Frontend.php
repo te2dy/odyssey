@@ -748,12 +748,12 @@ class Frontend extends dcNsProcess
             ) {
             ?>
                 <div class=comment-private>
-                    <h3 class=reaction-title>' . __('private-comment-title') . '</h3>
+                    <h3 class=reaction-title>' . __('reactions-comment-private-title') . '</h3>
 
-                    <?php $body = "' . __('private-comment-body-post-url') . ' " . dcCore::app()->ctx->posts->getURL(); ?>
+                    <?php $body = "' . __('reactions-comment-private-body-post-url') . ' " . dcCore::app()->ctx->posts->getURL(); ?>
 
                     <p>
-                        <a class=button href="mailto:<?php echo urlencode(dcCore::app()->ctx->posts->user_email); ?>?subject=<?php echo htmlentities("' . __("private-comment-email-prefix") . ' " . dcCore::app()->ctx->posts->post_title . "&body=" . $body); ?>">' . __('private-comment-button-text') . '</a>
+                        <a class=button href="mailto:<?php echo urlencode(dcCore::app()->ctx->posts->user_email); ?>?subject=<?php echo htmlentities("' . __("reactions-comment-private-email-prefix") . ' " . dcCore::app()->ctx->posts->post_title . "&body=" . $body); ?>">' . __('reactions-comment-private-button-text') . '</a>
                     </p>
                 </div>
             <?php }
