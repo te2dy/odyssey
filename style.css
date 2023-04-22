@@ -532,9 +532,6 @@ details summary {
   font-style: normal;
   font-weight: 700;
 }
-.remember {
-  margin: 0;
-}
 .comment-message {
   border: .063rem solid var(--color-border, #ccc);
   display: block;
