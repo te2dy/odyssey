@@ -1557,7 +1557,7 @@ class Config extends dcNsProcess
         $default_settings['footer_social_links_new_shape'] = [
             'title'       => __('settings-footer-sociallinksshape-title'),
             'description' => __('settings-footer-sociallinksshape-description'),
-            'type'        => 'file',
+            'type'        => 'textarea',
             'default'     => '',
             'placeholder' => '',
             'section'     => ['footer', 'social-links-new']
@@ -1687,19 +1687,6 @@ class Config extends dcNsProcess
 
                     break;
 
-                case 'file' :
-                    $placeholder = isset($default_settings[$setting_id]['placeholder']) ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"' : '';
-
-                    echo Form::file(
-                        $setting_id,
-                        '',
-                        '', // class
-                        '', // tabindex
-                        false, // disabled
-                        'accept="image/svg+xml"'
-                    );
-
-                    break;
                 default :
                     $placeholder = isset($default_settings[$setting_id]['placeholder']) ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"' : '';
 
