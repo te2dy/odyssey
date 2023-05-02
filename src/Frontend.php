@@ -399,10 +399,17 @@ class Frontend extends dcNsProcess
                     true
                 ) ? $om_settings->global_page_width : 30;
 
-                $script = 'function getMeta(e,t){var i=new Image;i.src=e,i.addEventListener("load",function(){t(this.width,this.height)})}function imageWide(){var e=parseInt(document.getElementById("script-images-wide").getAttribute("data-pagewidth")),t=e+10,d=0,m=0,i=0,n=(-1===[30,35,40].indexOf(e)&&(e=30),document.createElement("div")),a=(n.style.width="1rem",n.style.display="none",document.body.append(n),window.getComputedStyle(n).getPropertyValue("width").match(/\d+/));n.remove(),0<(i=a&&1<=a.length?parseInt(a[0]):16)&&(d=e*i,m=t*i);for(var r=0,s=("entry"===document.getElementById("script-images-wide").getAttribute("data-context")?document.getElementsByTagName("article"):document.getElementsByClassName("entry-list-content"))[0].getElementsByTagName("img");r<s.length;){let a=s[r];getMeta(a.src,function(e,t){let i=e,n=t;i>d&&i>n&&(i>m&&(n=parseInt(m*n/i),i=m),a.setAttribute("style","display:block;margin-left:50%;transform:translateX(-50%);max-width:95vw;"),i&&a.setAttribute("width",i),n)&&a.setAttribute("height",n)}),r++}}document.getElementById("script-images-wide").getAttribute("data-pagewidth")&&document.getElementsByTagName("article")[0]&&(window.addEventListener("load",imageWide),window.addEventListener("resize",imageWide));' . "\n";
+                if ((int) $om_settings->content_images_wide_size > 1) {
+                    $img_width = (int) $om_settings->content_images_wide_size;
+                } else {
+                    $img_width = '150';
+                }
+
+                $script = 'function getMeta(e,t){var i=new Image;i.src=e,i.addEventListener("load",function(){t(this.width,this.height)})}function imageWide(){var e=parseInt(document.getElementById("script-images-wide").getAttribute("data-pagewidth")),d=0,m=0,t=0,i=(-1===[30,35,40].indexOf(e)&&(e=30),document.createElement("div")),n=(i.style.width="1rem",i.style.display="none",document.body.append(i),window.getComputedStyle(i).getPropertyValue("width").match(/\d+/));i.remove(),0<(t=n&&1<=n.length?parseInt(n[0]):16)&&(m=(d=e*t)+parseInt(document.getElementById("script-images-wide").getAttribute("data-imgwidth")));for(var r=0,s=("entry"===document.getElementById("script-images-wide").getAttribute("data-context")?document.getElementsByTagName("article"):document.getElementsByClassName("entry-list-content"))[0].getElementsByTagName("img");r<s.length;){let a=s[r];getMeta(a.src,function(e,t){let i=e,n=t;i>d&&i>n&&(i>m&&(n=parseInt(m*n/i),i=m),a.setAttribute("style","display:block;margin-left:50%;transform:translateX(-50%);max-width:95vw;"),i&&a.setAttribute("width",i),n)&&a.setAttribute("height",n)}),r++}}document.getElementById("script-images-wide").getAttribute("data-pagewidth")&&document.getElementsByTagName("article")[0]&&(window.addEventListener("load",imageWide),window.addEventListener("resize",imageWide));' . "\n";
 
                 echo '<script data-context=', $context,
                 ' data-pagewidth=', $page_width,
+                ' data-imgwidth=', $img_width,
                 ' id=script-images-wide>',
                 $script,
                 '</script>', "\n";
@@ -435,8 +442,18 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniStylesInline()
     {
+        $styles = '';
+
         if (dcCore::app()->blog->settings->originemini->styles) {
-            return '<style>' . dcCore::app()->blog->settings->originemini->styles . '</style>';
+            $styles .= dcCore::app()->blog->settings->originemini->styles;
+        }
+
+        if (dcCore::app()->blog->settings->originemini->global_css_custom_mini) {
+            $styles .= dcCore::app()->blog->settings->originemini->global_css_custom_mini;
+        }
+
+        if ($styles) {
+            return '<style>' . $styles . '</style>';
         }
     }
 

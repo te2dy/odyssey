@@ -65,7 +65,7 @@ class Config extends dcNsProcess
 
                 if (isset($_POST['save'])) {
                     foreach ($default_settings as $setting_id => $setting_value) {
-                        $ignore_setting_id = ['styles', 'header_image', 'header_image2x'];
+                        $ignore_setting_id = ['styles', 'header_image', 'header_image2x', 'global_css_custom', 'global_css_custom_mini'];
 
                         if (!in_array($setting_id, $ignore_setting_id, true)) {
                             if (isset($_POST[$setting_id])) {
@@ -227,6 +227,41 @@ class Config extends dcNsProcess
                             } else {
                                 dcCore::app()->blog->settings->originemini->drop('header_image');
                                 dcCore::app()->blog->settings->originemini->drop('header_image2x');
+                            }
+                        } elseif ($setting_id === 'global_css_custom') {
+                            if (isset($_POST['global_css_custom'])) {
+                                $css_value = $_POST['global_css_custom'];
+
+                                $css_value_mini = str_replace("\n", "", $css_value);
+                                $css_value_mini = str_replace("\r", "", $css_value_mini);
+                                $css_value_mini = str_replace("  ", " ", $css_value_mini);
+                                $css_value_mini = str_replace("  ", " ", $css_value_mini);
+                                $css_value_mini = str_replace(" {", "{", $css_value_mini);
+                                $css_value_mini = str_replace("{ ", "{", $css_value_mini);
+                                $css_value_mini = str_replace(" }", "}", $css_value_mini);
+                                $css_value_mini = str_replace("} ", "}", $css_value_mini);
+                                $css_value_mini = str_replace(", ", ",", $css_value_mini);
+                                $css_value_mini = str_replace("; ", ";", $css_value_mini);
+                                $css_value_mini = str_replace(": ", ":", $css_value_mini);
+
+                                dcCore::app()->blog->settings->originemini->put(
+                                    'global_css_custom',
+                                    $css_value,
+                                    'string',
+                                    'Custom CSS',
+                                    true
+                                );
+
+                                dcCore::app()->blog->settings->originemini->put(
+                                    'global_css_custom_mini',
+                                    $css_value_mini,
+                                    'string',
+                                    'Custom CSS minified',
+                                    true
+                                );
+                            } else {
+                                dcCore::app()->blog->settings->originemini->drop('global_css_custom');
+                                dcCore::app()->blog->settings->originemini->drop('global_css_custom_mini');
                             }
                         }
                     }
@@ -1157,6 +1192,18 @@ class Config extends dcNsProcess
             'section'     => ['global', 'colors']
         ];
 
+        $default_settings['global_css_custom'] = [
+            'title'       => __('settings-global-csscustom-title'),
+            'description' => __('settings-global-csscustom-description'),
+            'type'        => 'textarea',
+            'default'     => '',
+            'section'     => ['global', 'colors']
+        ];
+
+        $default_settings['global_css_custom_mini'] = [
+            'type'        => 'text',
+        ];
+
         if (dcCore::app()->plugins->moduleExists('socialMeta')) {
             $plugin_social_url = dcCore::app()->adminurl->get('admin.plugin.socialMeta');
         } else {
@@ -1371,6 +1418,14 @@ class Config extends dcNsProcess
             'description' => __('settings-content-imageswide-description'),
             'type'        => 'checkbox',
             'default'     => 0,
+            'section'     => ['content', 'post']
+        ];
+
+        $default_settings['content_images_wide_size'] = [
+            'title'       => __('settings-content-imageswidesize-title'),
+            'description' => __('settings-content-imageswidesize-description'),
+            'type'        => 'text',
+            'default'     => '150',
             'section'     => ['content', 'post']
         ];
 
@@ -1765,7 +1820,7 @@ class Config extends dcNsProcess
 
         // Puts all settings in their section.
         foreach ($settings as $setting_id => $setting_data) {
-            $ignore_setting_id = ['header_image2x', 'styles'];
+            $ignore_setting_id = ['header_image2x', 'global_css_custom_mini', 'styles'];
 
             if (!in_array($setting_id, $ignore_setting_id, true)) {
                 // If a sub-section is set.

@@ -21,7 +21,6 @@ function getMeta(url, callback) {
 
 function imageWide() {
   var pageWidthEm    = parseInt(document.getElementById('script-images-wide').getAttribute('data-pagewidth')),
-      imgWideWidthEm = pageWidthEm + 10,
       pageWidthPx    = 0, // To set later.
       imgWideWidthPx = 0, // To set later.
       fontSizePx     = 0; // To set later.
@@ -59,7 +58,7 @@ function imageWide() {
   // If a font size is set, calculates page and image width in px.
   if (fontSizePx > 0) {
     pageWidthPx    = pageWidthEm * fontSizePx;
-    imgWideWidthPx = imgWideWidthEm * fontSizePx;
+    imgWideWidthPx = pageWidthPx + parseInt(document.getElementById('script-images-wide').getAttribute('data-imgwidth'));
   }
 
   // Gets all images of the post.
