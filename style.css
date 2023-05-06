@@ -447,6 +447,7 @@ details summary {
   align-items: baseline;
   display: flex;
   flex-direction: row;
+  flex-wrap: nowrap;
   justify-content: space-between;
   margin-bottom: 1rem;
 }
