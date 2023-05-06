@@ -13,3 +13,9 @@ _disabled
 
 # Ignore "code" folder.
 /prive
+
+# Ignore this custom template.
+_entry-list-photo.html
+_entry-list-status.html
+_entry-photo.html
+_entry-status.html
