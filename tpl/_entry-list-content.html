@@ -1,9 +1,9 @@
 <tpl:Entries>
   <tpl:EntriesHeader>
-    <div aria-label="{{tpl:lang entry-list-aria-label}}" class=entry-list-content>
+    <div aria-label="{{tpl:lang entry-list-aria-label}}" class="entry-list entry-list-content">
   </tpl:EntriesHeader>
 
-  <article class="post<tpl:EntryIf selected="1"> post-selected</tpl:EntryIf>{{tpl:origineConfigEntryUpdatedClass}}" id={{tpl:lang post-id}}-{{tpl:EntryID}}>
+  <article class="post<tpl:EntryIf selected="1"> post-selected</tpl:EntryIf>" id={{tpl:lang post-id}}-{{tpl:EntryID}}>
     <header>
       <tpl:EntryIf selected="1">
         <small class=post-selected>{{tpl:lang post-selected-label}}</small>
