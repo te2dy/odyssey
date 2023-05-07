@@ -16,6 +16,6 @@ _disabled
 
 # Ignore this custom template.
 _entry-list-photo.html
-_entry-list-status.html
+_entry-list-micromessages.html
 _entry-photo.html
-_entry-status.html
+_entry-micromessages.html
