@@ -15,7 +15,5 @@ _disabled
 /prive
 
 # Ignore this custom template.
-_entry-list-photo.html
-_entry-list-micromessages.html
-_entry-photo.html
-_entry-micromessages.html
+_entry-list-a*
+_entry-a*
