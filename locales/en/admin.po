@@ -63,20 +63,23 @@ msgstr "Social links"
 
 # Settings
 
-msgid "settings-global-pagewidth-title"
+msgid "settings-global-pagewidthunit-title"
+msgstr "Unit used to define the page width"
+
+msgid "settings-global-pagewidthunit-description"
+msgstr "Em allows your pages to adapt their width to the browser's font size. In this way, your blog can be displayed differently from one device to another. For a photo blog with large images, using pixels is recommended."
+
+msgid "settings-global-pagewidthunit-em-default"
+msgstr "Em (par défaut)"
+
+msgid "settings-global-pagewidthunit-px"
+msgstr "Pixel"
+
+msgid "settings-global-pagewidthvalue-title"
 msgstr "Page width"
 
-msgid "settings-global-pagewidth-description"
-msgstr "The width of the page depends on the font size set in the browser. Your blog can therefore be displayed differently from one device to another. By default, 30em corresponds to a page width of 480px."
-
-msgid "settings-global-pagewidth-30-default"
-msgstr "30em (default)"
-
-msgid "settings-global-pagewidth-35"
-msgstr "35em"
-
-msgid "settings-global-pagewidth-40"
-msgstr "40em"
+msgid "settings-global-pagewidthvalue-description"
+msgstr "In em, the width must be between 30 and 80; in pixels, between 480 and 1280. Default: 30em or 480px."
 
 msgid "settings-global-fontsize-title"
 msgstr "Size"

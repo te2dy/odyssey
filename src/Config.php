@@ -101,7 +101,7 @@ class Config extends dcNsProcess
                                                     $drop = true;
                                                 }
                                             } elseif ($setting_id === 'global_page_width_unit') {
-                                                if (isset($_POST['global_page_width_value'])) {
+                                                if (isset($_POST['global_page_width_value']) && $_POST['global_page_width_value'] !== '') {
                                                     $page_width_data = ConfigUtils::getContentWidth(
                                                         $_POST[$setting_id],
                                                         $_POST['global_page_width_value']
@@ -110,6 +110,8 @@ class Config extends dcNsProcess
                                                     if (!empty($page_width_data)) {
                                                         $setting_value = $page_width_data['unit'];
                                                     }
+                                                } elseif ($_POST[$setting_id] === 'px') {
+                                                    $setting_value = 'px';
                                                 }
                                             }
 
@@ -408,9 +410,16 @@ class Config extends dcNsProcess
 
             // Page width.
             if (isset($_POST['global_page_width_unit']) && isset($_POST['global_page_width_value'])) {
+                $page_width_unit  = $_POST['global_page_width_unit'];
+                $page_width_value = $_POST['global_page_width_value'];
+
+                if ($page_width_unit === 'px' && $page_width_value === '') {
+                    $page_width_value = '480';
+                }
+
                 $page_width_data = ConfigUtils::getContentWidth(
-                    $_POST['global_page_width_unit'],
-                    $_POST['global_page_width_value']
+                    $page_width_unit,
+                    $page_width_value
                 );
 
                 if (!empty($page_width_data)) {
@@ -2117,11 +2126,11 @@ class ConfigUtils
             return $content_width_default;
         }
 
-        if ($unit === 'em' && ($value < 20 || $value > 80)) {
+        if ($unit === 'em' && ($value < 30 || $value > 80)) {
             return $content_width_default;
         }
 
-        if ($unit === 'px' && ($value < 320 || $value > 1280)) {
+        if ($unit === 'px' && ($value < 480 || $value > 1280)) {
             return $content_width_default;
         }
 

@@ -82,22 +82,7 @@ msgid "settings-global-pagewidthvalue-title"
 msgstr "Largeur de la page"
 
 msgid "settings-global-pagewidthvalue-description"
-msgstr "En cadratin, la largeur doit être comprise entre 20 et 80 ; en pixel, entre 320 et 1 280. Par défaut, 30 em ou 480 px."
-
-msgid "settings-global-pagewidth-title"
-msgstr "Largeur des pages"
-
-msgid "settings-global-pagewidth-description"
-msgstr "La largeur de la page dépend de la taille de la police définie dans le navigateur. Votre blog peut donc s’afficher différemment d’un appareil à l’autre. Par défaut, 30 em correspondent à une largeur de page de 480 px."
-
-msgid "settings-global-pagewidth-30-default"
-msgstr "30 em (par défaut)"
-
-msgid "settings-global-pagewidth-35"
-msgstr "35 em"
-
-msgid "settings-global-pagewidth-40"
-msgstr "40 em"
+msgstr "En cadratin, la largeur doit être comprise entre 30 et 80 ; en pixel, entre 480 et 1 280. Par défaut, 30 em ou 480 px."
 
 msgid "settings-global-fontsize-title"
 msgstr "Taille"

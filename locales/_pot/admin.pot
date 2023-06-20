@@ -69,6 +69,12 @@ msgstr ""
 msgid "settings-global-pagewidthunit-description"
 msgstr ""
 
+msgid "settings-global-pagewidthunit-em-default"
+msgstr ""
+
+msgid "settings-global-pagewidthunit-px"
+msgstr ""
+
 msgid "settings-global-pagewidthvalue-title"
 msgstr ""
 
