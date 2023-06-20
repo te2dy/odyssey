@@ -550,10 +550,6 @@ details summary {
 #c_content {
   font-family: var(--font-family-content, var(--font-family, var(--font-family-default)));
 }
-#trackback-url {
-  text-decoration: var(--link-text-decoration, none);
-  text-decoration-style: var(--link-text-decoration-style, unset);
-}
 #comment-feed-link {
   margin-top: 2rem;
 }

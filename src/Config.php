@@ -467,6 +467,30 @@ class Config extends dcNsProcess
                     $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("woff2")';
                     $css_main_array[3]['@font-face']['font-style']  = 'italic';
                     $css_main_array[3]['@font-face']['font-weight'] = '700';
+                } elseif ($_POST['global_font_family'] === 'eb-garamond') {
+                    $themes_url = dcCore::app()->blog->settings->system->themes_url;
+
+                    $css_root_array[':root']['--font-family'] = '"EB Garamond", serif';
+
+                    $css_main_array[0]['@font-face']['font-family'] = '"EB Garamond"';
+                    $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Regular.ttf") format("truetype")';
+                    $css_main_array[0]['@font-face']['font-style']  = 'normal';
+                    $css_main_array[0]['@font-face']['font-weight'] = '400';
+
+                    $css_main_array[1]['@font-face']['font-family'] = '"EB Garamond"';
+                    $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Italic.ttf") format("truetype")';
+                    $css_main_array[1]['@font-face']['font-style']  = 'italic';
+                    $css_main_array[1]['@font-face']['font-weight'] = '400';
+
+                    $css_main_array[2]['@font-face']['font-family'] = '"EB Garamond"';
+                    $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Bold.ttf") format("truetype")';
+                    $css_main_array[2]['@font-face']['font-style']  = 'normal';
+                    $css_main_array[2]['@font-face']['font-weight'] = '700';
+
+                    $css_main_array[3]['@font-face']['font-family'] = '"EB Garamond"';
+                    $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-BoldItalic.ttf") format("truetype")';
+                    $css_main_array[3]['@font-face']['font-style']  = 'italic';
+                    $css_main_array[3]['@font-face']['font-weight'] = '700';
                 } elseif ($_POST['global_font_family'] === 'luciole') {
                     $themes_url = dcCore::app()->blog->settings->system->themes_url;
 
@@ -695,7 +719,9 @@ class Config extends dcNsProcess
             // JS.
             if (isset($_POST['global_js']) && $_POST['global_js'] === '1') {
                 if (isset($_POST['content_trackback_link']) && $_POST['content_trackback_link'] === '1') {
-                    $css_main_array['#trackback-url']['color'] = 'var(--color-primary)';
+                    $css_main_array['#trackback-url']['color']                 = 'var(--color-primary)';
+                    $css_main_array['#trackback-url']['text-decoration']       = 'var(--link-text-decoration, none)';
+                    $css_main_array['#trackback-url']['text-decoration-style'] = 'var(--link-text-decoration-style, unset)';
 
                     $css_main_array['#trackback-url:is(:active, :focus, :hover)']['cursor']                = 'pointer';
                     $css_main_array['#trackback-url:is(:active, :focus, :hover)']['filter']                = 'brightness(1.25)';
@@ -778,6 +804,30 @@ class Config extends dcNsProcess
                     $css_main_array[7]['@font-face']['font-weight'] = '700';
 
                     $css_root_array[':root']['--font-family-content'] = '"Atkinson Hyperlegible", sans-serif';
+                } elseif ($_POST['content_text_font'] === 'eb-garamond') {
+                    $themes_url = dcCore::app()->blog->settings->system->themes_url;
+
+                    $css_main_array[4]['@font-face']['font-family'] = '"EB Garamond"';
+                    $css_main_array[4]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Regular.ttf") format("truetype")';
+                    $css_main_array[4]['@font-face']['font-style']  = 'normal';
+                    $css_main_array[4]['@font-face']['font-weight'] = '400';
+
+                    $css_main_array[5]['@font-face']['font-family'] = '"EB Garamond"';
+                    $css_main_array[5]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Italic.ttf") format("truetype")';
+                    $css_main_array[5]['@font-face']['font-style']  = 'italic';
+                    $css_main_array[5]['@font-face']['font-weight'] = '400';
+
+                    $css_main_array[6]['@font-face']['font-family'] = '"EB Garamond"';
+                    $css_main_array[6]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Bold.ttf") format("truetype")';
+                    $css_main_array[6]['@font-face']['font-style']  = 'normal';
+                    $css_main_array[6]['@font-face']['font-weight'] = '700';
+
+                    $css_main_array[7]['@font-face']['font-family'] = '"EB Garamond"';
+                    $css_main_array[7]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-BoldItalic.ttf") format("truetype")';
+                    $css_main_array[7]['@font-face']['font-style']  = 'italic';
+                    $css_main_array[7]['@font-face']['font-weight'] = '700';
+
+                    $css_root_array[':root']['--font-family-content'] = '"EB Garamond", serif';
                 } elseif ($_POST['content_text_font'] === 'luciole') {
                     $themes_url = dcCore::app()->blog->settings->system->themes_url;
 
@@ -1542,6 +1592,7 @@ class origineMiniSettings
                 __('settings-global-fontfamily-serifbrowser')      => 'serif-browser',
                 __('settings-global-fontfamily-monobrowser')       => 'monospace-browser',
                 __('settings-global-fontfamily-atkinson')          => 'atkinson',
+                __('settings-global-fontfamily-ebgaramond')        => 'eb-garamond',
                 __('settings-global-fontfamily-luciole')           => 'luciole'
             ],
             'default'     => 'sans-serif',
@@ -1728,6 +1779,7 @@ class origineMiniSettings
                 __('settings-global-fontfamily-serifbrowser')     => 'serif-browser',
                 __('settings-global-fontfamily-monobrowser')      => 'monospace-browser',
                 __('settings-global-fontfamily-atkinson')         => 'atkinson',
+                __('settings-global-fontfamily-ebgaramond')       => 'eb-garamond',
                 __('settings-global-fontfamily-luciole')          => 'luciole'
             ],
             'default'     => 'same',

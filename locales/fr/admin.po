@@ -144,6 +144,9 @@ msgstr "Police à chasse fixe du navigateur"
 msgid "settings-global-fontfamily-atkinson"
 msgstr "Atkinson Hyperlegible"
 
+msgid "settings-global-fontfamily-ebgaramond"
+msgstr "EB Garamond"
+
 msgid "settings-global-fontfamily-luciole"
 msgstr "Luciole"
 

@@ -141,6 +141,9 @@ msgstr ""
 msgid "settings-global-fontfamily-atkinson"
 msgstr ""
 
+msgid "settings-global-fontfamily-ebgaramond"
+msgstr ""
+
 msgid "settings-global-fontfamily-luciole"
 msgstr ""
 
