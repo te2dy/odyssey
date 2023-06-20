@@ -14,11 +14,15 @@ $this->registerModule(
     '2.2',                      // Version
     [
         // Properties.
-        'requires'             => [['core', '2.26']],
-        'type'                 => 'theme',
+        'requires'             => [
+            ['core', '2.26'],
+            ['php', '8']
+        ],
+
+        'type' => 'theme',
 
         // Allows a full control for the theme configurator.
-        'standalone_config'    => true,
+        'standalone_config' => true,
 
         // Replaces default heading levels.
         'widgettitleformat'    => '<h3>%s</h3>',
