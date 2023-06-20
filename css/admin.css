@@ -21,3 +21,6 @@
 #originemini-message-js summary {
   cursor: pointer;
 }
+.om-value-error {
+  background-color: hsl(0, 90%, 90%);
+}
