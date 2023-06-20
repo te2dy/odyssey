@@ -417,10 +417,7 @@ class Config extends dcNsProcess
                     $page_width_value = '480';
                 }
 
-                $page_width_data = ConfigUtils::getContentWidth(
-                    $page_width_unit,
-                    $page_width_value
-                );
+                $page_width_data = ConfigUtils::getContentWidth($page_width_unit, $page_width_value);
 
                 if (!empty($page_width_data)) {
                     $css_root_array[':root']['--page-width'] = $page_width_data['value'] . $page_width_data['unit'];
@@ -431,7 +428,7 @@ class Config extends dcNsProcess
             $font_size_allowed = [80, 90, 110, 120];
 
             if (isset($_POST['global_font_size']) && in_array((int) $_POST['global_font_size'], $font_size_allowed, true)) {
-                $css_root_array[':root']['--font-size'] = ($_POST['global_font_size'] / 100) . 'em';
+                $css_root_array[':root']['--font-size'] = ConfigUtils::removeZero($_POST['global_font_size'] / 100) . 'em';
             }
 
             // Font family.
@@ -2109,6 +2106,15 @@ class origineMiniSettings
 
 class ConfigUtils
 {
+    /**
+     * Gets an array of the content width of the blog.
+     *
+     * @param string $unit           Should be 'em' or 'px'.
+     * @param int    $value          The value of the width.
+     * @param bool   $return_default If true, the default width will be returned.
+     *
+     * @return array The unit and the value of the width.
+     */
     public static function getContentWidth($unit = 'em', $value = 30, $return_default = false)
     {
         $value = (int) $value;
@@ -2142,5 +2148,23 @@ class ConfigUtils
             'unit'  => $unit,
             'value' => $value
         ];
+    }
+
+    /**
+     * Removes 0 before decimal separator of numbers inferior to 1.
+     *
+     * @param string|int $number The number.
+     *
+     * @return string The cleaned number.
+     */
+    public static function removeZero($number): string
+    {
+        $number = strval($number);
+
+        if (str_starts_with($number, '0.')) {
+            $number = substr($number, 1);
+        }
+
+        return $number;
     }
 }
