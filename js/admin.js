@@ -132,17 +132,19 @@ function updatePageWidthSetting(pageWidthUnitDefault, pageWidthValueDefault) {
 function inputCheckMessage() {
   var newPageWidth = Number(document.getElementById("global_page_width_value").value);
 
-  if (document.getElementById("global_page_width_unit").value === 'em') {
-    if (isNaN(newPageWidth) || newPageWidth < 20 || newPageWidth > 80) {
-      document.getElementById("global_page_width_value").classList.add("om-value-error");
+  if (newPageWidth) {
+    if (document.getElementById("global_page_width_unit").value === 'em') {
+      if (isNaN(newPageWidth) || newPageWidth < 30 || newPageWidth > 80) {
+        document.getElementById("global_page_width_value").classList.add("om-value-error");
+      } else {
+        document.getElementById("global_page_width_value").classList.remove("om-value-error")
+      }
     } else {
-      document.getElementById("global_page_width_value").classList.remove("om-value-error")
-    }
-  } else {
-    if (isNaN(newPageWidth) || newPageWidth < 320 || newPageWidth > 1280) {
-      document.getElementById("global_page_width_value").classList.add("om-value-error");
-    } else {
-      document.getElementById("global_page_width_value").classList.remove("om-value-error")
+      if (isNaN(newPageWidth) || newPageWidth < 480 || newPageWidth > 1280) {
+        document.getElementById("global_page_width_value").classList.add("om-value-error");
+      } else {
+        document.getElementById("global_page_width_value").classList.remove("om-value-error")
+      }
     }
   }
 }
@@ -184,12 +186,9 @@ function changeImage() {
   } else {
     document.getElementById("header_image-src").style.display = "none";
     document.getElementById("header_image_position-input").style.display = "none";
+    document.getElementById("header_image-retina").style.display = "none";
     document.getElementById("header_image_description-input").style.display = "none";
     document.getElementById("header_image_description-description").style.display = "none";
-  }
-
-  if (document.getElementById("header_image_position-retina")) {
-    document.getElementById("header_image_position-retina").style.display = "none";
   }
 }
 
@@ -206,6 +205,7 @@ window.onload = function() {
 
   document.getElementById("global_page_width_unit").onchange = function() {
     updatePageWidthSetting(pageWidthUnitDefault, pageWidthValueDefault);
+    inputCheckMessage();
   }
 
   window.oninput = function() {
