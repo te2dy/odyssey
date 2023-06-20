@@ -318,6 +318,15 @@ msgstr "Title and excerpt"
 msgid "settings-content-postlisttype-content"
 msgstr "Title and full content"
 
+msgid "settings-content-postlisttype-custom"
+msgstr "Custom"
+
+msgid "settings-content-postlistcustom-title"
+msgstr "Name of the custom template"
+
+msgid "settings-content-postlistcustom-description"
+msgstr "Enter here the name of the template. It must be placed in the <code>tpl</code> folder of the theme."
+
 msgid "settings-content-postlisttime-title"
 msgstr "Display the time of publication"
 
@@ -350,6 +359,33 @@ msgstr "Enlarge big images"
 
 msgid "settings-content-imageswide-description"
 msgstr "Photos that are large enough will overflow the page (uses JavaScript)."
+
+msgid "settings-content-imageswide-disabled-default"
+msgstr "Disabled"
+
+msgid "settings-content-imageswide-postspages"
+msgstr "Only for post and page"
+
+msgid "settings-content-imageswide-always"
+msgstr "Everywhere on the blog"
+
+msgid "settings-content-imageswidesize-title"
+msgstr "Image overflow width"
+
+msgid "settings-content-imageswidesize-description"
+msgstr "This is the number of pixels that allow images that are large enough to overflow. Default: 120."
+
+msgid "settings-content-imagecustomsizes-title"
+msgstr "Custom image sizes"
+
+msgid "settings-content-imagecustomsizes-description"
+msgstr "Optionally add here, separated by commas, the custom image size identifiers (see <code>coreMediaConstruct</code>) to include in <code>srcset</code>."
+
+msgid "settings-content-pagetemplate-title"
+msgstr "Custom template"
+
+msgid "settings-content-pagetemplate-description"
+msgstr "type here the name of the template. It must be placed in the <code>tpl</code> folder of the theme."
 
 msgid "settings-content-commentformhide-title"
 msgstr "Unveil the comment form by clicking on a link"

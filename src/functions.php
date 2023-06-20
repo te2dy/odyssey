@@ -131,9 +131,9 @@ class OrigineMiniUtils
             && substr(mime_content_type($path), 0, 6) === 'image/'
         ) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -150,5 +150,57 @@ class OrigineMiniUtils
         $port   = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
 
         return $scheme . $host . $port;
+    }
+
+    /**
+     * Wraps a string in quotes if if contains a least one space.
+     *
+     * @param string The value.
+     *
+     * @return string The string.
+     */
+    public static function attrValue($value): string
+    {
+        return strpos($value, ' ') === false ? $value : '"' . $value . '"';
+    }
+}
+
+class OrigineMiniSettings
+{
+    public static function value($setting_id = '')
+    {
+        return $setting_id ? dcCore::app()->blog->settings->originemini->$setting_id : '';
+    }
+
+    /**
+     * Gets the content width of the blog.
+     *
+     * @param string $unit The unit of the value ("em" or "px").
+     *
+     * @return int The content width.
+     */
+    public static function contentWidth($unit): int
+    {
+        $units_allowed      = ['em', 'px'];
+        $content_width      = 30;
+        $content_width_unit = 'em';
+
+        if (OrigineMiniSettings::value('global_page_width_value')) {
+            $content_width = (int) OrigineMiniSettings::value('global_page_width_value');
+        }
+
+        if (OrigineMiniSettings::value('global_page_width_unit') === 'px') {
+            $content_width_unit = 'px';
+
+            $content_width *= 16;
+        }
+
+        if (isset($unit) && in_array($unit, $units_allowed)) {
+            if ($unit !== $content_width_unit && $unit === 'px') {
+                $content_width *= 16;
+            }
+        }
+
+        return $content_width;
     }
 }

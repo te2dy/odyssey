@@ -38,14 +38,9 @@ class Prepend extends dcNsProcess
             dcCore::app()->blog->settings->addNamespace('originemini');
 
             // Hashes each JS files with the SHA-256 algorithm.
-            $imagewide_hash    = 'sha256-' . base64_encode(hash_file('sha256', dcCore::app()->blog->themes_path . '/originemini/js/imagewide.min.js', true));
-            $searchform_hash   = 'sha256-' . base64_encode(hash_file('sha256', dcCore::app()->blog->themes_path . '/originemini/js/searchform.min.js', true));
-            $trackbackurl_hash = 'sha256-' . base64_encode(hash_file('sha256', dcCore::app()->blog->themes_path . '/originemini/js/trackbackurl.min.js', true));
-
             $hashes = [
-                'trackbackurl' => htmlspecialchars($trackbackurl_hash, ENT_COMPAT, 'UTF-8'),
-                'searchform'   => htmlspecialchars($searchform_hash, ENT_COMPAT, 'UTF-8'),
-                'imagewide'    => htmlspecialchars($imagewide_hash, ENT_COMPAT, 'UTF-8')
+                'trackbackurl' => self::hashJS('/originemini/js/searchform.min.js'),
+                'searchform'   => self::hashJS('/originemini/js/trackbackurl.min.js')
             ];
 
             /**
@@ -53,12 +48,44 @@ class Prepend extends dcNsProcess
              *
              * @see Config::render() (/src/Config.php)
              */
-            dcCore::app()->blog->settings->originemini->put('js_hash', $hashes, 'array', __('prepend-hashes-save'), true);
+            dcCore::app()->blog->settings->originemini->put(
+                'js_hash',
+                $hashes,
+                'array',
+                __('prepend-hashes-save'),
+                true
+            );
 
             // Pushes the new version of the theme in the database.
             dcCore::app()->setVersion('originemini', $new_version);
         }
 
         return true;
+    }
+
+    /**
+     * Hashes JS file in ordered to be stored in the database.
+     *
+     * @param string $path_rel The relative JS file path.
+     *
+     * @return string The hash.
+     */
+    public static function hashJS($path_rel): string
+    {
+        $hash = '';
+
+        if ($path_rel) {
+            $hash = hash_file(
+                'sha256',
+                dcCore::app()->blog->themes_path . $path_rel,
+                true
+            );
+
+            $hash = base64_encode($hash);
+            $hash = 'sha256-' . $hash;
+            $hash = htmlspecialchars($hash, ENT_COMPAT, 'UTF-8');
+        }
+
+        return $hash;
     }
 }

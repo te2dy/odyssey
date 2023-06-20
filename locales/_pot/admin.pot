@@ -63,19 +63,16 @@ msgstr ""
 
 # Settings
 
-msgid "settings-global-pagewidth-title"
+msgid "settings-global-pagewidthunit-title"
 msgstr ""
 
-msgid "settings-global-pagewidth-description"
+msgid "settings-global-pagewidthunit-description"
 msgstr ""
 
-msgid "settings-global-pagewidth-30-default"
+msgid "settings-global-pagewidthvalue-title"
 msgstr ""
 
-msgid "settings-global-pagewidth-35"
-msgstr ""
-
-msgid "settings-global-pagewidth-40"
+msgid "settings-global-pagewidthvalue-description"
 msgstr ""
 
 msgid "settings-global-fontsize-title"
@@ -321,6 +318,15 @@ msgstr ""
 msgid "settings-content-postlisttime-title"
 msgstr ""
 
+msgid "settings-content-postlisttype-custom"
+msgstr ""
+
+msgid "settings-content-postlistcustom-title"
+msgstr ""
+
+msgid "settings-content-postlistcustom-description"
+msgstr ""
+
 msgid "settings-content-postlistreactionlink-title"
 msgstr ""
 
@@ -349,6 +355,33 @@ msgid "settings-content-imageswide-title"
 msgstr ""
 
 msgid "settings-content-imageswide-description"
+msgstr ""
+
+msgid "settings-content-imageswide-disabled-default"
+msgstr ""
+
+msgid "settings-content-imageswide-postspages"
+msgstr ""
+
+msgid "settings-content-imageswide-always"
+msgstr ""
+
+msgid "settings-content-imageswidesize-title"
+msgstr ""
+
+msgid "settings-content-imageswidesize-description"
+msgstr ""
+
+msgid "settings-content-imagecustomsizes-title"
+msgstr ""
+
+msgid "settings-content-imagecustomsizes-description"
+msgstr ""
+
+msgid "settings-content-pagetemplate-title"
+msgstr ""
+
+msgid "settings-content-pagetemplate-description"
 msgstr ""
 
 msgid "settings-content-commentformhide-title"

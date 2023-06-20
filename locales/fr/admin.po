@@ -46,6 +46,9 @@ msgstr "Liste des billets"
 msgid "section-content-post"
 msgstr "Billets"
 
+msgid "section-content-page"
+msgstr "Pages"
+
 msgid "section-content-reactions"
 msgstr "Réactions"
 
@@ -62,6 +65,24 @@ msgid "section-footer-sociallinks"
 msgstr "Liens sociaux"
 
 # Settings
+
+msgid "settings-global-pagewidthunit-title"
+msgstr "Unité utilisée pour définir la largeur de la page"
+
+msgid "settings-global-pagewidthunit-description"
+msgstr "Le cadratin (em) permet à vos pages d’adapter leur largeur en fonction de la taille de la police du navigateur. Ainsi, votre blog peut s’afficher différemment d’un appareil à l’autre. Pour un blog photo avec de larges images, il est recommandé d’utiliser les pixels."
+
+msgid "settings-global-pagewidthunit-em-default"
+msgstr "Cadratin (par défaut)"
+
+msgid "settings-global-pagewidthunit-px"
+msgstr "Pixel"
+
+msgid "settings-global-pagewidthvalue-title"
+msgstr "Largeur de la page"
+
+msgid "settings-global-pagewidthvalue-description"
+msgstr "En cadratin, la largeur doit être comprise entre 20 et 80 ; en pixel, entre 320 et 1 280. Par défaut, 30 em ou 480 px."
 
 msgid "settings-global-pagewidth-title"
 msgstr "Largeur des pages"
@@ -201,6 +222,12 @@ msgstr "Arrondir les coins"
 msgid "settings-global-roundcorner-description"
 msgstr "Ce paramètre concerne notamment le titre du site et les boutons."
 
+msgid "settings-global-csscustom-title"
+msgstr "Styles personnalisés"
+
+msgid "settings-global-csscustom-description"
+msgstr "Ajouter des styles en langage CSS pour personnaliser l’apparence du thème."
+
 msgid "settings-global-minimalsocialmarkups-title"
 msgstr "Ajouter des balises sociales minimalistes dans l’en-tête"
 
@@ -318,6 +345,15 @@ msgstr "Titre et extrait"
 msgid "settings-content-postlisttype-content"
 msgstr "Titre et contenu complet"
 
+msgid "settings-content-postlisttype-custom"
+msgstr "Personnalisé"
+
+msgid "settings-content-postlistcustom-title"
+msgstr "Nom du modèle personnalisé"
+
+msgid "settings-content-postlistcustom-description"
+msgstr "Le modèle doit être placé dans le dossier <code>tpl</code> du thème."
+
 msgid "settings-content-postlisttime-title"
 msgstr "Afficher l’heure de publication"
 
@@ -339,17 +375,50 @@ msgstr "Afficher l’heure de publication"
 msgid "settings-content-postintro-title"
 msgstr "Afficher l’extrait comme introduction"
 
-msgid "settings-content-linksunderline-title"
-msgstr "Souligner les liens du corps du texte"
-
 msgid "settings-content-postintro-description"
 msgstr "Met en avant l’extrait défini par l’auteur entre le titre et le contenu du billet."
+
+msgid "settings-content-posttemplate-title"
+msgstr "Modèle personnalisé"
+
+msgid "settings-content-posttemplate-description"
+msgstr "Entrez ici le nom du modèle. Celui-ci doit être placé dans le dossier <code>tpl</code> du thème."
+
+msgid "settings-content-linksunderline-title"
+msgstr "Souligner les liens du corps du texte"
 
 msgid "settings-content-imageswide-title"
 msgstr "Agrandir les images suffisamment larges"
 
 msgid "settings-content-imageswide-description"
 msgstr "Les photos suffisamment grandes déborderont de la page (utilise JavaScript)."
+
+msgid "settings-content-imageswide-disabled-default"
+msgstr "Désactivé"
+
+msgid "settings-content-imageswide-postspages"
+msgstr "Uniquement dans contenu des billets et des pages"
+
+msgid "settings-content-imageswide-always"
+msgstr "Sur tout le blog"
+
+msgid "settings-content-imageswidesize-title"
+msgstr "Taille du dépassement des images"
+
+msgid "settings-content-imageswidesize-description"
+msgstr "Il s’agit du nombre de pixels autorisant les images suffisamment larges à déborder. Par défaut&nbsp;: 120."
+
+msgid "settings-content-imagecustomsizes-title"
+msgstr "Tailles d’image personnalisées"
+
+msgid "settings-content-imagecustomsizes-description"
+msgstr "Ajoutez éventuellement ici, séparés par des virgules, les identifiants de tailles d’image personnalisées (cf. <code>coreMediaConstruct</code>) à inclure dans <code>srcset</code>."
+
+msgid "settings-content-pagetemplate-title"
+msgstr "Modèle personnalisé"
+
+msgid "settings-content-pagetemplate-description"
+msgstr "Saisissez ici le nom du modèle. Celui-ci doit être placé dans le dossier <code>tpl</code> du thème."
 
 msgid "settings-content-commentformhide-title"
 msgstr "Dévoiler le formulaire de commentaires en cliquant sur un lien"

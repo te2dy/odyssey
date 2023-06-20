@@ -14,13 +14,15 @@ namespace Dotclear\Theme\originemini;
 use dcCore;
 use dcNsProcess;
 use context;
-use Dotclear\Helper\Html\Html;
-use Dotclear\Helper\Text;
 use Dotclear\Helper\L10n;
+use Dotclear\Helper\Text;
+use Dotclear\Helper\File\Path;
+use Dotclear\Helper\Html\Html;
 
 // Lets prepare to use custom functions.
 require_once 'functions.php';
 use OrigineMiniUtils as omUtils;
+use OrigineMiniSettings as omSettings;
 
 class Frontend extends dcNsProcess
 {
@@ -46,7 +48,7 @@ class Frontend extends dcNsProcess
         dcCore::app()->addBehavior('publicFooterContent', [self::class, 'origineMiniSocialLinks']);
         dcCore::app()->addBehavior('publicFooterContent', [self::class, 'origineMiniScriptSearchForm']);
         dcCore::app()->addBehavior('publicFooterContent', [self::class, 'origineMiniScriptTrackbackURL']);
-        dcCore::app()->addBehavior('publicFooterContent', [self::class, 'origineMiniScriptImagesWide']);
+        dcCore::app()->addBehavior('publicAfterContentFilterV2', [self::class, 'origineMiniImageWide']);
 
         // Values.
         dcCore::app()->tpl->addValue('origineMiniMetaDescriptionHome', [self::class, 'origineMiniMetaDescriptionHome']);
@@ -56,6 +58,8 @@ class Frontend extends dcNsProcess
         dcCore::app()->tpl->addValue('origineMiniHeaderImage', [self::class, 'origineMiniHeaderImage']);
         dcCore::app()->tpl->addValue('origineMiniBlogDescription', [self::class, 'origineMiniBlogDescription']);
         dcCore::app()->tpl->addValue('origineMiniPostListType', [self::class, 'origineMiniPostListType']);
+        dcCore::app()->tpl->addValue('origineMiniPostTemplate', [self::class, 'origineMiniPostTemplate']);
+        dcCore::app()->tpl->addValue('origineMiniPageTemplate', [self::class, 'origineMiniPageTemplate']);
         dcCore::app()->tpl->addValue('origineMiniPostListReactionLink', [self::class, 'origineMiniPostListReactionLink']);
         dcCore::app()->tpl->addValue('origineMiniEntryTime', [self::class, 'origineMiniEntryTime']);
         dcCore::app()->tpl->addValue('origineMiniEntryExcerpt', [self::class, 'origineMiniEntryExcerpt']);
@@ -97,21 +101,18 @@ class Frontend extends dcNsProcess
             // Adds quotes if the value contains one or more spaces.
             $editor = strpos($editor, ' ') === false ? $editor : '"' . $editor . '"';
 
-            echo '<meta name=author content=', $editor, '>', "\n";
+            echo '<meta name=author content=', omUtils::attrValue($editor), '>', "\n";
         }
 
         // Adds the content of the copyright notice.
         if (dcCore::app()->blog->settings->system->copyright_notice) {
-            $notice = dcCore::app()->blog->settings->system->copyright_notice;
-
-            // Adds quotes if the value contains one or more spaces.
-            $notice = strpos($notice, ' ') === false ? $notice : '"' . $notice . '"';
-
-            echo '<meta name=copyright content=', $notice, '>', "\n";
+            echo '<meta name=copyright content=',
+            omUtils::attrValue(dcCore::app()->blog->settings->system->copyright_notice),
+            '>', "\n";
         }
 
         // Adds the generator name of the blog.
-        if (dcCore::app()->blog->settings->originemini->global_meta_generator === true) {
+        if (omSettings::value('global_meta_generator') === true) {
             echo '<meta name=generator content=Dotclear>', "\n";
         }
     }
@@ -125,79 +126,88 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniSocialMarkups(): void
     {
-        if (dcCore::app()->blog->settings->originemini->global_meta_social === true) {
+        if (omSettings::value('global_meta_social') === true) {
             $title = '';
             $desc  = '';
             $img   = '';
 
-            // Posts and pages.
-            if (dcCore::app()->url->type === 'post' || dcCore::app()->url->type === 'pages') {
-                $title = dcCore::app()->ctx->posts->post_title;
-                $desc  = dcCore::app()->ctx->posts->getExcerpt();
+            switch (dcCore::app()->url->type) {
+                case 'post':
+                case 'pages':
+                    $title = dcCore::app()->ctx->posts->post_title;
 
-                if ($desc === '') {
-                    $desc = dcCore::app()->ctx->posts->getContent();
-                }
-
-                $desc = Html::decodeEntities(Html::clean($desc));
-                $desc = preg_replace('/\s+/', ' ', $desc);
-
-                if (strlen($desc) > 180) {
-                    $desc = Text::cutString($desc, 179) . '…';
-                }
-
-                if (context::EntryFirstImageHelper('o', true, '', true)) {
-                    $img = omUtils::blogBaseURL() . context::EntryFirstImageHelper('o', true, '', true);
-                }
-
-            // Home.
-            } elseif (dcCore::app()->url->type === 'default' || dcCore::app()->url->type === 'default-page') {
-                $title = dcCore::app()->blog->name;
-
-                if ((int) context::PaginationPosition() > 1 ) {
-                    $desc = sprintf(
-                        __('meta-social-page-with-number'),
-                        context::PaginationPosition()
-                    );
-                }
-
-                if (dcCore::app()->blog->settings->originemini->global_meta_home_description || dcCore::app()->blog->desc) {
-                    if ($desc) {
-                        $desc .= ' – ';
-                    }
-
-                    if (dcCore::app()->blog->settings->originemini->global_meta_home_description) {
-                        $desc .= dcCore::app()->blog->settings->originemini->global_meta_home_description;
-                    } elseif (dcCore::app()->blog->desc) {
-                        $desc .= dcCore::app()->blog->desc;
-                    }
-
-                    $desc = Html::decodeEntities(Html::clean($desc));
+                    $desc = dcCore::app()->ctx->posts->getExcerpt() ?: dcCore::app()->ctx->posts->getContent();
+                    $desc = Html::clean($desc);
+                    $desc = Html::decodeEntities($desc);
                     $desc = preg_replace('/\s+/', ' ', $desc);
 
                     if (strlen($desc) > 180) {
                         $desc = Text::cutString($desc, 179) . '…';
                     }
-                }
 
-            // Categories.
-            } elseif (dcCore::app()->url->type === 'category') {
-                $title = dcCore::app()->ctx->categories->cat_title;
-
-                if (dcCore::app()->ctx->categories->cat_desc) {
-                    $desc = dcCore::app()->ctx->categories->cat_desc;
-                    $desc = Html::decodeEntities(Html::clean($desc));
-                    $desc = preg_replace('/\s+/', ' ', $desc);
-
-                    if (strlen($desc) > 180) {
-                        $desc = Text::cutString($desc, 179) . '…';
+                    if (context::EntryFirstImageHelper('o', true, '', true)) {
+                        $img = omUtils::blogBaseURL() . context::EntryFirstImageHelper('o', true, '', true);
                     }
-                }
 
-            // Tags.
-            } elseif (dcCore::app()->url->type === 'tag' && dcCore::app()->ctx->meta->meta_type === 'tag') {
-                $title = dcCore::app()->ctx->meta->meta_id;
-                $desc  = sprintf(__('meta-social-tags-post-related'), $title);
+                    break;
+
+                case 'default':
+                case 'default-page':
+                    $title = dcCore::app()->blog->name;
+
+                    if ((int) context::PaginationPosition() > 1 ) {
+                        $desc = sprintf(
+                            __('meta-social-page-with-number'),
+                            context::PaginationPosition()
+                        );
+                    }
+
+                    if (omSettings::value('global_meta_home_description') || dcCore::app()->blog->desc) {
+                        if ($desc) {
+                            $desc .= ' – ';
+                        }
+
+                        if (omSettings::value('global_meta_home_description')) {
+                            $desc .= omSettings::value('global_meta_home_description');
+                        } elseif (dcCore::app()->blog->desc) {
+                            $desc .= dcCore::app()->blog->desc;
+                        }
+
+                        $desc = Html::clean($desc);
+                        $desc = Html::decodeEntities($desc);
+                        $desc = preg_replace('/\s+/', ' ', $desc);
+
+                        if (strlen($desc) > 180) {
+                            $desc = Text::cutString($desc, 179) . '…';
+                        }
+                    }
+
+                    break;
+
+                case 'category':
+                    $title = dcCore::app()->ctx->categories->cat_title;
+
+                    if (dcCore::app()->ctx->categories->cat_desc) {
+                        $desc = dcCore::app()->ctx->categories->cat_desc;
+                        $desc = Html::clean($desc);
+                        $desc = Html::decodeEntities($desc);
+                        $desc = preg_replace('/\s+/', ' ', $desc);
+
+                        if (strlen($desc) > 180) {
+                            $desc = Text::cutString($desc, 179) . '…';
+                        }
+                    }
+
+                    break;
+
+                case 'tag':
+                    if (dcCore::app()->ctx->meta->meta_type === 'tag') {
+                        $title = dcCore::app()->ctx->meta->meta_id;
+                        $desc  = sprintf(
+                            __('meta-social-tags-post-related'),
+                            $title
+                        );
+                    }
             }
 
             $title = Html::escapeHTML($title);
@@ -205,11 +215,11 @@ class Frontend extends dcNsProcess
             if ($title) {
                 $desc = Html::escapeHTML($desc);
 
-                if (!$img && dcCore::app()->blog->settings->originemini->header_image['url']) {
-                    $img = omUtils::blogBaseURL() . dcCore::app()->blog->settings->originemini->header_image['url'];
+                if (!$img && isset(omSettings::value('header_image')['url'])) {
+                    $img = omUtils::blogBaseURL() . omSettings::value('header_image')['url'];
                 }
 
-                $img  = Html::escapeURL($img);
+                $img = Html::escapeURL($img);
 
                 if ($img) {
                     echo '<meta name=twitter:card content=summary_large_image>', "\n";
@@ -236,7 +246,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniPostIntro(): void
     {
-        if (dcCore::app()->blog->settings->originemini->content_post_intro === true && dcCore::app()->ctx->posts->post_excerpt) {
+        if (omSettings::value('content_post_intro') === true && dcCore::app()->ctx->posts->post_excerpt) {
             echo '<div id=post-intro>', dcCore::app()->ctx->posts->getExcerpt(), '</div>';
         }
     }
@@ -248,59 +258,52 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniSocialLinks(): void
     {
+        // A list of social sites supported by the theme.
+        $social_sites = [
+            'Diaspora',
+            'Discord',
+            'Facebook',
+            'GitHub',
+            'Mastodon',
+            'Signal',
+            'TikTok',
+            'Twitter',
+            'WhatsApp'
+        ];
+
+        // The array of social links to be displayed.
         $social_links = [];
 
-        if (dcCore::app()->blog->settings->originemini->footer_social_links_diaspora) {
-            $social_links['Diaspora'] = dcCore::app()->blog->settings->originemini->footer_social_links_diaspora;
+        // Builds the array of social links to display in the footer.
+        foreach ($social_sites as $site) {
+            $setting_id = 'footer_social_links_' . strtolower($site);
+
+            // If the setting has a value.
+            if (omSettings::value($setting_id)) {
+                $social_links[$site] = omSettings::value($setting_id);
+            }
         }
 
-        if (dcCore::app()->blog->settings->originemini->footer_social_links_discord) {
-            $social_links['Discord'] = dcCore::app()->blog->settings->originemini->footer_social_links_discord;
-        }
-
-        if (dcCore::app()->blog->settings->originemini->footer_social_links_facebook) {
-            $social_links['Facebook'] = dcCore::app()->blog->settings->originemini->footer_social_links_facebook;
-        }
-
-        if (dcCore::app()->blog->settings->originemini->footer_social_links_github) {
-            $social_links['GitHub'] = dcCore::app()->blog->settings->originemini->footer_social_links_github;
-        }
-
-        if (dcCore::app()->blog->settings->originemini->footer_social_links_mastodon) {
-            $social_links['Mastodon'] = dcCore::app()->blog->settings->originemini->footer_social_links_mastodon;
-        }
-
-        if (dcCore::app()->blog->settings->originemini->footer_social_links_signal) {
-            $social_links['Signal'] = dcCore::app()->blog->settings->originemini->footer_social_links_signal;
-        }
-
-        if (dcCore::app()->blog->settings->originemini->footer_social_links_tiktok) {
-            $social_links['TikTok'] = dcCore::app()->blog->settings->originemini->footer_social_links_tiktok;
-        }
-
-        if (dcCore::app()->blog->settings->originemini->footer_social_links_twitter) {
-            $social_links['Twitter'] = dcCore::app()->blog->settings->originemini->footer_social_links_twitter;
-        }
-
-        if (dcCore::app()->blog->settings->originemini->footer_social_links_whatsapp) {
-            $social_links['WhatsApp'] = dcCore::app()->blog->settings->originemini->footer_social_links_whatsapp;
-        }
-
-        if (!empty($social_links)) {
+        if (!empty($social_links)) :
             ?>
 
             <div class=footer-social-links>
                 <ul>
                     <?php
-                    foreach ($social_links as $site => $link) {
-                        if ($site === 'Signal') {
-                            if (substr($link, 0, 1) === '+') {
-                                $link = 'https://signal.me/#p/' . $link;
-                            }
-                        } elseif ($site === 'WhatsApp') {
-                            $link = 'https://wa.me/' . str_replace('+', '', $link);
-                        } elseif ($site === 'Twitter') {
-                            $link = 'https://twitter.com/' . str_replace('@', '', $link);
+                    foreach ($social_links as $site => $link) :
+                        switch ($site) {
+                            case 'Signal':
+                                if (substr($link, 0, 1) === '+') {
+                                    $link = 'https://signal.me/#p/' . $link;
+                                }
+
+                                break;
+                            case 'WhatsApp':
+                                $link = 'https://wa.me/' . str_replace('+', '', $link);
+
+                                break;
+                            case 'Twitter':
+                                $link = 'https://twitter.com/' . str_replace('@', '', $link);
                         }
                         ?>
 
@@ -316,13 +319,13 @@ class Frontend extends dcNsProcess
                             </a>
                         </li>
                         <?php
-                    }
+                    endforeach;
                     ?>
                 </ul>
             </div>
 
             <?php
-        }
+        endif;
     }
 
     /**
@@ -340,10 +343,20 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniScriptSearchForm(): void
     {
-        if (dcCore::app()->blog->settings->originemini->global_js === true && (dcCore::app()->blog->settings->originemini->widgets_search_form === true || (!dcCore::app()->blog->settings->originemini->widgets_search_form && dcCore::app()->url->type === 'search'))) {
+        if (!omSettings::value('global_js')) {
+            return;
+        }
+
+        if (!omSettings::value('widgets_search_form') && dcCore::app()->url->type !== 'search') {
+            return;
+        }
+
+        if (!defined('DC_DEV') || (defined('DC_DEV') && DC_DEV === false)) {
             $script = 'window.onload=function(){var e;document.getElementsByClassName("search-form-submit")[0]&&(""!==(e=new URL(document.location).searchParams.get("q"))&&(document.getElementsByClassName("search-form-submit")[0].disabled=!0),document.getElementsByClassName("search-form")[0].oninput=function(){document.getElementsByClassName("search-form-field")[0].value&&document.getElementsByClassName("search-form-field")[0].value!==e?document.getElementsByClassName("search-form-submit")[0].disabled=!1:document.getElementsByClassName("search-form-submit")[0].disabled=!0})};' . "\n";
 
-            echo '<script>' . $script . '</script>' . "\n";
+            echo '<script>', $script, '</script>', "\n";
+        } else {
+            echo '<script src=', dcCore::app()->blog->settings->system->themes_url, '/originemini/js/searchform.min.js></script>';
         }
     }
 
@@ -361,60 +374,186 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniScriptTrackbackURL(): void
     {
-        if (dcCore::app()->blog->settings->originemini->global_js === true && (dcCore::app()->url->type === 'post' || dcCore::app()->url->type === 'pages')) {
+        if (!omSettings::value('global_js')) {
+            return;
+        }
+
+        if (dcCore::app()->url->type !== 'post' && dcCore::app()->url->type !== 'pages') {
+            return;
+        }
+
+        if (!defined('DC_DEV') || (defined('DC_DEV') && DC_DEV === false)) {
             $script = 'window.onload=function(){document.getElementById("trackback-url")&&(document.getElementById("trackback-url").onclick=function(){window.location.protocol,window.location.host;var t,e=document.getElementById("trackback-url").innerHTML;try{t=new URL(e).href}catch(t){return!1}!1!==t.href&&navigator.clipboard.writeText(t).then(()=>{document.getElementById("trackback-url-copied").style.display="inline"},()=>{document.getElementById("trackback-url-copied").style.display="none"})})};' . "\n";
 
-            echo '<script>' . $script . '</script>' . "\n";
+            echo '<script>', $script, '</script>', "\n";
+        } else {
+            echo '<script src=', dcCore::app()->blog->settings->system->themes_url, '/originemini/js/trackbackurl.min.js></script>';
         }
     }
 
     /**
-     * Loads a script in the footer to enlarge big images in posts and pages.
+     * Displays wide image.
      *
-     * Loaded only on posts or pages.
+     * @param array $tag  The tags.
+     * @param array $args The args.
      *
-     * The content of the variable $script must be exactly the same
-     * as the content of the corresponding JS file.
-     *
-     * @see ./js/imagewide.min.js
-     *
-     * @return void The script.
+     * @return void The image.
      */
-    public static function origineMiniScriptImagesWide(): void
+    public static function origineMiniImageWide($tag, $args): void
     {
-        $om_settings = dcCore::app()->blog->settings->originemini;
-        $page_type   = dcCore::app()->url->type;
+        // If only on Entry content.
+        if (!in_array($tag, ['EntryContent'])) {
+            return;
+        }
 
-        if ($om_settings->content_images_wide === true) {
-            $context = 'entry';
+        if (!omSettings::value('content_images_wide')) {
+            return;
+        }
 
-            if ($om_settings->content_post_list_type === 'content') {
-                $context .= '-list';
-            }
+        // Matches all images by regex.
+        $args[0] = preg_replace_callback(
+            '/<img[^>]*>/',
+            function ($matches) {
+                // The image HTML code.
+                $img = $matches[0];
 
-            if ($context === 'entry-list' || ($context === 'entry' && ($page_type === 'post' || $page_type === 'pages'))) {
-                $page_width = in_array(
-                    $om_settings->global_page_width,
-                    [30, 35, 40],
-                    true
-                ) ? $om_settings->global_page_width : 30;
+                // Gets the image src attribute.
+                preg_match('/src="([^"]*)/', $img, $src_match);
 
-                if ((int) $om_settings->content_images_wide_size > 1) {
-                    $img_width = (int) $om_settings->content_images_wide_size;
-                } else {
-                    $img_width = '150';
+                $src_attr  = isset($src_match[0]) ? $src_match[0] . '"' : '';
+                $src_value = isset($src_match[1]) ? $src_match[1] : '';
+
+                // Builds an array that will contain all image sizes.
+                $img = [
+                    'o' => [
+                        'url'    => $src_value,
+                        'width'  => null,
+                        'height' => null
+                    ]
+                ];
+
+                // If the original image size exists.
+                if (file_exists(DC_ROOT . $src_value)) {
+                    /**
+                     * Sets the maximum width of the image to display.
+                     *
+                     * It can be superior to the content width
+                     * if the option "content_images_wide" is enabled.
+                     *
+                     * @see Config.php
+                     */
+                    $option_image_wide = false;
+
+                    switch (omSettings::value('content_images_wide')) {
+                        case 'posts-pages' :
+                            if (dcCore::app()->url->type === 'post' || dcCore::app()->url->type === 'pages') {
+                                $option_image_wide = true;
+                            }
+
+                            break;
+                        case 'always' :
+                            $option_image_wide = true;
+                    }
+
+                    $img_width_max = omSettings::contentWidth('px');
+
+                    if ($option_image_wide === true) {
+                        if (omSettings::value('content_images_wide_size')) {
+                            $img_width_max += (int) (omSettings::value('content_images_wide_size') * 2);
+                        } else {
+                            $img_width_max += 120 * 2;
+                        }
+                    }
+
+                    // Gets original image dimensions.
+                    list($width, $height) = getimagesize(DC_ROOT . $src_value);
+
+                    $img['o']['width']  = $width;
+                    $img['o']['height'] = $height;
+
+                    $media_sizes = dcCore::app()->media->thumb_sizes;
+
+                    // Adds eventual custom image sizes.
+                    if (omSettings::value('content_image_custom_size')) {
+                        $custom_image_sizes = explode(',', omSettings::value('content_image_custom_size'));
+
+                        foreach ($custom_image_sizes as $size_id) {
+                            $media_sizes[$size_id] = [
+                                0, // Width.
+                                'ratio'
+                            ];
+                        }
+                    }
+
+                    $info = Path::info($src_value);
+
+                    // The image to set in the src attribute.
+                    $src_image_size = 'o';
+
+                    foreach ($media_sizes as $size_id => $size_data) {
+                        if (isset($size_data[1])
+                            && $size_data[1] === 'ratio'
+                            && file_exists(DC_ROOT . $info['dirname'] . '/.' . $info['base'] . '_' . $size_id . '.' . strtolower($info['extension']))
+                        ) {
+                            $img[$size_id]['url']   = $info['dirname'] . '/.' . $info['base'] . '_' . $size_id . '.' . strtolower($info['extension']);
+                            $img[$size_id]['width'] = isset($size_data[0]) ? $size_data[0] : '';
+
+                            list($width, $height) = getimagesize(DC_ROOT . $img[$size_id]['url']);
+
+                            if (!$img[$size_id]['width']) {
+                                $img[$size_id]['width']   = $width;
+                                $media_sizes[$size_id][0] = $width;
+                            }
+
+                            $img[$size_id]['height'] = $height;
+
+                            if ($media_sizes[$size_id][0] >= $img_width_max
+                                && $img[$src_image_size]['width'] > $img[$size_id]['width']
+                            ) {
+                                $src_image_size = $size_id;
+                            }
+                        }
+                    }
+
+                    // Sort $img by width.
+                    uasort($img, function ($a, $b) {
+                        return $a['width'] <=> $b['width'];
+                    });
+
+                    // Defines image attributes.
+                    $attr  = 'src="' . $img[$src_image_size]['url'] . '" ';
+                    $attr .= 'srcset="';
+
+                    // Puts every image size in the srcset attribute.
+                    foreach ($img as $img_id => $img_data) {
+                        $attr .= $img_data['url'] . ' ' . $img_data['width'] . 'w';
+
+                        if ($img_id !== array_key_last($img)) {
+                            $attr .= ', ';
+                        }
+                    }
+
+                    $attr .= '" ';
+
+                    $attr .= 'sizes="100vw" ';
+
+                    // If it's a landscape format image only, displays it wide.
+                    if (omSettings::value('content_images_wide')
+                        && $img[$src_image_size]['width'] > $img[$src_image_size]['height']
+                        && $img[$src_image_size]['width'] >= $img_width_max
+                    ) {
+                        $attr .= 'style="display: block; margin-left: 50%; transform: translateX(-50%); max-width: 95vw;" ';
+                        $attr .= 'width="' . $img_width_max . '" ';
+                        $attr .= 'height="' . (int) ($img_width_max * $img[$src_image_size]['height'] / $img[$src_image_size]['width'] ). '"';
+                    }
+
+                    return str_replace($src_attr, trim($attr), $matches[0]);
                 }
 
-                $script = 'function getMeta(e,t){var i=new Image;i.src=e,i.addEventListener("load",function(){t(this.width,this.height)})}function imageWide(){var e=parseInt(document.getElementById("script-images-wide").getAttribute("data-pagewidth")),d=0,m=0,t=0,i=(-1===[30,35,40].indexOf(e)&&(e=30),document.createElement("div")),n=(i.style.width="1rem",i.style.display="none",document.body.append(i),window.getComputedStyle(i).getPropertyValue("width").match(/\d+/));i.remove(),0<(t=n&&1<=n.length?parseInt(n[0]):16)&&(m=(d=e*t)+parseInt(document.getElementById("script-images-wide").getAttribute("data-imgwidth")));for(var r=0,s=("entry"===document.getElementById("script-images-wide").getAttribute("data-context")?document.getElementsByTagName("article"):document.getElementsByClassName("entry-list-content"))[0].getElementsByTagName("img");r<s.length;){let a=s[r];getMeta(a.src,function(e,t){let i=e,n=t;i>d&&i>n&&(i>m&&(n=parseInt(m*n/i),i=m),a.setAttribute("style","display:block;margin-left:50%;transform:translateX(-50%);max-width:95vw;"),i&&a.setAttribute("width",i),n)&&a.setAttribute("height",n)}),r++}}document.getElementById("script-images-wide").getAttribute("data-pagewidth")&&document.getElementsByTagName("article")[0]&&(window.addEventListener("load",imageWide),window.addEventListener("resize",imageWide));' . "\n";
-
-                echo '<script data-context=', $context,
-                ' data-pagewidth=', $page_width,
-                ' data-imgwidth=', $img_width,
-                ' id=script-images-wide>',
-                $script,
-                '</script>', "\n";
-            }
-        }
+                return $matches[0];
+            },
+            $args[0]
+        );
     }
 
     /**
@@ -428,11 +567,11 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniMetaDescriptionHome($attr): string
     {
-        if (dcCore::app()->blog->settings->originemini->global_meta_home_description) {
+        if (omSettings::value('global_meta_home_description')) {
             return '<?php echo ' . sprintf(dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->blog->settings->originemini->global_meta_home_description') . '; ?>';
-        } else {
-            return '<?php echo ' . sprintf(dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->blog->desc') . '; ?>';
         }
+
+        return '<?php echo ' . sprintf(dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->blog->desc') . '; ?>';
     }
 
     /**
@@ -442,15 +581,8 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniStylesInline()
     {
-        $styles = '';
-
-        if (dcCore::app()->blog->settings->originemini->styles) {
-            $styles .= dcCore::app()->blog->settings->originemini->styles;
-        }
-
-        if (dcCore::app()->blog->settings->originemini->global_css_custom_mini) {
-            $styles .= dcCore::app()->blog->settings->originemini->global_css_custom_mini;
-        }
+        $styles  = omSettings::value('styles') ?: '';
+        $styles .= omSettings::value('global_css_custom_mini') ?: '';
 
         if ($styles) {
             return '<style>' . $styles . '</style>';
@@ -488,7 +620,7 @@ class Frontend extends dcNsProcess
         }
 
         // Adds a link to the footer except if it has been disabled in the configurator.
-        if (dcCore::app()->blog->settings->originemini->footer_enabled !== false) {
+        if (omSettings::value('footer_enabled') !== false) {
             $links .= '<a id=skip-footer class=skip-links href=#site-footer>' . __('skip-link-footer') . '</a>';
         }
 
@@ -509,22 +641,22 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniHeaderImage($attr)
     {
-        if (dcCore::app()->blog->settings->originemini->header_image && dcCore::app()->blog->settings->originemini->header_image['url']) {
+        if (omSettings::value('header_image') && isset(omSettings::value('header_image')['url'])) {
             if (!empty($attr['position'])
-                && (($attr['position'] === 'bottom' && dcCore::app()->blog->settings->originemini->header_image_position === 'bottom')
-                || ($attr['position'] === 'top' && !dcCore::app()->blog->settings->originemini->header_image_position))
+                && (($attr['position'] === 'bottom' && omSettings::value('header_image_position') === 'bottom')
+                || ($attr['position'] === 'top' && !omSettings::value('header_image_position')))
             ) {
-                $image_url = Html::escapeURL(dcCore::app()->blog->settings->originemini->header_image['url']);
+                $image_url = Html::escapeURL(omSettings::value('header_image')['url']);
                 $srcset    = '';
 
-                if (dcCore::app()->blog->settings->originemini->header_image_description) {
-                    $alt = ' alt="' . Html::escapeHTML(dcCore::app()->blog->settings->originemini->header_image_description) . '"';
+                if (omSettings::value('header_image_description')) {
+                    $alt = ' alt="' . Html::escapeHTML(omSettings::value('header_image_description')) . '"';
                 } else {
                     $alt = ' alt="' . __('header-image-alt') . '"';
                 }
 
-                if (dcCore::app()->blog->settings->originemini->header_image2x) {
-                    $image2x_url = Html::escapeURL(dcCore::app()->blog->settings->originemini->header_image2x);
+                if (omSettings::value('header_image2x')) {
+                    $image2x_url = Html::escapeURL(omSettings::value('header_image2x'));
 
                     $srcset  = ' srcset="';
                     $srcset .= $image_url . ' 1x, ';
@@ -535,9 +667,9 @@ class Frontend extends dcNsProcess
                 // Does not add a link to the home page on home page.
                 if (dcCore::app()->url->type === 'default') {
                     return '<div id=site-image><img' . $alt . ' src="' . $image_url . '"' . $srcset . '></div>';
-                } else {
-                    return '<div id=site-image><a href="' . dcCore::app()->blog->url . '" rel=home><img' . $alt . ' src="' . $image_url . '"' . $srcset . '></a></div>';
                 }
+
+                return '<div id=site-image><a href="' . dcCore::app()->blog->url . '" rel=home><img' . $alt . ' src="' . $image_url . '"' . $srcset . '></a></div>';
             }
         }
     }
@@ -549,8 +681,10 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniBlogDescription()
     {
-        if (dcCore::app()->blog->desc && dcCore::app()->blog->settings->originemini->header_description === true) {
-            $description = Html::decodeEntities(Html::clean(dcCore::app()->blog->desc));
+        if (dcCore::app()->blog->desc && omSettings::value('header_description') === true) {
+            $description = dcCore::app()->blog->desc;
+            $description = Html::clean($description);
+            $description = Html::decodeEntities($description);
             $description = preg_replace('/\s+/', ' ', $description);
             $description = Html::escapeHTML($description);
 
@@ -568,16 +702,53 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniPostListType(): string
     {
-        if (!dcCore::app()->blog->settings->originemini->content_post_list_type || dcCore::app()->blog->settings->originemini->content_post_list_type === 'short') {
+        if (!omSettings::value('content_post_list_type')) {
             return dcCore::app()->tpl->includeFile(['src' => '_entry-list-short.html']);
-        } else {
-            $postlist_type_allowed = ['short', 'excerpt', 'content'];
-
-            $postlist_type = dcCore::app()->blog->settings->originemini->content_post_list_type;
-            $postlist_type = in_array($postlist_type, $postlist_type_allowed, true) ? $postlist_type : 'short';
-
-            return dcCore::app()->tpl->includeFile(['src' => '_entry-list-' . $postlist_type . '.html']);
         }
+
+        $postlist_type_allowed = ['excerpt', 'content', 'custom'];
+
+        $postlist_type = omSettings::value('content_post_list_type');
+        $postlist_type = in_array($postlist_type, $postlist_type_allowed, true) ? $postlist_type : 'short';
+        $postlist_tpl  = '_entry-list-' . $postlist_type . '.html';
+
+        if ($postlist_type === 'custom') {
+            if (omSettings::value('content_post_list_custom')) {
+                $postlist_tpl = omSettings::value('content_post_list_custom');
+            } else {
+                $postlist_tpl = '_entry-list-short.html';
+            }
+        }
+
+        return dcCore::app()->tpl->includeFile(['src' => $postlist_tpl]);
+    }
+
+    /**
+     * Loads the post template.
+     *
+     * @return string The post template.
+     */
+    public static function origineMiniPostTemplate(): string
+    {
+        if (!omSettings::value('content_post_template')) {
+            return dcCore::app()->tpl->includeFile(['src' => '_entry-post.html']);
+        }
+
+        return dcCore::app()->tpl->includeFile(['src' => omSettings::value('content_post_template')]);
+    }
+
+    /**
+     * Loads the page template.
+     *
+     * @return string The page template.
+     */
+    public static function origineMiniPageTemplate(): string
+    {
+        if (!omSettings::value('content_page_template')) {
+            return dcCore::app()->tpl->includeFile(['src' => '_entry-page.html']);
+        }
+
+        return dcCore::app()->tpl->includeFile(['src' => omSettings::value('content_page_template')]);
     }
 
     /**
@@ -589,46 +760,48 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniPostListReactionLink()
     {
-        if (dcCore::app()->blog->settings->originemini->content_post_list_reaction_link && dcCore::app()->blog->settings->originemini->content_post_list_reaction_link !== 'disabled') {
-            $class = 'class=post-reaction-link';
-
-            $small_open  = '<small>';
-            $small_close = '</small>';
-
-            if (dcCore::app()->blog->settings->originemini->content_post_list_type === 'content') {
-                $class = 'class=\"post-reaction-link button\"';
-
-                $small_open = $small_close = '';
-            }
-
-            return '<?php
-            $nb_reactions = intval((int) dcCore::app()->ctx->posts->nb_comment + (int) dcCore::app()->ctx->posts->nb_trackback);
-
-            if ($nb_reactions > 0 || dcCore::app()->blog->settings->originemini->content_post_list_reaction_link === "always") {
-                echo "<a aria-label=\"";
-
-                if ($nb_reactions > 1) {
-                    printf(__("entry-list-multiple-reactions-link-aria-label"), $nb_reactions);
-                } elseif ($nb_reactions === 1) {
-                    echo __("entry-list-one-reaction-link-aria-label");
-                } elseif ($nb_reactions === 0 && dcCore::app()->blog->settings->originemini->content_post_list_reaction_link === "always") {
-                    echo __("entry-list-no-reaction-link-aria-label");
-                }
-
-                echo "\" ' . $class . ' href=\"", Html::escapeURL(dcCore::app()->ctx->posts->getURL()), "#", __("reactions-id"), "\">' . $small_open . '";
-
-                if ($nb_reactions > 1) {
-                    printf(__("entry-list-multiple-reactions"), $nb_reactions);
-                } elseif ($nb_reactions === 1) {
-                    echo __("entry-list-one-reaction");
-                } elseif ($nb_reactions === 0 && dcCore::app()->blog->settings->originemini->content_post_list_reaction_link === "always") {
-                    echo __("entry-list-no-reaction");
-                }
-
-                echo "' . $small_close . '</a>";
-            }
-            ?>';
+        if (!omSettings::value('content_post_list_reaction_link')) {
+            return;
         }
+
+        $class = 'class=post-reaction-link';
+
+        $small_open  = '<small>';
+        $small_close = '</small>';
+
+        if (omSettings::value('content_post_list_type') === 'content') {
+            $class = 'class=\"post-reaction-link button\"';
+
+            $small_open = $small_close = '';
+        }
+
+        return '<?php
+        $nb_reactions = intval((int) dcCore::app()->ctx->posts->nb_comment + (int) dcCore::app()->ctx->posts->nb_trackback);
+
+        if ($nb_reactions > 0 || dcCore::app()->blog->settings->originemini->content_post_list_reaction_link === "always") {
+            echo "<a aria-label=\"";
+
+            if ($nb_reactions > 1) {
+                printf(__("entry-list-multiple-reactions-link-aria-label"), $nb_reactions);
+            } elseif ($nb_reactions === 1) {
+                echo __("entry-list-one-reaction-link-aria-label");
+            } elseif ($nb_reactions === 0 && dcCore::app()->blog->settings->originemini->content_post_list_reaction_link === "always") {
+                echo __("entry-list-no-reaction-link-aria-label");
+            }
+
+            echo "\" ' . $class . ' href=\"", Html::escapeURL(dcCore::app()->ctx->posts->getURL()), "#", __("reactions-id"), "\">' . $small_open . '";
+
+            if ($nb_reactions > 1) {
+                printf(__("entry-list-multiple-reactions"), $nb_reactions);
+            } elseif ($nb_reactions === 1) {
+                echo __("entry-list-one-reaction");
+            } elseif ($nb_reactions === 0 && dcCore::app()->blog->settings->originemini->content_post_list_reaction_link === "always") {
+                echo __("entry-list-no-reaction");
+            }
+
+            echo "' . $small_close . '</a>";
+        }
+        ?>';
     }
 
     /**
@@ -644,9 +817,9 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniEntryTime($attr)
     {
-        if (!empty($attr['context']) && (dcCore::app()->blog->settings->originemini->content_post_list_time === true && $attr['context'] === 'entry-list') || (dcCore::app()->blog->settings->originemini->content_post_time === true && $attr['context'] === 'post')) {
-            if (dcCore::app()->blog->settings->originemini->content_separator) {
-                $content_separator = ' ' . Html::escapeHTML(dcCore::app()->blog->settings->originemini->content_separator);
+        if (!empty($attr['context']) && (omSettings::value('content_post_list_time') === true && $attr['context'] === 'entry-list') || (omSettings::value('content_post_time') === true && $attr['context'] === 'post')) {
+            if (omSettings::value('content_separator')) {
+                $content_separator = ' ' . Html::escapeHTML(omSettings::value('content_separator'));
             } else {
                 $content_separator = ' |';
             }
@@ -747,7 +920,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniScriptTrackbackURLCopied()
     {
-        if (dcCore::app()->blog->settings->originemini->global_js === true) {
+        if (omSettings::value('global_js') === true) {
             return ' <span id=trackback-url-copied>' . __('reactions-trackback-url-copied') . '</span>';
         }
     }
@@ -759,7 +932,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniEmailAuthor()
     {
-        if (dcCore::app()->blog->settings->originemini->content_post_email_author !== 'disabled') {
+        if (omSettings::value('content_post_email_author') !== 'disabled') {
             return '<?php
             if (isset(dcCore::app()->ctx->posts->user_email) && dcCore::app()->ctx->posts->user_email && (dcCore::app()->blog->settings->originemini->content_post_email_author === "always" || (dcCore::app()->blog->settings->originemini->content_post_email_author === "comments_open" && dcCore::app()->ctx->posts->post_open_comment === "1"))
             ) {
@@ -858,18 +1031,18 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniFooterCredits()
     {
-        if (dcCore::app()->blog->settings->originemini->footer_credits !== false) {
+        if (omSettings::value('footer_credits') !== false) {
             if (!defined('DC_DEV') || (defined('DC_DEV') && DC_DEV === false)) {
                 return '<div class=site-footer-block>' . __('footer-powered-by') . '</div>';
-            } else {
-                $dc_version       = dcCore::app()->getVersion('core');
-                $dc_version_parts = explode('-', $dc_version);
-                $dc_version_short = $dc_version_parts[0] ?? $dc_version;
-
-                $theme_version = dcCore::app()->themes->moduleInfo('originemini', 'version');
-
-                return '<div class=site-footer-block>' . sprintf(__('footer-powered-by-dev'), $dc_version, $dc_version_short, $theme_version) . '</div>';
             }
+
+            $dc_version       = dcCore::app()->getVersion('core');
+            $dc_version_parts = explode('-', $dc_version);
+            $dc_version_short = $dc_version_parts[0] ?? $dc_version;
+
+            $theme_version = dcCore::app()->themes->moduleInfo('originemini', 'version');
+
+            return '<div class=site-footer-block>' . sprintf(__('footer-powered-by-dev'), $dc_version, $dc_version_short, $theme_version) . '</div>';
         }
     }
 
@@ -928,11 +1101,11 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniHeaderIdentity($attr, $content): string
     {
-        if (dcCore::app()->blog->settings->originemini->header_description !== true) {
+        if (omSettings::value('header_description') !== true) {
             return $content;
-        } else {
-            return '<div id=site-identity>' . $content . '</div>';
         }
+
+        return '<div id=site-identity>' . $content . '</div>';
     }
 
     /**
@@ -945,15 +1118,13 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniCommentFormWrapper($attr, $content): string
     {
-        if (!dcCore::app()->blog->settings->originemini->content_commentform_hide) {
+        if (!omSettings::value('content_commentform_hide')) {
             return '<h3 class=reaction-title>' . __('reactions-comment-form-title') . '</h3>' . $content;
-        } else {
-            if (dcCore::app()->ctx->comment_preview !== null && dcCore::app()->ctx->comment_preview["preview"]) {
-                return '<div id=react-content><h3 class=reaction-title>' . __('reactions-comment-form-preview-title') . '</h3>' . $content . '</div>';
-            } else {
-                return '<details><summary class=button>' . __('reactions-react-link-title') . '</summary><div id=react-content><h3 class=reaction-title>' . __('reactions-comment-form-title') . '</h3>' . $content . '</div></details>';
-            }
+        } elseif (dcCore::app()->ctx->comment_preview && dcCore::app()->ctx->comment_preview["preview"]) {
+            return '<div id=react-content><h3 class=reaction-title>' . __('reactions-comment-form-preview-title') . '</h3>' . $content . '</div>';
         }
+
+        return '<details><summary class=button>' . __('reactions-react-link-title') . '</summary><div id=react-content><h3 class=reaction-title>' . __('reactions-comment-form-title') . '</h3>' . $content . '</div></details>';
     }
 
     /**
@@ -966,7 +1137,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniReactionFeedLink($attr, $content)
     {
-        if (dcCore::app()->blog->settings->originemini->content_reaction_feed !== false) {
+        if (omSettings::value('content_reaction_feed') !== false) {
             return $content;
         }
     }
@@ -981,7 +1152,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniTrackbackLink($attr, $content)
     {
-        if (dcCore::app()->blog->settings->originemini->content_trackback_link !== false) {
+        if (omSettings::value('content_trackback_link') !== false) {
             return $content;
         }
     }
@@ -996,7 +1167,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniWidgetsNav($attr, $content)
     {
-        if (dcCore::app()->blog->settings->originemini->widgets_nav_position !== 'disabled') {
+        if (omSettings::value('widgets_nav_position') !== 'disabled') {
             return $content;
         }
     }
@@ -1011,7 +1182,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniWidgetSearchForm($attr, $content)
     {
-        if (dcCore::app()->blog->settings->originemini->widgets_search_form === true && \dcCore::app()->url->type !== 'search') {
+        if (omSettings::value('widgets_search_form') === true && dcCore::app()->url->type !== 'search') {
             return $content;
         }
     }
@@ -1026,7 +1197,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniWidgetsExtra($attr, $content)
     {
-        if (dcCore::app()->blog->settings->originemini->widgets_extra_enabled !== false) {
+        if (omSettings::value('widgets_extra_enabled') !== false) {
             return $content;
         }
     }
@@ -1041,7 +1212,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniFooter($attr, $content)
     {
-        if (dcCore::app()->blog->settings->originemini->footer_enabled !== false) {
+        if (omSettings::value('footer_enabled') !== false) {
             return $content;
         }
     }

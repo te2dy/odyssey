@@ -25,6 +25,7 @@ use form;
 
 require_once 'functions.php';
 use OrigineMiniUtils as omUtils;
+use OrigineMiniSettings as omSettings;
 
 class Config extends dcNsProcess
 {
@@ -55,8 +56,8 @@ class Config extends dcNsProcess
 
         // On form submit.
         if (!empty($_POST)) {
-            $default_settings = self::defaultSettings();
-            $saved_settings   = self::savedSettings();
+            $default_settings = origineMiniSettings::default();
+            $saved_settings   = origineMiniSettings::saved();
 
             try {
                 dcCore::app()->blog->settings->addNamespace('originemini');
@@ -65,43 +66,102 @@ class Config extends dcNsProcess
 
                 if (isset($_POST['save'])) {
                     foreach ($default_settings as $setting_id => $setting_value) {
-                        $ignore_setting_id = ['styles', 'header_image', 'header_image2x', 'global_css_custom', 'global_css_custom_mini'];
+                        $ignored_settings = [
+                            'styles',
+                            'header_image',
+                            'header_image2x',
+                            'global_css_custom',
+                            'global_css_custom_mini'
+                        ];
 
-                        if (!in_array($setting_id, $ignore_setting_id, true)) {
+                        if (!in_array($setting_id, $ignored_settings, true)) {
                             if (isset($_POST[$setting_id])) {
                                 $drop          = false;
                                 $setting_value = '';
-                                $setting_type  = isset($default_settings[$setting_id]['type']) ? $default_settings[$setting_id]['type'] : 'string';
-                                $setting_title = isset($default_settings[$setting_id]['title']) ? $default_settings[$setting_id]['title'] : '';
+
+                                $setting_type = isset($default_settings[$setting_id]['type'])
+                                ? $default_settings[$setting_id]['type']
+                                : 'text';
+
+                                $setting_title = isset($default_settings[$setting_id]['title'])
+                                ? $default_settings[$setting_id]['title']
+                                : '';
 
                                 if ($_POST[$setting_id] != $default_settings[$setting_id]['default']) {
                                     // If the parameter has a new value that is different from the default (and is not an unchecked checkbox).
+                                    switch ($setting_type) {
+                                        case 'select' :
+                                            $specific_settings = ['global_page_width_unit'];
 
-                                    if ($setting_type === 'select') {
-                                        if (in_array($_POST[$setting_id], $default_settings[$setting_id]['choices'])) {
+                                            if (!in_array($setting_id, $specific_settings, true)) {
+                                                // Checks if the input value is proposed by the setting.
+                                                if (in_array($_POST[$setting_id], $default_settings[$setting_id]['choices'])) {
+                                                    $setting_value = $_POST[$setting_id];
+                                                } else {
+                                                    $drop = true;
+                                                }
+                                            } elseif ($setting_id === 'global_page_width_unit') {
+                                                if (isset($_POST['global_page_width_value'])) {
+                                                    $page_width_data = ConfigUtils::getContentWidth(
+                                                        $_POST[$setting_id],
+                                                        $_POST['global_page_width_value']
+                                                    );
+
+                                                    if (!empty($page_width_data)) {
+                                                        $setting_value = $page_width_data['unit'];
+                                                    }
+                                                }
+                                            }
+
+                                            $setting_type = 'string';
+
+                                            break;
+                                        case 'select_int' :
                                             // Checks if the input value is proposed by the setting.
-                                            $setting_value = $_POST[$setting_id];
-                                        } else {
-                                            $drop = true;
-                                        }
+                                            if (in_array((int) $_POST[$setting_id], $default_settings[$setting_id]['choices'], true)) {
+                                                $setting_value = (int) $_POST[$setting_id];
+                                            } else {
+                                                $drop = true;
+                                            }
 
-                                        $setting_type = 'string';
-                                    } elseif ($setting_type === 'select_int') {
-                                        if (in_array((int) $_POST[$setting_id], $default_settings[$setting_id]['choices'], true)) {
-                                            // Checks if the input value is proposed by the setting.
-                                            $setting_value = (int) $_POST[$setting_id];
-                                        } else {
-                                            $drop = true;
-                                        }
+                                            $setting_type = 'integer';
 
-                                        $setting_type = 'integer';
-                                    } elseif ($setting_type === 'checkbox') {
-                                        if ($_POST[$setting_id] === '1' && $default_settings[$setting_id]['default'] !== '1') {
-                                            $setting_value = true;
-                                            $setting_type  = 'boolean';
-                                        }
-                                    } else {
-                                        $setting_value = Html::escapeHTML($_POST[$setting_id]);
+                                            break;
+                                        case 'checkbox' :
+                                            if ($_POST[$setting_id] === '1' && $default_settings[$setting_id]['default'] !== '1') {
+                                                $setting_value = true;
+                                                $setting_type  = 'boolean';
+                                            }
+
+                                            break;
+
+                                        case 'integer' :
+                                            $specific_settings = ['global_page_width_value'];
+
+                                            if (!in_array($setting_id, $specific_settings, true)) {
+                                                if (is_numeric($_POST[$setting_id])) {
+                                                    $setting_value = (int) $_POST[$setting_id];
+                                                    $setting_type  = 'integer';
+                                                } else {
+                                                    $drop = true;
+                                                }
+                                            } elseif ($setting_id === 'global_page_width_value') {
+                                                if (isset($_POST['global_page_width_unit'])) {
+                                                    $page_width_data = ConfigUtils::getContentWidth(
+                                                        $_POST['global_page_width_unit'],
+                                                        $_POST[$setting_id]
+                                                    );
+
+                                                    if (!empty($page_width_data)) {
+                                                        $setting_value = $page_width_data['value'];
+                                                    }
+                                                }
+                                            }
+
+                                            break;
+                                        default :
+                                            $setting_value = Html::escapeHTML($_POST[$setting_id]);
+                                            $setting_type  = 'text';
                                     }
                                 } elseif ($_POST[$setting_id] == $default_settings[$setting_id]['default']) {
                                     // If the value is equal to the default value, removes the parameter.
@@ -120,8 +180,10 @@ class Config extends dcNsProcess
                                     dcCore::app()->blog->settings->originemini->drop($setting_id);
                                 }
                             } elseif (!isset($_POST[$setting_id]) && $default_settings[$setting_id]['type'] === 'checkbox') {
-                                // For unchecked checkboxes (= no POST request), does a specific action.
-                                $setting_title = isset($default_settings[$setting_id]['title']) ? $default_settings[$setting_id]['title'] : '';
+                                // For unchecked checkboxes (no POST request), does a specific action.
+                                $setting_title = isset($default_settings[$setting_id]['title'])
+                                ? $default_settings[$setting_id]['title']
+                                : '';
 
                                 if ($default_settings[$setting_id]['default'] !== 0) {
                                     dcCore::app()->blog->settings->originemini->put(
@@ -173,10 +235,16 @@ class Config extends dcNsProcess
                                      * Limits the maximum width value of the image if its superior to the page width,
                                      * and sets its height proportionally.
                                      */
-                                    if (isset($_POST['global_page_width'])) {
-                                        $page_width = (int) $_POST['global_page_width'] * 16;
-                                    } else {
-                                        $page_width = 480;
+                                    $page_width_data = ConfigUtils::getContentWidth(
+                                        $_POST['global_page_width_unit'],
+                                        $_POST['global_page_width_value'],
+                                        true
+                                    );
+
+                                    $page_width = $page_width_data['value'];
+
+                                    if ($page_width_data['unit'] === 'em') {
+                                        $page_width = $page_width * 16;
                                     }
 
                                     if ($header_image_width > $page_width) {
@@ -187,8 +255,8 @@ class Config extends dcNsProcess
 
                                     // Sets the array which contains the image data.
                                     $image_data = [
-                                        'url'    => Html::sanitizeURL($image_url),
-                                        'width'  => (int) $header_image_width,
+                                        'url'   => Html::sanitizeURL($image_url),
+                                        'width' => (int) $header_image_width,
                                     ];
 
                                     // Saves the setting in the database as an array.
@@ -290,7 +358,12 @@ class Config extends dcNsProcess
                  * With the parameters ['module' => 'originemini', 'conf' => '1'],
                  * the & is interpreted as &amp; causing a wrong redirect.
                  */
-                Http::redirect(dcCore::app()->adminurl->get('admin.blog.theme', ['module' => 'originemini']) . '&conf=1');
+                Http::redirect(
+                    dcCore::app()->adminurl->get(
+                        'admin.blog.theme',
+                        ['module' => 'originemini']
+                    ) . '&conf=1'
+                );
             } catch (Exception $e) {
                 dcCore::app()->error->add($e->getMessage());
             }
@@ -331,13 +404,18 @@ class Config extends dcNsProcess
             $css_media_motion_array            = [];
             $css_media_print_array             = [];
 
-            $default_settings = self::defaultSettings();
+            $default_settings = origineMiniSettings::default();
 
             // Page width.
-            $page_width_allowed = [35, 40];
+            if (isset($_POST['global_page_width_unit']) && isset($_POST['global_page_width_value'])) {
+                $page_width_data = ConfigUtils::getContentWidth(
+                    $_POST['global_page_width_unit'],
+                    $_POST['global_page_width_value']
+                );
 
-            if (isset($_POST['global_page_width']) && in_array((int) $_POST['global_page_width'], $page_width_allowed, true)) {
-                $css_root_array[':root']['--page-width'] = $_POST['global_page_width'] . 'em';
+                if (!empty($page_width_data)) {
+                    $css_root_array[':root']['--page-width'] = $page_width_data['value'] . $page_width_data['unit'];
+                }
             }
 
             // Font size.
@@ -995,6 +1073,333 @@ class Config extends dcNsProcess
     }
 
     /**
+     * Displays each parameter according to its type.
+     *
+     * @param strong $setting_id The id of the setting to display.
+     *
+     * @return void The parameter.
+     */
+    public static function settingRendering($setting_id = '')
+    {
+        $default_settings = origineMiniSettings::default();
+        $saved_settings   = origineMiniSettings::saved();
+
+        if ($setting_id && array_key_exists($setting_id, $default_settings)) {
+            echo '<p id=', $setting_id, '-input>';
+
+            // Displays the default value of the parameter if it is not defined.
+            if (isset($saved_settings[$setting_id])) {
+                $setting_value = $saved_settings[$setting_id];
+            } else {
+                $setting_value = isset($default_settings[$setting_id]['default'])
+                ? $default_settings[$setting_id]['default']
+                : '';
+            }
+
+            switch ($default_settings[$setting_id]['type']) {
+                case 'checkbox' :
+                    echo Form::checkbox(
+                        $setting_id,
+                        true,
+                        $setting_value
+                    ),
+                    '<label class=classic for=', $setting_id, '>',
+                    $default_settings[$setting_id]['title'],
+                    '</label>';
+
+                    break;
+
+                case 'select' :
+                case 'select_int' :
+                    echo '<label for=', $setting_id, '>',
+                    $default_settings[$setting_id]['title'],
+                    '</label>',
+                    Form::combo(
+                        $setting_id,
+                        $default_settings[$setting_id]['choices'],
+                        strval($setting_value)
+                    );
+
+                    break;
+
+                case 'textarea' :
+                    $placeholder = isset($default_settings[$setting_id]['placeholder'])
+                    ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"'
+                    : '';
+
+                    echo '<label for=', $setting_id, '>',
+                    $default_settings[$setting_id]['title'],
+                    '</label>',
+                    Form::textArea(
+                        $setting_id,
+                        60,
+                        3,
+                        $setting_value,
+                        '',
+                        '',
+                        false,
+                        $placeholder
+                    );
+
+                    break;
+
+                case 'image' :
+                    $placeholder = isset($default_settings[$setting_id]['placeholder'])
+                    ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"'
+                    : '';
+
+                    if (!empty($setting_value) && $setting_value['url'] !== '') {
+                        $image_src = $setting_value['url'];
+                    } else {
+                        $image_src = '';
+                    }
+
+                    echo '<label for=', $setting_id, '>',
+                    $default_settings[$setting_id]['title'],
+                    '</label>',
+                    Form::field(
+                        $setting_id,
+                        30,
+                        255,
+                        $image_src,
+                        '',
+                        '',
+                        false,
+                        $placeholder
+                    );
+
+                    break;
+
+                default :
+                    $placeholder = isset($default_settings[$setting_id]['placeholder'])
+                    ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"'
+                    : '';
+
+                    echo '<label for=', $setting_id, '>',
+                    $default_settings[$setting_id]['title'],
+                    '</label>',
+                    Form::field(
+                        $setting_id,
+                        30,
+                        255,
+                        $setting_value,
+                        '',
+                        '',
+                        false,
+                        $placeholder
+                    );
+
+                    break;
+            }
+
+            echo '</p>';
+
+            // Displays the description of the parameter as a note.
+            if ($default_settings[$setting_id]['type'] === 'checkbox' || (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '')) {
+                echo '<p class=form-note id=', $setting_id, '-description>',
+                $default_settings[$setting_id]['description'];
+
+                // If the parameter is a checkbox, displays its default value as a note.
+                if ($default_settings[$setting_id]['type'] === 'checkbox') {
+                    if ($default_settings[$setting_id]['default'] === 1) {
+                        echo ' ', __('settings-default-checked');
+                    } else {
+                        echo ' ', __('settings-default-unchecked');
+                    }
+                }
+
+                echo '</p>';
+            }
+
+            // Header image.
+            if ($setting_id === 'header_image') {
+                if (!empty($setting_value) && isset($setting_value['url'])) {
+                    $image_src = $setting_value['url'];
+                } else {
+                    $image_src = '';
+                }
+
+                echo '<img alt="', __('header-image-preview-alt'), '" id=', $setting_id, '-src src="', $image_src, '">';
+
+                if (isset($saved_settings['header_image2x'])) {
+                    echo '<p id=', $setting_id, '-retina>',
+                    __('header-image-retina-ready'),
+                    '</p>';
+                }
+
+                echo Form::hidden('header_image-url', $image_src);
+            }
+        }
+    }
+
+    /**
+     * Displays the theme configuration page.
+     *
+     * @return void
+     */
+    public static function render(): void
+    {
+        if (!static::$init) {
+            return;
+        }
+
+        /**
+         * Creates a table that contains all the parameters and their titles according to the following pattern:
+         *
+         * $sections_with_settings_id = [
+         *     'section_1_id' => [
+         *         'sub_section_1_id' => ['setting_1_id', 'option_2_id'],
+         *         'sub_section_2_id' => …
+         *     ]
+         * ];
+         */
+        $sections_with_settings_id = [];
+
+        $sections = origineMiniSettings::sections();
+        $settings = origineMiniSettings::default();
+
+        // Puts titles in the setting array.
+        foreach ($sections as $section_id => $section_data) {
+            $sections_with_settings_id[$section_id] = [];
+        }
+
+        // Puts all settings in their section.
+        foreach ($settings as $setting_id => $setting_data) {
+            $ignored_settings = ['header_image2x', 'global_css_custom_mini', 'styles'];
+
+            if (!in_array($setting_id, $ignored_settings, true)) {
+                // If a sub-section is set.
+                if (isset($setting_data['section'][1])) {
+                    $sections_with_settings_id[$setting_data['section'][0]][$setting_data['section'][1]][] = $setting_id;
+                } else {
+                    $sections_with_settings_id[$setting_data['section'][0]][] = $setting_id;
+                }
+            }
+        }
+
+        // Removes the titles if they are not associated with any parameter.
+        $sections_with_settings_id = array_filter($sections_with_settings_id);
+        ?>
+
+        <form action="<?php echo dcCore::app()->adminurl->get('admin.blog.theme', ['module' => 'originemini', 'conf' => '1']); ?>" enctype=multipart/form-data id=theme_config method=post>
+            <?php
+            // Displays the title of each section and places the corresponding parameters under each one.
+            foreach ($sections_with_settings_id as $section_id => $section_data) {
+                echo '<h3 id=section-', $section_id, '>',
+                $sections[$section_id]['name'],
+                '</h3>',
+                '<div class=fieldset>';
+
+                foreach ($section_data as $sub_section_id => $setting_id) {
+                    // Displays the name of the sub-section unless its ID is "no-title".
+                    if ($sub_section_id !== 'no-title') {
+                        echo '<h4 id=section-', $section_id, '-', $sub_section_id, '>',
+                        $sections[$section_id]['sub_sections'][$sub_section_id],
+                        '</h4>';
+                    }
+
+                    // Displays the parameter.
+                    foreach ($setting_id as $setting_id_value) {
+                        self::settingRendering($setting_id_value);
+                    }
+                }
+
+                echo '</div>';
+            }
+
+            echo Form::hidden('page_width_em_default', '30');
+            echo Form::hidden('page_width_px_default', '480');
+            ?>
+
+            <p>
+                <details id=originemini-message-js>
+                    <summary><?php echo __('settings-scripts-title'); ?></summary>
+
+                    <div class=warning-msg>
+                        <p><?php echo __('settings-scripts-message-intro'); ?></p>
+
+                        <p>
+                            <?php
+                            printf(
+                                __('settings-scripts-message-csp'),
+                                __('settings-scripts-message-csp-href'),
+                                __('settings-scripts-message-csp-title')
+                            );
+                            ?>
+                        </p>
+
+                        <p><?php echo __('settings-scripts-message-hash-intro'); ?></p>
+
+                        <?php
+                        /**
+                         * Displays the list of script hashes if they are loaded.
+                         *
+                         * @see /_prepend.php
+                         */
+                        if (dcCore::app()->blog->settings->originemini->js_hash) {
+                            $hashes = dcCore::app()->blog->settings->originemini->js_hash;
+
+                            if (!empty($hashes)) {
+                                echo '<ul>';
+
+                                foreach ($hashes as $script_id => $hash) {
+                                    $hash = '<code>' . $hash . '</code>';
+
+                                    echo '<li id=hash-', $script_id, '>';
+
+                                    switch ($script_id) {
+                                        case 'searchform':
+                                            echo __('settings-scripts-message-hash-searchform'),
+                                            '<br>',
+                                            $hash;
+
+                                            break;
+                                        case 'trackbackurl':
+                                            echo __('settings-scripts-message-hash-trackbackurl'),
+                                            '<br>',
+                                            $hash;
+                                    }
+
+                                    echo '</li>';
+                                }
+
+                                echo '</ul>';
+                            }
+                        }
+                        ?>
+
+                        <p>
+                            <?php
+                            printf(
+                                __('settings-scripts-message-example'),
+                                'https://open-time.net/post/2022/08/15/CSP-mon-amour-en-public',
+                                'fr',
+                                'CSP mon amour en public'
+                            );
+                            ?>
+                        </p>
+
+                        <p><?php echo __('settings-scripts-message-note'); ?></p>
+                    </div>
+                </details>
+            </p>
+
+            <p>
+                <?php echo dcCore::app()->formNonce(); ?>
+
+                <input name=save type=submit value="<?php echo __('settings-save-button-text'); ?>">
+
+                <input class=delete name=reset value="<?php echo __('settings-reset-button-text'); ?>" type=submit>
+            </p>
+        </form>
+
+        <?php
+    }
+}
+
+class origineMiniSettings
+{
+    /**
      * Defines the sections in which the theme settings will be sorted.
      *
      * The sections and sub-sections are placed in an array following this pattern:
@@ -1008,7 +1413,7 @@ class Config extends dcNsProcess
      *
      * @return array Sections and sub-sections.
      */
-    public static function pageSections()
+    public static function sections(): array
     {
         $page_sections['global'] = [
             'name'         => __('section-global'),
@@ -1033,6 +1438,7 @@ class Config extends dcNsProcess
             'sub_sections' => [
                 'entry-list'      => __('section-content-postlist'),
                 'post'            => __('section-content-post'),
+                'page'            => __('section-content-page'),
                 'text-formatting' => __('section-content-textformatting'),
                 'reactions'       => __('section-content-reactions'),
                 'other'           => __('section-content-other')
@@ -1073,19 +1479,33 @@ class Config extends dcNsProcess
      *
      * @return array The settings.
      */
-    public static function defaultSettings()
+    public static function default(): array
     {
         // Global settings.
-        $default_settings['global_page_width'] = [
-            'title'       => __('settings-global-pagewidth-title'),
-            'description' => __('settings-global-pagewidth-description'),
-            'type'        => 'select_int',
+        $default_settings['global_page_width_unit'] = [
+            'title'       => __('settings-global-pagewidthunit-title'),
+            'description' => __('settings-global-pagewidthunit-description'),
+            'type'        => 'select',
             'choices'     => [
-                __('settings-global-pagewidth-30-default') => 30,
-                __('settings-global-pagewidth-35')         => 35,
-                __('settings-global-pagewidth-40')         => 40
+                __('settings-global-pagewidthunit-em-default') => 'em',
+                __('settings-global-pagewidthunit-px')         => 'px'
             ],
-            'default'     => 30,
+            'default'     => 'em',
+            'section'     => ['global', 'layout']
+        ];
+
+        $page_width_value_default = 30;
+
+        if (dcCore::app()->blog->settings->originemini->global_page_width_unit === 'px') {
+            $page_width_value_default = 480;
+        }
+
+        $default_settings['global_page_width_value'] = [
+            'title'       => __('settings-global-pagewidthvalue-title'),
+            'description' => __('settings-global-pagewidthvalue-description'),
+            'type'        => 'integer',
+            'default'     => '',
+            'placeholder' => $page_width_value_default,
             'section'     => ['global', 'layout']
         ];
 
@@ -1362,9 +1782,19 @@ class Config extends dcNsProcess
             'choices'     => [
                 __('settings-content-postlisttype-short-default') => 'short',
                 __('settings-content-postlisttype-excerpt')       => 'excerpt',
-                __('settings-content-postlisttype-content')       => 'content'
+                __('settings-content-postlisttype-content')       => 'content',
+                __('settings-content-postlisttype-custom')        => 'custom'
             ],
             'default'     => 'short',
+            'section'     => ['content', 'entry-list']
+        ];
+
+        $default_settings['content_post_list_custom'] = [
+            'title'       => __('settings-content-postlistcustom-title'),
+            'description' => __('settings-content-postlistcustom-description'),
+            'type'        => 'text',
+            'default'     => '',
+            'placeholder' => '_entry-list-custom.html',
             'section'     => ['content', 'entry-list']
         ];
 
@@ -1405,6 +1835,15 @@ class Config extends dcNsProcess
             'section'     => ['content', 'post']
         ];
 
+        $default_settings['content_post_template'] = [
+            'title'       => __('settings-content-posttemplate-title'),
+            'description' => __('settings-content-posttemplate-description'),
+            'type'        => 'text',
+            'default'     => '',
+            'placeholder' => '_entry-post.html',
+            'section'     => ['content', 'post']
+        ];
+
         $default_settings['content_links_underline'] = [
             'title'       => __('settings-content-linksunderline-title'),
             'description' => '',
@@ -1416,8 +1855,13 @@ class Config extends dcNsProcess
         $default_settings['content_images_wide'] = [
             'title'       => __('settings-content-imageswide-title'),
             'description' => __('settings-content-imageswide-description'),
-            'type'        => 'checkbox',
-            'default'     => 0,
+            'type'        => 'select',
+            'choices'     => [
+                __('settings-content-imageswide-disabled-default') => 'disabled',
+                __('settings-content-imageswide-postspages')       => 'posts-pages',
+                __('settings-content-imageswide-always')           => 'always'
+            ],
+            'default'     => 'disabled',
             'section'     => ['content', 'post']
         ];
 
@@ -1425,8 +1869,26 @@ class Config extends dcNsProcess
             'title'       => __('settings-content-imageswidesize-title'),
             'description' => __('settings-content-imageswidesize-description'),
             'type'        => 'text',
-            'default'     => '150',
+            'default'     => '',
+            'placeholder' => '120',
             'section'     => ['content', 'post']
+        ];
+
+        $default_settings['content_image_custom_size'] = [
+            'title'       => __('settings-content-imagecustomsizes-title'),
+            'description' => __('settings-content-imagecustomsizes-description'),
+            'type'        => 'text',
+            'default'     => '',
+            'section'     => ['content', 'post']
+        ];
+
+        $default_settings['content_page_template'] = [
+            'title'       => __('settings-content-pagetemplate-title'),
+            'description' => __('settings-content-pagetemplate-description'),
+            'type'        => 'text',
+            'default'     => '',
+            'placeholder' => '_entry-page.html',
+            'section'     => ['content', 'page']
         ];
 
         $default_settings['content_commentform_hide'] = [
@@ -1615,10 +2077,10 @@ class Config extends dcNsProcess
      *
      * @return array The id of the saved parameters associated with their values.
      */
-    public static function savedSettings()
+    public static function saved(): array
     {
         $saved_settings   = [];
-        $default_settings = self::defaultSettings();
+        $default_settings = origineMiniSettings::default();
 
         foreach ($default_settings as $setting_id => $setting_data) {
             if (dcCore::app()->blog->settings->originemini->$setting_id !== null) {
@@ -1634,314 +2096,42 @@ class Config extends dcNsProcess
 
         return $saved_settings;
     }
+}
 
-    /**
-     * Displays each parameter according to its type.
-     *
-     * @param strong $setting_id The id of the setting to display.
-     *
-     * @return void The parameter.
-     */
-    public static function settingRendering($setting_id = '')
+class ConfigUtils
+{
+    public static function getContentWidth($unit = 'em', $value = 30, $return_default = false)
     {
-        $default_settings = self::defaultSettings();
-        $saved_settings   = self::savedSettings();
+        $value = (int) $value;
 
-        if ($setting_id && array_key_exists($setting_id, $default_settings)) {
-            echo '<p id=' . $setting_id . '-input>';
+        $content_width_default = [];
 
-            // Displays the default value of the parameter if it is not defined.
-            if (isset($saved_settings[$setting_id])) {
-                $setting_value = $saved_settings[$setting_id];
-            } else {
-                $setting_value = isset($default_settings[$setting_id]['default']) ? $default_settings[$setting_id]['default'] : '';
-            }
-
-            switch ($default_settings[$setting_id]['type']) {
-                case 'checkbox' :
-                    echo Form::checkbox(
-                        $setting_id,
-                        true,
-                        $setting_value
-                    ),
-                    '<label class=classic for=', $setting_id, '>',
-                    $default_settings[$setting_id]['title'],
-                    '</label>';
-
-                    break;
-
-                case 'select' :
-                case 'select_int' :
-                    echo '<label for=', $setting_id, '>',
-                    $default_settings[$setting_id]['title'],
-                    '</label>',
-                    Form::combo(
-                        $setting_id,
-                        $default_settings[$setting_id]['choices'],
-                        strval($setting_value)
-                    );
-
-                    break;
-
-                case 'textarea' :
-                    $placeholder = isset($default_settings[$setting_id]['placeholder']) ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"' : '';
-
-                    echo '<label for=', $setting_id, '>',
-                    $default_settings[$setting_id]['title'],
-                    '</label>',
-                    Form::textArea(
-                        $setting_id,
-                        60,
-                        3,
-                        $setting_value,
-                        '',
-                        '',
-                        false,
-                        $placeholder
-                    );
-
-                    break;
-
-                case 'image' :
-                    $placeholder = isset($default_settings[$setting_id]['placeholder']) ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"' : '';
-
-                    if (!empty($setting_value) && $setting_value['url'] !== '') {
-                        $image_src = $setting_value['url'];
-                    } else {
-                        $image_src = '';
-                    }
-
-                    echo '<label for=', $setting_id, '>',
-                    $default_settings[$setting_id]['title'],
-                    '</label>',
-                    Form::field(
-                        $setting_id,
-                        30,
-                        255,
-                        $image_src,
-                        '',
-                        '',
-                        false,
-                        $placeholder
-                    );
-
-                    break;
-
-                default :
-                    $placeholder = isset($default_settings[$setting_id]['placeholder']) ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"' : '';
-
-                    echo '<label for=', $setting_id, '>',
-                    $default_settings[$setting_id]['title'],
-                    '</label>',
-                    Form::field(
-                        $setting_id,
-                        30,
-                        255,
-                        $setting_value,
-                        '',
-                        '',
-                        false,
-                        $placeholder
-                    );
-
-                    break;
-            }
-
-            echo '</p>';
-
-            // Displays the description of the parameter as a note.
-            if ($default_settings[$setting_id]['type'] === 'checkbox' || (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '')) {
-                echo '<p class=form-note id=', $setting_id, '-description>',
-                $default_settings[$setting_id]['description'];
-
-                // If the parameter is a checkbox, displays its default value as a note.
-                if ($default_settings[$setting_id]['type'] === 'checkbox') {
-                    if ($default_settings[$setting_id]['default'] === 1) {
-                        echo ' ', __('settings-default-checked');
-                    } else {
-                        echo ' ', __('settings-default-unchecked');
-                    }
-                }
-
-                echo '</p>';
-            }
-
-            // Header image.
-            if ($setting_id === 'header_image') {
-                if (!empty($setting_value) && isset($setting_value['url'])) {
-                    $image_src = $setting_value['url'];
-                } else {
-                    $image_src = '';
-                }
-
-                echo '<img alt="' . __('header-image-preview-alt'), '" id=', $setting_id, '-src src="', $image_src, '">';
-
-                if (isset($saved_settings['header_image2x'])) {
-                    echo '<p id=', $setting_id, '-retina>',
-                    __('header-image-retina-ready'),
-                    '</p>';
-                }
-
-                echo Form::hidden('header_image-url', $image_src);
-            }
-        }
-    }
-
-    /**
-     * Displays the theme configuration page.
-     *
-     * @return void
-     */
-    public static function render(): void
-    {
-        if (!static::$init) {
-            return;
+        if ($return_default === true) {
+            $content_width_default = [
+                'unit'  => 'em',
+                'value' => 30
+            ];
         }
 
-        /**
-         * Creates a table that contains all the parameters and their titles according to the following pattern:
-         *
-         * $sections_with_settings_id = [
-         *     'section_1_id' => [
-         *         'sub_section_1_id' => ['setting_1_id', 'option_2_id'],
-         *         'sub_section_2_id' => …
-         *     ]
-         * ];
-         */
-        $sections_with_settings_id = [];
-
-        $sections = self::pageSections();
-        $settings = self::defaultSettings();
-
-        // Puts titles in the setting array.
-        foreach ($sections as $section_id => $section_data) {
-            $sections_with_settings_id[$section_id] = [];
+        if ($unit === 'em' && $value === 30 && $return_default === false) {
+            return $content_width_default;
         }
 
-        // Puts all settings in their section.
-        foreach ($settings as $setting_id => $setting_data) {
-            $ignore_setting_id = ['header_image2x', 'global_css_custom_mini', 'styles'];
-
-            if (!in_array($setting_id, $ignore_setting_id, true)) {
-                // If a sub-section is set.
-                if (isset($setting_data['section'][1])) {
-                    $sections_with_settings_id[$setting_data['section'][0]][$setting_data['section'][1]][] = $setting_id;
-                } else {
-                    $sections_with_settings_id[$setting_data['section'][0]][] = $setting_id;
-                }
-            }
+        if ($unit === 'em' && ($value < 20 || $value > 80)) {
+            return $content_width_default;
         }
 
-        // Removes the titles if they are not associated with any parameter.
-        $sections_with_settings_id = array_filter($sections_with_settings_id);
-        ?>
+        if ($unit === 'px' && ($value < 320 || $value > 1280)) {
+            return $content_width_default;
+        }
 
-        <form action="<?php echo dcCore::app()->adminurl->get('admin.blog.theme', ['module' => 'originemini', 'conf' => '1']); ?>" enctype=multipart/form-data id=theme_config method=post>
-            <?php
-            // Displays the title of each section and places the corresponding parameters under each one.
-            foreach ($sections_with_settings_id as $section_id => $section_data) {
-                echo '<h3 id=section-', $section_id, '>',
-                $sections[$section_id]['name'],
-                '</h3>',
-                '<div class=fieldset>';
+        if (!in_array($unit, ['em', 'px'], true)) {
+            return $content_width_default;
+        }
 
-                foreach ($section_data as $sub_section_id => $setting_id) {
-                    // Displays the name of the sub-section unless its ID is "no-title".
-                    if ($sub_section_id !== 'no-title') {
-                        echo '<h4 id=section-', $section_id, '-', $sub_section_id, '>',
-                        $sections[$section_id]['sub_sections'][$sub_section_id],
-                        '</h4>';
-                    }
-
-                    // Displays the parameter.
-                    foreach ($setting_id as $setting_id_value) {
-                        self::settingRendering($setting_id_value);
-                    }
-                }
-
-                echo '</div>';
-            }
-            ?>
-
-            <p>
-                <details id=originemini-message-js>
-                    <summary><?php echo __('settings-scripts-title'); ?></summary>
-
-                    <div class=warning-msg>
-                        <p><?php echo __('settings-scripts-message-intro'); ?></p>
-
-                        <p>
-                            <?php printf(
-                                __('settings-scripts-message-csp'),
-                                __('settings-scripts-message-csp-href'),
-                                __('settings-scripts-message-csp-title')
-                            ); ?>
-                        </p>
-
-                        <p><?php echo __('settings-scripts-message-hash-intro'); ?></p>
-
-                        <?php
-                        /**
-                         * Displays the list of script hashes if they are loaded.
-                         *
-                         * @see /_prepend.php
-                         */
-                        if (dcCore::app()->blog->settings->originemini->js_hash) {
-                            $hashes = dcCore::app()->blog->settings->originemini->js_hash;
-
-                            if (!empty($hashes)) {
-                                echo '<ul>';
-
-                                foreach ($hashes as $script_id => $hash) {
-                                    $hash = '<code>' . $hash . '</code>';
-
-                                    echo '<li id=hash-', $script_id, '>';
-
-                                    if ($script_id === 'searchform') {
-                                        echo __('settings-scripts-message-hash-searchform'),
-                                        '<br>',
-                                        $hash;
-                                    } elseif ($script_id === 'trackbackurl') {
-                                        echo __('settings-scripts-message-hash-trackbackurl'),
-                                        '<br>',
-                                        $hash;
-                                    } elseif ($script_id === 'imagewide') {
-                                        echo __('settings-scripts-message-hash-imagewide'),
-                                        '<br>',
-                                        $hash;
-                                    }
-
-                                    echo '</li>';
-                                }
-
-                                echo '</ul>';
-                            }
-                        }
-                        ?>
-
-                        <p>
-                            <?php printf(
-                                __('settings-scripts-message-example'),
-                                'https://open-time.net/post/2022/08/15/CSP-mon-amour-en-public',
-                                'fr',
-                                'CSP mon amour en public'
-                            ); ?>
-                        </p>
-
-                        <p><?php echo __('settings-scripts-message-note'); ?></p>
-                    </div>
-                </details>
-            </p>
-
-            <p>
-                <?php echo dcCore::app()->formNonce(); ?>
-
-                <input name=save type=submit value="<?php echo __('settings-save-button-text'); ?>">
-
-                <input class=delete name=reset value="<?php echo __('settings-reset-button-text'); ?>" type=submit>
-            </p>
-        </form>
-
-        <?php
+        return [
+            'unit'  => $unit,
+            'value' => $value
+        ];
     }
 }
