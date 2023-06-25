@@ -364,7 +364,7 @@ msgid "settings-content-imageswide-title"
 msgstr "Enlarge big images"
 
 msgid "settings-content-imageswide-description"
-msgstr "Photos that are large enough will overflow the page (uses JavaScript)."
+msgstr "Photos that are large enough will overflow the page."
 
 msgid "settings-content-imageswide-disabled-default"
 msgstr "Disabled"

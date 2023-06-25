@@ -379,7 +379,7 @@ msgid "settings-content-imageswide-title"
 msgstr "Agrandir les images suffisamment larges"
 
 msgid "settings-content-imageswide-description"
-msgstr "Les photos suffisamment grandes déborderont de la page (utilise JavaScript)."
+msgstr "Les photos suffisamment grandes déborderont de la page."
 
 msgid "settings-content-imageswide-disabled-default"
 msgstr "Désactivé"
