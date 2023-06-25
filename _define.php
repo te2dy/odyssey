@@ -13,8 +13,7 @@ $this->registerModule(
     'Teddy',                    // Author
     '2.2',                      // Version
     [
-        // Properties.
-        'requires'             => [
+        'requires' => [
             ['core', '2.26'],
             ['php', '8']
         ],
