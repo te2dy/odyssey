@@ -265,12 +265,12 @@ class Frontend extends dcNsProcess
         $social_links = [];
 
         // Builds the array of social links to display in the footer.
-        foreach ($social_sites as $site_nicename => $site) {
-            $setting_id = 'footer_social_links_' . $site_nicename;
+        foreach ($social_sites as $site_id) {
+            $setting_id = 'footer_social_links_' . $site_id;
 
             // If the setting has a value.
             if (omSettings::value($setting_id)) {
-                $social_links[$site_nicename] = omSettings::value($setting_id);
+                $social_links[$site_id] = omSettings::value($setting_id);
             }
         }
 
@@ -280,8 +280,8 @@ class Frontend extends dcNsProcess
             <div class=footer-social-links>
                 <ul>
                     <?php
-                    foreach ($social_links as $site => $link) :
-                        switch ($site) {
+                    foreach ($social_links as $site_id => $link) :
+                        switch ($site_id) {
                             case 'Signal':
                                 if (substr($link, 0, 1) === '+') {
                                     $link = 'https://signal.me/#p/' . $link;
@@ -301,9 +301,9 @@ class Frontend extends dcNsProcess
                             <a href="<?php echo Html::escapeURL($link); ?>" rel=me>
                                 <span class=footer-social-links-icon-container>
                                     <svg class=footer-social-links-icon role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>
-                                        <title><?php echo Html::escapeHTML($site); ?></title>
+                                        <title><?php echo Html::escapeHTML(__('site-name-' . $site_id)); ?></title>
 
-                                        <?php echo strip_tags(omUtils::origineMiniSocialIcons($site), '<path>'); ?>
+                                        <?php echo strip_tags(omUtils::origineMiniSocialIcons($site_id), '<path>'); ?>
                                     </svg>
                                 </span>
                             </a>

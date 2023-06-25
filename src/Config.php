@@ -1053,18 +1053,19 @@ class Config extends dcNsProcess
             }
 
             // Social links.
-            if (isset($_POST['footer_enabled']) && $_POST['footer_enabled'] === '1'
-                && ((isset($_POST['footer_social_links_500px']) && $_POST['footer_social_links_500px'] !== '')
-                || (isset($_POST['footer_social_links_diaspora']) && $_POST['footer_social_links_diaspora'] !== '')
-                || (isset($_POST['footer_social_links_discord']) && $_POST['footer_social_links_discord'] !== '')
-                || (isset($_POST['footer_social_links_facebook']) && $_POST['footer_social_links_facebook'] !== '')
-                || (isset($_POST['footer_social_links_github']) && $_POST['footer_social_links_github'] !== '')
-                || (isset($_POST['footer_social_links_mastodon']) && $_POST['footer_social_links_mastodon'] !== '')
-                || (isset($_POST['footer_social_links_signal']) && $_POST['footer_social_links_signal'] !== '')
-                || (isset($_POST['footer_social_links_tiktok']) && $_POST['footer_social_links_tiktok'] !== '')
-                || (isset($_POST['footer_social_links_twitter']) && $_POST['footer_social_links_twitter'] !== '')
-                || (isset($_POST['footer_social_links_whatsapp']) && $_POST['footer_social_links_whatsapp'] !== ''))
-            ) {
+            $social_sites = omSettings::socialSites();
+
+            $display_social_links = false;
+
+            foreach ($social_sites as $site_nicename => $site_name) {
+                if (isset($_POST['footer_social_links_' . $site_nicename]) && $_POST['footer_social_links_' . $site_nicename] !== '') {
+                    $display_social_links = true;
+
+                    break;
+                }
+            }
+
+            if (isset($_POST['footer_enabled']) && $_POST['footer_enabled'] === '1' && $display_social_links === true) {
                 $css_main_array['.footer-social-links']['margin-bottom'] = '1rem';
 
                 $css_main_array['.footer-social-links ul']['list-style']                 = 'none';
@@ -2052,26 +2053,37 @@ class origineMiniSettings
             'section'     => ['footer', 'no-title']
         ];
 
+        // Social links.
         $social_sites = omSettings::socialSites();
 
-        foreach ($social_sites as $site_nicename => $site) {
-            $placeholder = '';
+        foreach ($social_sites as $site_id) {
 
-            if ($site_nicename === 'twitter') {
-                $placeholder = __('settings-footer-sociallinks-twitter-placeholder');
-            } elseif ($site_nicename === 'whatsapp') {
-                $placeholder = '+1234567890';
+            // Defines the description of the setting.
+            $setting_description = '';
+
+            if (str_starts_with(__('settings-footer-sociallinks-' . $site_id . '-description'), 'settings-footer-sociallinks') === false ) {
+                $setting_description = __('settings-footer-sociallinks-' . $site_id . '-description');
             }
 
-            $default_settings['footer_social_links_' . $site_nicename] = [
-                'title'       => sprintf(
-                    __('settings-footer-sociallinks-' . $site_nicename . '-title'),
-                    $site
-                ),
-                'description' => '',
+            // Defines the placeholder of the setting.
+            $setting_placeholder = '';
+
+            switch ($site_id) {
+                case 'Twitter':
+                    $setting_placeholder = __('settings-footer-sociallinks-twitter-placeholder');
+
+                    break;
+                case 'WhatsApp':
+                    $setting_placeholder = '+1234567890';
+            }
+
+            // Displays the setting.
+            $default_settings['footer_social_links_' . $site_id] = [
+                'title'       => __('settings-footer-sociallinks-' . $site_id . '-title'),
+                'description' => $setting_description,
                 'type'        => 'text',
                 'default'     => '',
-                'placeholder' => $placeholder,
+                'placeholder' => $setting_placeholder,
                 'section'     => ['footer', 'social-links']
             ];
         }
