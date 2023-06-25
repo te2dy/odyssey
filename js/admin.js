@@ -33,11 +33,29 @@ function disableInputs() {
   }
 
   if (document.getElementById("content_post_list_type").value !== 'custom') {
-    document.getElementById("content_post_list_custom-input").style.display       = "none";
-    document.getElementById("content_post_list_custom-description").style.display = "none";
+    document.getElementById("content_post_list_custom-input").style.display              = "none";
+    document.getElementById("content_post_list_custom-description").style.display        = "none";
+    document.getElementById("content_post_list_time-input").style.display                = "block";
+    document.getElementById("content_post_list_time-description").style.display          = "block";
+    document.getElementById("content_post_list_reaction_link-input").style.display       = "block";
   } else {
-    document.getElementById("content_post_list_custom-input").style.display       = "block";
-    document.getElementById("content_post_list_custom-description").style.display = "block";
+    document.getElementById("content_post_list_custom-input").style.display              = "block";
+    document.getElementById("content_post_list_custom-description").style.display        = "block";
+    document.getElementById("content_post_list_time-input").style.display                = "none";
+    document.getElementById("content_post_list_time-description").style.display          = "none";
+    document.getElementById("content_post_list_reaction_link-input").style.display       = "none";
+  }
+
+  if (document.getElementById("content_post_template").value === '') {
+    document.getElementById("content_post_time-input").style.display        = "block";
+    document.getElementById("content_post_time-description").style.display  = "block";
+    document.getElementById("content_post_intro-input").style.display       = "block";
+    document.getElementById("content_post_intro-description").style.display = "block";
+  } else {
+    document.getElementById("content_post_time-input").style.display        = "none";
+    document.getElementById("content_post_time-description").style.display  = "none";
+    document.getElementById("content_post_intro-input").style.display       = "none";
+    document.getElementById("content_post_intro-description").style.display = "none";
   }
 
   if (document.getElementById("content_images_wide").value !== 'disabled') {
@@ -149,6 +167,20 @@ function inputCheckMessage() {
   }
 }
 
+function inputChange() {
+  if (document.getElementById("content_post_template").value === '') {
+    document.getElementById("content_post_time-input").style.display        = "block";
+    document.getElementById("content_post_time-description").style.display  = "block";
+    document.getElementById("content_post_intro-input").style.display       = "block";
+    document.getElementById("content_post_intro-description").style.display = "block";
+  } else {
+    document.getElementById("content_post_time-input").style.display        = "none";
+    document.getElementById("content_post_time-description").style.display  = "none";
+    document.getElementById("content_post_intro-input").style.display       = "none";
+    document.getElementById("content_post_intro-description").style.display = "none";
+  }
+}
+
 /**
  * Checks if an image exists via its URL.
  *
@@ -186,7 +218,6 @@ function changeImage() {
   } else {
     document.getElementById("header_image-src").style.display = "none";
     document.getElementById("header_image_position-input").style.display = "none";
-    document.getElementById("header_image-retina").style.display = "none";
     document.getElementById("header_image_description-input").style.display = "none";
     document.getElementById("header_image_description-description").style.display = "none";
   }
@@ -210,6 +241,7 @@ window.onload = function() {
 
   window.oninput = function() {
     inputCheckMessage();
+    inputChange();
   };
 
   document.getElementById("header_image").onchange = function() {

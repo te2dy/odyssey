@@ -1879,6 +1879,15 @@ class origineMiniSettings
             'section'     => ['content', 'entry-list']
         ];
 
+        $default_settings['content_post_template'] = [
+            'title'       => __('settings-content-posttemplate-title'),
+            'description' => __('settings-content-posttemplate-description'),
+            'type'        => 'text',
+            'default'     => '',
+            'placeholder' => '_entry-post.html',
+            'section'     => ['content', 'post']
+        ];
+
         $default_settings['content_post_time'] = [
             'title'       => __('settings-content-posttime-title'),
             'description' => '',
@@ -1892,15 +1901,6 @@ class origineMiniSettings
             'description' => __('settings-content-postintro-description'),
             'type'        => 'checkbox',
             'default'     => 0,
-            'section'     => ['content', 'post']
-        ];
-
-        $default_settings['content_post_template'] = [
-            'title'       => __('settings-content-posttemplate-title'),
-            'description' => __('settings-content-posttemplate-description'),
-            'type'        => 'text',
-            'default'     => '',
-            'placeholder' => '_entry-post.html',
             'section'     => ['content', 'post']
         ];
 
