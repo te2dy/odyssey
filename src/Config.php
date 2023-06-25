@@ -1054,7 +1054,8 @@ class Config extends dcNsProcess
 
             // Social links.
             if (isset($_POST['footer_enabled']) && $_POST['footer_enabled'] === '1'
-                && ((isset($_POST['footer_social_links_diaspora']) && $_POST['footer_social_links_diaspora'] !== '')
+                && ((isset($_POST['footer_social_links_500px']) && $_POST['footer_social_links_500px'] !== '')
+                || (isset($_POST['footer_social_links_diaspora']) && $_POST['footer_social_links_diaspora'] !== '')
                 || (isset($_POST['footer_social_links_discord']) && $_POST['footer_social_links_discord'] !== '')
                 || (isset($_POST['footer_social_links_facebook']) && $_POST['footer_social_links_facebook'] !== '')
                 || (isset($_POST['footer_social_links_github']) && $_POST['footer_social_links_github'] !== '')
@@ -2051,79 +2052,29 @@ class origineMiniSettings
             'section'     => ['footer', 'no-title']
         ];
 
-        $default_settings['footer_social_links_diaspora'] = [
-            'title'       => __('settings-footer-sociallinks-diaspora-title'),
-            'description' => '',
-            'type'        => 'text',
-            'default'     => '',
-            'section'     => ['footer', 'social-links']
-        ];
+        $social_sites = omSettings::socialSites();
 
-        $default_settings['footer_social_links_discord'] = [
-            'title'       => __('settings-footer-sociallinks-discord-title'),
-            'description' => '',
-            'type'        => 'text',
-            'default'     => '',
-            'section'     => ['footer', 'social-links']
-        ];
+        foreach ($social_sites as $site_nicename => $site) {
+            $placeholder = '';
 
-        $default_settings['footer_social_links_facebook'] = [
-            'title'       => __('settings-footer-sociallinks-facebook-title'),
-            'description' => '',
-            'type'        => 'text',
-            'default'     => '',
-            'section'     => ['footer', 'social-links']
-        ];
+            if ($site_nicename === 'twitter') {
+                $placeholder = __('settings-footer-sociallinks-twitter-placeholder');
+            } elseif ($site_nicename === 'whatsapp') {
+                $placeholder = '+1234567890';
+            }
 
-        $default_settings['footer_social_links_github'] = [
-            'title'       => __('settings-footer-sociallinks-github-title'),
-            'description' => '',
-            'type'        => 'text',
-            'default'     => '',
-            'section'     => ['footer', 'social-links']
-        ];
-
-        $default_settings['footer_social_links_mastodon'] = [
-            'title'       => __('settings-footer-sociallinks-mastodon-title'),
-            'description' => '',
-            'type'        => 'text',
-            'default'     => '',
-            'section'     => ['footer', 'social-links']
-        ];
-
-        $default_settings['footer_social_links_signal'] = [
-            'title'       => __('settings-footer-sociallinks-signal-title'),
-            'description' => __('settings-footer-sociallinks-signal-description'),
-            'type'        => 'text',
-            'default'     => '',
-            'section'     => ['footer', 'social-links']
-        ];
-
-        $default_settings['footer_social_links_tiktok'] = [
-            'title'       => __('settings-footer-sociallinks-tiktok-title'),
-            'description' => '',
-            'type'        => 'text',
-            'default'     => '',
-            'section'     => ['footer', 'social-links']
-        ];
-
-        $default_settings['footer_social_links_twitter'] = [
-            'title'       => __('settings-footer-sociallinks-twitter-title'),
-            'description' => '',
-            'type'        => 'text',
-            'default'     => '',
-            'placeholder' => __('settings-footer-sociallinks-twitter-placeholder'),
-            'section'     => ['footer', 'social-links']
-        ];
-
-        $default_settings['footer_social_links_whatsapp'] = [
-            'title'       => __('settings-footer-sociallinks-whatsapp-title'),
-            'description' => '',
-            'type'        => 'text',
-            'default'     => '',
-            'placeholder' => '+1234567890',
-            'section'     => ['footer', 'social-links']
-        ];
+            $default_settings['footer_social_links_' . $site_nicename] = [
+                'title'       => sprintf(
+                    __('settings-footer-sociallinks-' . $site_nicename . '-title'),
+                    $site
+                ),
+                'description' => '',
+                'type'        => 'text',
+                'default'     => '',
+                'placeholder' => $placeholder,
+                'section'     => ['footer', 'social-links']
+            ];
+        }
 
         $default_settings['styles'] = [
             'title' => __('settings-footer-origineministyles-title'),

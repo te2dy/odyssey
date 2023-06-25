@@ -259,28 +259,18 @@ class Frontend extends dcNsProcess
     public static function origineMiniSocialLinks(): void
     {
         // A list of social sites supported by the theme.
-        $social_sites = [
-            'Diaspora',
-            'Discord',
-            'Facebook',
-            'GitHub',
-            'Mastodon',
-            'Signal',
-            'TikTok',
-            'Twitter',
-            'WhatsApp'
-        ];
+        $social_sites = omSettings::socialSites();
 
         // The array of social links to be displayed.
         $social_links = [];
 
         // Builds the array of social links to display in the footer.
-        foreach ($social_sites as $site) {
-            $setting_id = 'footer_social_links_' . strtolower($site);
+        foreach ($social_sites as $site_nicename => $site) {
+            $setting_id = 'footer_social_links_' . $site_nicename;
 
             // If the setting has a value.
             if (omSettings::value($setting_id)) {
-                $social_links[$site] = omSettings::value($setting_id);
+                $social_links[$site_nicename] = omSettings::value($setting_id);
             }
         }
 
