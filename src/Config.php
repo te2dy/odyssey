@@ -988,14 +988,16 @@ class Config extends dcNsProcess
             if (isset($_POST['content_post_list_reaction_link']) && $_POST['content_post_list_reaction_link'] !== 'disabled') {
                 $css_main_array['.entry-list .post']['flex-wrap'] = 'wrap';
 
-                if (!isset($_POST['content_post_list_type']) || (isset($_POST['content_post_list_type']) && $_POST['content_post_list_type'] !== 'excerpt')) {
-                    $css_main_array['.post-reaction-link']['flex-basis'] = '100%';
+                $css_main_array['.post-reaction-link']['color'] = 'var(--color-text-secondary, #6c6f78)';
 
-                    $css_media_array['.post-reaction-link']['order'] = '3';
+                if (!isset($_POST['content_post_list_type']) || (isset($_POST['content_post_list_type']) && $_POST['content_post_list_type'] !== 'excerpt')) {
+                    $css_main_array['.post-reaction-link-container']['flex-basis'] = '100%';
+
+                    $css_media_array['.post-reaction-link-container']['order'] = '3';
                 } else {
-                    $css_main_array['.post-reaction-link']['display']    = 'inline-block';
-                    $css_main_array['.post-reaction-link']['flex-basis'] = '100%';
-                    $css_main_array['.post-reaction-link']['margin-top'] = '.5rem';
+                    $css_main_array['.post-reaction-link-container']['display']    = 'inline-block';
+                    $css_main_array['.post-reaction-link-container']['flex-basis'] = '100%';
+                    $css_main_array['.post-reaction-link-container']['margin-top'] = '.5rem';
                 }
             }
 

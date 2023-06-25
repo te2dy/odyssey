@@ -764,22 +764,23 @@ class Frontend extends dcNsProcess
             return;
         }
 
-        $class = 'class=post-reaction-link';
+        $tag_open  = '<small class=\"post-reaction-link-container text-secondary\">';
+        $tag_close = '</small>';
 
-        $small_open  = '<small>';
-        $small_close = '</small>';
+        $link_class = 'class=\"post-reaction-link\"';
 
         if (omSettings::value('content_post_list_type') === 'content') {
-            $class = 'class=\"post-reaction-link button\"';
+            $tag_open  = '';
+            $tag_close = '';
 
-            $small_open = $small_close = '';
+            $link_class = 'class=\"post-reaction-link button\"';
         }
 
         return '<?php
-        $nb_reactions = intval((int) dcCore::app()->ctx->posts->nb_comment + (int) dcCore::app()->ctx->posts->nb_trackback);
+        $nb_reactions = (int) dcCore::app()->ctx->posts->nb_comment + (int) dcCore::app()->ctx->posts->nb_trackback;
 
         if ($nb_reactions > 0 || dcCore::app()->blog->settings->originemini->content_post_list_reaction_link === "always") {
-            echo "<a aria-label=\"";
+            echo "' . $tag_open . '<a aria-label=\"";
 
             if ($nb_reactions > 1) {
                 printf(__("entry-list-multiple-reactions-link-aria-label"), $nb_reactions);
@@ -789,7 +790,7 @@ class Frontend extends dcNsProcess
                 echo __("entry-list-no-reaction-link-aria-label");
             }
 
-            echo "\" ' . $class . ' href=\"", Html::escapeURL(dcCore::app()->ctx->posts->getURL()), "#", __("reactions-id"), "\">' . $small_open . '";
+            echo "\" ' . $link_class . ' href=\"", Html::escapeURL(dcCore::app()->ctx->posts->getURL()), "#", __("reactions-id"), "\">";
 
             if ($nb_reactions > 1) {
                 printf(__("entry-list-multiple-reactions"), $nb_reactions);
@@ -799,7 +800,7 @@ class Frontend extends dcNsProcess
                 echo __("entry-list-no-reaction");
             }
 
-            echo "' . $small_close . '</a>";
+            echo "</a>' . $tag_close . '";
         }
         ?>';
     }
