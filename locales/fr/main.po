@@ -255,6 +255,56 @@ msgstr "Propulsé par <a href=https://fr.dotclear.org/>Dotclear</a> et <a href=h
 msgid "footer-powered-by-dev"
 msgstr "Propulsé par <a href=https://fr.dotclear.org/ title=%s>Dotclear %s</a> et <a href=https://github.com/te2dy/originemini>Origine Mini %s</a>"
 
+# Social links
+
+msgid "site-name-500px"
+msgstr "500px"
+
+msgid "site-name-dailymotion"
+msgstr "Dailymotion"
+
+msgid "site-name-diaspora"
+msgstr "Diaspora"
+
+msgid "site-name-discord"
+msgstr "Discord"
+
+msgid "site-name-facebook"
+msgstr "Facebook"
+
+msgid "site-name-github"
+msgstr "GitHub"
+
+msgid "site-name-mastodon"
+msgstr "Mastodon"
+
+msgid "site-name-peertube"
+msgstr "PeerTube"
+
+msgid "site-name-signal"
+msgstr "Signal"
+
+msgid "site-name-telegram"
+msgstr "Telegram"
+
+msgid "site-name-tiktok"
+msgstr "TikTok"
+
+msgid "site-name-twitch"
+msgstr "Twitch"
+
+msgid "site-name-twitter"
+msgstr "Twitter"
+
+msgid "site-name-vimeo"
+msgstr "Vimeo"
+
+msgid "site-name-whatsapp"
+msgstr "WhatsApp"
+
+msgid "site-name-youtube"
+msgstr "YouTube"
+
 # Archives
 
 msgid "archives-title"

@@ -46,6 +46,9 @@ msgstr "Post list"
 msgid "section-content-post"
 msgstr "Posts"
 
+msgid "section-content-page"
+msgstr "Pages"
+
 msgid "section-content-reactions"
 msgstr "Reactions"
 
@@ -207,6 +210,12 @@ msgstr "Rounding the corners"
 msgid "settings-global-roundcorner-description"
 msgstr "This setting concerns in particular the title of the site and the buttons."
 
+msgid "settings-global-csscustom-title"
+msgstr "Custom styles"
+
+msgid "settings-global-csscustom-description"
+msgstr "Add CSS styles to customize the theme's appearance."
+
 msgid "settings-global-minimalsocialmarkups-title"
 msgstr "Add minimal social tags in head"
 
@@ -354,11 +363,20 @@ msgstr "Display the time of publication"
 msgid "settings-content-postintro-title"
 msgstr "Display the excerpt as an introduction"
 
-msgid "settings-content-linksunderline-title"
-msgstr "Underline links in the text body"
+msgid "settings-content-postintro-description"
+msgstr "Highlights the excerpt defined by the author between the title and the content of the post."
+
+msgid "settings-content-posttemplate-title"
+msgstr "Custom template"
+
+msgid "settings-content-posttemplate-description"
+msgstr "Enter the template name here. This must be placed in the theme's <code>tpl</code> folder."
 
 msgid "settings-content-postintro-description"
 msgstr "Highlights the excerpt defined by the author between the title and the content of the post."
+
+msgid "settings-content-linksunderline-title"
+msgstr "Underline links in the text body"
 
 msgid "settings-content-imageswide-title"
 msgstr "Enlarge big images"
@@ -462,6 +480,12 @@ msgstr "Display a mention to Dotclear and the theme"
 msgid "settings-footer-credits-description"
 msgstr "Allows you to advertise Dotclear and this theme."
 
+msgid "settings-footer-sociallinks-500px-title"
+msgstr "URL of a 500px page"
+
+msgid "settings-footer-sociallinks-dailymotion-title"
+msgstr "URL of a Dailymotion page"
+
 msgid "settings-footer-sociallinks-diaspora-title"
 msgstr "URL of a Diaspora profile"
 
@@ -477,23 +501,38 @@ msgstr "URL of a profile or a GitHub directory"
 msgid "settings-footer-sociallinks-mastodon-title"
 msgstr "URL of a Mastodon profile"
 
+msgid "settings-footer-sociallinks-peertube-title"
+msgstr "URL of a PeerTube instance or channel"
+
 msgid "settings-footer-sociallinks-signal-title"
 msgstr "Signal account URL or phone number"
 
 msgid "settings-footer-sociallinks-signal-description"
 msgstr "If you prefer to provide your phone number directly, it must be entered in the format +1234567890."
 
+msgid "settings-footer-sociallinks-telegram-title"
+msgstr "URL of a Telegram group or channel"
+
 msgid "settings-footer-sociallinks-tiktok-title"
 msgstr "URL of a TikTok profile"
 
+msgid "settings-footer-sociallinks-twitch-title"
+msgstr "URL of a Twitch page"
+
 msgid "settings-footer-sociallinks-twitter-title"
 msgstr "Twitter account username"
+
+msgid "settings-footer-sociallinks-vimeo-title"
+msgstr "URL of a Vimeo page"
 
 msgid "settings-footer-sociallinks-twitter-placeholder"
 msgstr "@username"
 
 msgid "settings-footer-sociallinks-whatsapp-title"
 msgstr "WhatsApp phone number"
+
+msgid "settings-footer-sociallinks-youtube-title"
+msgstr "URL of a YouTube channel"
 
 msgid "settings-footer-origineministyles-title"
 msgstr "Custom styles for Origine Mini"

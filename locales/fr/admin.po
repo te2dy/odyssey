@@ -477,6 +477,12 @@ msgstr "Afficher une mention à Dotclear et au thème"
 msgid "settings-footer-credits-description"
 msgstr "Permet de faire de la publicité pour Dotclear et ce thème."
 
+msgid "settings-footer-sociallinks-500px-title"
+msgstr "Adresse d’une page 500px"
+
+msgid "settings-footer-sociallinks-dailymotion-title"
+msgstr "Adresse d’une chaîne Dailymotion"
+
 msgid "settings-footer-sociallinks-diaspora-title"
 msgstr "Adresse d’un profil Diaspora"
 
@@ -492,11 +498,20 @@ msgstr "Adresse d’un profil ou d’un répertoire GitHub"
 msgid "settings-footer-sociallinks-mastodon-title"
 msgstr "Adresse d’un profil Mastodon"
 
+msgid "settings-footer-sociallinks-peertube-title"
+msgstr "Adresse d’une chaîne PeerTube"
+
 msgid "settings-footer-sociallinks-signal-title"
 msgstr "Lien vers un compte ou un numéro de téléphone Signal"
 
 msgid "settings-footer-sociallinks-signal-description"
 msgstr "Si vous préférez fournir directement votre numéro de téléphone, il doit être saisi au format +1234567890."
+
+msgid "settings-footer-sociallinks-telegram-title"
+msgstr "Adresse d’une chaîne ou d’un groupe Telegram"
+
+msgid "settings-footer-sociallinks-twitch-title"
+msgstr "Adresse d’une page Twitch"
 
 msgid "settings-footer-sociallinks-tiktok-title"
 msgstr "Adresse d’un profil TikTok"
@@ -507,8 +522,14 @@ msgstr "Nom d’utilisateur d’un compte Twitter"
 msgid "settings-footer-sociallinks-twitter-placeholder"
 msgstr "@nomdutilisateur"
 
+msgid "settings-footer-sociallinks-vimeo-title"
+msgstr "Adresse d’une page Vimeo"
+
 msgid "settings-footer-sociallinks-whatsapp-title"
 msgstr "Numéro de téléphone WhatsApp"
+
+msgid "settings-footer-sociallinks-youtube-title"
+msgstr "Adresse d’une chaîne YouTube"
 
 msgid "settings-footer-origineministyles-title"
 msgstr "Styles personnalisés pour Origine Mini"

@@ -255,6 +255,56 @@ msgstr ""
 msgid "footer-powered-by-dev"
 msgstr ""
 
+# Social links
+
+msgid "site-name-500px"
+msgstr ""
+
+msgid "site-name-dailymotion"
+msgstr ""
+
+msgid "site-name-diaspora"
+msgstr ""
+
+msgid "site-name-discord"
+msgstr ""
+
+msgid "site-name-facebook"
+msgstr ""
+
+msgid "site-name-github"
+msgstr ""
+
+msgid "site-name-mastodon"
+msgstr ""
+
+msgid "site-name-peertube"
+msgstr ""
+
+msgid "site-name-signal"
+msgstr ""
+
+msgid "site-name-telegram"
+msgstr ""
+
+msgid "site-name-tiktok"
+msgstr ""
+
+msgid "site-name-twitch"
+msgstr ""
+
+msgid "site-name-twitter"
+msgstr ""
+
+msgid "site-name-vimeo"
+msgstr ""
+
+msgid "site-name-whatsapp"
+msgstr ""
+
+msgid "site-name-youtube"
+msgstr ""
+
 # Archives
 
 msgid "archives-title"

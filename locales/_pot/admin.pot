@@ -46,6 +46,9 @@ msgstr ""
 msgid "section-content-post"
 msgstr ""
 
+msgid "section-content-page"
+msgstr ""
+
 msgid "section-content-reactions"
 msgstr ""
 
@@ -207,6 +210,12 @@ msgstr ""
 msgid "settings-global-roundcorner-description"
 msgstr ""
 
+msgid "settings-global-csscustom-title"
+msgstr ""
+
+msgid "settings-global-csscustom-description"
+msgstr ""
+
 msgid "settings-global-minimalsocialmarkups-title"
 msgstr ""
 
@@ -354,10 +363,16 @@ msgstr ""
 msgid "settings-content-postintro-title"
 msgstr ""
 
-msgid "settings-content-linksunderline-title"
+msgid "settings-content-postintro-description"
 msgstr ""
 
-msgid "settings-content-postintro-description"
+msgid "settings-content-posttemplate-title"
+msgstr ""
+
+msgid "settings-content-posttemplate-description"
+msgstr ""
+
+msgid "settings-content-linksunderline-title"
 msgstr ""
 
 msgid "settings-content-imageswide-title"
@@ -462,6 +477,12 @@ msgstr ""
 msgid "settings-footer-credits-description"
 msgstr ""
 
+msgid "settings-footer-sociallinks-500px-title"
+msgstr ""
+
+msgid "settings-footer-sociallinks-dailymotion-title"
+msgstr ""
+
 msgid "settings-footer-sociallinks-diaspora-title"
 msgstr ""
 
@@ -477,13 +498,22 @@ msgstr ""
 msgid "settings-footer-sociallinks-mastodon-title"
 msgstr ""
 
+msgid "settings-footer-sociallinks-peertube-title"
+msgstr ""
+
 msgid "settings-footer-sociallinks-signal-title"
 msgstr ""
 
 msgid "settings-footer-sociallinks-signal-description"
 msgstr ""
 
+msgid "settings-footer-sociallinks-telegram-title"
+msgstr ""
+
 msgid "settings-footer-sociallinks-tiktok-title"
+msgstr ""
+
+msgid "settings-footer-sociallinks-twitch-title"
 msgstr ""
 
 msgid "settings-footer-sociallinks-twitter-title"
@@ -492,7 +522,13 @@ msgstr ""
 msgid "settings-footer-sociallinks-twitter-placeholder"
 msgstr ""
 
+msgid "settings-footer-sociallinks-vimeo-title"
+msgstr ""
+
 msgid "settings-footer-sociallinks-whatsapp-title"
+msgstr ""
+
+msgid "settings-footer-sociallinks-youtube-title"
 msgstr ""
 
 msgid "settings-footer-origineministyles-title"
