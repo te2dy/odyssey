@@ -1057,27 +1057,25 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniPostFooter($attr, $content)
     {
-        $has_attachment = false;
-        $has_category   = false;
-        $has_tag        = false;
+        $return_post_footer = false;
 
         if (dcCore::app()->ctx->posts->countMedia('attachment') > 0) {
-            $has_attachment = true;
+            $return_post_footer = true;
         }
 
-        if (dcCore::app()->ctx->posts->cat_id) {
-            $has_category = true;
+        if (dcCore::app()->ctx->posts->cat_id && $return_post_footer !== false) {
+            $return_post_footer = true;
         }
 
-        if (dcCore::app()->ctx->posts->post_meta) {
+        if (dcCore::app()->ctx->posts->post_meta  && $return_post_footer !== false) {
             $post_meta = unserialize(dcCore::app()->ctx->posts->post_meta);
 
             if (is_array($post_meta) && isset($post_meta['tag']) && count($post_meta['tag']) > 0) {
-                $has_tag = true;
+                $return_post_footer = true;
             }
         }
 
-        if ($has_attachment === true || $has_category === true || $has_tag === true) {
+        if ($return_post_footer === true) {
             return $content;
         }
     }

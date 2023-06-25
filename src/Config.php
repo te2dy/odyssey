@@ -80,12 +80,12 @@ class Config extends dcNsProcess
                                 $setting_value = '';
 
                                 $setting_type = isset($default_settings[$setting_id]['type'])
-                                ? $default_settings[$setting_id]['type']
-                                : 'text';
+                                    ? $default_settings[$setting_id]['type']
+                                    : 'text';
 
                                 $setting_title = isset($default_settings[$setting_id]['title'])
-                                ? $default_settings[$setting_id]['title']
-                                : '';
+                                    ? $default_settings[$setting_id]['title']
+                                    : '';
 
                                 if ($_POST[$setting_id] != $default_settings[$setting_id]['default']) {
                                     // If the parameter has a new value that is different from the default (and is not an unchecked checkbox).
