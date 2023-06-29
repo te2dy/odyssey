@@ -216,6 +216,9 @@ msgstr "Custom styles"
 msgid "settings-global-csscustom-description"
 msgstr "Add CSS styles to customize the theme's appearance."
 
+msgid "settings-global-csscustommini-title"
+msgstr "Custom styles minified"
+
 msgid "settings-global-minimalsocialmarkups-title"
 msgstr "Add minimal social tags in head"
 

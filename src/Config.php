@@ -66,15 +66,17 @@ class Config extends dcNsProcess
 
                 if (isset($_POST['save'])) {
                     foreach ($default_settings as $setting_id => $setting_value) {
-                        $ignored_settings = [
+                        $specific_settings = [
                             'styles',
                             'header_image',
                             'header_image2x',
                             'global_css_custom',
-                            'global_css_custom_mini'
+                            'global_css_custom_mini',
+                            'global_page_width_unit',
+                            'global_page_width_value'
                         ];
 
-                        if (!in_array($setting_id, $ignored_settings, true)) {
+                        if (!in_array($setting_id, $specific_settings, true)) {
                             if (isset($_POST[$setting_id])) {
                                 $drop          = false;
                                 $setting_value = '';
@@ -91,28 +93,11 @@ class Config extends dcNsProcess
                                     // If the parameter has a new value that is different from the default (and is not an unchecked checkbox).
                                     switch ($setting_type) {
                                         case 'select' :
-                                            $specific_settings = ['global_page_width_unit'];
-
-                                            if (!in_array($setting_id, $specific_settings, true)) {
-                                                // Checks if the input value is proposed by the setting.
-                                                if (in_array($_POST[$setting_id], $default_settings[$setting_id]['choices'])) {
-                                                    $setting_value = $_POST[$setting_id];
-                                                } else {
-                                                    $drop = true;
-                                                }
-                                            } elseif ($setting_id === 'global_page_width_unit') {
-                                                if (isset($_POST['global_page_width_value']) && $_POST['global_page_width_value'] !== '') {
-                                                    $page_width_data = ConfigUtils::getContentWidth(
-                                                        $_POST[$setting_id],
-                                                        $_POST['global_page_width_value']
-                                                    );
-
-                                                    if (!empty($page_width_data)) {
-                                                        $setting_value = $page_width_data['unit'];
-                                                    }
-                                                } elseif ($_POST[$setting_id] === 'px') {
-                                                    $setting_value = 'px';
-                                                }
+                                            // Checks if the input value is proposed by the setting.
+                                            if (in_array($_POST[$setting_id], $default_settings[$setting_id]['choices'])) {
+                                                $setting_value = $_POST[$setting_id];
+                                            } else {
+                                                $drop = true;
                                             }
 
                                             $setting_type = 'string';
@@ -138,26 +123,11 @@ class Config extends dcNsProcess
                                             break;
 
                                         case 'integer' :
-                                            $specific_settings = ['global_page_width_value'];
-
-                                            if (!in_array($setting_id, $specific_settings, true)) {
-                                                if (is_numeric($_POST[$setting_id])) {
-                                                    $setting_value = (int) $_POST[$setting_id];
-                                                    $setting_type  = 'integer';
-                                                } else {
-                                                    $drop = true;
-                                                }
-                                            } elseif ($setting_id === 'global_page_width_value') {
-                                                if (isset($_POST['global_page_width_unit'])) {
-                                                    $page_width_data = ConfigUtils::getContentWidth(
-                                                        $_POST['global_page_width_unit'],
-                                                        $_POST[$setting_id]
-                                                    );
-
-                                                    if (!empty($page_width_data)) {
-                                                        $setting_value = $page_width_data['value'];
-                                                    }
-                                                }
+                                            if (is_numeric($_POST[$setting_id])) {
+                                                $setting_value = (int) $_POST[$setting_id];
+                                                $setting_type  = 'integer';
+                                            } else {
+                                                $drop = true;
                                             }
 
                                             break;
@@ -201,137 +171,27 @@ class Config extends dcNsProcess
                             } else {
                                 dcCore::app()->blog->settings->originemini->drop($setting_id);
                             }
-                        } elseif ($setting_id === 'header_image') {
-                            /**
-                             * Saves the banner.
-                             *
-                             * The image is saved as an array which contains:
-                             * 'url'        => (string) The URL of the image.
-                             * 'max-width'  => (int) The maximum width of the image (inferior or equal to the page width).
-                             * 'max-height' => (int) The maximum height of the image.
-                             */
-
-                            // If an URL is set.
-                            if (isset($_POST['header_image'])) {
-
-                                // Gets relative url and path of the public folder.
-                                $public_url  = dcCore::app()->blog->settings->system->public_url;
-                                $public_path = dcCore::app()->blog->public_path;
-
-                                // The URL of the image.
-                                $image_url = $_POST['header_image'];
-
-                                // Converts the absolute URL in a relative one if necessary.
-                                $image_url = Html::stripHostURL($image_url);
-
-                                // Retrieves the image path.
-                                $image_path = $public_path . str_replace($public_url . '/', '/', $image_url);
-
-                                // If the file exists and is an image.
-                                if (omUtils::imageExists($image_path)) {
-
-                                    // Gets the dimensions of the image.
-                                    list($header_image_width) = getimagesize($image_path);
-
-                                    /**
-                                     * Limits the maximum width value of the image if its superior to the page width,
-                                     * and sets its height proportionally.
-                                     */
-                                    $page_width_data = ConfigUtils::getContentWidth(
+                        } else {
+                            switch ($setting_id) {
+                                case 'header_image':
+                                    self::saveHeaderImage(
+                                        $_POST['header_image'],
                                         $_POST['global_page_width_unit'],
-                                        $_POST['global_page_width_value'],
-                                        true
+                                        $_POST['global_page_width_value']
                                     );
 
-                                    $page_width = $page_width_data['value'];
+                                    break;
+                                case 'global_css_custom':
+                                    self::saveCustomCSS($_POST['global_css_custom']);
 
-                                    if ($page_width_data['unit'] === 'em') {
-                                        $page_width = $page_width * 16;
-                                    }
-
-                                    if ($header_image_width > $page_width) {
-                                        $header_image_width = 100;
-                                    } else {
-                                        $header_image_width = $header_image_width * 100 / $page_width;
-                                    }
-
-                                    // Sets the array which contains the image data.
-                                    $image_data = [
-                                        'url'   => Html::sanitizeURL($image_url),
-                                        'width' => (int) $header_image_width,
-                                    ];
-
-                                    // Saves the setting in the database as an array.
-                                    dcCore::app()->blog->settings->originemini->put(
-                                        'header_image',
-                                        $image_data,
-                                        'array',
-                                        Html::clean($setting_title),
-                                        true
+                                    break;
+                                case 'global_page_width_unit':
+                                    self::savePageWidth(
+                                        $_POST['global_page_width_unit'],
+                                        $_POST['global_page_width_value']
                                     );
 
-                                    // Builds the path to an hypothetical double sized image.
-                                    $image_info    = Path::info($image_path);
-                                    $image_path_2x = $image_info['dirname'] . '/' . $image_info['base'] . '-2x.' . $image_info['extension'];
-
-                                    // If the double sized image exists.
-                                    if (file_exists($image_path_2x)) {
-                                        $image_url_2x = str_replace($public_path, $public_url, $image_path_2x);
-
-                                        if (file_exists($image_path_2x) && getimagesize($image_path_2x) !== false) {
-                                            dcCore::app()->blog->settings->originemini->put(
-                                                'header_image2x',
-                                                Html::sanitizeURL($image_url_2x),
-                                                'string',
-                                                Html::clean($setting_title),
-                                                true
-                                            );
-                                        }
-                                    } else {
-                                        dcCore::app()->blog->settings->originemini->drop('header_image2x');
-                                    }
-                                } else {
-                                    dcCore::app()->blog->settings->originemini->drop('header_image');
-                                    dcCore::app()->blog->settings->originemini->drop('header_image2x');
-                                }
-                            } else {
-                                dcCore::app()->blog->settings->originemini->drop('header_image');
-                                dcCore::app()->blog->settings->originemini->drop('header_image2x');
-                            }
-                        } elseif ($setting_id === 'global_css_custom') {
-                            if (isset($_POST['global_css_custom'])) {
-                                $css_value = $_POST['global_css_custom'];
-
-                                $css_value_mini = str_replace("\n", "", $css_value);
-                                $css_value_mini = str_replace("\r", "", $css_value_mini);
-                                $css_value_mini = str_replace("  ", " ", $css_value_mini);
-                                $css_value_mini = str_replace("  ", " ", $css_value_mini);
-                                $css_value_mini = str_replace(" {", "{", $css_value_mini);
-                                $css_value_mini = str_replace("{ ", "{", $css_value_mini);
-                                $css_value_mini = str_replace(" }", "}", $css_value_mini);
-                                $css_value_mini = str_replace("} ", "}", $css_value_mini);
-                                $css_value_mini = str_replace(", ", ",", $css_value_mini);
-                                $css_value_mini = str_replace("; ", ";", $css_value_mini);
-                                $css_value_mini = str_replace(": ", ":", $css_value_mini);
-
-                                dcCore::app()->blog->settings->originemini->put(
-                                    'global_css_custom',
-                                    $css_value,
-                                    'string',
-                                    'Custom CSS',
-                                    true
-                                );
-
-                                dcCore::app()->blog->settings->originemini->put(
-                                    'global_css_custom_mini',
-                                    $css_value_mini,
-                                    'string',
-                                    'Custom CSS minified',
-                                    true
-                                );
-                            } else {
-                                dcCore::app()->blog->settings->originemini->drop('global_css_custom');
-                                dcCore::app()->blog->settings->originemini->drop('global_css_custom_mini');
+                                    break;
                             }
                         }
                     }
@@ -372,6 +232,172 @@ class Config extends dcNsProcess
         }
 
         return true;
+    }
+
+    /**
+     * Saves the banner.
+     *
+     * The image is saved as an array which contains:
+     * 'url'        => (string) The URL of the image.
+     * 'max-width'  => (int) The maximum width of the image (inferior or equal to the page width).
+     * 'max-height' => (int) The maximum height of the image.
+     */
+    public static function saveHeaderImage($image_url, $page_width_unit, $page_width_value)
+    {
+        $default_settings = origineMiniSettings::default();
+        $image_url        = $image_url ?: '';
+        $page_width_unit  = $page_width_unit ?: '';
+        $page_width_value = $page_width_value ?: '';
+
+        if ($image_url) {
+            // Gets relative url and path of the public folder.
+            $public_url  = dcCore::app()->blog->settings->system->public_url;
+            $public_path = dcCore::app()->blog->public_path;
+
+            // Converts the absolute URL in a relative one if necessary.
+            $image_url = Html::stripHostURL($image_url);
+
+            // Retrieves the image path.
+            $image_path = $public_path . str_replace($public_url . '/', '/', $image_url);
+
+            if (omUtils::imageExists($image_path)) {
+
+                // Gets the dimensions of the image.
+                list($header_image_width) = getimagesize($image_path);
+
+                /**
+                 * Limits the maximum width value of the image if its superior to the page width,
+                 * and sets its height proportionally.
+                 */
+                $page_width_data = ConfigUtils::getContentWidth($page_width_unit, $page_width_value, true);
+
+                $page_width = $page_width_data['value'];
+
+                if ($page_width_data['unit'] === 'em') {
+                    $page_width = $page_width * 16;
+                }
+
+                if ($header_image_width > $page_width) {
+                    $header_image_width = 100;
+                } else {
+                    $header_image_width = $header_image_width * 100 / $page_width;
+                }
+
+                // Sets the array which contains the image data.
+                $image_data = [
+                    'url'   => Html::sanitizeURL($image_url),
+                    'width' => (int) $header_image_width,
+                ];
+
+                // Saves the setting in the database as an array.
+                dcCore::app()->blog->settings->originemini->put(
+                    'header_image',
+                    $image_data,
+                    'array',
+                    Html::clean($default_settings['header_image']['title']),
+                    true
+                );
+
+                // Builds the path to an hypothetical double sized image.
+                $image_info    = Path::info($image_path);
+                $image_path_2x = $image_info['dirname'] . '/' . $image_info['base'] . '-2x.' . $image_info['extension'];
+
+                // If the double sized image exists.
+                if (file_exists($image_path_2x)) {
+                    $image_url_2x = str_replace($public_path, $public_url, $image_path_2x);
+
+                    if (file_exists($image_path_2x) && getimagesize($image_path_2x) !== false) {
+                        dcCore::app()->blog->settings->originemini->put(
+                            'header_image2x',
+                            $image_url_2x,
+                            'string',
+                            Html::clean($default_settings['header_image2x']['title']),
+                            true
+                        );
+                    }
+                } else {
+                    dcCore::app()->blog->settings->originemini->drop('header_image2x');
+                }
+            } else {
+                dcCore::app()->blog->settings->originemini->drop('header_image');
+                dcCore::app()->blog->settings->originemini->drop('header_image2x');
+            }
+        } else {
+            dcCore::app()->blog->settings->originemini->drop('header_image');
+            dcCore::app()->blog->settings->originemini->drop('header_image2x');
+        }
+    }
+
+    public static function saveCustomCSS($css_value)
+    {
+        $default_settings = origineMiniSettings::default();
+
+        $css_value = $css_value ?: '';
+
+        if ($css_value) {
+            $css_value_mini = str_replace("\n", "", $css_value);
+            $css_value_mini = str_replace("\r", "", $css_value_mini);
+            $css_value_mini = str_replace("  ", " ", $css_value_mini);
+            $css_value_mini = str_replace("  ", " ", $css_value_mini);
+            $css_value_mini = str_replace(" {", "{", $css_value_mini);
+            $css_value_mini = str_replace("{ ", "{", $css_value_mini);
+            $css_value_mini = str_replace(" }", "}", $css_value_mini);
+            $css_value_mini = str_replace("} ", "}", $css_value_mini);
+            $css_value_mini = str_replace(", ", ",", $css_value_mini);
+            $css_value_mini = str_replace("; ", ";", $css_value_mini);
+            $css_value_mini = str_replace(": ", ":", $css_value_mini);
+
+            dcCore::app()->blog->settings->originemini->put(
+                'global_css_custom',
+                $css_value,
+                'string',
+                Html::clean($default_settings['global_css_custom']['title']),
+                true
+            );
+
+            dcCore::app()->blog->settings->originemini->put(
+                'global_css_custom_mini',
+                $css_value_mini,
+                'string',
+                Html::clean($default_settings['global_css_custom_mini']['title']),
+                true
+            );
+        } else {
+            dcCore::app()->blog->settings->originemini->drop('global_css_custom');
+            dcCore::app()->blog->settings->originemini->drop('global_css_custom_mini');
+        }
+    }
+
+    public static function savePageWidth($page_width_unit, $page_width_value)
+    {
+        $default_settings = origineMiniSettings::default();
+        $page_width_unit  = $page_width_unit ?: 'px';
+        $page_width_value = $page_width_value ? (int) $page_width_value : 80;
+        $page_width_data  = ConfigUtils::getContentWidth(
+            $page_width_unit,
+            $page_width_value
+        );
+
+        if (!empty($page_width_data)) {
+            dcCore::app()->blog->settings->originemini->put(
+                'global_page_width_unit',
+                $page_width_data['unit'],
+                'text',
+                Html::clean($default_settings['global_page_width_unit']['title']),
+                true
+            );
+
+            dcCore::app()->blog->settings->originemini->put(
+                'global_page_width_value',
+                $page_width_data['value'],
+                'text',
+                Html::clean($default_settings['global_page_width_value']['title']),
+                true
+            );
+        } else {
+            dcCore::app()->blog->settings->originemini->drop('global_page_width_unit');
+            dcCore::app()->blog->settings->originemini->drop('global_page_width_value');
+        }
     }
 
     /**
@@ -1682,6 +1708,7 @@ class origineMiniSettings
         ];
 
         $default_settings['global_css_custom_mini'] = [
+            'title'       => __('settings-global-csscustommini-title'),
             'type'        => 'text',
         ];
 

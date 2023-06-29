@@ -216,6 +216,9 @@ msgstr ""
 msgid "settings-global-csscustom-description"
 msgstr ""
 
+msgid "settings-global-csscustommini-title"
+msgstr ""
+
 msgid "settings-global-minimalsocialmarkups-title"
 msgstr ""
 

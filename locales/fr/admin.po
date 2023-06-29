@@ -216,6 +216,9 @@ msgstr "Styles personnalisés"
 msgid "settings-global-csscustom-description"
 msgstr "Ajouter des styles en langage CSS pour personnaliser l’apparence du thème."
 
+msgid "settings-global-csscustommini-title"
+msgstr "Styles personnalisés minifiés"
+
 msgid "settings-global-minimalsocialmarkups-title"
 msgstr "Ajouter des balises sociales minimalistes dans l’en-tête"
 
