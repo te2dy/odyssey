@@ -78,99 +78,43 @@ class Config extends dcNsProcess
 
                         if (!in_array($setting_id, $specific_settings, true)) {
                             if (isset($_POST[$setting_id])) {
-                                $drop          = false;
-                                $setting_value = '';
 
-                                $setting_type = isset($default_settings[$setting_id]['type'])
-                                    ? $default_settings[$setting_id]['type']
-                                    : 'text';
-
-                                $setting_title = isset($default_settings[$setting_id]['title'])
-                                    ? $default_settings[$setting_id]['title']
-                                    : '';
-
+                                /**
+                                 * If the parameter has a new value that is different
+                                 * from the default (and is not an unchecked checkbox).
+                                 */
                                 if ($_POST[$setting_id] != $default_settings[$setting_id]['default']) {
-                                    // If the parameter has a new value that is different from the default (and is not an unchecked checkbox).
                                     switch ($setting_type) {
                                         case 'select' :
-                                            // Checks if the input value is proposed by the setting.
-                                            if (in_array($_POST[$setting_id], $default_settings[$setting_id]['choices'])) {
-                                                $setting_value = $_POST[$setting_id];
-                                            } else {
-                                                $drop = true;
-                                            }
-
-                                            $setting_type = 'string';
-
-                                            break;
+                                            self::saveSelectSetting($setting_id);
                                         case 'select_int' :
-                                            // Checks if the input value is proposed by the setting.
-                                            if (in_array((int) $_POST[$setting_id], $default_settings[$setting_id]['choices'], true)) {
-                                                $setting_value = (int) $_POST[$setting_id];
-                                            } else {
-                                                $drop = true;
-                                            }
-
-                                            $setting_type = 'integer';
-
-                                            break;
+                                            self::saveSelectIntSetting($setting_id);
                                         case 'checkbox' :
-                                            if ($_POST[$setting_id] === '1' && $default_settings[$setting_id]['default'] !== '1') {
-                                                $setting_value = true;
-                                                $setting_type  = 'boolean';
-                                            }
-
-                                            break;
-
+                                            self::saveCheckboxSetting($setting_id);
                                         case 'integer' :
-                                            if (is_numeric($_POST[$setting_id])) {
-                                                $setting_value = (int) $_POST[$setting_id];
-                                                $setting_type  = 'integer';
-                                            } else {
-                                                $drop = true;
-                                            }
-
-                                            break;
+                                            self::saveIntegerSetting($setting_id);
                                         default :
-                                            $setting_value = Html::escapeHTML($_POST[$setting_id]);
-                                            $setting_type  = 'text';
+                                            self::saveDefaultSetting($setting_id);
                                     }
-                                } elseif ($_POST[$setting_id] == $default_settings[$setting_id]['default']) {
-                                    // If the value is equal to the default value, removes the parameter.
-                                    $drop = true;
-                                }
 
-                                if ($drop === false) {
-                                    dcCore::app()->blog->settings->originemini->put(
-                                        $setting_id,
-                                        $setting_value,
-                                        $setting_type,
-                                        Html::clean($setting_title),
-                                        true
-                                    );
+                                /**
+                                 * If the value is equal to the default value,
+                                 * removes the parameter.
+                                 */
                                 } else {
                                     dcCore::app()->blog->settings->originemini->drop($setting_id);
                                 }
+
+                            // Unchecked checkboxes.
                             } elseif (!isset($_POST[$setting_id]) && $default_settings[$setting_id]['type'] === 'checkbox') {
-                                // For unchecked checkboxes (no POST request), does a specific action.
-                                $setting_title = isset($default_settings[$setting_id]['title'])
-                                ? $default_settings[$setting_id]['title']
-                                : '';
+                                self::saveCheckboxSetting($setting_id, false);
 
-                                if ($default_settings[$setting_id]['default'] !== 0) {
-                                    dcCore::app()->blog->settings->originemini->put(
-                                        $setting_id,
-                                        false,
-                                        'boolean',
-                                        Html::clean($setting_title),
-                                        true
-                                    );
-                                } else {
-                                    dcCore::app()->blog->settings->originemini->drop($setting_id);
-                                }
+                            // Removes everything else.
                             } else {
                                 dcCore::app()->blog->settings->originemini->drop($setting_id);
                             }
+
+                        // Saves specific settings.
                         } else {
                             switch ($setting_id) {
                                 case 'header_image':
@@ -179,25 +123,19 @@ class Config extends dcNsProcess
                                         $_POST['global_page_width_unit'],
                                         $_POST['global_page_width_value']
                                     );
-
-                                    break;
                                 case 'global_css_custom':
                                     self::saveCustomCSS($_POST['global_css_custom']);
-
-                                    break;
                                 case 'global_page_width_unit':
                                     self::savePageWidth(
                                         $_POST['global_page_width_unit'],
                                         $_POST['global_page_width_value']
                                     );
-
-                                    break;
                             }
                         }
                     }
 
                     dcPage::addSuccessNotice(__('settings-config-updated'));
-                } if (isset($_POST['reset'])) {
+                } elseif (isset($_POST['reset'])) {
                     foreach ($default_settings as $setting_id => $setting_value) {
                         dcCore::app()->blog->settings->originemini->drop($setting_id);
                     }
@@ -234,12 +172,102 @@ class Config extends dcNsProcess
         return true;
     }
 
+    public static function saveSelectSetting($setting_id)
+    {
+        $default_settings = origineMiniSettings::default();
+
+        if (in_array($_POST[$setting_id], $default_settings[$setting_id]['choices'])) {
+            dcCore::app()->blog->settings->originemini->put(
+                $setting_id,
+                $_POST[$setting_id],
+                'string',
+                Html::clean($default_settings[$setting_id]['title']),
+                true
+            );
+        } else {
+            dcCore::app()->blog->settings->originemini->drop($setting_id);
+        }
+    }
+
+    public static function saveSelectIntSetting($setting_id)
+    {
+        $default_settings = origineMiniSettings::default();
+
+        if (in_array((int) $_POST[$setting_id], $default_settings[$setting_id]['choices'], true)) {
+            dcCore::app()->blog->settings->originemini->put(
+                $setting_id,
+                (int) $_POST[$setting_id],
+                'integer',
+                Html::clean($default_settings[$setting_id]['title']),
+                true
+            );
+        } else {
+            dcCore::app()->blog->settings->originemini->drop($setting_id);
+        }
+    }
+
+    public static function saveCheckboxSetting($setting_id, $setting_value = true)
+    {
+        $default_settings = origineMiniSettings::default();
+
+        if (!is_bool($setting_value)) {
+            $setting_value = false;
+        }
+
+        if ($_POST[$setting_id] === '1' && $default_settings[$setting_id]['default'] !== '1') {
+            dcCore::app()->blog->settings->originemini->put(
+                $setting_id,
+                $setting_value,
+                'boolean',
+                Html::clean($default_settings[$setting_id]['title']),
+                true
+            );
+        } else {
+            dcCore::app()->blog->settings->originemini->drop($setting_id);
+        }
+    }
+
+    public static function saveIntegerSetting($setting_id)
+    {
+        $default_settings = origineMiniSettings::default();
+
+        if (is_numeric($_POST[$setting_id])) {
+            dcCore::app()->blog->settings->originemini->put(
+                $setting_id,
+                (int) $_POST[$setting_id],
+                'integer',
+                Html::clean($default_settings[$setting_id]['title']),
+                true
+            );
+        } else {
+            dcCore::app()->blog->settings->originemini->drop($setting_id);
+        }
+    }
+
+    public static function saveDefaultSetting($setting_id)
+    {
+        $default_settings = origineMiniSettings::default();
+
+        if (isset($_POST[$setting_id])) {
+            dcCore::app()->blog->settings->originemini->put(
+                $setting_id,
+                Html::escapeHTML($_POST[$setting_id]),
+                'text',
+                Html::clean($default_settings[$setting_id]['title']),
+                true
+            );
+        } else {
+            dcCore::app()->blog->settings->originemini->drop($setting_id);
+        }
+    }
+
     /**
      * Saves the banner.
      *
      * The image is saved as an array which contains:
      * 'url'        => (string) The URL of the image.
-     * 'max-width'  => (int) The maximum width of the image (inferior or equal to the page width).
+     * 'max-width'  => (int) The maximum width of the image
+     *                       (inferior or equal to the page width).
      * 'max-height' => (int) The maximum height of the image.
      */
     public static function saveHeaderImage($image_url, $page_width_unit, $page_width_value)
