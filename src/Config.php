@@ -43,7 +43,10 @@ class Config extends dcNsProcess
     }
 
     /**
-     * Processes the requests of the configurator.
+     * Processes the requests of the configurator
+     * to save the settings in the database.
+     *
+     * @return bool
      */
     public static function process(): bool
     {
@@ -65,6 +68,7 @@ class Config extends dcNsProcess
                 $header_image_width = 0;
 
                 if (isset($_POST['save'])) {
+                    // Save button has been clicked.
                     foreach ($default_settings as $setting_id => $setting_value) {
                         $specific_settings = [
                             'styles',
@@ -77,14 +81,15 @@ class Config extends dcNsProcess
                         ];
 
                         if (!in_array($setting_id, $specific_settings, true)) {
+                            // The current setting is not a specific one.
                             if (isset($_POST[$setting_id])) {
-
-                                /**
-                                 * If the parameter has a new value that is different
-                                 * from the default (and is not an unchecked checkbox).
-                                 */
+                                // The current setting has a set value.
                                 if ($_POST[$setting_id] != $default_settings[$setting_id]['default']) {
-                                    switch ($setting_type) {
+                                    /**
+                                     * The parameter has a new value that is different
+                                     * from the default (and is not an unchecked checkbox).
+                                     */
+                                    switch ($default_settings[$setting_id]['type']) {
                                         case 'select' :
                                             self::saveSelectSetting($setting_id);
                                         case 'select_int' :
@@ -92,30 +97,29 @@ class Config extends dcNsProcess
                                         case 'checkbox' :
                                             self::saveCheckboxSetting($setting_id);
                                         case 'integer' :
-                                            self::saveIntegerSetting($setting_id);
+                                            self::saveIntegerSetting($setting_id, $_POST[$setting_id]);
                                         default :
-                                            self::saveDefaultSetting($setting_id);
+                                            self::saveDefaultSetting($setting_id, $_POST[$setting_id]);
                                     }
-
-                                /**
-                                 * If the value is equal to the default value,
-                                 * removes the parameter.
-                                 */
                                 } else {
+                                    /**
+                                     * The value is equal to the default value,
+                                     * removes the parameter.
+                                     */
                                     dcCore::app()->blog->settings->originemini->drop($setting_id);
                                 }
-
-                            // Unchecked checkboxes.
                             } elseif (!isset($_POST[$setting_id]) && $default_settings[$setting_id]['type'] === 'checkbox') {
+                                /**
+                                 * No value is set for the current checkbox setting,
+                                 * means that the checkbox is empty.
+                                 */
                                 self::saveCheckboxSetting($setting_id, false);
-
-                            // Removes everything else.
                             } else {
+                                // Removes every other settings.
                                 dcCore::app()->blog->settings->originemini->drop($setting_id);
                             }
-
-                        // Saves specific settings.
                         } else {
+                            // The current setting is specific one.
                             switch ($setting_id) {
                                 case 'header_image':
                                     self::saveHeaderImage(
@@ -136,6 +140,10 @@ class Config extends dcNsProcess
 
                     dcPage::addSuccessNotice(__('settings-config-updated'));
                 } elseif (isset($_POST['reset'])) {
+                    /**
+                     * Reset button has been clicked.
+                     * Drops all settings.
+                     */
                     foreach ($default_settings as $setting_id => $setting_value) {
                         dcCore::app()->blog->settings->originemini->drop($setting_id);
                     }
@@ -172,7 +180,14 @@ class Config extends dcNsProcess
         return true;
     }
 
-    public static function saveSelectSetting($setting_id)
+    /**
+     * Saves a type "select" setting.
+     *
+     * @param string $setting_id The id of the setting.
+     *
+     * @return void Saves the setting value.
+     */
+    public static function saveSelectSetting($setting_id): void
     {
         $default_settings = origineMiniSettings::default();
 
@@ -189,7 +204,14 @@ class Config extends dcNsProcess
         }
     }
 
-    public static function saveSelectIntSetting($setting_id)
+    /**
+     * Saves a type "select_int" setting.
+     *
+     * @param string $setting_id The id of the setting.
+     *
+     * @return void Saves the setting value.
+     */
+    public static function saveSelectIntSetting($setting_id): void
     {
         $default_settings = origineMiniSettings::default();
 
@@ -206,7 +228,14 @@ class Config extends dcNsProcess
         }
     }
 
-    public static function saveCheckboxSetting($setting_id, $setting_value = true)
+    /**
+     * Saves a type "checkbox" setting.
+     *
+     * @param string $setting_id The id of the setting.
+     *
+     * @return void Saves the setting value.
+     */
+    public static function saveCheckboxSetting($setting_id, $setting_value = true): void
     {
         $default_settings = origineMiniSettings::default();
 
@@ -227,14 +256,21 @@ class Config extends dcNsProcess
         }
     }
 
-    public static function saveIntegerSetting($setting_id)
+    /**
+     * Saves a type "integer" setting.
+     *
+     * @param string $setting_id The id of the setting.
+     *
+     * @return void Saves the setting value.
+     */
+    public static function saveIntegerSetting($setting_id, $setting_value): void
     {
         $default_settings = origineMiniSettings::default();
 
-        if (is_numeric($_POST[$setting_id])) {
+        if (is_numeric($setting_value)) {
             dcCore::app()->blog->settings->originemini->put(
                 $setting_id,
-                (int) $_POST[$setting_id],
+                (int) $setting_value,
                 'integer',
                 Html::clean($default_settings[$setting_id]['title']),
                 true
@@ -244,14 +280,21 @@ class Config extends dcNsProcess
         }
     }
 
-    public static function saveDefaultSetting($setting_id)
+    /**
+     * Saves a type "default" setting.
+     *
+     * @param string $setting_id The id of the setting.
+     *
+     * @return void Saves the setting value.
+     */
+    public static function saveDefaultSetting($setting_id, $setting_value): void
     {
         $default_settings = origineMiniSettings::default();
 
-        if (isset($_POST[$setting_id])) {
+        if (isset($setting_value)) {
             dcCore::app()->blog->settings->originemini->put(
                 $setting_id,
-                Html::escapeHTML($_POST[$setting_id]),
+                Html::escapeHTML($setting_value),
                 'text',
                 Html::clean($default_settings[$setting_id]['title']),
                 true
@@ -269,8 +312,10 @@ class Config extends dcNsProcess
      * 'max-width'  => (int) The maximum width of the image
      *                       (inferior or equal to the page width).
      * 'max-height' => (int) The maximum height of the image.
+     *
+     * @return void
      */
-    public static function saveHeaderImage($image_url, $page_width_unit, $page_width_value)
+    public static function saveHeaderImage($image_url, $page_width_unit, $page_width_value): void
     {
         $default_settings = origineMiniSettings::default();
         $image_url        = $image_url ?: '';
