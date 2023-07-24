@@ -293,9 +293,6 @@ msgstr "TikTok"
 msgid "site-name-twitch"
 msgstr "Twitch"
 
-msgid "site-name-twitter"
-msgstr "Twitter"
-
 msgid "site-name-vimeo"
 msgstr "Vimeo"
 
@@ -304,6 +301,9 @@ msgstr "WhatsApp"
 
 msgid "site-name-youtube"
 msgstr "YouTube"
+
+msgid "site-name-x"
+msgstr "𝕏"
 
 # Archives
 

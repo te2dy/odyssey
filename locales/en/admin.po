@@ -522,20 +522,20 @@ msgstr "URL of a TikTok profile"
 msgid "settings-footer-sociallinks-twitch-title"
 msgstr "URL of a Twitch page"
 
-msgid "settings-footer-sociallinks-twitter-title"
-msgstr "Twitter account username"
-
 msgid "settings-footer-sociallinks-vimeo-title"
 msgstr "URL of a Vimeo page"
-
-msgid "settings-footer-sociallinks-twitter-placeholder"
-msgstr "@username"
 
 msgid "settings-footer-sociallinks-whatsapp-title"
 msgstr "WhatsApp phone number"
 
 msgid "settings-footer-sociallinks-youtube-title"
 msgstr "URL of a YouTube channel"
+
+msgid "settings-footer-sociallinks-x-title"
+msgstr "𝕏 account username"
+
+msgid "settings-footer-sociallinks-x-placeholder"
+msgstr "@username"
 
 msgid "settings-footer-origineministyles-title"
 msgstr "Custom styles for Origine Mini"

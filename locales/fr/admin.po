@@ -519,12 +519,6 @@ msgstr "Adresse d’une page Twitch"
 msgid "settings-footer-sociallinks-tiktok-title"
 msgstr "Adresse d’un profil TikTok"
 
-msgid "settings-footer-sociallinks-twitter-title"
-msgstr "Nom d’utilisateur d’un compte Twitter"
-
-msgid "settings-footer-sociallinks-twitter-placeholder"
-msgstr "@nomdutilisateur"
-
 msgid "settings-footer-sociallinks-vimeo-title"
 msgstr "Adresse d’une page Vimeo"
 
@@ -533,6 +527,12 @@ msgstr "Numéro de téléphone WhatsApp"
 
 msgid "settings-footer-sociallinks-youtube-title"
 msgstr "Adresse d’une chaîne YouTube"
+
+msgid "settings-footer-sociallinks-x-title"
+msgstr "Nom d’utilisateur d’un compte 𝕏"
+
+msgid "settings-footer-sociallinks-x-placeholder"
+msgstr "@nomdutilisateur"
 
 msgid "settings-footer-origineministyles-title"
 msgstr "Styles personnalisés pour Origine Mini"

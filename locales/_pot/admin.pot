@@ -519,12 +519,6 @@ msgstr ""
 msgid "settings-footer-sociallinks-twitch-title"
 msgstr ""
 
-msgid "settings-footer-sociallinks-twitter-title"
-msgstr ""
-
-msgid "settings-footer-sociallinks-twitter-placeholder"
-msgstr ""
-
 msgid "settings-footer-sociallinks-vimeo-title"
 msgstr ""
 
@@ -532,6 +526,12 @@ msgid "settings-footer-sociallinks-whatsapp-title"
 msgstr ""
 
 msgid "settings-footer-sociallinks-youtube-title"
+msgstr ""
+
+msgid "settings-footer-sociallinks-x-title"
+msgstr ""
+
+msgid "settings-footer-sociallinks-x-placeholder"
 msgstr ""
 
 msgid "settings-footer-origineministyles-title"

@@ -22,7 +22,7 @@ use Dotclear\Helper\Html\Html;
 // Lets prepare to use custom functions.
 require_once 'functions.php';
 use OrigineMiniUtils as omUtils;
-use OrigineMiniSettings as omSettings;
+use OrigineMiniUtilsSettings as omUtilsSettings;
 
 class Frontend extends dcNsProcess
 {
@@ -112,7 +112,7 @@ class Frontend extends dcNsProcess
         }
 
         // Adds the generator name of the blog.
-        if (omSettings::value('global_meta_generator') === true) {
+        if (omUtilsSettings::value('global_meta_generator') === true) {
             echo '<meta name=generator content=Dotclear>', "\n";
         }
     }
@@ -126,7 +126,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniSocialMarkups(): void
     {
-        if (omSettings::value('global_meta_social') === true) {
+        if (omUtilsSettings::value('global_meta_social') === true) {
             $title = '';
             $desc  = '';
             $img   = '';
@@ -162,13 +162,13 @@ class Frontend extends dcNsProcess
                         );
                     }
 
-                    if (omSettings::value('global_meta_home_description') || dcCore::app()->blog->desc) {
+                    if (omUtilsSettings::value('global_meta_home_description') || dcCore::app()->blog->desc) {
                         if ($desc) {
                             $desc .= ' – ';
                         }
 
-                        if (omSettings::value('global_meta_home_description')) {
-                            $desc .= omSettings::value('global_meta_home_description');
+                        if (omUtilsSettings::value('global_meta_home_description')) {
+                            $desc .= omUtilsSettings::value('global_meta_home_description');
                         } elseif (dcCore::app()->blog->desc) {
                             $desc .= dcCore::app()->blog->desc;
                         }
@@ -215,8 +215,8 @@ class Frontend extends dcNsProcess
             if ($title) {
                 $desc = Html::escapeHTML($desc);
 
-                if (!$img && isset(omSettings::value('header_image')['url'])) {
-                    $img = omUtils::blogBaseURL() . omSettings::value('header_image')['url'];
+                if (!$img && isset(omUtilsSettings::value('header_image')['url'])) {
+                    $img = omUtils::blogBaseURL() . omUtilsSettings::value('header_image')['url'];
                 }
 
                 $img = Html::escapeURL($img);
@@ -246,7 +246,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniPostIntro(): void
     {
-        if (omSettings::value('content_post_intro') === true && dcCore::app()->ctx->posts->post_excerpt) {
+        if (omUtilsSettings::value('content_post_intro') === true && dcCore::app()->ctx->posts->post_excerpt) {
             echo '<div id=post-intro>', dcCore::app()->ctx->posts->getExcerpt(), '</div>';
         }
     }
@@ -259,7 +259,7 @@ class Frontend extends dcNsProcess
     public static function origineMiniSocialLinks(): void
     {
         // A list of social sites supported by the theme.
-        $social_sites = omSettings::socialSites();
+        $social_sites = omUtilsSettings::socialSites();
 
         // The array of social links to be displayed.
         $social_links = [];
@@ -269,8 +269,8 @@ class Frontend extends dcNsProcess
             $setting_id = 'footer_social_links_' . $site_id;
 
             // If the setting has a value.
-            if (omSettings::value($setting_id)) {
-                $social_links[$site_id] = omSettings::value($setting_id);
+            if (omUtilsSettings::value($setting_id)) {
+                $social_links[$site_id] = omUtilsSettings::value($setting_id);
             }
         }
 
@@ -282,18 +282,18 @@ class Frontend extends dcNsProcess
                     <?php
                     foreach ($social_links as $site_id => $link) :
                         switch ($site_id) {
-                            case 'Signal':
+                            case 'signal':
                                 if (substr($link, 0, 1) === '+') {
                                     $link = 'https://signal.me/#p/' . $link;
                                 }
 
                                 break;
-                            case 'WhatsApp':
+                            case 'whatsapp':
                                 $link = 'https://wa.me/' . str_replace('+', '', $link);
 
                                 break;
-                            case 'Twitter':
-                                $link = 'https://twitter.com/' . str_replace('@', '', $link);
+                            case 'x':
+                                $link = 'https://x.com/' . str_replace('@', '', $link);
                         }
                         ?>
 
@@ -333,11 +333,11 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniScriptSearchForm(): void
     {
-        if (!omSettings::value('global_js')) {
+        if (!omUtilsSettings::value('global_js')) {
             return;
         }
 
-        if (!omSettings::value('widgets_search_form') && dcCore::app()->url->type !== 'search') {
+        if (!omUtilsSettings::value('widgets_search_form') && dcCore::app()->url->type !== 'search') {
             return;
         }
 
@@ -364,7 +364,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniScriptTrackbackURL(): void
     {
-        if (!omSettings::value('global_js')) {
+        if (!omUtilsSettings::value('global_js')) {
             return;
         }
 
@@ -396,7 +396,7 @@ class Frontend extends dcNsProcess
             return;
         }
 
-        if (!omSettings::value('content_images_wide')) {
+        if (!omUtilsSettings::value('content_images_wide')) {
             return;
         }
 
@@ -434,7 +434,7 @@ class Frontend extends dcNsProcess
                      */
                     $option_image_wide = false;
 
-                    switch (omSettings::value('content_images_wide')) {
+                    switch (omUtilsSettings::value('content_images_wide')) {
                         case 'posts-pages' :
                             if (dcCore::app()->url->type === 'post' || dcCore::app()->url->type === 'pages') {
                                 $option_image_wide = true;
@@ -445,11 +445,11 @@ class Frontend extends dcNsProcess
                             $option_image_wide = true;
                     }
 
-                    $img_width_max = omSettings::contentWidth('px');
+                    $img_width_max = omUtilsSettings::contentWidth('px');
 
                     if ($option_image_wide === true) {
-                        if (omSettings::value('content_images_wide_size')) {
-                            $img_width_max += (int) (omSettings::value('content_images_wide_size') * 2);
+                        if (omUtilsSettings::value('content_images_wide_size')) {
+                            $img_width_max += (int) (omUtilsSettings::value('content_images_wide_size') * 2);
                         } else {
                             $img_width_max += 120 * 2;
                         }
@@ -464,8 +464,8 @@ class Frontend extends dcNsProcess
                     $media_sizes = dcCore::app()->media->thumb_sizes;
 
                     // Adds eventual custom image sizes.
-                    if (omSettings::value('content_image_custom_size')) {
-                        $custom_image_sizes = explode(',', omSettings::value('content_image_custom_size'));
+                    if (omUtilsSettings::value('content_image_custom_size')) {
+                        $custom_image_sizes = explode(',', omUtilsSettings::value('content_image_custom_size'));
 
                         foreach ($custom_image_sizes as $size_id) {
                             $media_sizes[$size_id] = [
@@ -528,7 +528,7 @@ class Frontend extends dcNsProcess
                     $attr .= 'sizes="100vw" ';
 
                     // If it's a landscape format image only, displays it wide.
-                    if (omSettings::value('content_images_wide')
+                    if (omUtilsSettings::value('content_images_wide')
                         && $img[$src_image_size]['width'] > $img[$src_image_size]['height']
                         && $img[$src_image_size]['width'] >= $img_width_max
                     ) {
@@ -557,7 +557,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniMetaDescriptionHome($attr): string
     {
-        if (omSettings::value('global_meta_home_description')) {
+        if (omUtilsSettings::value('global_meta_home_description')) {
             return '<?php echo ' . sprintf(dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->blog->settings->originemini->global_meta_home_description') . '; ?>';
         }
 
@@ -571,8 +571,8 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniStylesInline()
     {
-        $styles  = omSettings::value('styles') ?: '';
-        $styles .= omSettings::value('global_css_custom_mini') ?: '';
+        $styles  = omUtilsSettings::value('styles') ?: '';
+        $styles .= omUtilsSettings::value('global_css_custom_mini') ?: '';
 
         if ($styles) {
             return '<style>' . $styles . '</style>';
@@ -610,7 +610,7 @@ class Frontend extends dcNsProcess
         }
 
         // Adds a link to the footer except if it has been disabled in the configurator.
-        if (omSettings::value('footer_enabled') !== false) {
+        if (omUtilsSettings::value('footer_enabled') !== false) {
             $links .= '<a id=skip-footer class=skip-links href=#site-footer>' . __('skip-link-footer') . '</a>';
         }
 
@@ -631,22 +631,22 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniHeaderImage($attr)
     {
-        if (omSettings::value('header_image') && isset(omSettings::value('header_image')['url'])) {
+        if (omUtilsSettings::value('header_image') && isset(omUtilsSettings::value('header_image')['url'])) {
             if (!empty($attr['position'])
-                && (($attr['position'] === 'bottom' && omSettings::value('header_image_position') === 'bottom')
-                || ($attr['position'] === 'top' && !omSettings::value('header_image_position')))
+                && (($attr['position'] === 'bottom' && omUtilsSettings::value('header_image_position') === 'bottom')
+                || ($attr['position'] === 'top' && !omUtilsSettings::value('header_image_position')))
             ) {
-                $image_url = Html::escapeURL(omSettings::value('header_image')['url']);
+                $image_url = Html::escapeURL(omUtilsSettings::value('header_image')['url']);
                 $srcset    = '';
 
-                if (omSettings::value('header_image_description')) {
-                    $alt = ' alt="' . Html::escapeHTML(omSettings::value('header_image_description')) . '"';
+                if (omUtilsSettings::value('header_image_description')) {
+                    $alt = ' alt="' . Html::escapeHTML(omUtilsSettings::value('header_image_description')) . '"';
                 } else {
                     $alt = ' alt="' . __('header-image-alt') . '"';
                 }
 
-                if (omSettings::value('header_image2x')) {
-                    $image2x_url = Html::escapeURL(omSettings::value('header_image2x'));
+                if (omUtilsSettings::value('header_image2x')) {
+                    $image2x_url = Html::escapeURL(omUtilsSettings::value('header_image2x'));
 
                     $srcset  = ' srcset="';
                     $srcset .= $image_url . ' 1x, ';
@@ -671,7 +671,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniBlogDescription()
     {
-        if (dcCore::app()->blog->desc && omSettings::value('header_description') === true) {
+        if (dcCore::app()->blog->desc && omUtilsSettings::value('header_description') === true) {
             $description = dcCore::app()->blog->desc;
             $description = Html::clean($description);
             $description = Html::decodeEntities($description);
@@ -692,19 +692,19 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniPostListType(): string
     {
-        if (!omSettings::value('content_post_list_type')) {
+        if (!omUtilsSettings::value('content_post_list_type')) {
             return dcCore::app()->tpl->includeFile(['src' => '_entry-list-short.html']);
         }
 
         $postlist_type_allowed = ['excerpt', 'content', 'custom'];
 
-        $postlist_type = omSettings::value('content_post_list_type');
+        $postlist_type = omUtilsSettings::value('content_post_list_type');
         $postlist_type = in_array($postlist_type, $postlist_type_allowed, true) ? $postlist_type : 'short';
         $postlist_tpl  = '_entry-list-' . $postlist_type . '.html';
 
         if ($postlist_type === 'custom') {
-            if (omSettings::value('content_post_list_custom')) {
-                $postlist_tpl = omSettings::value('content_post_list_custom');
+            if (omUtilsSettings::value('content_post_list_custom')) {
+                $postlist_tpl = omUtilsSettings::value('content_post_list_custom');
             } else {
                 $postlist_tpl = '_entry-list-short.html';
             }
@@ -720,11 +720,11 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniPostTemplate(): string
     {
-        if (!omSettings::value('content_post_template')) {
+        if (!omUtilsSettings::value('content_post_template')) {
             return dcCore::app()->tpl->includeFile(['src' => '_entry-post.html']);
         }
 
-        return dcCore::app()->tpl->includeFile(['src' => omSettings::value('content_post_template')]);
+        return dcCore::app()->tpl->includeFile(['src' => omUtilsSettings::value('content_post_template')]);
     }
 
     /**
@@ -734,11 +734,11 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniPageTemplate(): string
     {
-        if (!omSettings::value('content_page_template')) {
+        if (!omUtilsSettings::value('content_page_template')) {
             return dcCore::app()->tpl->includeFile(['src' => '_entry-page.html']);
         }
 
-        return dcCore::app()->tpl->includeFile(['src' => omSettings::value('content_page_template')]);
+        return dcCore::app()->tpl->includeFile(['src' => omUtilsSettings::value('content_page_template')]);
     }
 
     /**
@@ -750,7 +750,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniPostListReactionLink()
     {
-        if (!omSettings::value('content_post_list_reaction_link')) {
+        if (!omUtilsSettings::value('content_post_list_reaction_link')) {
             return;
         }
 
@@ -759,7 +759,7 @@ class Frontend extends dcNsProcess
 
         $link_class = 'class=\"post-reaction-link\"';
 
-        if (omSettings::value('content_post_list_type') === 'content') {
+        if (omUtilsSettings::value('content_post_list_type') === 'content') {
             $tag_open  = '';
             $tag_close = '';
 
@@ -808,9 +808,9 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniEntryTime($attr)
     {
-        if (!empty($attr['context']) && (omSettings::value('content_post_list_time') === true && $attr['context'] === 'entry-list') || (omSettings::value('content_post_time') === true && $attr['context'] === 'post')) {
-            if (omSettings::value('content_separator')) {
-                $content_separator = ' ' . Html::escapeHTML(omSettings::value('content_separator'));
+        if (!empty($attr['context']) && (omUtilsSettings::value('content_post_list_time') === true && $attr['context'] === 'entry-list') || (omUtilsSettings::value('content_post_time') === true && $attr['context'] === 'post')) {
+            if (omUtilsSettings::value('content_separator')) {
+                $content_separator = ' ' . Html::escapeHTML(omUtilsSettings::value('content_separator'));
             } else {
                 $content_separator = ' |';
             }
@@ -911,7 +911,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniScriptTrackbackURLCopied()
     {
-        if (omSettings::value('global_js') === true) {
+        if (omUtilsSettings::value('global_js') === true) {
             return ' <span id=trackback-url-copied>' . __('reactions-trackback-url-copied') . '</span>';
         }
     }
@@ -923,7 +923,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniEmailAuthor()
     {
-        if (omSettings::value('content_post_email_author') !== 'disabled') {
+        if (omUtilsSettings::value('content_post_email_author') !== 'disabled') {
             return '<?php
             if (isset(dcCore::app()->ctx->posts->user_email) && dcCore::app()->ctx->posts->user_email && (dcCore::app()->blog->settings->originemini->content_post_email_author === "always" || (dcCore::app()->blog->settings->originemini->content_post_email_author === "comments_open" && dcCore::app()->ctx->posts->post_open_comment === "1"))
             ) {
@@ -1022,7 +1022,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniFooterCredits()
     {
-        if (omSettings::value('footer_credits') !== false) {
+        if (omUtilsSettings::value('footer_credits') !== false) {
             if (!defined('DC_DEV') || (defined('DC_DEV') && DC_DEV === false)) {
                 return '<div class=site-footer-block>' . __('footer-powered-by') . '</div>';
             }
@@ -1090,7 +1090,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniHeaderIdentity($attr, $content): string
     {
-        if (omSettings::value('header_description') !== true) {
+        if (omUtilsSettings::value('header_description') !== true) {
             return $content;
         }
 
@@ -1107,7 +1107,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniCommentFormWrapper($attr, $content): string
     {
-        if (!omSettings::value('content_commentform_hide')) {
+        if (!omUtilsSettings::value('content_commentform_hide')) {
             return '<h3 class=reaction-title>' . __('reactions-comment-form-title') . '</h3>' . $content;
         } elseif (dcCore::app()->ctx->comment_preview && dcCore::app()->ctx->comment_preview["preview"]) {
             return '<div id=react-content><h3 class=reaction-title>' . __('reactions-comment-form-preview-title') . '</h3>' . $content . '</div>';
@@ -1126,7 +1126,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniReactionFeedLink($attr, $content)
     {
-        if (omSettings::value('content_reaction_feed') !== false) {
+        if (omUtilsSettings::value('content_reaction_feed') !== false) {
             return $content;
         }
     }
@@ -1141,7 +1141,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniTrackbackLink($attr, $content)
     {
-        if (omSettings::value('content_trackback_link') !== false) {
+        if (omUtilsSettings::value('content_trackback_link') !== false) {
             return $content;
         }
     }
@@ -1156,7 +1156,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniWidgetsNav($attr, $content)
     {
-        if (omSettings::value('widgets_nav_position') !== 'disabled') {
+        if (omUtilsSettings::value('widgets_nav_position') !== 'disabled') {
             return $content;
         }
     }
@@ -1171,7 +1171,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniWidgetSearchForm($attr, $content)
     {
-        if (omSettings::value('widgets_search_form') === true && dcCore::app()->url->type !== 'search') {
+        if (omUtilsSettings::value('widgets_search_form') === true && dcCore::app()->url->type !== 'search') {
             return $content;
         }
     }
@@ -1186,7 +1186,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniWidgetsExtra($attr, $content)
     {
-        if (omSettings::value('widgets_extra_enabled') !== false) {
+        if (omUtilsSettings::value('widgets_extra_enabled') !== false) {
             return $content;
         }
     }
@@ -1201,7 +1201,7 @@ class Frontend extends dcNsProcess
      */
     public static function origineMiniFooter($attr, $content)
     {
-        if (omSettings::value('footer_enabled') !== false) {
+        if (omUtilsSettings::value('footer_enabled') !== false) {
             return $content;
         }
     }

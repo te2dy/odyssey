@@ -25,7 +25,7 @@ use form;
 
 require_once 'functions.php';
 use OrigineMiniUtils as omUtils;
-use OrigineMiniSettings as omSettings;
+use OrigineMiniUtilsSettings as omUtilsSettings;
 
 class Config extends dcNsProcess
 {
@@ -65,11 +65,11 @@ class Config extends dcNsProcess
             try {
                 dcCore::app()->blog->settings->addNamespace('originemini');
 
-                $header_image_width = 0;
-
                 if (isset($_POST['save'])) {
                     // Save button has been clicked.
                     foreach ($default_settings as $setting_id => $setting_value) {
+                        $setting_data = [];
+
                         $specific_settings = [
                             'styles',
                             'header_image',
@@ -91,15 +91,23 @@ class Config extends dcNsProcess
                                      */
                                     switch ($default_settings[$setting_id]['type']) {
                                         case 'select' :
-                                            self::saveSelectSetting($setting_id);
+                                            $setting_data = self::saveSelectSetting($setting_id, $_POST[$setting_id]);
+                                            break;
+
                                         case 'select_int' :
-                                            self::saveSelectIntSetting($setting_id);
+                                            $setting_data = self::saveSelectIntSetting($setting_id, $_POST[$setting_id]);
+                                            break;
+
                                         case 'checkbox' :
-                                            self::saveCheckboxSetting($setting_id);
+                                            $setting_data = self::saveCheckboxSetting($setting_id, $_POST[$setting_id]);
+                                            break;
+
                                         case 'integer' :
-                                            self::saveIntegerSetting($setting_id, $_POST[$setting_id]);
+                                            $setting_data = self::saveIntegerSetting($setting_id, $_POST[$setting_id]);
+                                            break;
+
                                         default :
-                                            self::saveDefaultSetting($setting_id, $_POST[$setting_id]);
+                                            $setting_data = self::saveDefaultSetting($setting_id, $_POST[$setting_id]);
                                     }
                                 } else {
                                     /**
@@ -113,7 +121,7 @@ class Config extends dcNsProcess
                                  * No value is set for the current checkbox setting,
                                  * means that the checkbox is empty.
                                  */
-                                self::saveCheckboxSetting($setting_id, false);
+                                $setting_data = self::saveCheckboxSetting($setting_id);
                             } else {
                                 // Removes every other settings.
                                 dcCore::app()->blog->settings->originemini->drop($setting_id);
@@ -122,19 +130,57 @@ class Config extends dcNsProcess
                             // The current setting is specific one.
                             switch ($setting_id) {
                                 case 'header_image':
-                                    self::saveHeaderImage(
+                                case 'header_image2x':
+                                    $setting_data = self::saveHeaderImage(
+                                        $setting_id,
                                         $_POST['header_image'],
                                         $_POST['global_page_width_unit'],
                                         $_POST['global_page_width_value']
                                     );
+                                    break;
+
                                 case 'global_css_custom':
-                                    self::saveCustomCSS($_POST['global_css_custom']);
+                                case 'global_css_custom_mini':
+                                    $setting_data = self::saveCustomCSS($setting_id, $_POST['global_css_custom']);
+                                    break;
+
                                 case 'global_page_width_unit':
-                                    self::savePageWidth(
+                                case 'global_page_width_value':
+                                    $setting_data = self::savePageWidth(
+                                        $setting_id,
                                         $_POST['global_page_width_unit'],
                                         $_POST['global_page_width_value']
                                     );
+                                    break;
+
+                                case 'styles':
+                                    $setting_data = self::saveStyles();
                             }
+                        }
+
+                        if (isset($setting_data['value']) && isset($setting_data['type'])) {
+                            $setting_label = $default_settings[$setting_id]['title'];
+
+                            // Replace 𝕏 by X for ex-Twitter named social site.
+                            if ($setting_id === 'footer_social_links_x') {
+                                $setting_label = str_replace(
+                                    '𝕏',
+                                    'X',
+                                    $default_settings[$setting_id]['title']
+                                );
+                            }
+
+                            $setting_label = Html::clean($setting_label);
+
+                            dcCore::app()->blog->settings->originemini->put(
+                                $setting_id,
+                                $setting_data['value'],
+                                $setting_data['type'],
+                                $setting_label,
+                                true
+                            );
+                        } else {
+                            dcCore::app()->blog->settings->originemini->drop($setting_id);
                         }
                     }
 
@@ -150,9 +196,6 @@ class Config extends dcNsProcess
 
                     dcPage::addSuccessNotice(__('settings-config-reset'));
                 }
-
-                // Puts styles in the database.
-                self::addThemeStyles($header_image_width);
 
                 // Refreshes the blog.
                 dcCore::app()->blog->triggerBlog();
@@ -187,20 +230,15 @@ class Config extends dcNsProcess
      *
      * @return void Saves the setting value.
      */
-    public static function saveSelectSetting($setting_id): void
+    public static function saveSelectSetting($setting_id, $setting_value)
     {
         $default_settings = origineMiniSettings::default();
 
-        if (in_array($_POST[$setting_id], $default_settings[$setting_id]['choices'])) {
-            dcCore::app()->blog->settings->originemini->put(
-                $setting_id,
-                $_POST[$setting_id],
-                'string',
-                Html::clean($default_settings[$setting_id]['title']),
-                true
-            );
-        } else {
-            dcCore::app()->blog->settings->originemini->drop($setting_id);
+        if (in_array($setting_value, $default_settings[$setting_id]['choices'])) {
+            return [
+                'value' => Html::escapeHTML($setting_value),
+                'type'  => 'string'
+            ];
         }
     }
 
@@ -211,20 +249,15 @@ class Config extends dcNsProcess
      *
      * @return void Saves the setting value.
      */
-    public static function saveSelectIntSetting($setting_id): void
+    public static function saveSelectIntSetting($setting_id, $setting_value)
     {
         $default_settings = origineMiniSettings::default();
 
-        if (in_array((int) $_POST[$setting_id], $default_settings[$setting_id]['choices'], true)) {
-            dcCore::app()->blog->settings->originemini->put(
-                $setting_id,
-                (int) $_POST[$setting_id],
-                'integer',
-                Html::clean($default_settings[$setting_id]['title']),
-                true
-            );
-        } else {
-            dcCore::app()->blog->settings->originemini->drop($setting_id);
+        if (in_array((int) $setting_value, $default_settings[$setting_id]['choices'], true)) {
+            return [
+                'value' => (int) $setting_value,
+                'type'  => 'integer'
+            ];
         }
     }
 
@@ -235,24 +268,22 @@ class Config extends dcNsProcess
      *
      * @return void Saves the setting value.
      */
-    public static function saveCheckboxSetting($setting_id, $setting_value = true): void
+    public static function saveCheckboxSetting($setting_id, $setting_value = '0')
     {
         $default_settings = origineMiniSettings::default();
 
-        if (!is_bool($setting_value)) {
-            $setting_value = false;
+        if ($setting_value === '1' && $default_settings[$setting_id]['default'] !== '1') {
+            return [
+                'value' => '1',
+                'type'  => 'boolean'
+            ];
         }
 
-        if ($_POST[$setting_id] === '1' && $default_settings[$setting_id]['default'] !== '1') {
-            dcCore::app()->blog->settings->originemini->put(
-                $setting_id,
-                $setting_value,
-                'boolean',
-                Html::clean($default_settings[$setting_id]['title']),
-                true
-            );
-        } else {
-            dcCore::app()->blog->settings->originemini->drop($setting_id);
+        if ($setting_value === '0' && $default_settings[$setting_id]['default'] !== '0') {
+            return [
+                'value' => '0',
+                'type'  => 'boolean'
+            ];
         }
     }
 
@@ -263,20 +294,15 @@ class Config extends dcNsProcess
      *
      * @return void Saves the setting value.
      */
-    public static function saveIntegerSetting($setting_id, $setting_value): void
+    public static function saveIntegerSetting($setting_id, $setting_value)
     {
         $default_settings = origineMiniSettings::default();
 
-        if (is_numeric($setting_value)) {
-            dcCore::app()->blog->settings->originemini->put(
-                $setting_id,
-                (int) $setting_value,
-                'integer',
-                Html::clean($default_settings[$setting_id]['title']),
-                true
-            );
-        } else {
-            dcCore::app()->blog->settings->originemini->drop($setting_id);
+        if (is_numeric($setting_value) && $setting_value != $default_settings[$setting_id]['default']) {
+            return [
+                'value' => (int) $setting_value,
+                'type'  => 'integer'
+            ];
         }
     }
 
@@ -287,20 +313,15 @@ class Config extends dcNsProcess
      *
      * @return void Saves the setting value.
      */
-    public static function saveDefaultSetting($setting_id, $setting_value): void
+    public static function saveDefaultSetting($setting_id, $setting_value)
     {
         $default_settings = origineMiniSettings::default();
 
-        if (isset($setting_value)) {
-            dcCore::app()->blog->settings->originemini->put(
-                $setting_id,
-                Html::escapeHTML($setting_value),
-                'text',
-                Html::clean($default_settings[$setting_id]['title']),
-                true
-            );
-        } else {
-            dcCore::app()->blog->settings->originemini->drop($setting_id);
+        if ($setting_value != $default_settings[$setting_id]['default']) {
+            return [
+                'value' => Html::escapeHTML($setting_value),
+                'type'  => 'string'
+            ];
         }
     }
 
@@ -315,7 +336,7 @@ class Config extends dcNsProcess
      *
      * @return void
      */
-    public static function saveHeaderImage($image_url, $page_width_unit, $page_width_value): void
+    public static function saveHeaderImage($setting_id, $image_url, $page_width_unit, $page_width_value)
     {
         $default_settings = origineMiniSettings::default();
         $image_url        = $image_url ?: '';
@@ -362,14 +383,13 @@ class Config extends dcNsProcess
                     'width' => (int) $header_image_width,
                 ];
 
-                // Saves the setting in the database as an array.
-                dcCore::app()->blog->settings->originemini->put(
-                    'header_image',
-                    $image_data,
-                    'array',
-                    Html::clean($default_settings['header_image']['title']),
-                    true
-                );
+                if ($setting_id === 'header_image' && !empty($image_data)) {
+                    // Prepares the setting to save in the database as an array.
+                    return [
+                        'value' => $image_data,
+                        'type'  => 'array'
+                    ];
+                }
 
                 // Builds the path to an hypothetical double sized image.
                 $image_info    = Path::info($image_path);
@@ -380,96 +400,73 @@ class Config extends dcNsProcess
                     $image_url_2x = str_replace($public_path, $public_url, $image_path_2x);
 
                     if (file_exists($image_path_2x) && getimagesize($image_path_2x) !== false) {
-                        dcCore::app()->blog->settings->originemini->put(
-                            'header_image2x',
-                            $image_url_2x,
-                            'string',
-                            Html::clean($default_settings['header_image2x']['title']),
-                            true
-                        );
+                        return [
+                            'value' => $image_url_2x,
+                            'type'  => 'string'
+                        ];
                     }
-                } else {
-                    dcCore::app()->blog->settings->originemini->drop('header_image2x');
                 }
-            } else {
-                dcCore::app()->blog->settings->originemini->drop('header_image');
-                dcCore::app()->blog->settings->originemini->drop('header_image2x');
             }
-        } else {
-            dcCore::app()->blog->settings->originemini->drop('header_image');
-            dcCore::app()->blog->settings->originemini->drop('header_image2x');
         }
     }
 
-    public static function saveCustomCSS($css_value)
+    public static function saveCustomCSS($setting_id, $css_value)
     {
         $default_settings = origineMiniSettings::default();
 
         $css_value = $css_value ?: '';
 
         if ($css_value) {
-            $css_value_mini = str_replace("\n", "", $css_value);
-            $css_value_mini = str_replace("\r", "", $css_value_mini);
-            $css_value_mini = str_replace("  ", " ", $css_value_mini);
-            $css_value_mini = str_replace("  ", " ", $css_value_mini);
-            $css_value_mini = str_replace(" {", "{", $css_value_mini);
-            $css_value_mini = str_replace("{ ", "{", $css_value_mini);
-            $css_value_mini = str_replace(" }", "}", $css_value_mini);
-            $css_value_mini = str_replace("} ", "}", $css_value_mini);
-            $css_value_mini = str_replace(", ", ",", $css_value_mini);
-            $css_value_mini = str_replace("; ", ";", $css_value_mini);
-            $css_value_mini = str_replace(": ", ":", $css_value_mini);
+            if ($setting_id === 'global_css_custom') {
+                return [
+                    'value' => Html::escapeHTML($css_value),
+                    'type'  => 'string'
+                ];
+            } elseif ($setting_id === 'global_css_custom_mini') {
+                $css_value_mini = str_replace("\n", "", $css_value);
+                $css_value_mini = str_replace("\r", "", $css_value_mini);
+                $css_value_mini = str_replace("  ", " ", $css_value_mini);
+                $css_value_mini = str_replace("  ", " ", $css_value_mini);
+                $css_value_mini = str_replace(" {", "{", $css_value_mini);
+                $css_value_mini = str_replace("{ ", "{", $css_value_mini);
+                $css_value_mini = str_replace(" }", "}", $css_value_mini);
+                $css_value_mini = str_replace("} ", "}", $css_value_mini);
+                $css_value_mini = str_replace(", ", ",", $css_value_mini);
+                $css_value_mini = str_replace("; ", ";", $css_value_mini);
+                $css_value_mini = str_replace(": ", ":", $css_value_mini);
 
-            dcCore::app()->blog->settings->originemini->put(
-                'global_css_custom',
-                $css_value,
-                'string',
-                Html::clean($default_settings['global_css_custom']['title']),
-                true
-            );
-
-            dcCore::app()->blog->settings->originemini->put(
-                'global_css_custom_mini',
-                $css_value_mini,
-                'string',
-                Html::clean($default_settings['global_css_custom_mini']['title']),
-                true
-            );
-        } else {
-            dcCore::app()->blog->settings->originemini->drop('global_css_custom');
-            dcCore::app()->blog->settings->originemini->drop('global_css_custom_mini');
+                return [
+                    'value' => Html::escapeHTML($css_value_mini),
+                    'type'  => 'string'
+                ];
+            }
         }
     }
 
-    public static function savePageWidth($page_width_unit, $page_width_value)
+    public static function savePageWidth($setting_id, $page_width_unit, $page_width_value)
     {
         $default_settings = origineMiniSettings::default();
+
         $page_width_unit  = $page_width_unit ?: 'px';
-        $page_width_value = $page_width_value ? (int) $page_width_value : 80;
-        $page_width_data  = ConfigUtils::getContentWidth(
+        $page_width_value = $page_width_value ? (int) $page_width_value : 30;
+
+        $page_width_data = ConfigUtils::getContentWidth(
             $page_width_unit,
             $page_width_value
         );
 
-        if (!empty($page_width_data)) {
-            dcCore::app()->blog->settings->originemini->put(
-                'global_page_width_unit',
-                $page_width_data['unit'],
-                'text',
-                Html::clean($default_settings['global_page_width_unit']['title']),
-                true
-            );
+        if ($setting_id === 'global_page_width_unit' && isset($page_width_data['unit'])) {
+            return [
+                'value' => $page_width_data['unit'],
+                'type'  => 'text'
+            ];
+        }
 
-            dcCore::app()->blog->settings->originemini->put(
-                'global_page_width_value',
-                $page_width_data['value'],
-                'text',
-                Html::clean($default_settings['global_page_width_value']['title']),
-                true
-            );
-        } else {
-            dcCore::app()->blog->settings->originemini->drop('global_page_width_unit');
-            dcCore::app()->blog->settings->originemini->drop('global_page_width_value');
+        if ($setting_id === 'global_page_width_value' && isset($page_width_data['value'])) {
+            return [
+                'value' => $page_width_data['value'],
+                'type'  => 'integer'
+            ];
         }
     }
 
@@ -491,744 +488,736 @@ class Config extends dcNsProcess
      *
      * @return void
      */
-    public static function addThemeStyles($header_image_width)
+    public static function saveStyles($header_image_width = '')
     {
-        if (isset($_POST['save'])) {
-            $css = '';
 
-            $css_root_array                    = [];
-            $css_root_media_array              = [];
-            $css_main_array                    = [];
-            $css_supports_initial_letter_array = [];
-            $css_media_array                   = [];
-            $css_media_contrast_array          = [];
-            $css_media_motion_array            = [];
-            $css_media_print_array             = [];
+        $css = '';
 
-            $default_settings = origineMiniSettings::default();
+        $css_root_array                    = [];
+        $css_root_media_array              = [];
+        $css_main_array                    = [];
+        $css_supports_initial_letter_array = [];
+        $css_media_array                   = [];
+        $css_media_contrast_array          = [];
+        $css_media_motion_array            = [];
+        $css_media_print_array             = [];
 
-            // Page width.
-            if (isset($_POST['global_page_width_unit']) && isset($_POST['global_page_width_value'])) {
-                $page_width_unit  = $_POST['global_page_width_unit'];
-                $page_width_value = $_POST['global_page_width_value'];
+        $default_settings = origineMiniSettings::default();
 
-                if ($page_width_unit === 'px' && $page_width_value === '') {
-                    $page_width_value = '480';
-                }
+        // Page width.
+        if (isset($_POST['global_page_width_unit']) && isset($_POST['global_page_width_value'])) {
+            $page_width_unit  = $_POST['global_page_width_unit'];
+            $page_width_value = $_POST['global_page_width_value'];
 
-                $page_width_data = ConfigUtils::getContentWidth($page_width_unit, $page_width_value);
-
-                if (!empty($page_width_data)) {
-                    $css_root_array[':root']['--page-width'] = $page_width_data['value'] . $page_width_data['unit'];
-                }
+            if ($page_width_unit === 'px' && $page_width_value === '') {
+                $page_width_value = '480';
             }
 
-            // Font size.
-            $font_size_allowed = [80, 90, 110, 120];
+            $page_width_data = ConfigUtils::getContentWidth($page_width_unit, $page_width_value);
 
-            if (isset($_POST['global_font_size']) && in_array((int) $_POST['global_font_size'], $font_size_allowed, true)) {
-                $css_root_array[':root']['--font-size'] = ConfigUtils::removeZero($_POST['global_font_size'] / 100) . 'em';
+            if (!empty($page_width_data)) {
+                $css_root_array[':root']['--page-width'] = $page_width_data['value'] . $page_width_data['unit'];
             }
+        }
 
-            // Font family.
-            if (isset($_POST['global_font_family'])) {
-                if ($_POST['global_font_family'] === 'serif') {
-                    $css_root_array[':root']['--font-family'] = '"Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
-                } elseif ($_POST['global_font_family'] === 'monospace') {
-                    $css_root_array[':root']['--font-family'] = 'Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace';
-                } elseif ($_POST['global_font_family'] === 'sans-serif-browser') {
-                    $css_root_array[':root']['--font-family'] = 'sans-serif';
-                } elseif ($_POST['global_font_family'] === 'serif-browser') {
-                    $css_root_array[':root']['--font-family'] = 'serif';
-                } elseif ($_POST['global_font_family'] === 'monospace-browser') {
-                    $css_root_array[':root']['--font-family'] = 'monospace';
-                } elseif ($_POST['global_font_family'] === 'atkinson') {
-                    $themes_url = dcCore::app()->blog->settings->system->themes_url;
+        // Font size.
+        $font_size_allowed = [80, 90, 110, 120];
 
-                    $css_root_array[':root']['--font-family'] = '"Atkinson Hyperlegible", sans-serif';
+        if (isset($_POST['global_font_size']) && in_array((int) $_POST['global_font_size'], $font_size_allowed, true)) {
+            $css_root_array[':root']['--font-size'] = ConfigUtils::removeZero($_POST['global_font_size'] / 100) . 'em';
+        }
 
-                    $css_main_array[0]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                    $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2")';
-                    $css_main_array[0]['@font-face']['font-style']  = 'normal';
-                    $css_main_array[0]['@font-face']['font-weight'] = '400';
+        // Font family.
+        if (isset($_POST['global_font_family'])) {
+            if ($_POST['global_font_family'] === 'serif') {
+                $css_root_array[':root']['--font-family'] = '"Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
+            } elseif ($_POST['global_font_family'] === 'monospace') {
+                $css_root_array[':root']['--font-family'] = 'Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace';
+            } elseif ($_POST['global_font_family'] === 'sans-serif-browser') {
+                $css_root_array[':root']['--font-family'] = 'sans-serif';
+            } elseif ($_POST['global_font_family'] === 'serif-browser') {
+                $css_root_array[':root']['--font-family'] = 'serif';
+            } elseif ($_POST['global_font_family'] === 'monospace-browser') {
+                $css_root_array[':root']['--font-family'] = 'monospace';
+            } elseif ($_POST['global_font_family'] === 'atkinson') {
+                $themes_url = dcCore::app()->blog->settings->system->themes_url;
 
-                    $css_main_array[1]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                    $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2")';
-                    $css_main_array[1]['@font-face']['font-style']  = 'italic';
-                    $css_main_array[1]['@font-face']['font-weight'] = '400';
+                $css_root_array[':root']['--font-family'] = '"Atkinson Hyperlegible", sans-serif';
 
-                    $css_main_array[2]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                    $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2")';
-                    $css_main_array[2]['@font-face']['font-style']  = 'normal';
-                    $css_main_array[2]['@font-face']['font-weight'] = '700';
+                $css_main_array[0]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
+                $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2")';
+                $css_main_array[0]['@font-face']['font-style']  = 'normal';
+                $css_main_array[0]['@font-face']['font-weight'] = '400';
 
-                    $css_main_array[3]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                    $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("woff2")';
-                    $css_main_array[3]['@font-face']['font-style']  = 'italic';
-                    $css_main_array[3]['@font-face']['font-weight'] = '700';
-                } elseif ($_POST['global_font_family'] === 'eb-garamond') {
-                    $themes_url = dcCore::app()->blog->settings->system->themes_url;
+                $css_main_array[1]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
+                $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2")';
+                $css_main_array[1]['@font-face']['font-style']  = 'italic';
+                $css_main_array[1]['@font-face']['font-weight'] = '400';
 
-                    $css_root_array[':root']['--font-family'] = '"EB Garamond", serif';
+                $css_main_array[2]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
+                $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2")';
+                $css_main_array[2]['@font-face']['font-style']  = 'normal';
+                $css_main_array[2]['@font-face']['font-weight'] = '700';
 
-                    $css_main_array[0]['@font-face']['font-family'] = '"EB Garamond"';
-                    $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Regular.ttf") format("truetype")';
-                    $css_main_array[0]['@font-face']['font-style']  = 'normal';
-                    $css_main_array[0]['@font-face']['font-weight'] = '400';
+                $css_main_array[3]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
+                $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("woff2")';
+                $css_main_array[3]['@font-face']['font-style']  = 'italic';
+                $css_main_array[3]['@font-face']['font-weight'] = '700';
+            } elseif ($_POST['global_font_family'] === 'eb-garamond') {
+                $themes_url = dcCore::app()->blog->settings->system->themes_url;
 
-                    $css_main_array[1]['@font-face']['font-family'] = '"EB Garamond"';
-                    $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Italic.ttf") format("truetype")';
-                    $css_main_array[1]['@font-face']['font-style']  = 'italic';
-                    $css_main_array[1]['@font-face']['font-weight'] = '400';
+                $css_root_array[':root']['--font-family'] = '"EB Garamond", serif';
 
-                    $css_main_array[2]['@font-face']['font-family'] = '"EB Garamond"';
-                    $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Bold.ttf") format("truetype")';
-                    $css_main_array[2]['@font-face']['font-style']  = 'normal';
-                    $css_main_array[2]['@font-face']['font-weight'] = '700';
+                $css_main_array[0]['@font-face']['font-family'] = '"EB Garamond"';
+                $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Regular.ttf") format("truetype")';
+                $css_main_array[0]['@font-face']['font-style']  = 'normal';
+                $css_main_array[0]['@font-face']['font-weight'] = '400';
 
-                    $css_main_array[3]['@font-face']['font-family'] = '"EB Garamond"';
-                    $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-BoldItalic.ttf") format("truetype")';
-                    $css_main_array[3]['@font-face']['font-style']  = 'italic';
-                    $css_main_array[3]['@font-face']['font-weight'] = '700';
-                } elseif ($_POST['global_font_family'] === 'luciole') {
-                    $themes_url = dcCore::app()->blog->settings->system->themes_url;
+                $css_main_array[1]['@font-face']['font-family'] = '"EB Garamond"';
+                $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Italic.ttf") format("truetype")';
+                $css_main_array[1]['@font-face']['font-style']  = 'italic';
+                $css_main_array[1]['@font-face']['font-weight'] = '400';
 
-                    $css_root_array[':root']['--font-family'] = 'Luciole, sans-serif';
+                $css_main_array[2]['@font-face']['font-family'] = '"EB Garamond"';
+                $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Bold.ttf") format("truetype")';
+                $css_main_array[2]['@font-face']['font-style']  = 'normal';
+                $css_main_array[2]['@font-face']['font-weight'] = '700';
 
-                    $css_main_array[0]['@font-face']['font-family'] = '"Luciole"';
-                    $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Regular.ttf") format("truetype")';
-                    $css_main_array[0]['@font-face']['font-style']  = 'normal';
-                    $css_main_array[0]['@font-face']['font-weight'] = '400';
+                $css_main_array[3]['@font-face']['font-family'] = '"EB Garamond"';
+                $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-BoldItalic.ttf") format("truetype")';
+                $css_main_array[3]['@font-face']['font-style']  = 'italic';
+                $css_main_array[3]['@font-face']['font-weight'] = '700';
+            } elseif ($_POST['global_font_family'] === 'luciole') {
+                $themes_url = dcCore::app()->blog->settings->system->themes_url;
 
-                    $css_main_array[1]['@font-face']['font-family'] = '"Luciole"';
-                    $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Regular-Italic.ttf") format("truetype")';
-                    $css_main_array[1]['@font-face']['font-style']  = 'italic';
-                    $css_main_array[1]['@font-face']['font-weight'] = '400';
+                $css_root_array[':root']['--font-family'] = 'Luciole, sans-serif';
 
-                    $css_main_array[2]['@font-face']['font-family'] = '"Luciole"';
-                    $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Bold.ttf") format("truetype")';
-                    $css_main_array[2]['@font-face']['font-style']  = 'normal';
-                    $css_main_array[2]['@font-face']['font-weight'] = '700';
+                $css_main_array[0]['@font-face']['font-family'] = '"Luciole"';
+                $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Regular.ttf") format("truetype")';
+                $css_main_array[0]['@font-face']['font-style']  = 'normal';
+                $css_main_array[0]['@font-face']['font-weight'] = '400';
 
-                    $css_main_array[3]['@font-face']['font-family'] = '"Luciole"';
-                    $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Bold-Italic.ttf") format("truetype")';
-                    $css_main_array[3]['@font-face']['font-style']  = 'italic';
-                    $css_main_array[3]['@font-face']['font-weight'] = '700';
-                }
+                $css_main_array[1]['@font-face']['font-family'] = '"Luciole"';
+                $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Regular-Italic.ttf") format("truetype")';
+                $css_main_array[1]['@font-face']['font-style']  = 'italic';
+                $css_main_array[1]['@font-face']['font-weight'] = '400';
+
+                $css_main_array[2]['@font-face']['font-family'] = '"Luciole"';
+                $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Bold.ttf") format("truetype")';
+                $css_main_array[2]['@font-face']['font-style']  = 'normal';
+                $css_main_array[2]['@font-face']['font-weight'] = '700';
+
+                $css_main_array[3]['@font-face']['font-family'] = '"Luciole"';
+                $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Bold-Italic.ttf") format("truetype")';
+                $css_main_array[3]['@font-face']['font-style']  = 'italic';
+                $css_main_array[3]['@font-face']['font-weight'] = '700';
             }
+        }
 
-            // Font antialiasing.
-            if (isset($_POST['global_font_antialiasing']) && $_POST['global_font_antialiasing'] === '1') {
-                $css_root_array['body']['-moz-osx-font-smoothing'] = 'grayscale';
-                $css_root_array['body']['-webkit-font-smoothing']  = 'antialiased';
-                $css_root_array['body']['font-smooth']             = 'always';
+        // Font antialiasing.
+        if (isset($_POST['global_font_antialiasing']) && $_POST['global_font_antialiasing'] === '1') {
+            $css_root_array['body']['-moz-osx-font-smoothing'] = 'grayscale';
+            $css_root_array['body']['-webkit-font-smoothing']  = 'antialiased';
+            $css_root_array['body']['font-smooth']             = 'always';
 
-                $css_media_contrast_array['body']['-moz-osx-font-smoothing'] = 'unset';
-                $css_media_contrast_array['body']['-webkit-font-smoothing']  = 'unset';
-                $css_media_contrast_array['body']['font-smooth']             = 'unset';
+            $css_media_contrast_array['body']['-moz-osx-font-smoothing'] = 'unset';
+            $css_media_contrast_array['body']['-webkit-font-smoothing']  = 'unset';
+            $css_media_contrast_array['body']['font-smooth']             = 'unset';
 
-                $css_media_print_array['body']['-moz-osx-font-smoothing'] = 'unset';
-                $css_media_print_array['body']['-webkit-font-smoothing']  = 'unset';
-                $css_media_print_array['body']['font-smooth']             = 'unset';
-            }
+            $css_media_print_array['body']['-moz-osx-font-smoothing'] = 'unset';
+            $css_media_print_array['body']['-webkit-font-smoothing']  = 'unset';
+            $css_media_print_array['body']['font-smooth']             = 'unset';
+        }
 
-            // Primary color.
-            $primary_colors_allowed = ['gray', 'green', 'red'];
+        // Primary color.
+        $primary_colors_allowed = ['gray', 'green', 'red'];
 
-            $primary_colors = [
-                'light' => [
-                    'gray'  => [
-                        'h' => '0',
-                        's' => '0%',
-                        'l' => '10%'
-                    ],
-                    'green' => [
-                        'h' => '120',
-                        's' => '75%',
-                        'l' => '30%'
-                    ],
-                    'red'   => [
-                        'h' => '0',
-                        's' => '90%',
-                        'l' => '45%'
-                    ]
-                ],
-                'light-amplified' => [
-                    'gray'  => [
-                        'l' => '28%'
-                    ],
-                    'green' => [
-                        's' => '60%',
-                        'l' => '40%'
-                    ],
-                    'red'   => [
-                        's' => '100%',
-                        'l' => '55%'
-                    ]
-                ],
-                'dark' => [
-                    'gray'  => [
-                        'h' => '0%',
-                        'l' => '99%'
-                    ],
-                    'green' => [
-                        's' => '60%',
-                        'l' => '80%'
-                    ],
-                    'red'   => [
-                        's' => '70%',
-                        'l' => '85%'
-                    ]
-                ],
-                'dark-amplified' => [
-                    'gray'  => [
-                        'l' => '80%'
-                    ],
-                    'green' => [
-                        's' => '50%',
-                        'l' => '60%'
-                    ],
-                    'red'   => [
-                        'l' => '70%'
-                    ]
-                ]
-            ];
-
-            if (isset($_POST['global_color_primary']) && in_array($_POST['global_color_primary'], $primary_colors_allowed, true)) {
-
-                // Light.
-                $css_root_array[':root']['--color-primary-h-custom'] = $primary_colors['light'][$_POST['global_color_primary']]['h'];
-                $css_root_array[':root']['--color-primary-s-custom'] = $primary_colors['light'][$_POST['global_color_primary']]['s'];
-                $css_root_array[':root']['--color-primary-l-custom'] = $primary_colors['light'][$_POST['global_color_primary']]['l'];
-
-                // Light & amplified.
-                if (isset($primary_colors['light-amplified'][$_POST['global_color_primary']]['s'])) {
-                    $css_root_array[':root']['--color-primary-amplified-s-custom'] = $primary_colors['light-amplified'][$_POST['global_color_primary']]['s'];
-                }
-
-                if (isset($primary_colors['light-amplified'][$_POST['global_color_primary']]['l'])) {
-                    $css_root_array[':root']['--color-primary-amplified-l-custom'] = $primary_colors['light-amplified'][$_POST['global_color_primary']]['l'];
-                }
-
-                // Dark.
-                if (isset($primary_colors['dark'][$_POST['global_color_primary']]['h'])) {
-                    $css_root_array[':root']['--color-primary-dark-h-custom'] = $primary_colors['dark'][$_POST['global_color_primary']]['h'];
-                }
-
-                if (isset($primary_colors['dark'][$_POST['global_color_primary']]['s'])) {
-                    $css_root_array[':root']['--color-primary-dark-s-custom'] = $primary_colors['dark'][$_POST['global_color_primary']]['s'];
-                }
-
-                if (isset($primary_colors['dark'][$_POST['global_color_primary']]['l'])) {
-                    $css_root_array[':root']['--color-primary-dark-l-custom'] = $primary_colors['dark'][$_POST['global_color_primary']]['l'];
-                }
-
-                // Dark & amplified.
-                if (isset($primary_colors['dark-amplified'][$_POST['global_color_primary']]['s'])) {
-                    $css_root_array[':root']['--color-primary-dark-amplified-s-custom'] = $primary_colors['dark-amplified'][$_POST['global_color_primary']]['s'];
-                }
-
-                if (isset($primary_colors['dark-amplified'][$_POST['global_color_primary']]['l'])) {
-                    $css_root_array[':root']['--color-primary-dark-amplified-l-custom'] = $primary_colors['dark-amplified'][$_POST['global_color_primary']]['l'];
-                }
-            }
-
-            // Background color.
-            $background_colors_allowed = ['beige', 'blue', 'gray', 'green', 'red'];
-
-            $background_colors = [
-                'beige' => [
-                    'h' => '45',
-                    's' => '65%',
-                    'l' => '96%'
-                ],
-                'blue'  => [
-                    'h' => '226',
-                    's' => '100%',
-                    'l' => '98%'
-                ],
+        $primary_colors = [
+            'light' => [
                 'gray'  => [
                     'h' => '0',
                     's' => '0%',
-                    'l' => '97%'
+                    'l' => '10%'
                 ],
                 'green' => [
-                    'h' => '105',
-                    's' => '90%',
-                    'l' => '98%'
+                    'h' => '120',
+                    's' => '75%',
+                    'l' => '30%'
                 ],
                 'red'   => [
                     'h' => '0',
                     's' => '90%',
-                    'l' => '98%'
+                    'l' => '45%'
                 ]
-            ];
+            ],
+            'light-amplified' => [
+                'gray'  => [
+                    'l' => '28%'
+                ],
+                'green' => [
+                    's' => '60%',
+                    'l' => '40%'
+                ],
+                'red'   => [
+                    's' => '100%',
+                    'l' => '55%'
+                ]
+            ],
+            'dark' => [
+                'gray'  => [
+                    'h' => '0%',
+                    'l' => '99%'
+                ],
+                'green' => [
+                    's' => '60%',
+                    'l' => '80%'
+                ],
+                'red'   => [
+                    's' => '70%',
+                    'l' => '85%'
+                ]
+            ],
+            'dark-amplified' => [
+                'gray'  => [
+                    'l' => '80%'
+                ],
+                'green' => [
+                    's' => '50%',
+                    'l' => '60%'
+                ],
+                'red'   => [
+                    'l' => '70%'
+                ]
+            ]
+        ];
 
-            if (isset($_POST['global_color_background']) && in_array($_POST['global_color_background'], $background_colors_allowed, true)) {
+        if (isset($_POST['global_color_primary']) && in_array($_POST['global_color_primary'], $primary_colors_allowed, true)) {
 
-                // Main background.
-                if (isset($background_colors[$_POST['global_color_background']]['h'])) {
-                    $css_root_array[':root']['--color-background-h-custom'] = $background_colors[$_POST['global_color_background']]['h'];
-                }
+            // Light.
+            $css_root_array[':root']['--color-primary-h-custom'] = $primary_colors['light'][$_POST['global_color_primary']]['h'];
+            $css_root_array[':root']['--color-primary-s-custom'] = $primary_colors['light'][$_POST['global_color_primary']]['s'];
+            $css_root_array[':root']['--color-primary-l-custom'] = $primary_colors['light'][$_POST['global_color_primary']]['l'];
 
-                if (isset($background_colors[$_POST['global_color_background']]['s'])) {
-                    $css_root_array[':root']['--color-background-s-custom'] = $background_colors[$_POST['global_color_background']]['s'];
-                }
-
-                if (isset($background_colors[$_POST['global_color_background']]['l'])) {
-                    $css_root_array[':root']['--color-background-l-custom'] = $background_colors[$_POST['global_color_background']]['l'];
-                }
-
-                $css_root_array[':root']['--color-input-background'] = '#fff';
+            // Light & amplified.
+            if (isset($primary_colors['light-amplified'][$_POST['global_color_primary']]['s'])) {
+                $css_root_array[':root']['--color-primary-amplified-s-custom'] = $primary_colors['light-amplified'][$_POST['global_color_primary']]['s'];
             }
 
-            // Transitions.
-            if (isset($_POST['global_css_transition']) && $_POST['global_css_transition'] === '1') {
-                $css_main_array['a']['transition'] = 'all .2s ease-in-out';
-
-                $css_main_array['a:active, a:hover']['transition'] = 'all .2s ease-in-out';
-
-                $css_main_array['input[type="submit"], .form-submit, .button']['transition'] = 'all .2s ease-in-out';
-
-                $css_main_array['input[type="submit"]:hover, .button:hover, .form-submit:hover']['transition'] = 'all .2s ease-in-out';
-
-                $css_media_motion_array['a']['transition'] = 'unset';
-
-                $css_media_motion_array['a:active, a:hover']['transition'] = 'unset';
-
-                $css_media_motion_array['input[type="submit"], .form-submit, .button']['transition'] = 'unset';
-
-                $css_media_motion_array['input[type="submit"]:hover, .button:hover, .form-submit:hover']['transition'] = 'unset';
+            if (isset($primary_colors['light-amplified'][$_POST['global_color_primary']]['l'])) {
+                $css_root_array[':root']['--color-primary-amplified-l-custom'] = $primary_colors['light-amplified'][$_POST['global_color_primary']]['l'];
             }
 
-            // Links underline.
-            if (isset($_POST['global_css_links_underline']) && $_POST['global_css_links_underline'] === '1') {
-                $css_root_array[':root']['--link-text-decoration']       = 'underline';
-                $css_root_array[':root']['--link-text-decoration-style'] = 'dotted';
-
-                $css_root_array['.button']['text-decoration']       = 'none';
-                $css_root_array['.button']['text-decoration-style'] = 'none';
+            // Dark.
+            if (isset($primary_colors['dark'][$_POST['global_color_primary']]['h'])) {
+                $css_root_array[':root']['--color-primary-dark-h-custom'] = $primary_colors['dark'][$_POST['global_color_primary']]['h'];
             }
 
-            // Border radius.
-            if (isset($_POST['global_css_border_radius']) && $_POST['global_css_border_radius'] === '1') {
-                $css_root_array[':root']['--border-radius'] = '.168rem';
+            if (isset($primary_colors['dark'][$_POST['global_color_primary']]['s'])) {
+                $css_root_array[':root']['--color-primary-dark-s-custom'] = $primary_colors['dark'][$_POST['global_color_primary']]['s'];
             }
 
-            // JS.
-            if (isset($_POST['global_js']) && $_POST['global_js'] === '1') {
-                if (isset($_POST['content_trackback_link']) && $_POST['content_trackback_link'] === '1') {
-                    $css_main_array['#trackback-url']['color']                 = 'var(--color-primary)';
-                    $css_main_array['#trackback-url']['text-decoration']       = 'var(--link-text-decoration, none)';
-                    $css_main_array['#trackback-url']['text-decoration-style'] = 'var(--link-text-decoration-style, unset)';
-
-                    $css_main_array['#trackback-url:is(:active, :focus, :hover)']['cursor']                = 'pointer';
-                    $css_main_array['#trackback-url:is(:active, :focus, :hover)']['filter']                = 'brightness(1.25)';
-                    $css_main_array['#trackback-url:is(:active, :focus, :hover)']['text-decoration']       = 'underline';
-                    $css_main_array['#trackback-url:is(:active, :focus, :hover)']['text-decoration-style'] = 'solid';
-
-                    $css_main_array['#trackback-url-copied']['display'] = 'none';
-
-                    $css_media_contrast_array['#trackback-url:is(:active, :focus, :hover)']['background-color'] = 'var(--color-text-main)';
-                    $css_media_contrast_array['#trackback-url:is(:active, :focus, :hover)']['color']            = 'var(--color-background)';
-                    $css_media_contrast_array['#trackback-url:is(:active, :focus, :hover)']['outline']          = '.168rem solid var(--color-text-main)';
-                    $css_media_contrast_array['#trackback-url:is(:active, :focus, :hover)']['text-decoration']  = 'none';
-                }
+            if (isset($primary_colors['dark'][$_POST['global_color_primary']]['l'])) {
+                $css_root_array[':root']['--color-primary-dark-l-custom'] = $primary_colors['dark'][$_POST['global_color_primary']]['l'];
             }
 
-            // Header banner
-            if (isset($_POST['header_image']) && $_POST['header_image'] !== '') {
-                $css_main_array['#site-image']['width'] = '100%';
-
-                $css_media_contrast_array['#site-image a']['outline'] = 'inherit';
-
-                if (isset($_POST['global_css_border_radius']) && $_POST['global_css_border_radius'] === '1') {
-                    $css_main_array['#site-image img']['border-radius'] = 'var(--border-radius)';
-                }
-
-                if (isset($header_image_width) && $header_image_width >= 100) {
-                    $css_main_array['#site-image img']['width'] = '100%';
-                }
+            // Dark & amplified.
+            if (isset($primary_colors['dark-amplified'][$_POST['global_color_primary']]['s'])) {
+                $css_root_array[':root']['--color-primary-dark-amplified-s-custom'] = $primary_colors['dark-amplified'][$_POST['global_color_primary']]['s'];
             }
 
-            // Blog description.
-            if (isset($_POST['header_description']) && $_POST['header_description'] === '1') {
-                $css_main_array['#site-identity']['align-items'] = 'center';
-                $css_main_array['#site-identity']['column-gap']  = '.5rem';
-                $css_main_array['#site-identity']['display']     = 'flex';
-                $css_main_array['#site-identity']['flex-wrap']   = 'wrap';
-                $css_main_array['#site-identity']['row-gap']     = '.5rem';
-
-                $css_main_array['#site-description']['font-size']   = '.8em';
-                $css_main_array['#site-description']['font-style']  = 'italic';
-                $css_main_array['#site-description']['font-weight'] = 'normal';
-                $css_main_array['#site-description']['margin']      = '0';
+            if (isset($primary_colors['dark-amplified'][$_POST['global_color_primary']]['l'])) {
+                $css_root_array[':root']['--color-primary-dark-amplified-l-custom'] = $primary_colors['dark-amplified'][$_POST['global_color_primary']]['l'];
             }
-
-            // Content font family.
-            if (isset($_POST['content_text_font']) && $_POST['content_text_font'] !== 'same' && $_POST['global_font_family'] !== $_POST['content_text_font']) {
-                if ($_POST['content_text_font'] === 'sans-serif') {
-                    $css_root_array[':root']['--font-family-content'] = '-apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif';
-                } elseif ($_POST['content_text_font'] === 'serif') {
-                    $css_main_array[':root']['--font-family-content'] = '"Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
-                } elseif ($_POST['content_text_font'] === 'monospace') {
-                    $css_main_array[':root']['--font-family-content'] = 'Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace';
-                } elseif ($_POST['content_text_font'] === 'sans-serif-browser') {
-                    $css_main_array[':root']['--font-family-content'] = 'sans-serif';
-                } elseif ($_POST['content_text_font'] === 'serif-browser') {
-                    $css_main_array[':root']['--font-family-content'] = 'serif';
-                } elseif ($_POST['content_text_font'] === 'monospace-browser') {
-                    $css_main_array[':root']['--font-family-content'] = 'monospace';
-                } elseif ($_POST['content_text_font'] === 'atkinson') {
-                    $themes_url = dcCore::app()->blog->settings->system->themes_url;
-
-                    $css_main_array[4]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                    $css_main_array[4]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2")';
-                    $css_main_array[4]['@font-face']['font-style']  = 'normal';
-                    $css_main_array[4]['@font-face']['font-weight'] = '400';
-
-                    $css_main_array[5]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                    $css_main_array[5]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2")';
-                    $css_main_array[5]['@font-face']['font-style']  = 'italic';
-                    $css_main_array[5]['@font-face']['font-weight'] = '400';
-
-                    $css_main_array[6]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                    $css_main_array[6]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2")';
-                    $css_main_array[6]['@font-face']['font-style']  = 'normal';
-                    $css_main_array[6]['@font-face']['font-weight'] = '700';
-
-                    $css_main_array[7]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                    $css_main_array[7]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("woff2")';
-                    $css_main_array[7]['@font-face']['font-style']  = 'italic';
-                    $css_main_array[7]['@font-face']['font-weight'] = '700';
-
-                    $css_root_array[':root']['--font-family-content'] = '"Atkinson Hyperlegible", sans-serif';
-                } elseif ($_POST['content_text_font'] === 'eb-garamond') {
-                    $themes_url = dcCore::app()->blog->settings->system->themes_url;
-
-                    $css_main_array[4]['@font-face']['font-family'] = '"EB Garamond"';
-                    $css_main_array[4]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Regular.ttf") format("truetype")';
-                    $css_main_array[4]['@font-face']['font-style']  = 'normal';
-                    $css_main_array[4]['@font-face']['font-weight'] = '400';
-
-                    $css_main_array[5]['@font-face']['font-family'] = '"EB Garamond"';
-                    $css_main_array[5]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Italic.ttf") format("truetype")';
-                    $css_main_array[5]['@font-face']['font-style']  = 'italic';
-                    $css_main_array[5]['@font-face']['font-weight'] = '400';
-
-                    $css_main_array[6]['@font-face']['font-family'] = '"EB Garamond"';
-                    $css_main_array[6]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Bold.ttf") format("truetype")';
-                    $css_main_array[6]['@font-face']['font-style']  = 'normal';
-                    $css_main_array[6]['@font-face']['font-weight'] = '700';
-
-                    $css_main_array[7]['@font-face']['font-family'] = '"EB Garamond"';
-                    $css_main_array[7]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-BoldItalic.ttf") format("truetype")';
-                    $css_main_array[7]['@font-face']['font-style']  = 'italic';
-                    $css_main_array[7]['@font-face']['font-weight'] = '700';
-
-                    $css_root_array[':root']['--font-family-content'] = '"EB Garamond", serif';
-                } elseif ($_POST['content_text_font'] === 'luciole') {
-                    $themes_url = dcCore::app()->blog->settings->system->themes_url;
-
-                    $css_main_array[4]['@font-face']['font-family'] = '"Luciole"';
-                    $css_main_array[4]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Regular.ttf") format("truetype")';
-                    $css_main_array[4]['@font-face']['font-style']  = 'normal';
-                    $css_main_array[4]['@font-face']['font-weight'] = '400';
-
-                    $css_main_array[5]['@font-face']['font-family'] = '"Luciole"';
-                    $css_main_array[5]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Regular-Italic.ttf") format("truetype")';
-                    $css_main_array[5]['@font-face']['font-style']  = 'italic';
-                    $css_main_array[5]['@font-face']['font-weight'] = '400';
-
-                    $css_main_array[6]['@font-face']['font-family'] = '"Luciole"';
-                    $css_main_array[6]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Bold.ttf") format("truetype")';
-                    $css_main_array[6]['@font-face']['font-style']  = 'normal';
-                    $css_main_array[6]['@font-face']['font-weight'] = '700';
-
-                    $css_main_array[7]['@font-face']['font-family'] = '"Luciole"';
-                    $css_main_array[7]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Bold-Italic.ttf") format("truetype")';
-                    $css_main_array[7]['@font-face']['font-style']  = 'italic';
-                    $css_main_array[7]['@font-face']['font-weight'] = '700';
-
-                    $css_root_array[':root']['--font-family-content'] = 'Luciole, sans-serif';
-                }
-            }
-
-            // Line Height
-            $line_height_allowed = [125, 175];
-
-            if (isset($_POST['content_line_height']) && in_array((int) $_POST['content_line_height'], $line_height_allowed, true)) {
-                $css_root_array[':root']['--text-line-height'] = (int) $_POST['content_line_height'] / 100;
-            }
-
-            // Text align
-            if (isset($_POST['content_text_align']) && ($_POST['content_text_align'] === 'justify' || $_POST['content_text_align'] === 'justify_not_mobile')) {
-                $css_root_array[':root']['--text-align'] = 'justify';
-
-                $css_media_contrast_array[':root']['--text-align'] = 'left';
-
-                if ($_POST['content_text_align'] === 'justify_not_mobile') {
-                    $css_media_array[':root']['--text-align'] = 'left';
-                }
-            }
-
-            // Hyphenation.
-            if (isset($_POST['content_hyphens']) && $_POST['content_hyphens'] !== 'disabled') {
-                $css_main_array['.content-text']['-webkit-hyphens'] = 'auto';
-                $css_main_array['.content-text']['-ms-hyphens']     = 'auto';
-                $css_main_array['.content-text']['hyphens']         = 'auto';
-
-                $css_main_array['.content-text']['-webkit-hyphenate-limit-chars'] = '5 2 2';
-                $css_main_array['.content-text']['-moz-hyphenate-limit-chars']    = '5 2 2';
-                $css_main_array['.content-text']['-ms-hyphenate-limit-chars']     = '5 2 2';
-                $css_main_array['.content-text']['hyphenate-limit-chars']         = '5 2 2';
-
-                $css_main_array['.content-text']['-webkit-hyphenate-limit-lines'] = '2';
-                $css_main_array['.content-text']['-moz-hyphenate-limit-lines']    = '2';
-                $css_main_array['.content-text']['-ms-hyphenate-limit-lines']     = '2';
-                $css_main_array['.content-text']['hyphenate-limit-lines']         = '2';
-
-                $css_main_array['.content-text']['-webkit-hyphenate-limit-last'] = 'always';
-                $css_main_array['.content-text']['-moz-hyphenate-limit-last']    = 'always';
-                $css_main_array['.content-text']['-ms-hyphenate-limit-last']     = 'always';
-                $css_main_array['.content-text']['hyphenate-limit-last']         = 'always';
-
-                $css_media_contrast_array['.content-text']['-webkit-hyphens'] = 'unset';
-                $css_media_contrast_array['.content-text']['-ms-hyphens']     = 'unset';
-                $css_media_contrast_array['.content-text']['hyphens']         = 'unset';
-
-                $css_media_contrast_array['.content-text']['-webkit-hyphenate-limit-chars'] = 'unset';
-                $css_media_contrast_array['.content-text']['-moz-hyphenate-limit-chars']    = 'unset';
-                $css_media_contrast_array['.content-text']['-ms-hyphenate-limit-chars']     = 'unset';
-                $css_media_contrast_array['.content-text']['hyphenate-limit-chars']         = 'unset';
-
-                $css_media_contrast_array['.content-text']['-webkit-hyphenate-limit-lines'] = 'unset';
-                $css_media_contrast_array['.content-text']['-moz-hyphenate-limit-lines']    = 'unset';
-                $css_media_contrast_array['.content-text']['-ms-hyphenate-limit-lines']     = 'unset';
-                $css_media_contrast_array['.content-text']['hyphenate-limit-lines']         = 'unset';
-
-                $css_media_contrast_array['.content-text']['-webkit-hyphenate-limit-last'] = 'unset';
-                $css_media_contrast_array['.content-text']['-moz-hyphenate-limit-last']    = 'unset';
-                $css_media_contrast_array['.content-text']['-ms-hyphenate-limit-last']     = 'unset';
-                $css_media_contrast_array['.content-text']['hyphenate-limit-last']         = 'unset';
-
-                if ($_POST['content_hyphens'] === 'enabled_not_mobile') {
-                    $css_media_array['.content-text']['-webkit-hyphens'] = 'unset';
-                    $css_media_array['.content-text']['-ms-hyphens']     = 'unset';
-                    $css_media_array['.content-text']['hyphens']         = 'unset';
-
-                    $css_media_array['.content-text']['-webkit-hyphenate-limit-chars'] = 'unset';
-                    $css_media_array['.content-text']['-moz-hyphenate-limit-chars']    = 'unset';
-                    $css_media_array['.content-text']['-ms-hyphenate-limit-chars']     = 'unset';
-                    $css_media_array['.content-text']['hyphenate-limit-chars']         = 'unset';
-
-                    $css_media_array['.content-text']['-webkit-hyphenate-limit-lines'] = 'unset';
-                    $css_media_array['.content-text']['-moz-hyphenate-limit-lines']    = 'unset';
-                    $css_media_array['.content-text']['-ms-hyphenate-limit-lines']     = 'unset';
-                    $css_media_array['.content-text']['hyphenate-limit-lines']         = 'unset';
-
-                    $css_media_array['.content-text']['-webkit-hyphenate-limit-last'] = 'unset';
-                    $css_media_array['.content-text']['-moz-hyphenate-limit-last']    = 'unset';
-                    $css_media_array['.content-text']['-ms-hyphenate-limit-last']     = 'unset';
-                    $css_media_array['.content-text']['hyphenate-limit-last']         = 'unset';
-                }
-            }
-
-            // Initial letter.
-            if (isset($_POST['content_initial_letter']) && $_POST['content_initial_letter'] === '1') {
-                $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['-moz-initial-letter']    = '2';
-                $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['-webkit-initial-letter'] = '2';
-                $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['initial-letter']         = '2';
-                $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['margin-right']           = '.25rem';
-            }
-
-            // Post introduction.
-            if (isset($_POST['content_post_intro']) && $_POST['content_post_intro'] === '1') {
-                $css_main_array['#post-intro']['border-block']  = '.063rem solid var(--color-border, #ccc)';
-                $css_main_array['#post-intro']['font-weight']   = '700';
-                $css_main_array['#post-intro']['margin-bottom'] = '2rem';
-
-                $css_main_array['#post-intro strong']['font-weight'] = '900';
-            }
-
-            // Post list appearence.
-            if (isset($_POST['content_post_list_type'])) {
-                if ($_POST['content_post_list_type'] === 'excerpt') {
-                    $css_main_array['.entry-list-extended']['list-style'] = 'none';
-                    $css_main_array['.entry-list-extended']['margin']     = '0';
-                    $css_main_array['.entry-list-extended']['padding']    = '0';
-
-                    $css_main_array['.entry-list-extended .post']['margin-bottom'] = '3rem';
-
-                    $css_main_array['.entry-list-extended .post-selected']['padding'] = '1rem';
-
-                    $css_main_array['.entry-list-extended .entry-title']['margin-block'] = '.5rem';
-
-                    $css_main_array['.entry-list-extended .post-excerpt']['margin'] = '.5rem 0 0';
-                } elseif ($_POST['content_post_list_type'] === 'content') {
-                    $css_main_array['.entry-list-content .post']['margin-bottom']  = '4rem';
-                    $css_main_array['.entry-list-content .post']['border-bottom']  = '.063rem solid var(--color-border, #ccc)';
-                    $css_main_array['.entry-list-content .post']['padding-bottom'] = '4rem';
-
-                    $css_main_array['.entry-list-content .post:last-child']['margin-bottom'] = '0';
-
-                    $css_main_array['.entry-list-content .entry-title']['font-size'] = '1.4em';
-                }
-            }
-
-            // Content links.
-            if (!isset($_POST['content_links_underline'])) {
-                $css_root_array[':root']['--content-link-text-decoration-line']      = 'none';
-                $css_root_array[':root']['--content-link-text-decoration-style']     = 'unset';
-                $css_root_array[':root']['--content-link-text-decoration-thickness'] = '.063rem';
-            }
-
-            // Link to reactions in the post list.
-            if (isset($_POST['content_post_list_reaction_link']) && $_POST['content_post_list_reaction_link'] !== 'disabled') {
-                $css_main_array['.entry-list .post']['flex-wrap'] = 'wrap';
-
-                $css_main_array['.post-reaction-link']['color'] = 'var(--color-text-secondary, #6c6f78)';
-
-                if (!isset($_POST['content_post_list_type']) || (isset($_POST['content_post_list_type']) && $_POST['content_post_list_type'] !== 'excerpt')) {
-                    $css_main_array['.post-reaction-link-container']['flex-basis'] = '100%';
-
-                    $css_media_array['.post-reaction-link-container']['order'] = '3';
-                } else {
-                    $css_main_array['.post-reaction-link-container']['display']    = 'inline-block';
-                    $css_main_array['.post-reaction-link-container']['flex-basis'] = '100%';
-                    $css_main_array['.post-reaction-link-container']['margin-top'] = '.5rem';
-                }
-            }
-
-            // Hide comment form.
-            if (isset($_POST['content_commentform_hide']) && $_POST['content_commentform_hide'] === '1') {
-                $css_main_array['#react-content']['margin-top'] = '1rem';
-            }
-
-            // Private comments.
-            if (isset($_POST['content_post_email_author']) && $_POST['content_post_email_author'] !== 'disabled') {
-                $css_main_array['.comment-private']['margin-bottom'] = '2rem';
-            }
-
-            // Sets the order of the blog elements.
-            $structure_order = [2 => '',];
-
-            if (isset($_POST['widgets_nav_position']) && $_POST['widgets_nav_position'] === 'header_content') {
-                $structure_order[2] = '--order-widgets-nav';
-            }
-
-            if ($structure_order[2] === '') {
-                $structure_order[2] = '--order-content';
-            } else {
-                $structure_order[] = '--order-content';
-            }
-
-            if (isset($_POST['widgets_nav_position']) && $_POST['widgets_nav_position'] === 'content_footer') {
-                $structure_order[] = '--order-widgets-nav';
-            }
-
-            if (isset($_POST['widgets_extra_enabled']) && $_POST['widgets_extra_enabled'] === '1') {
-                $structure_order[] = '--order-widgets-extra';
-            }
-
-            if (isset($_POST['footer_enabled']) && $_POST['footer_enabled'] === '1') {
-                $structure_order[] = '--order-footer';
-            }
-
-            if (array_search('--order-content', $structure_order) !== 2) {
-                $css_root_array[':root']['--order-content'] = array_search('--order-content', $structure_order);
-            }
-
-            if (in_array('--order-widgets-nav', $structure_order, true) && array_search('--order-widgets-nav', $structure_order) !== 3) {
-                $css_root_array[':root']['--order-widgets-nav'] = array_search('--order-widgets-nav', $structure_order);
-            }
-
-            if (in_array('--order-widgets-extra', $structure_order, true) && array_search('--order-widgets-extra', $structure_order) !== 4) {
-                $css_root_array[':root']['--order-widgets-extra'] = array_search('--order-widgets-extra', $structure_order);
-            }
-
-            if (in_array('--order-footer', $structure_order, true) && array_search('--order-footer', $structure_order) !== 5) {
-                $css_root_array[':root']['--order-footer'] = array_search('--order-footer', $structure_order);
-            }
-
-            // Social links.
-            $social_sites = omSettings::socialSites();
-
-            $display_social_links = false;
-
-            foreach ($social_sites as $site_nicename => $site_name) {
-                if (isset($_POST['footer_social_links_' . $site_nicename]) && $_POST['footer_social_links_' . $site_nicename] !== '') {
-                    $display_social_links = true;
-
-                    break;
-                }
-            }
-
-            if (isset($_POST['footer_enabled']) && $_POST['footer_enabled'] === '1' && $display_social_links === true) {
-                $css_main_array['.footer-social-links']['margin-bottom'] = '1rem';
-
-                $css_main_array['.footer-social-links ul']['list-style']                 = 'none';
-                $css_main_array['.footer-social-links ul']['margin']                     = '0';
-                $css_main_array['.footer-social-links ul']['padding-left']               = '0';
-                $css_main_array['.footer-social-links ul li']['display']                 = 'inline-block';
-                $css_main_array['.footer-social-links ul li']['margin']                  = '.25em';
-                $css_main_array['.footer-social-links ul li:first-child']['margin-left'] = '0';
-                $css_main_array['.footer-social-links ul li:last-child']['margin-right'] = '0';
-
-                $css_main_array['.footer-social-links a']['display'] = 'inline-block';
-
-                $css_main_array['.footer-social-links-icon-container']['align-items']      = 'center';
-                $css_main_array['.footer-social-links-icon-container']['background-color'] = 'var(--color-primary)';
-                $css_main_array['.footer-social-links-icon-container']['border-radius']    = 'var(--border-radius, unset)';
-                $css_main_array['.footer-social-links-icon-container']['display']          = 'flex';
-                $css_main_array['.footer-social-links-icon-container']['height']           = '1.5rem';
-                $css_main_array['.footer-social-links-icon-container']['justify-content']  = 'center';
-                $css_main_array['.footer-social-links-icon-container']['width']            = '1.5rem';
-
-                $css_main_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['background-color'] = 'var(--color-primary-amplified)';
-
-                $css_main_array['.footer-social-links-icon']['fill']            = 'var(--color-background, #fcfcfd)';
-                $css_main_array['.footer-social-links-icon']['stroke']          = 'none';
-                $css_main_array['.footer-social-links-icon']['width']           = '1rem';
-
-                if (isset($_POST['global_css_transition']) && $_POST['global_css_transition'] === '1') {
-                    $css_main_array['.footer-social-links-icon-container']['transition'] = 'all .2s ease-in-out';
-
-                    $css_main_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['transition'] = 'all .2s ease-in-out';
-                }
-
-
-
-                $css_media_contrast_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['background-color'] = 'var(--color-background)';
-                $css_media_contrast_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['color']            = 'var(--color-text-main)';
-                $css_media_contrast_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['outline']          = '.168rem solid var(--color-text-main)';
-
-                $css_media_contrast_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon']['fill'] = 'var(--color-text-main)';
-            }
-
-            $css .= !empty($css_root_array) ? omUtils::stylesArrayToString($css_root_array) : '';
-            $css .= !empty($css_root_media_array) ? '@media (prefers-color-scheme:dark){' . omUtils::stylesArrayToString($css_root_media_array) . '}' : '';
-            $css .= !empty($css_main_array) ? omUtils::stylesArrayToString($css_main_array) : '';
-            $css .= !empty($css_supports_initial_letter_array) ? '@supports (initial-letter: 2) or (-webkit-initial-letter: 2) or (-moz-initial-letter: 2){' . omUtils::stylesArrayToString($css_supports_initial_letter_array) . '}' : '';
-            $css .= !empty($css_media_array) ? '@media (max-width:34em){' . omUtils::stylesArrayToString($css_media_array) . '}' : '';
-            $css .= !empty($css_media_contrast_array) ? '@media (prefers-contrast:more),(-ms-high-contrast:active),(-ms-high-contrast:black-on-white){' . omUtils::stylesArrayToString($css_media_contrast_array) . '}' : '';
-            $css .= !empty($css_media_motion_array) ? '@media (prefers-reduced-motion:reduce){' . omUtils::stylesArrayToString($css_media_motion_array) . '}' : '';
-            $css .= !empty($css_media_print_array) ? '@media print{' . omUtils::stylesArrayToString($css_media_print_array) . '}' : '';
-
-            if (!empty($css)) {
-                dcCore::app()->blog->settings->originemini->put(
-                    'styles',
-                    str_replace('&gt;', ">", htmlspecialchars($css, ENT_NOQUOTES)),
-                    'string',
-                    $default_settings['styles']['title'],
-                    true
-                );
-            } else {
-                dcCore::app()->blog->settings->originemini->drop('styles');
-            }
-        } else {
-            dcCore::app()->blog->settings->originemini->drop('styles');
         }
+
+        // Background color.
+        $background_colors_allowed = ['beige', 'blue', 'gray', 'green', 'red'];
+
+        $background_colors = [
+            'beige' => [
+                'h' => '45',
+                's' => '65%',
+                'l' => '96%'
+            ],
+            'blue'  => [
+                'h' => '226',
+                's' => '100%',
+                'l' => '98%'
+            ],
+            'gray'  => [
+                'h' => '0',
+                's' => '0%',
+                'l' => '97%'
+            ],
+            'green' => [
+                'h' => '105',
+                's' => '90%',
+                'l' => '98%'
+            ],
+            'red'   => [
+                'h' => '0',
+                's' => '90%',
+                'l' => '98%'
+            ]
+        ];
+
+        if (isset($_POST['global_color_background']) && in_array($_POST['global_color_background'], $background_colors_allowed, true)) {
+
+            // Main background.
+            if (isset($background_colors[$_POST['global_color_background']]['h'])) {
+                $css_root_array[':root']['--color-background-h-custom'] = $background_colors[$_POST['global_color_background']]['h'];
+            }
+
+            if (isset($background_colors[$_POST['global_color_background']]['s'])) {
+                $css_root_array[':root']['--color-background-s-custom'] = $background_colors[$_POST['global_color_background']]['s'];
+            }
+
+            if (isset($background_colors[$_POST['global_color_background']]['l'])) {
+                $css_root_array[':root']['--color-background-l-custom'] = $background_colors[$_POST['global_color_background']]['l'];
+            }
+
+            $css_root_array[':root']['--color-input-background'] = '#fff';
+        }
+
+        // Transitions.
+        if (isset($_POST['global_css_transition']) && $_POST['global_css_transition'] === '1') {
+            $css_main_array['a']['transition'] = 'all .2s ease-in-out';
+
+            $css_main_array['a:active, a:hover']['transition'] = 'all .2s ease-in-out';
+
+            $css_main_array['input[type="submit"], .form-submit, .button']['transition'] = 'all .2s ease-in-out';
+
+            $css_main_array['input[type="submit"]:hover, .button:hover, .form-submit:hover']['transition'] = 'all .2s ease-in-out';
+
+            $css_media_motion_array['a']['transition'] = 'unset';
+
+            $css_media_motion_array['a:active, a:hover']['transition'] = 'unset';
+
+            $css_media_motion_array['input[type="submit"], .form-submit, .button']['transition'] = 'unset';
+
+            $css_media_motion_array['input[type="submit"]:hover, .button:hover, .form-submit:hover']['transition'] = 'unset';
+        }
+
+        // Links underline.
+        if (isset($_POST['global_css_links_underline']) && $_POST['global_css_links_underline'] === '1') {
+            $css_root_array[':root']['--link-text-decoration']       = 'underline';
+            $css_root_array[':root']['--link-text-decoration-style'] = 'dotted';
+
+            $css_root_array['.button']['text-decoration']       = 'none';
+            $css_root_array['.button']['text-decoration-style'] = 'none';
+        }
+
+        // Border radius.
+        if (isset($_POST['global_css_border_radius']) && $_POST['global_css_border_radius'] === '1') {
+            $css_root_array[':root']['--border-radius'] = '.168rem';
+        }
+
+        // JS.
+        if (isset($_POST['global_js']) && $_POST['global_js'] === '1') {
+            if (isset($_POST['content_trackback_link']) && $_POST['content_trackback_link'] === '1') {
+                $css_main_array['#trackback-url']['color']                 = 'var(--color-primary)';
+                $css_main_array['#trackback-url']['text-decoration']       = 'var(--link-text-decoration, none)';
+                $css_main_array['#trackback-url']['text-decoration-style'] = 'var(--link-text-decoration-style, unset)';
+
+                $css_main_array['#trackback-url:is(:active, :focus, :hover)']['cursor']                = 'pointer';
+                $css_main_array['#trackback-url:is(:active, :focus, :hover)']['filter']                = 'brightness(1.25)';
+                $css_main_array['#trackback-url:is(:active, :focus, :hover)']['text-decoration']       = 'underline';
+                $css_main_array['#trackback-url:is(:active, :focus, :hover)']['text-decoration-style'] = 'solid';
+
+                $css_main_array['#trackback-url-copied']['display'] = 'none';
+
+                $css_media_contrast_array['#trackback-url:is(:active, :focus, :hover)']['background-color'] = 'var(--color-text-main)';
+                $css_media_contrast_array['#trackback-url:is(:active, :focus, :hover)']['color']            = 'var(--color-background)';
+                $css_media_contrast_array['#trackback-url:is(:active, :focus, :hover)']['outline']          = '.168rem solid var(--color-text-main)';
+                $css_media_contrast_array['#trackback-url:is(:active, :focus, :hover)']['text-decoration']  = 'none';
+            }
+        }
+
+        // Header banner
+        if (isset($_POST['header_image']) && $_POST['header_image'] !== '') {
+            $css_main_array['#site-image']['width'] = '100%';
+
+            $css_media_contrast_array['#site-image a']['outline'] = 'inherit';
+
+            if (isset($_POST['global_css_border_radius']) && $_POST['global_css_border_radius'] === '1') {
+                $css_main_array['#site-image img']['border-radius'] = 'var(--border-radius)';
+            }
+
+            if (isset($header_image_width) && $header_image_width >= 100) {
+                $css_main_array['#site-image img']['width'] = '100%';
+            }
+        }
+
+        // Blog description.
+        if (isset($_POST['header_description']) && $_POST['header_description'] === '1') {
+            $css_main_array['#site-identity']['align-items'] = 'center';
+            $css_main_array['#site-identity']['column-gap']  = '.5rem';
+            $css_main_array['#site-identity']['display']     = 'flex';
+            $css_main_array['#site-identity']['flex-wrap']   = 'wrap';
+            $css_main_array['#site-identity']['row-gap']     = '.5rem';
+
+            $css_main_array['#site-description']['font-size']   = '.8em';
+            $css_main_array['#site-description']['font-style']  = 'italic';
+            $css_main_array['#site-description']['font-weight'] = 'normal';
+            $css_main_array['#site-description']['margin']      = '0';
+        }
+
+        // Content font family.
+        if (isset($_POST['content_text_font']) && $_POST['content_text_font'] !== 'same' && $_POST['global_font_family'] !== $_POST['content_text_font']) {
+            if ($_POST['content_text_font'] === 'sans-serif') {
+                $css_root_array[':root']['--font-family-content'] = '-apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif';
+            } elseif ($_POST['content_text_font'] === 'serif') {
+                $css_main_array[':root']['--font-family-content'] = '"Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
+            } elseif ($_POST['content_text_font'] === 'monospace') {
+                $css_main_array[':root']['--font-family-content'] = 'Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace';
+            } elseif ($_POST['content_text_font'] === 'sans-serif-browser') {
+                $css_main_array[':root']['--font-family-content'] = 'sans-serif';
+            } elseif ($_POST['content_text_font'] === 'serif-browser') {
+                $css_main_array[':root']['--font-family-content'] = 'serif';
+            } elseif ($_POST['content_text_font'] === 'monospace-browser') {
+                $css_main_array[':root']['--font-family-content'] = 'monospace';
+            } elseif ($_POST['content_text_font'] === 'atkinson') {
+                $themes_url = dcCore::app()->blog->settings->system->themes_url;
+
+                $css_main_array[4]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
+                $css_main_array[4]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2")';
+                $css_main_array[4]['@font-face']['font-style']  = 'normal';
+                $css_main_array[4]['@font-face']['font-weight'] = '400';
+
+                $css_main_array[5]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
+                $css_main_array[5]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2")';
+                $css_main_array[5]['@font-face']['font-style']  = 'italic';
+                $css_main_array[5]['@font-face']['font-weight'] = '400';
+
+                $css_main_array[6]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
+                $css_main_array[6]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2")';
+                $css_main_array[6]['@font-face']['font-style']  = 'normal';
+                $css_main_array[6]['@font-face']['font-weight'] = '700';
+
+                $css_main_array[7]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
+                $css_main_array[7]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("woff2")';
+                $css_main_array[7]['@font-face']['font-style']  = 'italic';
+                $css_main_array[7]['@font-face']['font-weight'] = '700';
+
+                $css_root_array[':root']['--font-family-content'] = '"Atkinson Hyperlegible", sans-serif';
+            } elseif ($_POST['content_text_font'] === 'eb-garamond') {
+                $themes_url = dcCore::app()->blog->settings->system->themes_url;
+
+                $css_main_array[4]['@font-face']['font-family'] = '"EB Garamond"';
+                $css_main_array[4]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Regular.ttf") format("truetype")';
+                $css_main_array[4]['@font-face']['font-style']  = 'normal';
+                $css_main_array[4]['@font-face']['font-weight'] = '400';
+
+                $css_main_array[5]['@font-face']['font-family'] = '"EB Garamond"';
+                $css_main_array[5]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Italic.ttf") format("truetype")';
+                $css_main_array[5]['@font-face']['font-style']  = 'italic';
+                $css_main_array[5]['@font-face']['font-weight'] = '400';
+
+                $css_main_array[6]['@font-face']['font-family'] = '"EB Garamond"';
+                $css_main_array[6]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Bold.ttf") format("truetype")';
+                $css_main_array[6]['@font-face']['font-style']  = 'normal';
+                $css_main_array[6]['@font-face']['font-weight'] = '700';
+
+                $css_main_array[7]['@font-face']['font-family'] = '"EB Garamond"';
+                $css_main_array[7]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-BoldItalic.ttf") format("truetype")';
+                $css_main_array[7]['@font-face']['font-style']  = 'italic';
+                $css_main_array[7]['@font-face']['font-weight'] = '700';
+
+                $css_root_array[':root']['--font-family-content'] = '"EB Garamond", serif';
+            } elseif ($_POST['content_text_font'] === 'luciole') {
+                $themes_url = dcCore::app()->blog->settings->system->themes_url;
+
+                $css_main_array[4]['@font-face']['font-family'] = '"Luciole"';
+                $css_main_array[4]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Regular.ttf") format("truetype")';
+                $css_main_array[4]['@font-face']['font-style']  = 'normal';
+                $css_main_array[4]['@font-face']['font-weight'] = '400';
+
+                $css_main_array[5]['@font-face']['font-family'] = '"Luciole"';
+                $css_main_array[5]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Regular-Italic.ttf") format("truetype")';
+                $css_main_array[5]['@font-face']['font-style']  = 'italic';
+                $css_main_array[5]['@font-face']['font-weight'] = '400';
+
+                $css_main_array[6]['@font-face']['font-family'] = '"Luciole"';
+                $css_main_array[6]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Bold.ttf") format("truetype")';
+                $css_main_array[6]['@font-face']['font-style']  = 'normal';
+                $css_main_array[6]['@font-face']['font-weight'] = '700';
+
+                $css_main_array[7]['@font-face']['font-family'] = '"Luciole"';
+                $css_main_array[7]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Bold-Italic.ttf") format("truetype")';
+                $css_main_array[7]['@font-face']['font-style']  = 'italic';
+                $css_main_array[7]['@font-face']['font-weight'] = '700';
+
+                $css_root_array[':root']['--font-family-content'] = 'Luciole, sans-serif';
+            }
+        }
+
+        // Line Height
+        $line_height_allowed = [125, 175];
+
+        if (isset($_POST['content_line_height']) && in_array((int) $_POST['content_line_height'], $line_height_allowed, true)) {
+            $css_root_array[':root']['--text-line-height'] = (int) $_POST['content_line_height'] / 100;
+        }
+
+        // Text align
+        if (isset($_POST['content_text_align']) && ($_POST['content_text_align'] === 'justify' || $_POST['content_text_align'] === 'justify_not_mobile')) {
+            $css_root_array[':root']['--text-align'] = 'justify';
+
+            $css_media_contrast_array[':root']['--text-align'] = 'left';
+
+            if ($_POST['content_text_align'] === 'justify_not_mobile') {
+                $css_media_array[':root']['--text-align'] = 'left';
+            }
+        }
+
+        // Hyphenation.
+        if (isset($_POST['content_hyphens']) && $_POST['content_hyphens'] !== 'disabled') {
+            $css_main_array['.content-text']['-webkit-hyphens'] = 'auto';
+            $css_main_array['.content-text']['-ms-hyphens']     = 'auto';
+            $css_main_array['.content-text']['hyphens']         = 'auto';
+
+            $css_main_array['.content-text']['-webkit-hyphenate-limit-chars'] = '5 2 2';
+            $css_main_array['.content-text']['-moz-hyphenate-limit-chars']    = '5 2 2';
+            $css_main_array['.content-text']['-ms-hyphenate-limit-chars']     = '5 2 2';
+            $css_main_array['.content-text']['hyphenate-limit-chars']         = '5 2 2';
+
+            $css_main_array['.content-text']['-webkit-hyphenate-limit-lines'] = '2';
+            $css_main_array['.content-text']['-moz-hyphenate-limit-lines']    = '2';
+            $css_main_array['.content-text']['-ms-hyphenate-limit-lines']     = '2';
+            $css_main_array['.content-text']['hyphenate-limit-lines']         = '2';
+
+            $css_main_array['.content-text']['-webkit-hyphenate-limit-last'] = 'always';
+            $css_main_array['.content-text']['-moz-hyphenate-limit-last']    = 'always';
+            $css_main_array['.content-text']['-ms-hyphenate-limit-last']     = 'always';
+            $css_main_array['.content-text']['hyphenate-limit-last']         = 'always';
+
+            $css_media_contrast_array['.content-text']['-webkit-hyphens'] = 'unset';
+            $css_media_contrast_array['.content-text']['-ms-hyphens']     = 'unset';
+            $css_media_contrast_array['.content-text']['hyphens']         = 'unset';
+
+            $css_media_contrast_array['.content-text']['-webkit-hyphenate-limit-chars'] = 'unset';
+            $css_media_contrast_array['.content-text']['-moz-hyphenate-limit-chars']    = 'unset';
+            $css_media_contrast_array['.content-text']['-ms-hyphenate-limit-chars']     = 'unset';
+            $css_media_contrast_array['.content-text']['hyphenate-limit-chars']         = 'unset';
+
+            $css_media_contrast_array['.content-text']['-webkit-hyphenate-limit-lines'] = 'unset';
+            $css_media_contrast_array['.content-text']['-moz-hyphenate-limit-lines']    = 'unset';
+            $css_media_contrast_array['.content-text']['-ms-hyphenate-limit-lines']     = 'unset';
+            $css_media_contrast_array['.content-text']['hyphenate-limit-lines']         = 'unset';
+
+            $css_media_contrast_array['.content-text']['-webkit-hyphenate-limit-last'] = 'unset';
+            $css_media_contrast_array['.content-text']['-moz-hyphenate-limit-last']    = 'unset';
+            $css_media_contrast_array['.content-text']['-ms-hyphenate-limit-last']     = 'unset';
+            $css_media_contrast_array['.content-text']['hyphenate-limit-last']         = 'unset';
+
+            if ($_POST['content_hyphens'] === 'enabled_not_mobile') {
+                $css_media_array['.content-text']['-webkit-hyphens'] = 'unset';
+                $css_media_array['.content-text']['-ms-hyphens']     = 'unset';
+                $css_media_array['.content-text']['hyphens']         = 'unset';
+
+                $css_media_array['.content-text']['-webkit-hyphenate-limit-chars'] = 'unset';
+                $css_media_array['.content-text']['-moz-hyphenate-limit-chars']    = 'unset';
+                $css_media_array['.content-text']['-ms-hyphenate-limit-chars']     = 'unset';
+                $css_media_array['.content-text']['hyphenate-limit-chars']         = 'unset';
+
+                $css_media_array['.content-text']['-webkit-hyphenate-limit-lines'] = 'unset';
+                $css_media_array['.content-text']['-moz-hyphenate-limit-lines']    = 'unset';
+                $css_media_array['.content-text']['-ms-hyphenate-limit-lines']     = 'unset';
+                $css_media_array['.content-text']['hyphenate-limit-lines']         = 'unset';
+
+                $css_media_array['.content-text']['-webkit-hyphenate-limit-last'] = 'unset';
+                $css_media_array['.content-text']['-moz-hyphenate-limit-last']    = 'unset';
+                $css_media_array['.content-text']['-ms-hyphenate-limit-last']     = 'unset';
+                $css_media_array['.content-text']['hyphenate-limit-last']         = 'unset';
+            }
+        }
+
+        // Initial letter.
+        if (isset($_POST['content_initial_letter']) && $_POST['content_initial_letter'] === '1') {
+            $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['-moz-initial-letter']    = '2';
+            $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['-webkit-initial-letter'] = '2';
+            $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['initial-letter']         = '2';
+            $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['margin-right']           = '.25rem';
+        }
+
+        // Post introduction.
+        if (isset($_POST['content_post_intro']) && $_POST['content_post_intro'] === '1') {
+            $css_main_array['#post-intro']['border-block']  = '.063rem solid var(--color-border, #ccc)';
+            $css_main_array['#post-intro']['font-weight']   = '700';
+            $css_main_array['#post-intro']['margin-bottom'] = '2rem';
+
+            $css_main_array['#post-intro strong']['font-weight'] = '900';
+        }
+
+        // Post list appearence.
+        if (isset($_POST['content_post_list_type'])) {
+            if ($_POST['content_post_list_type'] === 'excerpt') {
+                $css_main_array['.entry-list-extended']['list-style'] = 'none';
+                $css_main_array['.entry-list-extended']['margin']     = '0';
+                $css_main_array['.entry-list-extended']['padding']    = '0';
+
+                $css_main_array['.entry-list-extended .post']['margin-bottom'] = '3rem';
+
+                $css_main_array['.entry-list-extended .post-selected']['padding'] = '1rem';
+
+                $css_main_array['.entry-list-extended .entry-title']['margin-block'] = '.5rem';
+
+                $css_main_array['.entry-list-extended .post-excerpt']['margin'] = '.5rem 0 0';
+            } elseif ($_POST['content_post_list_type'] === 'content') {
+                $css_main_array['.entry-list-content .post']['margin-bottom']  = '4rem';
+                $css_main_array['.entry-list-content .post']['border-bottom']  = '.063rem solid var(--color-border, #ccc)';
+                $css_main_array['.entry-list-content .post']['padding-bottom'] = '4rem';
+
+                $css_main_array['.entry-list-content .post:last-child']['margin-bottom'] = '0';
+
+                $css_main_array['.entry-list-content .entry-title']['font-size'] = '1.4em';
+            }
+        }
+
+        // Content links.
+        if (!isset($_POST['content_links_underline'])) {
+            $css_root_array[':root']['--content-link-text-decoration-line']      = 'none';
+            $css_root_array[':root']['--content-link-text-decoration-style']     = 'unset';
+            $css_root_array[':root']['--content-link-text-decoration-thickness'] = '.063rem';
+        }
+
+        // Link to reactions in the post list.
+        if (isset($_POST['content_post_list_reaction_link']) && $_POST['content_post_list_reaction_link'] !== 'disabled') {
+            $css_main_array['.entry-list .post']['flex-wrap'] = 'wrap';
+
+            $css_main_array['.post-reaction-link']['color'] = 'var(--color-text-secondary, #6c6f78)';
+
+            if (!isset($_POST['content_post_list_type']) || (isset($_POST['content_post_list_type']) && $_POST['content_post_list_type'] !== 'excerpt')) {
+                $css_main_array['.post-reaction-link-container']['flex-basis'] = '100%';
+
+                $css_media_array['.post-reaction-link-container']['order'] = '3';
+            } else {
+                $css_main_array['.post-reaction-link-container']['display']    = 'inline-block';
+                $css_main_array['.post-reaction-link-container']['flex-basis'] = '100%';
+                $css_main_array['.post-reaction-link-container']['margin-top'] = '.5rem';
+            }
+        }
+
+        // Hide comment form.
+        if (isset($_POST['content_commentform_hide']) && $_POST['content_commentform_hide'] === '1') {
+            $css_main_array['#react-content']['margin-top'] = '1rem';
+        }
+
+        // Private comments.
+        if (isset($_POST['content_post_email_author']) && $_POST['content_post_email_author'] !== 'disabled') {
+            $css_main_array['.comment-private']['margin-bottom'] = '2rem';
+        }
+
+        // Sets the order of the blog elements.
+        $structure_order = [2 => '',];
+
+        if (isset($_POST['widgets_nav_position']) && $_POST['widgets_nav_position'] === 'header_content') {
+            $structure_order[2] = '--order-widgets-nav';
+        }
+
+        if ($structure_order[2] === '') {
+            $structure_order[2] = '--order-content';
+        } else {
+            $structure_order[] = '--order-content';
+        }
+
+        if (isset($_POST['widgets_nav_position']) && $_POST['widgets_nav_position'] === 'content_footer') {
+            $structure_order[] = '--order-widgets-nav';
+        }
+
+        if (isset($_POST['widgets_extra_enabled']) && $_POST['widgets_extra_enabled'] === '1') {
+            $structure_order[] = '--order-widgets-extra';
+        }
+
+        if (isset($_POST['footer_enabled']) && $_POST['footer_enabled'] === '1') {
+            $structure_order[] = '--order-footer';
+        }
+
+        if (array_search('--order-content', $structure_order) !== 2) {
+            $css_root_array[':root']['--order-content'] = array_search('--order-content', $structure_order);
+        }
+
+        if (in_array('--order-widgets-nav', $structure_order, true) && array_search('--order-widgets-nav', $structure_order) !== 3) {
+            $css_root_array[':root']['--order-widgets-nav'] = array_search('--order-widgets-nav', $structure_order);
+        }
+
+        if (in_array('--order-widgets-extra', $structure_order, true) && array_search('--order-widgets-extra', $structure_order) !== 4) {
+            $css_root_array[':root']['--order-widgets-extra'] = array_search('--order-widgets-extra', $structure_order);
+        }
+
+        if (in_array('--order-footer', $structure_order, true) && array_search('--order-footer', $structure_order) !== 5) {
+            $css_root_array[':root']['--order-footer'] = array_search('--order-footer', $structure_order);
+        }
+
+        // Social links.
+        $social_sites = omUtilsSettings::socialSites();
+
+        $display_social_links = false;
+
+        foreach ($social_sites as $site_id) {
+            if (isset($_POST['footer_social_links_' . $site_id]) && $_POST['footer_social_links_' . $site_id] !== '') {
+                $display_social_links = true;
+
+                break;
+            }
+        }
+
+        if (isset($_POST['footer_enabled']) && $_POST['footer_enabled'] === '1' && $display_social_links === true) {
+            $css_main_array['.footer-social-links']['margin-bottom'] = '1rem';
+
+            $css_main_array['.footer-social-links ul']['list-style']                 = 'none';
+            $css_main_array['.footer-social-links ul']['margin']                     = '0';
+            $css_main_array['.footer-social-links ul']['padding-left']               = '0';
+            $css_main_array['.footer-social-links ul li']['display']                 = 'inline-block';
+            $css_main_array['.footer-social-links ul li']['margin']                  = '.25em';
+            $css_main_array['.footer-social-links ul li:first-child']['margin-left'] = '0';
+            $css_main_array['.footer-social-links ul li:last-child']['margin-right'] = '0';
+
+            $css_main_array['.footer-social-links a']['display'] = 'inline-block';
+
+            $css_main_array['.footer-social-links-icon-container']['align-items']      = 'center';
+            $css_main_array['.footer-social-links-icon-container']['background-color'] = 'var(--color-primary)';
+            $css_main_array['.footer-social-links-icon-container']['border-radius']    = 'var(--border-radius, unset)';
+            $css_main_array['.footer-social-links-icon-container']['display']          = 'flex';
+            $css_main_array['.footer-social-links-icon-container']['height']           = '1.5rem';
+            $css_main_array['.footer-social-links-icon-container']['justify-content']  = 'center';
+            $css_main_array['.footer-social-links-icon-container']['width']            = '1.5rem';
+
+            $css_main_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['background-color'] = 'var(--color-primary-amplified)';
+
+            $css_main_array['.footer-social-links-icon']['fill']            = 'var(--color-background, #fcfcfd)';
+            $css_main_array['.footer-social-links-icon']['stroke']          = 'none';
+            $css_main_array['.footer-social-links-icon']['width']           = '1rem';
+
+            if (isset($_POST['global_css_transition']) && $_POST['global_css_transition'] === '1') {
+                $css_main_array['.footer-social-links-icon-container']['transition'] = 'all .2s ease-in-out';
+
+                $css_main_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['transition'] = 'all .2s ease-in-out';
+            }
+
+            $css_media_contrast_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['background-color'] = 'var(--color-background)';
+            $css_media_contrast_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['color']            = 'var(--color-text-main)';
+            $css_media_contrast_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['outline']          = '.168rem solid var(--color-text-main)';
+
+            $css_media_contrast_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon']['fill'] = 'var(--color-text-main)';
+        }
+
+        $css .= !empty($css_root_array) ? omUtils::stylesArrayToString($css_root_array) : '';
+        $css .= !empty($css_root_media_array) ? '@media (prefers-color-scheme:dark){' . omUtils::stylesArrayToString($css_root_media_array) . '}' : '';
+        $css .= !empty($css_main_array) ? omUtils::stylesArrayToString($css_main_array) : '';
+        $css .= !empty($css_supports_initial_letter_array) ? '@supports (initial-letter: 2) or (-webkit-initial-letter: 2) or (-moz-initial-letter: 2){' . omUtils::stylesArrayToString($css_supports_initial_letter_array) . '}' : '';
+        $css .= !empty($css_media_array) ? '@media (max-width:34em){' . omUtils::stylesArrayToString($css_media_array) . '}' : '';
+        $css .= !empty($css_media_contrast_array) ? '@media (prefers-contrast:more),(-ms-high-contrast:active),(-ms-high-contrast:black-on-white){' . omUtils::stylesArrayToString($css_media_contrast_array) . '}' : '';
+        $css .= !empty($css_media_motion_array) ? '@media (prefers-reduced-motion:reduce){' . omUtils::stylesArrayToString($css_media_motion_array) . '}' : '';
+        $css .= !empty($css_media_print_array) ? '@media print{' . omUtils::stylesArrayToString($css_media_print_array) . '}' : '';
+
+        if (!empty($css)) {
+            return [
+                'value' => str_replace('&gt;', ">", htmlspecialchars($css, ENT_NOQUOTES)),
+                'type'  => 'string'
+            ];
+        }
+
+        return [];
     }
 
     /**
@@ -2154,7 +2143,7 @@ class origineMiniSettings
         ];
 
         // Social links.
-        $social_sites = omSettings::socialSites();
+        $social_sites = omUtilsSettings::socialSites();
 
         foreach ($social_sites as $site_id) {
 
@@ -2169,12 +2158,12 @@ class origineMiniSettings
             $setting_placeholder = '';
 
             switch ($site_id) {
-                case 'Twitter':
-                    $setting_placeholder = __('settings-footer-sociallinks-twitter-placeholder');
+                case 'whatsapp':
+                    $setting_placeholder = '+1234567890';
 
                     break;
-                case 'WhatsApp':
-                    $setting_placeholder = '+1234567890';
+                case 'x':
+                    $setting_placeholder = __('settings-footer-sociallinks-x-placeholder');
             }
 
             // Displays the setting.
