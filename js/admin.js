@@ -99,8 +99,8 @@ function disableInputs() {
     document.getElementById("footer_social_links_mastodon-input").style.display = "none";
     document.getElementById("footer_social_links_signal-input").style.display   = "none";
     document.getElementById("footer_social_links_tiktok-input").style.display   = "none";
-    document.getElementById("footer_social_links_twitter-input").style.display  = "none";
     document.getElementById("footer_social_links_whatsapp-input").style.display = "none";
+    document.getElementById("footer_social_links_x-input").style.display        = "none";
   } else {
     document.getElementById("footer_credits-input").style.display               = "block";
     document.getElementById("footer_credits-description").style.display         = "block";
@@ -112,8 +112,8 @@ function disableInputs() {
     document.getElementById("footer_social_links_mastodon-input").style.display = "block";
     document.getElementById("footer_social_links_signal-input").style.display   = "block";
     document.getElementById("footer_social_links_tiktok-input").style.display   = "block";
-    document.getElementById("footer_social_links_twitter-input").style.display  = "block";
     document.getElementById("footer_social_links_whatsapp-input").style.display = "block";
+    document.getElementById("footer_social_links_x-input").style.display        = "block";
   }
 }
 
