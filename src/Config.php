@@ -23,9 +23,12 @@ use Dotclear\Helper\Network\Http;
 use Exception;
 use form;
 
-require_once 'functions.php';
+// Prepares to use custom functions.
+require_once 'CustomSettings.php';
+use OrigineMiniSettings as omSettings;
+
+require_once 'CustomUtils.php';
 use OrigineMiniUtils as omUtils;
-use OrigineMiniUtilsSettings as omUtilsSettings;
 
 class Config extends dcNsProcess
 {
@@ -363,7 +366,7 @@ class Config extends dcNsProcess
                  * Limits the maximum width value of the image if its superior to the page width,
                  * and sets its height proportionally.
                  */
-                $page_width_data = ConfigUtils::getContentWidth($page_width_unit, $page_width_value, true);
+                $page_width_data = omSettings::getContentWidth($page_width_unit, $page_width_value, true);
 
                 $page_width = $page_width_data['value'];
 
@@ -450,7 +453,7 @@ class Config extends dcNsProcess
         $page_width_unit  = $page_width_unit ?: 'px';
         $page_width_value = $page_width_value ? (int) $page_width_value : 30;
 
-        $page_width_data = ConfigUtils::getContentWidth(
+        $page_width_data = omSettings::getContentWidth(
             $page_width_unit,
             $page_width_value
         );
@@ -513,7 +516,7 @@ class Config extends dcNsProcess
                 $page_width_value = '480';
             }
 
-            $page_width_data = ConfigUtils::getContentWidth($page_width_unit, $page_width_value);
+            $page_width_data = omSettings::getContentWidth($page_width_unit, $page_width_value);
 
             if (!empty($page_width_data)) {
                 $css_root_array[':root']['--page-width'] = $page_width_data['value'] . $page_width_data['unit'];
@@ -524,7 +527,7 @@ class Config extends dcNsProcess
         $font_size_allowed = [80, 90, 110, 120];
 
         if (isset($_POST['global_font_size']) && in_array((int) $_POST['global_font_size'], $font_size_allowed, true)) {
-            $css_root_array[':root']['--font-size'] = ConfigUtils::removeZero($_POST['global_font_size'] / 100) . 'em';
+            $css_root_array[':root']['--font-size'] = omUtils::removeZero($_POST['global_font_size'] / 100) . 'em';
         }
 
         // Font family.
@@ -1149,7 +1152,7 @@ class Config extends dcNsProcess
         }
 
         // Social links.
-        $social_sites = omUtilsSettings::socialSites();
+        $social_sites = omSettings::socialSites();
 
         $display_social_links = false;
 
@@ -2143,7 +2146,7 @@ class origineMiniSettings
         ];
 
         // Social links.
-        $social_sites = omUtilsSettings::socialSites();
+        $social_sites = omSettings::socialSites();
 
         foreach ($social_sites as $site_id) {
 
@@ -2207,70 +2210,5 @@ class origineMiniSettings
         }
 
         return $saved_settings;
-    }
-}
-
-class ConfigUtils
-{
-    /**
-     * Gets an array of the content width of the blog.
-     *
-     * @param string $unit           Should be 'em' or 'px'.
-     * @param int    $value          The value of the width.
-     * @param bool   $return_default If true, the default width will be returned.
-     *
-     * @return array The unit and the value of the width.
-     */
-    public static function getContentWidth($unit = 'em', $value = 30, $return_default = false)
-    {
-        $value = (int) $value;
-
-        $content_width_default = [];
-
-        if ($return_default === true) {
-            $content_width_default = [
-                'unit'  => 'em',
-                'value' => 30
-            ];
-        }
-
-        if ($unit === 'em' && $value === 30 && $return_default === false) {
-            return $content_width_default;
-        }
-
-        if ($unit === 'em' && ($value < 30 || $value > 80)) {
-            return $content_width_default;
-        }
-
-        if ($unit === 'px' && ($value < 480 || $value > 1280)) {
-            return $content_width_default;
-        }
-
-        if (!in_array($unit, ['em', 'px'], true)) {
-            return $content_width_default;
-        }
-
-        return [
-            'unit'  => $unit,
-            'value' => $value
-        ];
-    }
-
-    /**
-     * Removes 0 before decimal separator of numbers inferior to 1.
-     *
-     * @param string|int $number The number.
-     *
-     * @return string The cleaned number.
-     */
-    public static function removeZero($number): string
-    {
-        $number = strval($number);
-
-        if (str_starts_with($number, '0.')) {
-            $number = substr($number, 1);
-        }
-
-        return $number;
     }
 }

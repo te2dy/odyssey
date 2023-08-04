@@ -7,18 +7,19 @@
  * @license   GPL-3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
  */
 
+// This class contains useful functions.
 class OrigineMiniUtils
 {
     /**
      * Retrieves shapes of a spetific SVG icon from its name
      * or an array of SVG icon shpaes.
      *
-     * @link https://simpleicons.org/ Simple Icons
-     *
      * @param string $icon The name of the icon to retrieve.
      *
      * @return mixed The SVG shapes if $icon is set,
      *               otherwise an array of all shapes.
+     *
+     * @link https://simpleicons.org/ Simple Icons
      */
     public static function origineMiniSocialIcons($icon = '')
     {
@@ -38,7 +39,7 @@ class OrigineMiniUtils
 
         $social_svg['mastodon'] = '<path d="M23.193 7.88c0-5.207-3.411-6.733-3.411-6.733C18.062.357 15.108.025 12.041 0h-.076c-3.069.025-6.02.357-7.74 1.147 0 0-3.412 1.526-3.412 6.732 0 1.193-.023 2.619.015 4.13.124 5.092.934 10.11 5.641 11.355 2.17.574 4.034.695 5.536.612 2.722-.15 4.25-.972 4.25-.972l-.09-1.975s-1.945.613-4.13.54c-2.165-.075-4.449-.234-4.799-2.892a5.5 5.5 0 0 1-.048-.745s2.125.52 4.818.643c1.646.075 3.19-.097 4.758-.283 3.007-.359 5.625-2.212 5.954-3.905.517-2.665.475-6.508.475-6.508zm-4.024 6.709h-2.497v-6.12c0-1.29-.543-1.944-1.628-1.944-1.2 0-1.802.776-1.802 2.313v3.349h-2.484v-3.35c0-1.537-.602-2.313-1.802-2.313-1.085 0-1.628.655-1.628 1.945v6.119H4.831V8.285c0-1.29.328-2.314.987-3.07.68-.759 1.57-1.147 2.674-1.147 1.278 0 2.246.491 2.886 1.474L12 6.585l.622-1.043c.64-.983 1.608-1.474 2.886-1.474 1.104 0 1.994.388 2.674 1.146.658.757.986 1.781.986 3.07v6.305z">';
 
-        $social_svg['peertube'] = '<path d="M12 6.545v10.91L20.727 12M3.273 12v12L12 17.455M3.273 0v12L12 6.545"/>';
+        $social_svg['peertube'] = '<path d="M12 6.545v10.91L20.727 12M3.273 12v12L12 17.455M3.273 0v12L12 6.545">';
 
         $social_svg['signal'] = '<path d="m9.12.35.27 1.09a10.845 10.845 0 0 0-3.015 1.248l-.578-.964A11.955 11.955 0 0 1 9.12.35zm5.76 0-.27 1.09a10.845 10.845 0 0 1 3.015 1.248l.581-.964A11.955 11.955 0 0 0 14.88.35zM1.725 5.797A11.955 11.955 0 0 0 .351 9.119l1.09.27A10.845 10.845 0 0 1 2.69 6.374zm-.6 6.202a10.856 10.856 0 0 1 .122-1.63l-1.112-.168a12.043 12.043 0 0 0 0 3.596l1.112-.169A10.856 10.856 0 0 1 1.125 12zm17.078 10.275-.578-.964a10.845 10.845 0 0 1-3.011 1.247l.27 1.091a11.955 11.955 0 0 0 3.319-1.374zM22.875 12a10.856 10.856 0 0 1-.122 1.63l1.112.168a12.043 12.043 0 0 0 0-3.596l-1.112.169a10.856 10.856 0 0 1 .122 1.63zm.774 2.88-1.09-.27a10.845 10.845 0 0 1-1.248 3.015l.964.581a11.955 11.955 0 0 0 1.374-3.326zm-10.02 7.875a10.952 10.952 0 0 1-3.258 0l-.17 1.112a12.043 12.043 0 0 0 3.597 0zm7.125-4.303a10.914 10.914 0 0 1-2.304 2.302l.668.906a12.019 12.019 0 0 0 2.542-2.535zM18.45 3.245a10.914 10.914 0 0 1 2.304 2.304l.906-.675a12.019 12.019 0 0 0-2.535-2.535zM3.246 5.549A10.914 10.914 0 0 1 5.55 3.245l-.675-.906A12.019 12.019 0 0 0 2.34 4.874zm19.029.248-.964.577a10.845 10.845 0 0 1 1.247 3.011l1.091-.27a11.955 11.955 0 0 0-1.374-3.318zM10.371 1.246a10.952 10.952 0 0 1 3.258 0L13.8.134a12.043 12.043 0 0 0-3.597 0zM3.823 21.957 1.5 22.5l.542-2.323-1.095-.257-.542 2.323a1.125 1.125 0 0 0 1.352 1.352l2.321-.532zm-2.642-3.041 1.095.255.375-1.61a10.828 10.828 0 0 1-1.21-2.952l-1.09.27a11.91 11.91 0 0 0 1.106 2.852zm5.25 2.437-1.61.375.255 1.095 1.185-.275a11.91 11.91 0 0 0 2.851 1.106l.27-1.091a10.828 10.828 0 0 1-2.943-1.217zM12 2.25a9.75 9.75 0 0 0-8.25 14.938l-.938 4 4-.938A9.75 9.75 0 1 0 12 2.25z">';
 
@@ -181,75 +182,26 @@ class OrigineMiniUtils
      *
      * @return string The string.
      */
-    public static function attrValue($value): string
+    public static function attrValueQuotes($value): string
     {
-        return strpos($value, ' ') === false ? $value : '"' . $value . '"';
-    }
-}
-
-class OrigineMiniUtilsSettings
-{
-    public static function value($setting_id = '')
-    {
-        return $setting_id ? dcCore::app()->blog->settings->originemini->$setting_id : '';
+        return strpos($value, ' ') === false ? $value : "$value";
     }
 
     /**
-     * Gets the content width of the blog.
+     * Removes 0 before decimal separator of numbers inferior to 1.
      *
-     * @param string $unit The unit of the value ("em" or "px").
+     * @param string|int $number The number.
      *
-     * @return int The content width.
+     * @return string The cleaned number.
      */
-    public static function contentWidth($unit): int
+    public static function removeZero($number): string
     {
-        $units_allowed      = ['em', 'px'];
-        $content_width      = 30;
-        $content_width_unit = 'em';
+        $number = strval($number);
 
-        if (OrigineMiniUtilsSettings::value('global_page_width_value')) {
-            $content_width = (int) OrigineMiniUtilsSettings::value('global_page_width_value');
+        if (str_starts_with($number, '0.')) {
+            $number = substr($number, 1);
         }
 
-        if (OrigineMiniUtilsSettings::value('global_page_width_unit') === 'px') {
-            $content_width_unit = 'px';
-
-            $content_width *= 16;
-        }
-
-        if (isset($unit) && in_array($unit, $units_allowed)) {
-            if ($unit !== $content_width_unit && $unit === 'px') {
-                $content_width *= 16;
-            }
-        }
-
-        return $content_width;
-    }
-
-    /**
-     * A list of supported sites to use for social links.
-     *
-     * @return array The list.
-     */
-    public static function socialSites(): array
-    {
-        return [
-            '500px',
-            'dailymotion',
-            'diaspora',
-            'discord',
-            'facebook',
-            'github',
-            'mastodon',
-            'peertube',
-            'signal',
-            'telegram',
-            'tiktok',
-            'twitch',
-            'vimeo',
-            'whatsapp',
-            'youtube',
-            'x'
-        ];
+        return $number;
     }
 }
