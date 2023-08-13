@@ -80,7 +80,8 @@ class Config extends dcNsProcess
                             'global_css_custom',
                             'global_css_custom_mini',
                             'global_page_width_unit',
-                            'global_page_width_value'
+                            'global_page_width_value',
+                            'footer_social_links_x'
                         ];
 
                         if (!in_array($setting_id, $specific_settings, true)) {
@@ -156,6 +157,10 @@ class Config extends dcNsProcess
                                     );
                                     break;
 
+                                case 'footer_social_links_x':
+                                    $setting_data = self::saveXUsername($_POST['footer_social_links_x']);
+                                    break;
+
                                 case 'styles':
                                     $setting_data = self::saveStyles();
                             }
@@ -164,7 +169,6 @@ class Config extends dcNsProcess
                         if (isset($setting_data['value']) && isset($setting_data['type'])) {
                             $setting_label = $default_settings[$setting_id]['title'];
 
-                            // Replace 𝕏 by X for ex-Twitter named social site.
                             if ($setting_id === 'footer_social_links_x') {
                                 $setting_label = str_replace(
                                     '𝕏',
@@ -471,6 +475,25 @@ class Config extends dcNsProcess
                 'type'  => 'integer'
             ];
         }
+    }
+
+    /**
+     * Validates an X username and returns its URL.
+     *
+     * @param string $username The given username to save.
+     *
+     * @return array The URL of the X account.
+     */
+    public static function saveXUsername($username): array
+    {
+        $output = [];
+
+        if (preg_match('/^@[A-Za-z0-9_]{4,15}/', $username)) {
+            $output['value'] = 'https://twitter.com/' . substr($username, 1);
+            $output['type']  = 'string';
+        }
+
+        return $output;
     }
 
     /**
@@ -1245,6 +1268,11 @@ class Config extends dcNsProcess
                 $setting_value = isset($default_settings[$setting_id]['default'])
                 ? $default_settings[$setting_id]['default']
                 : '';
+            }
+
+            // Particular values to render.
+            if ($setting_id === 'footer_social_links_x' && $setting_value) {
+                $setting_value = str_replace('https://twitter.com/', '@', $setting_value);
             }
 
             switch ($default_settings[$setting_id]['type']) {
