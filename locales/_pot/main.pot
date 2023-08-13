@@ -6,6 +6,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgid "Odyssey"
+msgstr ""
+
+msgid "Write your own"
+msgstr ""
+
 # Head
 
 msgid "page-noun-before-number"

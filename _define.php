@@ -8,10 +8,10 @@
  */
 
 $this->registerModule(
-    'Origine Mini',             // Name
-    'A minimal Dotclear theme', // Description
-    'Teddy',                    // Author
-    '2.3',                      // Version
+    'Odyssey',
+    'Write your own with this theme',
+    'Teddy',
+    '2.3',
     [
         'requires' => [
             ['core', '2.26'],

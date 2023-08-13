@@ -6,6 +6,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgid "Odyssey"
+msgstr "Odyssée"
+
+msgid "Write your own with this theme"
+msgstr "Écrivez la vôtre avec ce thème"
+
 # Head
 
 msgid "page-noun-before-number"
@@ -250,10 +256,10 @@ msgstr "Page suivante ›"
 # Footer
 
 msgid "footer-powered-by"
-msgstr "Propulsé par <a href=https://fr.dotclear.org/>Dotclear</a> et <a href=https://themes.dotaddict.org/galerie-dc2/details/originemini>Origine Mini</a>"
+msgstr "Propulsé par <a href=https://fr.dotclear.org/>Dotclear</a> et <a href=https://themes.dotaddict.org/galerie-dc2/details/originemini>%s</a>"
 
 msgid "footer-powered-by-dev"
-msgstr "Propulsé par <a href=https://fr.dotclear.org/ title=%s>Dotclear %s</a> et <a href=https://github.com/te2dy/originemini>Origine Mini %s</a>"
+msgstr "Propulsé par <a href=https://fr.dotclear.org/ title=%s>Dotclear %s</a> et <a href=https://github.com/te2dy/originemini>%s %s</a>"
 
 # Social links
 

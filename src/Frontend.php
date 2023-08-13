@@ -289,10 +289,6 @@ class Frontend extends dcNsProcess
                                 break;
                             case 'whatsapp':
                                 $link = 'https://wa.me/' . str_replace('+', '', $link);
-
-                                break;
-                            case 'x':
-                                $link = 'https://x.com/' . str_replace('@', '', $link);
                         }
                         ?>
 
@@ -1023,7 +1019,10 @@ class Frontend extends dcNsProcess
     {
         if (omSettings::value('footer_credits') !== false) {
             if (!defined('DC_DEV') || (defined('DC_DEV') && DC_DEV === false)) {
-                return '<div class=site-footer-block>' . __('footer-powered-by') . '</div>';
+                return '<div class=site-footer-block>' . __(
+                    'footer-powered-by',
+                    My::name()
+                ) . '</div>';
             }
 
             $dc_version       = dcCore::app()->getVersion('core');
@@ -1032,7 +1031,13 @@ class Frontend extends dcNsProcess
 
             $theme_version = dcCore::app()->themes->moduleInfo('originemini', 'version');
 
-            return '<div class=site-footer-block>' . sprintf(__('footer-powered-by-dev'), $dc_version, $dc_version_short, $theme_version) . '</div>';
+            return '<div class=site-footer-block>' . sprintf(
+                __('footer-powered-by-dev'),
+                $dc_version,
+                $dc_version_short,
+                My::name(),
+                $theme_version
+            ) . '</div>';
         }
     }
 
