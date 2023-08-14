@@ -261,7 +261,8 @@ figure p {
   font-size: .8em;
   margin: 0;
 }
-img {
+img,
+video {
   height: auto;
   max-width: 100%;
 }
@@ -306,8 +307,6 @@ button {
 }
 button,
 .button {
-  border: .063rem solid var(--color-border, #ccc);
-  border-radius: var(--border-radius, unset);
   display: inline-block;
   padding: .5rem;
 }
@@ -317,12 +316,15 @@ a.button:is(:active, :focus, :hover) {
 input[type="submit"],
 .form-submit,
 .button {
-  color: var(--color-background, #fcfcfd);
-  background-color: var(--color-primary);
-  border: 0;
+  color: var(--color-primary);
+  background-color: transparent;
+  border: .063rem solid var(--color-primary);
+  border-radius: var(--border-radius, 0);
 }
 :is(input[type="submit"], .button, .form-submit):is(:active, :focus, :hover) {
   background-color: var(--color-primary-amplified);
+  border-color: var(--color-primary-amplified);
+  color: var(--color-background, #fcfcfd);
   cursor: pointer;
 }
 @media (prefers-contrast: more),
@@ -338,10 +340,11 @@ input:disabled {
   color: var(--color-text-secondary, #6c6f78);
 }
 input[type="submit"]:disabled {
+  background-color: var(--color-background, #fcfcfd);
   border-color: var(--color-border, #ccc);
 }
 input[type="submit"]:is(:active, :focus, :hover):disabled {
-  background-color: var(--color-background, #fcfcfd);
+  background-color: inherit;
   color: var(--color-text-secondary, #6c6f78);
   cursor: default;
 }
@@ -420,7 +423,7 @@ details summary {
 /**
  * Posts.
  */
-.post-selected,
+:not(.entry-list-content .post).post-selected,
 .post-selected-label {
   border: .063rem solid var(--color-border, #ccc);
   border-radius: var(--border-radius, unset);
@@ -437,22 +440,23 @@ details summary {
 /**
  * Post list only.
  */
-.entry-list {
+.entry-list-short {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-.entry-list .post {
+.entry-list-short .post {
   align-items: baseline;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
   margin-bottom: 1rem;
 }
-.entry-list .post:last-child {
+.entry-list-short .post:last-child {
   margin-bottom: 0;
 }
-.entry-list .entry-title {
+.entry-list-short .entry-title {
   font-size: 1em;
   font-weight: 400;
   margin: 0 auto 0 0;
@@ -460,7 +464,7 @@ details summary {
 .post-selected .entry-title {
   font-weight: 700;
 }
-.entry-list :is(.post-date, .page-info) {
+.entry-list-short :is(.post-date, .page-info) {
   flex-shrink: 0;
   margin-left: 1rem;
   text-align: right;
@@ -531,9 +535,6 @@ details summary {
   font-style: normal;
   font-weight: 700;
 }
-.remember {
-  margin: 0;
-}
 .comment-message {
   border: .063rem solid var(--color-border, #ccc);
   display: block;
@@ -548,10 +549,6 @@ details summary {
 }
 #c_content {
   font-family: var(--font-family-content, var(--font-family, var(--font-family-default)));
-}
-#trackback-url {
-  text-decoration: var(--link-text-decoration, none);
-  text-decoration-style: var(--link-text-decoration-style, unset);
 }
 #comment-feed-link {
   margin-top: 2rem;
@@ -674,18 +671,18 @@ aside .widget:last-child {
   blockquote {
     margin-left: 0;
   }
-  .entry-list .post {
+  .entry-list-short .post {
     flex-direction: column;
     row-gap: .25rem;
   }
   .post-comment-link {
     order: 3;
   }
-  .entry-list .entry-title {
+  .entry-list-short .entry-title {
     margin-right: 0;
     order: 2;
   }
-  .entry-list .post-date {
+  .entry-list-short .post-date {
     margin-left: 0;
     order: 1;
   }

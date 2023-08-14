@@ -9,9 +9,9 @@ function disableInputs() {
   }
 
   if (document.getElementById("global_js").checked || document.getElementById("content_images_wide").checked) {
-    document.getElementById("origine-mini-message-js").style.display = "block";
+    document.getElementById("odyssey-message-js").style.display = "block";
   } else {
-    document.getElementById("origine-mini-message-js").style.display = "none";
+    document.getElementById("odyssey-message-js").style.display = "none";
   }
 
   if (document.getElementById("global_js").checked) {
@@ -32,10 +32,42 @@ function disableInputs() {
     document.getElementById("header_image_description-description").style.display = "none";
   }
 
-  if (document.getElementById("content_images_wide").checked) {
-    document.getElementById("hash-imagewide").style.display = "block";
+  if (document.getElementById("content_post_list_type").value !== 'custom') {
+    document.getElementById("content_post_list_custom-input").style.display              = "none";
+    document.getElementById("content_post_list_custom-description").style.display        = "none";
+    document.getElementById("content_post_list_time-input").style.display                = "block";
+    document.getElementById("content_post_list_time-description").style.display          = "block";
+    document.getElementById("content_post_list_reaction_link-input").style.display       = "block";
   } else {
-    document.getElementById("hash-imagewide").style.display = "none";
+    document.getElementById("content_post_list_custom-input").style.display              = "block";
+    document.getElementById("content_post_list_custom-description").style.display        = "block";
+    document.getElementById("content_post_list_time-input").style.display                = "none";
+    document.getElementById("content_post_list_time-description").style.display          = "none";
+    document.getElementById("content_post_list_reaction_link-input").style.display       = "none";
+  }
+
+  if (document.getElementById("content_post_template").value === '') {
+    document.getElementById("content_post_time-input").style.display        = "block";
+    document.getElementById("content_post_time-description").style.display  = "block";
+    document.getElementById("content_post_intro-input").style.display       = "block";
+    document.getElementById("content_post_intro-description").style.display = "block";
+  } else {
+    document.getElementById("content_post_time-input").style.display        = "none";
+    document.getElementById("content_post_time-description").style.display  = "none";
+    document.getElementById("content_post_intro-input").style.display       = "none";
+    document.getElementById("content_post_intro-description").style.display = "none";
+  }
+
+  if (document.getElementById("content_images_wide").value !== 'disabled') {
+    document.getElementById("content_images_wide_size-input").style.display        = "block";
+    document.getElementById("content_images_wide_size-description").style.display  = "block";
+    document.getElementById("content_image_custom_size-input").style.display       = "block";
+    document.getElementById("content_image_custom_size-description").style.display = "block";
+  } else {
+    document.getElementById("content_images_wide_size-input").style.display        = "none";
+    document.getElementById("content_images_wide_size-description").style.display  = "none";
+    document.getElementById("content_image_custom_size-input").style.display       = "none";
+    document.getElementById("content_image_custom_size-description").style.display = "none";
   }
 
   if (document.getElementById("content_post_list_time").checked || document.getElementById("content_post_time").checked) {
@@ -67,8 +99,8 @@ function disableInputs() {
     document.getElementById("footer_social_links_mastodon-input").style.display = "none";
     document.getElementById("footer_social_links_signal-input").style.display   = "none";
     document.getElementById("footer_social_links_tiktok-input").style.display   = "none";
-    document.getElementById("footer_social_links_twitter-input").style.display  = "none";
     document.getElementById("footer_social_links_whatsapp-input").style.display = "none";
+    document.getElementById("footer_social_links_x-input").style.display        = "none";
   } else {
     document.getElementById("footer_credits-input").style.display               = "block";
     document.getElementById("footer_credits-description").style.display         = "block";
@@ -80,8 +112,72 @@ function disableInputs() {
     document.getElementById("footer_social_links_mastodon-input").style.display = "block";
     document.getElementById("footer_social_links_signal-input").style.display   = "block";
     document.getElementById("footer_social_links_tiktok-input").style.display   = "block";
-    document.getElementById("footer_social_links_twitter-input").style.display  = "block";
     document.getElementById("footer_social_links_whatsapp-input").style.display = "block";
+    document.getElementById("footer_social_links_x-input").style.display        = "block";
+  }
+}
+
+/**
+ * Updates page width settings depending on its values.
+ */
+function updatePageWidthSetting(pageWidthUnitDefault, pageWidthValueDefault) {
+  // Updates the placeholder of the width value.
+  if (document.getElementById("global_page_width_unit").value === "em") {
+    document.getElementById("global_page_width_value").placeholder = document.getElementById("page_width_em_default").value;
+  } else if (document.getElementById("global_page_width_unit").value === "px") {
+    document.getElementById("global_page_width_value").placeholder = document.getElementById("page_width_px_default").value;
+  }
+
+  // Converts the page width value when the unit is changed.
+  if (document.getElementById("global_page_width_value").value) {
+    var pageWidthUnitNew = document.getElementById("global_page_width_unit").value;
+
+    if (pageWidthUnitNew === 'px') {
+      var pageWidthValueNew = parseInt(document.getElementById("global_page_width_value").value, 10) * 16;
+
+      document.getElementById("global_page_width_value").value = pageWidthValueNew.toString();
+    } else if (pageWidthUnitNew === 'em') {
+      var pageWidthValueNew = parseInt(Number(document.getElementById("global_page_width_value").value) / 16, 10);
+
+      document.getElementById("global_page_width_value").value = pageWidthValueNew.toString();
+    }
+  }
+}
+
+/**
+ * Displays an error message if a value is incorrect.
+ */
+function inputCheckMessage() {
+  var newPageWidth = Number(document.getElementById("global_page_width_value").value);
+
+  if (newPageWidth) {
+    if (document.getElementById("global_page_width_unit").value === 'em') {
+      if (isNaN(newPageWidth) || newPageWidth < 30 || newPageWidth > 80) {
+        document.getElementById("global_page_width_value").classList.add("om-value-error");
+      } else {
+        document.getElementById("global_page_width_value").classList.remove("om-value-error")
+      }
+    } else {
+      if (isNaN(newPageWidth) || newPageWidth < 480 || newPageWidth > 1280) {
+        document.getElementById("global_page_width_value").classList.add("om-value-error");
+      } else {
+        document.getElementById("global_page_width_value").classList.remove("om-value-error")
+      }
+    }
+  }
+}
+
+function inputChange() {
+  if (document.getElementById("content_post_template").value === '') {
+    document.getElementById("content_post_time-input").style.display        = "block";
+    document.getElementById("content_post_time-description").style.display  = "block";
+    document.getElementById("content_post_intro-input").style.display       = "block";
+    document.getElementById("content_post_intro-description").style.display = "block";
+  } else {
+    document.getElementById("content_post_time-input").style.display        = "none";
+    document.getElementById("content_post_time-description").style.display  = "none";
+    document.getElementById("content_post_intro-input").style.display       = "none";
+    document.getElementById("content_post_intro-description").style.display = "none";
   }
 }
 
@@ -125,10 +221,6 @@ function changeImage() {
     document.getElementById("header_image_description-input").style.display = "none";
     document.getElementById("header_image_description-description").style.display = "none";
   }
-
-  if (document.getElementById("header_image_position-retina")) {
-    document.getElementById("header_image_position-retina").style.display = "none";
-  }
 }
 
 window.onload = function() {
@@ -137,6 +229,19 @@ window.onload = function() {
 
   window.onchange = function() {
     disableInputs();
+  };
+
+  var pageWidthUnitDefault = document.getElementById("global_page_width_unit").value,
+      pageWidthValueDefault = document.getElementById("global_page_width_value").value;
+
+  document.getElementById("global_page_width_unit").onchange = function() {
+    updatePageWidthSetting(pageWidthUnitDefault, pageWidthValueDefault);
+    inputCheckMessage();
+  }
+
+  window.oninput = function() {
+    inputCheckMessage();
+    inputChange();
   };
 
   document.getElementById("header_image").onchange = function() {

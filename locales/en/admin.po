@@ -11,7 +11,30 @@ msgstr ""
 msgid "prepend-hashes-save"
 msgstr "Hashes of the theme JS files."
 
-# Sections
+# Config
+
+msgid "config-help"
+msgstr "This theme was designed voluntarily by a Dotclear user, an amateur coder in his spare time. Please feel free to browse through the source code to help make this theme a little more professional."
+
+msgid "config-link-github-title"
+msgstr "GitHub"
+
+msgid "config-link-github"
+msgstr "Source code"
+
+msgid "config-link-dotclear-forum-title"
+msgstr "Dotclear forum"
+
+msgid "config-link-dotclear-forum"
+msgstr "Ask for help or discuss about the theme"
+
+msgid "config-link-github-issues-title"
+msgstr "GitHub"
+
+msgid "config-link-github-issues"
+msgstr "Report a bug or suggest an improvement"
+
+# Config sections
 
 msgid "section-global"
 msgstr "Global Settings"
@@ -46,6 +69,9 @@ msgstr "Post list"
 msgid "section-content-post"
 msgstr "Posts"
 
+msgid "section-content-page"
+msgstr "Pages"
+
 msgid "section-content-reactions"
 msgstr "Reactions"
 
@@ -63,20 +89,23 @@ msgstr "Social links"
 
 # Settings
 
-msgid "settings-global-pagewidth-title"
+msgid "settings-global-pagewidthunit-title"
+msgstr "Unit used to define the page width"
+
+msgid "settings-global-pagewidthunit-description"
+msgstr "Em allows your pages to adapt their width to the browser's font size. In this way, your blog can be displayed differently from one device to another. For a photo blog with large images, using pixels is recommended."
+
+msgid "settings-global-pagewidthunit-em-default"
+msgstr "Em (par défaut)"
+
+msgid "settings-global-pagewidthunit-px"
+msgstr "Pixel"
+
+msgid "settings-global-pagewidthvalue-title"
 msgstr "Page width"
 
-msgid "settings-global-pagewidth-description"
-msgstr "The width of the page depends on the font size set in the browser. Your blog can therefore be displayed differently from one device to another. By default, 30em corresponds to a page width of 480px."
-
-msgid "settings-global-pagewidth-30-default"
-msgstr "30em (default)"
-
-msgid "settings-global-pagewidth-35"
-msgstr "35em"
-
-msgid "settings-global-pagewidth-40"
-msgstr "40em"
+msgid "settings-global-pagewidthvalue-description"
+msgstr "In em, the width must be between 30 and 80; in pixels, between 480 and 1280. Default: 30em or 480px."
 
 msgid "settings-global-fontsize-title"
 msgstr "Size"
@@ -137,6 +166,9 @@ msgstr "Browser monospace font"
 
 msgid "settings-global-fontfamily-atkinson"
 msgstr "Atkinson Hyperlegible"
+
+msgid "settings-global-fontfamily-ebgaramond"
+msgstr "EB Garamond"
 
 msgid "settings-global-fontfamily-luciole"
 msgstr "Luciole"
@@ -200,6 +232,15 @@ msgstr "Rounding the corners"
 
 msgid "settings-global-roundcorner-description"
 msgstr "This setting concerns in particular the title of the site and the buttons."
+
+msgid "settings-global-csscustom-title"
+msgstr "Custom styles"
+
+msgid "settings-global-csscustom-description"
+msgstr "Add CSS styles to customize the theme's appearance."
+
+msgid "settings-global-csscustommini-title"
+msgstr "Custom styles minified"
 
 msgid "settings-global-minimalsocialmarkups-title"
 msgstr "Add minimal social tags in head"
@@ -318,6 +359,15 @@ msgstr "Title and excerpt"
 msgid "settings-content-postlisttype-content"
 msgstr "Title and full content"
 
+msgid "settings-content-postlisttype-custom"
+msgstr "Custom"
+
+msgid "settings-content-postlistcustom-title"
+msgstr "Name of the custom template"
+
+msgid "settings-content-postlistcustom-description"
+msgstr "Enter here the name of the template. It must be placed in the <code>tpl</code> folder of the theme."
+
 msgid "settings-content-postlisttime-title"
 msgstr "Display the time of publication"
 
@@ -339,17 +389,53 @@ msgstr "Display the time of publication"
 msgid "settings-content-postintro-title"
 msgstr "Display the excerpt as an introduction"
 
-msgid "settings-content-linksunderline-title"
-msgstr "Underline links in the text body"
+msgid "settings-content-postintro-description"
+msgstr "Highlights the excerpt defined by the author between the title and the content of the post."
+
+msgid "settings-content-posttemplate-title"
+msgstr "Custom template"
+
+msgid "settings-content-posttemplate-description"
+msgstr "Enter the template name here. This must be placed in the theme's <code>tpl</code> folder."
 
 msgid "settings-content-postintro-description"
 msgstr "Highlights the excerpt defined by the author between the title and the content of the post."
+
+msgid "settings-content-linksunderline-title"
+msgstr "Underline links in the text body"
 
 msgid "settings-content-imageswide-title"
 msgstr "Enlarge big images"
 
 msgid "settings-content-imageswide-description"
-msgstr "Photos that are large enough will overflow the page (uses JavaScript)."
+msgstr "Photos that are large enough will overflow the page."
+
+msgid "settings-content-imageswide-disabled-default"
+msgstr "Disabled"
+
+msgid "settings-content-imageswide-postspages"
+msgstr "Only for post and page"
+
+msgid "settings-content-imageswide-always"
+msgstr "Everywhere on the blog"
+
+msgid "settings-content-imageswidesize-title"
+msgstr "Image overflow width"
+
+msgid "settings-content-imageswidesize-description"
+msgstr "This is the number of pixels that allow images that are large enough to overflow. Default: 120."
+
+msgid "settings-content-imagecustomsizes-title"
+msgstr "Custom image sizes"
+
+msgid "settings-content-imagecustomsizes-description"
+msgstr "Optionally add here, separated by commas, the custom image size identifiers (see <code>coreMediaConstruct</code>) to include in <code>srcset</code>."
+
+msgid "settings-content-pagetemplate-title"
+msgstr "Custom template"
+
+msgid "settings-content-pagetemplate-description"
+msgstr "type here the name of the template. It must be placed in the <code>tpl</code> folder of the theme."
 
 msgid "settings-content-commentformhide-title"
 msgstr "Unveil the comment form by clicking on a link"
@@ -420,6 +506,12 @@ msgstr "Display a mention to Dotclear and the theme"
 msgid "settings-footer-credits-description"
 msgstr "Allows you to advertise Dotclear and this theme."
 
+msgid "settings-footer-sociallinks-500px-title"
+msgstr "URL of a 500px page"
+
+msgid "settings-footer-sociallinks-dailymotion-title"
+msgstr "URL of a Dailymotion page"
+
 msgid "settings-footer-sociallinks-diaspora-title"
 msgstr "URL of a Diaspora profile"
 
@@ -435,26 +527,44 @@ msgstr "URL of a profile or a GitHub directory"
 msgid "settings-footer-sociallinks-mastodon-title"
 msgstr "URL of a Mastodon profile"
 
+msgid "settings-footer-sociallinks-peertube-title"
+msgstr "URL of a PeerTube instance or channel"
+
 msgid "settings-footer-sociallinks-signal-title"
 msgstr "Signal account URL or phone number"
 
 msgid "settings-footer-sociallinks-signal-description"
-msgstr "If you prefer to provide your phone number directly, it must be entered in the format +1234567890."
+msgstr "If you choose to enter your phone number, it must be in the format +1234567890."
+
+msgid "settings-footer-sociallinks-telegram-title"
+msgstr "URL of a Telegram group or channel"
 
 msgid "settings-footer-sociallinks-tiktok-title"
 msgstr "URL of a TikTok profile"
 
-msgid "settings-footer-sociallinks-twitter-title"
-msgstr "Twitter account username"
+msgid "settings-footer-sociallinks-twitch-title"
+msgstr "URL of a Twitch page"
 
-msgid "settings-footer-sociallinks-twitter-placeholder"
-msgstr "@username"
+msgid "settings-footer-sociallinks-vimeo-title"
+msgstr "URL of a Vimeo page"
 
 msgid "settings-footer-sociallinks-whatsapp-title"
 msgstr "WhatsApp phone number"
 
-msgid "settings-footer-origineministyles-title"
-msgstr "Custom styles for Origine Mini"
+msgid "settings-footer-sociallinks-youtube-title"
+msgstr "URL of a YouTube channel"
+
+msgid "settings-footer-sociallinks-x-title"
+msgstr "𝕏 account username"
+
+msgid "settings-footer-sociallinks-x-placeholder"
+msgstr "@username"
+
+msgid "settings-footer-sociallinks-x-description"
+msgstr "You must add an @ in front of your username."
+
+msgid "settings-footer-odysseyministyles-title"
+msgstr "Custom styles for Odyssey"
 
 # Form
 
@@ -507,4 +617,4 @@ msgid "settings-scripts-message-example"
 msgstr "An example of implementation is available on <a href="%s" hreflang="%s" title="%s">Franck's blog, <em>Open Time</em></a>."
 
 msgid "settings-scripts-message-note"
-msgstr "Please note: these fingerprints may be modified in the next update of Origine Mini; you will then have to update them in the CSP."
+msgstr "Please note: these fingerprints may be modified in the next update of Odyssey; you will then have to update them in the CSP."

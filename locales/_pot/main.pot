@@ -6,6 +6,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgid "Odyssey"
+msgstr ""
+
+msgid "Write your own"
+msgstr ""
+
 # Head
 
 msgid "page-noun-before-number"
@@ -34,6 +40,9 @@ msgstr ""
 msgid "skip-link-footer"
 msgstr ""
 
+msgid "header-image-alt"
+msgstr ""
+
 # Posts & pages
 
 msgid "entry-list-aria-label"
@@ -51,7 +60,7 @@ msgstr ""
 msgid "entry-list-date-aria-label"
 msgstr ""
 
-msgid "entry-list-no-reaction-link-aria-label"
+msgid "entry-list-one-reaction-link-aria-label"
 msgstr ""
 
 msgid "entry-list-one-reaction-link-aria-label"
@@ -191,28 +200,34 @@ msgstr ""
 msgid "reactions-comment-form-comment-label"
 msgstr ""
 
+msgid "reactions-comment-markdown-support"
+msgstr ""
+
+msgid "reactions-comment-markdown-support-link"
+msgstr ""
+
 msgid "reactions-comment-form-preview-button"
 msgstr ""
 
 msgid "reactions-comment-form-submit-button"
 msgstr ""
 
-msgid "private-comment-title"
+msgid "reactions-comment-private-title"
 msgstr ""
 
-msgid "private-comment-body-post-url"
+msgid "reactions-comment-private-body-post-url"
 msgstr ""
 
-msgid "private-comment-button-text"
+msgid "reactions-comment-private-button-text"
 msgstr ""
 
-msgid "private-comment-email-prefix"
+msgid "reactions-comment-private-email-prefix"
 msgstr ""
 
 msgid "reactions-subscribe-link-reactions"
 msgstr ""
 
-msgid "reactions-trackbacks-add"
+msgid "reactions-trackbacks-add-title"
 msgstr ""
 
 msgid "reactions-trackback-url-copied"
@@ -244,6 +259,56 @@ msgid "footer-powered-by"
 msgstr ""
 
 msgid "footer-powered-by-dev"
+msgstr ""
+
+# Social links
+
+msgid "site-name-500px"
+msgstr ""
+
+msgid "site-name-dailymotion"
+msgstr ""
+
+msgid "site-name-diaspora"
+msgstr ""
+
+msgid "site-name-discord"
+msgstr ""
+
+msgid "site-name-facebook"
+msgstr ""
+
+msgid "site-name-github"
+msgstr ""
+
+msgid "site-name-mastodon"
+msgstr ""
+
+msgid "site-name-peertube"
+msgstr ""
+
+msgid "site-name-signal"
+msgstr ""
+
+msgid "site-name-telegram"
+msgstr ""
+
+msgid "site-name-tiktok"
+msgstr ""
+
+msgid "site-name-twitch"
+msgstr ""
+
+msgid "site-name-vimeo"
+msgstr ""
+
+msgid "site-name-whatsapp"
+msgstr ""
+
+msgid "site-name-youtube"
+msgstr ""
+
+msgid "site-name-x"
 msgstr ""
 
 # Archives

@@ -1,6 +1,6 @@
-= Origine Mini =
+= Odyssée =
 
-Nom du thème : Origine Mini
+Nom du thème : Odyssée
 Description : Un thème minimaliste pour Dotclear
 Auteur : Teddy
 Licence : GPLv3 ou ultérieure
@@ -12,8 +12,10 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
-=== 1.4.2 - 1er mars 2023 ===
+=== 2 - 15 avril 2023 ===
 - Amélioration : possibilité de saisir un lien vers Signal, et pas seulement un numéro de téléphone.
+- Modification : compatibilité avec la version 2.26 de Dotclear.
+- Correction : mauvaises couleurs à l’affichage des boutons désactivés.
 
 === 1.4.1 - 9 février 2023 ===
 - Modification : transformation du lien « Réagir » en bouton dans les billets.
@@ -114,7 +116,7 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Ressources ==
 
-Origine remercie les auteurs des ressources suivantes qui lui ont permis de réaliser ce thème :
+Odyssée remercie les auteurs des ressources suivantes qui lui ont permis de réaliser ce thème :
 
 System font stack
 Auteur : Tom MacWright

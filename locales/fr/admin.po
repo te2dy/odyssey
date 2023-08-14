@@ -11,7 +11,30 @@ msgstr ""
 msgid "prepend-hashes-save"
 msgstr "Empreinte numérique des fichiers JS du thème"
 
-# Sections
+# Config
+
+msgid "config-help"
+msgstr "Ce thème a été conçu bénévolement par un utilisateur de Dotclear, codeur amateur à ses nombreuses heures perdues. N’hésitez pas à parcourir son code source pour apporter votre contribution afin de rendre ce thème un peu plus professionnel."
+
+msgid "config-link-github-title"
+msgstr "GitHub"
+
+msgid "config-link-github"
+msgstr "Code source"
+
+msgid "config-link-dotclear-forum-title"
+msgstr "Forum Dotclear"
+
+msgid "config-link-dotclear-forum"
+msgstr "Obtenir de l’aide ou discuter du thème"
+
+msgid "config-link-github-issues-title"
+msgstr "GitHub"
+
+msgid "config-link-github-issues"
+msgstr "Signaler un bogue ou proposer une amélioration"
+
+# Config sections
 
 msgid "section-global"
 msgstr "Paramètres globaux"
@@ -46,6 +69,9 @@ msgstr "Liste des billets"
 msgid "section-content-post"
 msgstr "Billets"
 
+msgid "section-content-page"
+msgstr "Pages"
+
 msgid "section-content-reactions"
 msgstr "Réactions"
 
@@ -63,20 +89,23 @@ msgstr "Liens sociaux"
 
 # Settings
 
-msgid "settings-global-pagewidth-title"
-msgstr "Largeur des pages"
+msgid "settings-global-pagewidthunit-title"
+msgstr "Unité utilisée pour définir la largeur de la page"
 
-msgid "settings-global-pagewidth-description"
-msgstr "La largeur de la page dépend de la taille de la police définie dans le navigateur. Votre blog peut donc s’afficher différemment d’un appareil à l’autre. Par défaut, 30 em correspondent à une largeur de page de 480 px."
+msgid "settings-global-pagewidthunit-description"
+msgstr "Le cadratin (em) permet à vos pages d’adapter leur largeur en fonction de la taille de la police du navigateur. Ainsi, votre blog peut s’afficher différemment d’un appareil à l’autre. Pour un blog photo avec de larges images, il est recommandé d’utiliser les pixels."
 
-msgid "settings-global-pagewidth-30-default"
-msgstr "30 em (par défaut)"
+msgid "settings-global-pagewidthunit-em-default"
+msgstr "Cadratin (par défaut)"
 
-msgid "settings-global-pagewidth-35"
-msgstr "35 em"
+msgid "settings-global-pagewidthunit-px"
+msgstr "Pixel"
 
-msgid "settings-global-pagewidth-40"
-msgstr "40 em"
+msgid "settings-global-pagewidthvalue-title"
+msgstr "Largeur de la page"
+
+msgid "settings-global-pagewidthvalue-description"
+msgstr "En cadratin, la largeur doit être comprise entre 30 et 80 ; en pixel, entre 480 et 1 280. Par défaut, 30 em ou 480 px."
 
 msgid "settings-global-fontsize-title"
 msgstr "Taille"
@@ -137,6 +166,9 @@ msgstr "Police à chasse fixe du navigateur"
 
 msgid "settings-global-fontfamily-atkinson"
 msgstr "Atkinson Hyperlegible"
+
+msgid "settings-global-fontfamily-ebgaramond"
+msgstr "EB Garamond"
 
 msgid "settings-global-fontfamily-luciole"
 msgstr "Luciole"
@@ -200,6 +232,15 @@ msgstr "Arrondir les coins"
 
 msgid "settings-global-roundcorner-description"
 msgstr "Ce paramètre concerne notamment le titre du site et les boutons."
+
+msgid "settings-global-csscustom-title"
+msgstr "Styles personnalisés"
+
+msgid "settings-global-csscustom-description"
+msgstr "Ajouter des styles en langage CSS pour personnaliser l’apparence du thème."
+
+msgid "settings-global-csscustommini-title"
+msgstr "Styles personnalisés minifiés"
 
 msgid "settings-global-minimalsocialmarkups-title"
 msgstr "Ajouter des balises sociales minimalistes dans l’en-tête"
@@ -318,6 +359,15 @@ msgstr "Titre et extrait"
 msgid "settings-content-postlisttype-content"
 msgstr "Titre et contenu complet"
 
+msgid "settings-content-postlisttype-custom"
+msgstr "Personnalisé"
+
+msgid "settings-content-postlistcustom-title"
+msgstr "Nom du modèle personnalisé"
+
+msgid "settings-content-postlistcustom-description"
+msgstr "Le modèle doit être placé dans le dossier <code>tpl</code> du thème."
+
 msgid "settings-content-postlisttime-title"
 msgstr "Afficher l’heure de publication"
 
@@ -339,17 +389,50 @@ msgstr "Afficher l’heure de publication"
 msgid "settings-content-postintro-title"
 msgstr "Afficher l’extrait comme introduction"
 
-msgid "settings-content-linksunderline-title"
-msgstr "Souligner les liens du corps du texte"
-
 msgid "settings-content-postintro-description"
 msgstr "Met en avant l’extrait défini par l’auteur entre le titre et le contenu du billet."
+
+msgid "settings-content-posttemplate-title"
+msgstr "Modèle personnalisé"
+
+msgid "settings-content-posttemplate-description"
+msgstr "Entrez ici le nom du modèle. Celui-ci doit être placé dans le dossier <code>tpl</code> du thème."
+
+msgid "settings-content-linksunderline-title"
+msgstr "Souligner les liens du corps du texte"
 
 msgid "settings-content-imageswide-title"
 msgstr "Agrandir les images suffisamment larges"
 
 msgid "settings-content-imageswide-description"
-msgstr "Les photos suffisamment grandes déborderont de la page (utilise JavaScript)."
+msgstr "Les photos suffisamment grandes déborderont de la page."
+
+msgid "settings-content-imageswide-disabled-default"
+msgstr "Désactivé"
+
+msgid "settings-content-imageswide-postspages"
+msgstr "Uniquement dans contenu des billets et des pages"
+
+msgid "settings-content-imageswide-always"
+msgstr "Sur tout le blog"
+
+msgid "settings-content-imageswidesize-title"
+msgstr "Taille du dépassement des images"
+
+msgid "settings-content-imageswidesize-description"
+msgstr "Il s’agit du nombre de pixels autorisant les images suffisamment larges à déborder. Par défaut&nbsp;: 120."
+
+msgid "settings-content-imagecustomsizes-title"
+msgstr "Tailles d’image personnalisées"
+
+msgid "settings-content-imagecustomsizes-description"
+msgstr "Ajoutez éventuellement ici, séparés par des virgules, les identifiants de tailles d’image personnalisées (cf. <code>coreMediaConstruct</code>) à inclure dans <code>srcset</code>."
+
+msgid "settings-content-pagetemplate-title"
+msgstr "Modèle personnalisé"
+
+msgid "settings-content-pagetemplate-description"
+msgstr "Saisissez ici le nom du modèle. Celui-ci doit être placé dans le dossier <code>tpl</code> du thème."
 
 msgid "settings-content-commentformhide-title"
 msgstr "Dévoiler le formulaire de commentaires en cliquant sur un lien"
@@ -420,6 +503,12 @@ msgstr "Afficher une mention à Dotclear et au thème"
 msgid "settings-footer-credits-description"
 msgstr "Permet de faire de la publicité pour Dotclear et ce thème."
 
+msgid "settings-footer-sociallinks-500px-title"
+msgstr "Adresse d’une page 500px"
+
+msgid "settings-footer-sociallinks-dailymotion-title"
+msgstr "Adresse d’une chaîne Dailymotion"
+
 msgid "settings-footer-sociallinks-diaspora-title"
 msgstr "Adresse d’un profil Diaspora"
 
@@ -435,26 +524,44 @@ msgstr "Adresse d’un profil ou d’un répertoire GitHub"
 msgid "settings-footer-sociallinks-mastodon-title"
 msgstr "Adresse d’un profil Mastodon"
 
+msgid "settings-footer-sociallinks-peertube-title"
+msgstr "Adresse d’une chaîne PeerTube"
+
 msgid "settings-footer-sociallinks-signal-title"
-msgstr "Lien vers un compte ou un numéro de téléphone Signal"
+msgstr "Lien ou numéro de téléphone Signal"
 
 msgid "settings-footer-sociallinks-signal-description"
-msgstr "Si vous préférez fournir directement votre numéro de téléphone, il doit être saisi au format +1234567890."
+msgstr "Si vous choisissez de saisir votre numéro de téléphone, il doit être au format +1234567890."
+
+msgid "settings-footer-sociallinks-telegram-title"
+msgstr "Adresse d’une chaîne ou d’un groupe Telegram"
+
+msgid "settings-footer-sociallinks-twitch-title"
+msgstr "Adresse d’une page Twitch"
 
 msgid "settings-footer-sociallinks-tiktok-title"
 msgstr "Adresse d’un profil TikTok"
 
-msgid "settings-footer-sociallinks-twitter-title"
-msgstr "Nom d’utilisateur d’un compte Twitter"
-
-msgid "settings-footer-sociallinks-twitter-placeholder"
-msgstr "@nomdutilisateur"
+msgid "settings-footer-sociallinks-vimeo-title"
+msgstr "Adresse d’une page Vimeo"
 
 msgid "settings-footer-sociallinks-whatsapp-title"
 msgstr "Numéro de téléphone WhatsApp"
 
-msgid "settings-footer-origineministyles-title"
-msgstr "Styles personnalisés pour Origine Mini"
+msgid "settings-footer-sociallinks-youtube-title"
+msgstr "Adresse d’une chaîne YouTube"
+
+msgid "settings-footer-sociallinks-x-title"
+msgstr "Nom d’utilisateur d’un compte 𝕏"
+
+msgid "settings-footer-sociallinks-x-placeholder"
+msgstr "@nomdutilisateur"
+
+msgid "settings-footer-sociallinks-x-description"
+msgstr "Vous devez ajouter un @ devant votre nom d’utilisateur."
+
+msgid "settings-footer-odysseyministyles-title"
+msgstr "Styles personnalisés pour Odyssée"
 
 # Form
 
@@ -507,4 +614,4 @@ msgid "settings-scripts-message-example"
 msgstr "Un exemple de mise en place est disponible sur <a href="%s" hreflang="%s" title="%s">le blog de Franck, <em>Open Time</em></a>."
 
 msgid "settings-scripts-message-note"
-msgstr "Attention&nbsp;: ces empreintes sont susceptibles d’être modifiées lors de la prochaine mise à jour d’Origine Mini ; il faudra alors penser à les actualiser dans la stratégie."
+msgstr "Attention&nbsp;: ces empreintes sont susceptibles d’être modifiées lors de la prochaine mise à jour d’Odyssée ; il faudra alors penser à les actualiser dans la stratégie."

@@ -1,19 +1,19 @@
 <tpl:Entries>
   <tpl:EntriesHeader>
-    <div aria-label="{{tpl:lang entry-list-aria-label}}" class=entry-list-content>
+    <div aria-label="{{tpl:lang entry-list-aria-label}}" class="entry-list entry-list-content">
   </tpl:EntriesHeader>
 
-  <article class="post<tpl:EntryIf selected="1"> post-selected</tpl:EntryIf>{{tpl:origineConfigEntryUpdatedClass}}" id={{tpl:lang post-id}}-{{tpl:EntryID}}>
+  <article class="post<tpl:EntryIf selected="1"> post-selected</tpl:EntryIf>" id={{tpl:lang post-id}}-{{tpl:EntryID}}>
     <header>
       <tpl:EntryIf selected="1">
         <small class=post-selected>{{tpl:lang post-selected-label}}</small>
       </tpl:EntryIf>
 
       <tpl:EntryIf type="post">
-        <time aria-label="{{tpl:lang entry-list-date-aria-label}}" class="post-date text-secondary" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%M"}}>{{tpl:EntryDate}}{{tpl:origineMiniEntryTime context="entry-list"}}</time>
+        <time aria-label="{{tpl:lang entry-list-date-aria-label}}" class="post-date text-secondary" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%M"}}>{{tpl:EntryDate}}{{tpl:odysseyEntryTime context="entry-list"}}</time>
       </tpl:EntryIf>
 
-      <h3 class=entry-title{{tpl:origineMiniEntryLang}}><a href="{{tpl:EntryURL}}" rel=bookmark>{{tpl:EntryTitle}}</a></h3>
+      <h3 class=entry-title{{tpl:odysseyEntryLang}}><a href="{{tpl:EntryURL}}" rel=bookmark>{{tpl:EntryTitle}}</a></h3>
     </header>
 
     <div class=content-text>
@@ -24,8 +24,32 @@
       {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
     </div>
 
-    <footer>
-      {{tpl:origineMiniPostListReactionLink}}
+    <footer class=post-footer>
+      <tpl:EntryIf has_attachment="1">
+        {{tpl:include src="_attachments.html"}}
+      </tpl:EntryIf>
+
+      <tpl:EntryIf has_category="1">
+        <div class="post-meta text-secondary">
+          {{tpl:lang post-category-prefix}} <a href="{{tpl:EntryCategoryURL}}" rel=tag>{{tpl:EntryCategory}}</a>
+        </div>
+      </tpl:EntryIf>
+
+      <tpl:EntryIf>
+        <tpl:EntryTags>
+          <tpl:TagsHeader>
+            <div class="post-meta text-secondary">{{tpl:odysseyPostTagsBefore}}
+          </tpl:TagsHeader>
+
+          <a href="{{tpl:TagURL}}" rel=tag>{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
+
+          <tpl:TagsFooter>
+            </div>
+          </tpl:TagsFooter>
+        </tpl:EntryTags>
+      </tpl:EntryIf>
+
+      {{tpl:odysseyPostListReactionLink}}
     </footer>
   </article>
 

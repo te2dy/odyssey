@@ -1,10 +1,10 @@
-<article class=post id={{tpl:lang post-id}}-{{tpl:EntryID}}{{tpl:origineMiniEntryLang}}>
+<article class=post id={{tpl:lang post-id}}-{{tpl:EntryID}}{{tpl:odysseyEntryLang}}>
   <header>
     <tpl:EntryIf selected="1">
       <small class=post-selected-label>{{tpl:lang post-selected-label}}</small>
     </tpl:EntryIf>
 
-    <time aria-label="{{tpl:lang post-date-aria-label}}" class="post-date text-secondary" datetime="{{tpl:EntryDate format="%Y-%m-%dT%H:%M"}}">{{tpl:EntryDate}}{{tpl:origineMiniEntryTime context="post"}}</time>
+    <time aria-label="{{tpl:lang post-date-aria-label}}" class="post-date text-secondary" datetime="{{tpl:EntryDate format="%Y-%m-%dT%H:%M"}}">{{tpl:EntryDate}}{{tpl:odysseyEntryTime context="post"}}</time>
 
     <h1>{{tpl:EntryTitle}}</h1>
   </header>
@@ -12,12 +12,12 @@
   <div class=content-text>
     {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
 
-    {{tpl:EntryContent}}
+    {{tpl:EntryContent imagewide="1"}}
 
     {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
   </div>
 
-  <tpl:origineMiniPostFooter>
+  <tpl:odysseyPostFooter>
     <footer class=post-footer>
       <tpl:EntryIf has_attachment="1">
         {{tpl:include src="_attachments.html"}}
@@ -32,7 +32,7 @@
       <tpl:EntryIf>
         <tpl:EntryTags>
           <tpl:TagsHeader>
-            <div class="post-meta text-secondary">{{tpl:origineMiniPostTagsBefore}}
+            <div class="post-meta text-secondary">{{tpl:odysseyPostTagsBefore}}
           </tpl:TagsHeader>
 
           <a href="{{tpl:TagURL}}" rel=tag>{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
@@ -43,7 +43,7 @@
         </tpl:EntryTags>
       </tpl:EntryIf>
     </footer>
-  </tpl:origineMiniPostFooter>
+  </tpl:odysseyPostFooter>
 </article>
 
 <div class="post-pagination text-secondary">

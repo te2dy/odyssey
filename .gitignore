@@ -6,10 +6,14 @@
 
 # Ignore DotAddict files
 dotaddict-*
-origine-mini.jpg
+originemini.jpg
 
 # Ignore the file _disabled created by Dotclear when the theme/plugin has been unactivated.
 _disabled
 
 # Ignore "code" folder.
 /prive
+
+# Ignore this custom template.
+_entry-list-a*
+_entry-a*

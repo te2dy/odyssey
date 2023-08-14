@@ -6,6 +6,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgid "Odyssey"
+msgstr "Odyssée"
+
+msgid "Write your own with this theme"
+msgstr "Écrivez la vôtre avec ce thème"
+
 # Head
 
 msgid "page-noun-before-number"
@@ -33,6 +39,9 @@ msgstr "Aller au menu"
 
 msgid "skip-link-footer"
 msgstr "Aller au pied de page"
+
+msgid "header-image-alt"
+msgstr "Image d’en-tête"
 
 # Posts & pages
 
@@ -191,22 +200,28 @@ msgstr "Adresse d’un compte ou site personnel (facultatif)"
 msgid "reactions-comment-form-comment-label"
 msgstr "Commentaire"
 
+msgid "reactions-comment-markdown-support"
+msgstr "Vous pouvez mettre en forme votre commentaire avec le balisage <a href=%s hreflang=en rel=external target=_blank>Markdown</a>."
+
+msgid "reactions-comment-markdown-support-link"
+msgstr "https://www.markdownguide.org/basic-syntax"
+
 msgid "reactions-comment-form-preview-button"
 msgstr "Prévisualiser"
 
 msgid "reactions-comment-form-submit-button"
 msgstr "Envoyer"
 
-msgid "private-comment-title"
+msgid "reactions-comment-private-title"
 msgstr "Envoyer un commentaire privé"
 
-msgid "private-comment-body-post-url"
-msgstr "Adresse du billet :"
+msgid "reactions-comment-private-body-post-url"
+msgstr "Adresse du billet&nbsp;:"
 
-msgid "private-comment-button-text"
+msgid "reactions-comment-private-button-text"
 msgstr "Répondre à l’auteur par courriel"
 
-msgid "private-comment-email-prefix"
+msgid "reactions-comment-private-email-prefix"
 msgstr "Re:"
 
 msgid "reactions-subscribe-link-reactions"
@@ -241,10 +256,60 @@ msgstr "Page suivante ›"
 # Footer
 
 msgid "footer-powered-by"
-msgstr "Propulsé par <a href=https://fr.dotclear.org/>Dotclear</a> et <a href=https://themes.dotaddict.org/galerie-dc2/details/origine-mini>Origine Mini</a>"
+msgstr "Propulsé par <a href=https://fr.dotclear.org/>Dotclear</a> et <a href=https://themes.dotaddict.org/galerie-dc2/details/odyssey>%s</a>"
 
 msgid "footer-powered-by-dev"
-msgstr "Propulsé par <a href=https://fr.dotclear.org/ title=%s>Dotclear %s</a> et <a href=https://github.com/te2dy/origine-mini>Origine Mini %s</a>"
+msgstr "Propulsé par <a href=https://fr.dotclear.org/ title=%s>Dotclear %s</a> et <a href=https://github.com/te2dy/odyssey>%s %s</a>"
+
+# Social links
+
+msgid "site-name-500px"
+msgstr "500px"
+
+msgid "site-name-dailymotion"
+msgstr "Dailymotion"
+
+msgid "site-name-diaspora"
+msgstr "Diaspora"
+
+msgid "site-name-discord"
+msgstr "Discord"
+
+msgid "site-name-facebook"
+msgstr "Facebook"
+
+msgid "site-name-github"
+msgstr "GitHub"
+
+msgid "site-name-mastodon"
+msgstr "Mastodon"
+
+msgid "site-name-peertube"
+msgstr "PeerTube"
+
+msgid "site-name-signal"
+msgstr "Signal"
+
+msgid "site-name-telegram"
+msgstr "Telegram"
+
+msgid "site-name-tiktok"
+msgstr "TikTok"
+
+msgid "site-name-twitch"
+msgstr "Twitch"
+
+msgid "site-name-vimeo"
+msgstr "Vimeo"
+
+msgid "site-name-whatsapp"
+msgstr "WhatsApp"
+
+msgid "site-name-youtube"
+msgstr "YouTube"
+
+msgid "site-name-x"
+msgstr "𝕏"
 
 # Archives
 
