@@ -265,14 +265,16 @@ class Frontend extends dcNsProcess
 
         // Builds the array of social links to display in the footer.
         foreach ($social_sites as $site_id) {
-            $setting_id = 'footer_social_links_' . $site_id;
+            $setting_id    = 'footer_social_links_' . $site_id;
+            $setting_value = oSettings::value($setting_id);
 
-            // If the setting has a value.
-            if (oSettings::value($setting_id)) {
-                $social_links[$site_id] = oSettings::value($setting_id);
+            // If the setting has a valid value.
+            if (isset($setting_value['data']) && isset($setting_value['valid']) && $setting_value['valid'] === true) {
+                $social_links[$site_id] = oSettings::value($setting_id)['data'];
             }
         }
 
+        // If there are social links.
         if (!empty($social_links)) :
             ?>
 

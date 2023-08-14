@@ -568,6 +568,9 @@ msgstr ""
 
 # Form
 
+msgid "settings-error"
+msgstr ""
+
 msgid "settings-default-checked"
 msgstr ""
 

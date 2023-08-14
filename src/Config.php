@@ -531,15 +531,25 @@ class Config extends dcNsProcess
 
         if ($url) {
             if (array_key_exists($setting_id, $social_base_url)) {
+                $output['value']['data'] = $url;
+
                 if (str_starts_with($url, $social_base_url[$setting_id])) {
-                    $output['value'] = Html::escapeHTML($url);
-                    $output['type']  = 'string';
+                    $output['value']['valid'] = true;
+                } else {
+                    $output['value']['valid'] = false;
                 }
-            } elseif ($setting_id === 'footer_social_links_facebook'
-                && str_contains(parse_url($url, PHP_URL_HOST), '.facebook.com')
-            ) {
-                $output['value'] = Html::escapeHTML($url);
-                $output['type']  = 'string';
+
+                $output['type']  = 'array';
+            } elseif ($setting_id === 'footer_social_links_facebook') {
+                $output['value']['data'] = $url;
+
+                if (str_contains(parse_url($url, PHP_URL_HOST), '.facebook.com')) {
+                    $output['value']['valid'] = true;
+                } else {
+                    $output['value']['valid'] = false;
+                }
+
+                $output['type']  = 'array';
             }
         }
 
@@ -555,11 +565,26 @@ class Config extends dcNsProcess
      */
     public static function saveXUsername($username): array
     {
+        $username = $username ? Html::escapeHTML($username) : '';
+
         $output = [];
 
-        if (preg_match('/^@[A-Za-z0-9_]{4,15}/', $username)) {
-            $output['value'] = Html::escapeHTML('https://twitter.com/' . substr($username, 1));
-            $output['type']  = 'string';
+        if (preg_match('/^@[A-Za-z0-9_]{4,15}$/', $username)) {
+            $link = 'https://twitter.com/' . substr($username, 1);
+            
+            if ($link) {
+                $output['value'] = [
+                    'data'  => $link,
+                    'valid' => true
+                ];
+                $output['type']  = 'array';
+            }
+        } elseif ($username) {
+            $output['value'] = [
+                'data'  => $username,
+                'valid' => false
+            ];
+            $output['type']  = 'array';
         }
 
         return $output;
@@ -567,31 +592,34 @@ class Config extends dcNsProcess
 
     public static function saveMessagingAppsLink($setting_id, $input): array
     {
+        $input  = $input ? Html::escapeHTML($input) : '';
         $output = [];
 
         if ($setting_id === 'footer_social_links_signal') {
-            if (preg_match('/^\\+[1-9][0-9]{7,14}$/', $input)
-                || str_starts_with($input, 'sgnl://signal.me/')
-                || str_starts_with($input, 'https://signal.me/')
-            ) {
-                $output['value'] = Html::escapeHTML($input);
-                $output['type']  = 'string';
+            if (preg_match('/^\\+[1-9][0-9]{7,14}$/', $input) || str_starts_with($input, 'sgnl://signal.me/') || str_starts_with($input, 'https://signal.me/')) {
+                $output['value']['data'] = $input;
+                $output['type']          = 'array';
             }
         } elseif ($setting_id === 'footer_social_links_telegram') {
-            if (str_starts_with($input, 'https://t.me/')
-                || str_starts_with($input, 'https://telegram.me/')
-                || str_starts_with($input, 'tg://')
-            ) {
-                $output['value'] = Html::escapeHTML($input);
-                $output['type']  = 'string';
+            if (str_starts_with($input, 'https://t.me/') || str_starts_with($input, 'https://telegram.me/') || str_starts_with($input, 'tg://')) {
+                $output['value']['data'] = $input;
+                $output['type']          = 'array';
             }
         } elseif ($setting_id === 'footer_social_links_whatsapp') {
-            if (str_starts_with($input, 'https://wa.me/')
-                || str_starts_with($input, 'whatsapp://')
-            ) {
-                $output['value'] = Html::escapeHTML($input);
-                $output['type']  = 'string';
+            if (str_starts_with($input, 'https://wa.me/') || str_starts_with($input, 'whatsapp://')) {
+                $output['value']['data'] = $input;
+                $output['type']          = 'array';
             }
+        }
+
+        if (isset($output['value']['data'])) {
+            $output['value']['valid'] = true;
+        } elseif ($input) {
+            $output['value'] = [
+                'data'  => $input,
+                'valid' => false
+            ];
+            $output['type']  = 'array';
         }
 
         return $output;
@@ -617,7 +645,6 @@ class Config extends dcNsProcess
      */
     public static function saveStyles($header_image_width = '')
     {
-
         $css = '';
 
         $css_root_array                    = [];
@@ -1371,7 +1398,19 @@ class Config extends dcNsProcess
                 : '';
             }
 
-            // Particular values to render.
+            $social_setting_error = false;
+
+            if (str_starts_with($setting_id, 'footer_social_links_')) {
+                if (is_array($setting_value)) {
+                    if (isset($setting_value['valid']) && $setting_value['valid'] !== true) {
+                        $social_setting_error = true;
+                    }
+
+                    $setting_value = $setting_value['data'];
+                }
+            }
+
+            // Particular value for X to render.
             if ($setting_id === 'footer_social_links_x' && $setting_value) {
                 $setting_value = str_replace('https://twitter.com/', '@', $setting_value);
             }
@@ -1455,6 +1494,12 @@ class Config extends dcNsProcess
                     ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"'
                     : '';
 
+                    $class = '';
+
+                    if ($social_setting_error === true) {
+                        $class = 'form-field-error';
+                    }
+
                     echo '<label for=', $setting_id, '>',
                     $default_settings[$setting_id]['title'],
                     '</label>',
@@ -1463,7 +1508,7 @@ class Config extends dcNsProcess
                         30,
                         255,
                         $setting_value,
-                        '',
+                        $class,
                         '',
                         false,
                         $placeholder
@@ -1473,6 +1518,12 @@ class Config extends dcNsProcess
             }
 
             echo '</p>';
+
+            if ($social_setting_error === true) {
+                echo '<p class=form-note-error>',
+                __('settings-error'),
+                '</p>';
+            }
 
             // Displays the description of the parameter as a note.
             if ($default_settings[$setting_id]['type'] === 'checkbox' || (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '')) {

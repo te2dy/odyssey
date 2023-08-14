@@ -24,6 +24,17 @@
 #theme-config-form :is(select, textarea) {
   padding: .5rem;
 }
+#theme-config-form .form-field-error {
+  color: var(--invalid-input-color);
+  border-color: var(--invalid-input-border);
+  background-color: var(--invalid-input-background);
+  shadow-color: var(--invalid-input-shadow);
+}
+#theme-config-form .form-note-error {
+  color: var(--upload-error-color);
+  font-weight: normal;
+  margin-top: -0.7em;
+}
 #header_image-src {
   display: block;
   margin: 1rem 0;
