@@ -8,7 +8,7 @@ Odyssée a été spécialement conçu pour garantir une excellente lisibilité �
 
 **[Télécharger la dernière version d’Odyssée sur GitHub](https://github.com/te2dy/odyssey/releases/latest)**
 
-**[Télécharger la dernière version d’Odyssée sur DotAddict](https://themes.dotaddict.org/galerie-dc2/details/odyssey)**
+**~~[Télécharger la dernière version d’Odyssée sur DotAddict](https://themes.dotaddict.org/galerie-dc2/details/odyssey)~~** (bientôt)
 
 ## Installation
 
