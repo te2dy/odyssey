@@ -408,10 +408,10 @@ msgid "settings-content-linksunderline-title"
 msgstr "Underline links in the text body"
 
 msgid "settings-content-imageswide-title"
-msgstr "Enlarge big images"
+msgstr "Expand wide images (beta)"
 
 msgid "settings-content-imageswide-description"
-msgstr "Photos that are large enough will overflow the page."
+msgstr "Photos that are large enough will extend beyond the limits of the page to be displayed in full size. Warning: this feature is experimental and may not work properly."
 
 msgid "settings-content-imageswide-disabled-default"
 msgstr "Disabled"

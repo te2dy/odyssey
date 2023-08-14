@@ -405,10 +405,10 @@ msgid "settings-content-linksunderline-title"
 msgstr "Souligner les liens du corps du texte"
 
 msgid "settings-content-imageswide-title"
-msgstr "Agrandir les images suffisamment larges"
+msgstr "Agrandir les images suffisamment larges (bêta)"
 
 msgid "settings-content-imageswide-description"
-msgstr "Les photos suffisamment grandes déborderont de la page."
+msgstr "Les photos suffisamment larges dépasseront les limites de la page pour s’afficher en grand. Attention&nbsp;: cette fonctionnalité est expérimentale et pourrait mal fonctionner."
 
 msgid "settings-content-imageswide-disabled-default"
 msgstr "Désactivé"
