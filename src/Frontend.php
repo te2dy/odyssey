@@ -1,6 +1,6 @@
 <?php
 /**
- * Odyssey, a minimal theme for Dotclear.
+ * Odyssey, a Dotclear theme.
  *
  * This file contains functions for displaying the theme.
  *

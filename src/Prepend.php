@@ -1,6 +1,6 @@
 <?php
 /**
- * Odyssey, a minimal theme for Dotclear.
+ * Odyssey, a Dotclear theme.
  *
  * The purpose of this file is to generate, at each version change of the theme,
  * a digital fingerprint of the JS files and save them in the database.

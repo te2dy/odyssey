@@ -1,7 +1,7 @@
 = Odyssée =
 
 Nom du thème : Odyssée
-Description : Un thème minimaliste pour Dotclear
+Description : Un thème Dotclear
 Auteur : Teddy
 Licence : GPLv3 ou ultérieure
 Adresse de la licence : https://www.gnu.org/licenses/gpl-3.0.fr.html

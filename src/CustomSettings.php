@@ -1,6 +1,6 @@
 <?php
 /**
- * Odyssey, a minimal theme for Dotclear.
+ * Odyssey, a Dotclear theme.
  *
  *
  * @author    Teddy <zozxebpyr@mozmail.com>

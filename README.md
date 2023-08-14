@@ -1,4 +1,4 @@
-# Odyssée, un thème minimaliste pour Dotclear
+# Odyssée, un thème Dotclear
 
 ## Présentation
 
