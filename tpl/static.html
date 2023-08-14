@@ -5,7 +5,7 @@
 </tpl:Block>
 
 <tpl:Block name="head-description">
-  {{tpl:origineMiniBlogDescription remove_html="1" encode_html="1"}}
+  {{tpl:odysseyBlogDescription remove_html="1" encode_html="1"}}
 </tpl:Block>
 
 <tpl:Block name="main-content">
@@ -14,7 +14,7 @@
   <tpl:Entries>
     {{tpl:EntryContent}}
 
-    <article id={{tpl:lang page-id}}-{{tpl:EntryID}} class=page{{tpl:origineMiniEntryLang}}>
+    <article id={{tpl:lang page-id}}-{{tpl:EntryID}} class=page{{tpl:odysseyEntryLang}}>
       <div class=content-text>
         {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
 

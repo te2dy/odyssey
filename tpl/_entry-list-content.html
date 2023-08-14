@@ -10,10 +10,10 @@
       </tpl:EntryIf>
 
       <tpl:EntryIf type="post">
-        <time aria-label="{{tpl:lang entry-list-date-aria-label}}" class="post-date text-secondary" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%M"}}>{{tpl:EntryDate}}{{tpl:origineMiniEntryTime context="entry-list"}}</time>
+        <time aria-label="{{tpl:lang entry-list-date-aria-label}}" class="post-date text-secondary" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%M"}}>{{tpl:EntryDate}}{{tpl:odysseyEntryTime context="entry-list"}}</time>
       </tpl:EntryIf>
 
-      <h3 class=entry-title{{tpl:origineMiniEntryLang}}><a href="{{tpl:EntryURL}}" rel=bookmark>{{tpl:EntryTitle}}</a></h3>
+      <h3 class=entry-title{{tpl:odysseyEntryLang}}><a href="{{tpl:EntryURL}}" rel=bookmark>{{tpl:EntryTitle}}</a></h3>
     </header>
 
     <div class=content-text>
@@ -38,7 +38,7 @@
       <tpl:EntryIf>
         <tpl:EntryTags>
           <tpl:TagsHeader>
-            <div class="post-meta text-secondary">{{tpl:origineMiniPostTagsBefore}}
+            <div class="post-meta text-secondary">{{tpl:odysseyPostTagsBefore}}
           </tpl:TagsHeader>
 
           <a href="{{tpl:TagURL}}" rel=tag>{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
@@ -49,7 +49,7 @@
         </tpl:EntryTags>
       </tpl:EntryIf>
 
-      {{tpl:origineMiniPostListReactionLink}}
+      {{tpl:odysseyPostListReactionLink}}
     </footer>
   </article>
 

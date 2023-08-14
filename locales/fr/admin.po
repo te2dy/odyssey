@@ -11,7 +11,30 @@ msgstr ""
 msgid "prepend-hashes-save"
 msgstr "Empreinte numérique des fichiers JS du thème"
 
-# Sections
+# Config
+
+msgid "config-help"
+msgstr "Ce thème a été conçu bénévolement par un utilisateur de Dotclear, codeur amateur à ses nombreuses heures perdues. N’hésitez pas à parcourir son code source pour apporter votre contribution afin de rendre ce thème un peu plus professionnel."
+
+msgid "config-link-github-title"
+msgstr "GitHub"
+
+msgid "config-link-github"
+msgstr "Code source"
+
+msgid "config-link-dotclear-forum-title"
+msgstr "Forum Dotclear"
+
+msgid "config-link-dotclear-forum"
+msgstr "Obtenir de l’aide ou discuter du thème"
+
+msgid "config-link-github-issues-title"
+msgstr "GitHub"
+
+msgid "config-link-github-issues"
+msgstr "Signaler un bogue ou proposer une amélioration"
+
+# Config sections
 
 msgid "section-global"
 msgstr "Paramètres globaux"
@@ -505,10 +528,10 @@ msgid "settings-footer-sociallinks-peertube-title"
 msgstr "Adresse d’une chaîne PeerTube"
 
 msgid "settings-footer-sociallinks-signal-title"
-msgstr "Lien vers un compte ou un numéro de téléphone Signal"
+msgstr "Lien ou numéro de téléphone Signal"
 
 msgid "settings-footer-sociallinks-signal-description"
-msgstr "Si vous préférez fournir directement votre numéro de téléphone, il doit être saisi au format +1234567890."
+msgstr "Si vous choisissez de saisir votre numéro de téléphone, il doit être au format +1234567890."
 
 msgid "settings-footer-sociallinks-telegram-title"
 msgstr "Adresse d’une chaîne ou d’un groupe Telegram"
@@ -534,8 +557,11 @@ msgstr "Nom d’utilisateur d’un compte 𝕏"
 msgid "settings-footer-sociallinks-x-placeholder"
 msgstr "@nomdutilisateur"
 
-msgid "settings-footer-origineministyles-title"
-msgstr "Styles personnalisés pour Origine Mini"
+msgid "settings-footer-sociallinks-x-description"
+msgstr "Vous devez ajouter un @ devant votre nom d’utilisateur."
+
+msgid "settings-footer-odysseyministyles-title"
+msgstr "Styles personnalisés pour Odyssée"
 
 # Form
 
@@ -588,4 +614,4 @@ msgid "settings-scripts-message-example"
 msgstr "Un exemple de mise en place est disponible sur <a href="%s" hreflang="%s" title="%s">le blog de Franck, <em>Open Time</em></a>."
 
 msgid "settings-scripts-message-note"
-msgstr "Attention&nbsp;: ces empreintes sont susceptibles d’être modifiées lors de la prochaine mise à jour d’Origine Mini ; il faudra alors penser à les actualiser dans la stratégie."
+msgstr "Attention&nbsp;: ces empreintes sont susceptibles d’être modifiées lors de la prochaine mise à jour d’Odyssée ; il faudra alors penser à les actualiser dans la stratégie."

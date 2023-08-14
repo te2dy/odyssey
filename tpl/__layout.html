@@ -16,7 +16,7 @@
       <meta name=robots content="{{tpl:BlogMetaRobots}}">
     </tpl:Block>
 
-    {{tpl:origineMiniStylesInline}}
+    {{tpl:odysseyStylesInline}}
 
     <tpl:Block name="head-link">
       <link rel=stylesheet href="{{tpl:BlogThemeURL}}/style.min.css">
@@ -27,22 +27,22 @@
   </head>
 
   <body>
-    {{tpl:origineMiniScreenReaderLinks}}
+    {{tpl:odysseyScreenReaderLinks}}
 
     <div id=site>
       <header id=site-header>
         <tpl:Block name="site-header">
-          {{tpl:origineMiniHeaderImage position="top"}}
+          {{tpl:odysseyHeaderImage position="top"}}
 
-          <tpl:origineMiniHeaderIdentity>
+          <tpl:odysseyHeaderIdentity>
             <a href="{{tpl:BlogURL}}" id=site-title rel=home><h4>{{tpl:BlogName}}</h4></a>
 
-            {{tpl:origineMiniBlogDescription}}
-          </tpl:origineMiniHeaderIdentity>
+            {{tpl:odysseyBlogDescription}}
+          </tpl:odysseyHeaderIdentity>
 
           {{tpl:SimpleMenu id="main-menu"}}
 
-          {{tpl:origineMiniHeaderImage position="bottom"}}
+          {{tpl:odysseyHeaderImage position="bottom"}}
 
           {{tpl:SysBehavior behavior="publicTopAfterContent"}}
         </tpl:Block>
@@ -50,7 +50,7 @@
 
       <main id=site-content>
         <tpl:Block name="main-content">
-          {{tpl:origineMiniPostListType}}
+          {{tpl:odysseyPostListType}}
         </tpl:Block>
       </main>
 
@@ -58,11 +58,11 @@
         {{tpl:include src="_sidebar.html"}}
       </tpl:Block>
 
-      <tpl:origineMiniFooter>
+      <tpl:odysseyFooter>
         <tpl:Block name="site-footer">
           {{tpl:include src="_footer.html"}}
         </tpl:Block>
-      </tpl:origineMiniFooter>
+      </tpl:odysseyFooter>
     </div>
   </body>
 </html>

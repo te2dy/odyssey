@@ -11,7 +11,30 @@ msgstr ""
 msgid "prepend-hashes-save"
 msgstr "Hashes of the theme JS files."
 
-# Sections
+# Config
+
+msgid "config-help"
+msgstr "This theme was designed voluntarily by a Dotclear user, an amateur coder in his spare time. Please feel free to browse through the source code to help make this theme a little more professional."
+
+msgid "config-link-github-title"
+msgstr "GitHub"
+
+msgid "config-link-github"
+msgstr "Source code"
+
+msgid "config-link-dotclear-forum-title"
+msgstr "Dotclear forum"
+
+msgid "config-link-dotclear-forum"
+msgstr "Ask for help or discuss about the theme"
+
+msgid "config-link-github-issues-title"
+msgstr "GitHub"
+
+msgid "config-link-github-issues"
+msgstr "Report a bug or suggest an improvement"
+
+# Config sections
 
 msgid "section-global"
 msgstr "Global Settings"
@@ -511,7 +534,7 @@ msgid "settings-footer-sociallinks-signal-title"
 msgstr "Signal account URL or phone number"
 
 msgid "settings-footer-sociallinks-signal-description"
-msgstr "If you prefer to provide your phone number directly, it must be entered in the format +1234567890."
+msgstr "If you choose to enter your phone number, it must be in the format +1234567890."
 
 msgid "settings-footer-sociallinks-telegram-title"
 msgstr "URL of a Telegram group or channel"
@@ -537,8 +560,11 @@ msgstr "𝕏 account username"
 msgid "settings-footer-sociallinks-x-placeholder"
 msgstr "@username"
 
-msgid "settings-footer-origineministyles-title"
-msgstr "Custom styles for Origine Mini"
+msgid "settings-footer-sociallinks-x-description"
+msgstr "You must add an @ in front of your username."
+
+msgid "settings-footer-odysseyministyles-title"
+msgstr "Custom styles for Odyssey"
 
 # Form
 
@@ -591,4 +617,4 @@ msgid "settings-scripts-message-example"
 msgstr "An example of implementation is available on <a href="%s" hreflang="%s" title="%s">Franck's blog, <em>Open Time</em></a>."
 
 msgid "settings-scripts-message-note"
-msgstr "Please note: these fingerprints may be modified in the next update of Origine Mini; you will then have to update them in the CSP."
+msgstr "Please note: these fingerprints may be modified in the next update of Odyssey; you will then have to update them in the CSP."

@@ -1,6 +1,6 @@
 <?php
 /**
- * Origine Mini, a minimal theme for Dotclear.
+ * Odyssey, a minimal theme for Dotclear.
  *
  * This file contains functions for displaying the theme.
  *
@@ -9,7 +9,7 @@
  * @license   GPL-3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
  */
 
-namespace Dotclear\Theme\originemini;
+namespace Dotclear\Theme\odyssey;
 
 use dcCore;
 use dcNsProcess;
@@ -21,10 +21,10 @@ use Dotclear\Helper\Html\Html;
 
 // Prepares to use custom functions.
 require_once 'CustomSettings.php';
-use OrigineMiniSettings as omSettings;
+use OdysseySettings as oSettings;
 
 require_once 'CustomUtils.php';
-use OrigineMiniUtils as omUtils;
+use OdysseyUtils as oUtils;
 
 class Frontend extends dcNsProcess
 {
@@ -44,47 +44,47 @@ class Frontend extends dcNsProcess
         L10n::set(__DIR__ . '/../locales/' . dcCore::app()->lang . '/main');
 
         // Behaviors.
-        dcCore::app()->addBehavior('publicHeadContent', [self::class, 'origineMiniHeadMeta']);
-        dcCore::app()->addBehavior('publicHeadContent', [self::class, 'origineMiniSocialMarkups']);
-        dcCore::app()->addBehavior('publicEntryBeforeContent', [self::class, 'origineMiniPostIntro']);
-        dcCore::app()->addBehavior('publicFooterContent', [self::class, 'origineMiniSocialLinks']);
-        dcCore::app()->addBehavior('publicFooterContent', [self::class, 'origineMiniScriptSearchForm']);
-        dcCore::app()->addBehavior('publicFooterContent', [self::class, 'origineMiniScriptTrackbackURL']);
-        dcCore::app()->addBehavior('publicAfterContentFilterV2', [self::class, 'origineMiniImageWide']);
+        dcCore::app()->addBehavior('publicHeadContent', [self::class, 'odysseyHeadMeta']);
+        dcCore::app()->addBehavior('publicHeadContent', [self::class, 'odysseySocialMarkups']);
+        dcCore::app()->addBehavior('publicEntryBeforeContent', [self::class, 'odysseyPostIntro']);
+        dcCore::app()->addBehavior('publicFooterContent', [self::class, 'odysseySocialLinks']);
+        dcCore::app()->addBehavior('publicFooterContent', [self::class, 'odysseyScriptSearchForm']);
+        dcCore::app()->addBehavior('publicFooterContent', [self::class, 'odysseyScriptTrackbackURL']);
+        dcCore::app()->addBehavior('publicAfterContentFilterV2', [self::class, 'odysseyImageWide']);
 
         // Values.
-        dcCore::app()->tpl->addValue('origineMiniMetaDescriptionHome', [self::class, 'origineMiniMetaDescriptionHome']);
-        dcCore::app()->tpl->addValue('origineMiniStylesInline', [self::class, 'origineMiniStylesInline']);
-        dcCore::app()->tpl->addValue('origineMiniEntryLang', [self::class, 'origineMiniEntryLang']);
-        dcCore::app()->tpl->addValue('origineMiniScreenReaderLinks', [self::class, 'origineMiniScreenReaderLinks']);
-        dcCore::app()->tpl->addValue('origineMiniHeaderImage', [self::class, 'origineMiniHeaderImage']);
-        dcCore::app()->tpl->addValue('origineMiniBlogDescription', [self::class, 'origineMiniBlogDescription']);
-        dcCore::app()->tpl->addValue('origineMiniPostListType', [self::class, 'origineMiniPostListType']);
-        dcCore::app()->tpl->addValue('origineMiniPostTemplate', [self::class, 'origineMiniPostTemplate']);
-        dcCore::app()->tpl->addValue('origineMiniPageTemplate', [self::class, 'origineMiniPageTemplate']);
-        dcCore::app()->tpl->addValue('origineMiniPostListReactionLink', [self::class, 'origineMiniPostListReactionLink']);
-        dcCore::app()->tpl->addValue('origineMiniEntryTime', [self::class, 'origineMiniEntryTime']);
-        dcCore::app()->tpl->addValue('origineMiniEntryExcerpt', [self::class, 'origineMiniEntryExcerpt']);
-        dcCore::app()->tpl->addValue('origineMiniPostTagsBefore', [self::class, 'origineMiniPostTagsBefore']);
-        dcCore::app()->tpl->addValue('origineMiniMarkdownSupportInfo', [self::class, 'origineMiniMarkdownSupportInfo']);
-        dcCore::app()->tpl->addValue('origineMiniScriptTrackbackURLCopied', [self::class, 'origineMiniScriptTrackbackURLCopied']);
-        dcCore::app()->tpl->addValue('origineMiniEmailAuthor', [self::class, 'origineMiniEmailAuthor']);
-        dcCore::app()->tpl->addValue('origineMiniAttachmentTitle', [self::class, 'origineMiniAttachmentTitle']);
-        dcCore::app()->tpl->addValue('origineMiniAttachmentSize', [self::class, 'origineMiniAttachmentSize']);
-        dcCore::app()->tpl->addValue('origineMiniCategoryDescription', [self::class, 'origineMiniCategoryDescription']);
-        dcCore::app()->tpl->addValue('origineMiniFooterCredits', [self::class, 'origineMiniFooterCredits']);
-        dcCore::app()->tpl->addValue('origineMiniURIRelative', [self::class, 'origineMiniURIRelative']);
+        dcCore::app()->tpl->addValue('odysseyMetaDescriptionHome', [self::class, 'odysseyMetaDescriptionHome']);
+        dcCore::app()->tpl->addValue('odysseyStylesInline', [self::class, 'odysseyStylesInline']);
+        dcCore::app()->tpl->addValue('odysseyEntryLang', [self::class, 'odysseyEntryLang']);
+        dcCore::app()->tpl->addValue('odysseyScreenReaderLinks', [self::class, 'odysseyScreenReaderLinks']);
+        dcCore::app()->tpl->addValue('odysseyHeaderImage', [self::class, 'odysseyHeaderImage']);
+        dcCore::app()->tpl->addValue('odysseyBlogDescription', [self::class, 'odysseyBlogDescription']);
+        dcCore::app()->tpl->addValue('odysseyPostListType', [self::class, 'odysseyPostListType']);
+        dcCore::app()->tpl->addValue('odysseyPostTemplate', [self::class, 'odysseyPostTemplate']);
+        dcCore::app()->tpl->addValue('odysseyPageTemplate', [self::class, 'odysseyPageTemplate']);
+        dcCore::app()->tpl->addValue('odysseyPostListReactionLink', [self::class, 'odysseyPostListReactionLink']);
+        dcCore::app()->tpl->addValue('odysseyEntryTime', [self::class, 'odysseyEntryTime']);
+        dcCore::app()->tpl->addValue('odysseyEntryExcerpt', [self::class, 'odysseyEntryExcerpt']);
+        dcCore::app()->tpl->addValue('odysseyPostTagsBefore', [self::class, 'odysseyPostTagsBefore']);
+        dcCore::app()->tpl->addValue('odysseyMarkdownSupportInfo', [self::class, 'odysseyMarkdownSupportInfo']);
+        dcCore::app()->tpl->addValue('odysseyScriptTrackbackURLCopied', [self::class, 'odysseyScriptTrackbackURLCopied']);
+        dcCore::app()->tpl->addValue('odysseyEmailAuthor', [self::class, 'odysseyEmailAuthor']);
+        dcCore::app()->tpl->addValue('odysseyAttachmentTitle', [self::class, 'odysseyAttachmentTitle']);
+        dcCore::app()->tpl->addValue('odysseyAttachmentSize', [self::class, 'odysseyAttachmentSize']);
+        dcCore::app()->tpl->addValue('odysseyCategoryDescription', [self::class, 'odysseyCategoryDescription']);
+        dcCore::app()->tpl->addValue('odysseyFooterCredits', [self::class, 'odysseyFooterCredits']);
+        dcCore::app()->tpl->addValue('odysseyURIRelative', [self::class, 'odysseyURIRelative']);
 
         // Blocks.
-        dcCore::app()->tpl->addBlock('origineMiniPostFooter', [self::class, 'origineMiniPostFooter']);
-        dcCore::app()->tpl->addBlock('origineMiniHeaderIdentity', [self::class, 'origineMiniHeaderIdentity']);
-        dcCore::app()->tpl->addBlock('origineMiniCommentFormWrapper', [self::class, 'origineMiniCommentFormWrapper']);
-        dcCore::app()->tpl->addBlock('origineMiniReactionFeedLink', [self::class, 'origineMiniReactionFeedLink']);
-        dcCore::app()->tpl->addBlock('origineMiniTrackbackLink', [self::class, 'origineMiniTrackbackLink']);
-        dcCore::app()->tpl->addBlock('origineMiniWidgetsNav', [self::class, 'origineMiniWidgetsNav']);
-        dcCore::app()->tpl->addBlock('origineMiniWidgetSearchForm', [self::class, 'origineMiniWidgetSearchForm']);
-        dcCore::app()->tpl->addBlock('origineMiniWidgetsExtra', [self::class, 'origineMiniWidgetsExtra']);
-        dcCore::app()->tpl->addBlock('origineMiniFooter', [self::class, 'origineMiniFooter']);
+        dcCore::app()->tpl->addBlock('odysseyPostFooter', [self::class, 'odysseyPostFooter']);
+        dcCore::app()->tpl->addBlock('odysseyHeaderIdentity', [self::class, 'odysseyHeaderIdentity']);
+        dcCore::app()->tpl->addBlock('odysseyCommentFormWrapper', [self::class, 'odysseyCommentFormWrapper']);
+        dcCore::app()->tpl->addBlock('odysseyReactionFeedLink', [self::class, 'odysseyReactionFeedLink']);
+        dcCore::app()->tpl->addBlock('odysseyTrackbackLink', [self::class, 'odysseyTrackbackLink']);
+        dcCore::app()->tpl->addBlock('odysseyWidgetsNav', [self::class, 'odysseyWidgetsNav']);
+        dcCore::app()->tpl->addBlock('odysseyWidgetSearchForm', [self::class, 'odysseyWidgetSearchForm']);
+        dcCore::app()->tpl->addBlock('odysseyWidgetsExtra', [self::class, 'odysseyWidgetsExtra']);
+        dcCore::app()->tpl->addBlock('odysseyFooter', [self::class, 'odysseyFooter']);
 
         return true;
     }
@@ -94,24 +94,24 @@ class Frontend extends dcNsProcess
      *
      * @return void The head meta.
      */
-    public static function origineMiniHeadMeta(): void
+    public static function odysseyHeadMeta(): void
     {
         // Adds the name of the editor.
         if (dcCore::app()->blog->settings->system->editor) {
             echo '<meta name=author content=',
-            omUtils::attrValueQuotes(dcCore::app()->blog->settings->system->editor),
+            oUtils::attrValueQuotes(dcCore::app()->blog->settings->system->editor),
             '>', "\n";
         }
 
         // Adds the content of the copyright notice.
         if (dcCore::app()->blog->settings->system->copyright_notice) {
             echo '<meta name=copyright content=',
-            omUtils::attrValueQuotes(dcCore::app()->blog->settings->system->copyright_notice),
+            oUtils::attrValueQuotes(dcCore::app()->blog->settings->system->copyright_notice),
             '>', "\n";
         }
 
         // Adds the generator name of the blog.
-        if (omSettings::value('global_meta_generator') === true) {
+        if (oSettings::value('global_meta_generator') === true) {
             echo '<meta name=generator content=Dotclear>', "\n";
         }
     }
@@ -123,9 +123,9 @@ class Frontend extends dcNsProcess
      *
      * @link https://meiert.com/en/blog/minimal-social-markup/
      */
-    public static function origineMiniSocialMarkups(): void
+    public static function odysseySocialMarkups(): void
     {
-        if (omSettings::value('global_meta_social') === true) {
+        if (oSettings::value('global_meta_social') === true) {
             $title = '';
             $desc  = '';
             $img   = '';
@@ -145,7 +145,7 @@ class Frontend extends dcNsProcess
                     }
 
                     if (context::EntryFirstImageHelper('o', true, '', true)) {
-                        $img = omUtils::blogBaseURL() . context::EntryFirstImageHelper('o', true, '', true);
+                        $img = oUtils::blogBaseURL() . context::EntryFirstImageHelper('o', true, '', true);
                     }
 
                     break;
@@ -161,13 +161,13 @@ class Frontend extends dcNsProcess
                         );
                     }
 
-                    if (omSettings::value('global_meta_home_description') || dcCore::app()->blog->desc) {
+                    if (oSettings::value('global_meta_home_description') || dcCore::app()->blog->desc) {
                         if ($desc) {
                             $desc .= ' – ';
                         }
 
-                        if (omSettings::value('global_meta_home_description')) {
-                            $desc .= omSettings::value('global_meta_home_description');
+                        if (oSettings::value('global_meta_home_description')) {
+                            $desc .= oSettings::value('global_meta_home_description');
                         } elseif (dcCore::app()->blog->desc) {
                             $desc .= dcCore::app()->blog->desc;
                         }
@@ -214,8 +214,8 @@ class Frontend extends dcNsProcess
             if ($title) {
                 $desc = Html::escapeHTML($desc);
 
-                if (!$img && isset(omSettings::value('header_image')['url'])) {
-                    $img = omUtils::blogBaseURL() . omSettings::value('header_image')['url'];
+                if (!$img && isset(oSettings::value('header_image')['url'])) {
+                    $img = oUtils::blogBaseURL() . oSettings::value('header_image')['url'];
                 }
 
                 $img = Html::escapeURL($img);
@@ -243,9 +243,9 @@ class Frontend extends dcNsProcess
      *
      * @return void The excerpt in a div.
      */
-    public static function origineMiniPostIntro(): void
+    public static function odysseyPostIntro(): void
     {
-        if (omSettings::value('content_post_intro') === true && dcCore::app()->ctx->posts->post_excerpt) {
+        if (oSettings::value('content_post_intro') === true && dcCore::app()->ctx->posts->post_excerpt) {
             echo '<div id=post-intro>', dcCore::app()->ctx->posts->getExcerpt(), '</div>';
         }
     }
@@ -255,10 +255,10 @@ class Frontend extends dcNsProcess
      *
      * @return void A list of social links displayed as icons.
      */
-    public static function origineMiniSocialLinks(): void
+    public static function odysseySocialLinks(): void
     {
         // A list of social sites supported by the theme.
-        $social_sites = omSettings::socialSites();
+        $social_sites = oSettings::socialSites();
 
         // The array of social links to be displayed.
         $social_links = [];
@@ -268,8 +268,8 @@ class Frontend extends dcNsProcess
             $setting_id = 'footer_social_links_' . $site_id;
 
             // If the setting has a value.
-            if (omSettings::value($setting_id)) {
-                $social_links[$site_id] = omSettings::value($setting_id);
+            if (oSettings::value($setting_id)) {
+                $social_links[$site_id] = oSettings::value($setting_id);
             }
         }
 
@@ -298,7 +298,7 @@ class Frontend extends dcNsProcess
                                     <svg class=footer-social-links-icon role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>
                                         <title><?php echo Html::escapeHTML(__('site-name-' . $site_id)); ?></title>
 
-                                        <?php echo strip_tags(omUtils::origineMiniSocialIcons($site_id), '<path>'); ?>
+                                        <?php echo strip_tags(oUtils::odysseySocialIcons($site_id), '<path>'); ?>
                                     </svg>
                                 </span>
                             </a>
@@ -326,13 +326,13 @@ class Frontend extends dcNsProcess
      *
      * @return void The script.
      */
-    public static function origineMiniScriptSearchForm(): void
+    public static function odysseyScriptSearchForm(): void
     {
-        if (!omSettings::value('global_js')) {
+        if (!oSettings::value('global_js')) {
             return;
         }
 
-        if (!omSettings::value('widgets_search_form') && dcCore::app()->url->type !== 'search') {
+        if (!oSettings::value('widgets_search_form') && dcCore::app()->url->type !== 'search') {
             return;
         }
 
@@ -341,7 +341,7 @@ class Frontend extends dcNsProcess
 
             echo '<script>', $script, '</script>', "\n";
         } else {
-            echo '<script src=', dcCore::app()->blog->settings->system->themes_url, '/originemini/js/searchform.min.js></script>';
+            echo '<script src=', dcCore::app()->blog->settings->system->themes_url, '/odyssey/js/searchform.min.js></script>';
         }
     }
 
@@ -357,9 +357,9 @@ class Frontend extends dcNsProcess
      *
      * @return void The script.
      */
-    public static function origineMiniScriptTrackbackURL(): void
+    public static function odysseyScriptTrackbackURL(): void
     {
-        if (!omSettings::value('global_js')) {
+        if (!oSettings::value('global_js')) {
             return;
         }
 
@@ -372,7 +372,7 @@ class Frontend extends dcNsProcess
 
             echo '<script>', $script, '</script>', "\n";
         } else {
-            echo '<script src=', dcCore::app()->blog->settings->system->themes_url, '/originemini/js/trackbackurl.min.js></script>';
+            echo '<script src=', dcCore::app()->blog->settings->system->themes_url, '/odyssey/js/trackbackurl.min.js></script>';
         }
     }
 
@@ -384,14 +384,14 @@ class Frontend extends dcNsProcess
      *
      * @return void The image.
      */
-    public static function origineMiniImageWide($tag, $args): void
+    public static function odysseyImageWide($tag, $args): void
     {
         // If only on Entry content.
         if (!in_array($tag, ['EntryContent'])) {
             return;
         }
 
-        if (!omSettings::value('content_images_wide')) {
+        if (!oSettings::value('content_images_wide')) {
             return;
         }
 
@@ -429,7 +429,7 @@ class Frontend extends dcNsProcess
                      */
                     $option_image_wide = false;
 
-                    switch (omSettings::value('content_images_wide')) {
+                    switch (oSettings::value('content_images_wide')) {
                         case 'posts-pages' :
                             if (dcCore::app()->url->type === 'post' || dcCore::app()->url->type === 'pages') {
                                 $option_image_wide = true;
@@ -440,11 +440,11 @@ class Frontend extends dcNsProcess
                             $option_image_wide = true;
                     }
 
-                    $img_width_max = omSettings::contentWidth('px');
+                    $img_width_max = oSettings::contentWidth('px');
 
                     if ($option_image_wide === true) {
-                        if (omSettings::value('content_images_wide_size')) {
-                            $img_width_max += (int) (omSettings::value('content_images_wide_size') * 2);
+                        if (oSettings::value('content_images_wide_size')) {
+                            $img_width_max += (int) (oSettings::value('content_images_wide_size') * 2);
                         } else {
                             $img_width_max += 120 * 2;
                         }
@@ -459,8 +459,8 @@ class Frontend extends dcNsProcess
                     $media_sizes = dcCore::app()->media->thumb_sizes;
 
                     // Adds eventual custom image sizes.
-                    if (omSettings::value('content_image_custom_size')) {
-                        $custom_image_sizes = explode(',', omSettings::value('content_image_custom_size'));
+                    if (oSettings::value('content_image_custom_size')) {
+                        $custom_image_sizes = explode(',', oSettings::value('content_image_custom_size'));
 
                         foreach ($custom_image_sizes as $size_id) {
                             $media_sizes[$size_id] = [
@@ -523,7 +523,7 @@ class Frontend extends dcNsProcess
                     $attr .= 'sizes="100vw" ';
 
                     // If it's a landscape format image only, displays it wide.
-                    if (omSettings::value('content_images_wide')
+                    if (oSettings::value('content_images_wide')
                         && $img[$src_image_size]['width'] > $img[$src_image_size]['height']
                         && $img[$src_image_size]['width'] >= $img_width_max
                     ) {
@@ -550,10 +550,10 @@ class Frontend extends dcNsProcess
      *
      * @return string The description.
      */
-    public static function origineMiniMetaDescriptionHome($attr): string
+    public static function odysseyMetaDescriptionHome($attr): string
     {
-        if (omSettings::value('global_meta_home_description')) {
-            return '<?php echo ' . sprintf(dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->blog->settings->originemini->global_meta_home_description') . '; ?>';
+        if (oSettings::value('global_meta_home_description')) {
+            return '<?php echo ' . sprintf(dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->blog->settings->odyssey->global_meta_home_description') . '; ?>';
         }
 
         return '<?php echo ' . sprintf(dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->blog->desc') . '; ?>';
@@ -564,10 +564,10 @@ class Frontend extends dcNsProcess
      *
      * @return string The styles.
      */
-    public static function origineMiniStylesInline()
+    public static function odysseyStylesInline()
     {
-        $styles  = omSettings::value('styles') ?: '';
-        $styles .= omSettings::value('global_css_custom_mini') ?: '';
+        $styles  = oSettings::value('styles') ?: '';
+        $styles .= oSettings::value('global_css_custom_mini') ?: '';
 
         if ($styles) {
             return '<style>' . $styles . '</style>';
@@ -581,7 +581,7 @@ class Frontend extends dcNsProcess
      *
      * @return string The lang attribute.
      */
-    public static function origineMiniEntryLang(): string
+    public static function odysseyEntryLang(): string
     {
         return '<?php
         if (dcCore::app()->ctx->posts->post_lang !== dcCore::app()->blog->settings->system->lang) {
@@ -595,7 +595,7 @@ class Frontend extends dcNsProcess
      *
      * @return string The navigation links.
      */
-    public static function origineMiniScreenReaderLinks(): string
+    public static function odysseyScreenReaderLinks(): string
     {
         $links = '<a id=skip-content class=skip-links href=#site-content>' . __('skip-link-content') . '</a>';
 
@@ -605,7 +605,7 @@ class Frontend extends dcNsProcess
         }
 
         // Adds a link to the footer except if it has been disabled in the configurator.
-        if (omSettings::value('footer_enabled') !== false) {
+        if (oSettings::value('footer_enabled') !== false) {
             $links .= '<a id=skip-footer class=skip-links href=#site-footer>' . __('skip-link-footer') . '</a>';
         }
 
@@ -624,24 +624,24 @@ class Frontend extends dcNsProcess
      *
      * @return string
      */
-    public static function origineMiniHeaderImage($attr)
+    public static function odysseyHeaderImage($attr)
     {
-        if (omSettings::value('header_image') && isset(omSettings::value('header_image')['url'])) {
+        if (oSettings::value('header_image') && isset(oSettings::value('header_image')['url'])) {
             if (!empty($attr['position'])
-                && (($attr['position'] === 'bottom' && omSettings::value('header_image_position') === 'bottom')
-                || ($attr['position'] === 'top' && !omSettings::value('header_image_position')))
+                && (($attr['position'] === 'bottom' && oSettings::value('header_image_position') === 'bottom')
+                || ($attr['position'] === 'top' && !oSettings::value('header_image_position')))
             ) {
-                $image_url = Html::escapeURL(omSettings::value('header_image')['url']);
+                $image_url = Html::escapeURL(oSettings::value('header_image')['url']);
                 $srcset    = '';
 
-                if (omSettings::value('header_image_description')) {
-                    $alt = ' alt="' . Html::escapeHTML(omSettings::value('header_image_description')) . '"';
+                if (oSettings::value('header_image_description')) {
+                    $alt = ' alt="' . Html::escapeHTML(oSettings::value('header_image_description')) . '"';
                 } else {
                     $alt = ' alt="' . __('header-image-alt') . '"';
                 }
 
-                if (omSettings::value('header_image2x')) {
-                    $image2x_url = Html::escapeURL(omSettings::value('header_image2x'));
+                if (oSettings::value('header_image2x')) {
+                    $image2x_url = Html::escapeURL(oSettings::value('header_image2x'));
 
                     $srcset  = ' srcset="';
                     $srcset .= $image_url . ' 1x, ';
@@ -664,9 +664,9 @@ class Frontend extends dcNsProcess
      *
      * @return string The blog description.
      */
-    public static function origineMiniBlogDescription()
+    public static function odysseyBlogDescription()
     {
-        if (dcCore::app()->blog->desc && omSettings::value('header_description') === true) {
+        if (dcCore::app()->blog->desc && oSettings::value('header_description') === true) {
             $description = dcCore::app()->blog->desc;
             $description = Html::clean($description);
             $description = Html::decodeEntities($description);
@@ -685,21 +685,21 @@ class Frontend extends dcNsProcess
      *
      * @return string The entry-list template.
      */
-    public static function origineMiniPostListType(): string
+    public static function odysseyPostListType(): string
     {
-        if (!omSettings::value('content_post_list_type')) {
+        if (!oSettings::value('content_post_list_type')) {
             return dcCore::app()->tpl->includeFile(['src' => '_entry-list-short.html']);
         }
 
         $postlist_type_allowed = ['excerpt', 'content', 'custom'];
 
-        $postlist_type = omSettings::value('content_post_list_type');
+        $postlist_type = oSettings::value('content_post_list_type');
         $postlist_type = in_array($postlist_type, $postlist_type_allowed, true) ? $postlist_type : 'short';
         $postlist_tpl  = '_entry-list-' . $postlist_type . '.html';
 
         if ($postlist_type === 'custom') {
-            if (omSettings::value('content_post_list_custom')) {
-                $postlist_tpl = omSettings::value('content_post_list_custom');
+            if (oSettings::value('content_post_list_custom')) {
+                $postlist_tpl = oSettings::value('content_post_list_custom');
             } else {
                 $postlist_tpl = '_entry-list-short.html';
             }
@@ -713,13 +713,13 @@ class Frontend extends dcNsProcess
      *
      * @return string The post template.
      */
-    public static function origineMiniPostTemplate(): string
+    public static function odysseyPostTemplate(): string
     {
-        if (!omSettings::value('content_post_template')) {
+        if (!oSettings::value('content_post_template')) {
             return dcCore::app()->tpl->includeFile(['src' => '_entry-post.html']);
         }
 
-        return dcCore::app()->tpl->includeFile(['src' => omSettings::value('content_post_template')]);
+        return dcCore::app()->tpl->includeFile(['src' => oSettings::value('content_post_template')]);
     }
 
     /**
@@ -727,13 +727,13 @@ class Frontend extends dcNsProcess
      *
      * @return string The page template.
      */
-    public static function origineMiniPageTemplate(): string
+    public static function odysseyPageTemplate(): string
     {
-        if (!omSettings::value('content_page_template')) {
+        if (!oSettings::value('content_page_template')) {
             return dcCore::app()->tpl->includeFile(['src' => '_entry-page.html']);
         }
 
-        return dcCore::app()->tpl->includeFile(['src' => omSettings::value('content_page_template')]);
+        return dcCore::app()->tpl->includeFile(['src' => oSettings::value('content_page_template')]);
     }
 
     /**
@@ -743,9 +743,9 @@ class Frontend extends dcNsProcess
      *
      * @return string
      */
-    public static function origineMiniPostListReactionLink()
+    public static function odysseyPostListReactionLink()
     {
-        if (!omSettings::value('content_post_list_reaction_link')) {
+        if (!oSettings::value('content_post_list_reaction_link')) {
             return;
         }
 
@@ -754,7 +754,7 @@ class Frontend extends dcNsProcess
 
         $link_class = 'class=\"post-reaction-link\"';
 
-        if (omSettings::value('content_post_list_type') === 'content') {
+        if (oSettings::value('content_post_list_type') === 'content') {
             $tag_open  = '';
             $tag_close = '';
 
@@ -764,14 +764,14 @@ class Frontend extends dcNsProcess
         return '<?php
         $nb_reactions = (int) dcCore::app()->ctx->posts->nb_comment + (int) dcCore::app()->ctx->posts->nb_trackback;
 
-        if ($nb_reactions > 0 || dcCore::app()->blog->settings->originemini->content_post_list_reaction_link === "always") {
+        if ($nb_reactions > 0 || dcCore::app()->blog->settings->odyssey->content_post_list_reaction_link === "always") {
             echo "' . $tag_open . '<a aria-label=\"";
 
             if ($nb_reactions > 1) {
                 printf(__("entry-list-multiple-reactions-link-aria-label"), $nb_reactions);
             } elseif ($nb_reactions === 1) {
                 echo __("entry-list-one-reaction-link-aria-label");
-            } elseif ($nb_reactions === 0 && dcCore::app()->blog->settings->originemini->content_post_list_reaction_link === "always") {
+            } elseif ($nb_reactions === 0 && dcCore::app()->blog->settings->odyssey->content_post_list_reaction_link === "always") {
                 echo __("entry-list-no-reaction-link-aria-label");
             }
 
@@ -781,7 +781,7 @@ class Frontend extends dcNsProcess
                 printf(__("entry-list-multiple-reactions"), $nb_reactions);
             } elseif ($nb_reactions === 1) {
                 echo __("entry-list-one-reaction");
-            } elseif ($nb_reactions === 0 && dcCore::app()->blog->settings->originemini->content_post_list_reaction_link === "always") {
+            } elseif ($nb_reactions === 0 && dcCore::app()->blog->settings->odyssey->content_post_list_reaction_link === "always") {
                 echo __("entry-list-no-reaction");
             }
 
@@ -801,11 +801,11 @@ class Frontend extends dcNsProcess
      *
      * @return string The published time of the post.
      */
-    public static function origineMiniEntryTime($attr)
+    public static function odysseyEntryTime($attr)
     {
-        if (!empty($attr['context']) && (omSettings::value('content_post_list_time') === true && $attr['context'] === 'entry-list') || (omSettings::value('content_post_time') === true && $attr['context'] === 'post')) {
-            if (omSettings::value('content_separator')) {
-                $content_separator = ' ' . Html::escapeHTML(omSettings::value('content_separator'));
+        if (!empty($attr['context']) && (oSettings::value('content_post_list_time') === true && $attr['context'] === 'entry-list') || (oSettings::value('content_post_time') === true && $attr['context'] === 'post')) {
+            if (oSettings::value('content_separator')) {
+                $content_separator = ' ' . Html::escapeHTML(oSettings::value('content_separator'));
             } else {
                 $content_separator = ' |';
             }
@@ -826,7 +826,7 @@ class Frontend extends dcNsProcess
      *
      * @return string The entry excerpt.
      */
-    public static function origineMiniEntryExcerpt($attr): string
+    public static function odysseyEntryExcerpt($attr): string
     {
         return '<?php
         $the_excerpt = "";
@@ -863,7 +863,7 @@ class Frontend extends dcNsProcess
      *
      * @return string The text string.
      */
-    public static function origineMiniPostTagsBefore()
+    public static function odysseyPostTagsBefore()
     {
         return '<?php
         if (dcCore::app()->ctx->posts->post_meta) {
@@ -885,7 +885,7 @@ class Frontend extends dcNsProcess
      *
      * @return string The notice.
      */
-    public static function origineMiniMarkdownSupportInfo()
+    public static function odysseyMarkdownSupportInfo()
     {
         if (dcCore::app()->blog->settings->system->markdown_comments === true) {
             $markdown_notice = sprintf(
@@ -904,9 +904,9 @@ class Frontend extends dcNsProcess
      *
      * @return string Copied alert.
      */
-    public static function origineMiniScriptTrackbackURLCopied()
+    public static function odysseyScriptTrackbackURLCopied()
     {
-        if (omSettings::value('global_js') === true) {
+        if (oSettings::value('global_js') === true) {
             return ' <span id=trackback-url-copied>' . __('reactions-trackback-url-copied') . '</span>';
         }
     }
@@ -916,11 +916,11 @@ class Frontend extends dcNsProcess
      *
      * @return string The private comment section.
      */
-    public static function origineMiniEmailAuthor()
+    public static function odysseyEmailAuthor()
     {
-        if (omSettings::value('content_post_email_author') !== 'disabled') {
+        if (oSettings::value('content_post_email_author') !== 'disabled') {
             return '<?php
-            if (isset(dcCore::app()->ctx->posts->user_email) && dcCore::app()->ctx->posts->user_email && (dcCore::app()->blog->settings->originemini->content_post_email_author === "always" || (dcCore::app()->blog->settings->originemini->content_post_email_author === "comments_open" && dcCore::app()->ctx->posts->post_open_comment === "1"))
+            if (isset(dcCore::app()->ctx->posts->user_email) && dcCore::app()->ctx->posts->user_email && (dcCore::app()->blog->settings->odyssey->content_post_email_author === "always" || (dcCore::app()->blog->settings->odyssey->content_post_email_author === "comments_open" && dcCore::app()->ctx->posts->post_open_comment === "1"))
             ) {
             ?>
                 <div class=comment-private>
@@ -942,7 +942,7 @@ class Frontend extends dcNsProcess
      *
      * @return string The attachment area title.
      */
-    public static function origineMiniAttachmentTitle(): string
+    public static function odysseyAttachmentTitle(): string
     {
         return '<?php
         if (count(dcCore::app()->ctx->attachments) === 1) {
@@ -960,7 +960,7 @@ class Frontend extends dcNsProcess
      *
      * @return string The attachment size.
      */
-    public static function origineMiniAttachmentSize(): string
+    public static function odysseyAttachmentSize(): string
     {
         return '<?php
         $kb = 1024;
@@ -1001,7 +1001,7 @@ class Frontend extends dcNsProcess
      *
      * @return string The category description.
      */
-    public static function origineMiniCategoryDescription()
+    public static function odysseyCategoryDescription()
     {
         if (dcCore::app()->ctx->categories->cat_desc) {
             return '<div class=content-text>' . dcCore::app()->ctx->categories->cat_desc . '</div>';
@@ -1015,9 +1015,9 @@ class Frontend extends dcNsProcess
      *
      * @return string The footer credits.
      */
-    public static function origineMiniFooterCredits()
+    public static function odysseyFooterCredits()
     {
-        if (omSettings::value('footer_credits') !== false) {
+        if (oSettings::value('footer_credits') !== false) {
             if (!defined('DC_DEV') || (defined('DC_DEV') && DC_DEV === false)) {
                 return '<div class=site-footer-block>' . __(
                     'footer-powered-by',
@@ -1029,7 +1029,7 @@ class Frontend extends dcNsProcess
             $dc_version_parts = explode('-', $dc_version);
             $dc_version_short = $dc_version_parts[0] ?? $dc_version;
 
-            $theme_version = dcCore::app()->themes->moduleInfo('originemini', 'version');
+            $theme_version = dcCore::app()->themes->moduleInfo('odyssey', 'version');
 
             return '<div class=site-footer-block>' . sprintf(
                 __('footer-powered-by-dev'),
@@ -1046,7 +1046,7 @@ class Frontend extends dcNsProcess
      *
      * @return string The relative URI.
      */
-    public static function origineMiniURIRelative(): string
+    public static function odysseyURIRelative(): string
     {
         return '<?php echo filter_var($_SERVER["REQUEST_URI"], FILTER_SANITIZE_URL); ?>';
     }
@@ -1059,7 +1059,7 @@ class Frontend extends dcNsProcess
      *
      * @return string The post footer.
      */
-    public static function origineMiniPostFooter($attr, $content)
+    public static function odysseyPostFooter($attr, $content)
     {
         $return_post_footer = false;
 
@@ -1092,9 +1092,9 @@ class Frontend extends dcNsProcess
      *
      * @return string The link.
      */
-    public static function origineMiniHeaderIdentity($attr, $content): string
+    public static function odysseyHeaderIdentity($attr, $content): string
     {
-        if (omSettings::value('header_description') !== true) {
+        if (oSettings::value('header_description') !== true) {
             return $content;
         }
 
@@ -1109,9 +1109,9 @@ class Frontend extends dcNsProcess
      *
      * @return string The comment form.
      */
-    public static function origineMiniCommentFormWrapper($attr, $content): string
+    public static function odysseyCommentFormWrapper($attr, $content): string
     {
-        if (!omSettings::value('content_commentform_hide')) {
+        if (!oSettings::value('content_commentform_hide')) {
             return '<h3 class=reaction-title>' . __('reactions-comment-form-title') . '</h3>' . $content;
         } elseif (dcCore::app()->ctx->comment_preview && dcCore::app()->ctx->comment_preview["preview"]) {
             return '<div id=react-content><h3 class=reaction-title>' . __('reactions-comment-form-preview-title') . '</h3>' . $content . '</div>';
@@ -1128,9 +1128,9 @@ class Frontend extends dcNsProcess
      *
      * @return string The link.
      */
-    public static function origineMiniReactionFeedLink($attr, $content)
+    public static function odysseyReactionFeedLink($attr, $content)
     {
-        if (omSettings::value('content_reaction_feed') !== false) {
+        if (oSettings::value('content_reaction_feed') !== false) {
             return $content;
         }
     }
@@ -1143,9 +1143,9 @@ class Frontend extends dcNsProcess
      *
      * @return string The link.
      */
-    public static function origineMiniTrackbackLink($attr, $content)
+    public static function odysseyTrackbackLink($attr, $content)
     {
-        if (omSettings::value('content_trackback_link') !== false) {
+        if (oSettings::value('content_trackback_link') !== false) {
             return $content;
         }
     }
@@ -1158,9 +1158,9 @@ class Frontend extends dcNsProcess
      *
      * @return string The navigation widget.
      */
-    public static function origineMiniWidgetsNav($attr, $content)
+    public static function odysseyWidgetsNav($attr, $content)
     {
-        if (omSettings::value('widgets_nav_position') !== 'disabled') {
+        if (oSettings::value('widgets_nav_position') !== 'disabled') {
             return $content;
         }
     }
@@ -1173,9 +1173,9 @@ class Frontend extends dcNsProcess
      *
      * @return string The search form.
      */
-    public static function origineMiniWidgetSearchForm($attr, $content)
+    public static function odysseyWidgetSearchForm($attr, $content)
     {
-        if (omSettings::value('widgets_search_form') === true && dcCore::app()->url->type !== 'search') {
+        if (oSettings::value('widgets_search_form') === true && dcCore::app()->url->type !== 'search') {
             return $content;
         }
     }
@@ -1188,9 +1188,9 @@ class Frontend extends dcNsProcess
      *
      * @return string The navigation widget.
      */
-    public static function origineMiniWidgetsExtra($attr, $content)
+    public static function odysseyWidgetsExtra($attr, $content)
     {
-        if (omSettings::value('widgets_extra_enabled') !== false) {
+        if (oSettings::value('widgets_extra_enabled') !== false) {
             return $content;
         }
     }
@@ -1203,9 +1203,9 @@ class Frontend extends dcNsProcess
      *
      * @return string The footer.
      */
-    public static function origineMiniFooter($attr, $content)
+    public static function odysseyFooter($attr, $content)
     {
-        if (omSettings::value('footer_enabled') !== false) {
+        if (oSettings::value('footer_enabled') !== false) {
             return $content;
         }
     }

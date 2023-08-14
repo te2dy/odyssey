@@ -1,6 +1,6 @@
 <?php
 /**
- * Origine Mini, a minimal theme for Dotclear.
+ * Odyssey, a minimal theme for Dotclear.
  *
  * The purpose of this file is to generate, at each version change of the theme,
  * a digital fingerprint of the JS files and save them in the database.
@@ -10,7 +10,7 @@
  * @license   GPL-3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
  */
 
-namespace Dotclear\Theme\originemini;
+namespace Dotclear\Theme\odyssey;
 
 use dcCore;
 use dcNsProcess;
@@ -32,15 +32,15 @@ class Prepend extends dcNsProcess
 
         // Gets the new version number of the theme and the old one.
         $old_version = (string) dcCore::app()->getVersion(basename(__DIR__));
-        $new_version = (string) dcCore::app()->themes->moduleInfo('originemini', 'version');
+        $new_version = (string) dcCore::app()->themes->moduleInfo('odyssey', 'version');
 
         if (version_compare($old_version, $new_version, '<')) {
-            dcCore::app()->blog->settings->addNamespace('originemini');
+            dcCore::app()->blog->settings->addNamespace('odyssey');
 
             // Hashes each JS files with the SHA-256 algorithm.
             $hashes = [
-                'trackbackurl' => self::hashJS('/originemini/js/searchform.min.js'),
-                'searchform'   => self::hashJS('/originemini/js/trackbackurl.min.js')
+                'trackbackurl' => self::hashJS('/odyssey/js/searchform.min.js'),
+                'searchform'   => self::hashJS('/odyssey/js/trackbackurl.min.js')
             ];
 
             /**
@@ -48,7 +48,7 @@ class Prepend extends dcNsProcess
              *
              * @see Config::render() (/src/Config.php)
              */
-            dcCore::app()->blog->settings->originemini->put(
+            dcCore::app()->blog->settings->odyssey->put(
                 'js_hash',
                 $hashes,
                 'array',
@@ -57,7 +57,7 @@ class Prepend extends dcNsProcess
             );
 
             // Pushes the new version of the theme in the database.
-            dcCore::app()->setVersion('originemini', $new_version);
+            dcCore::app()->setVersion('odyssey', $new_version);
         }
 
         return true;

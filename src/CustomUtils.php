@@ -1,6 +1,6 @@
 <?php
 /**
- * Origine Mini, a minimal theme for Dotclear.
+ * Odyssey, a minimal theme for Dotclear.
  *
  * @author    Teddy <zozxebpyr@mozmail.com>
  * @copyright 2022-2023 Teddy
@@ -8,7 +8,7 @@
  */
 
 // This class contains useful functions.
-class OrigineMiniUtils
+class OdysseyUtils
 {
     /**
      * Retrieves shapes of a spetific SVG icon from its name
@@ -21,7 +21,7 @@ class OrigineMiniUtils
      *
      * @link https://simpleicons.org/ Simple Icons
      */
-    public static function origineMiniSocialIcons($icon = '')
+    public static function odysseySocialIcons($icon = '')
     {
         $social_svg = [];
 

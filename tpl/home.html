@@ -6,14 +6,14 @@
 
 <tpl:Block name="head-description">
   <tpl:PaginationIf start="1">
-    <meta name=description content="{{tpl:origineMiniMetaDescriptionHome remove_html="1" encode_html="1"}}">
+    <meta name=description content="{{tpl:odysseyMetaDescriptionHome remove_html="1" encode_html="1"}}">
   </tpl:PaginationIf>
 </tpl:Block>
 
 <tpl:Block name="site-header">
-  {{tpl:origineMiniHeaderImage position="top"}}
+  {{tpl:odysseyHeaderImage position="top"}}
 
-  <tpl:origineMiniHeaderIdentity>
+  <tpl:odysseyHeaderIdentity>
     <tpl:PaginationIf start="1">
       <h1 id=site-title>{{tpl:BlogName}}</h1>
     </tpl:PaginationIf>
@@ -22,16 +22,16 @@
       <a href="{{tpl:BlogURL}}" id=site-title rel=home><h1>{{tpl:BlogName}}</h1></a>
     </tpl:PaginationIf>
 
-    {{tpl:origineMiniBlogDescription}}
-  </tpl:origineMiniHeaderIdentity>
+    {{tpl:odysseyBlogDescription}}
+  </tpl:odysseyHeaderIdentity>
 
   {{tpl:SimpleMenu id="main-menu"}}
 
-  {{tpl:origineMiniHeaderImage position="bottom"}}
+  {{tpl:odysseyHeaderImage position="bottom"}}
 
   {{tpl:SysBehavior behavior="publicTopAfterContent"}}
 </tpl:Block>
 
 <tpl:Block name="main-content">
-  {{tpl:origineMiniPostListType}}
+  {{tpl:odysseyPostListType}}
 </tpl:Block>

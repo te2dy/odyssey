@@ -6,11 +6,11 @@
 
 <tpl:Block name="head-description">
   <tpl:EntryIf extended="1">
-    <meta name=description{{tpl:origineMiniEntryLang}} content="{{tpl:EntryExcerpt encode_html="1" remove_html="1"}}">
+    <meta name=description{{tpl:odysseyEntryLang}} content="{{tpl:EntryExcerpt encode_html="1" remove_html="1"}}">
   </tpl:EntryIf>
 
   <tpl:EntryIf extended="0">
-    <meta name=description{{tpl:origineMiniEntryLang}} content="{{tpl:EntryContent encode_html="1" remove_html="1" cut_string="150"}}<tpl:EntryIfContentCut encode_html="1" remove_html="1" cut_string="150"> […]</tpl:EntryIfContentCut>">
+    <meta name=description{{tpl:odysseyEntryLang}} content="{{tpl:EntryContent encode_html="1" remove_html="1" cut_string="150"}}<tpl:EntryIfContentCut encode_html="1" remove_html="1" cut_string="150"> […]</tpl:EntryIfContentCut>">
   </tpl:EntryIf>
 </tpl:Block>
 
@@ -22,7 +22,7 @@
 </tpl:Block>
 
 <tpl:Block name="main-content">
-  {{tpl:origineMiniPostTemplate}}
+  {{tpl:odysseyPostTemplate}}
 </tpl:Block>
 
 <tpl:Block name="footer-scripts-jquery">
@@ -39,6 +39,6 @@
 
 <tpl:Block name="footer-scripts-javascript">
   <tpl:EntryIf pings_active="1">
-    {{tpl:origineMiniScriptTrackbackURL}}
+    {{tpl:odysseyScriptTrackbackURL}}
   </tpl:EntryIf>
 </tpl:Block>

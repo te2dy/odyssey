@@ -1,6 +1,6 @@
 <?php
 /**
- * Origine Mini, a minimal theme for Dotclear.
+ * Odyssey, a minimal theme for Dotclear.
  *
  *
  * @author    Teddy <zozxebpyr@mozmail.com>
@@ -12,7 +12,7 @@
  * This class contains functions related to the theme custom settings
  * available through the theme configurator.
  */
-class OrigineMiniSettings
+class odysseySettings
 {
     /**
      * Returns the value of a theme setting.
@@ -23,7 +23,7 @@ class OrigineMiniSettings
      */
     public static function value($setting_id = '')
     {
-        return $setting_id ? dcCore::app()->blog->settings->originemini->$setting_id : '';
+        return $setting_id ? dcCore::app()->blog->settings->odyssey->$setting_id : '';
     }
 
     /**

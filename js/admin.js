@@ -9,9 +9,9 @@ function disableInputs() {
   }
 
   if (document.getElementById("global_js").checked || document.getElementById("content_images_wide").checked) {
-    document.getElementById("originemini-message-js").style.display = "block";
+    document.getElementById("odyssey-message-js").style.display = "block";
   } else {
-    document.getElementById("originemini-message-js").style.display = "none";
+    document.getElementById("odyssey-message-js").style.display = "none";
   }
 
   if (document.getElementById("global_js").checked) {

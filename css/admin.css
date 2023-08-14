@@ -1,15 +1,27 @@
-#theme_config h3 {
+#theme-config-links {
+  list-style: none;
+  margin-inline: 0;
+  padding-inline: 0;
+}
+#theme-config-links li:not(:last-child) {
+  margin-bottom: 1rem;
+}
+.theme-config-icon {
+  height: auto;
+  width: 2rem;
+}
+#theme-config-form h3 {
   margin-top: 2rem;
   margin-bottom: .5rem;
 }
-#theme_config .fieldset h4:not(:first-child) {
+#theme-config-form .fieldset h4:not(:first-child) {
   margin-top: 2rem;
   margin-bottom: 1rem;
 }
-#theme_config input[type="checkbox"] + label {
+#theme-config-form input[type="checkbox"] + label {
   cursor: pointer;
 }
-#theme_config :is(select, textarea) {
+#theme-config-form :is(select, textarea) {
   padding: .5rem;
 }
 #header_image-src {
@@ -18,9 +30,9 @@
   max-width: 200px;
   max-height: 200px;
 }
-#originemini-message-js summary {
+#odyssey-message-js summary {
   cursor: pointer;
 }
-.om-value-error {
+.odyssey-value-error {
   background-color: hsl(0, 90%, 90%);
 }

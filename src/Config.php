@@ -1,6 +1,6 @@
 <?php
 /**
- * Origine Mini, a minimal theme for Dotclear.
+ * Odyssey, a minimal theme for Dotclear.
  *
  * This file sets up the theme configuration page and settings.
  *
@@ -9,7 +9,7 @@
  * @license   GPL-3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
  */
 
-namespace Dotclear\Theme\originemini;
+namespace Dotclear\Theme\odyssey;
 
 use dcCore;
 use dcNsProcess;
@@ -22,13 +22,15 @@ use Dotclear\Helper\L10n;
 use Dotclear\Helper\Network\Http;
 use Exception;
 use form;
+use Dotclear\Core\Backend\Page;
+use Dotclear\Core\Backend\Notices;
 
 // Prepares to use custom functions.
 require_once 'CustomSettings.php';
-use OrigineMiniSettings as omSettings;
+use odysseySettings as oSettings;
 
 require_once 'CustomUtils.php';
-use OrigineMiniUtils as omUtils;
+use odysseyUtils as oUtils;
 
 class Config extends dcNsProcess
 {
@@ -62,11 +64,11 @@ class Config extends dcNsProcess
 
         // On form submit.
         if (!empty($_POST)) {
-            $default_settings = origineMiniSettings::default();
-            $saved_settings   = origineMiniSettings::saved();
+            $default_settings = odysseySettings::default();
+            $saved_settings   = odysseySettings::saved();
 
             try {
-                dcCore::app()->blog->settings->addNamespace('originemini');
+                dcCore::app()->blog->settings->addNamespace('odyssey');
 
                 if (isset($_POST['save'])) {
                     // Save button has been clicked.
@@ -81,6 +83,18 @@ class Config extends dcNsProcess
                             'global_css_custom_mini',
                             'global_page_width_unit',
                             'global_page_width_value',
+                            'footer_social_links_500px',
+                            'footer_social_links_dailymotion',
+                            'footer_social_links_discord',
+                            'footer_social_links_facebook',
+                            'footer_social_links_github',
+                            'footer_social_links_signal',
+                            'footer_social_links_telegram',
+                            'footer_social_links_tiktok',
+                            'footer_social_links_twitch',
+                            'footer_social_links_vimeo',
+                            'footer_social_links_whatsapp',
+                            'footer_social_links_youtube',
                             'footer_social_links_x'
                         ];
 
@@ -118,7 +132,7 @@ class Config extends dcNsProcess
                                      * The value is equal to the default value,
                                      * removes the parameter.
                                      */
-                                    dcCore::app()->blog->settings->originemini->drop($setting_id);
+                                    dcCore::app()->blog->settings->odyssey->drop($setting_id);
                                 }
                             } elseif (!isset($_POST[$setting_id]) && $default_settings[$setting_id]['type'] === 'checkbox') {
                                 /**
@@ -128,7 +142,7 @@ class Config extends dcNsProcess
                                 $setting_data = self::saveCheckboxSetting($setting_id);
                             } else {
                                 // Removes every other settings.
-                                dcCore::app()->blog->settings->originemini->drop($setting_id);
+                                dcCore::app()->blog->settings->odyssey->drop($setting_id);
                             }
                         } else {
                             // The current setting is specific one.
@@ -157,8 +171,29 @@ class Config extends dcNsProcess
                                     );
                                     break;
 
+                                case 'footer_social_links_500px':
+                                case 'footer_social_links_dailymotion':
+                                case 'footer_social_links_discord':
+                                case 'footer_social_links_facebook':
+                                case 'footer_social_links_github':
+                                case 'footer_social_links_tiktok':
+                                case 'footer_social_links_twitch':
+                                case 'footer_social_links_vimeo':
+                                case 'footer_social_links_youtube':
+                                    $setting_data = self::saveSocialLink(
+                                        $setting_id,
+                                        $_POST[$setting_id]
+                                    );
+                                    break;
+
                                 case 'footer_social_links_x':
                                     $setting_data = self::saveXUsername($_POST['footer_social_links_x']);
+                                    break;
+
+                                case 'footer_social_links_signal':
+                                case 'footer_social_links_telegram':
+                                case 'footer_social_links_whatsapp':
+                                    $setting_data = self::saveMessagingAppsLink($setting_id, $_POST[$setting_id]);
                                     break;
 
                                 case 'styles':
@@ -179,7 +214,7 @@ class Config extends dcNsProcess
 
                             $setting_label = Html::clean($setting_label);
 
-                            dcCore::app()->blog->settings->originemini->put(
+                            dcCore::app()->blog->settings->odyssey->put(
                                 $setting_id,
                                 $setting_data['value'],
                                 $setting_data['type'],
@@ -187,7 +222,7 @@ class Config extends dcNsProcess
                                 true
                             );
                         } else {
-                            dcCore::app()->blog->settings->originemini->drop($setting_id);
+                            dcCore::app()->blog->settings->odyssey->drop($setting_id);
                         }
                     }
 
@@ -198,7 +233,7 @@ class Config extends dcNsProcess
                      * Drops all settings.
                      */
                     foreach ($default_settings as $setting_id => $setting_value) {
-                        dcCore::app()->blog->settings->originemini->drop($setting_id);
+                        dcCore::app()->blog->settings->odyssey->drop($setting_id);
                     }
 
                     dcPage::addSuccessNotice(__('settings-config-reset'));
@@ -213,13 +248,13 @@ class Config extends dcNsProcess
                 /**
                  * Redirects to refresh form values.
                  *
-                 * With the parameters ['module' => 'originemini', 'conf' => '1'],
+                 * With the parameters ['module' => 'odyssey', 'conf' => '1'],
                  * the & is interpreted as &amp; causing a wrong redirect.
                  */
                 Http::redirect(
                     dcCore::app()->adminurl->get(
                         'admin.blog.theme',
-                        ['module' => 'originemini']
+                        ['module' => 'odyssey']
                     ) . '&conf=1'
                 );
             } catch (Exception $e) {
@@ -239,7 +274,7 @@ class Config extends dcNsProcess
      */
     public static function saveSelectSetting($setting_id, $setting_value)
     {
-        $default_settings = origineMiniSettings::default();
+        $default_settings = odysseySettings::default();
 
         if (in_array($setting_value, $default_settings[$setting_id]['choices'])) {
             return [
@@ -258,7 +293,7 @@ class Config extends dcNsProcess
      */
     public static function saveSelectIntSetting($setting_id, $setting_value)
     {
-        $default_settings = origineMiniSettings::default();
+        $default_settings = odysseySettings::default();
 
         if (in_array((int) $setting_value, $default_settings[$setting_id]['choices'], true)) {
             return [
@@ -277,7 +312,7 @@ class Config extends dcNsProcess
      */
     public static function saveCheckboxSetting($setting_id, $setting_value = '0')
     {
-        $default_settings = origineMiniSettings::default();
+        $default_settings = odysseySettings::default();
 
         if ($setting_value === '1' && $default_settings[$setting_id]['default'] !== '1') {
             return [
@@ -303,7 +338,7 @@ class Config extends dcNsProcess
      */
     public static function saveIntegerSetting($setting_id, $setting_value)
     {
-        $default_settings = origineMiniSettings::default();
+        $default_settings = odysseySettings::default();
 
         if (is_numeric($setting_value) && $setting_value != $default_settings[$setting_id]['default']) {
             return [
@@ -322,7 +357,7 @@ class Config extends dcNsProcess
      */
     public static function saveDefaultSetting($setting_id, $setting_value)
     {
-        $default_settings = origineMiniSettings::default();
+        $default_settings = odysseySettings::default();
 
         if ($setting_value != $default_settings[$setting_id]['default']) {
             return [
@@ -345,7 +380,7 @@ class Config extends dcNsProcess
      */
     public static function saveHeaderImage($setting_id, $image_url, $page_width_unit, $page_width_value)
     {
-        $default_settings = origineMiniSettings::default();
+        $default_settings = odysseySettings::default();
         $image_url        = $image_url ?: '';
         $page_width_unit  = $page_width_unit ?: '';
         $page_width_value = $page_width_value ?: '';
@@ -361,7 +396,7 @@ class Config extends dcNsProcess
             // Retrieves the image path.
             $image_path = $public_path . str_replace($public_url . '/', '/', $image_url);
 
-            if (omUtils::imageExists($image_path)) {
+            if (oUtils::imageExists($image_path)) {
 
                 // Gets the dimensions of the image.
                 list($header_image_width) = getimagesize($image_path);
@@ -370,7 +405,7 @@ class Config extends dcNsProcess
                  * Limits the maximum width value of the image if its superior to the page width,
                  * and sets its height proportionally.
                  */
-                $page_width_data = omSettings::getContentWidth($page_width_unit, $page_width_value, true);
+                $page_width_data = oSettings::getContentWidth($page_width_unit, $page_width_value, true);
 
                 $page_width = $page_width_data['value'];
 
@@ -419,7 +454,7 @@ class Config extends dcNsProcess
 
     public static function saveCustomCSS($setting_id, $css_value)
     {
-        $default_settings = origineMiniSettings::default();
+        $default_settings = odysseySettings::default();
 
         $css_value = $css_value ?: '';
 
@@ -452,29 +487,63 @@ class Config extends dcNsProcess
 
     public static function savePageWidth($setting_id, $page_width_unit, $page_width_value)
     {
-        $default_settings = origineMiniSettings::default();
+        $default_settings = odysseySettings::default();
 
         $page_width_unit  = $page_width_unit ?: 'px';
         $page_width_value = $page_width_value ? (int) $page_width_value : 30;
 
-        $page_width_data = omSettings::getContentWidth(
+        $page_width_data = oSettings::getContentWidth(
             $page_width_unit,
             $page_width_value
         );
 
         if ($setting_id === 'global_page_width_unit' && isset($page_width_data['unit'])) {
             return [
-                'value' => $page_width_data['unit'],
-                'type'  => 'text'
+                'value' => Html::escapeHTML($page_width_data['unit']),
+                'type'  => 'string'
             ];
         }
 
         if ($setting_id === 'global_page_width_value' && isset($page_width_data['value'])) {
             return [
-                'value' => $page_width_data['value'],
+                'value' => Html::escapeHTML($page_width_data['value']),
                 'type'  => 'integer'
             ];
         }
+    }
+
+    public static function saveSocialLink($setting_id, $url): array
+    {
+        $url = $url ? Html::escapeURL($url) : '';
+
+        $output = [];
+
+        $social_base_url = [
+            'footer_social_links_500px'       => 'https://500px.com/',
+            'footer_social_links_dailymotion' => 'https://www.dailymotion.com/',
+            'footer_social_links_discord'     => 'https://discord.com/',
+            'footer_social_links_github'      => 'https://github.com/',
+            'footer_social_links_tiktok'      => 'https://tiktok.com/',
+            'footer_social_links_twitch'      => 'https://www.twitch.tv/',
+            'footer_social_links_vimeo'       => 'https://vimeo.com/',
+            'footer_social_links_youtube'     => 'https://www.youtube.com/',
+        ];
+
+        if ($url) {
+            if (array_key_exists($setting_id, $social_base_url)) {
+                if (str_starts_with($url, $social_base_url[$setting_id])) {
+                    $output['value'] = Html::escapeHTML($url);
+                    $output['type']  = 'string';
+                }
+            } elseif ($setting_id === 'footer_social_links_facebook'
+                && str_contains(parse_url($url, PHP_URL_HOST), '.facebook.com')
+            ) {
+                $output['value'] = Html::escapeHTML($url);
+                $output['type']  = 'string';
+            }
+        }
+
+        return $output;
     }
 
     /**
@@ -489,8 +558,40 @@ class Config extends dcNsProcess
         $output = [];
 
         if (preg_match('/^@[A-Za-z0-9_]{4,15}/', $username)) {
-            $output['value'] = 'https://twitter.com/' . substr($username, 1);
+            $output['value'] = Html::escapeHTML('https://twitter.com/' . substr($username, 1));
             $output['type']  = 'string';
+        }
+
+        return $output;
+    }
+
+    public static function saveMessagingAppsLink($setting_id, $input): array
+    {
+        $output = [];
+
+        if ($setting_id === 'footer_social_links_signal') {
+            if (preg_match('/^\\+[1-9][0-9]{7,14}$/', $input)
+                || str_starts_with($input, 'sgnl://signal.me/')
+                || str_starts_with($input, 'https://signal.me/')
+            ) {
+                $output['value'] = Html::escapeHTML($input);
+                $output['type']  = 'string';
+            }
+        } elseif ($setting_id === 'footer_social_links_telegram') {
+            if (str_starts_with($input, 'https://t.me/')
+                || str_starts_with($input, 'https://telegram.me/')
+                || str_starts_with($input, 'tg://')
+            ) {
+                $output['value'] = Html::escapeHTML($input);
+                $output['type']  = 'string';
+            }
+        } elseif ($setting_id === 'footer_social_links_whatsapp') {
+            if (str_starts_with($input, 'https://wa.me/')
+                || str_starts_with($input, 'whatsapp://')
+            ) {
+                $output['value'] = Html::escapeHTML($input);
+                $output['type']  = 'string';
+            }
         }
 
         return $output;
@@ -503,8 +604,8 @@ class Config extends dcNsProcess
      */
     public static function loadStylesScripts()
     {
-        echo dcPage::cssLoad(dcCore::app()->blog->settings->system->themes_url . '/originemini/css/admin.min.css'),
-        dcPage::jsLoad(dcCore::app()->blog->settings->system->themes_url . '/originemini/js/admin.min.js');
+        echo dcPage::cssLoad(dcCore::app()->blog->settings->system->themes_url . '/odyssey/css/admin.min.css'),
+        dcPage::jsLoad(dcCore::app()->blog->settings->system->themes_url . '/odyssey/js/admin.min.js');
     }
 
     /**
@@ -528,7 +629,7 @@ class Config extends dcNsProcess
         $css_media_motion_array            = [];
         $css_media_print_array             = [];
 
-        $default_settings = origineMiniSettings::default();
+        $default_settings = odysseySettings::default();
 
         // Page width.
         if (isset($_POST['global_page_width_unit']) && isset($_POST['global_page_width_value'])) {
@@ -539,7 +640,7 @@ class Config extends dcNsProcess
                 $page_width_value = '480';
             }
 
-            $page_width_data = omSettings::getContentWidth($page_width_unit, $page_width_value);
+            $page_width_data = oSettings::getContentWidth($page_width_unit, $page_width_value);
 
             if (!empty($page_width_data)) {
                 $css_root_array[':root']['--page-width'] = $page_width_data['value'] . $page_width_data['unit'];
@@ -550,7 +651,7 @@ class Config extends dcNsProcess
         $font_size_allowed = [80, 90, 110, 120];
 
         if (isset($_POST['global_font_size']) && in_array((int) $_POST['global_font_size'], $font_size_allowed, true)) {
-            $css_root_array[':root']['--font-size'] = omUtils::removeZero($_POST['global_font_size'] / 100) . 'em';
+            $css_root_array[':root']['--font-size'] = oUtils::removeZero($_POST['global_font_size'] / 100) . 'em';
         }
 
         // Font family.
@@ -571,22 +672,22 @@ class Config extends dcNsProcess
                 $css_root_array[':root']['--font-family'] = '"Atkinson Hyperlegible", sans-serif';
 
                 $css_main_array[0]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2")';
+                $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2")';
                 $css_main_array[0]['@font-face']['font-style']  = 'normal';
                 $css_main_array[0]['@font-face']['font-weight'] = '400';
 
                 $css_main_array[1]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2")';
+                $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2")';
                 $css_main_array[1]['@font-face']['font-style']  = 'italic';
                 $css_main_array[1]['@font-face']['font-weight'] = '400';
 
                 $css_main_array[2]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2")';
+                $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2")';
                 $css_main_array[2]['@font-face']['font-style']  = 'normal';
                 $css_main_array[2]['@font-face']['font-weight'] = '700';
 
                 $css_main_array[3]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("woff2")';
+                $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("woff2")';
                 $css_main_array[3]['@font-face']['font-style']  = 'italic';
                 $css_main_array[3]['@font-face']['font-weight'] = '700';
             } elseif ($_POST['global_font_family'] === 'eb-garamond') {
@@ -595,22 +696,22 @@ class Config extends dcNsProcess
                 $css_root_array[':root']['--font-family'] = '"EB Garamond", serif';
 
                 $css_main_array[0]['@font-face']['font-family'] = '"EB Garamond"';
-                $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Regular.ttf") format("truetype")';
+                $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/EBGaramond-Regular.ttf") format("truetype")';
                 $css_main_array[0]['@font-face']['font-style']  = 'normal';
                 $css_main_array[0]['@font-face']['font-weight'] = '400';
 
                 $css_main_array[1]['@font-face']['font-family'] = '"EB Garamond"';
-                $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Italic.ttf") format("truetype")';
+                $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/EBGaramond-Italic.ttf") format("truetype")';
                 $css_main_array[1]['@font-face']['font-style']  = 'italic';
                 $css_main_array[1]['@font-face']['font-weight'] = '400';
 
                 $css_main_array[2]['@font-face']['font-family'] = '"EB Garamond"';
-                $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Bold.ttf") format("truetype")';
+                $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/EBGaramond-Bold.ttf") format("truetype")';
                 $css_main_array[2]['@font-face']['font-style']  = 'normal';
                 $css_main_array[2]['@font-face']['font-weight'] = '700';
 
                 $css_main_array[3]['@font-face']['font-family'] = '"EB Garamond"';
-                $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-BoldItalic.ttf") format("truetype")';
+                $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/EBGaramond-BoldItalic.ttf") format("truetype")';
                 $css_main_array[3]['@font-face']['font-style']  = 'italic';
                 $css_main_array[3]['@font-face']['font-weight'] = '700';
             } elseif ($_POST['global_font_family'] === 'luciole') {
@@ -619,22 +720,22 @@ class Config extends dcNsProcess
                 $css_root_array[':root']['--font-family'] = 'Luciole, sans-serif';
 
                 $css_main_array[0]['@font-face']['font-family'] = '"Luciole"';
-                $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Regular.ttf") format("truetype")';
+                $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Luciole-Regular.ttf") format("truetype")';
                 $css_main_array[0]['@font-face']['font-style']  = 'normal';
                 $css_main_array[0]['@font-face']['font-weight'] = '400';
 
                 $css_main_array[1]['@font-face']['font-family'] = '"Luciole"';
-                $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Regular-Italic.ttf") format("truetype")';
+                $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Luciole-Regular-Italic.ttf") format("truetype")';
                 $css_main_array[1]['@font-face']['font-style']  = 'italic';
                 $css_main_array[1]['@font-face']['font-weight'] = '400';
 
                 $css_main_array[2]['@font-face']['font-family'] = '"Luciole"';
-                $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Bold.ttf") format("truetype")';
+                $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Luciole-Bold.ttf") format("truetype")';
                 $css_main_array[2]['@font-face']['font-style']  = 'normal';
                 $css_main_array[2]['@font-face']['font-weight'] = '700';
 
                 $css_main_array[3]['@font-face']['font-family'] = '"Luciole"';
-                $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Bold-Italic.ttf") format("truetype")';
+                $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Luciole-Bold-Italic.ttf") format("truetype")';
                 $css_main_array[3]['@font-face']['font-style']  = 'italic';
                 $css_main_array[3]['@font-face']['font-weight'] = '700';
             }
@@ -906,22 +1007,22 @@ class Config extends dcNsProcess
                 $themes_url = dcCore::app()->blog->settings->system->themes_url;
 
                 $css_main_array[4]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                $css_main_array[4]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2")';
+                $css_main_array[4]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2")';
                 $css_main_array[4]['@font-face']['font-style']  = 'normal';
                 $css_main_array[4]['@font-face']['font-weight'] = '400';
 
                 $css_main_array[5]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                $css_main_array[5]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2")';
+                $css_main_array[5]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2")';
                 $css_main_array[5]['@font-face']['font-style']  = 'italic';
                 $css_main_array[5]['@font-face']['font-weight'] = '400';
 
                 $css_main_array[6]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                $css_main_array[6]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2")';
+                $css_main_array[6]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2")';
                 $css_main_array[6]['@font-face']['font-style']  = 'normal';
                 $css_main_array[6]['@font-face']['font-weight'] = '700';
 
                 $css_main_array[7]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                $css_main_array[7]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("woff2")';
+                $css_main_array[7]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("woff2")';
                 $css_main_array[7]['@font-face']['font-style']  = 'italic';
                 $css_main_array[7]['@font-face']['font-weight'] = '700';
 
@@ -930,22 +1031,22 @@ class Config extends dcNsProcess
                 $themes_url = dcCore::app()->blog->settings->system->themes_url;
 
                 $css_main_array[4]['@font-face']['font-family'] = '"EB Garamond"';
-                $css_main_array[4]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Regular.ttf") format("truetype")';
+                $css_main_array[4]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/EBGaramond-Regular.ttf") format("truetype")';
                 $css_main_array[4]['@font-face']['font-style']  = 'normal';
                 $css_main_array[4]['@font-face']['font-weight'] = '400';
 
                 $css_main_array[5]['@font-face']['font-family'] = '"EB Garamond"';
-                $css_main_array[5]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Italic.ttf") format("truetype")';
+                $css_main_array[5]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/EBGaramond-Italic.ttf") format("truetype")';
                 $css_main_array[5]['@font-face']['font-style']  = 'italic';
                 $css_main_array[5]['@font-face']['font-weight'] = '400';
 
                 $css_main_array[6]['@font-face']['font-family'] = '"EB Garamond"';
-                $css_main_array[6]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-Bold.ttf") format("truetype")';
+                $css_main_array[6]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/EBGaramond-Bold.ttf") format("truetype")';
                 $css_main_array[6]['@font-face']['font-style']  = 'normal';
                 $css_main_array[6]['@font-face']['font-weight'] = '700';
 
                 $css_main_array[7]['@font-face']['font-family'] = '"EB Garamond"';
-                $css_main_array[7]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/EBGaramond-BoldItalic.ttf") format("truetype")';
+                $css_main_array[7]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/EBGaramond-BoldItalic.ttf") format("truetype")';
                 $css_main_array[7]['@font-face']['font-style']  = 'italic';
                 $css_main_array[7]['@font-face']['font-weight'] = '700';
 
@@ -954,22 +1055,22 @@ class Config extends dcNsProcess
                 $themes_url = dcCore::app()->blog->settings->system->themes_url;
 
                 $css_main_array[4]['@font-face']['font-family'] = '"Luciole"';
-                $css_main_array[4]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Regular.ttf") format("truetype")';
+                $css_main_array[4]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Luciole-Regular.ttf") format("truetype")';
                 $css_main_array[4]['@font-face']['font-style']  = 'normal';
                 $css_main_array[4]['@font-face']['font-weight'] = '400';
 
                 $css_main_array[5]['@font-face']['font-family'] = '"Luciole"';
-                $css_main_array[5]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Regular-Italic.ttf") format("truetype")';
+                $css_main_array[5]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Luciole-Regular-Italic.ttf") format("truetype")';
                 $css_main_array[5]['@font-face']['font-style']  = 'italic';
                 $css_main_array[5]['@font-face']['font-weight'] = '400';
 
                 $css_main_array[6]['@font-face']['font-family'] = '"Luciole"';
-                $css_main_array[6]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Bold.ttf") format("truetype")';
+                $css_main_array[6]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Luciole-Bold.ttf") format("truetype")';
                 $css_main_array[6]['@font-face']['font-style']  = 'normal';
                 $css_main_array[6]['@font-face']['font-weight'] = '700';
 
                 $css_main_array[7]['@font-face']['font-family'] = '"Luciole"';
-                $css_main_array[7]['@font-face']['src']         = 'url("' . $themes_url . '/originemini/fonts/Luciole-Bold-Italic.ttf") format("truetype")';
+                $css_main_array[7]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Luciole-Bold-Italic.ttf") format("truetype")';
                 $css_main_array[7]['@font-face']['font-style']  = 'italic';
                 $css_main_array[7]['@font-face']['font-weight'] = '700';
 
@@ -1175,7 +1276,7 @@ class Config extends dcNsProcess
         }
 
         // Social links.
-        $social_sites = omSettings::socialSites();
+        $social_sites = oSettings::socialSites();
 
         $display_social_links = false;
 
@@ -1227,14 +1328,14 @@ class Config extends dcNsProcess
             $css_media_contrast_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon']['fill'] = 'var(--color-text-main)';
         }
 
-        $css .= !empty($css_root_array) ? omUtils::stylesArrayToString($css_root_array) : '';
-        $css .= !empty($css_root_media_array) ? '@media (prefers-color-scheme:dark){' . omUtils::stylesArrayToString($css_root_media_array) . '}' : '';
-        $css .= !empty($css_main_array) ? omUtils::stylesArrayToString($css_main_array) : '';
-        $css .= !empty($css_supports_initial_letter_array) ? '@supports (initial-letter: 2) or (-webkit-initial-letter: 2) or (-moz-initial-letter: 2){' . omUtils::stylesArrayToString($css_supports_initial_letter_array) . '}' : '';
-        $css .= !empty($css_media_array) ? '@media (max-width:34em){' . omUtils::stylesArrayToString($css_media_array) . '}' : '';
-        $css .= !empty($css_media_contrast_array) ? '@media (prefers-contrast:more),(-ms-high-contrast:active),(-ms-high-contrast:black-on-white){' . omUtils::stylesArrayToString($css_media_contrast_array) . '}' : '';
-        $css .= !empty($css_media_motion_array) ? '@media (prefers-reduced-motion:reduce){' . omUtils::stylesArrayToString($css_media_motion_array) . '}' : '';
-        $css .= !empty($css_media_print_array) ? '@media print{' . omUtils::stylesArrayToString($css_media_print_array) . '}' : '';
+        $css .= !empty($css_root_array) ? oUtils::stylesArrayToString($css_root_array) : '';
+        $css .= !empty($css_root_media_array) ? '@media (prefers-color-scheme:dark){' . oUtils::stylesArrayToString($css_root_media_array) . '}' : '';
+        $css .= !empty($css_main_array) ? oUtils::stylesArrayToString($css_main_array) : '';
+        $css .= !empty($css_supports_initial_letter_array) ? '@supports (initial-letter: 2) or (-webkit-initial-letter: 2) or (-moz-initial-letter: 2){' . oUtils::stylesArrayToString($css_supports_initial_letter_array) . '}' : '';
+        $css .= !empty($css_media_array) ? '@media (max-width:34em){' . oUtils::stylesArrayToString($css_media_array) . '}' : '';
+        $css .= !empty($css_media_contrast_array) ? '@media (prefers-contrast:more),(-ms-high-contrast:active),(-ms-high-contrast:black-on-white){' . oUtils::stylesArrayToString($css_media_contrast_array) . '}' : '';
+        $css .= !empty($css_media_motion_array) ? '@media (prefers-reduced-motion:reduce){' . oUtils::stylesArrayToString($css_media_motion_array) . '}' : '';
+        $css .= !empty($css_media_print_array) ? '@media print{' . oUtils::stylesArrayToString($css_media_print_array) . '}' : '';
 
         if (!empty($css)) {
             return [
@@ -1255,8 +1356,8 @@ class Config extends dcNsProcess
      */
     public static function settingRendering($setting_id = '')
     {
-        $default_settings = origineMiniSettings::default();
-        $saved_settings   = origineMiniSettings::saved();
+        $default_settings = odysseySettings::default();
+        $saved_settings   = odysseySettings::saved();
 
         if ($setting_id && array_key_exists($setting_id, $default_settings)) {
             echo '<p id=', $setting_id, '-input>';
@@ -1422,6 +1523,20 @@ class Config extends dcNsProcess
             return;
         }
 
+        /*
+        Page::openModule(
+            My::name(),
+            Page::jsPageTabs(dcCore::app()->admin->part)
+        );
+
+        echo Notices::getNotices() .
+        '<div id=section-global class="multi-part" title="Global Settings">' .
+        '<div id=section-header class="multi-part" title="Header Settings">' .
+        '<h3 class="out-of-screen-if-js">' . sprintf(__('Settings for %s'), Html::escapeHTML(dcCore::app()->blog->name)) . '</h3>';
+
+        Page::closeModule();
+        */
+
         /**
          * Creates a table that contains all the parameters and their titles according to the following pattern:
          *
@@ -1434,8 +1549,8 @@ class Config extends dcNsProcess
          */
         $sections_with_settings_id = [];
 
-        $sections = origineMiniSettings::sections();
-        $settings = origineMiniSettings::default();
+        $sections = odysseySettings::sections();
+        $settings = odysseySettings::default();
 
         // Puts titles in the setting array.
         foreach ($sections as $section_id => $section_data) {
@@ -1460,7 +1575,7 @@ class Config extends dcNsProcess
         $sections_with_settings_id = array_filter($sections_with_settings_id);
         ?>
 
-        <form action="<?php echo dcCore::app()->adminurl->get('admin.blog.theme', ['module' => 'originemini', 'conf' => '1']); ?>" enctype=multipart/form-data id=theme_config method=post>
+        <form action="<?php echo dcCore::app()->adminurl->get('admin.blog.theme', ['module' => 'odyssey', 'conf' => '1']); ?>" enctype=multipart/form-data id=theme-config-form method=post>
             <?php
             // Displays the title of each section and places the corresponding parameters under each one.
             foreach ($sections_with_settings_id as $section_id => $section_data) {
@@ -1491,7 +1606,7 @@ class Config extends dcNsProcess
             ?>
 
             <p>
-                <details id=originemini-message-js>
+                <details id=odyssey-message-js>
                     <summary><?php echo __('settings-scripts-title'); ?></summary>
 
                     <div class=warning-msg>
@@ -1515,8 +1630,8 @@ class Config extends dcNsProcess
                          *
                          * @see /_prepend.php
                          */
-                        if (dcCore::app()->blog->settings->originemini->js_hash) {
-                            $hashes = dcCore::app()->blog->settings->originemini->js_hash;
+                        if (dcCore::app()->blog->settings->odyssey->js_hash) {
+                            $hashes = dcCore::app()->blog->settings->odyssey->js_hash;
 
                             if (!empty($hashes)) {
                                 echo '<ul>';
@@ -1572,11 +1687,47 @@ class Config extends dcNsProcess
             </p>
         </form>
 
+        <h3>About Odyssey</h3>
+
+        <p><?php echo __('config-help'); ?></p>
+
+        <ul id=theme-config-links>
+            <li>
+                <a href="#" title="<?php echo __('config-link-github-title'); ?>">
+                    <svg class=theme-config-icon role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>
+                        <?php echo strip_tags(oUtils::odysseySocialIcons('github'), '<path>'); ?>
+                    </svg>
+
+                    <?php echo __('config-link-github'); ?>
+                </a>
+            </li>
+
+            <li>
+                <a href="#" title="<?php echo __('config-link-dotclear-forum-title'); ?>">
+                    <svg class=theme-config-icon role=img viewBox="0 0 64 49" xmlns=http://www.w3.org/2000/svg>
+                        <path d="m41.106 51.828s-13.196 13.726-13.309 26.99c1.778 13.675 7.537 10.929 13.309 39.539 6.299-2.431 19.033-19.077 16.465-42.569-3.337-16.775-16.465-23.96-16.465-23.96" fill="#88c200" transform="matrix(.605548 .795809 .795809 -.605548 -55.6488 38.9583)"/><path d="m6.936 105.565s14.608-11.719 30.499-19.789c25.131-12.765 31.66-27.311 31.66-27.311s-7.264 13.608-32.395 26.372c-15.891 8.07-30.499 19.789-30.499 19.789z" fill="#676e78" transform="translate(-6.201 -56.844)">
+                    </svg>
+
+                    <?php echo __('config-link-dotclear-forum'); ?>
+                </a>
+            </li>
+
+            <li>
+                <a href="#" title="<?php echo __('config-link-github-issues-title'); ?>">
+                    <svg class=theme-config-icon role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>
+                        <?php echo strip_tags(oUtils::odysseySocialIcons('github'), '<path>'); ?>
+                    </svg>
+
+                    <?php echo __('config-link-github-issues'); ?>
+                </a>
+            </li>
+        </ul>
+
         <?php
     }
 }
 
-class origineMiniSettings
+class odysseySettings
 {
     /**
      * Defines the sections in which the theme settings will be sorted.
@@ -1675,7 +1826,7 @@ class origineMiniSettings
 
         $page_width_value_default = 30;
 
-        if (dcCore::app()->blog->settings->originemini->global_page_width_unit === 'px') {
+        if (dcCore::app()->blog->settings->odyssey->global_page_width_unit === 'px') {
             $page_width_value_default = 480;
         }
 
@@ -2174,7 +2325,7 @@ class origineMiniSettings
         ];
 
         // Social links.
-        $social_sites = omSettings::socialSites();
+        $social_sites = oSettings::socialSites();
 
         foreach ($social_sites as $site_id) {
 
@@ -2209,7 +2360,7 @@ class origineMiniSettings
         }
 
         $default_settings['styles'] = [
-            'title' => __('settings-footer-origineministyles-title'),
+            'title' => __('settings-footer-odysseystyles-title'),
         ];
 
         return $default_settings;
@@ -2223,16 +2374,16 @@ class origineMiniSettings
     public static function saved(): array
     {
         $saved_settings   = [];
-        $default_settings = origineMiniSettings::default();
+        $default_settings = odysseySettings::default();
 
         foreach ($default_settings as $setting_id => $setting_data) {
-            if (dcCore::app()->blog->settings->originemini->$setting_id !== null) {
+            if (dcCore::app()->blog->settings->odyssey->$setting_id !== null) {
                 if (isset($setting_data['type']) && $setting_data['type'] === 'checkbox') {
-                    $saved_settings[$setting_id] = (bool) dcCore::app()->blog->settings->originemini->$setting_id;
+                    $saved_settings[$setting_id] = (bool) dcCore::app()->blog->settings->odyssey->$setting_id;
                 } elseif (isset($setting_data['type']) && $setting_data['type'] === 'select_int') {
-                    $saved_settings[$setting_id] = (int) dcCore::app()->blog->settings->originemini->$setting_id;
+                    $saved_settings[$setting_id] = (int) dcCore::app()->blog->settings->odyssey->$setting_id;
                 } else {
-                    $saved_settings[$setting_id] = dcCore::app()->blog->settings->originemini->$setting_id;
+                    $saved_settings[$setting_id] = dcCore::app()->blog->settings->odyssey->$setting_id;
                 }
             }
         }

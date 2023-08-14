@@ -256,10 +256,10 @@ msgstr "Page suivante ›"
 # Footer
 
 msgid "footer-powered-by"
-msgstr "Propulsé par <a href=https://fr.dotclear.org/>Dotclear</a> et <a href=https://themes.dotaddict.org/galerie-dc2/details/originemini>%s</a>"
+msgstr "Propulsé par <a href=https://fr.dotclear.org/>Dotclear</a> et <a href=https://themes.dotaddict.org/galerie-dc2/details/odyssey>%s</a>"
 
 msgid "footer-powered-by-dev"
-msgstr "Propulsé par <a href=https://fr.dotclear.org/ title=%s>Dotclear %s</a> et <a href=https://github.com/te2dy/originemini>%s %s</a>"
+msgstr "Propulsé par <a href=https://fr.dotclear.org/ title=%s>Dotclear %s</a> et <a href=https://github.com/te2dy/odyssey>%s %s</a>"
 
 # Social links
 

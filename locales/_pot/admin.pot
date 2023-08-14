@@ -11,7 +11,30 @@ msgstr ""
 msgid "prepend-hashes-save"
 msgstr ""
 
-# Sections
+# Config
+
+msgid "config-help"
+msgstr ""
+
+msgid "config-link-github-title"
+msgstr ""
+
+msgid "config-link-github"
+msgstr ""
+
+msgid "config-link-dotclear-forum-title"
+msgstr ""
+
+msgid "config-link-dotclear-forum"
+msgstr ""
+
+msgid "config-link-github-issues-title"
+msgstr ""
+
+msgid "config-link-github-issues"
+msgstr ""
+
+# Config sections
 
 msgid "section-global"
 msgstr ""
@@ -534,7 +557,10 @@ msgstr ""
 msgid "settings-footer-sociallinks-x-placeholder"
 msgstr ""
 
-msgid "settings-footer-origineministyles-title"
+msgid "settings-footer-sociallinks-x-description"
+msgstr ""
+
+msgid "settings-footer-odysseyministyles-title"
 msgstr ""
 
 # Form
