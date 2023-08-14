@@ -1687,9 +1687,9 @@ class Config extends dcNsProcess
             </p>
         </form>
 
-        <h3>About Odyssey</h3>
+        <h3><?php echo __('config-about-title'); ?></h3>
 
-        <p><?php echo __('config-help'); ?></p>
+        <p><?php echo __('config-about-text'); ?></p>
 
         <ul id=theme-config-links>
             <li>

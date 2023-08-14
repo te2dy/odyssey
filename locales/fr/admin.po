@@ -13,7 +13,10 @@ msgstr "Empreinte numérique des fichiers JS du thème"
 
 # Config
 
-msgid "config-help"
+msgid "config-about-title"
+msgstr "À propos d’Odyssée"
+
+msgid "config-about-text"
 msgstr "Ce thème a été conçu bénévolement par un utilisateur de Dotclear, codeur amateur à ses nombreuses heures perdues. N’hésitez pas à parcourir son code source pour apporter votre contribution afin de rendre ce thème un peu plus professionnel."
 
 msgid "config-link-github-title"

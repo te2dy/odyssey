@@ -13,7 +13,10 @@ msgstr ""
 
 # Config
 
-msgid "config-help"
+msgid "config-about-title"
+msgstr ""
+
+msgid "config-about-text"
 msgstr ""
 
 msgid "config-link-github-title"

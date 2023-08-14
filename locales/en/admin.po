@@ -13,7 +13,10 @@ msgstr "Hashes of the theme JS files."
 
 # Config
 
-msgid "config-help"
+msgid "config-about-title"
+msgstr "About Odyssey"
+
+msgid "config-about-text"
 msgstr "This theme was designed voluntarily by a Dotclear user, an amateur coder in his spare time. Please feel free to browse through the source code to help make this theme a little more professional."
 
 msgid "config-link-github-title"
