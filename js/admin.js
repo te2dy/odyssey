@@ -132,7 +132,7 @@ function updatePageWidthSetting(pageWidthUnitDefault, pageWidthValueDefault) {
   if (document.getElementById("global_page_width_value").value) {
     var pageWidthUnitNew = document.getElementById("global_page_width_unit").value;
 
-    if (pageWidthUnitNew === 'px') {
+    if (pageWidthUnitNew === "px") {
       var pageWidthValueNew = parseInt(document.getElementById("global_page_width_value").value, 10) * 16;
 
       document.getElementById("global_page_width_value").value = pageWidthValueNew.toString();
@@ -147,28 +147,32 @@ function updatePageWidthSetting(pageWidthUnitDefault, pageWidthValueDefault) {
 /**
  * Displays an error message if a value is incorrect.
  */
-function inputCheckMessage() {
-  var newPageWidth = Number(document.getElementById("global_page_width_value").value);
+function inputValidation() {
+  // Global page width setting.
+  var getPageWidthValue = document.getElementById("global_page_width_value").value,
+      pageWidth         = Number(getPageWidthValue);
 
-  if (newPageWidth) {
-    if (document.getElementById("global_page_width_unit").value === 'em') {
-      if (isNaN(newPageWidth) || newPageWidth < 30 || newPageWidth > 80) {
-        document.getElementById("global_page_width_value").classList.add("om-value-error");
+  if (getPageWidthValue) {
+    if (document.getElementById("global_page_width_unit").value === "em") {
+      if (isNaN(pageWidth) || pageWidth < 30 || pageWidth > 80) {
+        document.getElementById("global_page_width_value").classList.add("odyssey-value-error");
       } else {
-        document.getElementById("global_page_width_value").classList.remove("om-value-error")
+        document.getElementById("global_page_width_value").classList.remove("odyssey-value-error")
       }
     } else {
-      if (isNaN(newPageWidth) || newPageWidth < 480 || newPageWidth > 1280) {
-        document.getElementById("global_page_width_value").classList.add("om-value-error");
+      if (isNaN(pageWidth) || pageWidth < 480 || pageWidth > 1280) {
+        document.getElementById("global_page_width_value").classList.add("odyssey-value-error");
       } else {
-        document.getElementById("global_page_width_value").classList.remove("om-value-error")
+        document.getElementById("global_page_width_value").classList.remove("odyssey-value-error")
       }
     }
+  } else {
+    document.getElementById("global_page_width_value").classList.remove("odyssey-value-error")
   }
 }
 
 function inputChange() {
-  if (document.getElementById("content_post_template").value === '') {
+  if (document.getElementById("content_post_template").value === "") {
     document.getElementById("content_post_time-input").style.display        = "block";
     document.getElementById("content_post_time-description").style.display  = "block";
     document.getElementById("content_post_intro-input").style.display       = "block";
@@ -179,6 +183,46 @@ function inputChange() {
     document.getElementById("content_post_intro-input").style.display       = "none";
     document.getElementById("content_post_intro-description").style.display = "none";
   }
+
+  var socialSites = [
+    "500px",
+    "dailymotion",
+    "diaspora",
+    "discord",
+    "facebook",
+    "github",
+    "mastodon",
+    "peertube",
+    "signal",
+    "telegram",
+    "tiktok",
+    "twitch",
+    "vimeo",
+    "whatsapp",
+    "youtube",
+    "x",
+  ];
+
+  var socialLinks = [];
+
+  socialSites.forEach((site, index) => {
+    socialLinks.push("footer_social_links_" + site);
+  });
+
+  socialLinks.forEach((id, index) => {
+    if (document.getElementById(id) && document.getElementById(id + "_error")) {
+      if (document.getElementById(id).value !== ""  && document.getElementById(id).value !== document.getElementById(id).getAttribute("data-odyssey-value")) {
+        document.getElementById(id).style.color               = "var(--body-color)";
+        document.getElementById(id).style.backgroundColor     = "var(--input-background)";
+        document.getElementById(id).style.borderColor         = "var(--input-border)";
+        document.getElementById(id).style.boxShadow           = "1px 1px 2px var(--input-shadow) inset";
+        document.getElementById(id + "_error").style.display  = "none";
+      } else if (document.getElementById(id) && document.getElementById(id + "_error")) {
+        document.getElementById(id).removeAttribute("style");
+        document.getElementById(id + "_error").removeAttribute("style");
+      }
+    }
+  });
 }
 
 /**
@@ -236,11 +280,11 @@ window.onload = function() {
 
   document.getElementById("global_page_width_unit").onchange = function() {
     updatePageWidthSetting(pageWidthUnitDefault, pageWidthValueDefault);
-    inputCheckMessage();
+    inputValidation();
   }
 
   window.oninput = function() {
-    inputCheckMessage();
+    inputValidation();
     inputChange();
   };
 
