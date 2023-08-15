@@ -105,10 +105,10 @@ class Config extends dcNsProcess
                             if (isset($_POST[$setting_id])) {
                                 // The current setting has a set value.
                                 if ($_POST[$setting_id] != $default_settings[$setting_id]['default']) {
-                                    $setting_data = self::saveSetting($setting_type, $setting_id, $_POST[$setting_id]);
+                                    $setting_data = self::sanitizeSetting($setting_type, $setting_id, $_POST[$setting_id]);
                                 } else {
                                     /**
-                                     * The value is equal to the default value,
+                                     * If the value is equal to the default value,
                                      * removes the parameter.
                                      */
                                     dcCore::app()->blog->settings->odyssey->drop($setting_id);
@@ -118,7 +118,7 @@ class Config extends dcNsProcess
                                  * No value is set for the current checkbox setting,
                                  * means that the checkbox is empty.
                                  */
-                                $setting_data = self::saveSetting('checkbox', $setting_id, 0);
+                                $setting_data = self::sanitizeSetting('checkbox', $setting_id, 0);
                             } else {
                                 // Removes every other settings.
                                 dcCore::app()->blog->settings->odyssey->drop($setting_id);
@@ -128,7 +128,7 @@ class Config extends dcNsProcess
                             switch ($setting_id) {
                                 case 'header_image':
                                 case 'header_image2x':
-                                    $setting_data = self::saveHeaderImage(
+                                    $setting_data = self::sanitizeHeaderImage(
                                         $setting_id,
                                         $_POST['header_image'],
                                         $_POST['global_page_width_unit'],
@@ -138,12 +138,12 @@ class Config extends dcNsProcess
 
                                 case 'global_css_custom':
                                 case 'global_css_custom_mini':
-                                    $setting_data = self::saveCustomCSS($setting_id, $_POST['global_css_custom']);
+                                    $setting_data = self::sanitizeCustomCSS($setting_id, $_POST['global_css_custom']);
                                     break;
 
                                 case 'global_page_width_unit':
                                 case 'global_page_width_value':
-                                    $setting_data = self::savePageWidth(
+                                    $setting_data = self::sanitizePageWidth(
                                         $setting_id,
                                         $_POST['global_page_width_unit'],
                                         $_POST['global_page_width_value']
@@ -159,26 +159,26 @@ class Config extends dcNsProcess
                                 case 'footer_social_links_twitch':
                                 case 'footer_social_links_vimeo':
                                 case 'footer_social_links_youtube':
-                                    $setting_data = self::saveSocialLink(
+                                    $setting_data = self::sanitizeSocialLink(
                                         $setting_id,
                                         $_POST[$setting_id]
                                     );
                                     break;
 
                                 case 'footer_social_links_x':
-                                    $setting_data = self::saveXUsername($_POST['footer_social_links_x']);
+                                    $setting_data = self::sanitizeXUsername($_POST['footer_social_links_x']);
                                     break;
 
                                 case 'footer_social_links_diaspora':
                                 case 'footer_social_links_mastodon':
                                 case 'footer_social_links_peertube':
-                                    $setting_data = self::saveLink($_POST[$setting_id]);
+                                    $setting_data = self::sanitizeLink($_POST[$setting_id]);
                                     break;
 
                                 case 'footer_social_links_signal':
                                 case 'footer_social_links_telegram':
                                 case 'footer_social_links_whatsapp':
-                                    $setting_data = self::saveMessagingAppsLink($setting_id, $_POST[$setting_id]);
+                                    $setting_data = self::sanitizeMessagingAppsLink($setting_id, $_POST[$setting_id]);
                                     break;
 
                                 case 'styles':
@@ -251,7 +251,7 @@ class Config extends dcNsProcess
     }
 
     /**
-     * Prepares the value of a setting to be saved.
+     * Prepares the value of a setting to be saved depending on its type.
      *
      * @param string $setting_type  The type of the setting (integer, checkbox, etc.).
      * @param string $setting_id    The id of the setting.
@@ -259,7 +259,7 @@ class Config extends dcNsProcess
      *
      * @return array The value of the setting and its type.
      */
-    public static function saveSetting($setting_type, $setting_id, $setting_value)
+    public static function sanitizeSetting($setting_type, $setting_id, $setting_value): array
     {
         $default_settings = odysseySettings::default();
 
@@ -306,6 +306,8 @@ class Config extends dcNsProcess
                 'type'  => 'string'
             ];
         }
+
+        return [];
     }
 
     /**
@@ -319,7 +321,7 @@ class Config extends dcNsProcess
      *
      * @return void
      */
-    public static function saveHeaderImage($setting_id, $image_url, $page_width_unit, $page_width_value)
+    public static function sanitizeHeaderImage($setting_id, $image_url, $page_width_unit, $page_width_value)
     {
         $default_settings = odysseySettings::default();
         $image_url        = $image_url ?: '';
@@ -391,12 +393,20 @@ class Config extends dcNsProcess
                 }
             }
         }
+
+        return [];
     }
 
-    public static function saveCustomCSS($setting_id, $css_value)
+    /**
+     * Prepares to save custom CSS.
+     *
+     * @param string $setting_id The setting id.
+     * @param string $css_value  The giver CSS to save.
+     *
+     * @return array The CSS to save.
+     */
+    public static function sanitizeCustomCSS($setting_id, $css_value): array
     {
-        $default_settings = odysseySettings::default();
-
         $css_value = $css_value ?: '';
 
         if ($css_value) {
@@ -424,16 +434,24 @@ class Config extends dcNsProcess
                 ];
             }
         }
+
+        return [];
     }
 
-    public static function savePageWidth($setting_id, $page_width_unit, $page_width_value)
+    /**
+     * Prepares to save the page width option.
+     *
+     * @param string $setting_id       The setting id.
+     * @param string $page_width_unit  The unit used to define the width (px or em)
+     * @param string $page_width_value The value of the page width.
+     *
+     * @return array The page width and its unit.
+     */
+    public static function sanitizePageWidth($setting_id, $page_width_unit, $page_width_value): array
     {
-        $default_settings = odysseySettings::default();
-
         $page_width_unit  = $page_width_unit ?: 'px';
         $page_width_value = $page_width_value ? (int) $page_width_value : 30;
-
-        $page_width_data = odysseySettings::getContentWidth(
+        $page_width_data  = odysseySettings::getContentWidth(
             $page_width_unit,
             $page_width_value
         );
@@ -451,9 +469,19 @@ class Config extends dcNsProcess
                 'type'  => 'integer'
             ];
         }
+
+        return [];
     }
 
-    public static function saveSocialLink($setting_id, $url): array
+    /**
+     * Prepares to save social links.
+     *
+     * @param string $setting_id The social setting id.
+     * @param string $url        The URL of the social account.
+     *
+     * @return array The URL of the account.
+     */
+    public static function sanitizeSocialLink($setting_id, $url): array
     {
         $url = $url ? Html::escapeURL($url) : '';
 
@@ -500,40 +528,50 @@ class Config extends dcNsProcess
     }
 
     /**
-     * Validates an X username and returns its URL.
+     * Prepares to save an X username and its associated URL.
      *
      * @param string $username The given username to save.
      *
      * @return array The URL of the X account.
      */
-    public static function saveXUsername($username): array
+    public static function sanitizeXUsername($username): array
     {
         $username = $username ? Html::escapeHTML($username) : '';
-
-        $output = [];
 
         if (preg_match('/^@[A-Za-z0-9_]{4,15}$/', $username)) {
             $link = 'https://twitter.com/' . substr($username, 1);
             
             if ($link) {
-                $output['value'] = [
-                    'data'  => $link,
-                    'valid' => true
+                return [
+                    'value' => [
+                        'data'  => $link,
+                        'valid' => true
+                    ],
+                    'type'  => 'array'
                 ];
-                $output['type']  = 'array';
             }
         } elseif ($username) {
-            $output['value'] = [
-                'data'  => $username,
-                'valid' => false
+            return [
+                'value' => [
+                    'data'  => $username,
+                    'valid' => false
+                ],
+                'type'  => 'array'
             ];
-            $output['type']  = 'array';
         }
 
-        return $output;
+        return [];
     }
 
-    public static function saveMessagingAppsLink($setting_id, $input): array
+    /**
+     * Prepares to save links to messaging app accounts.
+     *
+     * @param string $setting_id The setting id.
+     * @param string $input      The input typed by the user..
+     *
+     * @return array The link.
+     */
+    public static function sanitizeMessagingAppsLink($setting_id, $input): array
     {
         $input  = $input ? Html::escapeHTML($input) : '';
         $output = [];
@@ -558,17 +596,26 @@ class Config extends dcNsProcess
         if (isset($output['value']['data'])) {
             $output['value']['valid'] = true;
         } elseif ($input) {
-            $output['value'] = [
-                'data'  => $input,
-                'valid' => false
+            $output = [
+                'value' => [
+                    'data'  => $input,
+                    'valid' => false
+                ],
+                'type'  => 'array'
             ];
-            $output['type']  = 'array';
         }
 
         return $output;
     }
 
-    public static function saveLink($input): array
+    /**
+     * Prepares to save links.
+     *
+     * @param string $input The URL.
+     *
+     * @return array The sanitized URL.
+     */
+    public static function sanitizeLink($input): array
     {
         $input  = $input ? Html::escapeURL($input) : '';
         $output = [];
@@ -578,17 +625,21 @@ class Config extends dcNsProcess
         }
 
         if (in_array(parse_url($input, PHP_URL_SCHEME), ['http', 'https'], true)) {
-            $output['value'] = [
-                'data'  => $input,
-                'valid' => true,
+            $output = [
+                'value' => [
+                    'data'  => $input,
+                    'valid' => true
+                ],
+                'type' => 'array'
             ];
-            $output['type'] = 'array';
         } else {
-            $output['value'] = [
-                'data'  => $input,
-                'valid' => false,
+            $output = [
+                'value' => [
+                    'data'  => $input,
+                    'valid' => false
+                ],
+                'type' => 'array'
             ];
-            $output['type'] = 'array';
         }
 
         return $output;

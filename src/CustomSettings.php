@@ -681,9 +681,9 @@ class odysseySettings
      *
      * @param string $setting_id The setting id.
      *
-     * @return mixed The value.
+     * @return mixed The value of the setting.
      */
-    public static function value($setting_id = '')
+    public static function value($setting_id = ''): mixed
     {
         return $setting_id ? dcCore::app()->blog->settings->odyssey->$setting_id : '';
     }
