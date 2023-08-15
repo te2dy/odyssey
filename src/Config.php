@@ -95,7 +95,10 @@ class Config extends dcNsProcess
                             'footer_social_links_vimeo',
                             'footer_social_links_whatsapp',
                             'footer_social_links_youtube',
-                            'footer_social_links_x'
+                            'footer_social_links_x',
+                            'footer_social_links_diaspora',
+                            'footer_social_links_mastodon',
+                            'footer_social_links_peertube'
                         ];
 
                         if (!in_array($setting_id, $specific_settings, true)) {
@@ -103,30 +106,7 @@ class Config extends dcNsProcess
                             if (isset($_POST[$setting_id])) {
                                 // The current setting has a set value.
                                 if ($_POST[$setting_id] != $default_settings[$setting_id]['default']) {
-                                    /**
-                                     * The parameter has a new value that is different
-                                     * from the default (and is not an unchecked checkbox).
-                                     */
-                                    switch ($default_settings[$setting_id]['type']) {
-                                        case 'select' :
-                                            $setting_data = self::saveSelectSetting($setting_id, $_POST[$setting_id]);
-                                            break;
-
-                                        case 'select_int' :
-                                            $setting_data = self::saveSelectIntSetting($setting_id, $_POST[$setting_id]);
-                                            break;
-
-                                        case 'checkbox' :
-                                            $setting_data = self::saveCheckboxSetting($setting_id, $_POST[$setting_id]);
-                                            break;
-
-                                        case 'integer' :
-                                            $setting_data = self::saveIntegerSetting($setting_id, $_POST[$setting_id]);
-                                            break;
-
-                                        default :
-                                            $setting_data = self::saveDefaultSetting($setting_id, $_POST[$setting_id]);
-                                    }
+                                    $setting_data = self::saveSetting($setting_type, $setting_id, $_POST[$setting_id]);
                                 } else {
                                     /**
                                      * The value is equal to the default value,
@@ -139,7 +119,7 @@ class Config extends dcNsProcess
                                  * No value is set for the current checkbox setting,
                                  * means that the checkbox is empty.
                                  */
-                                $setting_data = self::saveCheckboxSetting($setting_id);
+                                $setting_data = self::saveSetting('checkbox', $setting_id, 0);
                             } else {
                                 // Removes every other settings.
                                 dcCore::app()->blog->settings->odyssey->drop($setting_id);
@@ -188,6 +168,12 @@ class Config extends dcNsProcess
 
                                 case 'footer_social_links_x':
                                     $setting_data = self::saveXUsername($_POST['footer_social_links_x']);
+                                    break;
+
+                                case 'footer_social_links_diaspora':
+                                case 'footer_social_links_mastodon':
+                                case 'footer_social_links_peertube':
+                                    $setting_data = self::saveLink($_POST[$setting_id]);
                                     break;
 
                                 case 'footer_social_links_signal':
@@ -266,98 +252,54 @@ class Config extends dcNsProcess
     }
 
     /**
-     * Saves a type "select" setting.
+     * Prepares the value of a setting to be saved.
      *
-     * @param string $setting_id The id of the setting.
+     * @param string $setting_type  The type of the setting (integer, checkbox, etc.).
+     * @param string $setting_id    The id of the setting.
+     * @param string $setting_value The value of the setting.
      *
-     * @return void Saves the setting value.
+     * @return array The value of the setting and its type.
      */
-    public static function saveSelectSetting($setting_id, $setting_value)
+    public static function saveSetting($setting_type, $setting_id, $setting_value)
     {
         $default_settings = odysseySettings::default();
 
-        if (in_array($setting_value, $default_settings[$setting_id]['choices'])) {
+        if ($setting_type === 'select' && in_array($setting_value, $default_settings[$setting_id]['choices'])) {
             return [
                 'value' => Html::escapeHTML($setting_value),
                 'type'  => 'string'
             ];
         }
-    }
 
-    /**
-     * Saves a type "select_int" setting.
-     *
-     * @param string $setting_id The id of the setting.
-     *
-     * @return void Saves the setting value.
-     */
-    public static function saveSelectIntSetting($setting_id, $setting_value)
-    {
-        $default_settings = odysseySettings::default();
-
-        if (in_array((int) $setting_value, $default_settings[$setting_id]['choices'], true)) {
+        if ($setting_type === 'select_int' && in_array((int) $setting_value, $default_settings[$setting_id]['choices'], true)) {
             return [
                 'value' => (int) $setting_value,
                 'type'  => 'integer'
             ];
         }
-    }
 
-    /**
-     * Saves a type "checkbox" setting.
-     *
-     * @param string $setting_id The id of the setting.
-     *
-     * @return void Saves the setting value.
-     */
-    public static function saveCheckboxSetting($setting_id, $setting_value = '0')
-    {
-        $default_settings = odysseySettings::default();
+        if ($setting_type === 'checkbox') {
+            if ($setting_value === '1' && $default_settings[$setting_id]['default'] !== '1') {
+                return [
+                    'value' => '1',
+                    'type'  => 'boolean'
+                ];
+            }
 
-        if ($setting_value === '1' && $default_settings[$setting_id]['default'] !== '1') {
-            return [
-                'value' => '1',
-                'type'  => 'boolean'
-            ];
+            if ($setting_value === '0' && $default_settings[$setting_id]['default'] !== '0') {
+                return [
+                    'value' => '0',
+                    'type'  => 'boolean'
+                ];
+            }
         }
 
-        if ($setting_value === '0' && $default_settings[$setting_id]['default'] !== '0') {
-            return [
-                'value' => '0',
-                'type'  => 'boolean'
-            ];
-        }
-    }
-
-    /**
-     * Saves a type "integer" setting.
-     *
-     * @param string $setting_id The id of the setting.
-     *
-     * @return void Saves the setting value.
-     */
-    public static function saveIntegerSetting($setting_id, $setting_value)
-    {
-        $default_settings = odysseySettings::default();
-
-        if (is_numeric($setting_value) && $setting_value != $default_settings[$setting_id]['default']) {
+        if ($setting_type === 'integer' && is_numeric($setting_value) && $setting_value != $default_settings[$setting_id]['default']) {
             return [
                 'value' => (int) $setting_value,
                 'type'  => 'integer'
             ];
         }
-    }
-
-    /**
-     * Saves a type "default" setting.
-     *
-     * @param string $setting_id The id of the setting.
-     *
-     * @return void Saves the setting value.
-     */
-    public static function saveDefaultSetting($setting_id, $setting_value)
-    {
-        $default_settings = odysseySettings::default();
 
         if ($setting_value != $default_settings[$setting_id]['default']) {
             return [
@@ -518,7 +460,7 @@ class Config extends dcNsProcess
 
         $output = [];
 
-        $social_base_url = [
+        $social_url_base = [
             'footer_social_links_500px'       => 'https://500px.com/',
             'footer_social_links_dailymotion' => 'https://www.dailymotion.com/',
             'footer_social_links_discord'     => 'https://discord.com/',
@@ -530,10 +472,10 @@ class Config extends dcNsProcess
         ];
 
         if ($url) {
-            if (array_key_exists($setting_id, $social_base_url)) {
+            if (array_key_exists($setting_id, $social_url_base)) {
                 $output['value']['data'] = $url;
 
-                if (str_starts_with($url, $social_base_url[$setting_id])) {
+                if (str_starts_with($url, $social_url_base[$setting_id])) {
                     $output['value']['valid'] = true;
                 } else {
                     $output['value']['valid'] = false;
@@ -543,7 +485,9 @@ class Config extends dcNsProcess
             } elseif ($setting_id === 'footer_social_links_facebook') {
                 $output['value']['data'] = $url;
 
-                if (str_contains(parse_url($url, PHP_URL_HOST), '.facebook.com')) {
+                $host = parse_url($url, PHP_URL_HOST) ?: '';
+
+                if (str_contains($host, '.facebook.com')) {
                     $output['value']['valid'] = true;
                 } else {
                     $output['value']['valid'] = false;
@@ -606,7 +550,7 @@ class Config extends dcNsProcess
                 $output['type']          = 'array';
             }
         } elseif ($setting_id === 'footer_social_links_whatsapp') {
-            if (str_starts_with($input, 'https://wa.me/') || str_starts_with($input, 'whatsapp://')) {
+            if (preg_match('/^\\+[1-9][0-9]{7,14}$/', $input) || str_starts_with($input, 'https://wa.me/') || str_starts_with($input, 'whatsapp://')) {
                 $output['value']['data'] = $input;
                 $output['type']          = 'array';
             }
@@ -620,6 +564,32 @@ class Config extends dcNsProcess
                 'valid' => false
             ];
             $output['type']  = 'array';
+        }
+
+        return $output;
+    }
+
+    public static function saveLink($input): array
+    {
+        $input  = $input ? Html::escapeURL($input) : '';
+        $output = [];
+
+        if ($input === '') {
+            return $output;
+        }
+
+        if (in_array(parse_url($input, PHP_URL_SCHEME), ['http', 'https'], true)) {
+            $output['value'] = [
+                'data'  => $input,
+                'valid' => true,
+            ];
+            $output['type'] = 'array';
+        } else {
+            $output['value'] = [
+                'data'  => $input,
+                'valid' => false,
+            ];
+            $output['type'] = 'array';
         }
 
         return $output;
@@ -1498,6 +1468,11 @@ class Config extends dcNsProcess
 
                     if ($social_setting_error === true) {
                         $class = 'form-field-error';
+
+                        $setting_value = [
+                            'default' => $setting_value,
+                            'extra_html' => 'class=' . $class . ' data-odyssey-value="' . $setting_value . '"'
+                        ];
                     }
 
                     echo '<label for=', $setting_id, '>',
@@ -1520,7 +1495,7 @@ class Config extends dcNsProcess
             echo '</p>';
 
             if ($social_setting_error === true) {
-                echo '<p class=form-note-error>',
+                echo '<p class=form-note-error id=', $setting_id ,'_error>',
                 __('settings-error'),
                 '</p>';
             }

@@ -569,7 +569,7 @@ msgstr "Styles personnalisés pour Odyssée"
 # Form
 
 msgid "settings-error"
-msgstr "Ce champ n’a pas été correctement renseigné."
+msgstr "Ce champ semble ne pas avoir été correctement renseigné et sera ignoré."
 
 msgid "settings-default-checked"
 msgstr "Par défaut&nbsp;: coché."

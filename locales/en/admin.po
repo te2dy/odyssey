@@ -572,7 +572,7 @@ msgstr "Custom styles for Odyssey"
 # Form
 
 msgid "settings-error"
-msgstr "This field has not been filled in correctly."
+msgstr "This field seems to have been incorrectly filled in and will be ignored."
 
 msgid "settings-default-checked"
 msgstr "Default: checked."
