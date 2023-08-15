@@ -28,7 +28,7 @@
   color: var(--invalid-input-color);
   border-color: var(--invalid-input-border);
   background-color: var(--invalid-input-background);
-  shadow-color: var(--invalid-input-shadow);
+  box-shadow: 1px 1px 2px var(--invalid-input-shadow) inset;
 }
 #theme-config-form .form-note-error {
   color: var(--upload-error-color);
