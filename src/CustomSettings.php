@@ -8,11 +8,13 @@
  * @license   GPL-3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
  */
 
+require_once 'CustomUtils.php';
+
 /**
  * This class contains functions related to the theme custom settings
  * available through the theme configurator.
  */
-class odysseySettings
+class OdysseySettings
 {
     /**
      * Defines the sections in which the theme settings will be sorted.
@@ -43,6 +45,7 @@ class odysseySettings
         $page_sections['header'] = [
             'name'         => __('section-header'),
             'sub_sections' => [
+                'layout'   => __('section-header-layout'),
                 'image'    => __('section-header-image'),
                 'no-title' => ''
             ]
@@ -228,6 +231,7 @@ class odysseySettings
             'section'     => ['global', 'colors']
         ];
 
+        /*
         $default_settings['global_css_custom'] = [
             'title'       => __('settings-global-csscustom-title'),
             'description' => __('settings-global-csscustom-description'),
@@ -278,6 +282,7 @@ class odysseySettings
             'default'     => 0,
             'section'     => ['global', 'advanced']
         ];
+        */
 
         // Header settings.
         $default_settings['header_description'] = [
@@ -286,6 +291,19 @@ class odysseySettings
             'type'        => 'checkbox',
             'default'     => 0,
             'section'     => ['header', 'no-title']
+        ];
+
+        $default_settings['header_align'] = [
+            'title'       => __('settings-header-align-title'),
+            'description' => __('settings-header-align-description'),
+            'type'        => 'select',
+            'choices'     => [
+                __('Left')   => 'left',
+                __('Center') => 'center',
+                __('Right')  => 'right'
+            ],
+            'default'     => 'center',
+            'section'     => ['header', 'layout']
         ];
 
         $default_settings['header_image'] = [
@@ -326,6 +344,7 @@ class odysseySettings
         ];
 
         // Content settings.
+        /*
         $default_settings['content_text_font'] = [
             'title'       => __('settings-content-fontfamily-title'),
             'description' => '',
@@ -392,21 +411,31 @@ class odysseySettings
             'default'     => 0,
             'section'     => ['content', 'text-formatting']
         ];
+        */
 
         $default_settings['content_post_list_type'] = [
             'title'       => __('settings-content-postlisttype-title'),
             'description' => '',
             'type'        => 'select',
             'choices'     => [
-                __('settings-content-postlisttype-short-default') => 'short',
-                __('settings-content-postlisttype-excerpt')       => 'excerpt',
-                __('settings-content-postlisttype-content')       => 'content',
-                __('settings-content-postlisttype-custom')        => 'custom'
+                __('settings-content-postlisttype-oneline-default') => 'oneline',
+                __('settings-content-postlisttype-excerpt')         => 'excerpt',
+                __('settings-content-postlisttype-content')         => 'content',
+                __('settings-content-postlisttype-custom')          => 'custom'
             ],
-            'default'     => 'short',
+            'default'     => 'oneline',
             'section'     => ['content', 'entry-list']
         ];
 
+        $default_settings['content_post_list_image'] = [
+            'title'       => __('settings-content-postlistimage-title'),
+            'description' => '',
+            'type'        => 'checkbox',
+            'default'     => 0,
+            'section'     => ['content', 'entry-list']
+        ];
+
+        /*
         $default_settings['content_post_list_custom'] = [
             'title'       => __('settings-content-postlistcustom-title'),
             'description' => __('settings-content-postlistcustom-description'),
@@ -591,6 +620,7 @@ class odysseySettings
                 'section'     => ['widgets', 'no-title']
             ];
         }
+        */
 
         // Footer settings.
         $default_settings['footer_enabled'] = [
@@ -644,11 +674,71 @@ class odysseySettings
             ];
         }
 
+        $default_settings['styles_main_custom'] = [
+            'title' => __('settings-footer-odysseystylesroot-title'),
+        ];
+
         $default_settings['styles'] = [
             'title' => __('settings-footer-odysseystyles-title'),
         ];
 
         return $default_settings;
+    }
+
+    // all, dark, light
+    public static function defaultStyles($type = 'string'): mixed
+    {
+        $root = [];
+
+        $root[':root']['--font-family']             = '-apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif';
+        $root[':root']['--font-family-mono']        = 'Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace';
+        $root[':root']['--page-width']              = '30em';
+        $root[':root']['--font-size']               = '1em';
+        $root[':root']['--color-primary']           = 'hsl(226, 80%, 45%)';
+        $root[':root']['--color-primary-amplified'] = 'hsl(226, 95%, 55%)';
+        $root[':root']['--color-background']        = 'hsl(226, 0%, 100%)';
+
+        // Dark color scheme.
+        $root_dark = [];
+
+        $root_dark[':root']['--color-primary']           = 'hsl(226, 100%, 85%)';
+        $root_dark[':root']['--color-primary-amplified'] = 'hsl(226, 100%, 78%)';
+        $root_dark[':root']['--color-background']        = '#16161d';
+        $root_dark[':root']['--color-text-main']         = '#ccc';
+        $root_dark[':root']['--color-text-secondary']    = '#969696';
+        $root_dark[':root']['--color-input-background']  = '#262626';
+
+        // High contrast mode.
+        $root_contrast = [];
+
+        $root_contrast[':root']['--color-primary']            = '#000';
+        $root_contrast[':root']['--color-primary-amplified']  = '#000';
+        $root_contrast[':root']['--color-background-default'] = '#fff';
+        $root_contrast[':root']['--color-text-main']          = '#000';
+        $root_contrast[':root']['--color-text-secondary']     = '#000';
+        $root_contrast[':root']['--color-border']             = '#000';
+        $root_contrast[':root']['--color-input-background']   = '#fff';
+
+        // Styles
+        $main = [];
+
+        $main['#site-header']['text-align'] = 'center';
+
+        if ($type === 'string') {
+            $css  = OdysseyUtils::stylesArrayToString($root);
+            $css .= '@media (prefers-color-scheme:dark){' . OdysseyUtils::stylesArrayToString($root_dark) . '}';
+            $css .= '@media (prefers-contrast: more),(-ms-high-contrast: active),(-ms-high-contrast: black-on-white){' . OdysseyUtils::stylesArrayToString($root_contrast) . '}';
+            $css .= OdysseyUtils::stylesArrayToString($main);
+
+            return $css;
+        }
+
+        return [
+            'root'          => $root,
+            'root_dark'     => $root_dark,
+            'root_contrast' => $root_contrast,
+            'main'          => $main
+        ];
     }
 
     /**
@@ -659,7 +749,7 @@ class odysseySettings
     public static function saved(): array
     {
         $saved_settings   = [];
-        $default_settings = odysseySettings::default();
+        $default_settings = OdysseySettings::default();
 
         foreach ($default_settings as $setting_id => $setting_data) {
             if (dcCore::app()->blog->settings->odyssey->$setting_id !== null) {

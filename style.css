@@ -1,41 +1,4 @@
 /**
- * Color definition.
- */
-:root {
-  --font-family-default: -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif;
-  --font-family-mono: Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace;
-  --color-primary: hsl(var(--color-primary-h-custom, 226), var(--color-primary-s-custom, 80%), var(--color-primary-l-custom, 45%));
-  --color-primary-amplified: hsl(var(--color-primary-amplified-h-custom, var(--color-primary-h-custom, 226)), var(--color-primary-amplified-s-custom, var(--color-primary-s-custom, 95%)), var(--color-primary-amplified-l-custom, 55%));
-  --color-background: hsl(var(--color-background-h-custom, var(--color-primary-h-custom, 226)), var(--color-background-s-custom, var(--color-primary-s-custom, 0%)), var(--color-background-l-custom, 100%));
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-primary: hsl(var(--color-primary-dark-h-custom, var(--color-primary-h-custom, 226)), var(--color-primary-dark-s-custom, var(--color-primary-s-custom, 100%)), var(--color-primary-dark-l-custom, var(--color-primary-l-custom, 85%)));
-    --color-primary-amplified: hsl(var(--color-primary-dark-amplified-h-custom, var(--color-primary-h-custom, 226)), var(--color-primary-dark-amplified-s-custom, var(--color-primary-s-custom, 100%)), var(--color-primary-dark-amplified-l-custom, var(--color-primary-l-custom, 78%)));
-    --color-background: #16161d;
-    --color-text-main: #ccc;
-    --color-text-secondary: #969696;
-    --color-input-background: #262626;
-  }
-}
-
-/* Accessibility: high contrast mode. */
-@media (prefers-contrast: more),
-       (-ms-high-contrast: active),
-       (-ms-high-contrast: black-on-white) {
-  :root {
-    --color-primary: #000;
-    --color-primary-amplified: #000;
-    --color-background-default: #fff;
-    --color-text-main: #000;
-    --color-text-secondary: #000;
-    --color-border: #000;
-    --color-input-background: #fff;
-  }
-}
-
-/**
  * Site structure and main elements.
  */
 body {

@@ -22,7 +22,6 @@ use Dotclear\Helper\Html\Html;
 // Prepares to use custom functions.
 require_once 'CustomSettings.php';
 use OdysseySettings;
-
 require_once 'CustomUtils.php';
 use OdysseyUtils;
 
@@ -99,19 +98,19 @@ class Frontend extends dcNsProcess
         // Adds the name of the editor.
         if (dcCore::app()->blog->settings->system->editor) {
             echo '<meta name=author content=',
-            odysseyUtils::attrValueQuotes(dcCore::app()->blog->settings->system->editor),
+            OdysseyUtils::attrValueQuotes(dcCore::app()->blog->settings->system->editor),
             '>', "\n";
         }
 
         // Adds the content of the copyright notice.
         if (dcCore::app()->blog->settings->system->copyright_notice) {
             echo '<meta name=copyright content=',
-            odysseyUtils::attrValueQuotes(dcCore::app()->blog->settings->system->copyright_notice),
+            OdysseyUtils::attrValueQuotes(dcCore::app()->blog->settings->system->copyright_notice),
             '>', "\n";
         }
 
         // Adds the generator name of the blog.
-        if (odysseySettings::value('global_meta_generator') === true) {
+        if (OdysseySettings::value('global_meta_generator') === true) {
             echo '<meta name=generator content=Dotclear>', "\n";
         }
     }
@@ -125,7 +124,7 @@ class Frontend extends dcNsProcess
      */
     public static function odysseySocialMarkups(): void
     {
-        if (odysseySettings::value('global_meta_social') === true) {
+        if (OdysseySettings::value('global_meta_social') === true) {
             $title = '';
             $desc  = '';
             $img   = '';
@@ -145,7 +144,7 @@ class Frontend extends dcNsProcess
                     }
 
                     if (context::EntryFirstImageHelper('o', true, '', true)) {
-                        $img = odysseyUtils::blogBaseURL() . context::EntryFirstImageHelper('o', true, '', true);
+                        $img = OdysseyUtils::blogBaseURL() . context::EntryFirstImageHelper('o', true, '', true);
                     }
 
                     break;
@@ -161,13 +160,13 @@ class Frontend extends dcNsProcess
                         );
                     }
 
-                    if (odysseySettings::value('global_meta_home_description') || dcCore::app()->blog->desc) {
+                    if (OdysseySettings::value('global_meta_home_description') || dcCore::app()->blog->desc) {
                         if ($desc) {
                             $desc .= ' – ';
                         }
 
-                        if (odysseySettings::value('global_meta_home_description')) {
-                            $desc .= odysseySettings::value('global_meta_home_description');
+                        if (OdysseySettings::value('global_meta_home_description')) {
+                            $desc .= OdysseySettings::value('global_meta_home_description');
                         } elseif (dcCore::app()->blog->desc) {
                             $desc .= dcCore::app()->blog->desc;
                         }
@@ -214,8 +213,8 @@ class Frontend extends dcNsProcess
             if ($title) {
                 $desc = Html::escapeHTML($desc);
 
-                if (!$img && isset(odysseySettings::value('header_image')['url'])) {
-                    $img = odysseyUtils::blogBaseURL() . odysseySettings::value('header_image')['url'];
+                if (!$img && isset(OdysseySettings::value('header_image')['url'])) {
+                    $img = OdysseyUtils::blogBaseURL() . OdysseySettings::value('header_image')['url'];
                 }
 
                 $img = Html::escapeURL($img);
@@ -245,7 +244,7 @@ class Frontend extends dcNsProcess
      */
     public static function odysseyPostIntro(): void
     {
-        if (odysseySettings::value('content_post_intro') === true && dcCore::app()->ctx->posts->post_excerpt) {
+        if (OdysseySettings::value('content_post_intro') === true && dcCore::app()->ctx->posts->post_excerpt) {
             echo '<div id=post-intro>', dcCore::app()->ctx->posts->getExcerpt(), '</div>';
         }
     }
@@ -258,7 +257,7 @@ class Frontend extends dcNsProcess
     public static function odysseySocialLinks(): void
     {
         // A list of social sites supported by the theme.
-        $social_sites = odysseySettings::socialSites();
+        $social_sites = OdysseySettings::socialSites();
 
         // The array of social links to be displayed.
         $social_links = [];
@@ -266,11 +265,11 @@ class Frontend extends dcNsProcess
         // Builds the array of social links to display in the footer.
         foreach ($social_sites as $site_id) {
             $setting_id    = 'footer_social_links_' . $site_id;
-            $setting_value = odysseySettings::value($setting_id);
+            $setting_value = OdysseySettings::value($setting_id);
 
             // If the setting has a valid value.
             if (isset($setting_value['data']) && isset($setting_value['valid']) && $setting_value['valid'] === true) {
-                $social_links[$site_id] = odysseySettings::value($setting_id)['data'];
+                $social_links[$site_id] = OdysseySettings::value($setting_id)['data'];
             }
         }
 
@@ -300,7 +299,7 @@ class Frontend extends dcNsProcess
                                     <svg class=footer-social-links-icon role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>
                                         <title><?php echo Html::escapeHTML(__('site-name-' . $site_id)); ?></title>
 
-                                        <?php echo strip_tags(odysseyUtils::odysseySocialIcons($site_id), '<path>'); ?>
+                                        <?php echo strip_tags(OdysseyUtils::odysseySocialIcons($site_id), '<path>'); ?>
                                     </svg>
                                 </span>
                             </a>
@@ -330,11 +329,11 @@ class Frontend extends dcNsProcess
      */
     public static function odysseyScriptSearchForm(): void
     {
-        if (!odysseySettings::value('global_js')) {
+        if (!OdysseySettings::value('global_js')) {
             return;
         }
 
-        if (!odysseySettings::value('widgets_search_form') && dcCore::app()->url->type !== 'search') {
+        if (!OdysseySettings::value('widgets_search_form') && dcCore::app()->url->type !== 'search') {
             return;
         }
 
@@ -361,7 +360,7 @@ class Frontend extends dcNsProcess
      */
     public static function odysseyScriptTrackbackURL(): void
     {
-        if (!odysseySettings::value('global_js')) {
+        if (!OdysseySettings::value('global_js')) {
             return;
         }
 
@@ -393,7 +392,7 @@ class Frontend extends dcNsProcess
             return;
         }
 
-        if (!odysseySettings::value('content_images_wide')) {
+        if (!OdysseySettings::value('content_images_wide')) {
             return;
         }
 
@@ -431,7 +430,7 @@ class Frontend extends dcNsProcess
                      */
                     $option_image_wide = false;
 
-                    switch (odysseySettings::value('content_images_wide')) {
+                    switch (OdysseySettings::value('content_images_wide')) {
                         case 'posts-pages' :
                             if (dcCore::app()->url->type === 'post' || dcCore::app()->url->type === 'pages') {
                                 $option_image_wide = true;
@@ -442,11 +441,11 @@ class Frontend extends dcNsProcess
                             $option_image_wide = true;
                     }
 
-                    $img_width_max = odysseySettings::contentWidth('px');
+                    $img_width_max = OdysseySettings::contentWidth('px');
 
                     if ($option_image_wide === true) {
-                        if (odysseySettings::value('content_images_wide_size')) {
-                            $img_width_max += (int) (odysseySettings::value('content_images_wide_size') * 2);
+                        if (OdysseySettings::value('content_images_wide_size')) {
+                            $img_width_max += (int) (OdysseySettings::value('content_images_wide_size') * 2);
                         } else {
                             $img_width_max += 120 * 2;
                         }
@@ -461,8 +460,8 @@ class Frontend extends dcNsProcess
                     $media_sizes = dcCore::app()->media->thumb_sizes;
 
                     // Adds eventual custom image sizes.
-                    if (odysseySettings::value('content_image_custom_size')) {
-                        $custom_image_sizes = explode(',', odysseySettings::value('content_image_custom_size'));
+                    if (OdysseySettings::value('content_image_custom_size')) {
+                        $custom_image_sizes = explode(',', OdysseySettings::value('content_image_custom_size'));
 
                         foreach ($custom_image_sizes as $size_id) {
                             $media_sizes[$size_id] = [
@@ -525,7 +524,7 @@ class Frontend extends dcNsProcess
                     $attr .= 'sizes="100vw" ';
 
                     // If it's a landscape format image only, displays it wide.
-                    if (odysseySettings::value('content_images_wide')
+                    if (OdysseySettings::value('content_images_wide')
                         && $img[$src_image_size]['width'] > $img[$src_image_size]['height']
                         && $img[$src_image_size]['width'] >= $img_width_max
                     ) {
@@ -554,7 +553,7 @@ class Frontend extends dcNsProcess
      */
     public static function odysseyMetaDescriptionHome($attr): string
     {
-        if (odysseySettings::value('global_meta_home_description')) {
+        if (OdysseySettings::value('global_meta_home_description')) {
             return '<?php echo ' . sprintf(dcCore::app()->tpl->getFilters($attr), 'dcCore::app()->blog->settings->odyssey->global_meta_home_description') . '; ?>';
         }
 
@@ -566,14 +565,11 @@ class Frontend extends dcNsProcess
      *
      * @return string The styles.
      */
-    public static function odysseyStylesInline()
+    public static function odysseyStylesInline(): string
     {
-        $styles  = odysseySettings::value('styles') ?: '';
-        $styles .= odysseySettings::value('global_css_custom_mini') ?: '';
+        $styles = OdysseySettings::value('styles') . OdysseySettings::value('global_css_custom_mini');
 
-        if ($styles) {
-            return '<style>' . $styles . '</style>';
-        }
+        return $styles ? '<style>' . $styles . '</style>' : '';
     }
 
     /**
@@ -607,7 +603,7 @@ class Frontend extends dcNsProcess
         }
 
         // Adds a link to the footer except if it has been disabled in the configurator.
-        if (odysseySettings::value('footer_enabled') !== false) {
+        if (OdysseySettings::value('footer_enabled') !== false) {
             $links .= '<a id=skip-footer class=skip-links href=#site-footer>' . __('skip-link-footer') . '</a>';
         }
 
@@ -628,22 +624,22 @@ class Frontend extends dcNsProcess
      */
     public static function odysseyHeaderImage($attr)
     {
-        if (odysseySettings::value('header_image') && isset(odysseySettings::value('header_image')['url'])) {
+        if (OdysseySettings::value('header_image') && isset(OdysseySettings::value('header_image')['url'])) {
             if (!empty($attr['position'])
-                && (($attr['position'] === 'bottom' && odysseySettings::value('header_image_position') === 'bottom')
-                || ($attr['position'] === 'top' && !odysseySettings::value('header_image_position')))
+                && (($attr['position'] === 'bottom' && OdysseySettings::value('header_image_position') === 'bottom')
+                || ($attr['position'] === 'top' && !OdysseySettings::value('header_image_position')))
             ) {
-                $image_url = Html::escapeURL(odysseySettings::value('header_image')['url']);
+                $image_url = Html::escapeURL(OdysseySettings::value('header_image')['url']);
                 $srcset    = '';
 
-                if (odysseySettings::value('header_image_description')) {
-                    $alt = ' alt="' . Html::escapeHTML(odysseySettings::value('header_image_description')) . '"';
+                if (OdysseySettings::value('header_image_description')) {
+                    $alt = ' alt="' . Html::escapeHTML(OdysseySettings::value('header_image_description')) . '"';
                 } else {
                     $alt = ' alt="' . __('header-image-alt') . '"';
                 }
 
-                if (odysseySettings::value('header_image2x')) {
-                    $image2x_url = Html::escapeURL(odysseySettings::value('header_image2x'));
+                if (OdysseySettings::value('header_image2x')) {
+                    $image2x_url = Html::escapeURL(OdysseySettings::value('header_image2x'));
 
                     $srcset  = ' srcset="';
                     $srcset .= $image_url . ' 1x, ';
@@ -668,7 +664,7 @@ class Frontend extends dcNsProcess
      */
     public static function odysseyBlogDescription()
     {
-        if (dcCore::app()->blog->desc && odysseySettings::value('header_description') === true) {
+        if (dcCore::app()->blog->desc && OdysseySettings::value('header_description') === true) {
             $description = dcCore::app()->blog->desc;
             $description = Html::clean($description);
             $description = Html::decodeEntities($description);
@@ -689,21 +685,21 @@ class Frontend extends dcNsProcess
      */
     public static function odysseyPostListType(): string
     {
-        if (!odysseySettings::value('content_post_list_type')) {
-            return dcCore::app()->tpl->includeFile(['src' => '_entry-list-short.html']);
+        if (!OdysseySettings::value('content_post_list_type')) {
+            return dcCore::app()->tpl->includeFile(['src' => '_entry-list-oneline.html']);
         }
 
-        $postlist_type_allowed = ['excerpt', 'content', 'custom'];
+        $postlist_type_allowed = ['short', 'excerpt', 'content', 'custom'];
 
-        $postlist_type = odysseySettings::value('content_post_list_type');
-        $postlist_type = in_array($postlist_type, $postlist_type_allowed, true) ? $postlist_type : 'short';
+        $postlist_type = OdysseySettings::value('content_post_list_type');
+        $postlist_type = in_array($postlist_type, $postlist_type_allowed, true) ? $postlist_type : 'oneline';
         $postlist_tpl  = '_entry-list-' . $postlist_type . '.html';
 
         if ($postlist_type === 'custom') {
-            if (odysseySettings::value('content_post_list_custom')) {
-                $postlist_tpl = odysseySettings::value('content_post_list_custom');
+            if (OdysseySettings::value('content_post_list_custom')) {
+                $postlist_tpl = OdysseySettings::value('content_post_list_custom');
             } else {
-                $postlist_tpl = '_entry-list-short.html';
+                $postlist_tpl = '_entry-list-oneline.html';
             }
         }
 
@@ -717,11 +713,11 @@ class Frontend extends dcNsProcess
      */
     public static function odysseyPostTemplate(): string
     {
-        if (!odysseySettings::value('content_post_template')) {
+        if (!OdysseySettings::value('content_post_template')) {
             return dcCore::app()->tpl->includeFile(['src' => '_entry-post.html']);
         }
 
-        return dcCore::app()->tpl->includeFile(['src' => odysseySettings::value('content_post_template')]);
+        return dcCore::app()->tpl->includeFile(['src' => OdysseySettings::value('content_post_template')]);
     }
 
     /**
@@ -731,11 +727,11 @@ class Frontend extends dcNsProcess
      */
     public static function odysseyPageTemplate(): string
     {
-        if (!odysseySettings::value('content_page_template')) {
+        if (!OdysseySettings::value('content_page_template')) {
             return dcCore::app()->tpl->includeFile(['src' => '_entry-page.html']);
         }
 
-        return dcCore::app()->tpl->includeFile(['src' => odysseySettings::value('content_page_template')]);
+        return dcCore::app()->tpl->includeFile(['src' => OdysseySettings::value('content_page_template')]);
     }
 
     /**
@@ -747,7 +743,7 @@ class Frontend extends dcNsProcess
      */
     public static function odysseyPostListReactionLink()
     {
-        if (!odysseySettings::value('content_post_list_reaction_link')) {
+        if (!OdysseySettings::value('content_post_list_reaction_link')) {
             return;
         }
 
@@ -756,7 +752,7 @@ class Frontend extends dcNsProcess
 
         $link_class = 'class=\"post-reaction-link\"';
 
-        if (odysseySettings::value('content_post_list_type') === 'content') {
+        if (OdysseySettings::value('content_post_list_type') === 'content') {
             $tag_open  = '';
             $tag_close = '';
 
@@ -805,9 +801,9 @@ class Frontend extends dcNsProcess
      */
     public static function odysseyEntryTime($attr)
     {
-        if (!empty($attr['context']) && (odysseySettings::value('content_post_list_time') === true && $attr['context'] === 'entry-list') || (odysseySettings::value('content_post_time') === true && $attr['context'] === 'post')) {
-            if (odysseySettings::value('content_separator')) {
-                $content_separator = ' ' . Html::escapeHTML(odysseySettings::value('content_separator'));
+        if (!empty($attr['context']) && (OdysseySettings::value('content_post_list_time') === true && $attr['context'] === 'entry-list') || (OdysseySettings::value('content_post_time') === true && $attr['context'] === 'post')) {
+            if (OdysseySettings::value('content_separator')) {
+                $content_separator = ' ' . Html::escapeHTML(OdysseySettings::value('content_separator'));
             } else {
                 $content_separator = ' |';
             }
@@ -908,7 +904,7 @@ class Frontend extends dcNsProcess
      */
     public static function odysseyScriptTrackbackURLCopied()
     {
-        if (odysseySettings::value('global_js') === true) {
+        if (OdysseySettings::value('global_js') === true) {
             return ' <span id=trackback-url-copied>' . __('reactions-trackback-url-copied') . '</span>';
         }
     }
@@ -920,7 +916,7 @@ class Frontend extends dcNsProcess
      */
     public static function odysseyEmailAuthor()
     {
-        if (odysseySettings::value('content_post_email_author') !== 'disabled') {
+        if (OdysseySettings::value('content_post_email_author') !== 'disabled') {
             return '<?php
             if (isset(dcCore::app()->ctx->posts->user_email) && dcCore::app()->ctx->posts->user_email && (dcCore::app()->blog->settings->odyssey->content_post_email_author === "always" || (dcCore::app()->blog->settings->odyssey->content_post_email_author === "comments_open" && dcCore::app()->ctx->posts->post_open_comment === "1"))
             ) {
@@ -1019,7 +1015,7 @@ class Frontend extends dcNsProcess
      */
     public static function odysseyFooterCredits()
     {
-        if (odysseySettings::value('footer_credits') !== false) {
+        if (OdysseySettings::value('footer_credits') !== false) {
             if (!defined('DC_DEV') || (defined('DC_DEV') && DC_DEV === false)) {
                 return '<div class=site-footer-block>' . __(
                     'footer-powered-by',
@@ -1096,9 +1092,9 @@ class Frontend extends dcNsProcess
      */
     public static function odysseyHeaderIdentity($attr, $content): string
     {
-        if (odysseySettings::value('header_description') !== true) {
+        //if (OdysseySettings::value('header_description') !== true) {
             return $content;
-        }
+        //}
 
         return '<div id=site-identity>' . $content . '</div>';
     }
@@ -1113,7 +1109,7 @@ class Frontend extends dcNsProcess
      */
     public static function odysseyCommentFormWrapper($attr, $content): string
     {
-        if (!odysseySettings::value('content_commentform_hide')) {
+        if (!OdysseySettings::value('content_commentform_hide')) {
             return '<h3 class=reaction-title>' . __('reactions-comment-form-title') . '</h3>' . $content;
         } elseif (dcCore::app()->ctx->comment_preview && dcCore::app()->ctx->comment_preview["preview"]) {
             return '<div id=react-content><h3 class=reaction-title>' . __('reactions-comment-form-preview-title') . '</h3>' . $content . '</div>';
@@ -1132,7 +1128,7 @@ class Frontend extends dcNsProcess
      */
     public static function odysseyReactionFeedLink($attr, $content)
     {
-        if (odysseySettings::value('content_reaction_feed') !== false) {
+        if (OdysseySettings::value('content_reaction_feed') !== false) {
             return $content;
         }
     }
@@ -1147,7 +1143,7 @@ class Frontend extends dcNsProcess
      */
     public static function odysseyTrackbackLink($attr, $content)
     {
-        if (odysseySettings::value('content_trackback_link') !== false) {
+        if (OdysseySettings::value('content_trackback_link') !== false) {
             return $content;
         }
     }
@@ -1162,7 +1158,7 @@ class Frontend extends dcNsProcess
      */
     public static function odysseyWidgetsNav($attr, $content)
     {
-        if (odysseySettings::value('widgets_nav_position') !== 'disabled') {
+        if (OdysseySettings::value('widgets_nav_position') !== 'disabled') {
             return $content;
         }
     }
@@ -1177,7 +1173,7 @@ class Frontend extends dcNsProcess
      */
     public static function odysseyWidgetSearchForm($attr, $content)
     {
-        if (odysseySettings::value('widgets_search_form') === true && dcCore::app()->url->type !== 'search') {
+        if (OdysseySettings::value('widgets_search_form') === true && dcCore::app()->url->type !== 'search') {
             return $content;
         }
     }
@@ -1192,7 +1188,7 @@ class Frontend extends dcNsProcess
      */
     public static function odysseyWidgetsExtra($attr, $content)
     {
-        if (odysseySettings::value('widgets_extra_enabled') !== false) {
+        if (OdysseySettings::value('widgets_extra_enabled') !== false) {
             return $content;
         }
     }
@@ -1207,7 +1203,7 @@ class Frontend extends dcNsProcess
      */
     public static function odysseyFooter($attr, $content)
     {
-        if (odysseySettings::value('footer_enabled') !== false) {
+        if (OdysseySettings::value('footer_enabled') !== false) {
             return $content;
         }
     }
