@@ -1,19 +1,23 @@
 :root {
   --font-family-default: -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif;
   --color-primary-default: hsl(226, 80%, 45%);
-  --color-primary-amplified-default: hsl(226, 95%, 55%);
-  --color-background-default: transparent;
+  --color-primary-amplified-default: hsl(226, 95%, 50%);
+  --color-background-default: hsl(0, 0%, 98%);
 }
 
 /**
  * Site structure and main elements.
  */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
 body {
   background-color: var(--color-background, var(--color-background-default));
   color: var(--color-text-main, #303030);
   font-family: var(--font-family, var(--font-family-default));
   font-size: var(--font-size, 1em);
-  margin: 0;
 }
 #site {
   box-sizing: border-box;
@@ -29,6 +33,21 @@ body {
   row-gap: 1rem;
   order: 1;
   text-align: var(--site-header-text-align, center);
+}
+.site-header-short {
+  align-items: baseline;
+  column-gap: 2rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  row-gap: .5rem;
+}
+.site-header-short :is(#site-title, h4) {
+  font-size: 1rem;
+}
+.site-header-short h4 {
+  display: inline;
 }
 #site-content {
   order: var(--order-content, 2);
@@ -99,7 +118,7 @@ code {
 :is(a, details summary):is(:active, :focus, :hover):not(.button) {
   color: var(--color-primary-amplified, var(--color-primary-amplified-default));
   text-decoration: underline;
-  text-decoration-style: solid;  /* Needed for Safari when ".content-text a" decoration is set. */
+  text-decoration-style: solid; /* Needed for Safari when ".content-text a" decoration is set. */
 }
 :is(a, details summary):is(:focus-visible):not(.button) { /* For navigation with keyboard. */
   background-color: var(--color-primary-amplified, var(--color-primary-amplified-default));
@@ -128,7 +147,7 @@ code {
 
 /* Headings. */
 h1, h2, h3, h4, h5, h6 {
-  margin: 1rem 0;
+  margin-block: 1rem;
 }
 :is(h1, h2, h3, h4, h5, h6):first-child {
   margin-top: 0;
@@ -160,15 +179,6 @@ h6 {
   font-family: var(--font-family-content, var(--font-family, var(--font-family-default)));
   line-height: var(--text-line-height, 1.5);
   text-align: var(--text-align, left);
-}
-.content-text a {
-  text-decoration-line: var(--content-link-text-decoration-line, underline);
-  text-decoration-style: var(--content-link-text-decoration-style, solid);
-}
-.content-text a:is(:active, :focus, :hover) {
-  text-decoration-line: underline;
-  text-decoration-style: solid;
-  text-decoration-thickness: var(--content-link-text-decoration-thickness, .168rem);
 }
 .content-text pre {
   text-align: left;
@@ -384,28 +394,14 @@ a#site-title {
 }
 
 /**
- * Post list only.
+ * Post list.
  */
-
 .entry-list-short {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-.entry-list-short .post:not(:last-child) {
-  margin-bottom: 2rem;
-}
-.entry-list-short .entry-title {
-  margin-block: .5rem 0;
-}
-
-/* To remove */
-.entry-list-oneline {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-.entry-list-oneline .post {
+.entry-list-short .post {
   align-items: baseline;
   display: flex;
   flex-direction: row;
@@ -413,25 +409,20 @@ a#site-title {
   justify-content: space-between;
   margin-bottom: 1rem;
 }
-.entry-list-oneline .post:last-child {
+.entry-list-short .post:last-child {
   margin-bottom: 0;
 }
-.entry-list-oneline .entry-title {
+.entry-list-short .entry-title {
   font-size: 1em;
   font-weight: 400;
-  margin: 0 auto 0 0;
+  margin-bottom: 0;
 }
 .post-selected .entry-title {
   font-weight: 700;
 }
-.entry-list-oneline :is(.post-date, .page-info) {
-  flex-shrink: 0;
-  margin-left: 1rem;
-  text-align: right;
-}
 
 /**
- * Full posts and pages.
+ * Posts and pages.
  */
 :is(.post, .page) header {
   margin-bottom: 2rem;
@@ -592,37 +583,6 @@ aside .widget:last-child {
   margin-bottom: 0;
 }
 
-/**
- * Accessibility
- */
-
-/* Screen readers */
-.skip-links {
-  border: 0;
-  clip: rect(1px, 1px, 1px, 1px);
-  clip-path: inset(50%);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-  word-wrap: normal !important;
-}
-.skip-links:focus {
-  clip: auto !important;
-  clip-path: none;
-  display: block;
-  font-size: 1em;
-  height: auto;
-  left: .3125rem;
-  line-height: normal;
-  padding: .5em;
-  top: .3125rem;
-  width: auto;
-  z-index: 100000;
-}
-
 @media (max-width: 34em) {
   #site {
     margin-block: 2rem;
@@ -698,11 +658,6 @@ aside .widget:last-child {
     font-size: initial;
     margin: 0;
     width: unset;
-  }
-  #site-title {
-    background-color: unset;
-    border: .063rem solid var(--color-border, #ccc);
-    color: var(--color-text-main, #303030);
   }
   .content-text a {
     text-decoration: none;
