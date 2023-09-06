@@ -13,17 +13,15 @@
 <tpl:Block name="site-header">
   {{tpl:odysseyHeaderImage position="top"}}
 
-  <tpl:odysseyHeaderIdentity>
-    <tpl:PaginationIf start="1">
-      <h1 id=site-title>{{tpl:BlogName}}</h1>
-    </tpl:PaginationIf>
+  <tpl:PaginationIf start="1">
+    <h1 id=site-title>{{tpl:BlogName}}</h1>
+  </tpl:PaginationIf>
 
-    <tpl:PaginationIf start="0">
-      <a href="{{tpl:BlogURL}}" id=site-title rel=home><h1>{{tpl:BlogName}}</h1></a>
-    </tpl:PaginationIf>
+  <tpl:PaginationIf start="0">
+    <a href="{{tpl:BlogURL}}" id=site-title rel=home><h1>{{tpl:BlogName}}</h1></a>
+  </tpl:PaginationIf>
 
-    {{tpl:odysseyBlogDescription}}
-  </tpl:odysseyHeaderIdentity>
+  {{tpl:odysseyBlogDescription}}
 
   {{tpl:SimpleMenu id="main-menu"}}
 
@@ -33,5 +31,5 @@
 </tpl:Block>
 
 <tpl:Block name="main-content">
-  {{tpl:odysseyPostListType}}
+  {{tpl:include src="_entry-list-short.html"}}
 </tpl:Block>
