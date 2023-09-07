@@ -14,7 +14,7 @@ $this->registerModule(
     '0.1-alpha',
     [
         'requires' => [
-            ['core', '2.27'],
+            ['core', '2.28'],
             ['php', '8']
         ],
 
