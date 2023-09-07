@@ -30,7 +30,9 @@
     <div id=site>
       <tpl:Block name="site-header">
         <header id=site-header>
-          <a href="{{tpl:BlogURL}}" id=site-title rel=home><h4>{{tpl:BlogName}}</h4></a>
+          <div id=site-title>
+            <a href="{{tpl:BlogURL}}" rel=home><h4>{{tpl:BlogName}}</h4></a>
+          </div>
 
           {{tpl:SimpleMenu id="main-menu"}}
 
