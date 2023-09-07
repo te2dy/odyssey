@@ -22,15 +22,13 @@
 </tpl:Block>
 
 <tpl:Block name="site-header">
-  {{tpl:odysseyHeaderImage position="top"}}
-
-  <div class=site-header-short>
+  <header id=site-header-short>
     <a href="{{tpl:BlogURL}}" id=site-title rel=home title="Back to home">‹&nbsp;<h4>{{tpl:BlogName}}</h4></a>
 
     {{tpl:SimpleMenu id="main-menu"}}
-  </div>
 
-  {{tpl:SysBehavior behavior="publicTopAfterContent"}}
+    {{tpl:SysBehavior behavior="publicTopAfterContent"}}
+  </header>
 </tpl:Block>
 
 <tpl:Block name="main-content">

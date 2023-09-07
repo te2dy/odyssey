@@ -28,30 +28,26 @@
     {{tpl:odysseyScreenReaderLinks}}
 
     <div id=site>
-      <header id=site-header>
-        <tpl:Block name="site-header">
-          {{tpl:odysseyHeaderImage position="top"}}
-
+      <tpl:Block name="site-header">
+        <header id=site-header>
           <a href="{{tpl:BlogURL}}" id=site-title rel=home><h4>{{tpl:BlogName}}</h4></a>
-
-          {{tpl:odysseyBlogDescription}}
 
           {{tpl:SimpleMenu id="main-menu"}}
 
-          {{tpl:odysseyHeaderImage position="bottom"}}
-
           {{tpl:SysBehavior behavior="publicTopAfterContent"}}
-        </tpl:Block>
-      </header>
+        </header>
+      </tpl:Block>
 
       <main id=site-content>
         <tpl:Block name="main-content">
-          {{tpl:include src="_entry-list-short.html"}}
+          {{tpl:include src="_entry-list.html"}}
         </tpl:Block>
       </main>
 
       <tpl:Block name="site-sidebar">
-        {{tpl:include src="_sidebar.html"}}
+        <tpl:odysseySidebar>
+          {{tpl:include src="_sidebar.html"}}
+        </tpl:odysseySidebar>
       </tpl:Block>
 
       <tpl:Block name="site-footer">

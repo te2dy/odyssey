@@ -11,7 +11,7 @@ $this->registerModule(
     'Odyssey',
     'Write your own with this theme',
     'Teddy',
-    '0.1',
+    '0.1-alpha',
     [
         'requires' => [
             ['core', '2.27'],
@@ -19,6 +19,9 @@ $this->registerModule(
         ],
 
         'type' => 'theme',
+
+        // Allows a full control for the theme configurator.
+        'standalone_config' => false,
 
         // Replaces default heading levels.
         'widgettitleformat'    => '<h3>%s</h3>',

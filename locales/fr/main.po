@@ -55,7 +55,7 @@ msgid "page-id"
 msgstr "page"
 
 msgid "post-selected-label"
-msgstr "Billet sélectionné"
+msgstr "Sélection"
 
 msgid "entry-list-date-aria-label"
 msgstr "Date de publication du billet"

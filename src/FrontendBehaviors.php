@@ -2,8 +2,6 @@
 /**
  * Odyssey, a Dotclear theme.
  *
- * This file contains functions for displaying the theme.
- *
  * @author    Teddy <zozxebpyr@mozmail.com>
  * @copyright 2022-2023 Teddy
  * @license   GPL-3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
@@ -14,7 +12,7 @@ namespace Dotclear\Theme\odyssey;
 use Dotclear\App;
 use Dotclear\Core\Process;
 
-require_once 'CustomUtils.php';
+require_once 'OdysseyUtils.php';
 use OdysseyUtils as odUtils;
 
 class FrontendBehaviors

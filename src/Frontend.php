@@ -14,9 +14,6 @@ namespace Dotclear\Theme\odyssey;
 use Dotclear\App;
 use Dotclear\Core\Process;
 
-require_once 'CustomUtils.php';
-use OdysseyUtils as odUtils;
-
 class Frontend extends Process
 {
     public static function init(): bool
@@ -33,7 +30,11 @@ class Frontend extends Process
         // Behaviors.
         App::behavior()->addBehavior('publicHeadContent', FrontendBehaviors::odysseyHeadMeta(...));
 
+        // Blocks
+        App::frontend()->tpl->addBlock('odysseySidebar', FrontendBlocks::odysseySidebar(...));
+
         // Values.
+        App::frontend()->tpl->addValue('odysseyURIRelative', FrontendValues::odysseyURIRelative(...));
         App::frontend()->tpl->addValue('odysseyPostTagsBefore', FrontendValues::odysseyPostTagsBefore(...));
         App::frontend()->tpl->addValue('odysseyFooterCredits', FrontendValues::odysseyFooterCredits(...));
 
