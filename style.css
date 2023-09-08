@@ -168,7 +168,6 @@ h6 {
 .content-text {
   font-family: -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif;
   line-height: 1.5;
-  text-align: left;
 }
 .content-text pre {
   text-align: left;
@@ -329,24 +328,33 @@ details summary {
 /**
  * Site header.
  */
-#site-header-short :is(#site-title, h4) {
-  font-size: 1rem;
-}
-#site-header-short h4 {
-  display: inline;
-}
 #site-title {
-  font-size: 1.5em;
+  font-size: 1.5rem;
   margin-bottom: 0;
 }
 #site-title :is(h1, h4) {
   font-size: inherit;
   margin-bottom: 0;
 }
-#site-title a:not(:active, :focus, :hover) {
+#site-title a {
   color: inherit;
 }
-#site-title a h4 {
+#site-title a:is(:active, :focus, :hover) {
+  color: hsl(226, 95%, 50%);
+}
+#site-title a :is(h1, h4) {
+  display: inline;
+}
+#site-header-short :is(#site-title, h4) {
+  font-size: 1rem;
+}
+#site-header-short #site-title {
+  color: inherit;
+}
+#site-header-short #site-title:is(:active, :focus, :hover) {
+  color: hsl(226, 95%, 50%);
+}
+#site-header-short h4 {
   display: inline;
 }
 #main-menu {
@@ -599,4 +607,11 @@ aside .widget:last-child {
     margin-left: 0;
     order: 1;
   }
+}
+
+/**
+ * Custom styles to be put in the theme configurator.
+ */
+.content-text {
+  text-align: justify;
 }
