@@ -88,13 +88,61 @@ class FrontendValues
         ?>';
     }
     
-    public static function odysseyAttachmentTitle()
+    /**
+     * Displays a title for attachments.
+     * 
+     * @return void The title.
+     */
+    public static function odysseyAttachmentTitle(): string
     {
         return '<?php
             if (count(App::frontend()->ctx->attachments) === 1) {
                 echo __("attachments-title-one");
             } else {
                 echo __("attachments-title-multiple");
+            }
+        ?>';
+    }
+    
+    /**
+     * Displays the attachment size.
+     *
+     * Based on Clearbricks package, Common subpackage and files class.
+     *
+     * @return string The attachment size.
+     */
+    public static function odysseyAttachmentSize(): string
+    {
+        return '<?php
+            $kb = 1024;
+            $mb = 1024 * $kb;
+            $gb = 1024 * $mb;
+            $tb = 1024 * $gb;
+
+            $size = $attach_f->size;
+
+            // Setting ignored for some reason:
+            // setlocale(LC_ALL, "fr_FR");
+
+            if (dcCore::app()->blog->settings->system->lang === "fr") {
+                $locale_decimal = ",";
+            } else {
+                $lang_conv      = localeconv();
+                $locale_decimal = $lang_conv["decimal_point"];
+            }
+
+            if ($size > 0) {
+                if ($size < $kb) {
+                    printf(__("attachment-size-b"), $size);
+                } elseif ($size < $mb) {
+                    printf(__("attachment-size-kb"), number_format($size / $kb, 1, $locale_decimal));
+                } elseif ($size < $gb) {
+                    printf(__("attachment-size-mb"), number_format($size / $mb, 1, $locale_decimal));
+                } elseif ($size < $tb) {
+                    printf(__("attachment-size-gb"), number_format($size / $gb, 1, $locale_decimal));
+                } else {
+                    printf(__("attachment-size-tb"), number_format($size / $tb, 1, $locale_decimal));
+                }
             }
         ?>';
     }
