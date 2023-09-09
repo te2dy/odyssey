@@ -54,12 +54,14 @@ class FrontendBehaviors
             switch (App::url()->type) {
                 case 'default':
                     $json_ld = [
-                        '@context'  => 'http://schema.org',
-                        '@type'     => 'WebPage',
+                        '@context' => 'http://schema.org',
+                        '@type'    => 'WebPage',
                         'publisher' => [
                             '@type' => 'Organization',
                             'name'  => App::blog()->name
-                        ]
+                        ],
+                        'headline' => App::blog()->name,
+                        'url'      => App::blog()->url
                     ];
 
                     break;
