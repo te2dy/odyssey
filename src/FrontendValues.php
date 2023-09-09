@@ -52,11 +52,14 @@ class FrontendValues
                 $img_s   = ' . Ctx::class . '::EntryFirstImageHelper("s", false, "", true);
                 $width_s = getimagesize(DC_ROOT . $img_s)[0];
 
-                $img_src = "src=\"" . $img_t . "\"";
+                if ($img_s && $img_s !==$img_t) {
 
-                $img_src_srcset = $img_src . " srcset=\"" . $img_s . " " . $width_s . "w, " . $img_t . " " . $width_t . "w\" size=100vw";
+                    $img_src = "src=\"" . $img_t . "\"";
 
-                $img = str_replace($img_src, $img_src_srcset, $img);
+                    $img_src_srcset = $img_src . " srcset=\"" . $img_s . " " . $width_s . "w, " . $img_t . " " . $width_t . "w\" size=100vw";
+
+                    $img = str_replace($img_src, $img_src_srcset, $img);
+                }
 
                 echo $img;
             }
