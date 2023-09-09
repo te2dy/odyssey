@@ -28,6 +28,23 @@ class FrontendValues
         return Html::escapeURL($_SERVER['REQUEST_URI']);
     }
 
+    public static function odysseyBlogDescription(): string
+    {
+        if (odUtils::configuratorSetting() === false) {
+            return '';
+        }
+
+        if (App::blog()->desc) {
+            $desc = strip_tags(App::blog()->desc, ['<em>', '<strong>']);
+            $desc = Html::decodeEntities($desc);
+            $desc = preg_replace('/\s+/', ' ', $desc);
+
+            return '<div id=site-desc>' . $desc . '</div>';
+        }
+
+        return '';
+    }
+
     /**
      * Displays a thumbnail in the post list of the first image found in each post.
      *
@@ -52,7 +69,7 @@ class FrontendValues
                 $img_s   = ' . Ctx::class . '::EntryFirstImageHelper("s", false, "", true);
                 $width_s = getimagesize(DC_ROOT . $img_s)[0];
 
-                if ($img_s && $img_s !==$img_t) {
+                if ($img_s && $img_s !== $img_t) {
 
                     $img_src = "src=\"" . $img_t . "\"";
 
