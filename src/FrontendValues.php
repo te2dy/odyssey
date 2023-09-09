@@ -10,7 +10,11 @@
 namespace Dotclear\Theme\odyssey;
 
 use Dotclear\App;
+use Dotclear\Core\Frontend\Ctx;
 use Dotclear\Helper\Html\Html;
+
+require_once 'OdysseyUtils.php';
+use OdysseyUtils as odUtils;
 
 class FrontendValues
 {
@@ -22,6 +26,41 @@ class FrontendValues
     public static function odysseyURIRelative()
     {
         return Html::escapeURL($_SERVER['REQUEST_URI']);
+    }
+
+    /**
+     * Displays a thumbnail in the post list of the first image found in each post.
+     *
+     * This function replaces the tag {{tpl:EntryFirstImage}} that should have been put
+     * in the template in order to support responsive images with the srcset attribute.
+     *
+     * @return string The image.
+     */
+    public static function origineEntryListImage(): string
+    {
+        if (odUtils::configuratorSetting() === false) {
+            return '';
+        }
+
+        return '<?php
+            $img = ' . Ctx::class . '::EntryFirstImageHelper("t", false, "entry-list-img");
+
+            if ($img) {
+                $img_t   = ' . Ctx::class . '::EntryFirstImageHelper("t", false, "", true);
+                $width_t = getimagesize(DC_ROOT . $img_t)[0];
+
+                $img_s   = ' . Ctx::class . '::EntryFirstImageHelper("s", false, "", true);
+                $width_s = getimagesize(DC_ROOT . $img_s)[0];
+
+                $img_src = "src=\"" . $img_t . "\"";
+
+                $img_src_srcset = $img_src . " srcset=\"" . $img_s . " " . $width_s . "w, " . $img_t . " " . $width_t . "w\" size=100vw";
+
+                $img = str_replace($img_src, $img_src_srcset, $img);
+
+                echo $img;
+            }
+        ?>';
     }
 
     /**

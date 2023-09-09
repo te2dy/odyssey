@@ -35,6 +35,7 @@ class Frontend extends Process
 
         // Values.
         App::frontend()->tpl->addValue('odysseyURIRelative', FrontendValues::odysseyURIRelative(...));
+        App::frontend()->tpl->addValue('origineEntryListImage', FrontendValues::origineEntryListImage(...));
         App::frontend()->tpl->addValue('odysseyPostTagsBefore', FrontendValues::odysseyPostTagsBefore(...));
         App::frontend()->tpl->addValue('odysseyFooterCredits', FrontendValues::odysseyFooterCredits(...));
 
