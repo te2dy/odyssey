@@ -1,6 +1,6 @@
 <article class=post id={{tpl:lang post-id}}-{{tpl:EntryID}}>
   <header>
-    <time aria-label="{{tpl:lang post-date-aria-label}}" class="post-date text-secondary" datetime="{{tpl:EntryDate format="%Y-%m-%dT%H:%M"}}">{{tpl:EntryDate}}</time><tpl:EntryIf selected="1"><span class=text-secondary> • {{tpl:lang post-selected-label}} ⭐️</span></tpl:EntryIf>
+    <time aria-label="{{tpl:lang post-date-aria-label}}" class="post-date text-secondary" datetime="{{tpl:EntryDate iso8601="1"}}">{{tpl:EntryDate}}</time><tpl:EntryIf selected="1"><span class=text-secondary> • {{tpl:lang post-selected-label}} ⭐️</span></tpl:EntryIf>
 
     <h1>{{tpl:EntryTitle}}</h1>
   </header>
