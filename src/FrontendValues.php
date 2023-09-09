@@ -28,6 +28,11 @@ class FrontendValues
         return Html::escapeURL($_SERVER['REQUEST_URI']);
     }
 
+    /**
+     * Displays the blog description.
+     * 
+     * @return string The blog description.
+     */
     public static function odysseyBlogDescription(): string
     {
         if (odUtils::configuratorSetting() === false) {
@@ -79,6 +84,17 @@ class FrontendValues
                 }
 
                 echo $img;
+            }
+        ?>';
+    }
+    
+    public static function odysseyAttachmentTitle()
+    {
+        return '<?php
+            if (count(App::frontend()->ctx->attachments) === 1) {
+                echo __("attachments-title-one");
+            } else {
+                echo __("attachments-title-multiple");
             }
         ?>';
     }
