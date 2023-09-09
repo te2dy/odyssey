@@ -29,6 +29,7 @@ class Frontend extends Process
 
         // Behaviors.
         App::behavior()->addBehavior('publicHeadContent', FrontendBehaviors::odysseyHeadMeta(...));
+        App::behavior()->addBehavior('publicHeadContent', FrontendBehaviors::odysseyJsonLd(...));
 
         // Blocks
         App::frontend()->tpl->addBlock('odysseySidebar', FrontendBlocks::odysseySidebar(...));
