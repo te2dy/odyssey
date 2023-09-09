@@ -11,13 +11,20 @@ namespace Dotclear\Theme\odyssey;
 
 use Dotclear\App;
 
+require_once 'OdysseyUtils.php';
+use OdysseyUtils as odUtils;
+
 class FrontendBlocks
 {
     /**
      * Hides the sidebar.
      */
-    public static function odysseySidebar($attr, $content)
+    public static function odysseySidebar($attr, $content): mixed
     {
-        return '';
+        if (odUtils::configuratorSetting() === true) {
+            return '';
+        }
+
+        return $content;
     }
 }

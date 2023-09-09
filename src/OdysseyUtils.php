@@ -11,6 +11,22 @@
 class OdysseyUtils
 {
     /**
+     * Returns true if the purpose of a value, block or behavior
+     * is to be activated via the theme configuration currently not available.
+     *
+     * @param bool $true true by default.
+     *
+     * @return bool
+     */
+    public static function configuratorSetting(bool $true = true): bool
+    {
+        if ($true === true) {
+            return true;
+        }
+
+        return false;
+    }
+    /**
      * Wraps a string in quotes if it contains a least one space.
      *
      * Avoids unnecessarily wrapping attributes in quotation marks.
