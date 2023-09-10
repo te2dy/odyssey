@@ -37,6 +37,7 @@ class Frontend extends Process
         App::behavior()->addBehavior('publicHeadContent', FrontendBehaviors::odysseyJsonLd(...));
 
         // Blocks
+        App::frontend()->tpl->addBlock('odysseyCommentFormWrapper', FrontendBlocks::odysseyCommentFormWrapper(...));
         App::frontend()->tpl->addBlock('odysseySidebar', FrontendBlocks::odysseySidebar(...));
 
         // Values.
