@@ -28,6 +28,7 @@ class OdysseyUtils
 
         return false;
     }
+    
     /**
      * Wraps a string in quotes if it contains a least one space.
      *
