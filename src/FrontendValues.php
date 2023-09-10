@@ -154,17 +154,19 @@ class FrontendValues
      */
     public static function odysseyPostTagsBefore()
     {
-        if (App::frontend()->ctx->posts->post_meta) {
-            $post_meta = unserialize(App::frontend()->ctx->posts->post_meta);
-
-            if (is_array($post_meta) && isset($post_meta['tag'])) {
-                if (count($post_meta['tag']) > 1) {
-                    return __('post-tags-prefix-multiple');
+        return '<?php
+            if (App::frontend()->ctx->posts->post_meta) {
+                $post_meta = unserialize(App::frontend()->ctx->posts->post_meta);
+    
+                if (is_array($post_meta) && isset($post_meta["tag"])) {
+                    if (count($post_meta["tag"]) > 1) {
+                        echo "' . __('post-tags-prefix-multiple') . '";
+                    } else {
+                        echo "' . __('post-tags-prefix-one') . '";
+                    }
                 }
-
-                return __('post-tags-prefix-one');
             }
-        }
+        ?>';
     }
 
     /**
