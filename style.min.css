@@ -397,6 +397,7 @@ details summary {
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: flex-start;
+  margin-inline: -.5rem;
   padding: 1rem .5rem;
 }
 .entry-list .post:nth-child(even) {
@@ -510,6 +511,9 @@ details summary {
 }
 #comment-feed-link {
   margin-top: 2rem;
+}
+#react-content {
+  margin-top: 1rem;
 }
 
 /**
