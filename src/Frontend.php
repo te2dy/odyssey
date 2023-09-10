@@ -21,6 +21,11 @@ class Frontend extends Process
         return self::status(My::checkContext(My::FRONTEND));
     }
 
+    /**
+     * Performs action and/or prepares render.
+     *
+     * @return bool
+     */
     public static function process(): bool
     {
         if (!self::status()) {
