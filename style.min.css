@@ -434,9 +434,10 @@ details summary {
 }
 .entry-list-img {
   aspect-ratio: 1/1;
-  height: 2rem;
+  height: auto;
   object-fit: cover;
-  width: auto;
+  overflow: hidden; /* In case the image is not loaded and displays the alt text. */
+  width: 2rem;
 }
 .post-list-link {
   align-items: baseline;
