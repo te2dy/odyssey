@@ -1,34 +1,4 @@
 /**
- * Custom fonts to put in the theme configurator.
- */
-/*
-@font-face {
-  font-family: "EB Garamond";
-  src: url("../odyssey/fonts/EBGaramond-Regular.ttf") format("truetype");
-  font-style: normal;
-  font-weight: 400;
-}
-@font-face {
-  font-family: "EB Garamond";
-  src: url("../odyssey/fonts/EBGaramond-Italic.ttf") format("truetype");
-  font-style: italic;
-  font-weight: 400;
-}
-@font-face {
-  font-family: "EB Garamond";
-  src: url("../odyssey/fonts/EBGaramond-Bold.ttf") format("truetype");
-  font-style: normal;
-  font-weight: 700;
-}
-@font-face {
-  font-family: "EB Garamond";
-  src: url("../odyssey/fonts/EBGaramond-BoldItalic.ttf") format("truetype");
-  font-style: italic;
-  font-weight: 700;
-}
-*/
-
-/**
  * Site structure and main elements.
  */
 html,
@@ -642,24 +612,46 @@ aside .widget:last-child {
 /**
  * Custom styles to be put in the theme configurator.
  */
+/*@font-face {
+  font-family: "EB Garamond";
+  src: url("../odyssey/fonts/EBGaramond-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-family: "EB Garamond";
+  src: url("../odyssey/fonts/EBGaramond-Italic.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 400;
+}
+@font-face {
+  font-family: "EB Garamond";
+  src: url("../odyssey/fonts/EBGaramond-Bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 700;
+}
+@font-face {
+  font-family: "EB Garamond";
+  src: url("../odyssey/fonts/EBGaramond-BoldItalic.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 700;
+}*/
 .content-text {
+  font-family: "Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   text-align: justify;
   -webkit-hyphens: auto;
-  -ms-hyphens: auto;
-  hyphens: auto;
-
+      -ms-hyphens: auto;
+          hyphens: auto;
   -webkit-hyphenate-limit-chars: 5 2 2;
-  -moz-hyphenate-limit-chars: 5 2 2;
-  -ms-hyphenate-limit-chars: 5 2 2;
-  hyphenate-limit-chars: 5 2 2;
-
+    -moz-hyphenate-limit-chars: 5 2 2;
+     -ms-hyphenate-limit-chars: 5 2 2;
+         hyphenate-limit-chars: 5 2 2;
   -webkit-hyphenate-limit-lines: 2;
-  -moz-hyphenate-limit-lines: 2;
-  -ms-hyphenate-limit-lines: 2;
-  hyphenate-limit-lines: 2;
-
+     -moz-hyphenate-limit-lines: 2;
+      -ms-hyphenate-limit-lines: 2;
+          hyphenate-limit-lines: 2;
   -webkit-hyphenate-limit-last: always;
-  -moz-hyphenate-limit-last: always;
-  -ms-hyphenate-limit-last: always;
-  hyphenate-limit-last: always;
+     -moz-hyphenate-limit-last: always;
+      -ms-hyphenate-limit-last: always;
+          hyphenate-limit-last: always;
 }
