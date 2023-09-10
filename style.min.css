@@ -277,7 +277,7 @@ textarea {
   border-radius: unset;
   box-sizing: border-box;
   color: #303030;
-  font: 1em inherit;
+  font: inherit;
   margin-bottom: 1rem;
   max-width: 100%;
   padding: .5em;
