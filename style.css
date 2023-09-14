@@ -1,3 +1,14 @@
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #16161d;
+    --color-background-even: #000;
+    --color-text-main: #ccc;
+    --color-text-secondary: #969696;
+    --color-primary: hsl(226, 80%, 70%);
+    --color-primary-amplified: hsl(226, 95%, 80%);
+  }
+}
+
 /**
  * Site structure and main elements.
  */
@@ -7,8 +18,8 @@ body {
   padding: 0;
 }
 body {
-  background-color: #fafafa; /* hsl(0, 0%, 98%) */
-  color: #303030;
+  background-color: var(--color-background, #fafafa); /* hsl(0, 0%, 98%) */
+  color: var(--color-text-main, #303030);
   font: 1em -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif; /*"EB Garamond", Georgie, serif */
 }
 #site {
@@ -100,19 +111,19 @@ code {
 
 /* Links */
 :is(a, details summary) {
-  color: hsl(226, 80%, 45%);
+  color: var(--color-primary, hsl(226, 80%, 45%));
   text-decoration: none;
   text-decoration-style: unset;
 }
 :is(a, details summary):is(:active, :focus, :hover):not(.button) {
-  color: hsl(226, 95%, 50%);
+  color: var(--color-primary-amplified, hsl(226, 95%, 50%));
   text-decoration: underline;
   text-decoration-style: solid; /* Needed for Safari when ".content-text a" decoration is set. */
 }
 :is(a, details summary):is(:focus-visible):not(.button) { /* For navigation with keyboard. */
-  background-color: hsl(226, 95%, 50%);
-  color: #fafafa; /* hsl(0, 0%, 98%) */
-  outline: .168rem solid hsl(226, 95%, 50%);
+  background-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
+  color: var(--color-background, #fafafa);
+  outline: .168rem solid var(--color-primary-amplified, hsl(226, 95%, 50%));
   outline-offset: 0;
   text-decoration: none;
 }
@@ -126,9 +137,9 @@ code {
     text-decoration-style: solid;
   }
   :is(a, details summary):is(:active, :focus, :hover):not(.button) {
-    background-color: hsl(226, 95%, 50%);
-    color: #fafafa; /* hsl(0, 0%, 98%) */
-    outline: .168rem solid hsl(226, 95%, 50%);
+    background-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
+    color: var(--color-background, #fafafa);
+    outline: .168rem solid var(--color-primary-amplified, hsl(226, 95%, 50%));
     outline-offset: 0;
     text-decoration: none;
   }
@@ -162,7 +173,7 @@ h6 {
 
 /* Text. */
 .text-secondary {
-  color: #6c6f78;
+  color: var(--color-text-secondary, #6c6f78);
 }
 .content-text {
   line-height: 1.5;
@@ -176,7 +187,7 @@ h6 {
   text-align: center;
 }
 .content-text hr::after {
-  color: #303030;
+  color: var(--color-text-main, #303030);
   content: "\002042"; /* ⁂ */
 }
 .content-text :is(h1, h2, h3, h4, h5) {
@@ -246,7 +257,7 @@ textarea {
   border: .063rem solid #ccc;
   border-radius: unset;
   box-sizing: border-box;
-  color: #303030;
+  color: var(--color-text-main, #303030);
   font: inherit;
   margin-bottom: 1rem;
   max-width: 100%;
@@ -279,14 +290,14 @@ a.button:is(:active, :focus, :hover) {
 input[type="submit"],
 .form-submit,
 .button {
-  color: hsl(226, 80%, 45%);
+  color: var(--color-primary, hsl(226, 80%, 45%));
   background-color: transparent;
-  border: .063rem solid hsl(226, 80%, 45%);
+  border: .063rem solid var(--color-primary, hsl(226, 80%, 45%));
   border-radius: 0;
 }
 :is(input[type="submit"], .button, .form-submit):is(:active, :focus, :hover) {
-  background-color: hsl(226, 95%, 50%);
-  border-color: hsl(226, 95%, 50%);
+  background-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
+  border-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
   color: var(--color-background, #fcfcfd);
   cursor: pointer;
 }
@@ -294,13 +305,13 @@ input[type="submit"],
        (-ms-high-contrast: active),
        (-ms-high-contrast: black-on-white) {
   :is(input[type="submit"], .button, .form-submit):is(:active, :focus, :hover) {
-    background-color: #fafafa; /* hsl(0, 0%, 98%) */
-    color: #303030;
+    background-color: var(--color-background, #fafafa);
+    color: var(--color-text-main, #303030);
     outline: .168rem solid #303030;
   }
 }
 input:disabled {
-  color: #6c6f78;
+  color: var(--color-text-secondary, #6c6f78);
 }
 input[type="submit"]:disabled {
   background-color: #fcfcfd;
@@ -308,7 +319,7 @@ input[type="submit"]:disabled {
 }
 input[type="submit"]:is(:active, :focus, :hover):disabled {
   background-color: inherit;
-  color: #6c6f78;
+  color: var(--color-text-secondary, #6c6f78);
   cursor: default;
 }
 textarea {
@@ -336,7 +347,7 @@ details summary {
   color: inherit;
 }
 #site-title a:is(:active, :focus, :hover) {
-  color: hsl(226, 95%, 50%);
+  color: var(--color-primary-amplified, hsl(226, 95%, 50%));
 }
 #site-title a :is(h1, h4) {
   display: inline;
@@ -348,13 +359,13 @@ details summary {
   color: inherit;
 }
 #site-header-short #site-title:is(:active, :focus, :hover) {
-  color: hsl(226, 95%, 50%);
+  color: var(--color-primary-amplified, hsl(226, 95%, 50%));
 }
 #site-header-short h4 {
   display: inline;
 }
 #site-desc {
-  color: #6c6f78;
+  color: var(--color-text-secondary, #6c6f78);
 }
 #main-menu {
   list-style: none;
@@ -401,7 +412,7 @@ details summary {
   padding: 1rem .5rem;
 }
 .entry-list .post:nth-child(even) {
-  background-color: #fff;
+  background-color: var(--color-background-even, #fff);
 }
 .entry-list-img {
   aspect-ratio: 1/1;
