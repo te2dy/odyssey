@@ -43,6 +43,9 @@ msgstr ""
 msgid "header-image-alt"
 msgstr ""
 
+msgid "post-home-link-title"
+msgstr ""
+
 # Posts & pages
 
 msgid "entry-list-aria-label"
