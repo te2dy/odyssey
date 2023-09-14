@@ -178,8 +178,8 @@ class FrontendValues
     {
         // If we are not in a development environment.
         if (!defined('DC_DEV') || (defined('DC_DEV') && DC_DEV === false)) {
-            return '<div class=site-footer-block>' . __(
-                'footer-powered-by',
+            return '<div class=site-footer-block>' . sprintf(
+                __('footer-powered-by'),
                 My::name()
             ) . '</div>';
         }
