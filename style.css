@@ -7,10 +7,9 @@ body {
   padding: 0;
 }
 body {
-  background-color: hsl(0, 0%, 98%);
+  background-color: #fafafa; /* hsl(0, 0%, 98%) */
   color: #303030;
-  font-family: -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif;
-  font-size: 1em;
+  font: 1em -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif; /*"EB Garamond", Georgie, serif */
 }
 #site {
   box-sizing: border-box;
@@ -112,7 +111,7 @@ code {
 }
 :is(a, details summary):is(:focus-visible):not(.button) { /* For navigation with keyboard. */
   background-color: hsl(226, 95%, 50%);
-  color: hsl(0, 0%, 98%);
+  color: #fafafa; /* hsl(0, 0%, 98%) */
   outline: .168rem solid hsl(226, 95%, 50%);
   outline-offset: 0;
   text-decoration: none;
@@ -128,7 +127,7 @@ code {
   }
   :is(a, details summary):is(:active, :focus, :hover):not(.button) {
     background-color: hsl(226, 95%, 50%);
-    color: hsl(0, 0%, 98%);
+    color: #fafafa; /* hsl(0, 0%, 98%) */
     outline: .168rem solid hsl(226, 95%, 50%);
     outline-offset: 0;
     text-decoration: none;
@@ -163,10 +162,9 @@ h6 {
 
 /* Text. */
 .text-secondary {
-  color: var(--color-text-secondary, #6c6f78);
+  color: #6c6f78;
 }
 .content-text {
-  font-family: -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif;
   line-height: 1.5;
 }
 .content-text pre {
@@ -249,8 +247,7 @@ textarea {
   border-radius: unset;
   box-sizing: border-box;
   color: #303030;
-  font-family: inherit;
-  font-size: 1em;
+  font: inherit;
   margin-bottom: 1rem;
   max-width: 100%;
   padding: .5em;
@@ -268,8 +265,7 @@ label:hover {
   margin-block: .25rem;
 }
 button {
-  font-family: inherit;
-  font-size: 1em;
+  font: 1em inherit;
   margin: 0;
 }
 button,
@@ -298,7 +294,7 @@ input[type="submit"],
        (-ms-high-contrast: active),
        (-ms-high-contrast: black-on-white) {
   :is(input[type="submit"], .button, .form-submit):is(:active, :focus, :hover) {
-    background-color: hsl(0, 0%, 98%);
+    background-color: #fafafa; /* hsl(0, 0%, 98%) */
     color: #303030;
     outline: .168rem solid #303030;
   }
@@ -329,7 +325,7 @@ details summary {
  * Site header.
  */
 #site-title {
-  font-size: 1.5rem;
+  font-size: 1.5em;
   margin-bottom: 0;
 }
 #site-title :is(h1, h4) {
@@ -346,7 +342,7 @@ details summary {
   display: inline;
 }
 #site-header-short :is(#site-title, h4) {
-  font-size: 1rem;
+  font-size: 1em;
 }
 #site-header-short #site-title {
   color: inherit;
@@ -356,6 +352,9 @@ details summary {
 }
 #site-header-short h4 {
   display: inline;
+}
+#site-desc {
+  color: #6c6f78;
 }
 #main-menu {
   list-style: none;
@@ -398,6 +397,7 @@ details summary {
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: flex-start;
+  margin-inline: -.5rem;
   padding: 1rem .5rem;
 }
 .entry-list .post:nth-child(even) {
@@ -405,9 +405,10 @@ details summary {
 }
 .entry-list-img {
   aspect-ratio: 1/1;
-  height: 2rem;
+  height: auto;
   object-fit: cover;
-  width: auto;
+  overflow: hidden; /* In case the image is not loaded and displays the alt text. */
+  width: 2rem;
 }
 .post-list-link {
   align-items: baseline;
@@ -511,6 +512,9 @@ details summary {
 #comment-feed-link {
   margin-top: 2rem;
 }
+#react-content {
+  margin-top: 1rem;
+}
 
 /**
  * Archives
@@ -612,6 +616,46 @@ aside .widget:last-child {
 /**
  * Custom styles to be put in the theme configurator.
  */
+/*@font-face {
+  font-family: "EB Garamond";
+  src: url("../odyssey/fonts/EBGaramond-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-family: "EB Garamond";
+  src: url("../odyssey/fonts/EBGaramond-Italic.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 400;
+}
+@font-face {
+  font-family: "EB Garamond";
+  src: url("../odyssey/fonts/EBGaramond-Bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 700;
+}
+@font-face {
+  font-family: "EB Garamond";
+  src: url("../odyssey/fonts/EBGaramond-BoldItalic.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 700;
+}*/
 .content-text {
+  font-family: "Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   text-align: justify;
+  -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+          hyphens: auto;
+  -webkit-hyphenate-limit-chars: 5 2 2;
+    -moz-hyphenate-limit-chars: 5 2 2;
+     -ms-hyphenate-limit-chars: 5 2 2;
+         hyphenate-limit-chars: 5 2 2;
+  -webkit-hyphenate-limit-lines: 2;
+     -moz-hyphenate-limit-lines: 2;
+      -ms-hyphenate-limit-lines: 2;
+          hyphenate-limit-lines: 2;
+  -webkit-hyphenate-limit-last: always;
+     -moz-hyphenate-limit-last: always;
+      -ms-hyphenate-limit-last: always;
+          hyphenate-limit-last: always;
 }
