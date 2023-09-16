@@ -14,6 +14,7 @@ use Dotclear\Core\Process;
 use Dotclear\Core\Frontend\Ctx;
 use Dotclear\Core\Frontend\Url;
 use Dotclear\Helper\Date;
+use Dotclear\Helper\File\Path;
 use Dotclear\Helper\Html\Html;
 
 require_once 'OdysseyUtils.php';
@@ -162,5 +163,175 @@ class FrontendBehaviors
                 echo '<script type="application/ld+json">', json_encode($json_ld), '</script>', "\n";
             }
         }
+    }
+
+    /**
+     * Displays wide image.
+     *
+     * @param array $tag  The tags.
+     * @param array $args The args.
+     *
+     * @return void The image.
+     */
+    public static function odysseyImageWide($tag, $args): void
+    {
+        if (odUtils::configuratorSetting() !== true) {
+            return;
+        }
+
+        // If only on Entry content.
+        if (!in_array($tag, ['EntryContent'])) {
+            return;
+        }
+
+        // if (!odysseySettings::value('content_images_wide')) {
+            // return;
+        // }
+
+        // Matches all images by regex.
+        $args[0] = preg_replace_callback(
+            '/<img[^>]*>/',
+            function ($matches) {
+                // The image HTML code.
+                $img = $matches[0];
+
+                // Gets the image src attribute.
+                preg_match('/src="([^"]*)/', $img, $src_match);
+
+                $src_attr  = isset($src_match[0]) ? $src_match[0] . '"' : '';
+                $src_value = isset($src_match[1]) ? $src_match[1] : '';
+
+                // Builds an array that will contain all image sizes.
+                $img = [
+                    'o' => [
+                        'url'    => $src_value,
+                        'width'  => null,
+                        'height' => null
+                    ]
+                ];
+
+                // If the original image size exists.
+                if (file_exists(DC_ROOT . $src_value)) {
+                    /**
+                     * Sets the maximum width of the image to display.
+                     *
+                     * It can be superior to the content width
+                     * if the option "content_images_wide" is enabled.
+                     *
+                     * @see Config.php
+                     */
+                    $option_image_wide = false;
+
+                    // switch (odysseySettings::value('content_images_wide')) {
+                        // case 'posts-pages' :
+                            if (App::url()->type === 'post' || App::url()->type === 'pages') {
+                                $option_image_wide = true;
+                            }
+
+                            // break;
+                        // case 'always' :
+                            // $option_image_wide = true;
+                    // }
+
+                    // $img_width_max = odysseySettings::contentWidth('px');
+                    $img_width_max = 480;
+
+                    if ($option_image_wide === true) {
+                        // if (odysseySettings::value('content_images_wide_size')) {
+                            // $img_width_max += (int) (odysseySettings::value('content_images_wide_size') * 2);
+                        // } else {
+                            $img_width_max += 120 * 2;
+                        // }
+                    }
+
+                    // Gets original image dimensions.
+                    list($width, $height) = getimagesize(DC_ROOT . $src_value);
+
+                    $img['o']['width']  = $width;
+                    $img['o']['height'] = $height;
+
+                    $media_sizes = App::media()->thumb_sizes;
+
+                    // Adds eventual custom image sizes.
+                    /*if (odysseySettings::value('content_image_custom_size')) {
+                        $custom_image_sizes = explode(',', odysseySettings::value('content_image_custom_size'));
+
+                        foreach ($custom_image_sizes as $size_id) {
+                            $media_sizes[$size_id] = [
+                                0, // Width.
+                                'ratio'
+                            ];
+                        }
+                    }*/
+
+                    $info = Path::info($src_value);
+
+                    // The image to set in the src attribute.
+                    $src_image_size = 'o';
+
+                    foreach ($media_sizes as $size_id => $size_data) {
+                        if (isset($size_data[1])
+                            && $size_data[1] === 'ratio'
+                            && file_exists(DC_ROOT . $info['dirname'] . '/.' . $info['base'] . '_' . $size_id . '.' . strtolower($info['extension']))
+                        ) {
+                            $img[$size_id]['url']   = $info['dirname'] . '/.' . $info['base'] . '_' . $size_id . '.' . strtolower($info['extension']);
+                            $img[$size_id]['width'] = isset($size_data[0]) ? $size_data[0] : '';
+
+                            list($width, $height) = getimagesize(DC_ROOT . $img[$size_id]['url']);
+
+                            if (!$img[$size_id]['width']) {
+                                $img[$size_id]['width']   = $width;
+                                $media_sizes[$size_id][0] = $width;
+                            }
+
+                            $img[$size_id]['height'] = $height;
+
+                            if ($media_sizes[$size_id][0] >= $img_width_max
+                                && $img[$src_image_size]['width'] > $img[$size_id]['width']
+                            ) {
+                                $src_image_size = $size_id;
+                            }
+                        }
+                    }
+
+                    // Sort $img by width.
+                    uasort($img, function ($a, $b) {
+                        return $a['width'] <=> $b['width'];
+                    });
+
+                    // Defines image attributes.
+                    $attr  = 'src="' . $img[$src_image_size]['url'] . '" ';
+                    $attr .= 'srcset="';
+
+                    // Puts every image size in the srcset attribute.
+                    foreach ($img as $img_id => $img_data) {
+                        $attr .= $img_data['url'] . ' ' . $img_data['width'] . 'w';
+
+                        if ($img_id !== array_key_last($img)) {
+                            $attr .= ', ';
+                        }
+                    }
+
+                    $attr .= '" ';
+
+                    $attr .= 'sizes="100vw" ';
+
+                    // If it's a landscape format image only, displays it wide.
+                    if (//odysseySettings::value('content_images_wide') &&
+                        $img[$src_image_size]['width'] > $img[$src_image_size]['height']
+                        && $img[$src_image_size]['width'] >= $img_width_max
+                    ) {
+                        $attr .= 'style="display: block; margin-left: 50%; transform: translateX(-50%); max-width: 95vw;" ';
+                        $attr .= 'width="' . $img_width_max . '" ';
+                        $attr .= 'height="' . (int) ($img_width_max * $img[$src_image_size]['height'] / $img[$src_image_size]['width'] ). '"';
+                    }
+
+                    return str_replace($src_attr, trim($attr), $matches[0]);
+                }
+
+                return $matches[0];
+            },
+            $args[0]
+        );
     }
 }
