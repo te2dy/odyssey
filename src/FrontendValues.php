@@ -25,7 +25,7 @@ class FrontendValues
      */
     public static function odysseyURIRelative()
     {
-        return Html::escapeURL($_SERVER['REQUEST_URI']);
+        return '<?php echo Html::escapeURL($_SERVER["REQUEST_URI"]); ?>';
     }
 
     /**
