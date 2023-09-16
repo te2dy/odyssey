@@ -170,6 +170,25 @@ class FrontendValues
     }
 
     /**
+     * Displays a notice informing about the support of the Markdown syntax in comments.
+     *
+     * @return string The notice.
+     */
+    public static function odysseyMarkdownSupportInfo(): string
+    {
+        if (odUtils::configuratorSetting() === false) {
+            return '';
+        }
+
+        $markdown_notice = sprintf(
+            __('reactions-comment-markdown-support'),
+            __('reactions-comment-markdown-support-link')
+        );
+
+        return '<br><small class=text-secondary><em>' . $markdown_notice . '</em></small>';
+    }
+
+    /**
      * Displays Dotclear and Odyssey as credits in the footer.
      *
      * @return string The credits.
