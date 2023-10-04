@@ -69,13 +69,12 @@ class FrontendValues
 
             if ($img) {
                 $img_t   = ' . Ctx::class . '::EntryFirstImageHelper("t", false, "", true);
-                $width_t = getimagesize(DC_ROOT . $img_t)[0];
+                $width_t = ' . App::media()->thumb_sizes['t'][0] . ';
 
                 $img_s   = ' . Ctx::class . '::EntryFirstImageHelper("s", false, "", true);
-                $width_s = getimagesize(DC_ROOT . $img_s)[0];
+                $width_s = ' . App::media()->thumb_sizes['s'][0] . ';
 
                 if ($img_s && $img_s !== $img_t) {
-
                     $img_src = "src=\"" . $img_t . "\"";
 
                     $img_src_srcset = $img_src . " srcset=\"" . $img_s . " " . $width_s . "w, " . $img_t . " " . $width_t . "w\" size=100vw";
