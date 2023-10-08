@@ -34,6 +34,7 @@ class Frontend extends Process
 
         // Behaviors.
         App::behavior()->addBehavior('publicHeadContent', FrontendBehaviors::odysseyHeadMeta(...));
+        App::behavior()->addBehavior('publicHeadContent', FrontendBehaviors::odysseySocialMarkups(...));
         App::behavior()->addBehavior('publicHeadContent', FrontendBehaviors::odysseyJsonLd(...));
         App::behavior()->addBehavior('publicAfterContentFilterV2', FrontendBehaviors::odysseyImageWide(...));
 

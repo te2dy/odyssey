@@ -14,8 +14,10 @@ use Dotclear\Core\Process;
 use Dotclear\Core\Frontend\Ctx;
 use Dotclear\Core\Frontend\Url;
 use Dotclear\Helper\Date;
+use Dotclear\Helper\Text;
 use Dotclear\Helper\File\Path;
 use Dotclear\Helper\Html\Html;
+use context;
 
 require_once 'OdysseyUtils.php';
 use OdysseyUtils as odUtils;
@@ -45,7 +47,137 @@ class FrontendBehaviors
     }
 
     /**
-     * DEV
+     * Displays minimal social markups.
+     *
+     * @return void The social markups.
+     *
+     * @link https://meiert.com/en/blog/minimal-social-markup/
+     */
+    public static function odysseySocialMarkups(): void
+    {
+        if (odUtils::configuratorSetting() === true) {
+            $title = '';
+            $desc  = '';
+            $img   = '';
+
+            switch (App::url()->type) {
+                case 'post':
+                case 'pages':
+                    $title = App::frontend()->ctx->posts->post_title;
+
+                    $desc = App::frontend()->ctx->posts->getExcerpt() ?: App::frontend()->ctx->posts->getContent();
+                    $desc = Html::clean($desc);
+                    $desc = Html::decodeEntities($desc);
+                    $desc = preg_replace('/\s+/', ' ', $desc);
+
+                    if (strlen($desc) > 180) {
+                        $desc = Text::cutString($desc, 179) . '…';
+                    }
+
+                    if (context::EntryFirstImageHelper('o', true, '', true)) {
+                        $img = odysseyUtils::blogBaseURL() . context::EntryFirstImageHelper('o', true, '', true);
+                    }
+
+                    break;
+
+                case 'default':
+                case 'default-page':
+                    $title = App::blog()->name;
+
+                    if ((int) Ctx::PaginationPosition() > 1) {
+                        $desc = sprintf(
+                            __('meta-social-page-with-number'),
+                            Ctx::PaginationPosition()
+                        );
+                    }
+
+                    if (
+                        // odysseySettings::value('global_meta_home_description') ||
+                        App::blog()->desc
+                    ) {
+                        if ($desc) {
+                            $desc .= ' – ';
+                        }
+
+                        // if (odysseySettings::value('global_meta_home_description')) {
+                            // $desc .= odysseySettings::value('global_meta_home_description');
+                        // } elseif (dcCore::app()->blog->desc) {
+                            $desc .= App::blog()->desc;
+                        // }
+
+                        $desc = Html::clean($desc);
+                        $desc = Html::decodeEntities($desc);
+                        $desc = preg_replace('/\s+/', ' ', $desc);
+
+                        if (strlen($desc) > 180) {
+                            $desc = Text::cutString($desc, 179) . '…';
+                        }
+                    }
+
+                    break;
+
+
+                case 'category':
+                    $title = App::frontend()->ctx->categories->cat_title;
+
+                    if (App::frontend()->ctx->categories->cat_desc) {
+                        $desc = App::frontend()->ctx->categories->cat_desc;
+                        $desc = Html::clean($desc);
+                        $desc = Html::decodeEntities($desc);
+                        $desc = preg_replace('/\s+/', ' ', $desc);
+
+                        if (strlen($desc) > 180) {
+                            $desc = Text::cutString($desc, 179) . '…';
+                        }
+                    }
+
+                    break;
+
+                case 'tag':
+                    if (App::frontend()->ctx->meta->meta_type === 'tag') {
+                        $title = App::frontend()->ctx->meta->meta_id;
+                        $desc  = sprintf(
+                            __('meta-social-tags-post-related'),
+                            $title
+                        );
+                    }
+            }
+
+            $title = Html::escapeHTML($title);
+
+            if ($title) {
+                $desc = Html::escapeHTML($desc);
+
+                /*
+                if (!$img && isset(odysseySettings::value('header_image')['url'])) {
+                    $img = odysseyUtils::blogBaseURL() . odysseySettings::value('header_image')['url'];
+                }
+
+                $img = Html::escapeURL($img);
+                */
+
+                if ($img) {
+                    echo '<meta name=twitter:card content=summary_large_image>', "\n";
+                }
+
+                echo '<meta property=og:title content="', $title, '">', "\n";
+
+                // Quotes seem required for the following meta properties.
+                if ($desc) {
+                    echo '<meta property="og:description" name="description" content="', $desc, '">', "\n";
+                }
+
+                if ($img) {
+                    echo '<meta property="og:image" content="', $img, '">', "\n";
+                }
+            }
+        }
+    }
+
+    /**
+     * Displays structured data as JSON-LD.
+     *
+     * @return string The structured data.
      */
     public static function odysseyJsonLd()
     {
