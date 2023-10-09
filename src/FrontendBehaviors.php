@@ -75,7 +75,7 @@ class FrontendBehaviors
                     }
 
                     if (context::EntryFirstImageHelper('o', true, '', true)) {
-                        $img = odysseyUtils::blogBaseURL() . context::EntryFirstImageHelper('o', true, '', true);
+                        $img = odUtils::blogBaseURL() . context::EntryFirstImageHelper('o', true, '', true);
                     }
 
                     break;
@@ -150,7 +150,7 @@ class FrontendBehaviors
 
                 /*
                 if (!$img && isset(odysseySettings::value('header_image')['url'])) {
-                    $img = odysseyUtils::blogBaseURL() . odysseySettings::value('header_image')['url'];
+                    $img = odUtils::blogBaseURL() . odysseySettings::value('header_image')['url'];
                 }
 
                 $img = Html::escapeURL($img);
