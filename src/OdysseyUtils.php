@@ -38,7 +38,7 @@ class OdysseyUtils
      *
      * @return string The string.
      */
-    public static function attrValueQuotes(string $value)
+    public static function attrValueQuotes(string $value): string
     {
         return str_contains($value, ' ') === false ? $value : '"' . $value . '"';
     }

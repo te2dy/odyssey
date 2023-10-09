@@ -23,7 +23,7 @@ class FrontendValues
      *
      * @return string The relative URI.
      */
-    public static function odysseyURIRelative()
+    public static function odysseyURIRelative(): string
     {
         return '<?php echo Html::escapeURL($_SERVER["REQUEST_URI"]); ?>';
     }
@@ -96,9 +96,9 @@ class FrontendValues
     {
         return '<?php
             if (count(App::frontend()->ctx->attachments) === 1) {
-                echo __("attachments-title-one");
+                echo "' . __('attachments-title-one') . '";
             } else {
-                echo __("attachments-title-multiple");
+                echo "' . __('attachments-title-multiple') . '";
             }
         ?>';
     }
@@ -132,15 +132,15 @@ class FrontendValues
 
             if ($size > 0) {
                 if ($size < $kb) {
-                    printf(__("attachment-size-b"), $size);
+                    printf("' . __('attachment-size-b') . '", $size);
                 } elseif ($size < $mb) {
-                    printf(__("attachment-size-kb"), number_format($size / $kb, 1, $locale_decimal));
+                    printf("' . __('attachment-size-kb') . '", number_format($size / $kb, 1, $locale_decimal));
                 } elseif ($size < $gb) {
-                    printf(__("attachment-size-mb"), number_format($size / $mb, 1, $locale_decimal));
+                    printf("' . __('attachment-size-mb') . '", number_format($size / $mb, 1, $locale_decimal));
                 } elseif ($size < $tb) {
-                    printf(__("attachment-size-gb"), number_format($size / $gb, 1, $locale_decimal));
+                    printf("' . __('attachment-size-gb') . '", number_format($size / $gb, 1, $locale_decimal));
                 } else {
-                    printf(__("attachment-size-tb"), number_format($size / $tb, 1, $locale_decimal));
+                    printf("' . __('attachment-size-tb') . '", number_format($size / $tb, 1, $locale_decimal));
                 }
             }
         ?>';
