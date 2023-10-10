@@ -50,7 +50,7 @@ class OdysseyUtils
      */
     public static function blogBaseURL(): string
     {
-        $parsed_url = parse_url(App::blog()->url());
+        $parsed_url = parse_url(App::blog()->url);
 
         $scheme = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
         $host   = isset($parsed_url['host']) ? $parsed_url['host'] : '';
