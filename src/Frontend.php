@@ -11,7 +11,7 @@
 
 namespace Dotclear\Theme\odyssey;
 
-use Dotclear\App;
+use dcCore;
 use Dotclear\Core\Process;
 
 class Frontend extends Process
@@ -33,24 +33,24 @@ class Frontend extends Process
         }
 
         // Behaviors.
-        App::behavior()->addBehavior('publicHeadContent', FrontendBehaviors::odysseyHeadMeta(...));
-        App::behavior()->addBehavior('publicHeadContent', FrontendBehaviors::odysseySocialMarkups(...));
-        App::behavior()->addBehavior('publicHeadContent', FrontendBehaviors::odysseyJsonLd(...));
-        App::behavior()->addBehavior('publicAfterContentFilterV2', FrontendBehaviors::odysseyImageWide(...));
+        dcCore::app()->addBehavior('publicHeadContent', [FrontendBehaviors::class, 'odysseyHeadMeta']);
+        dcCore::app()->addBehavior('publicHeadContent', [FrontendBehaviors::class, 'odysseySocialMarkups']);
+        dcCore::app()->addBehavior('publicHeadContent', [FrontendBehaviors::class, 'odysseyJsonLd']);
+        dcCore::app()->addBehavior('publicAfterContentFilterV2', [FrontendBehaviors::class, 'odysseyImageWide']);
 
         // Blocks
-        App::frontend()->tpl->addBlock('odysseyCommentFormWrapper', FrontendBlocks::odysseyCommentFormWrapper(...));
-        App::frontend()->tpl->addBlock('odysseySidebar', FrontendBlocks::odysseySidebar(...));
+        dcCore::app()->tpl->addBlock('odysseyCommentFormWrapper', [FrontendBlocks::class, 'odysseyCommentFormWrapper']);
+        dcCore::app()->tpl->addBlock('odysseySidebar', [FrontendBlocks::class, 'odysseySidebar']);
 
         // Values.
-        App::frontend()->tpl->addValue('odysseyURIRelative', FrontendValues::odysseyURIRelative(...));
-        App::frontend()->tpl->addValue('odysseyBlogDescription', FrontendValues::odysseyBlogDescription(...));
-        App::frontend()->tpl->addValue('origineEntryListImage', FrontendValues::origineEntryListImage(...));
-        App::frontend()->tpl->addValue('odysseyAttachmentTitle', FrontendValues::odysseyAttachmentTitle(...));
-        App::frontend()->tpl->addValue('odysseyAttachmentSize', FrontendValues::odysseyAttachmentSize(...));        
-        App::frontend()->tpl->addValue('odysseyPostTagsBefore', FrontendValues::odysseyPostTagsBefore(...));
-        App::frontend()->tpl->addValue('odysseyMarkdownSupportInfo', FrontendValues::odysseyMarkdownSupportInfo(...));
-        App::frontend()->tpl->addValue('odysseyFooterCredits', FrontendValues::odysseyFooterCredits(...));
+        dcCore::app()->tpl->addValue('odysseyURIRelative', [FrontendValues::class, 'odysseyURIRelative']);
+        dcCore::app()->tpl->addValue('odysseyBlogDescription', [FrontendValues::class, 'odysseyBlogDescription']);
+        dcCore::app()->tpl->addValue('origineEntryListImage', [FrontendValues::class, 'origineEntryListImage']);
+        dcCore::app()->tpl->addValue('odysseyAttachmentTitle', [FrontendValues::class, 'odysseyAttachmentTitle']);
+        dcCore::app()->tpl->addValue('odysseyAttachmentSize', [FrontendValues::class, 'odysseyAttachmentSize']);
+        dcCore::app()->tpl->addValue('odysseyPostTagsBefore', [FrontendValues::class, 'odysseyPostTagsBefore']);
+        dcCore::app()->tpl->addValue('odysseyMarkdownSupportInfo', [FrontendValues::class, 'odysseyMarkdownSupportInfo']);
+        dcCore::app()->tpl->addValue('odysseyFooterCredits', [FrontendValues::class, 'odysseyFooterCredits']);
 
         return true;
     }

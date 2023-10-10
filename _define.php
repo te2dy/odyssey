@@ -11,10 +11,10 @@ $this->registerModule(
     'Odyssey',
     'Write your own with this theme',
     'Teddy',
-    '0.3.1-alpha',
+    '0.4-alpha',
     [
         'requires' => [
-            ['core', '2.28'],
+            ['core', '2.27'],
             ['php', '8']
         ],
 

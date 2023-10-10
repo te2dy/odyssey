@@ -9,8 +9,10 @@
 
 namespace Dotclear\Theme\odyssey;
 
-use Dotclear\App;
-use Dotclear\Core\Frontend\Ctx;
+use dcCore;
+use context;
+// use Dotclear\App;
+// use Dotclear\Core\Frontend\Ctx;
 use Dotclear\Helper\Html\Html;
 
 require_once 'OdysseyUtils.php';
@@ -39,8 +41,8 @@ class FrontendValues
             return '';
         }
 
-        if (App::blog()->desc) {
-            $desc = strip_tags(App::blog()->desc, ['<em>', '<strong>']);
+        if (dcCore::app()->blog->desc) {
+            $desc = strip_tags(dcCore::app()->blog->desc, ['<em>', '<strong>']);
             $desc = Html::decodeEntities($desc);
             $desc = preg_replace('/\s+/', ' ', $desc);
 
@@ -65,14 +67,14 @@ class FrontendValues
         }
 
         return '<?php
-            $img = ' . Ctx::class . '::EntryFirstImageHelper("t", false, "entry-list-img");
+            $img = ' . context::class . '::EntryFirstImageHelper("t", false, "entry-list-img");
 
             if ($img) {
-                $img_t   = ' . Ctx::class . '::EntryFirstImageHelper("t", false, "", true);
-                $width_t = ' . App::media()->thumb_sizes['t'][0] . ';
+                $img_t   = ' . context::class . '::EntryFirstImageHelper("t", false, "", true);
+                $width_t = ' . dcCore::app()->media->thumb_sizes['t'][0] . ';
 
-                $img_s   = ' . Ctx::class . '::EntryFirstImageHelper("s", false, "", true);
-                $width_s = ' . App::media()->thumb_sizes['s'][0] . ';
+                $img_s   = ' . context::class . '::EntryFirstImageHelper("s", false, "", true);
+                $width_s = ' . dcCore::app()->media->thumb_sizes['s'][0] . ';
 
                 if ($img_s && $img_s !== $img_t) {
                     $img_src = "src=\"" . $img_t . "\"";
@@ -95,7 +97,7 @@ class FrontendValues
     public static function odysseyAttachmentTitle(): string
     {
         return '<?php
-            if (count(App::frontend()->ctx->attachments) === 1) {
+            if (count(dcCore::app()->ctx->attachments) === 1) {
                 echo "' . __('attachments-title-one') . '";
             } else {
                 echo "' . __('attachments-title-multiple') . '";
@@ -154,8 +156,8 @@ class FrontendValues
     public static function odysseyPostTagsBefore()
     {
         return '<?php
-            if (App::frontend()->ctx->posts->post_meta) {
-                $post_meta = unserialize(App::frontend()->ctx->posts->post_meta);
+            if (dcCore::app()->ctx->posts->post_meta) {
+                $post_meta = unserialize(dcCore::app()->ctx->posts->post_meta);
     
                 if (is_array($post_meta) && isset($post_meta["tag"])) {
                     if (count($post_meta["tag"]) > 1) {
@@ -203,10 +205,10 @@ class FrontendValues
         }
 
         // Otherwise, displays a more detailed information.
-        $dc_version       = App::version()->getVersion('core');
+        $dc_version       = dcCore::app()->version->getVersion('core');
         $dc_version_short = explode('-', $dc_version)[0] ?? $dc_version;
         $theme_name       = My::name();
-        $theme_version    = App::themes()->moduleInfo(My::id(), 'version');
+        $theme_version    = dcCore::app()->themes->moduleInfo(My::id(), 'version');
 
         return '<div class=site-footer-block>' . sprintf(
             __('footer-powered-by-dev'),

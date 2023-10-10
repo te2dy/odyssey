@@ -7,8 +7,6 @@
  * @license   GPL-3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
  */
 
-use Dotclear\App;
-
 // This class contains useful functions.
 class OdysseyUtils
 {
@@ -50,7 +48,7 @@ class OdysseyUtils
      */
     public static function blogBaseURL(): string
     {
-        $parsed_url = parse_url(App::blog()->url());
+        $parsed_url = parse_url(dcCore::app()->blog->url);
 
         $scheme = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
         $host   = isset($parsed_url['host']) ? $parsed_url['host'] : '';
