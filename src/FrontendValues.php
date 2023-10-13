@@ -123,7 +123,7 @@ class FrontendValues
             // Setting ignored for some reason:
             // setlocale(LC_ALL, "fr_FR");
 
-            if (dcCore::app()->blog->settings->system->lang === "fr") {
+            if (App::lang()->getLang() === "fr") {
                 $locale_decimal = ",";
             } else {
                 $lang_conv      = localeconv();
@@ -203,7 +203,7 @@ class FrontendValues
         }
 
         // Otherwise, displays a more detailed information.
-        $dc_version       = App::version()->getVersion('core');
+        $dc_version       = App::config()->dotclearVersion();
         $dc_version_short = explode('-', $dc_version)[0] ?? $dc_version;
         $theme_name       = My::name();
         $theme_version    = App::themes()->moduleInfo(My::id(), 'version');

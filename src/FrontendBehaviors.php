@@ -343,7 +343,7 @@ class FrontendBehaviors
                 ];
 
                 // If the original image size exists.
-                if (file_exists(DC_ROOT . $src_value)) {
+                if (file_exists(App::config()->dotclearRoot() . $src_value)) {
                     /**
                      * Sets the maximum width of the image to display.
                      *
@@ -377,7 +377,7 @@ class FrontendBehaviors
                     }
 
                     // Gets original image dimensions.
-                    list($width, $height) = getimagesize(DC_ROOT . $src_value);
+                    list($width, $height) = getimagesize(App::config()->dotclearRoot() . $src_value);
 
                     $img['o']['width']  = $width;
                     $img['o']['height'] = $height;
@@ -404,12 +404,12 @@ class FrontendBehaviors
                     foreach ($media_sizes as $size_id => $size_data) {
                         if (isset($size_data[1])
                             && $size_data[1] === 'ratio'
-                            && file_exists(DC_ROOT . $info['dirname'] . '/.' . $info['base'] . '_' . $size_id . '.' . strtolower($info['extension']))
+                            && file_exists(App::config()->dotclearRoot() . $info['dirname'] . '/.' . $info['base'] . '_' . $size_id . '.' . strtolower($info['extension']))
                         ) {
                             $img[$size_id]['url']   = $info['dirname'] . '/.' . $info['base'] . '_' . $size_id . '.' . strtolower($info['extension']);
                             $img[$size_id]['width'] = isset($size_data[0]) ? $size_data[0] : '';
 
-                            list($width, $height) = getimagesize(DC_ROOT . $img[$size_id]['url']);
+                            list($width, $height) = getimagesize(App::config()->dotclearRoot() . $img[$size_id]['url']);
 
                             if (!$img[$size_id]['width']) {
                                 $img[$size_id]['width']   = $width;
