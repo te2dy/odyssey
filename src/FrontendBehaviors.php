@@ -63,9 +63,9 @@ class FrontendBehaviors
             switch (App::url()->type) {
                 case 'post':
                 case 'pages':
-                    $title = App::frontend()->ctx->posts->post_title;
+                    $title = App::frontend()->context()->posts->post_title;
 
-                    $desc = App::frontend()->ctx->posts->getExcerpt() ?: App::frontend()->ctx->posts->getContent();
+                    $desc = App::frontend()->context()->posts->getExcerpt() ?: App::frontend()->context()->posts->getContent();
                     $desc = Html::clean($desc);
                     $desc = Html::decodeEntities($desc);
                     $desc = preg_replace('/\s+/', ' ', $desc);
@@ -118,10 +118,10 @@ class FrontendBehaviors
 
 
                 case 'category':
-                    $title = App::frontend()->ctx->categories->cat_title;
+                    $title = App::frontend()->context()->categories->cat_title;
 
-                    if (App::frontend()->ctx->categories->cat_desc) {
-                        $desc = App::frontend()->ctx->categories->cat_desc;
+                    if (App::frontend()->context()->categories->cat_desc) {
+                        $desc = App::frontend()->context()->categories->cat_desc;
                         $desc = Html::clean($desc);
                         $desc = Html::decodeEntities($desc);
                         $desc = preg_replace('/\s+/', ' ', $desc);
@@ -134,8 +134,8 @@ class FrontendBehaviors
                     break;
 
                 case 'tag':
-                    if (App::frontend()->ctx->meta->meta_type === 'tag') {
-                        $title = App::frontend()->ctx->meta->meta_id;
+                    if (App::frontend()->context()->meta->meta_type === 'tag') {
+                        $title = App::frontend()->context()->meta->meta_id;
                         $desc  = sprintf(
                             __('meta-social-tags-post-related'),
                             $title
@@ -208,12 +208,12 @@ class FrontendBehaviors
                         ]
                     ];
 
-                    if (App::frontend()->ctx->posts->post_title) {
-                        $json_ld['headline'] = App::frontend()->ctx->posts->post_title;
+                    if (App::frontend()->context()->posts->post_title) {
+                        $json_ld['headline'] = App::frontend()->context()->posts->post_title;
                     }
                     
-                    if (App::frontend()->ctx->posts->post_excerpt) {
-                        $post_excerpt = App::frontend()->ctx->posts->post_excerpt_xhtml;
+                    if (App::frontend()->context()->posts->post_excerpt) {
+                        $post_excerpt = App::frontend()->context()->posts->post_excerpt_xhtml;
                         $post_excerpt = Html::clean($post_excerpt);
                         $post_excerpt = Html::decodeEntities($post_excerpt);
                         $post_excerpt = preg_replace('/\s+/', ' ', $post_excerpt);
@@ -226,24 +226,24 @@ class FrontendBehaviors
                         $json_ld['image'] = Ctx::EntryFirstImageHelper("o", false, "", true);
                     }
 
-                    if (App::frontend()->ctx->posts->user_displayname) {
+                    if (App::frontend()->context()->posts->user_displayname) {
                         $json_ld['author'] = [
                             '@type' => 'Person',
-                            'name'  => App::frontend()->ctx->posts->user_displayname
+                            'name'  => App::frontend()->context()->posts->user_displayname
                         ];
-                    } elseif (App::frontend()->ctx->posts->user_name || App::frontend()->ctx->posts->user_firstname) {
+                    } elseif (App::frontend()->context()->posts->user_name || App::frontend()->context()->posts->user_firstname) {
                         $json_ld['author'] = [
                             '@type' => 'Person',
-                            'name'  => trim(App::frontend()->ctx->posts->user_name . ' ' . App::frontend()->ctx->posts->user_firstname)
+                            'name'  => trim(App::frontend()->context()->posts->user_name . ' ' . App::frontend()->context()->posts->user_firstname)
                         ];
                     }
 
-                    if (App::frontend()->ctx->posts->cat_title) {
-                        $json_ld['articleSection'] = App::frontend()->ctx->posts->cat_title;
+                    if (App::frontend()->context()->posts->cat_title) {
+                        $json_ld['articleSection'] = App::frontend()->context()->posts->cat_title;
                     }
 
-                    if (App::frontend()->ctx->posts->post_meta) {
-                        $post_meta = unserialize(App::frontend()->ctx->posts->post_meta);
+                    if (App::frontend()->context()->posts->post_meta) {
+                        $post_meta = unserialize(App::frontend()->context()->posts->post_meta);
                         $tags      = '';
 
                         if (is_array($post_meta) && isset($post_meta['tag'])) {
@@ -256,31 +256,31 @@ class FrontendBehaviors
                         }
                     }
 
-                    if (App::frontend()->ctx->posts->post_url) {
-                        $json_ld['url'] = odUtils::blogBaseURL() . '/' . App::frontend()->ctx->posts->post_url;
+                    if (App::frontend()->context()->posts->post_url) {
+                        $json_ld['url'] = odUtils::blogBaseURL() . '/' . App::frontend()->context()->posts->post_url;
                     }
                     
-                    if (App::frontend()->ctx->posts->post_dt && App::frontend()->ctx->posts->post_tz) {
-                        $json_ld['datePublished'] = Date::iso8601(strtotime(App::frontend()->ctx->posts->post_dt), App::frontend()->ctx->posts->post_tz);
+                    if (App::frontend()->context()->posts->post_dt && App::frontend()->context()->posts->post_tz) {
+                        $json_ld['datePublished'] = Date::iso8601(strtotime(App::frontend()->context()->posts->post_dt), App::frontend()->context()->posts->post_tz);
                     }
                 
-                    if (App::frontend()->ctx->posts->post_creadt && App::frontend()->ctx->posts->post_tz) {
-                        $json_ld['dateCreated'] = Date::iso8601(strtotime(App::frontend()->ctx->posts->post_creadt), App::frontend()->ctx->posts->post_tz);
+                    if (App::frontend()->context()->posts->post_creadt && App::frontend()->context()->posts->post_tz) {
+                        $json_ld['dateCreated'] = Date::iso8601(strtotime(App::frontend()->context()->posts->post_creadt), App::frontend()->context()->posts->post_tz);
                     }
                     
-                    if (App::frontend()->ctx->posts->post_upddt && App::frontend()->ctx->posts->post_tz) {
-                        $json_ld['dateModified'] = Date::iso8601(strtotime(App::frontend()->ctx->posts->post_upddt), App::frontend()->ctx->posts->post_tz);
+                    if (App::frontend()->context()->posts->post_upddt && App::frontend()->context()->posts->post_tz) {
+                        $json_ld['dateModified'] = Date::iso8601(strtotime(App::frontend()->context()->posts->post_upddt), App::frontend()->context()->posts->post_tz);
                     }
 
-                    if (App::frontend()->ctx->posts->nb_comment) {
-                        $json_ld['commentCount'] = App::frontend()->ctx->posts->nb_comment;
+                    if (App::frontend()->context()->posts->nb_comment) {
+                        $json_ld['commentCount'] = App::frontend()->context()->posts->nb_comment;
                     }
 
-                    if (App::frontend()->ctx->posts->post_lang) {
-                        $json_ld['inLanguage'] = App::frontend()->ctx->posts->post_lang;
+                    if (App::frontend()->context()->posts->post_lang) {
+                        $json_ld['inLanguage'] = App::frontend()->context()->posts->post_lang;
                     }
 
-                    // var_dump(App::frontend()->ctx->posts);
+                    // var_dump(App::frontend()->context()->posts);
 
                     /**
                      * @link https://www.contentpowered.com/blog/adding-schema-markup-blog/

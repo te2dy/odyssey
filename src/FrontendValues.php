@@ -95,7 +95,7 @@ class FrontendValues
     public static function odysseyAttachmentTitle(): string
     {
         return '<?php
-            if (count(App::frontend()->ctx->attachments) === 1) {
+            if (count(App::frontend()->context()->attachments) === 1) {
                 echo "' . __('attachments-title-one') . '";
             } else {
                 echo "' . __('attachments-title-multiple') . '";
@@ -154,8 +154,8 @@ class FrontendValues
     public static function odysseyPostTagsBefore()
     {
         return '<?php
-            if (App::frontend()->ctx->posts->post_meta) {
-                $post_meta = unserialize(App::frontend()->ctx->posts->post_meta);
+            if (App::frontend()->context()->posts->post_meta) {
+                $post_meta = unserialize(App::frontend()->context()->posts->post_meta);
     
                 if (is_array($post_meta) && isset($post_meta["tag"])) {
                     if (count($post_meta["tag"]) > 1) {

@@ -34,7 +34,7 @@ class FrontendBlocks
         // Part of the previous code:
         if (!odysseySettings::value('content_commentform_hide')) {
             return '<h3 class=reaction-title>' . __('reactions-comment-form-title') . '</h3>' . $content;
-        } elseif (App::frontend()->ctx->comment_preview && App::frontend()->ctx->comment_preview["preview"]) {
+        } elseif (App::frontend()->context()->comment_preview && App::frontend()->context()->comment_preview["preview"]) {
             return '<div id=react-content><h3 class=reaction-title>' . __('reactions-comment-form-preview-title') . '</h3>' . $content . '</div>';
         }
 
