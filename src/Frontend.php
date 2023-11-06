@@ -39,18 +39,18 @@ class Frontend extends Process
         App::behavior()->addBehavior('publicAfterContentFilterV2', FrontendBehaviors::odysseyImageWide(...));
 
         // Blocks
-        App::frontend()->tpl->addBlock('odysseyCommentFormWrapper', FrontendBlocks::odysseyCommentFormWrapper(...));
-        App::frontend()->tpl->addBlock('odysseySidebar', FrontendBlocks::odysseySidebar(...));
+        App::frontend()->template()->addBlock('odysseyCommentFormWrapper', FrontendBlocks::odysseyCommentFormWrapper(...));
+        App::frontend()->template()->addBlock('odysseySidebar', FrontendBlocks::odysseySidebar(...));
 
         // Values.
-        App::frontend()->tpl->addValue('odysseyURIRelative', FrontendValues::odysseyURIRelative(...));
-        App::frontend()->tpl->addValue('odysseyBlogDescription', FrontendValues::odysseyBlogDescription(...));
-        App::frontend()->tpl->addValue('origineEntryListImage', FrontendValues::origineEntryListImage(...));
-        App::frontend()->tpl->addValue('odysseyAttachmentTitle', FrontendValues::odysseyAttachmentTitle(...));
-        App::frontend()->tpl->addValue('odysseyAttachmentSize', FrontendValues::odysseyAttachmentSize(...));        
-        App::frontend()->tpl->addValue('odysseyPostTagsBefore', FrontendValues::odysseyPostTagsBefore(...));
-        App::frontend()->tpl->addValue('odysseyMarkdownSupportInfo', FrontendValues::odysseyMarkdownSupportInfo(...));
-        App::frontend()->tpl->addValue('odysseyFooterCredits', FrontendValues::odysseyFooterCredits(...));
+        App::frontend()->template()->addValue('odysseyURIRelative', FrontendValues::odysseyURIRelative(...));
+        App::frontend()->template()->addValue('odysseyBlogDescription', FrontendValues::odysseyBlogDescription(...));
+        App::frontend()->template()->addValue('origineEntryListImage', FrontendValues::origineEntryListImage(...));
+        App::frontend()->template()->addValue('odysseyAttachmentTitle', FrontendValues::odysseyAttachmentTitle(...));
+        App::frontend()->template()->addValue('odysseyAttachmentSize', FrontendValues::odysseyAttachmentSize(...));
+        App::frontend()->template()->addValue('odysseyPostTagsBefore', FrontendValues::odysseyPostTagsBefore(...));
+        App::frontend()->template()->addValue('odysseyMarkdownSupportInfo', FrontendValues::odysseyMarkdownSupportInfo(...));
+        App::frontend()->template()->addValue('odysseyFooterCredits', FrontendValues::odysseyFooterCredits(...));
 
         return true;
     }
