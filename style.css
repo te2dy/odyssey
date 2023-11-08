@@ -379,8 +379,12 @@ details summary {
 #main-menu li:last-child {
   margin-right: 0;
 }
+#main-menu a {
+  text-decoration: none;
+}
 #main-menu .active a {
-  text-decoration: underline;
+  border-bottom: .168rem solid var(--color-primary, hsl(226, 80%, 45%));
+  padding-bottom: .1rem;
 }
 @media (prefers-contrast: more),
        (-ms-high-contrast: active),
