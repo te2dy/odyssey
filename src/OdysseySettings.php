@@ -112,4 +112,16 @@ class OdysseySettings
 
         return $saved_settings;
     }
+
+    /**
+     * Returns the value of a theme setting.
+     *
+     * @param string $setting_id The setting id.
+     *
+     * @return mixed The value of the setting.
+     */
+    public static function value($setting_id = ''): mixed
+    {
+        return $setting_id ? App::blog()->settings->odyssey->$setting_id : '';
+    }
 }

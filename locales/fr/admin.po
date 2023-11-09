@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Last-Translator: Teddy\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "section-global"
+msgstr "Paramètres globaux"
+
+msgid "section-global-fonts"
+msgstr "Polices d’écriture"
+
+msgid "settings-global-fontfamily-title"
+msgstr "Type"
+
+msgid "settings-global-fontfamily-description"
+msgstr "Vous avez le choix d’utiliser des polices système (susceptibles de changer d’un appareil à un autre), des polices du navigateur (susceptibles de changer d’un navigateur à un autre, y compris sur le même système), ou des polices sélectionnées pour leur lisibilité, conçues pour faciliter la lecture des personnes malvoyantes (à noter que ces polices sont plus gourmandes en ressources)."
+
+msgid "settings-global-fontfamily-sansserif-default"
+msgstr "Police sans empattements du système (par défaut)"
+
+msgid "settings-global-fontfamily-sansserif"
+msgstr "Police sans empattement du système"
+
+msgid "settings-global-fontfamily-serif"
+msgstr "Police avec empattements du système"
+
+msgid "settings-global-fontfamily-mono"
+msgstr "Police à chasse fixe du système"
+
+msgid "settings-global-fontfamily-sansserifbrowser"
+msgstr "Police sans empattements du navigateur"
+
+msgid "settings-global-fontfamily-serifbrowser"
+msgstr "Police avec empattements du navigateur"
+
+msgid "settings-global-fontfamily-monobrowser"
+msgstr "Police à chasse fixe du navigateur"
+
+msgid "settings-global-fontfamily-atkinson"
+msgstr "Atkinson Hyperlegible"
+
+msgid "settings-global-fontfamily-ebgaramond"
+msgstr "EB Garamond"
+
+msgid "settings-global-fontfamily-luciole"
+msgstr "Luciole"

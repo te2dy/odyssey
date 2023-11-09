@@ -58,4 +58,61 @@ class OdysseyUtils
 
         return $scheme . $host . $port;
     }
+
+    /**
+     * Converts a style array into a minified style string.
+     *
+     * @param array $rules An array of styles.
+     *
+     * @return string $css The minified styles.
+     */
+    public static function stylesArrayToString($rules): string
+    {
+        $css = '';
+
+        foreach ($rules as $key => $value) {
+            if (!is_int($key)) {
+                if (is_array($value) && !empty($value)) {
+                    $selector   = $key;
+                    $properties = $value;
+
+                    $css .= str_replace(', ', ',', $selector) . '{';
+
+                    if (is_array($properties) && !empty($properties)) {
+                        foreach ($properties as $property => $rule) {
+                            if ($rule !== '') {
+                                $css .= $property . ':';
+                                $css .= str_replace(', ', ',', $rule) . ';';
+                            }
+                        }
+                    }
+
+                    $css .= '}';
+                }
+            } else {
+                // For @font-face.
+                foreach ($value as $key_2 => $value_2) {
+                    if (is_array($value) && !empty($value_2)) {
+                        $selector   = $key_2;
+                        $properties = $value_2;
+
+                        $css .= str_replace(', ', ',', $selector) . '{';
+
+                        if (is_array($properties) && !empty($properties)) {
+                            foreach ($properties as $property => $rule) {
+                                if ($rule !== '') {
+                                    $css .= $property . ':';
+                                    $css .= str_replace(', ', ',', $rule) . ';';
+                                }
+                            }
+                        }
+
+                        $css .= '}';
+                    }
+                }
+            }
+        }
+
+        return $css;
+    }
 }
