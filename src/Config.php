@@ -41,7 +41,7 @@ class Config extends Process
             ]
         ];
 
-        App::backend()->settings = My::settings_default();
+        App::backend()->settings = My::settingsDefault();
 
         return self::status();
     }
@@ -53,43 +53,70 @@ class Config extends Process
     {
         if (!empty($_POST)) {
             try {
+
+                /**
+                 * This part saves each option in the database
+                 * only if it is different than the default one.
+                 *
+                 * Custom styles to be inserted in the head of the blog
+                 * will be saved later.
+                 */
                 foreach (App::backend()->settings as $setting_id => $setting_data) {
                     $specific_settings = ['styles'];
+                    $setting_data      = [];
 
+                    // Saves non specific settings.
                     if (!in_array($setting_id, $specific_settings, true)) {
-                        if ($_POST[$setting_id] != App::backend()->settings[$setting_id]['default']) {
-                            $setting_data = self::sanitizeSetting($setting_type, $setting_id, $_POST[$setting_id]);
-                        } else {
-                            /**
-                             * If the value is equal to the default value,
-                             * removes the parameter.
-                             */
-                            App::blog()->settings->odyssey->drop($setting_id);
+                        if (isset($_POST[$setting_id]) && $_POST[$setting_id] != App::backend()->settings[$setting_id]['default']) {
+                            $setting_data = self::sanitizeSetting(
+                                App::backend()->settings[$setting_id]['type'],
+                                $setting_id,
+                                $_POST[$setting_id]
+                            );
                         }
-                    } else {
-                        switch ($setting_id) {
-                            case 'styles':
-                                $setting_data = self::saveStyles();
-                                break;
+
+                        $setting_label = App::backend()->settings[$setting_id]['title'];
+                        $setting_label = Html::clean($setting_label);
+
+                        // Saves the setting or drop it.
+                        if (!empty($setting_data) && $_POST[$setting_id] != App::backend()->settings[$setting_id]['default']) {
+                            App::blog()->settings->odyssey->put(
+                                $setting_id,
+                                $setting_data['value'],
+                                $setting_data['type'],
+                                $setting_label,
+                                true
+                            );
+                        } else {
+                            App::blog()->settings->odyssey->drop($setting_id);
                         }
                     }
 
-                    App::blog()->settings->odyssey->put(
-                        $setting_id,
-                        $setting_data['value'],
-                        $setting_data['type'],
-                        $setting_label,
-                        true
-                    );
+                    // Saves specific settings.
                 }
 
-                // Blog refresh
+                // Saves styles.
+                $styles = self::saveStyles();
+
+                if ($styles) {
+                    App::blog()->settings->odyssey->put(
+                        'styles',
+                        $styles['value'],
+                        $styles['type'],
+                        Html::clean(App::backend()->settings['styles']['title']),
+                        true
+                    );
+                } else {
+                    App::blog()->settings->odyssey->drop('styles');
+                }
+
+                // Refreshes blog.
                 App::blog()->triggerBlog();
 
-                // Template cache reset
+                // Resets template cache.
                 App::cache()->emptyTemplatesCache();
 
-                // Not working.
+                // Displays a success notice.
                 Notices::addSuccessNotice(__('Theme configuration updated.'));
 
                 // Redirects to refresh form values.
@@ -118,6 +145,7 @@ class Config extends Process
 
         switch ($default_settings[$setting_id]['type']) {
             case 'select' :
+            case 'select_int' :
                 echo '<label for=', $setting_id, '>',
                 $default_settings[$setting_id]['title'],
                 '</label>',
@@ -156,7 +184,7 @@ class Config extends Process
     public static function settingsSaved(): array
     {
         $saved_settings   = [];
-        $default_settings = odysseySettings::default();
+        $default_settings = App::backend()->settings;
 
         foreach ($default_settings as $setting_id => $setting_data) {
             if (App::blog()->settings->odyssey->$setting_id !== null) {
@@ -234,22 +262,21 @@ class Config extends Process
      *
      * @return void
      */
-    public static function saveStyles()
+    public static function saveStyles(): array
     {
-        $css = '';
-
         $css_root_array = [];
         $css_main_array = [];
 
         $default_settings = App::backend()->settings;
 
         // Font family.
+        var_dump($_POST['global_font_family']);
         if (isset($_POST['global_font_family'])) {
             if ($_POST['global_font_family'] === 'serif') {
                 $css_root_array[':root']['--font-family'] = '"Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
             } elseif ($_POST['global_font_family'] === 'monospace') {
                 $css_root_array[':root']['--font-family'] = 'Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace';
-            } elseif ($_POST['global_font_family'] === 'sans-serif-browser') {
+            }/* elseif ($_POST['global_font_family'] === 'sans-serif-browser') {
                 $css_root_array[':root']['--font-family'] = 'sans-serif';
             } elseif ($_POST['global_font_family'] === 'serif-browser') {
                 $css_root_array[':root']['--font-family'] = 'serif';
@@ -280,7 +307,7 @@ class Config extends Process
                 $css_main_array[3]['@font-face']['font-style']  = 'italic';
                 $css_main_array[3]['@font-face']['font-weight'] = '700';
             } elseif ($_POST['global_font_family'] === 'eb-garamond') {
-                $themes_url = dcCore::app()->blog->settings->system->themes_url;
+                $themes_url = App::blog()->settings->system->themes_url;
 
                 $css_root_array[':root']['--font-family'] = '"EB Garamond", serif';
 
@@ -304,7 +331,7 @@ class Config extends Process
                 $css_main_array[3]['@font-face']['font-style']  = 'italic';
                 $css_main_array[3]['@font-face']['font-weight'] = '700';
             } elseif ($_POST['global_font_family'] === 'luciole') {
-                $themes_url = dcCore::app()->blog->settings->system->themes_url;
+                $themes_url = App::blog()->settings->system->themes_url;
 
                 $css_root_array[':root']['--font-family'] = 'Luciole, sans-serif';
 
@@ -327,15 +354,25 @@ class Config extends Process
                 $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Luciole-Bold-Italic.ttf") format("truetype")';
                 $css_main_array[3]['@font-face']['font-style']  = 'italic';
                 $css_main_array[3]['@font-face']['font-weight'] = '700';
-            }
+            }*/
         }
 
-        $css .= !empty($css_root_array) ? odUtils::stylesArrayToString($css_root_array) : '';
+        // Font size.
+        $font_size_allowed = [80, 90, 110, 120];
+
+        if (isset($_POST['global_font_size']) && in_array((int) $_POST['global_font_size'], $font_size_allowed, true)) {
+            $css_root_array[':root']['--font-size'] = odUtils::removeZero($_POST['global_font_size'] / 100) . 'em';
+        }
+
+        $css  = !empty($css_root_array) ? odUtils::stylesArrayToString($css_root_array) : '';
         $css .= !empty($css_main_array) ? odUtils::stylesArrayToString($css_main_array) : '';
 
-        if (!empty($css)) {
+        $css = htmlspecialchars($css, ENT_NOQUOTES);
+        $css = str_replace('&gt;', ">", $css);
+
+        if ($css) {
             return [
-                'value' => str_replace('&gt;', ">", htmlspecialchars($css, ENT_NOQUOTES)),
+                'value' => $css,
                 'type'  => 'string'
             ];
         }
@@ -354,7 +391,7 @@ class Config extends Process
      */
     public static function sanitizeSetting($setting_type, $setting_id, $setting_value): array
     {
-        $default_settings = odysseySettings::default();
+        $default_settings = App::backend()->settings;
 
         if ($setting_type === 'select' && in_array($setting_value, $default_settings[$setting_id]['choices'])) {
             return [

@@ -13,7 +13,7 @@ use Dotclear\Module\MyTheme;
 
 class My extends MyTheme
 {
-    public static function settings_default(): array
+    public static function settingsDefault(): array
     {
         $default_settings['global_font_family'] = [
             'title'       => __('settings-global-fontfamily-title'),
@@ -33,6 +33,21 @@ class My extends MyTheme
                 */
             ],
             'default'     => 'sans-serif',
+            'section'     => ['global', 'fonts']
+        ];
+
+        $default_settings['global_font_size'] = [
+            'title'       => __('settings-global-fontsize-title'),
+            'description' => __('settings-global-fontsize-description'),
+            'type'        => 'select_int',
+            'choices'     => [
+                __('settings-global-fontsize-80')          => 80,
+                __('settings-global-fontsize-90')          => 90,
+                __('settings-global-fontsize-100-default') => 100,
+                __('settings-global-fontsize-110')         => 110,
+                __('settings-global-fontsize-120')         => 120
+            ],
+            'default'     => 100,
             'section'     => ['global', 'fonts']
         ];
 

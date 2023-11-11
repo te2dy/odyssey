@@ -115,4 +115,22 @@ class OdysseyUtils
 
         return $css;
     }
+
+    /**
+     * Removes 0 before decimal separator of numbers inferior to 1.
+     *
+     * @param string|int $number The number.
+     *
+     * @return string The cleaned number.
+     */
+    public static function removeZero($number): string
+    {
+        $number = strval($number);
+
+        if (str_starts_with($number, '0.')) {
+            $number = substr($number, 1);
+        }
+
+        return $number;
+    }
 }
