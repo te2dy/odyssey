@@ -20,7 +20,7 @@ body {
 body {
   background-color: var(--color-background, #fafafa); /* hsl(0, 0%, 98%) */
   color: var(--color-text-main, #303030);
-  font: 1em -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif; /*"EB Garamond", Georgie, serif */
+  font: var(--font-size, 1em) var(--font-family, -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif); /*"EB Garamond", Georgie, serif */
 }
 #site {
   box-sizing: border-box;
@@ -655,7 +655,7 @@ aside .widget:last-child {
   font-style: italic;
   font-weight: 700;
 }*/
-.content-text {
+/*.content-text {
   font-family: "Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   text-align: justify;
   -webkit-hyphens: auto;
@@ -674,3 +674,4 @@ aside .widget:last-child {
       -ms-hyphenate-limit-last: always;
           hyphenate-limit-last: always;
 }
+*/
