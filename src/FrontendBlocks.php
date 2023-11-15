@@ -28,7 +28,7 @@ class FrontendBlocks
     public static function odysseyCommentFormWrapper($attr, $content): string
     {
         if (odUtils::configuratorSetting() === true) {
-            return '<details><summary class=button>' . __('reactions-react-link-title') . '</summary><div id=react-content><h3 class=reaction-title>' . __('reactions-comment-form-title') . '</h3>' . $content . '</div></details>';
+            return '<details id=reactions-react-button><summary class=button>' . __('reactions-react-link-title') . '</summary><div id=react-content><h3 class=reaction-title>' . __('reactions-comment-form-title') . '</h3>' . $content . '</div></details>';
         }
 
         // Part of the previous code:
