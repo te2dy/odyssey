@@ -54,73 +54,92 @@ class Config extends Process
         if (!empty($_POST)) {
             try {
 
-                /**
-                 * This part saves each option in the database
-                 * only if it is different than the default one.
-                 *
-                 * Custom styles to be inserted in the head of the blog
-                 * will be saved later.
-                 */
-                foreach (App::backend()->settings as $setting_id => $setting_data) {
-                    $specific_settings = ['styles'];
-                    $setting_data      = [];
+                // If the save button has been clicked.
+                if (isset($_POST['save'])) {
 
-                    // Saves non specific settings.
-                    if (!in_array($setting_id, $specific_settings, true)) {
-                        if (isset($_POST[$setting_id]) && $_POST[$setting_id] != App::backend()->settings[$setting_id]['default']) {
-                            $setting_data = self::sanitizeSetting(
-                                App::backend()->settings[$setting_id]['type'],
-                                $setting_id,
-                                $_POST[$setting_id]
-                            );
+                    /**
+                     * This part saves each option in the database
+                     * only if it is different than the default one.
+                     *
+                     * Custom styles to be inserted in the head of the blog
+                     * will be saved later.
+                     */
+                    foreach (App::backend()->settings as $setting_id => $setting_data) {
+                        $specific_settings = ['styles'];
+                        $setting_data      = [];
+
+                        // Saves non specific settings.
+                        if (!in_array($setting_id, $specific_settings, true)) {
+                            if (isset($_POST[$setting_id]) && $_POST[$setting_id] != App::backend()->settings[$setting_id]['default']) {
+                                $setting_data = self::sanitizeSetting(
+                                    App::backend()->settings[$setting_id]['type'],
+                                    $setting_id,
+                                    $_POST[$setting_id]
+                                );
+                            }
+
+                            $setting_label = App::backend()->settings[$setting_id]['title'];
+                            $setting_label = Html::clean($setting_label);
+
+                            // Saves the setting or drop it.
+                            if (!empty($setting_data) && $_POST[$setting_id] != App::backend()->settings[$setting_id]['default']) {
+                                App::blog()->settings->odyssey->put(
+                                    $setting_id,
+                                    $setting_data['value'],
+                                    $setting_data['type'],
+                                    $setting_label,
+                                    true
+                                );
+                            } else {
+                                App::blog()->settings->odyssey->drop($setting_id);
+                            }
                         }
 
-                        $setting_label = App::backend()->settings[$setting_id]['title'];
-                        $setting_label = Html::clean($setting_label);
-
-                        // Saves the setting or drop it.
-                        if (!empty($setting_data) && $_POST[$setting_id] != App::backend()->settings[$setting_id]['default']) {
-                            App::blog()->settings->odyssey->put(
-                                $setting_id,
-                                $setting_data['value'],
-                                $setting_data['type'],
-                                $setting_label,
-                                true
-                            );
-                        } else {
-                            App::blog()->settings->odyssey->drop($setting_id);
-                        }
+                        // Saves specific settings.
                     }
 
-                    // Saves specific settings.
+                    // Saves styles.
+                    $styles = self::saveStyles();
+
+                    if ($styles) {
+                        App::blog()->settings->odyssey->put(
+                            'styles',
+                            $styles['value'],
+                            $styles['type'],
+                            Html::clean(App::backend()->settings['styles']['title']),
+                            true
+                        );
+                    } else {
+                        App::blog()->settings->odyssey->drop('styles');
+                    }
+
+                    // Refreshes blog.
+                    App::blog()->triggerBlog();
+
+                    // Resets template cache.
+                    App::cache()->emptyTemplatesCache();
+
+                    // Displays a success notice.
+                    Notices::addSuccessNotice(__('Theme configuration updated.'));
+
+                    // Redirects to refresh form values.
+                    App::backend()->url()->redirect('admin.blog.theme', ['conf' => '1']);
+                } elseif (isset($_POST['reset'])) {
+
+                    /**
+                     * Reset button has been clicked.
+                     * Drops all settings.
+                     */
+                    foreach (App::backend()->settings as $setting_id => $setting_value) {
+                        App::blog()->settings->odyssey->drop($setting_id);
+                    }
+
+                    // Displays a success notice.
+                    Notices::addSuccessNotice(__('settings-config-reset'));
+
+                    // Redirects to refresh form values.
+                    App::backend()->url()->redirect('admin.blog.theme', ['conf' => '1']);
                 }
-
-                // Saves styles.
-                $styles = self::saveStyles();
-
-                if ($styles) {
-                    App::blog()->settings->odyssey->put(
-                        'styles',
-                        $styles['value'],
-                        $styles['type'],
-                        Html::clean(App::backend()->settings['styles']['title']),
-                        true
-                    );
-                } else {
-                    App::blog()->settings->odyssey->drop('styles');
-                }
-
-                // Refreshes blog.
-                App::blog()->triggerBlog();
-
-                // Resets template cache.
-                App::cache()->emptyTemplatesCache();
-
-                // Displays a success notice.
-                Notices::addSuccessNotice(__('Theme configuration updated.'));
-
-                // Redirects to refresh form values.
-                App::backend()->url()->redirect('admin.blog.theme', ['conf' => '1']);
             } catch (Exception $e) {
                 App::error()->add($e->getMessage());
             }
@@ -230,6 +249,8 @@ class Config extends Process
             }
         }
 
+        echo '<form action="', App::backend()->url()->get('admin.blog.theme', ['module' => 'odyssey', 'conf' => '1']), '" enctype=multipart/form-data id=theme-config-form method=post>';
+
         // Displays the setting.
         foreach ($settings_render as $section_id => $setting_data) {
             echo '<h3 id=section-', $section_id, '>',
@@ -252,6 +273,13 @@ class Config extends Process
             }
 
             echo '</div>';
+
+            echo '<p>',
+            App::nonce()->getFormNonce(),
+            '<input name=save type=submit value="', __('settings-save-button-text'), '">',
+            '<input class=delete name=reset value="', __('settings-reset-button-text'), '" type=submit>',
+            '</p>',
+            '</form>';
         }
     }
 

@@ -21,7 +21,7 @@ $this->registerModule(
         'type' => 'theme',
 
         // Allows a full control for the theme configurator.
-        'standalone_config' => false,
+        'standalone_config' => true,
 
         // Replaces default heading levels.
         'widgettitleformat'    => '<h3>%s</h3>',
