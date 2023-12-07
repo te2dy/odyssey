@@ -23,14 +23,12 @@ class My extends MyTheme
                 __('settings-global-fontfamily-sansserif-default') => 'sans-serif',
                 __('settings-global-fontfamily-serif')             => 'serif',
                 __('settings-global-fontfamily-mono')              => 'monospace',
-                /*
                 __('settings-global-fontfamily-sansserifbrowser')  => 'sans-serif-browser',
                 __('settings-global-fontfamily-serifbrowser')      => 'serif-browser',
                 __('settings-global-fontfamily-monobrowser')       => 'monospace-browser',
                 __('settings-global-fontfamily-atkinson')          => 'atkinson',
                 __('settings-global-fontfamily-ebgaramond')        => 'eb-garamond',
                 __('settings-global-fontfamily-luciole')           => 'luciole'
-                */
             ],
             'default'     => 'sans-serif',
             'section'     => ['global', 'fonts']

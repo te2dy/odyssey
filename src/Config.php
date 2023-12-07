@@ -273,14 +273,14 @@ class Config extends Process
             }
 
             echo '</div>';
-
-            echo '<p>',
-            App::nonce()->getFormNonce(),
-            '<input name=save type=submit value="', __('settings-save-button-text'), '">',
-            '<input class=delete name=reset value="', __('settings-reset-button-text'), '" type=submit>',
-            '</p>',
-            '</form>';
         }
+
+        echo '<p>',
+        App::nonce()->getFormNonce(),
+        '<input name=save type=submit value="', __('settings-save-button-text'), '">',
+        '<input class=delete name=reset value="', __('settings-reset-button-text'), '" type=submit>',
+        '</p>',
+        '</form>';;
     }
 
     /**
@@ -298,13 +298,12 @@ class Config extends Process
         $default_settings = App::backend()->settings;
 
         // Font family.
-        var_dump($_POST['global_font_family']);
         if (isset($_POST['global_font_family'])) {
             if ($_POST['global_font_family'] === 'serif') {
                 $css_root_array[':root']['--font-family'] = '"Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
             } elseif ($_POST['global_font_family'] === 'monospace') {
                 $css_root_array[':root']['--font-family'] = 'Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace';
-            }/* elseif ($_POST['global_font_family'] === 'sans-serif-browser') {
+            } elseif ($_POST['global_font_family'] === 'sans-serif-browser') {
                 $css_root_array[':root']['--font-family'] = 'sans-serif';
             } elseif ($_POST['global_font_family'] === 'serif-browser') {
                 $css_root_array[':root']['--font-family'] = 'serif';
@@ -382,7 +381,7 @@ class Config extends Process
                 $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Luciole-Bold-Italic.ttf") format("truetype")';
                 $css_main_array[3]['@font-face']['font-style']  = 'italic';
                 $css_main_array[3]['@font-face']['font-weight'] = '700';
-            }*/
+            }
         }
 
         // Font size.
