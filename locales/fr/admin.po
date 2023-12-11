@@ -6,6 +6,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgid "settings-notice-saved"
+msgstr "Les paramètres du thème ont été enregistrés."
+
+msgid "settings-notice-reset"
+msgstr "Les paramètres du thème ont été réinitialisés."
+
 msgid "section-global"
 msgstr "Paramètres globaux"
 
@@ -47,3 +53,33 @@ msgstr "EB Garamond"
 
 msgid "settings-global-fontfamily-luciole"
 msgstr "Luciole"
+
+msgid "settings-global-fontsize-title"
+msgstr "Taille"
+
+msgid "settings-global-fontsize-description"
+msgstr "La taille des polices est calculée en fonction des paramètres du navigateur ; elle peut varier d’un appareil à l’autre."
+
+msgid "settings-global-fontsize-80"
+msgstr "80 %"
+
+msgid "settings-global-fontsize-90"
+msgstr "90 %"
+
+msgid "settings-global-fontsize-100-default"
+msgstr "100 % (par défaut)"
+
+msgid "settings-global-fontsize-110"
+msgstr "110 %"
+
+msgid "settings-global-fontsize-120"
+msgstr "120 %"
+
+msgid "settings-save-button-text"
+msgstr "Enregistrer les paramètres"
+
+msgid "settings-reset-button-text"
+msgstr "Réinitialiser"
+
+msgid "settings-footer-odysseystyles-title"
+msgstr "Styles personnalisés"

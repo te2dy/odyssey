@@ -120,7 +120,7 @@ class Config extends Process
                     App::cache()->emptyTemplatesCache();
 
                     // Displays a success notice.
-                    Notices::addSuccessNotice(__('Theme configuration updated.'));
+                    Notices::addSuccessNotice(__('settings-notice-saved'));
 
                     // Redirects to refresh form values.
                     App::backend()->url()->redirect('admin.blog.theme', ['conf' => '1']);
@@ -135,7 +135,7 @@ class Config extends Process
                     }
 
                     // Displays a success notice.
-                    Notices::addSuccessNotice(__('settings-config-reset'));
+                    Notices::addSuccessNotice(__('settings-notice-reset'));
 
                     // Redirects to refresh form values.
                     App::backend()->url()->redirect('admin.blog.theme', ['conf' => '1']);
@@ -277,7 +277,7 @@ class Config extends Process
 
         echo '<p>',
         App::nonce()->getFormNonce(),
-        '<input name=save type=submit value="', __('settings-save-button-text'), '">',
+        '<input name=save type=submit value="', __('settings-save-button-text'), '"> ',
         '<input class=delete name=reset value="', __('settings-reset-button-text'), '" type=submit>',
         '</p>',
         '</form>';;
