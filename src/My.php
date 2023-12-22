@@ -9,6 +9,7 @@
 
 namespace Dotclear\Theme\odyssey;
 
+use Dotclear\App;
 use Dotclear\Module\MyTheme;
 
 class My extends MyTheme
@@ -49,10 +50,30 @@ class My extends MyTheme
             'section'     => ['global', 'fonts']
         ];
 
+        $default_settings['content_images_wide'] = [
+            'title'       => __('settings-content-imageswide-title'),
+            'description' => __('settings-content-imageswide-description'),
+            'type'        => 'checkbox',
+            'default'     => 0,
+            'section'     => ['content', 'images']
+        ];
+
         $default_settings['styles'] = [
             'title' => __('settings-footer-odysseystyles-title'),
         ];
 
         return $default_settings;
+    }
+
+    /**
+     * Returns the value of a saved theme setting.
+     *
+     * @param string $setting_id The setting id.
+     *
+     * @return mixed The value of the setting.
+     */
+    public static function settingValue($setting_id = ''): mixed
+    {
+        return $setting_id ? App::blog()->settings->odyssey->$setting_id : '';
     }
 }

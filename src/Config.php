@@ -38,6 +38,12 @@ class Config extends Process
                 'sub_sections' => [
                     'fonts' => __('section-global-fonts')
                 ]
+            ],
+            'content' => [
+                'name'         => __('section-content'),
+                'sub_sections' => [
+                    'images' => __('section-content-images')
+                ]
             ]
         ];
 
@@ -163,6 +169,17 @@ class Config extends Process
         echo '<p id=', $setting_id, '-input>';
 
         switch ($default_settings[$setting_id]['type']) {
+            case 'checkbox' :
+                echo form::checkbox(
+                    $setting_id,
+                    true,
+                    $setting_value
+                ),
+                '<label class=classic for=', $setting_id, '>',
+                $default_settings[$setting_id]['title'],
+                '</label>';
+                break;
+
             case 'select' :
             case 'select_int' :
                 echo '<label for=', $setting_id, '>',

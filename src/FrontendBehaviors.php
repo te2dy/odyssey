@@ -92,15 +92,15 @@ class FrontendBehaviors
                     }
 
                     if (
-                        // odysseySettings::value('global_meta_home_description') ||
+                        // My::settingValue('global_meta_home_description') ||
                         App::blog()->desc
                     ) {
                         if ($desc) {
                             $desc .= ' – ';
                         }
 
-                        // if (odysseySettings::value('global_meta_home_description')) {
-                            // $desc .= odysseySettings::value('global_meta_home_description');
+                        // if (My::settingValue('global_meta_home_description')) {
+                            // $desc .= My::settingValue('global_meta_home_description');
                         // } elseif (dcCore::app()->blog->desc) {
                             $desc .= App::blog()->desc;
                         // }
@@ -149,8 +149,8 @@ class FrontendBehaviors
                 $desc = Html::escapeHTML($desc);
 
                 /*
-                if (!$img && isset(odysseySettings::value('header_image')['url'])) {
-                    $img = odUtils::blogBaseURL() . odysseySettings::value('header_image')['url'];
+                if (!$img && isset(My::settingValue('header_image')['url'])) {
+                    $img = odUtils::blogBaseURL() . My::settingValue('header_image')['url'];
                 }
 
                 $img = Html::escapeURL($img);
@@ -307,18 +307,15 @@ class FrontendBehaviors
      */
     public static function odysseyImageWide($tag, $args): void
     {
-        if (odUtils::configuratorSetting() !== true) {
-            return;
-        }
 
         // If only on Entry content.
         if (!in_array($tag, ['EntryContent'])) {
             return;
         }
 
-        // if (!odysseySettings::value('content_images_wide')) {
-            // return;
-        // }
+        if (!My::settingValue('content_images_wide')) {
+            return;
+        }
 
         // Matches all images by regex.
         $args[0] = preg_replace_callback(
@@ -354,7 +351,7 @@ class FrontendBehaviors
                      */
                     $option_image_wide = false;
 
-                    // switch (odysseySettings::value('content_images_wide')) {
+                    // switch (My::settingValue('content_images_wide')) {
                         // case 'posts-pages' :
                             if (App::url()->type === 'post' || App::url()->type === 'pages') {
                                 $option_image_wide = true;
@@ -369,8 +366,8 @@ class FrontendBehaviors
                     $img_width_max = 480;
 
                     if ($option_image_wide === true) {
-                        // if (odysseySettings::value('content_images_wide_size')) {
-                            // $img_width_max += (int) (odysseySettings::value('content_images_wide_size') * 2);
+                        // if (My::settingValue('content_images_wide_size')) {
+                            // $img_width_max += (int) (My::settingValue('content_images_wide_size') * 2);
                         // } else {
                             $img_width_max += 120 * 2;
                         // }
@@ -385,8 +382,8 @@ class FrontendBehaviors
                     $media_sizes = App::media()->thumb_sizes;
 
                     // Adds eventual custom image sizes.
-                    /*if (odysseySettings::value('content_image_custom_size')) {
-                        $custom_image_sizes = explode(',', odysseySettings::value('content_image_custom_size'));
+                    /*if (My::settingValue('content_image_custom_size')) {
+                        $custom_image_sizes = explode(',', My::settingValue('content_image_custom_size'));
 
                         foreach ($custom_image_sizes as $size_id) {
                             $media_sizes[$size_id] = [
@@ -449,7 +446,7 @@ class FrontendBehaviors
                     $attr .= 'sizes="100vw" ';
 
                     // If it's a landscape format image only, displays it wide.
-                    if (//odysseySettings::value('content_images_wide') &&
+                    if (//My::settingValue('content_images_wide') &&
                         $img[$src_image_size]['width'] > $img[$src_image_size]['height']
                         && $img[$src_image_size]['width'] >= $img_width_max
                     ) {

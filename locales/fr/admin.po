@@ -12,6 +12,9 @@ msgstr "Les paramètres du thème ont été enregistrés."
 msgid "settings-notice-reset"
 msgstr "Les paramètres du thème ont été réinitialisés."
 
+msgid "settings-default-unchecked"
+msgstr "Par défaut&nbsp;: décoché."
+
 msgid "section-global"
 msgstr "Paramètres globaux"
 
@@ -20,6 +23,12 @@ msgstr "Polices d’écriture"
 
 msgid "settings-global-fontfamily-title"
 msgstr "Type"
+
+msgid "section-content"
+msgstr "Contenu"
+
+msgid "section-content-images"
+msgstr "Images"
 
 msgid "settings-global-fontfamily-description"
 msgstr "Vous avez le choix d’utiliser des polices système (susceptibles de changer d’un appareil à un autre), des polices du navigateur (susceptibles de changer d’un navigateur à un autre, y compris sur le même système), ou des polices sélectionnées pour leur lisibilité, conçues pour faciliter la lecture des personnes malvoyantes (à noter que ces polices sont plus gourmandes en ressources)."
@@ -75,11 +84,14 @@ msgstr "110 %"
 msgid "settings-global-fontsize-120"
 msgstr "120 %"
 
+msgid "settings-content-imageswide-title"
+msgstr "Agrandir les images suffisamment larges (bêta)"
+
+msgid "settings-content-imageswide-description"
+msgstr "Les photos suffisamment larges dépasseront les limites de la page pour s’afficher en grand. Attention&nbsp;: cette fonctionnalité est expérimentale et pourrait mal fonctionner. N’hésitez pas à me faire part de vos retours par <a href=mailto:zozxebpyr@mozmail.com>courriel</a>."
+
 msgid "settings-save-button-text"
 msgstr "Enregistrer les paramètres"
 
 msgid "settings-reset-button-text"
 msgstr "Réinitialiser"
-
-msgid "settings-footer-odysseystyles-title"
-msgstr "Styles personnalisés"

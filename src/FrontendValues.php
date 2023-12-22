@@ -13,8 +13,6 @@ use Dotclear\App;
 use Dotclear\Core\Frontend\Ctx;
 use Dotclear\Helper\Html\Html;
 
-require_once 'OdysseySettings.php';
-
 require_once 'OdysseyUtils.php';
 use OdysseyUtils as odUtils;
 
@@ -35,13 +33,13 @@ class FrontendValues
      *
      * @return string The styles.
      */
-    public static function odysseyStylesInline(): string
+    public static function odysseyStylesInline()//: string
     {
-        if (!OdysseySettings::value('styles')) {
+        if (!My::settingValue('styles')) {
             return '';
         }
 
-        return '<style>' . OdysseySettings::value('styles') . '</style>';
+        return '<style>' . My::settingValue('styles') . '</style>';
     }
 
     /**
