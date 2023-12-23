@@ -32,9 +32,6 @@ class Config extends Process
 
         My::l10n('admin');
 
-        App::backend()->sections = My::settingsSections();
-        App::backend()->settings = My::settingsDefault();
-
         return self::status();
     }
 
@@ -56,27 +53,27 @@ class Config extends Process
                      * Custom styles to be inserted in the head of the blog
                      * will be saved later.
                      */
-                    foreach (App::backend()->settings as $setting_id => $setting_data) {
+                    foreach (My::settingsDefault() as $setting_id => $setting_data) {
                         $specific_settings = ['styles'];
                         $setting_data      = [];
 
                         // Saves non specific settings.
                         if (!in_array($setting_id, $specific_settings, true)) {
-                            if (isset($_POST[$setting_id]) && $_POST[$setting_id] != App::backend()->settings[$setting_id]['default']) {
+                            if (isset($_POST[$setting_id]) && $_POST[$setting_id] != My::settingsDefault($setting_id)['default']) {
                                 $setting_data = self::sanitizeSetting(
-                                    App::backend()->settings[$setting_id]['type'],
+                                    My::settingsDefault($setting_id)['type'],
                                     $setting_id,
                                     $_POST[$setting_id]
                                 );
-                            } elseif (!isset($_POST[$setting_id]) && App::backend()->settings[$setting_id]['type'] === 'checkbox') {
+                            } elseif (!isset($_POST[$setting_id]) && My::settingsDefault($setting_id)['type'] === 'checkbox') {
                                 $setting_data = self::sanitizeSetting(
-                                    App::backend()->settings[$setting_id]['type'],
+                                    My::settingsDefault($setting_id)['type'],
                                     $setting_id,
                                     '0'
                                 );
                             }
 
-                            $setting_label = App::backend()->settings[$setting_id]['title'];
+                            $setting_label = My::settingsDefault($setting_id)['title'];
                             $setting_label = Html::clean($setting_label);
 
                             // Saves the setting or drop it.
@@ -104,7 +101,7 @@ class Config extends Process
                             'styles',
                             $styles['value'],
                             $styles['type'],
-                            Html::clean(App::backend()->settings['styles']['title']),
+                            Html::clean(My::settingsDefault()['styles']['title']),
                             true
                         );
                     } else {
@@ -128,7 +125,7 @@ class Config extends Process
                      * Reset button has been clicked.
                      * Drops all settings.
                      */
-                    foreach (App::backend()->settings as $setting_id => $setting_value) {
+                    foreach (My::settingsDefault() as $setting_id => $setting_value) {
                         App::blog()->settings->odyssey->drop($setting_id);
                     }
 
@@ -148,7 +145,7 @@ class Config extends Process
 
     public static function settingRender($setting_id)
     {
-        $default_settings = App::backend()->settings;
+        $default_settings = My::settingsDefault();
         $saved_settings   = self::settingsSaved();
 
         // Displays the default value of the parameter if it is not defined.
@@ -212,7 +209,7 @@ class Config extends Process
     public static function settingsSaved(): array
     {
         $saved_settings   = [];
-        $default_settings = App::backend()->settings;
+        $default_settings = My::settingsDefault();
 
         foreach ($default_settings as $setting_id => $setting_data) {
             if (App::blog()->settings->odyssey->$setting_id !== null) {
@@ -242,12 +239,12 @@ class Config extends Process
         $settings_render = [];
 
         // Adds sections.
-        foreach (App::backend()->sections as $section_id => $section_data) {
+        foreach (My::settingsSections() as $section_id => $section_data) {
             $settings_render[$section_id] = [];
         }
 
         // Adds settings in their section.
-        foreach (App::backend()->settings as $setting_id => $setting_data) {
+        foreach (My::settingsDefault() as $setting_id => $setting_data) {
             if ($setting_id !== 'styles') {
                 // If a sub-section is set.
                 if (isset($setting_data['section'][1])) {
@@ -258,12 +255,12 @@ class Config extends Process
             }
         }
 
-        echo '<form action="', App::backend()->url()->get('admin.blog.theme', ['module' => 'odyssey', 'conf' => '1']), '" enctype=multipart/form-data id=theme-config-form method=post>';
+        echo '<form action="', App::backend()->url()->get('admin.blog.theme', ['conf' => '1']), '" enctype=multipart/form-data id=theme-config-form method=post>';
 
         // Displays the setting.
         foreach ($settings_render as $section_id => $setting_data) {
             echo '<h3 id=section-', $section_id, '>',
-            App::backend()->sections[$section_id]['name'],
+            My::settingsSections($section_id)['name'],
             '</h3>',
             '<div class=fieldset>';
 
@@ -271,7 +268,7 @@ class Config extends Process
                 // Displays the name of the sub-section unless its ID is "no-title".
                 if ($sub_section_id !== 'no-title') {
                     echo '<h4 id=section-', $section_id, '-', $sub_section_id, '>',
-                    App::backend()->sections[$section_id]['sub_sections'][$sub_section_id],
+                    My::settingsSections($section_id)['sub_sections'][$sub_section_id],
                     '</h4>';
                 }
 
@@ -305,7 +302,7 @@ class Config extends Process
         $$css_root_dark_array = [];
         $css_main_array = [];
 
-        $default_settings = App::backend()->settings;
+        $default_settings = My::settingsDefault();
 
         // Font family.
         if (isset($_POST['global_font_family'])) {
@@ -436,7 +433,7 @@ class Config extends Process
      */
     public static function sanitizeSetting($setting_type, $setting_id, $setting_value): array
     {
-        $default_settings = App::backend()->settings;
+        $default_settings = My::settingsDefault();
 
         if ($setting_type === 'select' && in_array($setting_value, $default_settings[$setting_id]['choices'])) {
             return [

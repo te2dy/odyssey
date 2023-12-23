@@ -14,7 +14,7 @@ use Dotclear\Module\MyTheme;
 
 class My extends MyTheme
 {
-    public static function settingsSections(): array
+    public static function settingsSections(string $section_id = ''): array
     {
         $sections = [
             'global' => [
@@ -49,10 +49,14 @@ class My extends MyTheme
             ]
         ];
 
+        if ($section_id && isset($sections[$section_id])) {
+            return $sections[$section_id];
+        }
+
         return $sections;
     }
 
-    public static function settingsDefault(): array
+    public static function settingsDefault(string $setting_id = ''): array
     {
         $default_settings['global_unit'] = [
             'title'       => __('settings-global-unit-title'),
@@ -104,7 +108,7 @@ class My extends MyTheme
             'title'       => __('settings-header-description-title'),
             'description' => '',
             'type'        => 'checkbox',
-            'default'     => '1',
+            'default'     => 1,
             'section'     => ['header', 'no-title']
         ];
 
@@ -112,7 +116,7 @@ class My extends MyTheme
             'title'       => __('settings-content-postlistaltcolor-title'),
             'description' => __('settings-content-postlistaltcolor-description'),
             'type'        => 'checkbox',
-            'default'     => '0',
+            'default'     => 0,
             'section'     => ['content', 'postlist']
         ];
 
@@ -120,7 +124,7 @@ class My extends MyTheme
             'title'       => __('settings-content-postlistthumbnail-title'),
             'description' => __('settings-content-postlistthumbnail-description'),
             'type'        => 'checkbox',
-            'default'     => '1',
+            'default'     => 1,
             'section'     => ['content', 'postlist']
         ];
 
@@ -128,7 +132,7 @@ class My extends MyTheme
             'title'       => __('settings-content-imageswide-title'),
             'description' => __('settings-content-imageswide-description'),
             'type'        => 'checkbox',
-            'default'     => '0',
+            'default'     => 0,
             'section'     => ['content', 'images']
         ];
 
@@ -137,7 +141,7 @@ class My extends MyTheme
                 'title'       => __('settings-reactions-markdownnotice-title'),
                 'description' => __('settings-reactions-markdownnotice-description'),
                 'type'        => 'checkbox',
-                'default'     => '0',
+                'default'     => 0,
                 'section'     => ['reactions', 'no-title']
             ];
         }
@@ -146,13 +150,17 @@ class My extends MyTheme
             'title'       => __('settings-reactions-advancedminimalsocialmeta-title'),
             'description' => __('settings-reactions-advancedminimalsocialmeta-description'),
             'type'        => 'checkbox',
-            'default'     => '0',
+            'default'     => 0,
             'section'     => ['advanced', 'metadata']
         ];
 
         $default_settings['styles'] = [
             'title' => __('settings-footer-odysseystyles-title'),
         ];
+
+        if ($setting_id && isset($default_settings[$setting_id])) {
+            return $default_settings[$setting_id];
+        }
 
         return $default_settings;
     }
