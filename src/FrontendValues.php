@@ -74,7 +74,7 @@ class FrontendValues
      */
     public static function origineEntryListImage(): string
     {
-        if (odUtils::configuratorSetting() === false) {
+        if (My::settingValue('content_postlist_thumbnail') === false) {
             return '';
         }
 

@@ -30,6 +30,9 @@ msgstr "En-tête"
 msgid "section-content"
 msgstr "Contenu"
 
+msgid "section-content-postlist"
+msgstr "Liste des billets"
+
 msgid "section-content-images"
 msgstr "Images"
 
@@ -105,11 +108,17 @@ msgstr "120 %"
 msgid "settings-header-description-title"
 msgstr "Afficher le slogan du blog"
 
+msgid "settings-content-postlistthumbnail-title"
+msgstr "Afficher des miniatures"
+
+msgid "settings-content-postlistthumbnail-description"
+msgstr "Affiche une miniature de la première image des billets devant leur titre."
+
 msgid "settings-content-imageswide-title"
-msgstr "Agrandir les images suffisamment larges (bêta)"
+msgstr "Agrandir les images suffisamment larges"
 
 msgid "settings-content-imageswide-description"
-msgstr "Les photos suffisamment larges dépasseront les limites de la page pour s’afficher en grand. Attention&nbsp;: cette fonctionnalité est expérimentale et pourrait mal fonctionner. N’hésitez pas à me faire part de vos retours par <a href=mailto:zozxebpyr@mozmail.com>courriel</a>."
+msgstr "Les photos suffisamment larges dépasseront les limites de la page pour s’afficher en grand. ⚠️ Attention&nbsp;: cette fonctionnalité est expérimentale et pourrait mal fonctionner. N’hésitez pas à me faire part de vos retours par <a href=mailto:zozxebpyr@mozmail.com>courriel</a>."
 
 msgid "settings-save-button-text"
 msgstr "Enregistrer les paramètres"

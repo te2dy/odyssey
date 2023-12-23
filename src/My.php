@@ -33,7 +33,8 @@ class My extends MyTheme
             'content' => [
                 'name'         => __('section-content'),
                 'sub_sections' => [
-                    'images' => __('section-content-images')
+                    'postlist' => __('section-content-postlist'),
+                    'images'   => __('section-content-images')
                 ]
             ]
         ];
@@ -95,6 +96,14 @@ class My extends MyTheme
             'type'        => 'checkbox',
             'default'     => '1',
             'section'     => ['header', 'no-title']
+        ];
+
+        $default_settings['content_postlist_thumbnail'] = [
+            'title'       => __('settings-content-postlistthumbnail-title'),
+            'description' => __('settings-content-postlistthumbnail-description'),
+            'type'        => 'checkbox',
+            'default'     => '1',
+            'section'     => ['content', 'postlist']
         ];
 
         $default_settings['content_images_wide'] = [
