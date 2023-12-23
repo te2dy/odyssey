@@ -108,6 +108,12 @@ msgstr "120 %"
 msgid "settings-header-description-title"
 msgstr "Afficher le slogan du blog"
 
+msgid "settings-content-postlistaltcolor-title"
+msgstr "Alterner la couleur des liens vers les billets"
+
+msgid "settings-content-postlistaltcolor-description"
+msgstr "Change la couleur de fond d’un lien sur deux pour mieux distinguer chaque billet."
+
 msgid "settings-content-postlistthumbnail-title"
 msgstr "Afficher des miniatures"
 

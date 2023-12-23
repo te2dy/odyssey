@@ -98,6 +98,14 @@ class My extends MyTheme
             'section'     => ['header', 'no-title']
         ];
 
+        $default_settings['content_postlist_altcolor'] = [
+            'title'       => __('settings-content-postlistaltcolor-title'),
+            'description' => __('settings-content-postlistaltcolor-description'),
+            'type'        => 'checkbox',
+            'default'     => '0',
+            'section'     => ['content', 'postlist']
+        ];
+
         $default_settings['content_postlist_thumbnail'] = [
             'title'       => __('settings-content-postlistthumbnail-title'),
             'description' => __('settings-content-postlistthumbnail-description'),

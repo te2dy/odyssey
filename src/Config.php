@@ -302,6 +302,7 @@ class Config extends Process
     public static function saveStyles(): array
     {
         $css_root_array = [];
+        $$css_root_dark_array = [];
         $css_main_array = [];
 
         $default_settings = App::backend()->settings;
@@ -400,7 +401,15 @@ class Config extends Process
             $css_root_array[':root']['--font-size'] = odUtils::removeZero($_POST['global_font_size'] / 100) . 'em';
         }
 
+        // Alternate post color.
+        if (isset($_POST['content_postlist_altcolor']) && $_POST['content_postlist_altcolor'] === '1') {
+            $css_root_dark_array[':root']['--color-background-even'] = '#000';
+
+            $css_main_array['.entry-list .post:nth-child(even)']['background-color'] = 'var(--color-background-even, #fff)';
+        }
+
         $css  = !empty($css_root_array) ? odUtils::stylesArrayToString($css_root_array) : '';
+        $css .= !empty($css_root_dark_array) ? '@media (prefers-color-scheme:dark){' . odUtils::stylesArrayToString($css_root_dark_array) . '}' : '';
         $css .= !empty($css_main_array) ? odUtils::stylesArrayToString($css_main_array) : '';
 
         $css = htmlspecialchars($css, ENT_NOQUOTES);

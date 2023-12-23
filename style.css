@@ -1,7 +1,6 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --color-background: #16161d;
-    --color-background-even: #000;
     --color-text-main: #ccc;
     --color-text-secondary: #969696;
     --color-primary: hsl(226, 80%, 70%);
@@ -415,9 +414,6 @@ details summary {
   margin-inline: -.5rem;
   padding: 1rem .5rem;
 }
-.entry-list .post:nth-child(even) {
-  background-color: var(--color-background-even, #fff);
-}
 .entry-list-img {
   aspect-ratio: 1/1;
   height: auto;
@@ -527,8 +523,20 @@ details summary {
 #comment-feed-link {
   margin-top: 2rem;
 }
+#reactions-react-button > summary {
+  list-style-type: none;
+}
+#reactions-react-button > summary::-webkit-details-marker {
+  display: none;
+}
+#reactions-react-button[open] > summary::after {
+  content: '\2193';
+  margin-left: .25rem;
+}
 #react-content {
+  border: .063rem solid #ccc;
   margin-top: 1rem;
+  padding: 1rem;
 }
 
 /**
