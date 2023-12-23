@@ -36,6 +36,21 @@ msgstr "Liste des billets"
 msgid "section-content-images"
 msgstr "Images"
 
+msgid "section-reactions"
+msgstr "Commentaires et rétroliens"
+
+msgid "section-advanced"
+msgstr "Paramètres avancés"
+
+msgid "section-advanced-metadata"
+msgstr "Métadonnées"
+
+msgid "settings-reactions-advancedminimalsocialmeta-title"
+msgstr "Ajouter des balises sociales minimalistes"
+
+msgid "settings-reactions-advancedminimalsocialmeta-description"
+msgstr "Assure un meilleur affichage du blog sur les réseaux sociaux et peut être utile pour le référencement."
+
 msgid "settings-global-unit-title"
 msgstr "Unité de base"
 
@@ -125,6 +140,12 @@ msgstr "Agrandir les images suffisamment larges"
 
 msgid "settings-content-imageswide-description"
 msgstr "Les photos suffisamment larges dépasseront les limites de la page pour s’afficher en grand. ⚠️ Attention&nbsp;: cette fonctionnalité est expérimentale et pourrait mal fonctionner. N’hésitez pas à me faire part de vos retours par <a href=mailto:zozxebpyr@mozmail.com>courriel</a>."
+
+msgid "settings-reactions-markdownnotice-title"
+msgstr "Afficher un message signalant la prise en charge du balisage Markdown"
+
+msgid "settings-reactions-markdownnotice-description"
+msgstr "Il s’affichera sous le formulaire de commentaire."
 
 msgid "settings-save-button-text"
 msgstr "Enregistrer les paramètres"

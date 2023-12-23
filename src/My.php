@@ -38,8 +38,14 @@ class My extends MyTheme
                 ]
             ],
             'reactions' => [
-                'name'         => __('section-reaction'),
+                'name'         => __('section-reactions'),
                 'sub_sections' => []
+            ],
+            'advanced' => [
+                'name'         => __('section-advanced'),
+                'sub_sections' => [
+                    'metadata' => __('section-advanced-metadata')
+                ]
             ]
         ];
 
@@ -126,12 +132,22 @@ class My extends MyTheme
             'section'     => ['content', 'images']
         ];
 
-        $default_settings['reactions_markdown_notice'] = [
-            'title'       => __('settings-reactions-markdownnotice-title'),
-            'description' => __('settings-reactions-markdownnotice-description'),
+        if (App::plugins()->moduleExists('legacyMarkdown')) {
+            $default_settings['reactions_markdown_notice'] = [
+                'title'       => __('settings-reactions-markdownnotice-title'),
+                'description' => __('settings-reactions-markdownnotice-description'),
+                'type'        => 'checkbox',
+                'default'     => '0',
+                'section'     => ['reactions', 'no-title']
+            ];
+        }
+
+        $default_settings['advanced_minimal_social_meta'] = [
+            'title'       => __('settings-reactions-advancedminimalsocialmeta-title'),
+            'description' => __('settings-reactions-advancedminimalsocialmeta-description'),
             'type'        => 'checkbox',
             'default'     => '0',
-            'section'     => ['reactions', 'no-title']
+            'section'     => ['advanced', 'metadata']
         ];
 
         $default_settings['styles'] = [

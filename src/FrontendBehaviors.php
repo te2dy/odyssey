@@ -55,7 +55,7 @@ class FrontendBehaviors
      */
     public static function odysseySocialMarkups(): void
     {
-        if (odUtils::configuratorSetting() === true) {
+        if (My::settingValue('advanced_minimal_social_meta') === true) {
             $title = '';
             $desc  = '';
             $img   = '';
