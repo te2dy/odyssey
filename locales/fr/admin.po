@@ -12,6 +12,9 @@ msgstr "Les paramètres du thème ont été enregistrés."
 msgid "settings-notice-reset"
 msgstr "Les paramètres du thème ont été réinitialisés."
 
+msgid "settings-default-checked"
+msgstr "Par défaut&nbsp;: coché."
+
 msgid "settings-default-unchecked"
 msgstr "Par défaut&nbsp;: décoché."
 
@@ -21,14 +24,29 @@ msgstr "Paramètres globaux"
 msgid "section-global-fonts"
 msgstr "Polices d’écriture"
 
-msgid "settings-global-fontfamily-title"
-msgstr "Type"
+msgid "section-header"
+msgstr "En-tête"
 
 msgid "section-content"
 msgstr "Contenu"
 
 msgid "section-content-images"
 msgstr "Images"
+
+msgid "settings-global-unit-title"
+msgstr "Unité de base"
+
+msgid "settings-global-unit-description"
+msgstr "En mode relatif, les dimensions de la page et la taille du texte sont liées aux paramètres du navigateur ; elles peuvent donc différer d’un appareil à l’autre (utile d’un point de vue accessibilité ♿️). <span style="font-style:normal;">A contrario</span>, le mode statique impose une même taille à tous les navigateurs."
+
+msgid "settings-global-unit-relative-default"
+msgstr "Relative (par défaut)"
+
+msgid "settings-global-unit-static"
+msgstr "Statique"
+
+msgid "settings-global-fontfamily-title"
+msgstr "Type"
 
 msgid "settings-global-fontfamily-description"
 msgstr "Vous avez le choix d’utiliser des polices système (susceptibles de changer d’un appareil à un autre), des polices du navigateur (susceptibles de changer d’un navigateur à un autre, y compris sur le même système), ou des polices sélectionnées pour leur lisibilité, conçues pour faciliter la lecture des personnes malvoyantes (à noter que ces polices sont plus gourmandes en ressources)."
@@ -83,6 +101,9 @@ msgstr "110 %"
 
 msgid "settings-global-fontsize-120"
 msgstr "120 %"
+
+msgid "settings-header-description-title"
+msgstr "Afficher le slogan du blog"
 
 msgid "settings-content-imageswide-title"
 msgstr "Agrandir les images suffisamment larges (bêta)"

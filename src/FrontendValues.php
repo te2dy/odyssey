@@ -49,7 +49,7 @@ class FrontendValues
      */
     public static function odysseyBlogDescription(): string
     {
-        if (odUtils::configuratorSetting() === false) {
+        if (My::settingValue('header_description') === false) {
             return '';
         }
 

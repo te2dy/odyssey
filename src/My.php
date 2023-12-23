@@ -14,8 +14,47 @@ use Dotclear\Module\MyTheme;
 
 class My extends MyTheme
 {
+    public static function settingsSections(): array
+    {
+        $sections = [
+            'global' => [
+                'name'         => __('section-global'),
+                'sub_sections' => [
+                    'units' => __('section-global-units'),
+                    'fonts' => __('section-global-fonts')
+                ]
+            ],
+            'header' => [
+                'name'         => __('section-header'),
+                'sub_sections' => [
+                    'no-title' => ''
+                ]
+            ],
+            'content' => [
+                'name'         => __('section-content'),
+                'sub_sections' => [
+                    'images' => __('section-content-images')
+                ]
+            ]
+        ];
+
+        return $sections;
+    }
+
     public static function settingsDefault(): array
     {
+        $default_settings['global_unit'] = [
+            'title'       => __('settings-global-unit-title'),
+            'description' => __('settings-global-unit-description'),
+            'type'        => 'select',
+            'choices'     => [
+                __('settings-global-unit-relative-default') => 'relative',
+                __('settings-global-unit-static')           => 'static'
+            ],
+            'default'     => 'relative',
+            'section'     => ['global', 'no-title']
+        ];
+
         $default_settings['global_font_family'] = [
             'title'       => __('settings-global-fontfamily-title'),
             'description' => __('settings-global-fontfamily-description'),
@@ -48,6 +87,14 @@ class My extends MyTheme
             ],
             'default'     => 100,
             'section'     => ['global', 'fonts']
+        ];
+
+        $default_settings['header_description'] = [
+            'title'       => __('settings-header-description-title'),
+            'description' => '',
+            'type'        => 'checkbox',
+            'default'     => 1,
+            'section'     => ['header', 'no-title']
         ];
 
         $default_settings['content_images_wide'] = [

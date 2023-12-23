@@ -32,21 +32,7 @@ class Config extends Process
 
         My::l10n('admin');
 
-        App::backend()->sections = [
-            'global' => [
-                'name'         => __('section-global'),
-                'sub_sections' => [
-                    'fonts' => __('section-global-fonts')
-                ]
-            ],
-            'content' => [
-                'name'         => __('section-content'),
-                'sub_sections' => [
-                    'images' => __('section-content-images')
-                ]
-            ]
-        ];
-
+        App::backend()->sections = My::settingsSections();
         App::backend()->settings = My::settingsDefault();
 
         return self::status();
