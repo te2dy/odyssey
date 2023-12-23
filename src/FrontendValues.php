@@ -189,7 +189,7 @@ class FrontendValues
      */
     public static function odysseyMarkdownSupportInfo(): string
     {
-        if (odUtils::configuratorSetting() === false) {
+        if (My::settingValue('reactions_markdown_notice') !== true) {
             return '';
         }
 

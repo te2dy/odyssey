@@ -36,6 +36,10 @@ class My extends MyTheme
                     'postlist' => __('section-content-postlist'),
                     'images'   => __('section-content-images')
                 ]
+            ],
+            'reactions' => [
+                'name'         => __('section-reaction'),
+                'sub_sections' => []
             ]
         ];
 
@@ -120,6 +124,14 @@ class My extends MyTheme
             'type'        => 'checkbox',
             'default'     => '0',
             'section'     => ['content', 'images']
+        ];
+
+        $default_settings['reactions_markdown_notice'] = [
+            'title'       => __('settings-reactions-markdownnotice-title'),
+            'description' => __('settings-reactions-markdownnotice-description'),
+            'type'        => 'checkbox',
+            'default'     => '0',
+            'section'     => ['reactions', 'no-title']
         ];
 
         $default_settings['styles'] = [
