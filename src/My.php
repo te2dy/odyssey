@@ -93,7 +93,7 @@ class My extends MyTheme
             'title'       => __('settings-header-description-title'),
             'description' => '',
             'type'        => 'checkbox',
-            'default'     => 1,
+            'default'     => '1',
             'section'     => ['header', 'no-title']
         ];
 
@@ -101,7 +101,7 @@ class My extends MyTheme
             'title'       => __('settings-content-imageswide-title'),
             'description' => __('settings-content-imageswide-description'),
             'type'        => 'checkbox',
-            'default'     => 0,
+            'default'     => '0',
             'section'     => ['content', 'images']
         ];
 

@@ -68,13 +68,19 @@ class Config extends Process
                                     $setting_id,
                                     $_POST[$setting_id]
                                 );
+                            } elseif (!isset($_POST[$setting_id]) && App::backend()->settings[$setting_id]['type'] === 'checkbox') {
+                                $setting_data = self::sanitizeSetting(
+                                    App::backend()->settings[$setting_id]['type'],
+                                    $setting_id,
+                                    '0'
+                                );
                             }
 
                             $setting_label = App::backend()->settings[$setting_id]['title'];
                             $setting_label = Html::clean($setting_label);
 
                             // Saves the setting or drop it.
-                            if (!empty($setting_data) && $_POST[$setting_id] != App::backend()->settings[$setting_id]['default']) {
+                            if (!empty($setting_data)) {
                                 App::blog()->settings->odyssey->put(
                                     $setting_id,
                                     $setting_data['value'],
