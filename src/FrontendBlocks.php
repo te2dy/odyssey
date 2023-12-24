@@ -27,18 +27,11 @@ class FrontendBlocks
      */
     public static function odysseyCommentFormWrapper($attr, $content): string
     {
-        if (odUtils::configuratorSetting() === true) {
-            return '<details id=reactions-react-button><summary class=button>' . __('reactions-react-link-title') . '</summary><div id=react-content><h3 class=reaction-title>' . __('reactions-comment-form-title') . '</h3>' . $content . '</div></details>';
+        if (My::settingValue('reactions_button') !== false) {
+            return '<details id=reactions-react-button><summary class=button>' . __('reactions-react-link-title') . '</summary><div id=react-content>' . $content . '</div></details>';
         }
 
-        // Part of the previous code:
-        /*if (!My::settingValue('content_commentform_hide')) {
-            return '<h3 class=reaction-title>' . __('reactions-comment-form-title') . '</h3>' . $content;
-        } else*/if (App::frontend()->context()->comment_preview && App::frontend()->context()->comment_preview["preview"]) {
-            return '<div id=react-content><h3 class=reaction-title>' . __('reactions-comment-form-preview-title') . '</h3>' . $content . '</div>';
-        }
-
-        return '';
+        return $content;
     }
 
     /**

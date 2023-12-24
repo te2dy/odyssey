@@ -39,7 +39,9 @@ class My extends MyTheme
             ],
             'reactions' => [
                 'name'         => __('section-reactions'),
-                'sub_sections' => []
+                'sub_sections' => [
+                    'form' => __('section-reactions-form')
+                ]
             ],
             'advanced' => [
                 'name'         => __('section-advanced'),
@@ -136,27 +138,35 @@ class My extends MyTheme
             'section'     => ['content', 'images']
         ];
 
+        $default_settings['reactions_button'] = [
+            'title'       => __('settings-reactions-button-title'),
+            'description' => __('settings-reactions-button-description'),
+            'type'        => 'checkbox',
+            'default'     => 1,
+            'section'     => ['reactions', 'form']
+        ];
+
         if (App::plugins()->moduleExists('legacyMarkdown')) {
             $default_settings['reactions_markdown_notice'] = [
                 'title'       => __('settings-reactions-markdownnotice-title'),
                 'description' => __('settings-reactions-markdownnotice-description'),
                 'type'        => 'checkbox',
                 'default'     => 0,
-                'section'     => ['reactions', 'no-title']
+                'section'     => ['reactions', 'form']
             ];
         }
 
         $default_settings['advanced_minimal_social_meta'] = [
-            'title'       => __('settings-reactions-advancedminimalsocialmeta-title'),
-            'description' => __('settings-reactions-advancedminimalsocialmeta-description'),
+            'title'       => __('settings-advanced-minimalsocialmeta-title'),
+            'description' => __('settings-advanced-minimalsocialmeta-description'),
             'type'        => 'checkbox',
             'default'     => 0,
             'section'     => ['advanced', 'metadata']
         ];
 
         $default_settings['advanced_json'] = [
-            'title'       => __('settings-reactions-advancedjson-title'),
-            'description' => __('settings-reactions-advancedjson-description'),
+            'title'       => __('settings-advanced-json-title'),
+            'description' => __('settings-advanced-json-description'),
             'type'        => 'checkbox',
             'default'     => 0,
             'section'     => ['advanced', 'metadata']
