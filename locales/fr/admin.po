@@ -12,6 +12,9 @@ msgstr "Les paramètres du thème ont été enregistrés."
 msgid "settings-notice-reset"
 msgstr "Les paramètres du thème ont été réinitialisés."
 
+msgid "settings-intro"
+msgstr "Sur cette page, vous pouvez personnaliser votre thème afin de l’adapter au mieux à vos besoins."
+
 msgid "settings-default-checked"
 msgstr "Par défaut&nbsp;: coché."
 
@@ -44,12 +47,6 @@ msgstr "Paramètres avancés"
 
 msgid "section-advanced-metadata"
 msgstr "Métadonnées"
-
-msgid "settings-reactions-advancedminimalsocialmeta-title"
-msgstr "Ajouter des balises sociales minimalistes"
-
-msgid "settings-reactions-advancedminimalsocialmeta-description"
-msgstr "Assure un meilleur affichage du blog sur les réseaux sociaux et peut être utile pour le référencement."
 
 msgid "settings-global-unit-title"
 msgstr "Unité de base"
@@ -146,6 +143,18 @@ msgstr "Afficher un message signalant la prise en charge du balisage Markdown"
 
 msgid "settings-reactions-markdownnotice-description"
 msgstr "Il s’affichera sous le formulaire de commentaire."
+
+msgid "settings-reactions-advancedminimalsocialmeta-title"
+msgstr "Ajouter des balises sociales minimalistes"
+
+msgid "settings-reactions-advancedminimalsocialmeta-description"
+msgstr "Assure un meilleur affichage du blog sur les réseaux sociaux et peut être utile pour le référencement."
+
+msgid "settings-reactions-advancedjson-title"
+msgstr "Ajouter des métadonnées au format JSON"
+
+msgid "settings-reactions-advancedjson-description"
+msgstr "Utile pour le référencement sur les moteurs de recherche."
 
 msgid "settings-save-button-text"
 msgstr "Enregistrer les paramètres"

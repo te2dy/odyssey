@@ -181,7 +181,7 @@ class FrontendBehaviors
      */
     public static function odysseyJsonLd()
     {
-        if (odUtils::configuratorSetting() === true) {
+        if (My::settingValue('advanced_json') === true) {
             $json_ld = [];
 
             switch (App::url()->type) {

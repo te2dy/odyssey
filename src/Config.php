@@ -255,6 +255,8 @@ class Config extends Process
             }
         }
 
+        echo '<p>' . __('settings-intro') . '</p>';
+
         echo '<form action="', App::backend()->url()->get('admin.blog.theme', ['conf' => '1']), '" enctype=multipart/form-data id=theme-config-form method=post>';
 
         // Displays the setting.
@@ -286,7 +288,7 @@ class Config extends Process
         '<input name=save type=submit value="', __('settings-save-button-text'), '"> ',
         '<input class=delete name=reset value="', __('settings-reset-button-text'), '" type=submit>',
         '</p>',
-        '</form>';;
+        '</form>';
     }
 
     /**

@@ -154,6 +154,14 @@ class My extends MyTheme
             'section'     => ['advanced', 'metadata']
         ];
 
+        $default_settings['advanced_json'] = [
+            'title'       => __('settings-reactions-advancedjson-title'),
+            'description' => __('settings-reactions-advancedjson-description'),
+            'type'        => 'checkbox',
+            'default'     => 0,
+            'section'     => ['advanced', 'metadata']
+        ];
+
         $default_settings['styles'] = [
             'title' => __('settings-footer-odysseystyles-title'),
         ];
