@@ -45,6 +45,9 @@ msgstr "Commentaires et rétroliens"
 msgid "section-reactions-form"
 msgstr "Formulaire de commentaires"
 
+msgid "section-widgets"
+msgstr "Widgets"
+
 msgid "section-advanced"
 msgstr "Paramètres avancés"
 
@@ -152,6 +155,12 @@ msgstr "Afficher un message signalant la prise en charge du balisage Markdown"
 
 msgid "settings-reactions-markdownnotice-description"
 msgstr "Il s’affichera sous le formulaire de commentaire."
+
+msgid "settings-widgets-display-title"
+msgstr "Activer l’emplacement pour les widgets"
+
+msgid "settings-widgets-display-description"
+msgstr "Il est recommandé de désactiver cette option si vous n’affichez aucun widget sur votre blog."
 
 msgid "settings-advanced-minimalsocialmeta-title"
 msgstr "Ajouter des balises sociales minimalistes"

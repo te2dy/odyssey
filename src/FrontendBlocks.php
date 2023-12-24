@@ -35,14 +35,19 @@ class FrontendBlocks
     }
 
     /**
-     * Hides the sidebar.
+     * Display/hides the sidebar.
+     *
+     * @param array $attr    Unused.
+     * @param void  $content The sidebar.
+     *
+     * @return string The sidebar.
      */
     public static function odysseySidebar($attr, $content): mixed
     {
-        if (odUtils::configuratorSetting() === true) {
-            return '';
+        if (My::settingValue('widgets_display') !== false) {
+            return $content;
         }
 
-        return $content;
+        return '';
     }
 }

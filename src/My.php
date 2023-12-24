@@ -43,6 +43,10 @@ class My extends MyTheme
                     'form' => __('section-reactions-form')
                 ]
             ],
+            'widgets' => [
+                'name'         => __('section-widgets'),
+                'sub_sections' => []
+            ],
             'advanced' => [
                 'name'         => __('section-advanced'),
                 'sub_sections' => [
@@ -155,6 +159,14 @@ class My extends MyTheme
                 'section'     => ['reactions', 'form']
             ];
         }
+
+        $default_settings['widgets_display'] = [
+            'title'       => __('settings-widgets-display-title'),
+            'description' => __('settings-widgets-display-description'),
+            'type'        => 'checkbox',
+            'default'     => 1,
+            'section'     => ['widgets', 'no-title']
+        ];
 
         $default_settings['advanced_minimal_social_meta'] = [
             'title'       => __('settings-advanced-minimalsocialmeta-title'),
