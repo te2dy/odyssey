@@ -5,6 +5,7 @@
     --color-text-secondary: #969696;
     --color-primary: hsl(226, 80%, 70%);
     --color-primary-amplified: hsl(226, 95%, 80%);
+    --color-input-background: #2b2a33;
   }
 }
 
@@ -252,7 +253,7 @@ img + em { /* Image caption */
 /* Forms & buttons. */
 input,
 textarea {
-  background-color: #f2f2f2;
+  background-color: var(--color-input-background, #f2f2f2);
   border: .063rem solid #ccc;
   border-radius: unset;
   box-sizing: border-box;
@@ -273,6 +274,10 @@ label:hover {
 }
 .form-entry :is(label + br + input, label + br + textarea, input + br + small) {
   margin-block: .25rem;
+}
+.form-entry:last-of-type,
+.form-entry :is(input[type="submit"], .form-submit, .button) {
+  margin-bottom: 0;
 }
 button {
   font: 1em inherit;
@@ -639,30 +644,7 @@ aside .widget:last-child {
 /**
  * Custom styles to be put in the theme configurator.
  */
-/*@font-face {
-  font-family: "EB Garamond";
-  src: url("../odyssey/fonts/EBGaramond-Regular.ttf") format("truetype");
-  font-style: normal;
-  font-weight: 400;
-}
-@font-face {
-  font-family: "EB Garamond";
-  src: url("../odyssey/fonts/EBGaramond-Italic.ttf") format("truetype");
-  font-style: italic;
-  font-weight: 400;
-}
-@font-face {
-  font-family: "EB Garamond";
-  src: url("../odyssey/fonts/EBGaramond-Bold.ttf") format("truetype");
-  font-style: normal;
-  font-weight: 700;
-}
-@font-face {
-  font-family: "EB Garamond";
-  src: url("../odyssey/fonts/EBGaramond-BoldItalic.ttf") format("truetype");
-  font-style: italic;
-  font-weight: 700;
-}*/
+
 /*.content-text {
   font-family: "Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   text-align: justify;
