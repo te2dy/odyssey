@@ -34,6 +34,7 @@ class My extends MyTheme
                 'name'         => __('section-content'),
                 'sub_sections' => [
                     'postlist' => __('section-content-postlist'),
+                    'text'     => __('section-content-text'),
                     'images'   => __('section-content-images')
                 ]
             ],
@@ -132,6 +133,19 @@ class My extends MyTheme
             'type'        => 'checkbox',
             'default'     => 1,
             'section'     => ['content', 'postlist']
+        ];
+
+        $default_settings['content_text_align'] = [
+            'title'       => __('settings-content-textalign-title'),
+            'description' => __('settings-content-textalign-description'),
+            'type'        => 'select',
+            'choices'     => [
+                __('settings-content-textalign-left-default')       => 'left',
+                __('settings-content-textalign-justify')            => 'justify',
+                __('settings-content-textalign-justify-not-mobile') => 'justify-not-mobile'
+            ],
+            'default'     => 'left',
+            'section'     => ['content', 'text']
         ];
 
         $default_settings['content_images_wide'] = [

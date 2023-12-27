@@ -12,6 +12,7 @@ namespace Dotclear\Theme\odyssey;
 use Dotclear\App;
 use Dotclear\Core\Process;
 use Dotclear\Core\Backend\Notices;
+use Dotclear\Core\Backend\Page;
 use Dotclear\Helper\Network\Http;
 use Dotclear\Helper\Html\Html;
 // use Dotclear\Helper\Html\Form;
@@ -40,6 +41,14 @@ class Config extends Process
      */
     public static function process(): bool
     {
+        // Loads custon styles for the configurator page.
+        App::behavior()->addBehavior(
+            'adminPageHTMLHead',
+            function () {
+                echo My::cssLoad('/css/admin.min.css');
+            }
+        );
+
         if (!empty($_POST)) {
             try {
 

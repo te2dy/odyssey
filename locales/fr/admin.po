@@ -36,6 +36,9 @@ msgstr "Contenu"
 msgid "section-content-postlist"
 msgstr "Liste des billets"
 
+msgid "section-content-text"
+msgstr "Billets et pages"
+
 msgid "section-content-images"
 msgstr "Images"
 
@@ -137,6 +140,21 @@ msgstr "Afficher des miniatures"
 
 msgid "settings-content-postlistthumbnail-description"
 msgstr "Affiche une miniature de la première image des billets devant leur titre."
+
+msgid "settings-content-textalign-title"
+msgstr "Alignement du texte"
+
+msgid "settings-content-textalign-description"
+msgstr "La justification sur les petits écrans (téléphones) peut provoquer un étirement excessif des lignes. Pour prévenir cet inconvénient, vous pouvez choisir l’option « Justifié (sauf sur les petits écrans) »."
+
+msgid "settings-content-textalign-left-default"
+msgstr "Gauche (par défaut)"
+
+msgid "settings-content-textalign-justify"
+msgstr "Justifié"
+
+msgid "settings-content-textalign-justify-not-mobile"
+msgstr "Justifié (sauf sur les petits écrans)"
 
 msgid "settings-content-imageswide-title"
 msgstr "Agrandir les images suffisamment larges"
