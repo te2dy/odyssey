@@ -19,9 +19,6 @@ use Dotclear\Helper\File\Path;
 use Dotclear\Helper\Html\Html;
 use context;
 
-require_once 'OdysseyUtils.php';
-use OdysseyUtils as odUtils;
-
 class FrontendBehaviors
 {
     /**
@@ -34,14 +31,14 @@ class FrontendBehaviors
         // Adds the name of the editor.
         if (App::blog()->settings->system->editor) {
             echo '<meta name=author content=',
-            odUtils::attrValueQuotes(App::blog()->settings->system->editor),
+            My::attrValue(App::blog()->settings->system->editor),
             '>' . "\n";
         }
 
         // Adds the content of the copyright notice.
         if (App::blog()->settings->system->copyright_notice) {
             echo '<meta name=copyright content=',
-            odUtils::attrValueQuotes(App::blog()->settings->system->copyright_notice),
+            My::attrValue(App::blog()->settings->system->copyright_notice),
             '>' . "\n";
         }
     }
@@ -75,7 +72,7 @@ class FrontendBehaviors
                     }
 
                     if (context::EntryFirstImageHelper('o', true, '', true)) {
-                        $img = odUtils::blogBaseURL() . context::EntryFirstImageHelper('o', true, '', true);
+                        $img = My::blogBaseURL() . context::EntryFirstImageHelper('o', true, '', true);
                     }
 
                     break;
@@ -150,7 +147,7 @@ class FrontendBehaviors
 
                 /*
                 if (!$img && isset(My::settingValue('header_image')['url'])) {
-                    $img = odUtils::blogBaseURL() . My::settingValue('header_image')['url'];
+                    $img = My::blogBaseURL() . My::settingValue('header_image')['url'];
                 }
 
                 $img = Html::escapeURL($img);
@@ -257,7 +254,7 @@ class FrontendBehaviors
                     }
 
                     if (App::frontend()->context()->posts->post_url) {
-                        $json_ld['url'] = odUtils::blogBaseURL() . '/' . App::frontend()->context()->posts->post_url;
+                        $json_ld['url'] = My::blogBaseURL() . '/' . App::frontend()->context()->posts->post_url;
                     }
                     
                     if (App::frontend()->context()->posts->post_dt && App::frontend()->context()->posts->post_tz) {

@@ -12,9 +12,6 @@ namespace Dotclear\Theme\odyssey;
 use Dotclear\App;
 use Dotclear\Core\Frontend\Ctx;
 
-require_once 'OdysseyUtils.php';
-use OdysseyUtils as odUtils;
-
 class FrontendBlocks
 {
     /**

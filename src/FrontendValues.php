@@ -13,9 +13,6 @@ use Dotclear\App;
 use Dotclear\Core\Frontend\Ctx;
 use Dotclear\Helper\Html\Html;
 
-require_once 'OdysseyUtils.php';
-use OdysseyUtils as odUtils;
-
 class FrontendValues
 {
     /**

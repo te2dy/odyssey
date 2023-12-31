@@ -18,9 +18,6 @@ use Dotclear\Helper\Html\Html;
 // use Dotclear\Helper\Html\Form;
 // use Dotclear\Helper\Html\Form\Select;
 
-require_once 'OdysseyUtils.php';
-use OdysseyUtils as odUtils;
-
 use form;
 
 class Config extends Process
@@ -406,7 +403,7 @@ class Config extends Process
         $font_size_allowed = [80, 90, 110, 120];
 
         if (isset($_POST['global_font_size']) && in_array((int) $_POST['global_font_size'], $font_size_allowed, true)) {
-            $css_root_array[':root']['--font-size'] = odUtils::removeZero($_POST['global_font_size'] / 100) . 'em';
+            $css_root_array[':root']['--font-size'] = My::removeZero($_POST['global_font_size'] / 100) . 'em';
         }
 
         // Alternate post color.
@@ -416,9 +413,9 @@ class Config extends Process
             $css_main_array['.entry-list .post:nth-child(even)']['background-color'] = 'var(--color-background-even, #fff)';
         }
 
-        $css  = !empty($css_root_array) ? odUtils::stylesArrayToString($css_root_array) : '';
-        $css .= !empty($css_root_dark_array) ? '@media (prefers-color-scheme:dark){' . odUtils::stylesArrayToString($css_root_dark_array) . '}' : '';
-        $css .= !empty($css_main_array) ? odUtils::stylesArrayToString($css_main_array) : '';
+        $css  = !empty($css_root_array) ? My::stylesArrToStr($css_root_array) : '';
+        $css .= !empty($css_root_dark_array) ? '@media (prefers-color-scheme:dark){' . My::stylesArrToStr($css_root_dark_array) . '}' : '';
+        $css .= !empty($css_main_array) ? My::stylesArrToStr($css_main_array) : '';
 
         $css = htmlspecialchars($css, ENT_NOQUOTES);
         $css = str_replace('&gt;', ">", $css);
