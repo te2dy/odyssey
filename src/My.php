@@ -20,8 +20,8 @@ class My extends MyTheme
             'global' => [
                 'name'         => __('section-global'),
                 'sub_sections' => [
-                    'units' => __('section-global-units'),
-                    'fonts' => __('section-global-fonts')
+                    'layout' => __('section-global-layout'),
+                    'fonts'  => __('section-global-fonts')
                 ]
             ],
             'header' => [
@@ -70,11 +70,20 @@ class My extends MyTheme
             'description' => __('settings-global-unit-description'),
             'type'        => 'select',
             'choices'     => [
-                __('settings-global-unit-relative-default') => 'relative',
-                __('settings-global-unit-static')           => 'static'
+                __('settings-global-unit-relative-default') => 'em',
+                __('settings-global-unit-static')           => 'px'
             ],
-            'default'     => 'relative',
-            'section'     => ['global', 'no-title']
+            'default'     => 'em',
+            'section'     => ['global', 'layout']
+        ];
+
+        $default_settings['global_page_width_value'] = [
+            'title'       => __('settings-global-pagewidthvalue-title'),
+            'description' => __('settings-global-pagewidthvalue-description'),
+            'type'        => 'integer',
+            'default'     => '',
+            'placeholder' => !My::settingValue('global_unit') ? 30 : 480,
+            'section'     => ['global', 'layout']
         ];
 
         $default_settings['global_font_family'] = [
@@ -233,6 +242,50 @@ class My extends MyTheme
     public static function attrValue(string $value): string
     {
         return str_contains($value, ' ') === false ? $value : '"' . $value . '"';
+    }
+
+    /**
+     * Gets an array of the content width of the blog.
+     *
+     * @param string $unit           Should be 'em' or 'px'.
+     * @param int    $value          The value of the width.
+     * @param bool   $return_default If true, the default width will be returned.
+     *
+     * @return array The unit and the value of the width.
+     */
+    public static function getContentWidth($unit = 'em', $value = 30, $return_default = false)
+    {
+        $value = (int) $value;
+
+        $content_width_default = [];
+
+        if ($return_default === true) {
+            $content_width_default = [
+                'unit'  => 'em',
+                'value' => 30
+            ];
+        }
+
+        if ($unit === 'em' && $value === 30 && $return_default === false) {
+            return $content_width_default;
+        }
+
+        if ($unit === 'em' && ($value < 30 || $value > 80)) {
+            return $content_width_default;
+        }
+
+        if ($unit === 'px' && ($value < 480 || $value > 1280)) {
+            return $content_width_default;
+        }
+
+        if (!in_array($unit, ['em', 'px'], true)) {
+            return $content_width_default;
+        }
+
+        return [
+            'unit'  => $unit,
+            'value' => $value
+        ];
     }
 
     /**

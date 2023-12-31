@@ -24,6 +24,9 @@ msgstr "Par défaut&nbsp;: décoché."
 msgid "section-global"
 msgstr "Paramètres globaux"
 
+msgid "section-global-layout"
+msgstr "Mise en page"
+
 msgid "section-global-fonts"
 msgstr "Polices d’écriture"
 
@@ -61,13 +64,19 @@ msgid "settings-global-unit-title"
 msgstr "Unité de base"
 
 msgid "settings-global-unit-description"
-msgstr "En mode relatif, les dimensions de la page et la taille du texte sont liées aux paramètres du navigateur ; elles peuvent donc différer d’un appareil à l’autre (utile d’un point de vue accessibilité ♿️). <span style="font-style:normal;">A contrario</span>, le mode statique impose une même taille à tous les navigateurs."
+msgstr "Le cadratin (em) permet à vos pages d’adapter leur largeur en fonction de la taille de la police du navigateur (très utile d’un point de vue accessibilité). Ainsi, votre blog peut s’afficher différemment d’un appareil à l’autre. Pour un blog photo avec de larges images, il est recommandé d’utiliser les pixels."
 
 msgid "settings-global-unit-relative-default"
-msgstr "Relative (par défaut)"
+msgstr "Cadradin (par défaut)"
 
 msgid "settings-global-unit-static"
-msgstr "Statique"
+msgstr "Pixel"
+
+msgid "settings-global-pagewidthvalue-title"
+msgstr "Largeur"
+
+msgid "settings-global-pagewidthvalue-description"
+msgstr "Si vous avez choisi le cadratin comme unité de base, la largeur doit être comprise entre 30 et 80 ; en pixel, entre 480 et 1 280. Par défaut, 30 em ou 480 px."
 
 msgid "settings-global-fontfamily-title"
 msgstr "Type"

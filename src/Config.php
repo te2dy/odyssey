@@ -60,8 +60,13 @@ class Config extends Process
                      * will be saved later.
                      */
                     foreach (My::settingsDefault() as $setting_id => $setting_data) {
-                        $specific_settings = ['styles'];
-                        $setting_data      = [];
+                        $specific_settings = [
+                            'global_unit',
+                            'global_page_width_value',
+                            'styles'
+                        ];
+
+                        $setting_data = [];
 
                         // Saves non specific settings.
                         if (!in_array($setting_id, $specific_settings, true)) {
@@ -79,39 +84,41 @@ class Config extends Process
                                 );
                             }
 
-                            $setting_label = My::settingsDefault($setting_id)['title'];
-                            $setting_label = Html::clean($setting_label);
-
-                            // Saves the setting or drop it.
-                            if (!empty($setting_data)) {
-                                App::blog()->settings->odyssey->put(
-                                    $setting_id,
-                                    $setting_data['value'],
-                                    $setting_data['type'],
-                                    $setting_label,
-                                    true
-                                );
-                            } else {
+                            // Drops empty settings.
+                            if (empty($setting_data)) {
                                 App::blog()->settings->odyssey->drop($setting_id);
+                            }
+                        } else {
+                            // Saves specific settings.
+                            switch ($setting_id) {
+                                case 'global_unit' :
+                                case 'global_page_width_value' :
+                                    $setting_data = self::sanitizePageWidth(
+                                        $setting_id,
+                                        $_POST['global_unit'],
+                                        $_POST['global_page_width_value']
+                                    );
+                                    break;
+                                case 'styles' :
+                                    $setting_data = self::saveStyles();
                             }
                         }
 
-                        // Saves specific settings.
-                    }
+                        // Saves the setting or drop it.
+                        if (isset($setting_data['value']) && isset($setting_data['type'])) {
+                            $setting_label = My::settingsDefault($setting_id)['title'];
+                            $setting_label = Html::clean($setting_label);
 
-                    // Saves styles.
-                    $styles = self::saveStyles();
-
-                    if ($styles) {
-                        App::blog()->settings->odyssey->put(
-                            'styles',
-                            $styles['value'],
-                            $styles['type'],
-                            Html::clean(My::settingsDefault()['styles']['title']),
-                            true
-                        );
-                    } else {
-                        App::blog()->settings->odyssey->drop('styles');
+                            App::blog()->settings->odyssey->put(
+                                $setting_id,
+                                $setting_data['value'],
+                                $setting_data['type'],
+                                $setting_label ?: '',
+                                true
+                            );
+                        } else {
+                            App::blog()->settings->odyssey->drop($setting_id);
+                        }
                     }
 
                     // Refreshes blog.
@@ -184,6 +191,26 @@ class Config extends Process
                     $setting_id,
                     $default_settings[$setting_id]['choices'],
                     $setting_value
+                );
+                break;
+
+            default :
+                $placeholder = isset($default_settings[$setting_id]['placeholder'])
+                ? 'placeholder=' . My::attrValue($default_settings[$setting_id]['placeholder'])
+                : '';
+
+                echo '<label for=', $setting_id, '>',
+                $default_settings[$setting_id]['title'],
+                '</label>',
+                Form::field(
+                    $setting_id,
+                    30,
+                    255,
+                    $setting_value,
+                    '',
+                    '',
+                    false,
+                    $placeholder
                 );
         }
 
@@ -306,11 +333,27 @@ class Config extends Process
      */
     public static function saveStyles(): array
     {
-        $css_root_array = [];
-        $$css_root_dark_array = [];
-        $css_main_array = [];
+        $css_root_array      = [];
+        $css_root_dark_array = [];
+        $css_main_array      = [];
 
         $default_settings = My::settingsDefault();
+
+        // Page width.
+        if (isset($_POST['global_unit']) && isset($_POST['global_page_width_value'])) {
+            $page_width_unit  = $_POST['global_unit'];
+            $page_width_value = $_POST['global_page_width_value'];
+
+            if ($page_width_unit === 'px' && $page_width_value === '') {
+                $page_width_value = '480';
+            }
+
+            $page_width_data = My::getContentWidth($page_width_unit, $page_width_value);
+
+            if (!empty($page_width_data)) {
+                $css_root_array[':root']['--page-width'] = $page_width_data['value'] . $page_width_data['unit'];
+            }
+        }
 
         // Font family.
         if (isset($_POST['global_font_family'])) {
@@ -484,6 +527,38 @@ class Config extends Process
             return [
                 'value' => Html::escapeHTML($setting_value),
                 'type'  => 'string'
+            ];
+        }
+
+        return [];
+    }
+
+    /**
+     * Prepares to save the page width option.
+     *
+     * @param string  $setting_id The setting id.
+     * @param string  $unit       The unit used to define the width (px or em)
+     * @param integer $value      The value of the page width.
+     *
+     * @return array The page width and its unit.
+     */
+    public static function sanitizePageWidth($setting_id, $unit, $value): array
+    {
+        $unit  = $unit ?: 'px';
+        $value = $value ? (int) $value : 30;
+        $data  = My::getContentWidth($unit, $value);
+
+        if ($setting_id === 'global_unit' && isset($data['unit'])) {
+            return [
+                'value' => Html::escapeHTML($data['unit']),
+                'type'  => 'string'
+            ];
+        }
+
+        if ($setting_id === 'global_page_width_value' && isset($data['value'])) {
+            return [
+                'value' => Html::escapeHTML($data['value']),
+                'type'  => 'integer'
             ];
         }
 

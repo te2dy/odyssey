@@ -28,7 +28,7 @@ body {
   flex-direction: column;
   margin: 4rem auto;
   row-gap: 4rem;
-  width: min(30em, 85%);
+  width: min(var(--page-width, 30em), 85%);
 }
 #site-header,
 #site-header-short {
