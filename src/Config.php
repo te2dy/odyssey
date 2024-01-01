@@ -525,6 +525,21 @@ class Config extends Process
             }
         }
 
+        // Transitions.
+        if (isset($_POST['global_css_transition']) && $_POST['global_css_transition'] === '1') {
+            $css_root_array[':root']['--color-transition'] = 'all .2s ease-in-out';
+
+            /*
+            $css_media_motion_array['a']['transition'] = 'unset';
+
+            $css_media_motion_array['a:active, a:hover']['transition'] = 'unset';
+
+            $css_media_motion_array['input[type="submit"], .form-submit, .button']['transition'] = 'unset';
+
+            $css_media_motion_array['input[type="submit"]:hover, .button:hover, .form-submit:hover']['transition'] = 'unset';
+            */
+        }
+
         // Alternate post color.
         if (isset($_POST['content_postlist_altcolor']) && $_POST['content_postlist_altcolor'] === '1') {
             $css_root_dark_array[':root']['--color-background-even'] = '#000';
@@ -625,6 +640,7 @@ class Config extends Process
         $data  = My::getContentWidth($unit, $value);
 
         if ($setting_id === 'global_unit' && isset($data['unit'])) {
+            var_dump("ok");
             return [
                 'value' => Html::escapeHTML($data['unit']),
                 'type'  => 'string'

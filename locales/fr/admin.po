@@ -162,6 +162,12 @@ msgstr "Vert"
 msgid "settings-global-primarycolor-red"
 msgstr "Rouge"
 
+msgid "settings-global-colortransition-title"
+msgstr "Activer les transitions de couleur"
+
+msgid "settings-global-colortransition-description"
+msgstr "Les transitions s’activent lors du survol des liens et des boutons."
+
 msgid "settings-header-description-title"
 msgstr "Afficher le slogan du blog"
 

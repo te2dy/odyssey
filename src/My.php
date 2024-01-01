@@ -147,6 +147,14 @@ class My extends MyTheme
             'section'     => ['global', 'colors']
         ];
 
+        $default_settings['global_css_transition'] = [
+            'title'       => __('settings-global-colortransition-title'),
+            'description' => __('settings-global-colortransition-description'),
+            'type'        => 'checkbox',
+            'default'     => 0,
+            'section'     => ['global', 'colors']
+        ];
+
         $default_settings['header_description'] = [
             'title'       => __('settings-header-description-title'),
             'description' => '',
