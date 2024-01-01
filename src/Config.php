@@ -89,7 +89,7 @@ class Config extends Process
                                 App::blog()->settings->odyssey->drop($setting_id);
                             }
                         } else {
-                            // Saves specific settings.
+                            // Saves each specific settings.
                             switch ($setting_id) {
                                 case 'global_unit' :
                                 case 'global_page_width_value' :
@@ -99,23 +99,30 @@ class Config extends Process
                                         $_POST['global_page_width_value']
                                     );
                                     break;
+
                                 case 'styles' :
                                     $setting_data = self::saveStyles();
                             }
                         }
 
                         // Saves the setting or drop it.
-                        if (isset($setting_data['value']) && isset($setting_data['type'])) {
+                        if (!empty($setting_data)) {
+                            $setting_value = isset($setting_data['value']) ? $setting_data['value'] : '';
+                            $setting_type  = isset($setting_data['type']) ? $setting_data['type'] : '';
                             $setting_label = My::settingsDefault($setting_id)['title'];
                             $setting_label = Html::clean($setting_label);
 
-                            App::blog()->settings->odyssey->put(
-                                $setting_id,
-                                $setting_data['value'],
-                                $setting_data['type'],
-                                $setting_label ?: '',
-                                true
-                            );
+                            if ($setting_value && $setting_type) {
+                                App::blog()->settings->odyssey->put(
+                                    $setting_id,
+                                    $setting_value,
+                                    $setting_type,
+                                    $setting_label ?: '',
+                                    true
+                                );
+                            } else {
+                                App::blog()->settings->odyssey->drop($setting_id);
+                            }
                         } else {
                             App::blog()->settings->odyssey->drop($setting_id);
                         }
