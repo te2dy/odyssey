@@ -21,7 +21,8 @@ class My extends MyTheme
                 'name'         => __('section-global'),
                 'sub_sections' => [
                     'layout' => __('section-global-layout'),
-                    'fonts'  => __('section-global-fonts')
+                    'fonts'  => __('section-global-fonts'),
+                    'colors' => __('section-global-colors')
                 ]
             ],
             'header' => [
@@ -126,6 +127,24 @@ class My extends MyTheme
             'type'        => 'checkbox',
             'default'     => 0,
             'section'     => ['global', 'fonts']
+        ];
+
+        $global_color_primary_choices = [
+            __('settings-global-primarycolor-blue-default') => 'blue',
+            __('settings-global-primarycolor-gray')         => 'gray',
+            __('settings-global-primarycolor-green')        => 'green',
+            __('settings-global-primarycolor-red')          => 'red'
+        ];
+
+        ksort($global_color_primary_choices);
+
+        $default_settings['global_color_primary'] = [
+            'title'       => __('settings-global-primarycolor-title'),
+            'description' => __('settings-global-primarycolor-description'),
+            'type'        => 'select',
+            'choices'     => $global_color_primary_choices,
+            'default'     => 'blue',
+            'section'     => ['global', 'colors']
         ];
 
         $default_settings['header_description'] = [

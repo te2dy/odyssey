@@ -463,9 +463,9 @@ class Config extends Process
 
         // Font antialiasing.
         if (isset($_POST['global_font_antialiasing']) && $_POST['global_font_antialiasing'] === '1') {
-            $css_root_array['body']['-moz-osx-font-smoothing'] = 'grayscale';
-            $css_root_array['body']['-webkit-font-smoothing']  = 'antialiased';
-            $css_root_array['body']['font-smooth']             = 'always';
+            $css_main_array['body']['-moz-osx-font-smoothing'] = 'grayscale';
+            $css_main_array['body']['-webkit-font-smoothing']  = 'antialiased';
+            $css_main_array['body']['font-smooth']             = 'always';
 
             /*
             $css_media_contrast_array['body']['-moz-osx-font-smoothing'] = 'unset';
@@ -476,6 +476,53 @@ class Config extends Process
             $css_media_print_array['body']['-webkit-font-smoothing']  = 'unset';
             $css_media_print_array['body']['font-smooth']             = 'unset';
             */
+        }
+
+        // Primary color.
+        $primary_colors_allowed = ['gray', 'green', 'red'];
+
+        $primary_colors = [
+            'light' => [
+                'gray'  => '0, 0%, 10%',
+                'green' => '120, 75%, 30%',
+                'red'   => '0, 90%, 45%'
+            ],
+            'light-amplified' => [
+                'gray'  => '0, 0%, 28%',
+                'green' => '120, 60%, 40%',
+                'red'   => '0, 100%, 55%'
+            ],
+            'dark' => [
+                'gray'  => '0, 0%, 99%',
+                'green' => '120, 60%, 80%',
+                'red'   => '0, 70%, 85%'
+            ],
+            'dark-amplified' => [
+                'gray'  => '0, 0%, 80%',
+                'green' => '120, 50%, 60%',
+                'red'   => '0, 70, 70%'
+            ]
+        ];
+
+        if (isset($_POST['global_color_primary']) && in_array($_POST['global_color_primary'], $primary_colors_allowed, true)) {
+
+            // Light.
+            $css_root_array[':root']['--color-primary'] = 'hsl(' . $primary_colors['light'][$_POST['global_color_primary']] . ')';
+
+            // Light & amplified.
+            if (isset($primary_colors['light-amplified'][$_POST['global_color_primary']])) {
+                $css_root_array[':root']['--color-primary-amplified'] = 'hsl(' . $primary_colors['light-amplified'][$_POST['global_color_primary']] . ')';
+            }
+
+            // Dark.
+            if (isset($primary_colors['dark'][$_POST['global_color_primary']])) {
+                $css_root_array[':root']['--color-primary-dark'] = 'hsl(' . $primary_colors['dark'][$_POST['global_color_primary']] . ')';
+            }
+
+            // Dark & amplified.
+            if (isset($primary_colors['dark-amplified'][$_POST['global_color_primary']])) {
+                $css_root_array[':root']['--color-primary-dark-amplified'] = 'hsl(' . $primary_colors['dark-amplified'][$_POST['global_color_primary']] . ')';
+            }
         }
 
         // Alternate post color.

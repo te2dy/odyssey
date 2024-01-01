@@ -3,8 +3,8 @@
     --color-background: #16161d;
     --color-text-main: #ccc;
     --color-text-secondary: #969696;
-    --color-primary: hsl(226, 80%, 70%);
-    --color-primary-amplified: hsl(226, 95%, 80%);
+    --color-primary: var(--color-primary-dark, hsl(226, 80%, 70%));
+    --color-primary-amplified: var(--color-primary-dark-amplified, hsl(226, 95%, 80%));
     --color-input-background: #2b2a33;
   }
 }

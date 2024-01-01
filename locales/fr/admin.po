@@ -30,6 +30,9 @@ msgstr "Mise en page"
 msgid "section-global-fonts"
 msgstr "Polices d’écriture"
 
+msgid "section-global-colors"
+msgstr "Couleurs"
+
 msgid "section-header"
 msgstr "En-tête"
 
@@ -140,6 +143,24 @@ msgstr "Activer le lissage des caractères"
 
 msgid "settings-global-fontantialiasing-description"
 msgstr "Prévient l’effet de crénelage mais peut rendre les caractères très (trop) fins."
+
+msgid "settings-global-primarycolor-title"
+msgstr "Couleur principale"
+
+msgid "settings-global-primarycolor-description"
+msgstr "Notamment utilisée pour les liens."
+
+msgid "settings-global-primarycolor-blue-default"
+msgstr "Bleu (par défaut)"
+
+msgid "settings-global-primarycolor-gray"
+msgstr "Gris"
+
+msgid "settings-global-primarycolor-green"
+msgstr "Vert"
+
+msgid "settings-global-primarycolor-red"
+msgstr "Rouge"
 
 msgid "settings-header-description-title"
 msgstr "Afficher le slogan du blog"
