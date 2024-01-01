@@ -3,7 +3,7 @@
  * Odyssey, a Dotclear theme.
  *
  * @author    Teddy <zozxebpyr@mozmail.com>
- * @copyright 2022-2023 Teddy
+ * @copyright 2022-2024 Teddy
  * @license   GPL-3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
  */
 
@@ -43,6 +43,7 @@ class Config extends Process
             'adminPageHTMLHead',
             function () {
                 echo My::cssLoad('/css/admin.min.css');
+                echo My::jsLoad('/js/admin.min.js');
             }
         );
 
@@ -322,6 +323,10 @@ class Config extends Process
 
             echo '</div>';
         }
+
+        // Hidden inputs.
+        echo form::hidden('page_width_em_default', '30');
+        echo form::hidden('page_width_px_default', '480');
 
         echo '<p>',
         App::nonce()->getFormNonce(),
