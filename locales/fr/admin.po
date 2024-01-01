@@ -168,6 +168,18 @@ msgstr "Activer les transitions de couleur"
 msgid "settings-global-colortransition-description"
 msgstr "Les transitions s’activent lors du survol des liens et des boutons."
 
+msgid "settings-header-align-title"
+msgstr "Alignement"
+
+msgid "settings-header-align-left"
+msgstr "Gauche"
+
+msgid "settings-header-align-center-default"
+msgstr "Centré (par défaut)"
+
+msgid "settings-header-align-right"
+msgstr "Droite"
+
 msgid "settings-header-description-title"
 msgstr "Afficher le slogan du blog"
 

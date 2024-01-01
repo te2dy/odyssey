@@ -155,6 +155,19 @@ class My extends MyTheme
             'section'     => ['global', 'colors']
         ];
 
+        $default_settings['header_align'] = [
+            'title'       => __('settings-header-align-title'),
+            'description' => '',
+            'type'        => 'select',
+            'choices'     => [
+                __('settings-header-align-left')           => 'left',
+                __('settings-header-align-center-default') => 'center',
+                __('settings-header-align-right')          => 'right'
+            ],
+            'default'     => 'center',
+            'section'     => ['header', 'no-title']
+        ];
+
         $default_settings['header_description'] = [
             'title'       => __('settings-header-description-title'),
             'description' => '',

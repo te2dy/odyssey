@@ -540,6 +540,13 @@ class Config extends Process
             */
         }
 
+        // Header alignment
+        $header_align_allowed = ['left', 'right'];
+
+        if (isset($_POST['header_align']) && in_array($_POST['header_align'], $header_align_allowed, true)) {
+            $css_root_array[':root']['--header-align'] = $_POST['header_align'];
+        }
+
         // Alternate post color.
         if (isset($_POST['content_postlist_altcolor']) && $_POST['content_postlist_altcolor'] === '1') {
             $css_root_dark_array[':root']['--color-background-even'] = '#000';
