@@ -120,6 +120,14 @@ class My extends MyTheme
             'section'     => ['global', 'fonts']
         ];
 
+        $default_settings['global_font_antialiasing'] = [
+            'title'       => __('settings-global-fontantialiasing-title'),
+            'description' => __('settings-global-fontantialiasing-description'),
+            'type'        => 'checkbox',
+            'default'     => 0,
+            'section'     => ['global', 'fonts']
+        ];
+
         $default_settings['header_description'] = [
             'title'       => __('settings-header-description-title'),
             'description' => '',

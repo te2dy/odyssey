@@ -461,6 +461,23 @@ class Config extends Process
             $css_root_array[':root']['--font-size'] = My::removeZero($_POST['global_font_size'] / 100) . 'em';
         }
 
+        // Font antialiasing.
+        if (isset($_POST['global_font_antialiasing']) && $_POST['global_font_antialiasing'] === '1') {
+            $css_root_array['body']['-moz-osx-font-smoothing'] = 'grayscale';
+            $css_root_array['body']['-webkit-font-smoothing']  = 'antialiased';
+            $css_root_array['body']['font-smooth']             = 'always';
+
+            /*
+            $css_media_contrast_array['body']['-moz-osx-font-smoothing'] = 'unset';
+            $css_media_contrast_array['body']['-webkit-font-smoothing']  = 'unset';
+            $css_media_contrast_array['body']['font-smooth']             = 'unset';
+
+            $css_media_print_array['body']['-moz-osx-font-smoothing'] = 'unset';
+            $css_media_print_array['body']['-webkit-font-smoothing']  = 'unset';
+            $css_media_print_array['body']['font-smooth']             = 'unset';
+            */
+        }
+
         // Alternate post color.
         if (isset($_POST['content_postlist_altcolor']) && $_POST['content_postlist_altcolor'] === '1') {
             $css_root_dark_array[':root']['--color-background-even'] = '#000';

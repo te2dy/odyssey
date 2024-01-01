@@ -135,6 +135,12 @@ msgstr "110 %"
 msgid "settings-global-fontsize-120"
 msgstr "120 %"
 
+msgid "settings-global-fontantialiasing-title"
+msgstr "Activer le lissage des caractères"
+
+msgid "settings-global-fontantialiasing-description"
+msgstr "Prévient l’effet de crénelage mais peut rendre les caractères très (trop) fins."
+
 msgid "settings-header-description-title"
 msgstr "Afficher le slogan du blog"
 
