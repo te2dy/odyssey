@@ -125,7 +125,7 @@ class My extends MyTheme
             'title'       => __('settings-global-fontantialiasing-title'),
             'description' => __('settings-global-fontantialiasing-description'),
             'type'        => 'checkbox',
-            'default'     => 0,
+            'default'     => '0',
             'section'     => ['global', 'fonts']
         ];
 
@@ -151,7 +151,7 @@ class My extends MyTheme
             'title'       => __('settings-global-colortransition-title'),
             'description' => __('settings-global-colortransition-description'),
             'type'        => 'checkbox',
-            'default'     => 0,
+            'default'     => '0',
             'section'     => ['global', 'colors']
         ];
 
@@ -172,7 +172,7 @@ class My extends MyTheme
             'title'       => __('settings-header-description-title'),
             'description' => '',
             'type'        => 'checkbox',
-            'default'     => 1,
+            'default'     => '1',
             'section'     => ['header', 'no-title']
         ];
 
@@ -180,7 +180,7 @@ class My extends MyTheme
             'title'       => __('settings-content-postlistaltcolor-title'),
             'description' => __('settings-content-postlistaltcolor-description'),
             'type'        => 'checkbox',
-            'default'     => 0,
+            'default'     => '0',
             'section'     => ['content', 'postlist']
         ];
 
@@ -188,7 +188,7 @@ class My extends MyTheme
             'title'       => __('settings-content-postlistthumbnail-title'),
             'description' => __('settings-content-postlistthumbnail-description'),
             'type'        => 'checkbox',
-            'default'     => 1,
+            'default'     => '1',
             'section'     => ['content', 'postlist']
         ];
 
@@ -255,7 +255,7 @@ class My extends MyTheme
             'title'       => __('settings-content-initialletter-title'),
             'description' => __('settings-content-initialletter-description'),
             'type'        => 'checkbox',
-            'default'     => 0,
+            'default'     => '0',
             'section'     => ['content', 'text-formatting']
         ];
 
@@ -263,7 +263,7 @@ class My extends MyTheme
             'title'       => __('settings-content-imageswide-title'),
             'description' => __('settings-content-imageswide-description'),
             'type'        => 'checkbox',
-            'default'     => 0,
+            'default'     => '0',
             'section'     => ['content', 'images']
         ];
 
@@ -271,7 +271,7 @@ class My extends MyTheme
             'title'       => __('settings-reactions-button-title'),
             'description' => __('settings-reactions-button-description'),
             'type'        => 'checkbox',
-            'default'     => 1,
+            'default'     => '1',
             'section'     => ['reactions', 'form']
         ];
 
@@ -280,7 +280,7 @@ class My extends MyTheme
                 'title'       => __('settings-reactions-markdownnotice-title'),
                 'description' => __('settings-reactions-markdownnotice-description'),
                 'type'        => 'checkbox',
-                'default'     => 0,
+                'default'     => '0',
                 'section'     => ['reactions', 'form']
             ];
         }
@@ -289,7 +289,7 @@ class My extends MyTheme
             'title'       => __('settings-widgets-display-title'),
             'description' => __('settings-widgets-display-description'),
             'type'        => 'checkbox',
-            'default'     => 1,
+            'default'     => '1',
             'section'     => ['widgets', 'no-title']
         ];
 
@@ -297,7 +297,7 @@ class My extends MyTheme
             'title'       => __('settings-advanced-minimalsocialmeta-title'),
             'description' => __('settings-advanced-minimalsocialmeta-description'),
             'type'        => 'checkbox',
-            'default'     => 0,
+            'default'     => '0',
             'section'     => ['advanced', 'metadata']
         ];
 
@@ -305,7 +305,7 @@ class My extends MyTheme
             'title'       => __('settings-advanced-json-title'),
             'description' => __('settings-advanced-json-description'),
             'type'        => 'checkbox',
-            'default'     => 0,
+            'default'     => '0',
             'section'     => ['advanced', 'metadata']
         ];
 

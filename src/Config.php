@@ -83,10 +83,7 @@ class Config extends Process
                                     $setting_id,
                                     '0'
                                 );
-                            }
-
-                            // Drops empty settings.
-                            if (empty($setting_data)) {
+                            } else {
                                 App::blog()->settings->odyssey->drop($setting_id);
                             }
                         } else {
@@ -113,7 +110,7 @@ class Config extends Process
                             $setting_label = My::settingsDefault($setting_id)['title'];
                             $setting_label = Html::clean($setting_label);
 
-                            if ($setting_value && $setting_type) {
+                            if ($setting_value !== '' && $setting_type !== '') {
                                 App::blog()->settings->odyssey->put(
                                     $setting_id,
                                     $setting_value,
@@ -231,7 +228,7 @@ class Config extends Process
 
             // If the parameter is a checkbox, displays its default value as a note.
             if ($default_settings[$setting_id]['type'] === 'checkbox') {
-                if ($default_settings[$setting_id]['default'] === 1) {
+                if ($default_settings[$setting_id]['default'] === '1') {
                     echo ' ', __('settings-default-checked');
                 } else {
                     echo ' ', __('settings-default-unchecked');
@@ -737,7 +734,7 @@ class Config extends Process
         $css  = !empty($css_root_array) ? My::stylesArrToStr($css_root_array) : '';
         $css .= !empty($css_root_dark_array) ? '@media (prefers-color-scheme:dark){' . My::stylesArrToStr($css_root_dark_array) . '}' : '';
         $css .= !empty($css_main_array) ? My::stylesArrToStr($css_main_array) : '';
-        $css .= !empty($css_supports_initial_letter_array) ? '@supports (initial-letter:2) or (-webkit-initial-letter:2) or (-moz-initial-letter:2){' . odysseyUtils::stylesArrayToString($css_supports_initial_letter_array) . '}' : '';
+        $css .= !empty($css_supports_initial_letter_array) ? '@supports (initial-letter:2) or (-webkit-initial-letter:2) or (-moz-initial-letter:2){' . My::stylesArrToStr($css_supports_initial_letter_array) . '}' : '';
         $css .= !empty($css_media_array) ? '@media (max-width:34em){' . My::stylesArrToStr($css_media_array) . '}' : '';
 
         $css = htmlspecialchars($css, ENT_NOQUOTES);
