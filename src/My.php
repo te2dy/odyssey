@@ -251,6 +251,14 @@ class My extends MyTheme
             'section'     => ['content', 'text-formatting']
         ];
 
+        $default_settings['content_initial_letter'] = [
+            'title'       => __('settings-content-initialletter-title'),
+            'description' => __('settings-content-initialletter-description'),
+            'type'        => 'checkbox',
+            'default'     => 0,
+            'section'     => ['content', 'text-formatting']
+        ];
+
         $default_settings['content_images_wide'] = [
             'title'       => __('settings-content-imageswide-title'),
             'description' => __('settings-content-imageswide-description'),

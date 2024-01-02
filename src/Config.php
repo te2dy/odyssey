@@ -345,10 +345,11 @@ class Config extends Process
      */
     public static function saveStyles(): array
     {
-        $css_root_array      = [];
-        $css_root_dark_array = [];
-        $css_main_array      = [];
-        $css_media_array     = [];
+        $css_root_array                    = [];
+        $css_root_dark_array               = [];
+        $css_main_array                    = [];
+        $css_supports_initial_letter_array = [];
+        $css_media_array                   = [];
 
         $default_settings = My::settingsDefault();
 
@@ -725,9 +726,18 @@ class Config extends Process
             }
         }
 
+        // Initial letter
+        if (isset($_POST['content_initial_letter']) && $_POST['content_initial_letter'] === '1') {
+            $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['-moz-initial-letter'] = '2';
+            $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['-webkit-initial-letter'] = '2';
+            $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['initial-letter'] = '2';
+            $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['margin-right'] = '.25rem';
+        }
+
         $css  = !empty($css_root_array) ? My::stylesArrToStr($css_root_array) : '';
         $css .= !empty($css_root_dark_array) ? '@media (prefers-color-scheme:dark){' . My::stylesArrToStr($css_root_dark_array) . '}' : '';
         $css .= !empty($css_main_array) ? My::stylesArrToStr($css_main_array) : '';
+        $css .= !empty($css_supports_initial_letter_array) ? '@supports (initial-letter:2) or (-webkit-initial-letter:2) or (-moz-initial-letter:2){' . odysseyUtils::stylesArrayToString($css_supports_initial_letter_array) . '}' : '';
         $css .= !empty($css_media_array) ? '@media (max-width:34em){' . My::stylesArrToStr($css_media_array) . '}' : '';
 
         $css = htmlspecialchars($css, ENT_NOQUOTES);
