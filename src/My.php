@@ -212,6 +212,19 @@ class My extends MyTheme
             'section'     => ['content', 'text-formatting']
         ];
 
+        $default_settings['content_line_height'] = [
+            'title'       => __('settings-content-lineheight-title'),
+            'description' => '',
+            'type'        => 'select_int',
+            'choices'     => [
+                __('settings-content-lineheight-small')            => 125,
+                __('settings-content-lineheight-standard-default') => 150,
+                __('settings-content-lineheight-big')              => 175
+            ],
+            'default'     => 150,
+            'section'     => ['content', 'text-formatting']
+        ];
+
         $default_settings['content_text_align'] = [
             'title'       => __('settings-content-textalign-title'),
             'description' => __('settings-content-textalign-description'),
@@ -222,6 +235,19 @@ class My extends MyTheme
                 __('settings-content-textalign-justify-not-mobile') => 'justify-not-mobile'
             ],
             'default'     => 'left',
+            'section'     => ['content', 'text-formatting']
+        ];
+
+        $default_settings['content_hyphens'] = [
+            'title'       => __('settings-content-hyphens-title'),
+            'description' => '',
+            'type'        => 'select',
+            'choices'     => [
+                __('settings-content-hyphens-disabled-default') => 'disabled',
+                __('settings-content-hyphens-enabled')          => 'enabled',
+                __('settings-content-hyphens-enablednotmobile') => 'enabled-not-mobile'
+            ],
+            'default'     => 'disabled',
             'section'     => ['content', 'text-formatting']
         ];
 

@@ -38,7 +38,7 @@ body {
 #site-header {
   flex-direction: column;
   row-gap: 1rem;
-  text-align: center;
+  text-align: var(--header-align, center);
 }
 #site-header-short {
   align-items: baseline;
@@ -47,7 +47,6 @@ body {
   flex-wrap: wrap;
   justify-content: space-between;
   row-gap: .5rem;
-
 }
 #site-content {
   order: 2;
@@ -114,11 +113,13 @@ code {
   color: var(--color-primary, hsl(226, 80%, 45%));
   text-decoration: none;
   text-decoration-style: unset;
+  transition: var(--color-transition, unset);
 }
 :is(a, details summary):is(:active, :focus, :hover):not(.button) {
   color: var(--color-primary-amplified, hsl(226, 95%, 50%));
   text-decoration: underline;
   text-decoration-style: solid; /* Needed for Safari when ".content-text a" decoration is set. */
+  transition: var(--color-transition, unset);
 }
 :is(a, details summary):is(:focus-visible):not(.button) { /* For navigation with keyboard. */
   background-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
@@ -176,7 +177,8 @@ h6 {
   color: var(--color-text-secondary, #6c6f78);
 }
 .content-text {
-  line-height: 1.5;
+  font-family: var(--font-family-content, inherit);
+  line-height: var(--text-line-height, 1.5);
 }
 .content-text pre {
   text-align: left;
@@ -298,12 +300,14 @@ input[type="submit"],
   background-color: transparent;
   border: .063rem solid var(--color-primary, hsl(226, 80%, 45%));
   border-radius: 0;
+  transition: var(--color-transition, unset);
 }
 :is(input[type="submit"], .button, .form-submit):is(:active, :focus, :hover) {
   background-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
   border-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
   color: var(--color-background, #fcfcfd);
   cursor: pointer;
+  transition: var(--color-transition, unset);
 }
 @media (prefers-contrast: more),
        (-ms-high-contrast: active),
@@ -622,7 +626,7 @@ aside .widget:last-child {
   margin-bottom: 0;
 }
 
-@media all and (max-width: 30em) {
+@media all and (max-width: 34em) {
   #site {
     margin-block: 2rem;
     row-gap: 2rem;
@@ -640,28 +644,3 @@ aside .widget:last-child {
     order: 1;
   }
 }
-
-/**
- * Custom styles to be put in the theme configurator.
- */
-
-/*.content-text {
-  font-family: "Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  text-align: justify;
-  -webkit-hyphens: auto;
-      -ms-hyphens: auto;
-          hyphens: auto;
-  -webkit-hyphenate-limit-chars: 5 2 2;
-    -moz-hyphenate-limit-chars: 5 2 2;
-     -ms-hyphenate-limit-chars: 5 2 2;
-         hyphenate-limit-chars: 5 2 2;
-  -webkit-hyphenate-limit-lines: 2;
-     -moz-hyphenate-limit-lines: 2;
-      -ms-hyphenate-limit-lines: 2;
-          hyphenate-limit-lines: 2;
-  -webkit-hyphenate-limit-last: always;
-     -moz-hyphenate-limit-last: always;
-      -ms-hyphenate-limit-last: always;
-          hyphenate-limit-last: always;
-}
-*/

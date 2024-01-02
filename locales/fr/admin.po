@@ -201,35 +201,20 @@ msgstr "Police d’écriture"
 msgid "settings-content-fontfamily-same-default"
 msgstr "Identique à la police globale du thème (par défaut)"
 
-msgid "settings-content-fontfamily-sansserif"
-msgstr ""
+msgid "settings-content-lineheight-title"
+msgstr "Interligne"
 
-msgid "settings-content-fontfamily-serif"
-msgstr ""
+msgid "settings-content-lineheight-small"
+msgstr "Petit"
 
-msgid "settings-content-fontfamily-mono"
-msgstr ""
+msgid "settings-content-lineheight-standard-default"
+msgstr "Standard (par défaut)"
 
-msgid "settings-content-fontfamily-sansserifbrowser"
-msgstr ""
-
-msgid "settings-content-fontfamily-serifbrowser"
-msgstr ""
-
-msgid "settings-content-fontfamily-monobrowser"
-msgstr ""
-
-msgid "settings-content-fontfamily-atkinson"
-msgstr ""
-
-msgid "settings-content-fontfamily-ebgaramond"
-msgstr ""
-
-msgid "settings-content-fontfamily-luciole"
-msgstr ""
+msgid "settings-content-lineheight-big"
+msgstr "Grand"
 
 msgid "settings-content-textalign-title"
-msgstr "Alignement du texte"
+msgstr "Alignement"
 
 msgid "settings-content-textalign-description"
 msgstr "La justification sur les petits écrans (téléphones) peut provoquer un étirement excessif des lignes. Pour prévenir cet inconvénient, vous pouvez choisir l’option « Justifié (sauf sur les petits écrans) »."
@@ -242,6 +227,18 @@ msgstr "Justifié"
 
 msgid "settings-content-textalign-justify-not-mobile"
 msgstr "Justifié (sauf sur les petits écrans)"
+
+msgid "settings-content-hyphens-title"
+msgstr "Césures"
+
+msgid "settings-content-hyphens-disabled-default"
+msgstr "Désactivées (par défaut)"
+
+msgid "settings-content-hyphens-enabled"
+msgstr "Activées"
+
+msgid "settings-content-hyphens-enablednotmobile"
+msgstr "Activées (sauf sur les petits écrans)"
 
 msgid "settings-content-imageswide-title"
 msgstr "Agrandir les images suffisamment larges 🧪"

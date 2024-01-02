@@ -178,7 +178,8 @@ h6 {
 }
 .content-text {
   font-family: var(--font-family-content, inherit);
-  line-height: 1.5;
+  line-height: var(--text-line-height, 1.5);
+  text-align: var(--text-align, left);
 }
 .content-text pre {
   text-align: left;
@@ -626,7 +627,7 @@ aside .widget:last-child {
   margin-bottom: 0;
 }
 
-@media all and (max-width: 30em) {
+@media all and (max-width: 34em) {
   #site {
     margin-block: 2rem;
     row-gap: 2rem;
@@ -644,28 +645,3 @@ aside .widget:last-child {
     order: 1;
   }
 }
-
-/**
- * Custom styles to be put in the theme configurator.
- */
-
-/*.content-text {
-  font-family: "Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  text-align: justify;
-  -webkit-hyphens: auto;
-      -ms-hyphens: auto;
-          hyphens: auto;
-  -webkit-hyphenate-limit-chars: 5 2 2;
-    -moz-hyphenate-limit-chars: 5 2 2;
-     -ms-hyphenate-limit-chars: 5 2 2;
-         hyphenate-limit-chars: 5 2 2;
-  -webkit-hyphenate-limit-lines: 2;
-     -moz-hyphenate-limit-lines: 2;
-      -ms-hyphenate-limit-lines: 2;
-          hyphenate-limit-lines: 2;
-  -webkit-hyphenate-limit-last: always;
-     -moz-hyphenate-limit-last: always;
-      -ms-hyphenate-limit-last: always;
-          hyphenate-limit-last: always;
-}
-*/

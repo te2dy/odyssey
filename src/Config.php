@@ -348,6 +348,7 @@ class Config extends Process
         $css_root_array      = [];
         $css_root_dark_array = [];
         $css_main_array      = [];
+        $css_media_array     = [];
 
         $default_settings = My::settingsDefault();
 
@@ -542,14 +543,14 @@ class Config extends Process
             $css_root_array[':root']['--header-align'] = $_POST['header_align'];
         }
 
-        // Alternate post color.
+        // Alternate post color
         if (isset($_POST['content_postlist_altcolor']) && $_POST['content_postlist_altcolor'] === '1') {
             $css_root_dark_array[':root']['--color-background-even'] = '#000';
 
             $css_main_array['.entry-list .post:nth-child(even)']['background-color'] = 'var(--color-background-even, #fff)';
         }
 
-        // Content font family.
+        // Content font family
         if (isset($_POST['content_text_font']) && $_POST['content_text_font'] !== 'same' && $_POST['global_font_family'] !== $_POST['content_text_font']) {
             switch ($_POST['content_text_font']) {
                 case 'sans-serif' :
@@ -571,6 +572,8 @@ class Config extends Process
                     $css_root_array[':root']['--font-family-content'] = 'monospace';
                     break;
                 case 'atkinson' :
+                    $css_root_array[':root']['--font-family-content'] = '"Atkinson Hyperlegible", sans-serif';
+
                     $css_main_array[4]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
                     $css_main_array[4]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2")';
                     $css_main_array[4]['@font-face']['font-style']  = 'normal';
@@ -590,11 +593,10 @@ class Config extends Process
                     $css_main_array[7]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("woff2")';
                     $css_main_array[7]['@font-face']['font-style']  = 'italic';
                     $css_main_array[7]['@font-face']['font-weight'] = '700';
-
-                    $css_root_array[':root']['--font-family-content'] = '"Atkinson Hyperlegible", sans-serif';
-
                     break;
                 case 'eb-garamond' :
+                    $css_root_array[':root']['--font-family-content'] = '"EB Garamond", serif';
+
                     $css_main_array[4]['@font-face']['font-family'] = '"EB Garamond"';
                     $css_main_array[4]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/EBGaramond-Regular.ttf") format("truetype")';
                     $css_main_array[4]['@font-face']['font-style']  = 'normal';
@@ -614,10 +616,10 @@ class Config extends Process
                     $css_main_array[7]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/EBGaramond-BoldItalic.ttf") format("truetype")';
                     $css_main_array[7]['@font-face']['font-style']  = 'italic';
                     $css_main_array[7]['@font-face']['font-weight'] = '700';
-
-                    $css_root_array[':root']['--font-family-content'] = '"EB Garamond", serif';
                     break;
                 case 'luciole' :
+                    $css_root_array[':root']['--font-family-content'] = 'Luciole, sans-serif';
+
                     $css_main_array[4]['@font-face']['font-family'] = '"Luciole"';
                     $css_main_array[4]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Luciole-Regular.ttf") format("truetype")';
                     $css_main_array[4]['@font-face']['font-style']  = 'normal';
@@ -637,14 +639,96 @@ class Config extends Process
                     $css_main_array[7]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Luciole-Bold-Italic.ttf") format("truetype")';
                     $css_main_array[7]['@font-face']['font-style']  = 'italic';
                     $css_main_array[7]['@font-face']['font-weight'] = '700';
+            }
+        }
 
-                    $css_root_array[':root']['--font-family-content'] = 'Luciole, sans-serif';
+        // Text align
+        if (isset($_POST['content_text_align'])) {
+            switch ($_POST['content_text_align']) {
+                case 'justify' :
+                    $css_root_array[':root']['--text-align'] = 'justify';
+                    break;
+                case 'justify-not-mobile' :
+                    $css_root_array[':root']['--text-align']  = 'justify';
+                    $css_media_array[':root']['--text-align'] = 'left';
+            }
+        }
+
+        // Line Height
+        $line_height_allowed = [125, 175];
+
+        if (isset($_POST['content_line_height']) && in_array((int) $_POST['content_line_height'], $line_height_allowed, true)) {
+            $css_root_array[':root']['--text-line-height'] = (int) $_POST['content_line_height'] / 100;
+        }
+
+        // Hyphenation.
+        if (isset($_POST['content_hyphens']) && $_POST['content_hyphens'] !== 'disabled') {
+            $css_main_array['.content-text']['-webkit-hyphens'] = 'auto';
+            $css_main_array['.content-text']['-ms-hyphens']     = 'auto';
+            $css_main_array['.content-text']['hyphens']         = 'auto';
+
+            $css_main_array['.content-text']['-webkit-hyphenate-limit-chars'] = '5 2 2';
+            $css_main_array['.content-text']['-moz-hyphenate-limit-chars']    = '5 2 2';
+            $css_main_array['.content-text']['-ms-hyphenate-limit-chars']     = '5 2 2';
+            $css_main_array['.content-text']['hyphenate-limit-chars']         = '5 2 2';
+
+            $css_main_array['.content-text']['-webkit-hyphenate-limit-lines'] = '2';
+            $css_main_array['.content-text']['-moz-hyphenate-limit-lines']    = '2';
+            $css_main_array['.content-text']['-ms-hyphenate-limit-lines']     = '2';
+            $css_main_array['.content-text']['hyphenate-limit-lines']         = '2';
+
+            $css_main_array['.content-text']['-webkit-hyphenate-limit-last'] = 'always';
+            $css_main_array['.content-text']['-moz-hyphenate-limit-last']    = 'always';
+            $css_main_array['.content-text']['-ms-hyphenate-limit-last']     = 'always';
+            $css_main_array['.content-text']['hyphenate-limit-last']         = 'always';
+
+            /*
+            $css_media_contrast_array['.content-text']['-webkit-hyphens'] = 'unset';
+            $css_media_contrast_array['.content-text']['-ms-hyphens']     = 'unset';
+            $css_media_contrast_array['.content-text']['hyphens']         = 'unset';
+
+            $css_media_contrast_array['.content-text']['-webkit-hyphenate-limit-chars'] = 'unset';
+            $css_media_contrast_array['.content-text']['-moz-hyphenate-limit-chars']    = 'unset';
+            $css_media_contrast_array['.content-text']['-ms-hyphenate-limit-chars']     = 'unset';
+            $css_media_contrast_array['.content-text']['hyphenate-limit-chars']         = 'unset';
+
+            $css_media_contrast_array['.content-text']['-webkit-hyphenate-limit-lines'] = 'unset';
+            $css_media_contrast_array['.content-text']['-moz-hyphenate-limit-lines']    = 'unset';
+            $css_media_contrast_array['.content-text']['-ms-hyphenate-limit-lines']     = 'unset';
+            $css_media_contrast_array['.content-text']['hyphenate-limit-lines']         = 'unset';
+
+            $css_media_contrast_array['.content-text']['-webkit-hyphenate-limit-last'] = 'unset';
+            $css_media_contrast_array['.content-text']['-moz-hyphenate-limit-last']    = 'unset';
+            $css_media_contrast_array['.content-text']['-ms-hyphenate-limit-last']     = 'unset';
+            $css_media_contrast_array['.content-text']['hyphenate-limit-last']         = 'unset';
+            */
+
+            if ($_POST['content_hyphens'] === 'enabled-not-mobile') {
+                $css_media_array['.content-text']['-webkit-hyphens'] = 'unset';
+                $css_media_array['.content-text']['-ms-hyphens']     = 'unset';
+                $css_media_array['.content-text']['hyphens']         = 'unset';
+
+                $css_media_array['.content-text']['-webkit-hyphenate-limit-chars'] = 'unset';
+                $css_media_array['.content-text']['-moz-hyphenate-limit-chars']    = 'unset';
+                $css_media_array['.content-text']['-ms-hyphenate-limit-chars']     = 'unset';
+                $css_media_array['.content-text']['hyphenate-limit-chars']         = 'unset';
+
+                $css_media_array['.content-text']['-webkit-hyphenate-limit-lines'] = 'unset';
+                $css_media_array['.content-text']['-moz-hyphenate-limit-lines']    = 'unset';
+                $css_media_array['.content-text']['-ms-hyphenate-limit-lines']     = 'unset';
+                $css_media_array['.content-text']['hyphenate-limit-lines']         = 'unset';
+
+                $css_media_array['.content-text']['-webkit-hyphenate-limit-last'] = 'unset';
+                $css_media_array['.content-text']['-moz-hyphenate-limit-last']    = 'unset';
+                $css_media_array['.content-text']['-ms-hyphenate-limit-last']     = 'unset';
+                $css_media_array['.content-text']['hyphenate-limit-last']         = 'unset';
             }
         }
 
         $css  = !empty($css_root_array) ? My::stylesArrToStr($css_root_array) : '';
         $css .= !empty($css_root_dark_array) ? '@media (prefers-color-scheme:dark){' . My::stylesArrToStr($css_root_dark_array) . '}' : '';
         $css .= !empty($css_main_array) ? My::stylesArrToStr($css_main_array) : '';
+        $css .= !empty($css_media_array) ? '@media (max-width:34em){' . My::stylesArrToStr($css_media_array) . '}' : '';
 
         $css = htmlspecialchars($css, ENT_NOQUOTES);
         $css = str_replace('&gt;', ">", $css);
