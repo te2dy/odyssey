@@ -34,9 +34,9 @@ class My extends MyTheme
             'content' => [
                 'name'         => __('section-content'),
                 'sub_sections' => [
-                    'postlist' => __('section-content-postlist'),
-                    'text'     => __('section-content-text'),
-                    'images'   => __('section-content-images')
+                    'postlist'        => __('section-content-postlist'),
+                    'text-formatting' => __('section-content-textformatting'),
+                    'images'          => __('section-content-images')
                 ]
             ],
             'reactions' => [
@@ -192,6 +192,26 @@ class My extends MyTheme
             'section'     => ['content', 'postlist']
         ];
 
+        $default_settings['content_text_font'] = [
+            'title'       => __('settings-content-fontfamily-title'),
+            'description' => '',
+            'type'        => 'select',
+            'choices'     => [
+                __('settings-content-fontfamily-same-default')    => 'same',
+                __('settings-global-fontfamily-sansserif')        => 'sans-serif',
+                __('settings-global-fontfamily-serif')            => 'serif',
+                __('settings-global-fontfamily-mono')             => 'monospace',
+                __('settings-global-fontfamily-sansserifbrowser') => 'sans-serif-browser',
+                __('settings-global-fontfamily-serifbrowser')     => 'serif-browser',
+                __('settings-global-fontfamily-monobrowser')      => 'monospace-browser',
+                __('settings-global-fontfamily-atkinson')         => 'atkinson',
+                __('settings-global-fontfamily-ebgaramond')       => 'eb-garamond',
+                __('settings-global-fontfamily-luciole')          => 'luciole'
+            ],
+            'default'     => 'same',
+            'section'     => ['content', 'text-formatting']
+        ];
+
         $default_settings['content_text_align'] = [
             'title'       => __('settings-content-textalign-title'),
             'description' => __('settings-content-textalign-description'),
@@ -202,7 +222,7 @@ class My extends MyTheme
                 __('settings-content-textalign-justify-not-mobile') => 'justify-not-mobile'
             ],
             'default'     => 'left',
-            'section'     => ['content', 'text']
+            'section'     => ['content', 'text-formatting']
         ];
 
         $default_settings['content_images_wide'] = [
@@ -425,5 +445,15 @@ class My extends MyTheme
         }
 
         return $number;
+    }
+
+    /**
+     * Displays the theme relative URL
+     *
+     * @return string The URL.
+     */
+    public static function themeURL(): string
+    {
+        return App::blog()->settings->system->themes_url . '/odyssey';
     }
 }

@@ -47,7 +47,6 @@ body {
   flex-wrap: wrap;
   justify-content: space-between;
   row-gap: .5rem;
-
 }
 #site-content {
   order: 2;
@@ -178,6 +177,7 @@ h6 {
   color: var(--color-text-secondary, #6c6f78);
 }
 .content-text {
+  font-family: var(--font-family-content, inherit);
   line-height: 1.5;
 }
 .content-text pre {

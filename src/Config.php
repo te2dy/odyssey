@@ -380,75 +380,69 @@ class Config extends Process
             } elseif ($_POST['global_font_family'] === 'monospace-browser') {
                 $css_root_array[':root']['--font-family'] = 'monospace';
             } elseif ($_POST['global_font_family'] === 'atkinson') {
-                $themes_url = App::blog()->settings->system->themes_url;
-
                 $css_root_array[':root']['--font-family'] = '"Atkinson Hyperlegible", sans-serif';
 
                 $css_main_array[0]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2")';
+                $css_main_array[0]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2")';
                 $css_main_array[0]['@font-face']['font-style']  = 'normal';
                 $css_main_array[0]['@font-face']['font-weight'] = '400';
 
                 $css_main_array[1]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2")';
+                $css_main_array[1]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2")';
                 $css_main_array[1]['@font-face']['font-style']  = 'italic';
                 $css_main_array[1]['@font-face']['font-weight'] = '400';
 
                 $css_main_array[2]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2")';
+                $css_main_array[2]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2")';
                 $css_main_array[2]['@font-face']['font-style']  = 'normal';
                 $css_main_array[2]['@font-face']['font-weight'] = '700';
 
                 $css_main_array[3]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("woff2")';
+                $css_main_array[3]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("woff2")';
                 $css_main_array[3]['@font-face']['font-style']  = 'italic';
                 $css_main_array[3]['@font-face']['font-weight'] = '700';
             } elseif ($_POST['global_font_family'] === 'eb-garamond') {
-                $themes_url = App::blog()->settings->system->themes_url;
-
                 $css_root_array[':root']['--font-family'] = '"EB Garamond", serif';
 
                 $css_main_array[0]['@font-face']['font-family'] = '"EB Garamond"';
-                $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/EBGaramond-Regular.ttf") format("truetype")';
+                $css_main_array[0]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/EBGaramond-Regular.ttf") format("truetype")';
                 $css_main_array[0]['@font-face']['font-style']  = 'normal';
                 $css_main_array[0]['@font-face']['font-weight'] = '400';
 
                 $css_main_array[1]['@font-face']['font-family'] = '"EB Garamond"';
-                $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/EBGaramond-Italic.ttf") format("truetype")';
+                $css_main_array[1]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/EBGaramond-Italic.ttf") format("truetype")';
                 $css_main_array[1]['@font-face']['font-style']  = 'italic';
                 $css_main_array[1]['@font-face']['font-weight'] = '400';
 
                 $css_main_array[2]['@font-face']['font-family'] = '"EB Garamond"';
-                $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/EBGaramond-Bold.ttf") format("truetype")';
+                $css_main_array[2]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/EBGaramond-Bold.ttf") format("truetype")';
                 $css_main_array[2]['@font-face']['font-style']  = 'normal';
                 $css_main_array[2]['@font-face']['font-weight'] = '700';
 
                 $css_main_array[3]['@font-face']['font-family'] = '"EB Garamond"';
-                $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/EBGaramond-BoldItalic.ttf") format("truetype")';
+                $css_main_array[3]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/EBGaramond-BoldItalic.ttf") format("truetype")';
                 $css_main_array[3]['@font-face']['font-style']  = 'italic';
                 $css_main_array[3]['@font-face']['font-weight'] = '700';
             } elseif ($_POST['global_font_family'] === 'luciole') {
-                $themes_url = App::blog()->settings->system->themes_url;
-
                 $css_root_array[':root']['--font-family'] = 'Luciole, sans-serif';
 
                 $css_main_array[0]['@font-face']['font-family'] = '"Luciole"';
-                $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Luciole-Regular.ttf") format("truetype")';
+                $css_main_array[0]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Luciole-Regular.ttf") format("truetype")';
                 $css_main_array[0]['@font-face']['font-style']  = 'normal';
                 $css_main_array[0]['@font-face']['font-weight'] = '400';
 
                 $css_main_array[1]['@font-face']['font-family'] = '"Luciole"';
-                $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Luciole-Regular-Italic.ttf") format("truetype")';
+                $css_main_array[1]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Luciole-Regular-Italic.ttf") format("truetype")';
                 $css_main_array[1]['@font-face']['font-style']  = 'italic';
                 $css_main_array[1]['@font-face']['font-weight'] = '400';
 
                 $css_main_array[2]['@font-face']['font-family'] = '"Luciole"';
-                $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Luciole-Bold.ttf") format("truetype")';
+                $css_main_array[2]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Luciole-Bold.ttf") format("truetype")';
                 $css_main_array[2]['@font-face']['font-style']  = 'normal';
                 $css_main_array[2]['@font-face']['font-weight'] = '700';
 
                 $css_main_array[3]['@font-face']['font-family'] = '"Luciole"';
-                $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Luciole-Bold-Italic.ttf") format("truetype")';
+                $css_main_array[3]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Luciole-Bold-Italic.ttf") format("truetype")';
                 $css_main_array[3]['@font-face']['font-style']  = 'italic';
                 $css_main_array[3]['@font-face']['font-weight'] = '700';
             }
@@ -504,6 +498,7 @@ class Config extends Process
             ]
         ];
 
+        // Primary color.
         if (isset($_POST['global_color_primary']) && in_array($_POST['global_color_primary'], $primary_colors_allowed, true)) {
 
             // Light.
@@ -552,6 +547,99 @@ class Config extends Process
             $css_root_dark_array[':root']['--color-background-even'] = '#000';
 
             $css_main_array['.entry-list .post:nth-child(even)']['background-color'] = 'var(--color-background-even, #fff)';
+        }
+
+        // Content font family.
+        if (isset($_POST['content_text_font']) && $_POST['content_text_font'] !== 'same' && $_POST['global_font_family'] !== $_POST['content_text_font']) {
+            switch ($_POST['content_text_font']) {
+                case 'sans-serif' :
+                    $css_root_array[':root']['--font-family-content'] = '-apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif';
+                    break;
+                case 'serif' :
+                    $css_root_array[':root']['--font-family-content'] = '"Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
+                    break;
+                case 'monospace' :
+                    $css_root_array[':root']['--font-family-content'] = 'Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace';
+                    break;
+                case 'sans-serif-browser' :
+                    $css_root_array[':root']['--font-family-content'] = 'sans-serif';
+                    break;
+                case 'serif-browser' :
+                    $css_root_array[':root']['--font-family-content'] = 'serif';
+                    break;
+                case 'monospace-browser' :
+                    $css_root_array[':root']['--font-family-content'] = 'monospace';
+                    break;
+                case 'atkinson' :
+                    $css_main_array[4]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
+                    $css_main_array[4]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2")';
+                    $css_main_array[4]['@font-face']['font-style']  = 'normal';
+                    $css_main_array[4]['@font-face']['font-weight'] = '400';
+
+                    $css_main_array[5]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
+                    $css_main_array[5]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2")';
+                    $css_main_array[5]['@font-face']['font-style']  = 'italic';
+                    $css_main_array[5]['@font-face']['font-weight'] = '400';
+
+                    $css_main_array[6]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
+                    $css_main_array[6]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2")';
+                    $css_main_array[6]['@font-face']['font-style']  = 'normal';
+                    $css_main_array[6]['@font-face']['font-weight'] = '700';
+
+                    $css_main_array[7]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
+                    $css_main_array[7]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("woff2")';
+                    $css_main_array[7]['@font-face']['font-style']  = 'italic';
+                    $css_main_array[7]['@font-face']['font-weight'] = '700';
+
+                    $css_root_array[':root']['--font-family-content'] = '"Atkinson Hyperlegible", sans-serif';
+
+                    break;
+                case 'eb-garamond' :
+                    $css_main_array[4]['@font-face']['font-family'] = '"EB Garamond"';
+                    $css_main_array[4]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/EBGaramond-Regular.ttf") format("truetype")';
+                    $css_main_array[4]['@font-face']['font-style']  = 'normal';
+                    $css_main_array[4]['@font-face']['font-weight'] = '400';
+
+                    $css_main_array[5]['@font-face']['font-family'] = '"EB Garamond"';
+                    $css_main_array[5]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/EBGaramond-Italic.ttf") format("truetype")';
+                    $css_main_array[5]['@font-face']['font-style']  = 'italic';
+                    $css_main_array[5]['@font-face']['font-weight'] = '400';
+
+                    $css_main_array[6]['@font-face']['font-family'] = '"EB Garamond"';
+                    $css_main_array[6]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/EBGaramond-Bold.ttf") format("truetype")';
+                    $css_main_array[6]['@font-face']['font-style']  = 'normal';
+                    $css_main_array[6]['@font-face']['font-weight'] = '700';
+
+                    $css_main_array[7]['@font-face']['font-family'] = '"EB Garamond"';
+                    $css_main_array[7]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/EBGaramond-BoldItalic.ttf") format("truetype")';
+                    $css_main_array[7]['@font-face']['font-style']  = 'italic';
+                    $css_main_array[7]['@font-face']['font-weight'] = '700';
+
+                    $css_root_array[':root']['--font-family-content'] = '"EB Garamond", serif';
+                    break;
+                case 'luciole' :
+                    $css_main_array[4]['@font-face']['font-family'] = '"Luciole"';
+                    $css_main_array[4]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Luciole-Regular.ttf") format("truetype")';
+                    $css_main_array[4]['@font-face']['font-style']  = 'normal';
+                    $css_main_array[4]['@font-face']['font-weight'] = '400';
+
+                    $css_main_array[5]['@font-face']['font-family'] = '"Luciole"';
+                    $css_main_array[5]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Luciole-Regular-Italic.ttf") format("truetype")';
+                    $css_main_array[5]['@font-face']['font-style']  = 'italic';
+                    $css_main_array[5]['@font-face']['font-weight'] = '400';
+
+                    $css_main_array[6]['@font-face']['font-family'] = '"Luciole"';
+                    $css_main_array[6]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Luciole-Bold.ttf") format("truetype")';
+                    $css_main_array[6]['@font-face']['font-style']  = 'normal';
+                    $css_main_array[6]['@font-face']['font-weight'] = '700';
+
+                    $css_main_array[7]['@font-face']['font-family'] = '"Luciole"';
+                    $css_main_array[7]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Luciole-Bold-Italic.ttf") format("truetype")';
+                    $css_main_array[7]['@font-face']['font-style']  = 'italic';
+                    $css_main_array[7]['@font-face']['font-weight'] = '700';
+
+                    $css_root_array[':root']['--font-family-content'] = 'Luciole, sans-serif';
+            }
         }
 
         $css  = !empty($css_root_array) ? My::stylesArrToStr($css_root_array) : '';

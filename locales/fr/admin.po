@@ -42,8 +42,8 @@ msgstr "Contenu"
 msgid "section-content-postlist"
 msgstr "Liste des billets"
 
-msgid "section-content-text"
-msgstr "Billets et pages"
+msgid "section-content-textformatting"
+msgstr "Format du texte"
 
 msgid "section-content-images"
 msgstr "Images"
@@ -194,6 +194,39 @@ msgstr "Afficher des miniatures"
 
 msgid "settings-content-postlistthumbnail-description"
 msgstr "Affiche une miniature de la première image des billets devant leur titre."
+
+msgid "settings-content-fontfamily-title"
+msgstr "Police d’écriture"
+
+msgid "settings-content-fontfamily-same-default"
+msgstr "Identique à la police globale du thème (par défaut)"
+
+msgid "settings-content-fontfamily-sansserif"
+msgstr ""
+
+msgid "settings-content-fontfamily-serif"
+msgstr ""
+
+msgid "settings-content-fontfamily-mono"
+msgstr ""
+
+msgid "settings-content-fontfamily-sansserifbrowser"
+msgstr ""
+
+msgid "settings-content-fontfamily-serifbrowser"
+msgstr ""
+
+msgid "settings-content-fontfamily-monobrowser"
+msgstr ""
+
+msgid "settings-content-fontfamily-atkinson"
+msgstr ""
+
+msgid "settings-content-fontfamily-ebgaramond"
+msgstr ""
+
+msgid "settings-content-fontfamily-luciole"
+msgstr ""
 
 msgid "settings-content-textalign-title"
 msgstr "Alignement du texte"
