@@ -183,6 +183,12 @@ msgstr "Droite"
 msgid "settings-header-description-title"
 msgstr "Afficher le slogan du blog"
 
+msgid "settings-header-postfull-title"
+msgstr "Afficher une en-tête complète sur les pages des billets"
+
+msgid "settings-header-postfull-description"
+msgstr "Par défaut, l’en-tête est affichée dans un format réduit."
+
 msgid "settings-content-postlistaltcolor-title"
 msgstr "Alterner la couleur des liens vers les billets"
 

@@ -176,6 +176,14 @@ class My extends MyTheme
             'section'     => ['header', 'no-title']
         ];
 
+        $default_settings['header_post_full'] = [
+            'title'       => __('settings-header-postfull-title'),
+            'description' => __('settings-header-postfull-description'),
+            'type'        => 'checkbox',
+            'default'     => '0',
+            'section'     => ['header', 'no-title']
+        ];
+
         $default_settings['content_postlist_altcolor'] = [
             'title'       => __('settings-content-postlistaltcolor-title'),
             'description' => __('settings-content-postlistaltcolor-description'),

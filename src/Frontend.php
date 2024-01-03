@@ -39,6 +39,7 @@ class Frontend extends Process
         App::behavior()->addBehavior('publicAfterContentFilterV2', FrontendBehaviors::odysseyImageWide(...));
 
         // Blocks
+        App::frontend()->template()->addBlock('odysseyHeaderMinimal', FrontendBlocks::odysseyHeaderMinimal(...));
         App::frontend()->template()->addBlock('odysseyCommentFormWrapper', FrontendBlocks::odysseyCommentFormWrapper(...));
         App::frontend()->template()->addBlock('odysseySidebar', FrontendBlocks::odysseySidebar(...));
 

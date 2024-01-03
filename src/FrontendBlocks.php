@@ -14,6 +14,15 @@ use Dotclear\Core\Frontend\Ctx;
 
 class FrontendBlocks
 {
+    public static function odysseyHeaderMinimal($attr, $content): mixed
+    {
+        if (My::settingValue('header_post_full') !== true) {
+            return $content;
+        }
+
+        return App::frontend()->template()->includeFile(['src' => '_post-header-full.html']);
+    }
+
     /**
      * Displays the comment form wrapper to toggle it.
      *
