@@ -56,4 +56,21 @@ class FrontendBlocks
 
         return '';
     }
+
+    /**
+     * Displays the footer.
+     *
+     * @param array $attr    Unused.
+     * @param void  $content The content of the footer.
+     *
+     * @return string The footer.
+     */
+    public static function odysseyFooter($attr, $content): mixed
+    {
+        if (My::settingValue('footer_enabled') !== false) {
+            return $content;
+        }
+
+        return '';
+    }
 }

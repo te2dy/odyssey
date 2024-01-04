@@ -223,26 +223,30 @@ class FrontendValues
      */
     public static function odysseyFooterCredits(): string
     {
-        // If we are not in a development environment.
-        if (!defined('DC_DEV') || (defined('DC_DEV') && DC_DEV === false)) {
+        if (My::settingValue('footer_credits') !== false) {
+            // If we are not in a development environment.
+            if (!defined('DC_DEV') || (defined('DC_DEV') && DC_DEV === false)) {
+                return '<div class=site-footer-block>' . sprintf(
+                    __('footer-powered-by'),
+                    My::name()
+                ) . '</div>';
+            }
+
+            // Otherwise, displays a more detailed information.
+            $dc_version       = App::config()->dotclearVersion();
+            $dc_version_short = explode('-', $dc_version)[0] ?? $dc_version;
+            $theme_name       = My::name();
+            $theme_version    = App::themes()->moduleInfo(My::id(), 'version');
+
             return '<div class=site-footer-block>' . sprintf(
-                __('footer-powered-by'),
-                My::name()
+                __('footer-powered-by-dev'),
+                $dc_version,
+                $dc_version_short,
+                $theme_name,
+                $theme_version
             ) . '</div>';
         }
 
-        // Otherwise, displays a more detailed information.
-        $dc_version       = App::config()->dotclearVersion();
-        $dc_version_short = explode('-', $dc_version)[0] ?? $dc_version;
-        $theme_name       = My::name();
-        $theme_version    = App::themes()->moduleInfo(My::id(), 'version');
-
-        return '<div class=site-footer-block>' . sprintf(
-            __('footer-powered-by-dev'),
-            $dc_version,
-            $dc_version_short,
-            $theme_name,
-            $theme_version
-        ) . '</div>';
+        return '';
     }
 }

@@ -49,6 +49,10 @@ class My extends MyTheme
                 'name'         => __('section-widgets'),
                 'sub_sections' => []
             ],
+            'footer' => [
+                'name'         => __('section-footer'),
+                'sub_sections' => []
+            ],
             'advanced' => [
                 'name'         => __('section-advanced'),
                 'sub_sections' => [
@@ -307,6 +311,22 @@ class My extends MyTheme
             'type'        => 'checkbox',
             'default'     => '1',
             'section'     => ['widgets', 'no-title']
+        ];
+
+        $default_settings['footer_enabled'] = [
+            'title'       => __('settings-footer-activation-title'),
+            'description' => __('settings-footer-activation-description'),
+            'type'        => 'checkbox',
+            'default'     => '1',
+            'section'     => ['footer', 'no-title']
+        ];
+
+        $default_settings['footer_credits'] = [
+            'title'       => __('settings-footer-credits-title'),
+            'description' => __('settings-footer-credits-description'),
+            'type'        => 'checkbox',
+            'default'     => '1',
+            'section'     => ['footer', 'no-title']
         ];
 
         $default_settings['advanced_minimal_social_meta'] = [

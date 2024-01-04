@@ -42,6 +42,7 @@ class Frontend extends Process
         App::frontend()->template()->addBlock('odysseyHeaderMinimal', FrontendBlocks::odysseyHeaderMinimal(...));
         App::frontend()->template()->addBlock('odysseyCommentFormWrapper', FrontendBlocks::odysseyCommentFormWrapper(...));
         App::frontend()->template()->addBlock('odysseySidebar', FrontendBlocks::odysseySidebar(...));
+        App::frontend()->template()->addBlock('odysseyFooter', FrontendBlocks::odysseyFooter(...));
 
         // Values.
         App::frontend()->template()->addValue('odysseyURIRelative', FrontendValues::odysseyURIRelative(...));

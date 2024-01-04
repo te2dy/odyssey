@@ -57,6 +57,9 @@ msgstr "Formulaire de commentaires"
 msgid "section-widgets"
 msgstr "Widgets"
 
+msgid "section-footer"
+msgstr "Pied de page"
+
 msgid "section-advanced"
 msgstr "Paramètres avancés"
 
@@ -278,6 +281,18 @@ msgstr "Activer l’emplacement pour les widgets"
 
 msgid "settings-widgets-display-description"
 msgstr "Il est recommandé de désactiver cette option si vous n’affichez aucun widget sur votre blog."
+
+msgid "settings-footer-activation-title"
+msgstr "Activer le pied de page"
+
+msgid "settings-footer-activation-description"
+msgstr "Il est recommandé de décocher cet paramètre si le pied de page ne contient aucun élément."
+
+msgid "settings-footer-credits-title"
+msgstr "Afficher une mention à Dotclear et au thème"
+
+msgid "settings-footer-credits-description"
+msgstr "Permet de faire de la publicité à Dotclear et à ce thème."
 
 msgid "settings-advanced-minimalsocialmeta-title"
 msgstr "Ajouter des balises sociales minimalistes"
