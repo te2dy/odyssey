@@ -4,17 +4,19 @@
   </tpl:EntriesHeader>
 
   <li class="post<tpl:EntryIf selected="1"> post-selected</tpl:EntryIf>" id={{tpl:lang post-id}}-{{tpl:EntryID}}>
-    {{tpl:origineEntryListImage}}
+    <div class=post-list-content>
+      {{tpl:odysseyEntryListImage}}
 
-    <tpl:EntryIf selected="1"><div class=post-selected-star>⭐️</div></tpl:EntryIf>
+      <div class=post-list-content-main>
+        <h3 class=entry-title><tpl:EntryIf selected="1"><span class=post-selected-star>⭐️</span> </tpl:EntryIf><a href="{{tpl:EntryURL}}" rel=bookmark>{{tpl:EntryTitle}}</a></h3>
 
-    <div class=post-list-link>
-      <h3 class=entry-title><a href="{{tpl:EntryURL}}" rel=bookmark>{{tpl:EntryTitle}}</a></h3>
-
-      <tpl:EntryIf type="post">
-        <small class="post-date text-secondary"><time aria-label="{{tpl:lang entry-list-date-aria-label}}" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%M"}}>{{tpl:EntryDate}}</time></small>
-      </tpl:EntryIf>
+        <tpl:EntryIf type="post">
+          <small class="post-date text-secondary"><time aria-label="{{tpl:lang entry-list-date-aria-label}}" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%M"}}>{{tpl:EntryDate}}</time></small>
+        </tpl:EntryIf>
+      </div>
     </div>
+
+    {{tpl:odysseyPostListReactions}}
   </li>
 
   <tpl:EntriesFooter>

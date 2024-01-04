@@ -200,6 +200,14 @@ class My extends MyTheme
             'section'     => ['content', 'postlist']
         ];
 
+        $default_settings['content_postlist_reactions'] = [
+            'title'       => __('settings-content-postlistreactions-title'),
+            'description' => '',
+            'type'        => 'checkbox',
+            'default'     => '0',
+            'section'     => ['content', 'postlist']
+        ];
+
         $default_settings['content_text_font'] = [
             'title'       => __('settings-content-fontfamily-title'),
             'description' => '',

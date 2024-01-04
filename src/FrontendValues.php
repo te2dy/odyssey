@@ -69,7 +69,7 @@ class FrontendValues
      *
      * @return string The image.
      */
-    public static function origineEntryListImage(): string
+    public static function odysseyEntryListImage(): string
     {
         if (My::settingValue('content_postlist_thumbnail') === false) {
             return '';
@@ -96,6 +96,24 @@ class FrontendValues
                 echo $img;
             }
         ?>';
+    }
+
+    public static function odysseyPostListReactions(): string
+    {
+        if (My::settingValue('content_postlist_reactions') === true) {
+            return '<?php
+            $nb_reactions = (int) App::frontend()->context()->posts->nb_comment + (int) App::frontend()->context()->posts->nb_trackback;
+
+            if ($nb_reactions > 0) {
+                $reaction_text  = (string) $nb_reactions . " reaction";
+                $reaction_text .= $nb_reactions > 1 ? "s" : "";
+
+                echo "<div class=post-list-reaction-link><small><a href=\"" .  App::frontend()->context()->posts->getURL() . "#' . __('reactions-id') . '\">" . $reaction_text . "</a></small></div>";
+            }
+            ?>';
+        }
+
+        return '';
     }
     
     /**

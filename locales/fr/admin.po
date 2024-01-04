@@ -201,6 +201,9 @@ msgstr "Afficher des miniatures"
 msgid "settings-content-postlistthumbnail-description"
 msgstr "Affiche une miniature de la première image des billets devant leur titre."
 
+msgid "settings-content-postlistreactions-title"
+msgstr "Afficher un lien vers les réactions"
+
 msgid "settings-content-fontfamily-title"
 msgstr "Police d’écriture"
 

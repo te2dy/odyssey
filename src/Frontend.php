@@ -47,7 +47,8 @@ class Frontend extends Process
         App::frontend()->template()->addValue('odysseyURIRelative', FrontendValues::odysseyURIRelative(...));
         App::frontend()->template()->addValue('odysseyStylesInline', FrontendValues::odysseyStylesInline(...));
         App::frontend()->template()->addValue('odysseyBlogDescription', FrontendValues::odysseyBlogDescription(...));
-        App::frontend()->template()->addValue('origineEntryListImage', FrontendValues::origineEntryListImage(...));
+        App::frontend()->template()->addValue('odysseyEntryListImage', FrontendValues::odysseyEntryListImage(...));
+        App::frontend()->template()->addValue('odysseyPostListReactions', FrontendValues::odysseyPostListReactions(...));
         App::frontend()->template()->addValue('odysseyAttachmentTitle', FrontendValues::odysseyAttachmentTitle(...));
         App::frontend()->template()->addValue('odysseyAttachmentSize', FrontendValues::odysseyAttachmentSize(...));
         App::frontend()->template()->addValue('odysseyPostTagsBefore', FrontendValues::odysseyPostTagsBefore(...));
