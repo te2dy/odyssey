@@ -12,6 +12,8 @@
 
 <tpl:Block name="site-header">
   <header id=site-header>
+    {{tpl:odysseyHeaderImage position="top"}}
+
     <tpl:PaginationIf start="1">
       <h1 id=site-title>{{tpl:BlogName}}</h1>
     </tpl:PaginationIf>
@@ -25,6 +27,8 @@
     {{tpl:odysseyBlogDescription}}
 
     {{tpl:SimpleMenu id="main-menu"}}
+
+    {{tpl:odysseyHeaderImage position="bottom"}}
 
     {{tpl:SysBehavior behavior="publicTopAfterContent"}}
   </header>

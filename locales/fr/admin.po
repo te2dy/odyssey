@@ -36,6 +36,9 @@ msgstr "Couleurs"
 msgid "section-header"
 msgstr "En-tête"
 
+msgid "section-header-image"
+msgstr "Logo ou bannière"
+
 msgid "section-content"
 msgstr "Contenu"
 
@@ -191,6 +194,36 @@ msgstr "Afficher une en-tête complète sur les pages des billets"
 
 msgid "settings-header-postfull-description"
 msgstr "Par défaut, l’en-tête est affichée dans un format réduit."
+
+msgid "settings-header-image-title"
+msgstr "Adresse de l’image"
+
+msgid "settings-header-image-description"
+msgstr "Facultatif : pour assurer un rendu optimal de votre image sur les écrans à double densité de pixels (Retina), assurez-vous d’avoir téléversé dans la médiathèque la même image, aux dimensions deux fois plus grandes, avec le suffixe <code>-2x</code>.<br>Exemple&nbsp;: vous souhaitez afficher un logo nommé <code>logo.png</code> (200 px × 200 px) que vous avez téléversé à la racine de votre médiathèque (adresse&nbsp;: <code>/public/logo.png</code>). Téléversez la même image en 400 px × 400 px dans le même dossier en ajoutant <code>-2x</code> à la fin de son nom (adresse&nbsp;: <code>/public/logo-2x.png</code>) ; le thème et le navigateur se chargeront du reste."
+
+msgid "settings-header-image-placeholder"
+msgstr "image.png"
+
+msgid "header-image-preview-alt"
+msgstr "Aperçu de l’image"
+
+msgid "header-image-retina-ready"
+msgstr "✅ Image adaptée aux écrans à double densité de pixels."
+
+msgid "settings-header-imageposition-title"
+msgstr "Position de l’image"
+
+msgid "settings-header-imageposition-top-default"
+msgstr "En haut de l’en-tête (par défaut)"
+
+msgid "settings-header-imageposition-bottom"
+msgstr "En bas de l’en-tête"
+
+msgid "settings-header-imagedescription-title"
+msgstr "Description de l’image d’en-tête"
+
+msgid "settings-header-imagedescription-description"
+msgstr "Utile pour l’accessibilité."
 
 msgid "settings-content-postlistaltcolor-title"
 msgstr "Alterner la couleur des liens vers les billets"

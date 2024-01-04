@@ -11,6 +11,7 @@ namespace Dotclear\Theme\odyssey;
 
 use Dotclear\App;
 use Dotclear\Module\MyTheme;
+use Dotclear\Helper\File\Files;
 
 class My extends MyTheme
 {
@@ -28,7 +29,8 @@ class My extends MyTheme
             'header' => [
                 'name'         => __('section-header'),
                 'sub_sections' => [
-                    'no-title' => ''
+                    'no-title' => '',
+                    'image'    => __('section-header-image')
                 ]
             ],
             'content' => [
@@ -186,6 +188,43 @@ class My extends MyTheme
             'type'        => 'checkbox',
             'default'     => '0',
             'section'     => ['header', 'no-title']
+        ];
+
+        $default_settings['header_image'] = [
+            'title'       => __('settings-header-image-title'),
+            'description' => __('settings-header-image-description'),
+            'type'        => 'image',
+            'placeholder' => App::blog()->settings()->system->public_url . '/' . __('settings-header-image-placeholder'),
+            'default'     => '',
+            'section'     => ['header', 'image']
+        ];
+
+        $default_settings['header_image2x'] = [
+            'title'       => '',
+            'description' => '',
+            'type'        => 'text',
+            'default'     => '',
+            'section'     => ['header', 'image']
+        ];
+
+        $default_settings['header_image_position'] = [
+            'title'       => __('settings-header-imageposition-title'),
+            'description' => '',
+            'type'        => 'select',
+            'choices'     => [
+                __('settings-header-imageposition-top-default') => 'top',
+                __('settings-header-imageposition-bottom')      => 'bottom',
+            ],
+            'default'     => 'top',
+            'section'     => ['header', 'image']
+        ];
+
+        $default_settings['header_image_description'] = [
+            'title'       => __('settings-header-imagedescription-title'),
+            'description' => __('settings-header-imagedescription-description'),
+            'type'        => 'text',
+            'default'     => '',
+            'section'     => ['header', 'image']
         ];
 
         $default_settings['content_postlist_altcolor'] = [
@@ -525,5 +564,45 @@ class My extends MyTheme
     public static function themeURL(): string
     {
         return App::blog()->settings->system->themes_url . '/odyssey';
+    }
+
+    /**
+     * Checks if a file path returns a valid image.
+     *
+     * @param array $path The path to the image.
+     *
+     * @return bool true if the image exists.
+     */
+    public static function imageExists($path): bool
+    {
+        // Extensions allowed for image files in Dotclear.
+        $img_ext_allowed = [
+            'bmp',
+            'gif',
+            'ico',
+            'jpeg',
+            'jpg',
+            'jpe',
+            'png',
+            'svg',
+            'tiff',
+            'tif',
+            'webp',
+            'xbm'
+        ];
+
+        // Returns true if the file exists and is an allowed type of image.
+        if (file_exists($path)
+            && in_array(
+                strtolower(files::getExtension($path)),
+                $img_ext_allowed,
+                true
+            )
+            && substr(mime_content_type($path), 0, 6) === 'image/'
+        ) {
+            return true;
+        }
+
+        return false;
     }
 }

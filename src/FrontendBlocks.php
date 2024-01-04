@@ -14,6 +14,14 @@ use Dotclear\Core\Frontend\Ctx;
 
 class FrontendBlocks
 {
+    /**
+     * Displays the right blog header on posts.
+     *
+     * @param array $attr    Unused.
+     * @param void  $content The full header.
+     *
+     * @return string The header.
+     */
     public static function odysseyHeaderMinimal($attr, $content): mixed
     {
         if (My::settingValue('header_post_full') !== true) {

@@ -40,6 +40,53 @@ class FrontendValues
     }
 
     /**
+     * Displays in the header an image defined in the theme configuration page.
+     *
+     * @param array $attr Attributes to customize the value.
+     *                    Attribute allowed: position, to define the place
+     *                    of the image in the header.
+     *                    Values allowed:
+     *                    - (string) top
+     *                    - (string) bottom
+     *
+     * @return string
+     */
+    public static function odysseyHeaderImage($attr)
+    {
+        if (My::settingValue('header_image') && isset(My::settingValue('header_image')['url'])) {
+            if (!empty($attr['position'])
+                && (($attr['position'] === 'bottom' && My::settingValue('header_image_position') === 'bottom')
+                || ($attr['position'] === 'top' && !My::settingValue('header_image_position')))
+            ) {
+                $image_url = Html::escapeURL(My::settingValue('header_image')['url']);
+                $srcset    = '';
+
+                if (My::settingValue('header_image_description')) {
+                    $alt = ' alt="' . Html::escapeHTML(My::settingValue('header_image_description')) . '"';
+                } else {
+                    $alt = ' alt="' . __('header-image-alt') . '"';
+                }
+
+                if (My::settingValue('header_image2x')) {
+                    $image2x_url = Html::escapeURL(My::settingValue('header_image2x'));
+
+                    $srcset  = ' srcset="';
+                    $srcset .= $image_url . ' 1x, ';
+                    $srcset .= $image2x_url . ' 2x';
+                    $srcset .= '"';
+                }
+
+                // Does not add a link to the home page on home page.
+                if (App::url()->type === 'default') {
+                    return '<div id=site-image><img' . $alt . ' src="' . $image_url . '"' . $srcset . '></div>';
+                }
+
+                return '<div id=site-image><a href="' . App::blog()->url . '" rel=home><img' . $alt . ' src="' . $image_url . '"' . $srcset . '></a></div>';
+            }
+        }
+    }
+
+    /**
      * Displays the blog description.
      * 
      * @return string The blog description.

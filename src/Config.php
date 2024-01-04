@@ -13,8 +13,9 @@ use Dotclear\App;
 use Dotclear\Core\Process;
 use Dotclear\Core\Backend\Notices;
 use Dotclear\Core\Backend\Page;
-use Dotclear\Helper\Network\Http;
+use Dotclear\Helper\File\Path;
 use Dotclear\Helper\Html\Html;
+use Dotclear\Helper\Network\Http;
 // use Dotclear\Helper\Html\Form;
 // use Dotclear\Helper\Html\Form\Select;
 
@@ -64,6 +65,8 @@ class Config extends Process
                         $specific_settings = [
                             'global_unit',
                             'global_page_width_value',
+                            'header_image',
+                            'header_image2x',
                             'styles'
                         ];
 
@@ -96,6 +99,18 @@ class Config extends Process
                                         $_POST['global_unit'],
                                         $_POST['global_page_width_value']
                                     );
+
+                                    break;
+
+                                case 'header_image':
+                                case 'header_image2x':
+                                    $setting_data = self::sanitizeHeaderImage(
+                                        $setting_id,
+                                        $_POST['header_image'],
+                                        $_POST['global_unit'],
+                                        $_POST['global_page_width_value']
+                                    );
+
                                     break;
 
                                 case 'styles' :
@@ -185,6 +200,7 @@ class Config extends Process
                 '<label class=classic for=', $setting_id, '>',
                 $default_settings[$setting_id]['title'],
                 '</label>';
+
                 break;
 
             case 'select' :
@@ -197,6 +213,34 @@ class Config extends Process
                     $default_settings[$setting_id]['choices'],
                     $setting_value
                 );
+
+                break;
+
+            case 'image' :
+                $placeholder = isset($default_settings[$setting_id]['placeholder'])
+                ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"'
+                : '';
+
+                if (!empty($setting_value) && $setting_value['url'] !== '') {
+                    $image_src = $setting_value['url'];
+                } else {
+                    $image_src = '';
+                }
+
+                echo '<label for=', $setting_id, '>',
+                $default_settings[$setting_id]['title'],
+                '</label>',
+                Form::field(
+                    $setting_id,
+                    30,
+                    255,
+                    $image_src,
+                    '',
+                    '',
+                    false,
+                    $placeholder
+                );
+
                 break;
 
             default :
@@ -236,6 +280,25 @@ class Config extends Process
             }
 
             echo '</p>';
+        }
+
+        // Header image.
+        if ($setting_id === 'header_image') {
+            if (!empty($setting_value) && isset($setting_value['url'])) {
+                $image_src = $setting_value['url'];
+            } else {
+                $image_src = '';
+            }
+
+            echo '<img alt="', __('header-image-preview-alt'), '" id=', $setting_id, '-src src="', $image_src, '">';
+
+            if (isset($saved_settings['header_image2x'])) {
+                echo '<p id=', $setting_id, '-retina>',
+                __('header-image-retina-ready'),
+                '</p>';
+            }
+
+            echo Form::hidden('header_image-url', $image_src);
         }
     }
 
@@ -282,8 +345,10 @@ class Config extends Process
         }
 
         // Adds settings in their section.
+        $settings_ignored = ['header_image2x', 'styles'];
+
         foreach (My::settingsDefault() as $setting_id => $setting_data) {
-            if ($setting_id !== 'styles') {
+            if (!in_array($setting_id, $settings_ignored, true)) {
                 // If a sub-section is set.
                 if (isset($setting_data['section'][1])) {
                     $settings_render[$setting_data['section'][0]][$setting_data['section'][1]][] = $setting_id;
@@ -336,7 +401,7 @@ class Config extends Process
     /**
      * Adds custom styles to the theme to apply the settings.
      *
-     * @param int $header_image_width The width if the header image.
+     * // @param int $header_image_width The width if the header image.
      *
      * @return void
      */
@@ -539,6 +604,23 @@ class Config extends Process
 
         if (isset($_POST['header_align']) && in_array($_POST['header_align'], $header_align_allowed, true)) {
             $css_root_array[':root']['--header-align'] = $_POST['header_align'];
+        }
+
+        // Header banner
+        if (isset($_POST['header_image']) && $_POST['header_image'] !== '') {
+            $css_main_array['#site-image']['width'] = '100%';
+
+            /*
+            $css_media_contrast_array['#site-image a']['outline'] = 'inherit';
+
+            if (isset($_POST['global_css_border_radius']) && $_POST['global_css_border_radius'] === '1') {
+                $css_main_array['#site-image img']['border-radius'] = 'var(--border-radius)';
+            }
+
+            if (isset($header_image_width) && $header_image_width >= 100) {
+                $css_main_array['#site-image img']['width'] = '100%';
+            }
+            */
         }
 
         // Alternate post color
@@ -805,6 +887,93 @@ class Config extends Process
                 'value' => Html::escapeHTML($setting_value),
                 'type'  => 'string'
             ];
+        }
+
+        return [];
+    }
+
+    /**
+     * Saves the banner.
+     *
+     * The image is saved as an array which contains:
+     * 'url'        => (string) The URL of the image.
+     * 'max-width'  => (int) The maximum width of the image
+     *                       (inferior or equal to the page width).
+     * 'max-height' => (int) The maximum height of the image.
+     *
+     * @return void
+     */
+    public static function sanitizeHeaderImage($setting_id, $image_url, $page_width_unit, $page_width_value)
+    {
+        $default_settings = My::settingsDefault();
+        $image_url        = $image_url ?: '';
+        $page_width_unit  = $page_width_unit ?: '';
+        $page_width_value = $page_width_value ?: '';
+
+        if ($image_url) {
+            // Gets relative url and path of the public folder.
+            $public_url  = App::blog()->settings->system->public_url;
+            $public_path = App::blog()->public_path;
+
+            // Converts the absolute URL in a relative one if necessary.
+            $image_url = Html::stripHostURL($image_url);
+
+            // Retrieves the image path.
+            $image_path = $public_path . str_replace($public_url . '/', '/', $image_url);
+
+            if (My::imageExists($image_path)) {
+
+                // Gets the dimensions of the image.
+                list($header_image_width) = getimagesize($image_path);
+
+                /**
+                 * Limits the maximum width value of the image if its superior to the page width,
+                 * and sets its height proportionally.
+                 */
+                $page_width_data = My::getContentWidth($page_width_unit, $page_width_value, true);
+
+                $page_width = $page_width_data['value'];
+
+                if ($page_width_data['unit'] === 'em') {
+                    $page_width = $page_width * 16;
+                }
+
+                if ($header_image_width > $page_width) {
+                    $header_image_width = 100;
+                } else {
+                    $header_image_width = $header_image_width * 100 / $page_width;
+                }
+
+                // Sets the array which contains the image data.
+                $image_data = [
+                    'url'   => Html::sanitizeURL($image_url),
+                    'width' => (int) $header_image_width,
+                ];
+
+                if ($setting_id === 'header_image' && !empty($image_data)) {
+                    // Prepares the setting to save in the database as an array.
+                    return [
+                        'value' => $image_data,
+                        'type'  => 'array'
+                    ];
+                }
+
+                // Builds the path to an hypothetical double sized image.
+                $image_info    = Path::info($image_path);
+                $image_path_2x = $image_info['dirname'] . '/' . $image_info['base'] . '-2x.' . $image_info['extension'];
+
+                // If the double sized image exists.
+                if (file_exists($image_path_2x)) {
+                    $image_url_2x = str_replace($public_path, $public_url, $image_path_2x);
+
+                    if (file_exists($image_path_2x) && getimagesize($image_path_2x) !== false) {
+                        return [
+                            'value' => $image_url_2x,
+                            'type'  => 'string'
+                        ];
+                    }
+                }
+            }
         }
 
         return [];

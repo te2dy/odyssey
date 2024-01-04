@@ -31,6 +31,8 @@
     <div id=site>
       <tpl:Block name="site-header">
         <header id=site-header>
+          {{tpl:odysseyHeaderImage position="top"}}
+
           <div id=site-title>
             <a href="{{tpl:BlogURL}}" rel=home><h4>{{tpl:BlogName}}</h4></a>
           </div>
@@ -38,6 +40,8 @@
           {{tpl:odysseyBlogDescription}}
 
           {{tpl:SimpleMenu id="main-menu"}}
+
+          {{tpl:odysseyHeaderImage position="bottom"}}
 
           {{tpl:SysBehavior behavior="publicTopAfterContent"}}
         </header>
