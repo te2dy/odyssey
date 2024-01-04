@@ -11,7 +11,7 @@ $this->registerModule(
     'Odyssey',
     'Write your own with this theme',
     'Teddy',
-    '0.5-alpha',
+    '0.6-alpha',
     [
         'requires' => [
             ['core', '2.28'],
