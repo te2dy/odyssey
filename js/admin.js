@@ -11,6 +11,38 @@ function disableInputs() {
     document.getElementById("header_image_description-input").style.display       = "none";
     document.getElementById("header_image_description-description").style.display = "none";
   }
+
+  if (!document.getElementById("footer_enabled").checked) {
+    document.getElementById("footer_credits-input").style.display               = "none";
+    document.getElementById("footer_credits-description").style.display         = "none";
+    /*
+    document.getElementById("section-footer-social-links").style.display        = "none";
+    document.getElementById("footer_social_links_diaspora-input").style.display = "none";
+    document.getElementById("footer_social_links_discord-input").style.display  = "none";
+    document.getElementById("footer_social_links_facebook-input").style.display = "none";
+    document.getElementById("footer_social_links_github-input").style.display   = "none";
+    document.getElementById("footer_social_links_mastodon-input").style.display = "none";
+    document.getElementById("footer_social_links_signal-input").style.display   = "none";
+    document.getElementById("footer_social_links_tiktok-input").style.display   = "none";
+    document.getElementById("footer_social_links_whatsapp-input").style.display = "none";
+    document.getElementById("footer_social_links_x-input").style.display        = "none";
+    */
+  } else {
+    document.getElementById("footer_credits-input").style.display               = "block";
+    document.getElementById("footer_credits-description").style.display         = "block";
+    /*
+    document.getElementById("section-footer-social-links").style.display        = "block";
+    document.getElementById("footer_social_links_diaspora-input").style.display = "block";
+    document.getElementById("footer_social_links_discord-input").style.display  = "block";
+    document.getElementById("footer_social_links_facebook-input").style.display = "block";
+    document.getElementById("footer_social_links_github-input").style.display   = "block";
+    document.getElementById("footer_social_links_mastodon-input").style.display = "block";
+    document.getElementById("footer_social_links_signal-input").style.display   = "block";
+    document.getElementById("footer_social_links_tiktok-input").style.display   = "block";
+    document.getElementById("footer_social_links_whatsapp-input").style.display = "block";
+    document.getElementById("footer_social_links_x-input").style.display        = "block";
+    */
+  }
 }
 
 /**
@@ -129,7 +161,7 @@ window.onload = function() {
 
   window.oninput = function() {
     inputValidation();
-    inputChange();
+    // inputChange();
   };
 
   document.getElementById("header_image").onchange = function() {

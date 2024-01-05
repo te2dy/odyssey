@@ -66,8 +66,8 @@ msgstr "Paramètres du pied de page"
 msgid "section-advanced"
 msgstr "Paramètres avancés"
 
-msgid "section-advanced-metadata"
-msgstr "Métadonnées"
+msgid "section-advanced-seo"
+msgstr "Optimisation du référencement"
 
 msgid "settings-global-unit-title"
 msgstr "Unité de base"
@@ -324,10 +324,16 @@ msgstr "Afficher une mention à Dotclear et au thème"
 msgid "settings-footer-credits-description"
 msgstr "Permet de faire de la publicité à Dotclear et à ce thème."
 
-msgid "settings-advanced-minimalsocialmeta-title"
+msgid "settings-advanced-metadescription-title"
+msgstr "Description de la page d’accueil"
+
+msgid "settings-advanced-metadescription-title"
+msgstr "Texte utilisé comme description du blog pour des moteurs de recherche. Sa taille idéale est d’environ 200&nbsp;caractères."
+
+msgid "settings-advanced-metasocial-title"
 msgstr "Ajouter des balises sociales minimalistes"
 
-msgid "settings-advanced-minimalsocialmeta-description"
+msgid "settings-advanced-metasocial-description"
 msgstr "Assure un meilleur affichage du blog sur les réseaux sociaux et peut être utile pour le référencement."
 
 msgid "settings-advanced-json-title"

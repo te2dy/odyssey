@@ -52,7 +52,7 @@ class FrontendBehaviors
      */
     public static function odysseySocialMarkups(): void
     {
-        if (My::settingValue('advanced_minimal_social_meta') === true) {
+        if (My::settingValue('advanced_meta_social') === true) {
             $title = '';
             $desc  = '';
             $img   = '';
@@ -88,19 +88,16 @@ class FrontendBehaviors
                         );
                     }
 
-                    if (
-                        // My::settingValue('global_meta_home_description') ||
-                        App::blog()->desc
-                    ) {
+                    if (My::settingValue('advanced_meta_description') || App::blog()->desc) {
                         if ($desc) {
                             $desc .= ' – ';
                         }
 
-                        // if (My::settingValue('global_meta_home_description')) {
-                            // $desc .= My::settingValue('global_meta_home_description');
-                        // } elseif (dcCore::app()->blog->desc) {
+                        if (My::settingValue('advanced_meta_description')) {
+                            $desc .= My::settingValue('advanced_meta_description');
+                        } elseif (App::blog()->desc) {
                             $desc .= App::blog()->desc;
-                        // }
+                        }
 
                         $desc = Html::clean($desc);
                         $desc = Html::decodeEntities($desc);
@@ -145,13 +142,11 @@ class FrontendBehaviors
             if ($title) {
                 $desc = Html::escapeHTML($desc);
 
-                /*
                 if (!$img && isset(My::settingValue('header_image')['url'])) {
                     $img = My::blogBaseURL() . My::settingValue('header_image')['url'];
                 }
 
                 $img = Html::escapeURL($img);
-                */
 
                 if ($img) {
                     echo '<meta name=twitter:card content=summary_large_image>', "\n";

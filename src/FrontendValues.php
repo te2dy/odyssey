@@ -26,6 +26,25 @@ class FrontendValues
     }
 
     /**
+     * Displays the description of the blog homepage in a meta description tag.
+     *
+     * If a custom description has not been set in the configurator,
+     * displays the blog description.
+     *
+     * @param array $attr Unused.
+     *
+     * @return string The description.
+     */
+    public static function odysseyMetaDescriptionHome($attr): string
+    {
+        if (My::settingValue('advanced_meta_description')) {
+            return '<?php echo ' . sprintf(App::frontend()->template()->getFilters($attr), 'dcCore::app()->blog->settings->odyssey->advanced_meta_description') . '; ?>';
+        }
+
+        return '<?php echo ' . sprintf(App::frontend()->template()->getFilters($attr), 'App::blog()->desc') . '; ?>';
+    }
+
+    /**
      * Adds styles in the head.
      *
      * @return string The styles.

@@ -58,7 +58,7 @@ class My extends MyTheme
             'advanced' => [
                 'name'         => __('section-advanced'),
                 'sub_sections' => [
-                    'metadata' => __('section-advanced-metadata')
+                    'seo' => __('section-advanced-seo')
                 ]
             ]
         ];
@@ -368,21 +368,31 @@ class My extends MyTheme
             'section'     => ['footer', 'no-title']
         ];
 
-        $default_settings['advanced_minimal_social_meta'] = [
-            'title'       => __('settings-advanced-minimalsocialmeta-title'),
-            'description' => __('settings-advanced-minimalsocialmeta-description'),
-            'type'        => 'checkbox',
-            'default'     => '0',
-            'section'     => ['advanced', 'metadata']
+        $default_settings['advanced_meta_description'] = [
+            'title'       => __('settings-advanced-metadescription-title'),
+            'description' => __('settings-advanced-metadescription-description'),
+            'type'        => 'textarea',
+            'default'     => '',
+            'section'     => ['advanced', 'seo']
         ];
 
+        $default_settings['advanced_meta_social'] = [
+            'title'       => __('settings-advanced-metasocial-title'),
+            'description' => __('settings-advanced-metasocial-description'),
+            'type'        => 'checkbox',
+            'default'     => '0',
+            'section'     => ['advanced', 'seo']
+        ];
+
+        /*
         $default_settings['advanced_json'] = [
             'title'       => __('settings-advanced-json-title'),
             'description' => __('settings-advanced-json-description'),
             'type'        => 'checkbox',
             'default'     => '0',
-            'section'     => ['advanced', 'metadata']
+            'section'     => ['advanced', 'seo']
         ];
+        */
 
         $default_settings['styles'] = [
             'title' => __('settings-footer-odysseystyles-title'),

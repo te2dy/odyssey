@@ -92,7 +92,7 @@ blockquote {
 }
 code,
 pre {
-  background-color: #f2f2f2;
+  background-color: var(--color-input-background, #f2f2f2);
   border-radius: unset;
   font-family: Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace;
   font-size: 1em;

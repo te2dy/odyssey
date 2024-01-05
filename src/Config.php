@@ -243,6 +243,27 @@ class Config extends Process
 
                 break;
 
+            case 'textarea' :
+                $placeholder = isset($default_settings[$setting_id]['placeholder'])
+                ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"'
+                : '';
+
+                echo '<label for=', $setting_id, '>',
+                $default_settings[$setting_id]['title'],
+                '</label>',
+                Form::textArea(
+                    $setting_id,
+                    60,
+                    3,
+                    $setting_value,
+                    '',
+                    '',
+                    false,
+                    $placeholder
+                );
+
+                break;
+
             default :
                 $placeholder = isset($default_settings[$setting_id]['placeholder'])
                 ? 'placeholder=' . My::attrValue($default_settings[$setting_id]['placeholder'])
