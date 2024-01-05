@@ -327,7 +327,7 @@ msgstr "Permet de faire de la publicité à Dotclear et à ce thème."
 msgid "settings-advanced-metadescription-title"
 msgstr "Description de la page d’accueil"
 
-msgid "settings-advanced-metadescription-title"
+msgid "settings-advanced-metadescription-description"
 msgstr "Texte utilisé comme description du blog pour des moteurs de recherche. Sa taille idéale est d’environ 200&nbsp;caractères."
 
 msgid "settings-advanced-metasocial-title"
