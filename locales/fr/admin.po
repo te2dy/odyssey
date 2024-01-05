@@ -13,7 +13,7 @@ msgid "settings-notice-reset"
 msgstr "Les paramètres du thème ont été réinitialisés."
 
 msgid "settings-intro"
-msgstr "Sur cette page, vous pouvez personnaliser votre thème afin de l’adapter au mieux à vos besoins."
+msgstr "Ici, vous pouvez personnaliser votre thème Odyssée pour l’adapter à vos besoins."
 
 msgid "settings-default-checked"
 msgstr "Par défaut&nbsp;: coché."
@@ -28,40 +28,40 @@ msgid "section-global-layout"
 msgstr "Mise en page"
 
 msgid "section-global-fonts"
-msgstr "Polices d’écriture"
+msgstr "Textes"
 
 msgid "section-global-colors"
 msgstr "Couleurs"
 
 msgid "section-header"
-msgstr "En-tête"
+msgstr "Paramètres de l’en-tête"
 
 msgid "section-header-image"
 msgstr "Logo ou bannière"
 
 msgid "section-content"
-msgstr "Contenu"
+msgstr "Paramètres du contenu"
 
 msgid "section-content-postlist"
 msgstr "Liste des billets"
 
 msgid "section-content-textformatting"
-msgstr "Format du texte"
+msgstr "Mise en forme"
 
 msgid "section-content-images"
 msgstr "Images"
 
 msgid "section-reactions"
-msgstr "Commentaires et rétroliens"
+msgstr "Paramètres des commentaires et rétroliens"
 
 msgid "section-reactions-form"
 msgstr "Formulaire de commentaires"
 
 msgid "section-widgets"
-msgstr "Widgets"
+msgstr "Paramètres des widgets"
 
 msgid "section-footer"
-msgstr "Pied de page"
+msgstr "Paramètres du pied de page"
 
 msgid "section-advanced"
 msgstr "Paramètres avancés"
@@ -73,10 +73,10 @@ msgid "settings-global-unit-title"
 msgstr "Unité de base"
 
 msgid "settings-global-unit-description"
-msgstr "Le cadratin (em) permet à vos pages d’adapter leur largeur en fonction de la taille de la police du navigateur (très utile d’un point de vue accessibilité). Ainsi, votre blog peut s’afficher différemment d’un appareil à l’autre. Pour un blog photo avec de larges images, il est recommandé d’utiliser les pixels."
+msgstr "Avec le cadratin (em), votre blog s’adapte mieux aux paramètres du navigateur de vos visiteurs (très utile d’un point de vue accessibilité, pour les personnes qui utilisent une taille de police plus grande par défaut). L’inconvénient est qu’il peut s’afficher différemment d’un appareil à l’autre. Pour garder la maîtrise de l’apparence de votre blog (pour blog photo par exemple), il est recommandé d’utiliser le pixel comme unité de base."
 
 msgid "settings-global-unit-relative-default"
-msgstr "Cadradin (par défaut)"
+msgstr "Cadratin (par défaut)"
 
 msgid "settings-global-unit-static"
 msgstr "Pixel"
@@ -85,34 +85,34 @@ msgid "settings-global-pagewidthvalue-title"
 msgstr "Largeur"
 
 msgid "settings-global-pagewidthvalue-description"
-msgstr "Si vous avez choisi le cadratin comme unité de base, la largeur doit être comprise entre 30 et 80 ; en pixel, entre 480 et 1 280. Par défaut, 30 em ou 480 px."
+msgstr "En cadratin, la largeur doit être comprise entre 30 et 80 ; en pixel, entre 480 et 1 280. Par défaut, 30 em ou 480 px."
 
 msgid "settings-global-fontfamily-title"
-msgstr "Type"
+msgstr "Police d’écriture"
 
 msgid "settings-global-fontfamily-description"
-msgstr "Vous avez le choix d’utiliser des polices système (susceptibles de changer d’un appareil à un autre), des polices du navigateur (susceptibles de changer d’un navigateur à un autre, y compris sur le même système), ou des polices sélectionnées pour leur lisibilité, conçues pour faciliter la lecture des personnes malvoyantes (à noter que ces polices sont plus gourmandes en ressources)."
+msgstr "Vous avez le choix d’utiliser des polices système (susceptibles de changer d’un appareil à un autre), des polices du navigateur (susceptibles de changer d’un navigateur à un autre, y compris sur le même système), ou des polices sélectionnées pour leur lisibilité, conçues pour faciliter la lecture des personnes malvoyantes (à noter que ces dernières sont plus gourmandes en ressources)."
 
 msgid "settings-global-fontfamily-sansserif-default"
-msgstr "Police sans empattements du système (par défaut)"
+msgstr "Sans empattements du système (par défaut)"
 
 msgid "settings-global-fontfamily-sansserif"
-msgstr "Police sans empattement du système"
+msgstr "Sans empattement du système"
 
 msgid "settings-global-fontfamily-serif"
-msgstr "Police avec empattements du système"
+msgstr "Avec empattements du système"
 
 msgid "settings-global-fontfamily-mono"
-msgstr "Police à chasse fixe du système"
+msgstr "À chasse fixe du système"
 
 msgid "settings-global-fontfamily-sansserifbrowser"
-msgstr "Police sans empattements du navigateur"
+msgstr "Sans empattements du navigateur"
 
 msgid "settings-global-fontfamily-serifbrowser"
-msgstr "Police avec empattements du navigateur"
+msgstr "Avec empattements du navigateur"
 
 msgid "settings-global-fontfamily-monobrowser"
-msgstr "Police à chasse fixe du navigateur"
+msgstr "À chasse fixe du navigateur"
 
 msgid "settings-global-fontfamily-atkinson"
 msgstr "Atkinson Hyperlegible"
@@ -124,10 +124,10 @@ msgid "settings-global-fontfamily-luciole"
 msgstr "Luciole"
 
 msgid "settings-global-fontsize-title"
-msgstr "Taille"
+msgstr "Taille de la police"
 
 msgid "settings-global-fontsize-description"
-msgstr "La taille des polices est calculée en fonction des paramètres du navigateur ; elle peut varier d’un appareil à l’autre."
+msgstr "Cette taille est relative à celle du navigateur ; elle peut varier d’un appareil à l’autre."
 
 msgid "settings-global-fontsize-80"
 msgstr "80 %"
@@ -172,7 +172,7 @@ msgid "settings-global-colortransition-title"
 msgstr "Activer les transitions de couleur"
 
 msgid "settings-global-colortransition-description"
-msgstr "Les transitions s’activent lors du survol des liens et des boutons."
+msgstr "Entraîne un changement doux de couleur au survol des liens et des boutons."
 
 msgid "settings-header-align-title"
 msgstr "Alignement"
@@ -187,13 +187,13 @@ msgid "settings-header-align-right"
 msgstr "Droite"
 
 msgid "settings-header-description-title"
-msgstr "Afficher le slogan du blog"
+msgstr "Afficher la description du blog"
 
 msgid "settings-header-postfull-title"
-msgstr "Afficher une en-tête complète sur les pages des billets"
+msgstr "Afficher l’en-tête complète sur toutes les pages du blog"
 
 msgid "settings-header-postfull-description"
-msgstr "Par défaut, l’en-tête est affichée dans un format réduit."
+msgstr "Désactive l’en-tête réduite affichée sur les pages des billets."
 
 msgid "settings-header-image-title"
 msgstr "Adresse de l’image"
@@ -229,13 +229,13 @@ msgid "settings-content-postlistaltcolor-title"
 msgstr "Alterner la couleur des liens vers les billets"
 
 msgid "settings-content-postlistaltcolor-description"
-msgstr "Change la couleur de fond d’un lien sur deux pour mieux distinguer chaque billet."
+msgstr "Permet de mieux distinguer chaque billet dans la liste."
 
 msgid "settings-content-postlistthumbnail-title"
 msgstr "Afficher des miniatures"
 
 msgid "settings-content-postlistthumbnail-description"
-msgstr "Affiche une miniature de la première image des billets devant leur titre."
+msgstr "Si un billet comprend une image, affiche une miniature devant son titre."
 
 msgid "settings-content-postlistreactions-title"
 msgstr "Afficher un lien vers les réactions"
@@ -262,7 +262,7 @@ msgid "settings-content-textalign-title"
 msgstr "Alignement"
 
 msgid "settings-content-textalign-description"
-msgstr "La justification sur les petits écrans (téléphones) peut provoquer un étirement excessif des lignes. Pour prévenir cet inconvénient, vous pouvez choisir l’option « Justifié (sauf sur les petits écrans) »."
+msgstr "La justification sur les petits écrans (téléphones) peut provoquer un affichage bizarre. Pour l’éviter, vous pouvez choisir l’option « Justifié (sauf sur les petits écrans) »."
 
 msgid "settings-content-textalign-left-default"
 msgstr "Gauche (par défaut)"
@@ -289,31 +289,28 @@ msgid "settings-content-initialletter-title"
 msgstr "Ajouter une lettrine au premier paragraphe des billets et des pages."
 
 msgid "settings-content-initialletter-description"
-msgstr "Ne fonctionne que sur des versions récentes de Safari et Chrome (janvier 2023)."
+msgstr "Ne fonctionne que sur des versions récentes de Safari et Chrome (janvier 2024)."
 
 msgid "settings-content-imageswide-title"
 msgstr "Agrandir les images suffisamment larges 🧪"
 
 msgid "settings-content-imageswide-description"
-msgstr "Les photos suffisamment larges dépasseront les limites de la page pour s’afficher en grand. ⚠️ Attention&nbsp;: cette fonctionnalité est expérimentale et pourrait mal fonctionner. N’hésitez pas à me faire part de vos retours par <a href=mailto:zozxebpyr@mozmail.com>courriel</a>."
+msgstr "Les grandes images dépasseront des bords de la page pour s’afficher en grand. ⚠️ Attention&nbsp;: cette fonctionnalité est expérimentale et pourrait mal fonctionner. N’hésitez pas à me faire part de vos retours par <a href=mailto:zozxebpyr@mozmail.com>courriel</a>."
 
 msgid "settings-reactions-button-title"
 msgstr "Dévoiler le formulaire en cliquant sur un bouton"
 
 msgid "settings-reactions-button-description"
-msgstr "Permet d’alléger les pages du blog."
+msgstr "Permet d’alléger visuellement les pages du blog."
 
 msgid "settings-reactions-markdownnotice-title"
 msgstr "Afficher un message signalant la prise en charge du balisage Markdown"
 
-msgid "settings-reactions-markdownnotice-description"
-msgstr "Il s’affichera sous le formulaire de commentaire."
-
 msgid "settings-widgets-display-title"
-msgstr "Activer l’emplacement pour les widgets"
+msgstr "Activer les widgets (volets de navigation et d’extra)"
 
 msgid "settings-widgets-display-description"
-msgstr "Il est recommandé de désactiver cette option si vous n’affichez aucun widget sur votre blog."
+msgstr "Il est recommandé de désactiver cette option si vous n’avez configuré aucun widget dans le volet de navigation et le volet d’extra."
 
 msgid "settings-footer-activation-title"
 msgstr "Activer le pied de page"

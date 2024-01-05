@@ -337,7 +337,7 @@ class My extends MyTheme
         if (App::plugins()->moduleExists('legacyMarkdown')) {
             $default_settings['reactions_markdown_notice'] = [
                 'title'       => __('settings-reactions-markdownnotice-title'),
-                'description' => __('settings-reactions-markdownnotice-description'),
+                'description' => '',
                 'type'        => 'checkbox',
                 'default'     => '0',
                 'section'     => ['reactions', 'form']
