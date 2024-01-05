@@ -17,6 +17,7 @@ use Dotclear\Helper\Date;
 use Dotclear\Helper\Text;
 use Dotclear\Helper\File\Path;
 use Dotclear\Helper\Html\Html;
+
 use context;
 
 class FrontendBehaviors

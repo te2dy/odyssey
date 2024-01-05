@@ -1,0 +1,346 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Last-Translator: Teddy\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "settings-notice-saved"
+msgstr "Theme settings have been saved."
+
+msgid "settings-notice-reset"
+msgstr "Theme settings have been reset."
+
+msgid "settings-default-checked"
+msgstr "Default: checked."
+
+msgid "settings-default-unchecked"
+msgstr "Default: unchecked."
+
+msgid "section-global"
+msgstr "Global settings"
+
+msgid "section-global-layout"
+msgstr "Layout"
+
+msgid "section-global-fonts"
+msgstr "Text"
+
+msgid "section-global-colors"
+msgstr "Colors"
+
+msgid "section-header"
+msgstr "Header settings"
+
+msgid "section-header-image"
+msgstr "Logo or banner"
+
+msgid "section-content"
+msgstr "Content settings"
+
+msgid "section-content-postlist"
+msgstr "Post list"
+
+msgid "section-content-textformatting"
+msgstr "Formatting"
+
+msgid "section-content-images"
+msgstr "Images"
+
+msgid "section-reactions"
+msgstr "Comment and trackback settings"
+
+msgid "section-reactions-form"
+msgstr "Comment form"
+
+msgid "section-widgets"
+msgstr "Widgets settings"
+
+msgid "section-footer"
+msgstr "Footer settings"
+
+msgid "section-advanced"
+msgstr "Advanced settings"
+
+msgid "section-advanced-seo"
+msgstr "Search engine optimization"
+
+msgid "settings-global-unit-title"
+msgstr "Base unit"
+
+msgid "settings-global-unit-description"
+msgstr "With em, your blog adapts better to your visitors' browser settings (very useful from an accessibility point of view, for people who use a larger font size by default). The downside is that it may display differently from one device to another. To keep control of your blog's appearance (for photo blogs, for example), we recommend using pixels as the basic unit."
+
+msgid "settings-global-unit-relative-default"
+msgstr "Em (par défaut)"
+
+msgid "settings-global-unit-static"
+msgstr "Pixels"
+
+msgid "settings-global-pagewidthvalue-title"
+msgstr "Width"
+
+msgid "settings-global-pagewidthvalue-description"
+msgstr "In the case of em, the width must be between 30 and 80; in the case of pixels, between 480 and 1,280. The default is 30em or 480px."
+
+msgid "settings-global-fontfamily-title"
+msgstr "Fonts"
+
+msgid "settings-global-fontfamily-description"
+msgstr "You have the choice of using system fonts (which may change from one device to another), browser fonts (which may change from one browser to another, even on the same system), or fonts selected for their legibility, designed to make reading easier for the visually impaired (note that the latter are more resource-intensive)."
+
+msgid "settings-global-fontfamily-sansserif-default"
+msgstr "Sans serif of the OS (par défaut)"
+
+msgid "settings-global-fontfamily-sansserif"
+msgstr "Sans serif of the OS"
+
+msgid "settings-global-fontfamily-serif"
+msgstr "Serif of the OS"
+
+msgid "settings-global-fontfamily-mono"
+msgstr "Monospace of the OS"
+
+msgid "settings-global-fontfamily-sansserifbrowser"
+msgstr "Sans serif of the browser"
+
+msgid "settings-global-fontfamily-serifbrowser"
+msgstr "Serif of the browser"
+
+msgid "settings-global-fontfamily-monobrowser"
+msgstr "Monospace of the browser"
+
+msgid "settings-global-fontfamily-atkinson"
+msgstr "Atkinson Hyperlegible"
+
+msgid "settings-global-fontfamily-ebgaramond"
+msgstr "EB Garamond"
+
+msgid "settings-global-fontfamily-luciole"
+msgstr "Luciole"
+
+msgid "settings-global-fontsize-title"
+msgstr "Font size"
+
+msgid "settings-global-fontsize-description"
+msgstr "This size is relative to that of the browser, and may vary from one device to another."
+
+msgid "settings-global-fontsize-80"
+msgstr "80%"
+
+msgid "settings-global-fontsize-90"
+msgstr "90%"
+
+msgid "settings-global-fontsize-100-default"
+msgstr "100% (default)"
+
+msgid "settings-global-fontsize-110"
+msgstr "110%"
+
+msgid "settings-global-fontsize-120"
+msgstr "120%"
+
+msgid "settings-global-fontantialiasing-title"
+msgstr "Enable character smoothing"
+
+msgid "settings-global-fontantialiasing-description"
+msgstr "Prevents aliasing but can make characters very (too) fine."
+
+msgid "settings-global-primarycolor-title"
+msgstr "Main color"
+
+msgid "settings-global-primarycolor-description"
+msgstr "Particularly used for links."
+
+msgid "settings-global-primarycolor-blue-default"
+msgstr "Blue (default)"
+
+msgid "settings-global-primarycolor-gray"
+msgstr "Gray"
+
+msgid "settings-global-primarycolor-green"
+msgstr "Green"
+
+msgid "settings-global-primarycolor-red"
+msgstr "Red"
+
+msgid "settings-global-colortransition-title"
+msgstr "Enable color transitions"
+
+msgid "settings-global-colortransition-description"
+msgstr "Produces a smooth color change when hovering over links and buttons."
+
+msgid "settings-header-align-title"
+msgstr "Alignment"
+
+msgid "settings-header-align-left"
+msgstr "Left"
+
+msgid "settings-header-align-center-default"
+msgstr "Center (default)"
+
+msgid "settings-header-align-right"
+msgstr "Right"
+
+msgid "settings-header-description-title"
+msgstr "Display blog description"
+
+msgid "settings-header-postfull-title"
+msgstr "Display full header on all blog posts"
+
+msgid "settings-header-postfull-description"
+msgstr "Disables the reduced header displayed on posts."
+
+msgid "settings-header-image-title"
+msgstr "URL of the image"
+
+msgid "settings-header-image-description"
+msgstr "Optional: to ensure optimum rendering of your image on dual-pixel-density screens (Retina), make sure you've uploaded the same image to the media library, twice the size, with the suffix <code>-2x</code>.<br>Example: you want to display a logo named <code>logo.png</code> (200px × 200px) that you have uploaded to the root of your media library (URL&nbsp;: <code>/public/logo.png</code>). Upload the same 400 px × 400 px image to the same folder, adding <code>-2x</code> at the end of the page (URL&nbsp;: <code>/public/logo-2x.png</code>) ; the theme and browser will take care of the rest."
+
+msgid "settings-header-image-placeholder"
+msgstr "image.png"
+
+msgid "header-image-preview-alt"
+msgstr "Image preview"
+
+msgid "header-image-retina-ready"
+msgstr "✅ Image suitable for dual-pixel-density screens."
+
+msgid "settings-header-imageposition-title"
+msgstr "Image position"
+
+msgid "settings-header-imageposition-top-default"
+msgstr "Top of header (default)"
+
+msgid "settings-header-imageposition-bottom"
+msgstr "Bottom of header"
+
+msgid "settings-header-imagedescription-title"
+msgstr "Header image description"
+
+msgid "settings-header-imagedescription-description"
+msgstr "Useful for accessibility."
+
+msgid "settings-content-postlistaltcolor-title"
+msgstr "Alternate colors for links to posts"
+
+msgid "settings-content-postlistaltcolor-description"
+msgstr "Allows you to better distinguish each ticket in the list."
+
+msgid "settings-content-postlistthumbnail-title"
+msgstr "Display thumbnails"
+
+msgid "settings-content-postlistthumbnail-description"
+msgstr "If a post includes an image, display a thumbnail in front of its title."
+
+msgid "settings-content-postlistreactions-title"
+msgstr "Show a link to reactions"
+
+msgid "settings-content-fontfamily-title"
+msgstr "Fonts"
+
+msgid "settings-content-fontfamily-same-default"
+msgstr "Same as global theme font (default)"
+
+msgid "settings-content-lineheight-title"
+msgstr "Line spacing"
+
+msgid "settings-content-lineheight-small"
+msgstr "Small"
+
+msgid "settings-content-lineheight-standard-default"
+msgstr "Standard (default)"
+
+msgid "settings-content-lineheight-big"
+msgstr "Big"
+
+msgid "settings-content-textalign-title"
+msgstr "Alignment"
+
+msgid "settings-content-textalign-description"
+msgstr "Justify on small screens (phones) may cause a weird display. To avoid it, you can choose the “Justify (except on small screens)” option."
+
+msgid "settings-content-textalign-left-default"
+msgstr "Left (default)"
+
+msgid "settings-content-textalign-justify"
+msgstr "Justify"
+
+msgid "settings-content-textalign-justify-not-mobile"
+msgstr "Justify (except on small screens)"
+
+msgid "settings-content-hyphens-title"
+msgstr "Hyphenation"
+
+msgid "settings-content-hyphens-disabled-default"
+msgstr "Disabled (default)"
+
+msgid "settings-content-hyphens-enabled"
+msgstr "Enabled"
+
+msgid "settings-content-hyphens-enablednotmobile"
+msgstr "Enabled (except on small screens)"
+
+msgid "settings-content-initialletter-title"
+msgstr "Add a drop cap to the first paragraph of posts and pages."
+
+msgid "settings-content-initialletter-description"
+msgstr "Only works on recent versions of Safari and Chrome (January 2024)."
+
+msgid "settings-content-imageswide-title"
+msgstr "Enlarge images wide enough 🧪"
+
+msgid "settings-content-imageswide-description"
+msgstr "Large images will extend beyond the edges of the page to display large. ⚠️ Warning: This feature is experimental and may malfunction. Do not hesitate to send me your feedback by <a href=mailto:zozxebpyr@mozmail.com>email</a>."
+
+msgid "settings-reactions-button-title"
+msgstr "Unveil the form by clicking a button"
+
+msgid "settings-reactions-button-description"
+msgstr "Allows you to visually lighten the blog pages."
+
+msgid "settings-reactions-markdownnotice-title"
+msgstr "Show a message about Markdown markup support"
+
+msgid "settings-widgets-display-title"
+msgstr "Enable widgets (nav and extra panes)"
+
+msgid "settings-widgets-display-description"
+msgstr "It is recommended to disable this option if you have not configured any widgets in the nav and extra pane."
+
+msgid "settings-footer-activation-title"
+msgstr "Enable footer"
+
+msgid "settings-footer-activation-description"
+msgstr "It is recommended to uncheck this setting if the footer does not contain any elements."
+
+msgid "settings-footer-credits-title"
+msgstr "Show a mention to Dotclear and the theme"
+
+msgid "settings-footer-credits-description"
+msgstr "Allows you to advertise Dotclear and this theme."
+
+msgid "settings-advanced-metadescription-title"
+msgstr "Description of the home page"
+
+msgid "settings-advanced-metadescription-description"
+msgstr "Text used as a description of the blog for search engines. Its ideal size is around 200 characters."
+
+msgid "settings-advanced-metasocial-title"
+msgstr "Add minimalist social tags"
+
+msgid "settings-advanced-metasocial-description"
+msgstr "Ensures better display of the blog on social networks and can be useful for SEO."
+
+msgid "settings-advanced-json-title"
+msgstr "Add metadata in JSON format"
+
+msgid "settings-advanced-json-description"
+msgstr "Useful for search engine optimization."
+
+msgid "settings-save-button-text"
+msgstr "Save settings"
+
+msgid "settings-reset-button-text"
+msgstr "Reset"

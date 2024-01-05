@@ -12,9 +12,6 @@ msgstr "Les paramètres du thème ont été enregistrés."
 msgid "settings-notice-reset"
 msgstr "Les paramètres du thème ont été réinitialisés."
 
-msgid "settings-intro"
-msgstr "Ici, vous pouvez personnaliser votre thème Odyssée pour l’adapter à vos besoins."
-
 msgid "settings-default-checked"
 msgstr "Par défaut&nbsp;: coché."
 
@@ -199,7 +196,7 @@ msgid "settings-header-image-title"
 msgstr "Adresse de l’image"
 
 msgid "settings-header-image-description"
-msgstr "Facultatif : pour assurer un rendu optimal de votre image sur les écrans à double densité de pixels (Retina), assurez-vous d’avoir téléversé dans la médiathèque la même image, aux dimensions deux fois plus grandes, avec le suffixe <code>-2x</code>.<br>Exemple&nbsp;: vous souhaitez afficher un logo nommé <code>logo.png</code> (200 px × 200 px) que vous avez téléversé à la racine de votre médiathèque (adresse&nbsp;: <code>/public/logo.png</code>). Téléversez la même image en 400 px × 400 px dans le même dossier en ajoutant <code>-2x</code> à la fin de son nom (adresse&nbsp;: <code>/public/logo-2x.png</code>) ; le thème et le navigateur se chargeront du reste."
+msgstr "Facultatif&nbsp;: pour assurer un rendu optimal de votre image sur les écrans à double densité de pixels (Retina), assurez-vous d’avoir téléversé dans la médiathèque la même image, aux dimensions deux fois plus grandes, avec le suffixe <code>-2x</code>.<br>Exemple&nbsp;: vous souhaitez afficher un logo nommé <code>logo.png</code> (200 px × 200 px) que vous avez téléversé à la racine de votre médiathèque (adresse&nbsp;: <code>/public/logo.png</code>). Téléversez la même image en 400 px × 400 px dans le même dossier en ajoutant <code>-2x</code> à la fin de son nom (adresse&nbsp;: <code>/public/logo-2x.png</code>) ; le thème et le navigateur se chargeront du reste."
 
 msgid "settings-header-image-placeholder"
 msgstr "image.png"

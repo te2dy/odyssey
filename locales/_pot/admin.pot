@@ -1,0 +1,346 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Last-Translator: Teddy\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "settings-notice-saved"
+msgstr ""
+
+msgid "settings-notice-reset"
+msgstr ""
+
+msgid "settings-default-checked"
+msgstr ""
+
+msgid "settings-default-unchecked"
+msgstr ""
+
+msgid "section-global"
+msgstr ""
+
+msgid "section-global-layout"
+msgstr ""
+
+msgid "section-global-fonts"
+msgstr ""
+
+msgid "section-global-colors"
+msgstr ""
+
+msgid "section-header"
+msgstr ""
+
+msgid "section-header-image"
+msgstr ""
+
+msgid "section-content"
+msgstr ""
+
+msgid "section-content-postlist"
+msgstr ""
+
+msgid "section-content-textformatting"
+msgstr ""
+
+msgid "section-content-images"
+msgstr ""
+
+msgid "section-reactions"
+msgstr ""
+
+msgid "section-reactions-form"
+msgstr ""
+
+msgid "section-widgets"
+msgstr ""
+
+msgid "section-footer"
+msgstr ""
+
+msgid "section-advanced"
+msgstr ""
+
+msgid "section-advanced-seo"
+msgstr ""
+
+msgid "settings-global-unit-title"
+msgstr ""
+
+msgid "settings-global-unit-description"
+msgstr ""
+
+msgid "settings-global-unit-relative-default"
+msgstr ""
+
+msgid "settings-global-unit-static"
+msgstr ""
+
+msgid "settings-global-pagewidthvalue-title"
+msgstr ""
+
+msgid "settings-global-pagewidthvalue-description"
+msgstr ""
+
+msgid "settings-global-fontfamily-title"
+msgstr ""
+
+msgid "settings-global-fontfamily-description"
+msgstr ""
+
+msgid "settings-global-fontfamily-sansserif-default"
+msgstr ""
+
+msgid "settings-global-fontfamily-sansserif"
+msgstr ""
+
+msgid "settings-global-fontfamily-serif"
+msgstr ""
+
+msgid "settings-global-fontfamily-mono"
+msgstr ""
+
+msgid "settings-global-fontfamily-sansserifbrowser"
+msgstr ""
+
+msgid "settings-global-fontfamily-serifbrowser"
+msgstr ""
+
+msgid "settings-global-fontfamily-monobrowser"
+msgstr ""
+
+msgid "settings-global-fontfamily-atkinson"
+msgstr ""
+
+msgid "settings-global-fontfamily-ebgaramond"
+msgstr ""
+
+msgid "settings-global-fontfamily-luciole"
+msgstr ""
+
+msgid "settings-global-fontsize-title"
+msgstr ""
+
+msgid "settings-global-fontsize-description"
+msgstr ""
+
+msgid "settings-global-fontsize-80"
+msgstr ""
+
+msgid "settings-global-fontsize-90"
+msgstr ""
+
+msgid "settings-global-fontsize-100-default"
+msgstr ""
+
+msgid "settings-global-fontsize-110"
+msgstr ""
+
+msgid "settings-global-fontsize-120"
+msgstr ""
+
+msgid "settings-global-fontantialiasing-title"
+msgstr ""
+
+msgid "settings-global-fontantialiasing-description"
+msgstr ""
+
+msgid "settings-global-primarycolor-title"
+msgstr ""
+
+msgid "settings-global-primarycolor-description"
+msgstr ""
+
+msgid "settings-global-primarycolor-blue-default"
+msgstr ""
+
+msgid "settings-global-primarycolor-gray"
+msgstr ""
+
+msgid "settings-global-primarycolor-green"
+msgstr ""
+
+msgid "settings-global-primarycolor-red"
+msgstr ""
+
+msgid "settings-global-colortransition-title"
+msgstr ""
+
+msgid "settings-global-colortransition-description"
+msgstr ""
+
+msgid "settings-header-align-title"
+msgstr ""
+
+msgid "settings-header-align-left"
+msgstr ""
+
+msgid "settings-header-align-center-default"
+msgstr ""
+
+msgid "settings-header-align-right"
+msgstr ""
+
+msgid "settings-header-description-title"
+msgstr ""
+
+msgid "settings-header-postfull-title"
+msgstr ""
+
+msgid "settings-header-postfull-description"
+msgstr ""
+
+msgid "settings-header-image-title"
+msgstr ""
+
+msgid "settings-header-image-description"
+msgstr ""
+
+msgid "settings-header-image-placeholder"
+msgstr ""
+
+msgid "header-image-preview-alt"
+msgstr ""
+
+msgid "header-image-retina-ready"
+msgstr ""
+
+msgid "settings-header-imageposition-title"
+msgstr ""
+
+msgid "settings-header-imageposition-top-default"
+msgstr ""
+
+msgid "settings-header-imageposition-bottom"
+msgstr ""
+
+msgid "settings-header-imagedescription-title"
+msgstr ""
+
+msgid "settings-header-imagedescription-description"
+msgstr ""
+
+msgid "settings-content-postlistaltcolor-title"
+msgstr ""
+
+msgid "settings-content-postlistaltcolor-description"
+msgstr ""
+
+msgid "settings-content-postlistthumbnail-title"
+msgstr ""
+
+msgid "settings-content-postlistthumbnail-description"
+msgstr ""
+
+msgid "settings-content-postlistreactions-title"
+msgstr ""
+
+msgid "settings-content-fontfamily-title"
+msgstr ""
+
+msgid "settings-content-fontfamily-same-default"
+msgstr ""
+
+msgid "settings-content-lineheight-title"
+msgstr ""
+
+msgid "settings-content-lineheight-small"
+msgstr ""
+
+msgid "settings-content-lineheight-standard-default"
+msgstr ""
+
+msgid "settings-content-lineheight-big"
+msgstr ""
+
+msgid "settings-content-textalign-title"
+msgstr ""
+
+msgid "settings-content-textalign-description"
+msgstr ""
+
+msgid "settings-content-textalign-left-default"
+msgstr ""
+
+msgid "settings-content-textalign-justify"
+msgstr ""
+
+msgid "settings-content-textalign-justify-not-mobile"
+msgstr ""
+
+msgid "settings-content-hyphens-title"
+msgstr ""
+
+msgid "settings-content-hyphens-disabled-default"
+msgstr ""
+
+msgid "settings-content-hyphens-enabled"
+msgstr ""
+
+msgid "settings-content-hyphens-enablednotmobile"
+msgstr ""
+
+msgid "settings-content-initialletter-title"
+msgstr ""
+
+msgid "settings-content-initialletter-description"
+msgstr ""
+
+msgid "settings-content-imageswide-title"
+msgstr ""
+
+msgid "settings-content-imageswide-description"
+msgstr ""
+
+msgid "settings-reactions-button-title"
+msgstr ""
+
+msgid "settings-reactions-button-description"
+msgstr ""
+
+msgid "settings-reactions-markdownnotice-title"
+msgstr ""
+
+msgid "settings-widgets-display-title"
+msgstr ""
+
+msgid "settings-widgets-display-description"
+msgstr ""
+
+msgid "settings-footer-activation-title"
+msgstr ""
+
+msgid "settings-footer-activation-description"
+msgstr ""
+
+msgid "settings-footer-credits-title"
+msgstr ""
+
+msgid "settings-footer-credits-description"
+msgstr ""
+
+msgid "settings-advanced-metadescription-title"
+msgstr ""
+
+msgid "settings-advanced-metadescription-description"
+msgstr ""
+
+msgid "settings-advanced-metasocial-title"
+msgstr ""
+
+msgid "settings-advanced-metasocial-description"
+msgstr ""
+
+msgid "settings-advanced-json-title"
+msgstr ""
+
+msgid "settings-advanced-json-description"
+msgstr ""
+
+msgid "settings-save-button-text"
+msgstr ""
+
+msgid "settings-reset-button-text"
+msgstr ""

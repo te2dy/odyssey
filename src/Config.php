@@ -16,8 +16,6 @@ use Dotclear\Core\Backend\Page;
 use Dotclear\Helper\File\Path;
 use Dotclear\Helper\Html\Html;
 use Dotclear\Helper\Network\Http;
-// use Dotclear\Helper\Html\Form;
-// use Dotclear\Helper\Html\Form\Select;
 
 use form;
 
@@ -378,8 +376,6 @@ class Config extends Process
                 }
             }
         }
-
-        echo '<p>' . __('settings-intro') . '</p>';
 
         echo '<form action="', App::backend()->url()->get('admin.blog.theme', ['conf' => '1']), '" enctype=multipart/form-data id=theme-config-form method=post>';
 
