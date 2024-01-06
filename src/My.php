@@ -89,7 +89,7 @@ class My extends MyTheme
             'description' => __('settings-global-pagewidthvalue-description'),
             'type'        => 'integer',
             'default'     => '',
-            'placeholder' => !My::settingValue('global_unit') ? 30 : 480,
+            'placeholder' => !My::settingValue('global_unit') ? '30' : '480',
             'section'     => ['global', 'layout']
         ];
 
@@ -98,15 +98,24 @@ class My extends MyTheme
             'description' => __('settings-global-fontfamily-description'),
             'type'        => 'select',
             'choices'     => [
-                __('settings-global-fontfamily-sansserif-default') => 'sans-serif',
-                __('settings-global-fontfamily-serif')             => 'serif',
-                __('settings-global-fontfamily-mono')              => 'monospace',
-                __('settings-global-fontfamily-sansserifbrowser')  => 'sans-serif-browser',
-                __('settings-global-fontfamily-serifbrowser')      => 'serif-browser',
-                __('settings-global-fontfamily-monobrowser')       => 'monospace-browser',
-                __('settings-global-fontfamily-atkinson')          => 'atkinson',
-                __('settings-global-fontfamily-ebgaramond')        => 'eb-garamond',
-                __('settings-global-fontfamily-luciole')           => 'luciole'
+                __('settings-global-fontfamily-sansserif-default')  => 'sans-serif',
+                __('settings-global-fontfamily-transitional')       => 'transitional',
+                __('settings-global-fontfamily-oldstyle')           => 'old-style',
+                __('settings-global-fontfamily-humanist')           => 'humanist',
+                __('settings-global-fontfamily-geometrichumanist')  => 'geometric-humanist',
+                __('settings-global-fontfamily-classicalhumanist')  => 'classical-humanist',
+                __('settings-global-fontfamily-neogrotesque')       => 'neo-grotesque',
+                __('settings-global-fontfamily-monospaceslabserif') => 'monospace-slab-serif',
+                __('settings-global-fontfamily-monospacecode')      => 'monospace-code',
+                __('settings-global-fontfamily-industrial')         => 'industrial',
+                __('settings-global-fontfamily-roundedsans')        => 'rounded-sans',
+                __('settings-global-fontfamily-slabserif')          => 'slab-serif',
+                __('settings-global-fontfamily-antique')            => 'antique',
+                __('settings-global-fontfamily-didone')             => 'didone',
+                __('settings-global-fontfamily-handwritten')        => 'handwritten'
+                // __('settings-global-fontfamily-atkinson')          => 'atkinson',
+                // __('settings-global-fontfamily-ebgaramond')        => 'eb-garamond',
+                // __('settings-global-fontfamily-luciole')           => 'luciole'
             ],
             'default'     => 'sans-serif',
             'section'     => ['global', 'fonts']
@@ -256,16 +265,25 @@ class My extends MyTheme
             'description' => '',
             'type'        => 'select',
             'choices'     => [
-                __('settings-content-fontfamily-same-default')    => 'same',
-                __('settings-global-fontfamily-sansserif')        => 'sans-serif',
-                __('settings-global-fontfamily-serif')            => 'serif',
-                __('settings-global-fontfamily-mono')             => 'monospace',
-                __('settings-global-fontfamily-sansserifbrowser') => 'sans-serif-browser',
-                __('settings-global-fontfamily-serifbrowser')     => 'serif-browser',
-                __('settings-global-fontfamily-monobrowser')      => 'monospace-browser',
-                __('settings-global-fontfamily-atkinson')         => 'atkinson',
-                __('settings-global-fontfamily-ebgaramond')       => 'eb-garamond',
-                __('settings-global-fontfamily-luciole')          => 'luciole'
+                __('settings-content-fontfamily-same-default')      => 'same',
+                __('settings-global-fontfamily-sansserif')          => 'sans-serif',
+                __('settings-global-fontfamily-transitional')       => 'transitional',
+                __('settings-global-fontfamily-oldstyle')           => 'old-style',
+                __('settings-global-fontfamily-humanist')           => 'humanist',
+                __('settings-global-fontfamily-geometrichumanist')  => 'geometric-humanist',
+                __('settings-global-fontfamily-classicalhumanist')  => 'classical-humanist',
+                __('settings-global-fontfamily-neogrotesque')       => 'neo-grotesque',
+                __('settings-global-fontfamily-monospaceslabserif') => 'monospace-slab-serif',
+                __('settings-global-fontfamily-monospacecode')      => 'monospace-code',
+                __('settings-global-fontfamily-industrial')         => 'industrial',
+                __('settings-global-fontfamily-roundedsans')        => 'rounded-sans',
+                __('settings-global-fontfamily-slabserif')          => 'slab-serif',
+                __('settings-global-fontfamily-antique')            => 'antique',
+                __('settings-global-fontfamily-didone')             => 'didone',
+                __('settings-global-fontfamily-handwritten')        => 'handwritten'
+                // __('settings-global-fontfamily-atkinson')           => 'atkinson',
+                // __('settings-global-fontfamily-ebgaramond')         => 'eb-garamond',
+                // __('settings-global-fontfamily-luciole')            => 'luciole'
             ],
             'default'     => 'same',
             'section'     => ['content', 'text-formatting']
@@ -614,5 +632,56 @@ class My extends MyTheme
         }
 
         return false;
+    }
+
+    /**
+     * Returns the fonts to be used as styles in CSS
+     *
+     * @param string $fontname The name of the font to return the CSS rule.
+     *
+     * @return The font rule.
+     */
+    public static function fontStack($fontname = ''): string
+    {
+        if (!$fontname) {
+            return '';
+        }
+
+        $emoji = ', "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"';
+
+        switch ($fontname) {
+            case 'sans-serif' :
+                return 'system-ui, sans-serif' . $emoji;
+            case 'transitional' :
+                return 'Charter, "Bitstream Charter", "Sitka Text", Cambria, serif' . $emoji;
+            case 'old-style' :
+                return '"Iowan Old Style", "Palatino Linotype", "URW Palladio L", P052, serif' . $emoji;
+            case 'humanist' :
+                return 'Seravek, "Gill Sans Nova", Ubuntu, Calibri, "DejaVu Sans", source-sans-pro, sans-serif' . $emoji;
+            case 'geometric-humanist' :
+                return 'Avenir, Montserrat, Corbel, "URW Gothic", source-sans-pro, sans-serif' . $emoji;
+            case 'classical-humanist' :
+                return 'Optima, Candara, "Noto Sans", source-sans-pro, sans-serif' . $emoji;
+            case 'neo-grotesque' :
+                return 'Inter, Roboto, "Helvetica Neue", "Arial Nova", "Nimbus Sans", Arial, sans-serif' . $emoji;
+            case 'monospace-slab-serif' :
+                return '"Nimbus Mono PS", "Courier New", monospace' . $emoji;
+            case 'monospace-code' :
+                return 'ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace' . $emoji;
+            case 'industrial' :
+                return 'Bahnschrift, "DIN Alternate", "Franklin Gothic Medium", "Nimbus Sans Narrow", sans-serif-condensed, sans-serif' . $emoji;
+            case 'rounded-sans' :
+                return 'ui-rounded, "Hiragino Maru Gothic ProN", Quicksand, Comfortaa, Manjari, "Arial Rounded MT", "Arial Rounded MT Bold", Calibri, source-sans-pro, sans-serif' . $emoji;
+            case 'slab-serif' :
+                return 'Rockwell, "Rockwell Nova", "Roboto Slab", "DejaVu Serif", "Sitka Small", serif' . $emoji;
+            case 'antique' :
+                return 'Superclarendon, "Bookman Old Style", "URW Bookman", "URW Bookman L", "Georgia Pro", Georgia, serif' . $emoji;
+            case 'didone' :
+                return 'Didot, "Bodoni MT", "Noto Serif Display", "URW Palladio L", P052, Sylfaen, serif' . $emoji;
+            case 'handwritten' :
+                return '"Segoe Print", "Bradley Hand", Chilanka, TSCu_Comic, casual, cursive' . $emoji;
+            default :
+                return '';
+        }
     }
 }

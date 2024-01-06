@@ -91,25 +91,52 @@ msgid "settings-global-fontfamily-description"
 msgstr "Vous avez le choix d’utiliser des polices système (susceptibles de changer d’un appareil à un autre), des polices du navigateur (susceptibles de changer d’un navigateur à un autre, y compris sur le même système), ou des polices sélectionnées pour leur lisibilité, conçues pour faciliter la lecture des personnes malvoyantes (à noter que ces dernières sont plus gourmandes en ressources)."
 
 msgid "settings-global-fontfamily-sansserif-default"
-msgstr "Sans empattements du système (par défaut)"
+msgstr "IU du système (par défaut)"
 
 msgid "settings-global-fontfamily-sansserif"
-msgstr "Sans empattement du système"
+msgstr "IU du système"
 
-msgid "settings-global-fontfamily-serif"
-msgstr "Avec empattements du système"
+msgid "settings-global-fontfamily-transitional"
+msgstr "Transition"
 
-msgid "settings-global-fontfamily-mono"
-msgstr "À chasse fixe du système"
+msgid "settings-global-fontfamily-oldstyle"
+msgstr "Style ancien"
 
-msgid "settings-global-fontfamily-sansserifbrowser"
-msgstr "Sans empattements du navigateur"
+msgid "settings-global-fontfamily-humanist"
+msgstr "Humane"
 
-msgid "settings-global-fontfamily-serifbrowser"
-msgstr "Avec empattements du navigateur"
+msgid "settings-global-fontfamily-geometrichumanist"
+msgstr "Linéale humanistique"
 
-msgid "settings-global-fontfamily-monobrowser"
-msgstr "À chasse fixe du navigateur"
+msgid "settings-global-fontfamily-classicalhumanist"
+msgstr "Humane classique"
+
+msgid "settings-global-fontfamily-neogrotesque"
+msgstr "Linéale néo-grotesque"
+
+msgid "settings-global-fontfamily-monospaceslabserif"
+msgstr "À chasse fixe avec empattement"
+
+msgid "settings-global-fontfamily-monospacecode"
+msgstr "À chasse fixe"
+
+msgid "settings-global-fontfamily-industrial"
+msgstr "Industrielle"
+
+msgid "settings-global-fontfamily-roundedsans"
+msgstr "Arrondie"
+
+msgid "settings-global-fontfamily-slabserif"
+msgstr "À empattement carré"
+
+msgid "settings-global-fontfamily-antique"
+msgstr "Antique"
+
+msgid "settings-global-fontfamily-didone"
+msgstr "Didone"
+
+msgid "settings-global-fontfamily-handwritten"
+msgstr "Manuscrite"
 
 msgid "settings-global-fontfamily-atkinson"
 msgstr "Atkinson Hyperlegible"
@@ -119,6 +146,9 @@ msgstr "EB Garamond"
 
 msgid "settings-global-fontfamily-luciole"
 msgstr "Luciole"
+
+msgid "config-preview-font"
+msgstr "Aperçu de la police sélectionnée&nbsp;:"
 
 msgid "settings-global-fontsize-title"
 msgstr "Taille de la police"

@@ -20,7 +20,8 @@ body {
 body {
   background-color: var(--color-background, #fafafa); /* hsl(0, 0%, 98%) */
   color: var(--color-text-main, #303030);
-  font: var(--font-size, 1em) var(--font-family, -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif); /*"EB Garamond", Georgie, serif */
+  font-family: var(--font-family, system-ui, sans-serif);
+  font-size: var(--font-size, 1rem);
 }
 #site {
   box-sizing: border-box;
@@ -94,7 +95,7 @@ code,
 pre {
   background-color: var(--color-input-background, #f2f2f2);
   border-radius: unset;
-  font-family: Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace;
+  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace;
   font-size: 1em;
   white-space: pre-wrap;
 }
@@ -637,15 +638,15 @@ aside .widget:last-child {
     margin-block: 2rem;
     row-gap: 2rem;
   }
-  .post-list-link {
+  .post-list-content-main {
     column-gap: 0;
     flex-direction: column;
     row-gap: .25rem;
   }
-  .post-list-link .entry-title {
+  .post-list-content-main .entry-title {
     order: 2;
   }
-  .post-list-link .post-date {
+  .post-list-content-main .post-date {
     margin-left: 0;
     order: 1;
   }

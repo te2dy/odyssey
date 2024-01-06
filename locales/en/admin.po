@@ -73,7 +73,7 @@ msgid "settings-global-unit-description"
 msgstr "With em, your blog adapts better to your visitors' browser settings (very useful from an accessibility point of view, for people who use a larger font size by default). The downside is that it may display differently from one device to another. To keep control of your blog's appearance (for photo blogs, for example), we recommend using pixels as the basic unit."
 
 msgid "settings-global-unit-relative-default"
-msgstr "Em (par défaut)"
+msgstr "Em (default)"
 
 msgid "settings-global-unit-static"
 msgstr "Pixels"
@@ -91,25 +91,52 @@ msgid "settings-global-fontfamily-description"
 msgstr "You have the choice of using system fonts (which may change from one device to another), browser fonts (which may change from one browser to another, even on the same system), or fonts selected for their legibility, designed to make reading easier for the visually impaired (note that the latter are more resource-intensive)."
 
 msgid "settings-global-fontfamily-sansserif-default"
-msgstr "Sans serif of the OS (par défaut)"
+msgstr "System UI (default)"
 
 msgid "settings-global-fontfamily-sansserif"
-msgstr "Sans serif of the OS"
+msgstr "System UI"
 
-msgid "settings-global-fontfamily-serif"
-msgstr "Serif of the OS"
+msgid "settings-global-fontfamily-transitional"
+msgstr "Transitional"
 
-msgid "settings-global-fontfamily-mono"
-msgstr "Monospace of the OS"
+msgid "settings-global-fontfamily-oldstyle"
+msgstr "Old Style"
 
-msgid "settings-global-fontfamily-sansserifbrowser"
-msgstr "Sans serif of the browser"
+msgid "settings-global-fontfamily-humanist"
+msgstr "Humanist"
 
-msgid "settings-global-fontfamily-serifbrowser"
-msgstr "Serif of the browser"
+msgid "settings-global-fontfamily-geometrichumanist"
+msgstr "Geometric Humanist"
 
-msgid "settings-global-fontfamily-monobrowser"
-msgstr "Monospace of the browser"
+msgid "settings-global-fontfamily-classicalhumanist"
+msgstr "Classical Humanist"
+
+msgid "settings-global-fontfamily-neogrotesque"
+msgstr "Neo Grotesque"
+
+msgid "settings-global-fontfamily-monospaceslabserif"
+msgstr "Monospace Slab Serif"
+
+msgid "settings-global-fontfamily-monospacecode"
+msgstr "Monospace Code"
+
+msgid "settings-global-fontfamily-industrial"
+msgstr "Industrial"
+
+msgid "settings-global-fontfamily-roundedsans"
+msgstr "Rounded Sans"
+
+msgid "settings-global-fontfamily-slabserif"
+msgstr "Slab Serif"
+
+msgid "settings-global-fontfamily-antique"
+msgstr "Antique"
+
+msgid "settings-global-fontfamily-didone"
+msgstr "Didone"
+
+msgid "settings-global-fontfamily-handwritten"
+msgstr "Handwritten"
 
 msgid "settings-global-fontfamily-atkinson"
 msgstr "Atkinson Hyperlegible"
@@ -119,6 +146,9 @@ msgstr "EB Garamond"
 
 msgid "settings-global-fontfamily-luciole"
 msgstr "Luciole"
+
+msgid "config-preview-font"
+msgstr "Preview of the selected font:"
 
 msgid "settings-global-fontsize-title"
 msgstr "Font size"

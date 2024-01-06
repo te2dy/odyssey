@@ -1,8 +1,7 @@
-.select-button-box {
-  /*position: absolute;
-  clip: rect(0,0,0,0);
-  pointer-events: none;*/
-}
 .odyssey-value-error {
   background-color: hsl(0, 90%, 90%);
+}
+.odyssey-font-preview {
+  border-left: .252rem solid var(--fieldset-border);
+  padding-left: .5rem;
 }
