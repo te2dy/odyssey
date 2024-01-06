@@ -8,11 +8,14 @@ Odyssée a été spécialement conçu pour garantir une excellente lisibilité �
 
 **[Télécharger la dernière version d’Odyssée sur GitHub](https://github.com/te2dy/odyssey/releases/latest)**
 
-**~~[Télécharger la dernière version d’Odyssée sur DotAddict](https://themes.dotaddict.org/galerie-dc2/details/odyssey)~~** (bientôt)
+**[Télécharger la dernière version d’Odyssée sur DotAddict](https://themes.dotaddict.org/galerie-dc2/details/odyssey)**
 
 ## Installation
 
-Dans l’administration de votre blog, rendez-vous dans _Apparence du blog_ et cliquez sur l’onglet _Installer ou mettre à jour manuellement_ pour téléverser et installer Odyssée.
+Dans l’administration de votre blog :
+
+- cliquez sur l’onglet _Ajouter des thèmes_, cherchez Odyssée et installez-le ;
+- ou rendez-vous dans _Apparence du blog_ et cliquez sur l’onglet _Installer ou mettre à jour manuellement_ pour téléverser et installer Odyssée.
 
 ## Personnalisation
 
@@ -20,7 +23,7 @@ Odyssée intègre de nombreuses options de personnalisation. Elles sont accessib
 
 ## Contribuer, suggérer, signaler
 
-N’hésitez pas à [contribuer](https://github.com/te2dy/odyssey/pulls) à ce projet, à [suggérer](https://github.com/te2dy/odyssey/issues) des nouvelles fonctionnalités ou à [signaler](https://github.com/te2dy/odyssey/issues) des problèmes directement depuis GitHub. Vous pouvez aussi [m’écrire](mailto:zozxebpyr@mozmail.com).
+N’hésitez pas à [contribuer](https://github.com/te2dy/odyssey/pulls) à ce projet, à [proposer](https://github.com/te2dy/odyssey/issues) des nouvelles fonctionnalités ou à [signaler](https://github.com/te2dy/odyssey/issues) des problèmes directement depuis GitHub. Vous pouvez aussi [m’écrire](mailto:zozxebpyr@mozmail.com).
 
 ## Licence
 
