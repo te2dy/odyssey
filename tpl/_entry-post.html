@@ -1,10 +1,6 @@
-<article class=post id={{tpl:lang post-id}}-{{tpl:EntryID}}{{tpl:odysseyEntryLang}}>
+<article class=post id={{tpl:lang post-id}}-{{tpl:EntryID}}>
   <header>
-    <tpl:EntryIf selected="1">
-      <small class=post-selected-label>{{tpl:lang post-selected-label}}</small>
-    </tpl:EntryIf>
-
-    <time aria-label="{{tpl:lang post-date-aria-label}}" class="post-date text-secondary" datetime="{{tpl:EntryDate format="%Y-%m-%dT%H:%M"}}">{{tpl:EntryDate}}{{tpl:odysseyEntryTime context="post"}}</time>
+    <time class="post-date text-secondary" datetime="{{tpl:EntryDate iso8601="1"}}">{{tpl:EntryDate}}</time><tpl:EntryIf selected="1"><span class=text-secondary> – {{tpl:lang post-selected-label}} ⭐️</span></tpl:EntryIf>
 
     <h1>{{tpl:EntryTitle}}</h1>
   </header>
@@ -17,33 +13,31 @@
     {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
   </div>
 
-  <tpl:odysseyPostFooter>
-    <footer class=post-footer>
-      <tpl:EntryIf has_attachment="1">
-        {{tpl:include src="_attachments.html"}}
-      </tpl:EntryIf>
+  <footer class=post-footer>
+    <tpl:EntryIf has_attachment="1">
+      {{tpl:include src="_attachments.html"}}
+    </tpl:EntryIf>
 
-      <tpl:EntryIf has_category="1">
-        <div class="post-meta text-secondary">
-          {{tpl:lang post-category-prefix}} <a href="{{tpl:EntryCategoryURL}}" rel=tag>{{tpl:EntryCategory}}</a>
-        </div>
-      </tpl:EntryIf>
+    <tpl:EntryIf has_category="1">
+      <div class="post-meta text-secondary">
+        {{tpl:lang post-category-prefix}} <a href="{{tpl:EntryCategoryURL}}" rel=tag>{{tpl:EntryCategory}}</a>
+      </div>
+    </tpl:EntryIf>
 
-      <tpl:EntryIf>
-        <tpl:EntryTags>
-          <tpl:TagsHeader>
-            <div class="post-meta text-secondary">{{tpl:odysseyPostTagsBefore}}
-          </tpl:TagsHeader>
+    <tpl:EntryIf>
+      <tpl:EntryTags>
+        <tpl:TagsHeader>
+          <div class="post-meta text-secondary">{{tpl:odysseyPostTagsBefore}}
+        </tpl:TagsHeader>
 
-          <a href="{{tpl:TagURL}}" rel=tag>{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
+        <a href="{{tpl:TagURL}}" rel=tag>{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
 
-          <tpl:TagsFooter>
-            </div>
-          </tpl:TagsFooter>
-        </tpl:EntryTags>
-      </tpl:EntryIf>
-    </footer>
-  </tpl:odysseyPostFooter>
+        <tpl:TagsFooter>
+          </div>
+        </tpl:TagsFooter>
+      </tpl:EntryTags>
+    </tpl:EntryIf>
+  </footer>
 </article>
 
 <div class="post-pagination text-secondary">

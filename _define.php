@@ -3,7 +3,7 @@
  * Odyssey, a Dotclear theme.
  *
  * @author    Teddy <zozxebpyr@mozmail.com>
- * @copyright 2022-2023 Teddy
+ * @copyright 2022-2024 Teddy
  * @license   GPL-3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
  */
 
@@ -11,10 +11,10 @@ $this->registerModule(
     'Odyssey',
     'Write your own with this theme',
     'Teddy',
-    '2.0',
+    '0.8-beta',
     [
         'requires' => [
-            ['core', '2.26'],
+            ['core', '2.28'],
             ['php', '8']
         ],
 

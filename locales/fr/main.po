@@ -43,6 +43,9 @@ msgstr "Aller au pied de page"
 msgid "header-image-alt"
 msgstr "Image d’en-tête"
 
+msgid "post-home-link-title"
+msgstr "Retour à l’accueil"
+
 # Posts & pages
 
 msgid "entry-list-aria-label"
@@ -55,7 +58,7 @@ msgid "page-id"
 msgstr "page"
 
 msgid "post-selected-label"
-msgstr "Billet sélectionné"
+msgstr "Sélection"
 
 msgid "entry-list-date-aria-label"
 msgstr "Date de publication du billet"

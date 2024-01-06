@@ -2,26 +2,6 @@
  * Shows or hides settings depending on others.
  */
 function disableInputs() {
-  if (document.getElementById("global_color_primary").value === "gray") {
-    document.getElementById("setting-linksunderline-recommended").style.display = "inline";
-  } else {
-    document.getElementById("setting-linksunderline-recommended").style.display = "none";
-  }
-
-  if (document.getElementById("global_js").checked || document.getElementById("content_images_wide").checked) {
-    document.getElementById("odyssey-message-js").style.display = "block";
-  } else {
-    document.getElementById("odyssey-message-js").style.display = "none";
-  }
-
-  if (document.getElementById("global_js").checked) {
-    document.getElementById("hash-searchform").style.display   = "block";
-    document.getElementById("hash-trackbackurl").style.display = "block";
-  } else {
-    document.getElementById("hash-searchform").style.display   = "none";
-    document.getElementById("hash-trackbackurl").style.display = "none";
-  }
-
   if (document.getElementById("header_image").value !== "") {
     document.getElementById("header_image_position-input").style.display          = "block";
     document.getElementById("header_image_description-input").style.display       = "block";
@@ -32,65 +12,10 @@ function disableInputs() {
     document.getElementById("header_image_description-description").style.display = "none";
   }
 
-  if (document.getElementById("content_post_list_type").value !== 'custom') {
-    document.getElementById("content_post_list_custom-input").style.display              = "none";
-    document.getElementById("content_post_list_custom-description").style.display        = "none";
-    document.getElementById("content_post_list_time-input").style.display                = "block";
-    document.getElementById("content_post_list_time-description").style.display          = "block";
-    document.getElementById("content_post_list_reaction_link-input").style.display       = "block";
-  } else {
-    document.getElementById("content_post_list_custom-input").style.display              = "block";
-    document.getElementById("content_post_list_custom-description").style.display        = "block";
-    document.getElementById("content_post_list_time-input").style.display                = "none";
-    document.getElementById("content_post_list_time-description").style.display          = "none";
-    document.getElementById("content_post_list_reaction_link-input").style.display       = "none";
-  }
-
-  if (document.getElementById("content_post_template").value === '') {
-    document.getElementById("content_post_time-input").style.display        = "block";
-    document.getElementById("content_post_time-description").style.display  = "block";
-    document.getElementById("content_post_intro-input").style.display       = "block";
-    document.getElementById("content_post_intro-description").style.display = "block";
-  } else {
-    document.getElementById("content_post_time-input").style.display        = "none";
-    document.getElementById("content_post_time-description").style.display  = "none";
-    document.getElementById("content_post_intro-input").style.display       = "none";
-    document.getElementById("content_post_intro-description").style.display = "none";
-  }
-
-  if (document.getElementById("content_images_wide").value !== 'disabled') {
-    document.getElementById("content_images_wide_size-input").style.display        = "block";
-    document.getElementById("content_images_wide_size-description").style.display  = "block";
-    document.getElementById("content_image_custom_size-input").style.display       = "block";
-    document.getElementById("content_image_custom_size-description").style.display = "block";
-  } else {
-    document.getElementById("content_images_wide_size-input").style.display        = "none";
-    document.getElementById("content_images_wide_size-description").style.display  = "none";
-    document.getElementById("content_image_custom_size-input").style.display       = "none";
-    document.getElementById("content_image_custom_size-description").style.display = "none";
-  }
-
-  if (document.getElementById("content_post_list_time").checked || document.getElementById("content_post_time").checked) {
-    document.getElementById("content_separator-input").style.display       = "block";
-    document.getElementById("content_separator-description").style.display = "block";
-    document.getElementById("section-content-other").style.display         = "block";
-  } else {
-    document.getElementById("content_separator-input").style.display       = "none";
-    document.getElementById("content_separator-description").style.display = "none";
-    document.getElementById("section-content-other").style.display         = "none";
-  }
-
-  if (document.getElementById("widgets_nav_position").value === "disabled") {
-    document.getElementById("widgets_search_form-input").style.display       = "none";
-    document.getElementById("widgets_search_form-description").style.display = "none";
-  } else {
-    document.getElementById("widgets_search_form-input").style.display       = "block";
-    document.getElementById("widgets_search_form-description").style.display = "block";
-  }
-
   if (!document.getElementById("footer_enabled").checked) {
     document.getElementById("footer_credits-input").style.display               = "none";
     document.getElementById("footer_credits-description").style.display         = "none";
+    /*
     document.getElementById("section-footer-social-links").style.display        = "none";
     document.getElementById("footer_social_links_diaspora-input").style.display = "none";
     document.getElementById("footer_social_links_discord-input").style.display  = "none";
@@ -101,9 +26,11 @@ function disableInputs() {
     document.getElementById("footer_social_links_tiktok-input").style.display   = "none";
     document.getElementById("footer_social_links_whatsapp-input").style.display = "none";
     document.getElementById("footer_social_links_x-input").style.display        = "none";
+    */
   } else {
     document.getElementById("footer_credits-input").style.display               = "block";
     document.getElementById("footer_credits-description").style.display         = "block";
+    /*
     document.getElementById("section-footer-social-links").style.display        = "block";
     document.getElementById("footer_social_links_diaspora-input").style.display = "block";
     document.getElementById("footer_social_links_discord-input").style.display  = "block";
@@ -114,6 +41,7 @@ function disableInputs() {
     document.getElementById("footer_social_links_tiktok-input").style.display   = "block";
     document.getElementById("footer_social_links_whatsapp-input").style.display = "block";
     document.getElementById("footer_social_links_x-input").style.display        = "block";
+    */
   }
 }
 
@@ -122,15 +50,15 @@ function disableInputs() {
  */
 function updatePageWidthSetting(pageWidthUnitDefault, pageWidthValueDefault) {
   // Updates the placeholder of the width value.
-  if (document.getElementById("global_page_width_unit").value === "em") {
+  if (document.getElementById("global_unit").value === "em") {
     document.getElementById("global_page_width_value").placeholder = document.getElementById("page_width_em_default").value;
-  } else if (document.getElementById("global_page_width_unit").value === "px") {
+  } else if (document.getElementById("global_unit").value === "px") {
     document.getElementById("global_page_width_value").placeholder = document.getElementById("page_width_px_default").value;
   }
 
   // Converts the page width value when the unit is changed.
   if (document.getElementById("global_page_width_value").value) {
-    var pageWidthUnitNew = document.getElementById("global_page_width_unit").value;
+    var pageWidthUnitNew = document.getElementById("global_unit").value;
 
     if (pageWidthUnitNew === "px") {
       var pageWidthValueNew = parseInt(document.getElementById("global_page_width_value").value, 10) * 16;
@@ -153,7 +81,7 @@ function inputValidation() {
       pageWidth         = Number(getPageWidthValue);
 
   if (getPageWidthValue) {
-    if (document.getElementById("global_page_width_unit").value === "em") {
+    if (document.getElementById("global_unit").value === "em") {
       if (isNaN(pageWidth) || pageWidth < 30 || pageWidth > 80) {
         document.getElementById("global_page_width_value").classList.add("odyssey-value-error");
       } else {
@@ -169,60 +97,6 @@ function inputValidation() {
   } else {
     document.getElementById("global_page_width_value").classList.remove("odyssey-value-error")
   }
-}
-
-function inputChange() {
-  if (document.getElementById("content_post_template").value === "") {
-    document.getElementById("content_post_time-input").style.display        = "block";
-    document.getElementById("content_post_time-description").style.display  = "block";
-    document.getElementById("content_post_intro-input").style.display       = "block";
-    document.getElementById("content_post_intro-description").style.display = "block";
-  } else {
-    document.getElementById("content_post_time-input").style.display        = "none";
-    document.getElementById("content_post_time-description").style.display  = "none";
-    document.getElementById("content_post_intro-input").style.display       = "none";
-    document.getElementById("content_post_intro-description").style.display = "none";
-  }
-
-  var socialSites = [
-    "500px",
-    "dailymotion",
-    "diaspora",
-    "discord",
-    "facebook",
-    "github",
-    "mastodon",
-    "peertube",
-    "signal",
-    "telegram",
-    "tiktok",
-    "twitch",
-    "vimeo",
-    "whatsapp",
-    "youtube",
-    "x",
-  ];
-
-  var socialLinks = [];
-
-  socialSites.forEach((site, index) => {
-    socialLinks.push("footer_social_links_" + site);
-  });
-
-  socialLinks.forEach((id, index) => {
-    if (document.getElementById(id) && document.getElementById(id + "_error")) {
-      if (document.getElementById(id).value !== ""  && document.getElementById(id).value !== document.getElementById(id).getAttribute("data-odyssey-value")) {
-        document.getElementById(id).style.color               = "var(--body-color)";
-        document.getElementById(id).style.backgroundColor     = "var(--input-background)";
-        document.getElementById(id).style.borderColor         = "var(--input-border)";
-        document.getElementById(id).style.boxShadow           = "1px 1px 2px var(--input-shadow) inset";
-        document.getElementById(id + "_error").style.display  = "none";
-      } else if (document.getElementById(id) && document.getElementById(id + "_error")) {
-        document.getElementById(id).removeAttribute("style");
-        document.getElementById(id + "_error").removeAttribute("style");
-      }
-    }
-  });
 }
 
 /**
@@ -267,25 +141,103 @@ function changeImage() {
   }
 }
 
+function fontsPreview() {
+  if (document.getElementById("content_text_font").value === 'same') {
+    document.getElementById("odyssey-config-content-font-preview").style.display = "none";
+  } else {
+    document.getElementById("odyssey-config-content-font-preview").style.display = "block";
+  }
+
+  if (document.getElementById("global_font_family").value === "sans-serif") {
+    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "system-ui, sans-serif";
+  } else if (document.getElementById("global_font_family").value === "transitional") {
+    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "Charter, \"Bitstream Charter\", \"Sitka Text\", Cambria, serif";
+  } else if (document.getElementById("global_font_family").value === "old-style") {
+    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "\"Iowan Old Style\", \"Palatino Linotype\", \"URW Palladio L\", P052, serif";
+  } else if (document.getElementById("global_font_family").value === "humanist") {
+    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "Seravek, \"Gill Sans Nova\", Ubuntu, Calibri, \"DejaVu Sans\", source-sans-pro, sans-serif";
+  } else if (document.getElementById("global_font_family").value === "geometric-humanist") {
+    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "Avenir, Montserrat, Corbel, \"URW Gothic\", source-sans-pro, sans-serif";
+  } else if (document.getElementById("global_font_family").value === "classical-humanist") {
+    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "Optima, Candara, \"Noto Sans\", source-sans-pro, sans-serif";
+  } else if (document.getElementById("global_font_family").value === "neo-grotesque") {
+    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "Inter, Roboto, \"Helvetica Neue\", \"Arial Nova\", \"Nimbus Sans\", Arial, sans-serif";
+  } else if (document.getElementById("global_font_family").value === "monospace-slab-serif") {
+    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "\"Nimbus Mono PS\", \"Courier New\", monospace";
+
+  } else if (document.getElementById("global_font_family").value === "monospace-code") {
+    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "ui-monospace, \"Cascadia Code\", \"Source Code Pro\", Menlo, Consolas, \"DejaVu Sans Mono\", monospace";
+  } else if (document.getElementById("global_font_family").value === "industrial") {
+    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "Bahnschrift, \"DIN Alternate\", \"Franklin Gothic Medium\", \"Nimbus Sans Narrow\", sans-serif-condensed, sans-serif";
+  } else if (document.getElementById("global_font_family").value === "rounded-sans") {
+    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "ui-rounded, \"Hiragino Maru Gothic ProN\", Quicksand, Comfortaa, Manjari, \"Arial Rounded MT\", \"Arial Rounded MT Bold\", Calibri, source-sans-pro, sans-serif";
+  } else if (document.getElementById("global_font_family").value === "slab-serif") {
+    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "Rockwell, \"Rockwell Nova\", \"Roboto Slab\", \"DejaVu Serif\", \"Sitka Small\", serif";
+
+  } else if (document.getElementById("global_font_family").value === "antique") {
+    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "Superclarendon, \"Bookman Old Style\", \"URW Bookman\", \"URW Bookman L\", \"Georgia Pro\", Georgia, serif";
+  } else if (document.getElementById("global_font_family").value === "didone") {
+    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "Didot, \"Bodoni MT\", \"Noto Serif Display\", \"URW Palladio L\", P052, Sylfaen, serif";
+  } else if (document.getElementById("global_font_family").value === "handwritten") {
+    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "\"Segoe Print\", \"Bradley Hand\", Chilanka, TSCu_Comic, casual, cursive";
+  }
+
+  if (document.getElementById("content_text_font").value === "sans-serif") {
+    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "system-ui, sans-serif";
+  } else if (document.getElementById("global_font_family").value === "transitional") {
+    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "Charter, \"Bitstream Charter\", \"Sitka Text\", Cambria, serif";
+  } else if (document.getElementById("content_text_font").value === "old-style") {
+    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "\"Iowan Old Style\", \"Palatino Linotype\", \"URW Palladio L\", P052, serif";
+  } else if (document.getElementById("content_text_font").value === "humanist") {
+    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "Seravek, \"Gill Sans Nova\", Ubuntu, Calibri, \"DejaVu Sans\", source-sans-pro, sans-serif";
+  } else if (document.getElementById("content_text_font").value === "geometric-humanist") {
+    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "Avenir, Montserrat, Corbel, \"URW Gothic\", source-sans-pro, sans-serif";
+  } else if (document.getElementById("content_text_font").value === "classical-humanist") {
+    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "Optima, Candara, \"Noto Sans\", source-sans-pro, sans-serif";
+  } else if (document.getElementById("content_text_font").value === "neo-grotesque") {
+    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "Inter, Roboto, \"Helvetica Neue\", \"Arial Nova\", \"Nimbus Sans\", Arial, sans-serif";
+  } else if (document.getElementById("content_text_font").value === "monospace-slab-serif") {
+    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "\"Nimbus Mono PS\", \"Courier New\", monospace";
+
+  } else if (document.getElementById("content_text_font").value === "monospace-code") {
+    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "ui-monospace, \"Cascadia Code\", \"Source Code Pro\", Menlo, Consolas, \"DejaVu Sans Mono\", monospace";
+  } else if (document.getElementById("content_text_font").value === "industrial") {
+    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "Bahnschrift, \"DIN Alternate\", \"Franklin Gothic Medium\", \"Nimbus Sans Narrow\", sans-serif-condensed, sans-serif";
+  } else if (document.getElementById("content_text_font").value === "rounded-sans") {
+    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "ui-rounded, \"Hiragino Maru Gothic ProN\", Quicksand, Comfortaa, Manjari, \"Arial Rounded MT\", \"Arial Rounded MT Bold\", Calibri, source-sans-pro, sans-serif";
+  } else if (document.getElementById("content_text_font").value === "slab-serif") {
+    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "Rockwell, \"Rockwell Nova\", \"Roboto Slab\", \"DejaVu Serif\", \"Sitka Small\", serif";
+
+  } else if (document.getElementById("content_text_font").value === "antique") {
+    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "Superclarendon, \"Bookman Old Style\", \"URW Bookman\", \"URW Bookman L\", \"Georgia Pro\", Georgia, serif";
+  } else if (document.getElementById("content_text_font").value === "didone") {
+    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "Didot, \"Bodoni MT\", \"Noto Serif Display\", \"URW Palladio L\", P052, Sylfaen, serif";
+  } else if (document.getElementById("content_text_font").value === "handwritten") {
+    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "\"Segoe Print\", \"Bradley Hand\", Chilanka, TSCu_Comic, casual, cursive";
+  }
+}
+
 window.onload = function() {
   disableInputs();
   changeImage();
+  fontsPreview();
 
   window.onchange = function() {
     disableInputs();
+    fontsPreview();
   };
 
-  var pageWidthUnitDefault = document.getElementById("global_page_width_unit").value,
+  var pageWidthUnitDefault = document.getElementById("global_unit").value,
       pageWidthValueDefault = document.getElementById("global_page_width_value").value;
 
-  document.getElementById("global_page_width_unit").onchange = function() {
+  document.getElementById("global_unit").onchange = function() {
     updatePageWidthSetting(pageWidthUnitDefault, pageWidthValueDefault);
     inputValidation();
   }
 
   window.oninput = function() {
     inputValidation();
-    inputChange();
+    // inputChange();
   };
 
   document.getElementById("header_image").onchange = function() {

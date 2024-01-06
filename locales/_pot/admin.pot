@@ -6,38 +6,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-# Prepend
-
-msgid "prepend-hashes-save"
+msgid "settings-notice-saved"
 msgstr ""
 
-# Config
-
-msgid "config-about-title"
+msgid "settings-notice-reset"
 msgstr ""
 
-msgid "config-about-text"
+msgid "settings-default-checked"
 msgstr ""
 
-msgid "config-link-github-title"
+msgid "settings-default-unchecked"
 msgstr ""
-
-msgid "config-link-github"
-msgstr ""
-
-msgid "config-link-dotclear-forum-title"
-msgstr ""
-
-msgid "config-link-dotclear-forum"
-msgstr ""
-
-msgid "config-link-github-issues-title"
-msgstr ""
-
-msgid "config-link-github-issues"
-msgstr ""
-
-# Config sections
 
 msgid "section-global"
 msgstr ""
@@ -51,9 +30,6 @@ msgstr ""
 msgid "section-global-colors"
 msgstr ""
 
-msgid "section-global-advance"
-msgstr ""
-
 msgid "section-header"
 msgstr ""
 
@@ -63,22 +39,19 @@ msgstr ""
 msgid "section-content"
 msgstr ""
 
-msgid "section-content-textformatting"
-msgstr ""
-
 msgid "section-content-postlist"
 msgstr ""
 
-msgid "section-content-post"
+msgid "section-content-textformatting"
 msgstr ""
 
-msgid "section-content-page"
+msgid "section-content-images"
 msgstr ""
 
-msgid "section-content-reactions"
+msgid "section-reactions"
 msgstr ""
 
-msgid "section-content-other"
+msgid "section-reactions-form"
 msgstr ""
 
 msgid "section-widgets"
@@ -87,27 +60,94 @@ msgstr ""
 msgid "section-footer"
 msgstr ""
 
-msgid "section-footer-sociallinks"
+msgid "section-advanced"
 msgstr ""
 
-# Settings
-
-msgid "settings-global-pagewidthunit-title"
+msgid "section-advanced-seo"
 msgstr ""
 
-msgid "settings-global-pagewidthunit-description"
+msgid "settings-global-unit-title"
 msgstr ""
 
-msgid "settings-global-pagewidthunit-em-default"
+msgid "settings-global-unit-description"
 msgstr ""
 
-msgid "settings-global-pagewidthunit-px"
+msgid "settings-global-unit-relative-default"
+msgstr ""
+
+msgid "settings-global-unit-static"
 msgstr ""
 
 msgid "settings-global-pagewidthvalue-title"
 msgstr ""
 
 msgid "settings-global-pagewidthvalue-description"
+msgstr ""
+
+msgid "settings-global-fontfamily-title"
+msgstr ""
+
+msgid "settings-global-fontfamily-description"
+msgstr ""
+
+msgid "settings-global-fontfamily-sansserif-default"
+msgstr ""
+
+msgid "settings-global-fontfamily-sansserif"
+msgstr ""
+
+msgid "settings-global-fontfamily-transitional"
+msgstr ""
+
+msgid "settings-global-fontfamily-oldstyle"
+msgstr ""
+
+msgid "settings-global-fontfamily-humanist"
+msgstr ""
+
+msgid "settings-global-fontfamily-geometrichumanist"
+msgstr ""
+
+msgid "settings-global-fontfamily-classicalhumanist"
+msgstr ""
+
+msgid "settings-global-fontfamily-neogrotesque"
+msgstr ""
+
+msgid "settings-global-fontfamily-monospaceslabserif"
+msgstr ""
+
+msgid "settings-global-fontfamily-monospacecode"
+msgstr ""
+
+msgid "settings-global-fontfamily-industrial"
+msgstr ""
+
+msgid "settings-global-fontfamily-roundedsans"
+msgstr ""
+
+msgid "settings-global-fontfamily-slabserif"
+msgstr ""
+
+msgid "settings-global-fontfamily-antique"
+msgstr ""
+
+msgid "settings-global-fontfamily-didone"
+msgstr ""
+
+msgid "settings-global-fontfamily-handwritten"
+msgstr ""
+
+msgid "settings-global-fontfamily-atkinson"
+msgstr ""
+
+msgid "settings-global-fontfamily-ebgaramond"
+msgstr ""
+
+msgid "settings-global-fontfamily-luciole"
+msgstr ""
+
+msgid "config-preview-font"
 msgstr ""
 
 msgid "settings-global-fontsize-title"
@@ -131,49 +171,10 @@ msgstr ""
 msgid "settings-global-fontsize-120"
 msgstr ""
 
-msgid "settings-global-fontsize-120"
-msgstr ""
-
-msgid "settings-global-fontfamily-title"
-msgstr ""
-
-msgid "settings-global-fontfamily-description"
-msgstr ""
-
 msgid "settings-global-fontantialiasing-title"
 msgstr ""
 
 msgid "settings-global-fontantialiasing-description"
-msgstr ""
-
-msgid "settings-global-fontfamily-sansserif-default"
-msgstr ""
-
-msgid "settings-global-fontfamily-sansserif"
-msgstr ""
-
-msgid "settings-global-fontfamily-serif"
-msgstr ""
-
-msgid "settings-global-fontfamily-mono"
-msgstr ""
-
-msgid "settings-global-fontfamily-sansserifbrowser"
-msgstr ""
-
-msgid "settings-global-fontfamily-serifbrowser"
-msgstr ""
-
-msgid "settings-global-fontfamily-monobrowser"
-msgstr ""
-
-msgid "settings-global-fontfamily-atkinson"
-msgstr ""
-
-msgid "settings-global-fontfamily-ebgaramond"
-msgstr ""
-
-msgid "settings-global-fontfamily-luciole"
 msgstr ""
 
 msgid "settings-global-primarycolor-title"
@@ -194,82 +195,31 @@ msgstr ""
 msgid "settings-global-primarycolor-red"
 msgstr ""
 
-msgid "settings-global-backgroundcolor-title"
-msgstr ""
-
-msgid "settings-global-backgroundcolor-description"
-msgstr ""
-
-msgid "settings-global-backgroundcolor-none-default"
-msgstr ""
-
-msgid "settings-global-backgroundcolor-beige"
-msgstr ""
-
-msgid "settings-global-backgroundcolor-blue"
-msgstr ""
-
-msgid "settings-global-backgroundcolor-gray"
-msgstr ""
-
-msgid "settings-global-backgroundcolor-green"
-msgstr ""
-
-msgid "settings-global-backgroundcolor-red"
-msgstr ""
-
 msgid "settings-global-colortransition-title"
 msgstr ""
 
 msgid "settings-global-colortransition-description"
 msgstr ""
 
-msgid "settings-global-linksunderline-title"
-msgstr ""display:none;">(recommandé lorsque le gris est la couleur principale)</strong>"
-
-msgid "settings-global-linksunderline-description"
+msgid "settings-header-align-title"
 msgstr ""
 
-msgid "settings-global-roundcorner-title"
+msgid "settings-header-align-left"
 msgstr ""
 
-msgid "settings-global-roundcorner-description"
+msgid "settings-header-align-center-default"
 msgstr ""
 
-msgid "settings-global-csscustom-title"
-msgstr ""
-
-msgid "settings-global-csscustom-description"
-msgstr ""
-
-msgid "settings-global-csscustommini-title"
-msgstr ""
-
-msgid "settings-global-minimalsocialmarkups-title"
-msgstr ""
-
-msgid "settings-global-minimalsocialmarkups-description"
-msgstr ""
-
-msgid "settings-global-metahomedescription-title"
-msgstr ""
-
-msgid "settings-global-metahomedescription-description"
-msgstr ""
-
-msgid "settings-global-js-title"
-msgstr ""
-
-msgid "settings-global-js-description"
-msgstr ""
-
-msgid "settings-global-metagenerator-title"
-msgstr ""
-
-msgid "settings-global-metagenerator-description"
+msgid "settings-header-align-right"
 msgstr ""
 
 msgid "settings-header-description-title"
+msgstr ""
+
+msgid "settings-header-postfull-title"
+msgstr ""
+
+msgid "settings-header-postfull-description"
 msgstr ""
 
 msgid "settings-header-image-title"
@@ -287,7 +237,7 @@ msgstr ""
 msgid "header-image-retina-ready"
 msgstr ""
 
-msgid "settings-header-layout-title"
+msgid "settings-header-imageposition-title"
 msgstr ""
 
 msgid "settings-header-imageposition-top-default"
@@ -300,6 +250,21 @@ msgid "settings-header-imagedescription-title"
 msgstr ""
 
 msgid "settings-header-imagedescription-description"
+msgstr ""
+
+msgid "settings-content-postlistaltcolor-title"
+msgstr ""
+
+msgid "settings-content-postlistaltcolor-description"
+msgstr ""
+
+msgid "settings-content-postlistthumbnail-title"
+msgstr ""
+
+msgid "settings-content-postlistthumbnail-description"
+msgstr ""
+
+msgid "settings-content-postlistreactions-title"
 msgstr ""
 
 msgid "settings-content-fontfamily-title"
@@ -323,13 +288,16 @@ msgstr ""
 msgid "settings-content-textalign-title"
 msgstr ""
 
+msgid "settings-content-textalign-description"
+msgstr ""
+
 msgid "settings-content-textalign-left-default"
 msgstr ""
 
 msgid "settings-content-textalign-justify"
 msgstr ""
 
-msgid "settings-content-textalign-justifynotmobile"
+msgid "settings-content-textalign-justify-not-mobile"
 msgstr ""
 
 msgid "settings-content-hyphens-title"
@@ -350,148 +318,25 @@ msgstr ""
 msgid "settings-content-initialletter-description"
 msgstr ""
 
-msgid "settings-content-postlisttype-title"
-msgstr ""
-
-msgid "settings-content-postlisttype-short-default"
-msgstr ""
-
-msgid "settings-content-postlisttype-excerpt"
-msgstr ""
-
-msgid "settings-content-postlisttype-content"
-msgstr ""
-
-msgid "settings-content-postlisttime-title"
-msgstr ""
-
-msgid "settings-content-postlisttype-custom"
-msgstr ""
-
-msgid "settings-content-postlistcustom-title"
-msgstr ""
-
-msgid "settings-content-postlistcustom-description"
-msgstr ""
-
-msgid "settings-content-postlistreactionlink-title"
-msgstr ""
-
-msgid "settings-content-postlistreactionlink-disabled-default"
-msgstr ""
-
-msgid "settings-content-postlistreactionlink-whenexist"
-msgstr ""
-
-msgid "settings-content-postlistreactionlink-always"
-msgstr ""
-
-msgid "settings-content-posttime-title"
-msgstr ""
-
-msgid "settings-content-postintro-title"
-msgstr ""
-
-msgid "settings-content-postintro-description"
-msgstr ""
-
-msgid "settings-content-posttemplate-title"
-msgstr ""
-
-msgid "settings-content-posttemplate-description"
-msgstr ""
-
-msgid "settings-content-linksunderline-title"
-msgstr ""
-
 msgid "settings-content-imageswide-title"
 msgstr ""
 
 msgid "settings-content-imageswide-description"
 msgstr ""
 
-msgid "settings-content-imageswide-disabled-default"
+msgid "settings-reactions-button-title"
 msgstr ""
 
-msgid "settings-content-imageswide-postspages"
+msgid "settings-reactions-button-description"
 msgstr ""
 
-msgid "settings-content-imageswide-always"
+msgid "settings-reactions-markdownnotice-title"
 msgstr ""
 
-msgid "settings-content-imageswidesize-title"
+msgid "settings-widgets-display-title"
 msgstr ""
 
-msgid "settings-content-imageswidesize-description"
-msgstr ""
-
-msgid "settings-content-imagecustomsizes-title"
-msgstr ""
-
-msgid "settings-content-imagecustomsizes-description"
-msgstr ""
-
-msgid "settings-content-pagetemplate-title"
-msgstr ""
-
-msgid "settings-content-pagetemplate-description"
-msgstr ""
-
-msgid "settings-content-commentformhide-title"
-msgstr ""
-
-msgid "settings-content-commentformhide-description"
-msgstr ""
-
-msgid "settings-content-postreactionfeed-title"
-msgstr ""
-
-msgid "settings-content-posttrackbacklink-title"
-msgstr ""
-
-msgid "settings-content-privatecomment-title"
-msgstr ""
-
-msgid "settings-content-postlistcommentlink-description"
-msgstr ""
-
-msgid "settings-content-postlistcommentlink-no-default"
-msgstr ""
-
-msgid "settings-content-postlistcommentlink-open"
-msgstr ""
-
-msgid "settings-content-postlistcommentlink-always"
-msgstr ""
-
-msgid "settings-content-separator-title"
-msgstr ""
-
-msgid "settings-content-separator-description"
-msgstr ""
-
-msgid "settings-widgets-navposition-title"
-msgstr ""
-
-msgid "settings-widgets-navposition-top"
-msgstr ""
-
-msgid "settings-widgets-navposition-bottom-default"
-msgstr ""
-
-msgid "settings-widgets-navposition-disabled"
-msgstr ""
-
-msgid "settings-widgets-searchform-title"
-msgstr ""
-
-msgid "settings-widgets-searchform-description"
-msgstr ""
-
-msgid "settings-widgets-extra-title"
-msgstr ""
-
-msgid "settings-widgets-extra-description"
+msgid "settings-widgets-display-description"
 msgstr ""
 
 msgid "settings-footer-activation-title"
@@ -506,118 +351,26 @@ msgstr ""
 msgid "settings-footer-credits-description"
 msgstr ""
 
-msgid "settings-footer-sociallinks-500px-title"
+msgid "settings-advanced-metadescription-title"
 msgstr ""
 
-msgid "settings-footer-sociallinks-dailymotion-title"
+msgid "settings-advanced-metadescription-description"
 msgstr ""
 
-msgid "settings-footer-sociallinks-diaspora-title"
+msgid "settings-advanced-metasocial-title"
 msgstr ""
 
-msgid "settings-footer-sociallinks-discord-title"
+msgid "settings-advanced-metasocial-description"
 msgstr ""
 
-msgid "settings-footer-sociallinks-facebook-title"
+msgid "settings-advanced-json-title"
 msgstr ""
 
-msgid "settings-footer-sociallinks-github-title"
-msgstr ""
-
-msgid "settings-footer-sociallinks-mastodon-title"
-msgstr ""
-
-msgid "settings-footer-sociallinks-peertube-title"
-msgstr ""
-
-msgid "settings-footer-sociallinks-signal-title"
-msgstr ""
-
-msgid "settings-footer-sociallinks-signal-description"
-msgstr ""
-
-msgid "settings-footer-sociallinks-telegram-title"
-msgstr ""
-
-msgid "settings-footer-sociallinks-tiktok-title"
-msgstr ""
-
-msgid "settings-footer-sociallinks-twitch-title"
-msgstr ""
-
-msgid "settings-footer-sociallinks-vimeo-title"
-msgstr ""
-
-msgid "settings-footer-sociallinks-whatsapp-title"
-msgstr ""
-
-msgid "settings-footer-sociallinks-youtube-title"
-msgstr ""
-
-msgid "settings-footer-sociallinks-x-title"
-msgstr ""
-
-msgid "settings-footer-sociallinks-x-placeholder"
-msgstr ""
-
-msgid "settings-footer-sociallinks-x-description"
-msgstr ""
-
-msgid "settings-footer-odysseyministyles-title"
-msgstr ""
-
-# Form
-
-msgid "settings-error"
-msgstr ""
-
-msgid "settings-default-checked"
-msgstr ""
-
-msgid "settings-default-unchecked"
+msgid "settings-advanced-json-description"
 msgstr ""
 
 msgid "settings-save-button-text"
 msgstr ""
 
 msgid "settings-reset-button-text"
-msgstr ""
-
-msgid "settings-config-updated"
-msgstr ""
-
-msgid "settings-config-reset"
-msgstr ""
-
-msgid "settings-scripts-title"
-msgstr ""
-
-msgid "settings-scripts-message-intro"
-msgstr ""
-
-msgid "settings-scripts-message-csp"
-msgstr ""
-
-msgid "settings-scripts-message-csp-href"
-msgstr ""
-
-msgid "settings-scripts-message-csp-title"
-msgstr ""
-
-msgid "settings-scripts-message-hash-intro"
-msgstr ""
-
-msgid "settings-scripts-message-hash-searchform"
-msgstr ""
-
-msgid "settings-scripts-message-hash-trackbackurl"
-msgstr ""
-
-msgid "settings-scripts-message-hash-imagewide"
-msgstr ""
-
-msgid "settings-scripts-message-example"
-msgstr ""
-
-msgid "settings-scripts-message-note"
 msgstr ""

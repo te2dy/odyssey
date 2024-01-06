@@ -1,19 +1,7 @@
-<tpl:odysseyWidgetsNav>
-  <aside id=blognav>
-    <tpl:odysseyWidgetSearchForm>
-      <div class=widget>
-        <h3>{{tpl:lang search-widget-title}}</h3>
+<aside id=blognav>
+  {{tpl:Widgets type="nav"}}
+</aside>
 
-        {{tpl:include src="_searchform.html"}}
-      </div>
-    </tpl:odysseyWidgetSearchForm>
-
-    {{tpl:Widgets type="nav"}}
-  </aside>
-</tpl:odysseyWidgetsNav>
-
-<tpl:odysseyWidgetsExtra>
-  <aside id=blogextra>
-    {{tpl:Widgets type="extra"}}
-  </aside>
-</tpl:odysseyWidgetsExtra>
+<aside id=blogextra>
+  {{tpl:Widgets type="extra"}}
+</aside>

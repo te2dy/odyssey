@@ -43,6 +43,9 @@ msgstr "Skip to footer"
 msgid "header-image-alt"
 msgstr "Header Image"
 
+msgid "post-home-link-title"
+msgstr "Back to home"
+
 # Posts & pages
 
 msgid "entry-list-aria-label"

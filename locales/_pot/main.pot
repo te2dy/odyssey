@@ -9,7 +9,7 @@ msgstr ""
 msgid "Odyssey"
 msgstr ""
 
-msgid "Write your own"
+msgid "Write your own with this theme"
 msgstr ""
 
 # Head
@@ -41,6 +41,9 @@ msgid "skip-link-footer"
 msgstr ""
 
 msgid "header-image-alt"
+msgstr ""
+
+msgid "post-home-link-title"
 msgstr ""
 
 # Posts & pages

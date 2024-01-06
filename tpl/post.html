@@ -6,23 +6,37 @@
 
 <tpl:Block name="head-description">
   <tpl:EntryIf extended="1">
-    <meta name=description{{tpl:odysseyEntryLang}} content="{{tpl:EntryExcerpt encode_html="1" remove_html="1"}}">
+    <meta name=description content="{{tpl:EntryExcerpt encode_html="1" remove_html="1"}}">
   </tpl:EntryIf>
 
   <tpl:EntryIf extended="0">
-    <meta name=description{{tpl:odysseyEntryLang}} content="{{tpl:EntryContent encode_html="1" remove_html="1" cut_string="150"}}<tpl:EntryIfContentCut encode_html="1" remove_html="1" cut_string="150"> […]</tpl:EntryIfContentCut>">
+    <meta name=description content="{{tpl:EntryContent encode_html="1" remove_html="1" cut_string="150"}}<tpl:EntryIfContentCut encode_html="1" remove_html="1" cut_string="150"> […]</tpl:EntryIfContentCut>">
   </tpl:EntryIf>
 </tpl:Block>
 
 <tpl:Block name="head-link">
+  {{tpl:odysseyStylesInline}}
   <link rel=stylesheet href="{{tpl:BlogThemeURL}}/style.min.css">
   <link rel=alternate type=application/atom+xml title="{{tpl:lang feed-title}}" href="{{tpl:BlogFeedURL}}">
   <link rel=alternate type=application/atom+xml title="{{tpl:lang feed-comments-title}}" href="{{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}}">
   <tpl:EntryIf pings_active="1"><link rel=pingback href="{{tpl:BlogXMLRPCURL}}"></tpl:EntryIf>
 </tpl:Block>
 
+
+<tpl:Block name="site-header">
+  <tpl:odysseyHeaderMinimal>
+    <header id=site-header-short>
+      <a href="{{tpl:BlogURL}}" id=site-title rel=home title="{{tpl:lang post-home-link-title}}">‹&nbsp;<h4>{{tpl:BlogName}}</h4></a>
+
+      {{tpl:SimpleMenu id="main-menu"}}
+
+      {{tpl:SysBehavior behavior="publicTopAfterContent"}}
+    </header>
+  </tpl:odysseyHeaderMinimal>
+</tpl:Block>
+
 <tpl:Block name="main-content">
-  {{tpl:odysseyPostTemplate}}
+  {{tpl:include src="_entry-post.html"}}
 </tpl:Block>
 
 <tpl:Block name="footer-scripts-jquery">
@@ -34,11 +48,5 @@
       {"post_remember_str": "{{tpl:lang reactions-comment-remember-me}}"}
     </script>
     <script src="{{tpl:BlogQmarkURL}}pf=post.js"></script>
-  </tpl:EntryIf>
-</tpl:Block>
-
-<tpl:Block name="footer-scripts-javascript">
-  <tpl:EntryIf pings_active="1">
-    {{tpl:odysseyScriptTrackbackURL}}
   </tpl:EntryIf>
 </tpl:Block>

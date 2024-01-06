@@ -2,252 +2,781 @@
 /**
  * Odyssey, a Dotclear theme.
  *
- * This file sets up the theme configuration page and settings.
- *
  * @author    Teddy <zozxebpyr@mozmail.com>
- * @copyright 2022-2023 Teddy
+ * @copyright 2022-2024 Teddy
  * @license   GPL-3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
  */
 
 namespace Dotclear\Theme\odyssey;
 
-use dcCore;
-use dcNsProcess;
-use dcPage;
-use dcThemeConfig;
-use Dotclear\Helper\File\Files;
+use Dotclear\App;
+use Dotclear\Core\Process;
+use Dotclear\Core\Backend\Notices;
+use Dotclear\Core\Backend\Page;
 use Dotclear\Helper\File\Path;
 use Dotclear\Helper\Html\Html;
-use Dotclear\Helper\L10n;
 use Dotclear\Helper\Network\Http;
-use Exception;
+
 use form;
-use Dotclear\Core\Backend\Page;
-use Dotclear\Core\Backend\Notices;
 
-// Prepares to use custom functions.
-require_once 'CustomSettings.php';
-use OdysseySettings;
-require_once 'CustomUtils.php';
-use OdysseyUtils;
-
-class Config extends dcNsProcess
+class Config extends Process
 {
     public static function init(): bool
     {
-        if (!defined('DC_CONTEXT_ADMIN')) {
+        if (!self::status(My::checkContext(My::CONFIG))) {
             return false;
         }
 
-        static::$init = true;
+        My::l10n('admin');
 
-        L10n::set(__DIR__ . '/../locales/' . dcCore::app()->lang . '/admin');
-
-        return true;
+        return self::status();
     }
 
     /**
-     * Processes the requests of the configurator
-     * to save the settings in the database.
-     *
-     * @return bool
+     * Processes the request(s).
      */
     public static function process(): bool
     {
-        if (!static::$init) {
-            return false;
-        }
+        // Loads custon styles for the configurator page.
+        App::behavior()->addBehavior(
+            'adminPageHTMLHead',
+            function () {
+                echo My::cssLoad('/css/admin.min.css');
+                echo My::jsLoad('/js/admin.min.js');
+            }
+        );
 
-        // Behavior.
-        dcCore::app()->addBehavior('adminPageHTMLHead', [self::class, 'loadStylesScripts']);
-
-        // On form submit.
         if (!empty($_POST)) {
-            $default_settings = odysseySettings::default();
-            $saved_settings   = odysseySettings::saved();
-
             try {
-                dcCore::app()->blog->settings->addNamespace('odyssey');
 
+                // If the save button has been clicked.
                 if (isset($_POST['save'])) {
-                    // Save button has been clicked.
-                    foreach ($default_settings as $setting_id => $setting_value) {
-                        $setting_data = [];
 
+                    /**
+                     * This part saves each option in the database
+                     * only if it is different than the default one.
+                     *
+                     * Custom styles to be inserted in the head of the blog
+                     * will be saved later.
+                     */
+                    foreach (My::settingsDefault() as $setting_id => $setting_data) {
                         $specific_settings = [
-                            'styles',
+                            'global_unit',
+                            'global_page_width_value',
                             'header_image',
                             'header_image2x',
-                            'global_css_custom',
-                            'global_css_custom_mini',
-                            'global_page_width_unit',
-                            'global_page_width_value',
-                            'footer_social_links_500px',
-                            'footer_social_links_dailymotion',
-                            'footer_social_links_discord',
-                            'footer_social_links_facebook',
-                            'footer_social_links_github',
-                            'footer_social_links_signal',
-                            'footer_social_links_telegram',
-                            'footer_social_links_tiktok',
-                            'footer_social_links_twitch',
-                            'footer_social_links_vimeo',
-                            'footer_social_links_whatsapp',
-                            'footer_social_links_youtube',
-                            'footer_social_links_x',
-                            'footer_social_links_diaspora',
-                            'footer_social_links_mastodon',
-                            'footer_social_links_peertube'
+                            'styles'
                         ];
 
+                        $setting_data = [];
+
+                        // Saves non specific settings.
                         if (!in_array($setting_id, $specific_settings, true)) {
-                            // The current setting is not a specific one.
-                            if (isset($_POST[$setting_id])) {
-                                // The current setting has a set value.
-                                if ($_POST[$setting_id] != $default_settings[$setting_id]['default']) {
-                                    $setting_data = self::sanitizeSetting($setting_type, $setting_id, $_POST[$setting_id]);
-                                } else {
-                                    /**
-                                     * If the value is equal to the default value,
-                                     * removes the parameter.
-                                     */
-                                    dcCore::app()->blog->settings->odyssey->drop($setting_id);
-                                }
-                            } elseif (!isset($_POST[$setting_id]) && $default_settings[$setting_id]['type'] === 'checkbox') {
-                                /**
-                                 * No value is set for the current checkbox setting,
-                                 * means that the checkbox is empty.
-                                 */
-                                $setting_data = self::sanitizeSetting('checkbox', $setting_id, 0);
+                            if (isset($_POST[$setting_id]) && $_POST[$setting_id] != My::settingsDefault($setting_id)['default']) {
+                                $setting_data = self::sanitizeSetting(
+                                    My::settingsDefault($setting_id)['type'],
+                                    $setting_id,
+                                    $_POST[$setting_id]
+                                );
+                            } elseif (!isset($_POST[$setting_id]) && My::settingsDefault($setting_id)['type'] === 'checkbox') {
+                                $setting_data = self::sanitizeSetting(
+                                    My::settingsDefault($setting_id)['type'],
+                                    $setting_id,
+                                    '0'
+                                );
                             } else {
-                                // Removes every other settings.
-                                dcCore::app()->blog->settings->odyssey->drop($setting_id);
+                                App::blog()->settings->odyssey->drop($setting_id);
                             }
                         } else {
-                            // The current setting is specific one.
+                            // Saves each specific settings.
                             switch ($setting_id) {
+                                case 'global_unit' :
+                                case 'global_page_width_value' :
+                                    $setting_data = self::sanitizePageWidth(
+                                        $setting_id,
+                                        $_POST['global_unit'],
+                                        $_POST['global_page_width_value']
+                                    );
+
+                                    break;
+
                                 case 'header_image':
                                 case 'header_image2x':
                                     $setting_data = self::sanitizeHeaderImage(
                                         $setting_id,
                                         $_POST['header_image'],
-                                        $_POST['global_page_width_unit'],
+                                        $_POST['global_unit'],
                                         $_POST['global_page_width_value']
                                     );
+
                                     break;
 
-                                case 'global_css_custom':
-                                case 'global_css_custom_mini':
-                                    $setting_data = self::sanitizeCustomCSS($setting_id, $_POST['global_css_custom']);
-                                    break;
-
-                                case 'global_page_width_unit':
-                                case 'global_page_width_value':
-                                    $setting_data = self::sanitizePageWidth(
-                                        $setting_id,
-                                        $_POST['global_page_width_unit'],
-                                        $_POST['global_page_width_value']
-                                    );
-                                    break;
-
-                                case 'footer_social_links_500px':
-                                case 'footer_social_links_dailymotion':
-                                case 'footer_social_links_discord':
-                                case 'footer_social_links_facebook':
-                                case 'footer_social_links_github':
-                                case 'footer_social_links_tiktok':
-                                case 'footer_social_links_twitch':
-                                case 'footer_social_links_vimeo':
-                                case 'footer_social_links_youtube':
-                                    $setting_data = self::sanitizeSocialLink(
-                                        $setting_id,
-                                        $_POST[$setting_id]
-                                    );
-                                    break;
-
-                                case 'footer_social_links_x':
-                                    $setting_data = self::sanitizeXUsername($_POST['footer_social_links_x']);
-                                    break;
-
-                                case 'footer_social_links_diaspora':
-                                case 'footer_social_links_mastodon':
-                                case 'footer_social_links_peertube':
-                                    $setting_data = self::sanitizeLink($_POST[$setting_id]);
-                                    break;
-
-                                case 'footer_social_links_signal':
-                                case 'footer_social_links_telegram':
-                                case 'footer_social_links_whatsapp':
-                                    $setting_data = self::sanitizeMessagingAppsLink($setting_id, $_POST[$setting_id]);
-                                    break;
-
-                                case 'styles':
+                                case 'styles' :
                                     $setting_data = self::saveStyles();
                             }
                         }
 
-                        if (isset($setting_data['value']) && isset($setting_data['type'])) {
-                            $setting_label = $default_settings[$setting_id]['title'];
-
-                            if ($setting_id === 'footer_social_links_x') {
-                                $setting_label = str_replace(
-                                    '𝕏',
-                                    'X',
-                                    $default_settings[$setting_id]['title']
-                                );
-                            }
-
+                        // Saves the setting or drop it.
+                        if (!empty($setting_data)) {
+                            $setting_value = isset($setting_data['value']) ? $setting_data['value'] : '';
+                            $setting_type  = isset($setting_data['type']) ? $setting_data['type'] : '';
+                            $setting_label = My::settingsDefault($setting_id)['title'];
                             $setting_label = Html::clean($setting_label);
 
-                            dcCore::app()->blog->settings->odyssey->put(
-                                $setting_id,
-                                $setting_data['value'],
-                                $setting_data['type'],
-                                $setting_label,
-                                true
-                            );
+                            if ($setting_value !== '' && $setting_type !== '') {
+                                App::blog()->settings->odyssey->put(
+                                    $setting_id,
+                                    $setting_value,
+                                    $setting_type,
+                                    $setting_label ?: '',
+                                    true
+                                );
+                            } else {
+                                App::blog()->settings->odyssey->drop($setting_id);
+                            }
                         } else {
-                            dcCore::app()->blog->settings->odyssey->drop($setting_id);
+                            App::blog()->settings->odyssey->drop($setting_id);
                         }
                     }
 
-                    dcPage::addSuccessNotice(__('settings-config-updated'));
+                    // Refreshes blog.
+                    App::blog()->triggerBlog();
+
+                    // Resets template cache.
+                    App::cache()->emptyTemplatesCache();
+
+                    // Displays a success notice.
+                    Notices::addSuccessNotice(__('settings-notice-saved'));
+
+                    // Redirects to refresh form values.
+                    App::backend()->url()->redirect('admin.blog.theme', ['conf' => '1']);
                 } elseif (isset($_POST['reset'])) {
+
                     /**
                      * Reset button has been clicked.
                      * Drops all settings.
                      */
-                    foreach ($default_settings as $setting_id => $setting_value) {
-                        dcCore::app()->blog->settings->odyssey->drop($setting_id);
+                    foreach (My::settingsDefault() as $setting_id => $setting_value) {
+                        App::blog()->settings->odyssey->drop($setting_id);
                     }
 
-                    dcPage::addSuccessNotice(__('settings-config-reset'));
+                    // Displays a success notice.
+                    Notices::addSuccessNotice(__('settings-notice-reset'));
+
+                    // Redirects to refresh form values.
+                    App::backend()->url()->redirect('admin.blog.theme', ['conf' => '1']);
                 }
-
-                // Refreshes the blog.
-                dcCore::app()->blog->triggerBlog();
-
-                // Resets template cache.
-                dcCore::app()->emptyTemplatesCache();
-
-                /**
-                 * Redirects to refresh form values.
-                 *
-                 * With the parameters ['module' => 'odyssey', 'conf' => '1'],
-                 * the & is interpreted as &amp; causing a wrong redirect.
-                 */
-                Http::redirect(
-                    dcCore::app()->adminurl->get(
-                        'admin.blog.theme',
-                        ['module' => 'odyssey']
-                    ) . '&conf=1'
-                );
             } catch (Exception $e) {
-                dcCore::app()->error->add($e->getMessage());
+                App::error()->add($e->getMessage());
             }
         }
 
         return true;
+    }
+
+    public static function settingRender($setting_id)
+    {
+        $default_settings = My::settingsDefault();
+        $saved_settings   = self::settingsSaved();
+
+        // Displays the default value of the parameter if it is not defined.
+        if (isset($saved_settings[$setting_id])) {
+            $setting_value = $saved_settings[$setting_id];
+        } else {
+            $setting_value = $default_settings[$setting_id]['default'];
+        }
+
+        echo '<p id=', $setting_id, '-input>';
+
+        switch ($default_settings[$setting_id]['type']) {
+            case 'checkbox' :
+                echo form::checkbox(
+                    $setting_id,
+                    true,
+                    $setting_value
+                ),
+                '<label class=classic for=', $setting_id, '>',
+                $default_settings[$setting_id]['title'],
+                '</label>';
+
+                break;
+
+            case 'select' :
+            case 'select_int' :
+                echo '<label for=', $setting_id, '>',
+                $default_settings[$setting_id]['title'],
+                '</label>',
+                form::combo(
+                    $setting_id,
+                    $default_settings[$setting_id]['choices'],
+                    $setting_value
+                );
+
+                if ($setting_id === 'global_font_family') {
+                    echo '<p class=odyssey-font-preview id=odyssey-config-global-font-preview><strong>' . __('config-preview-font') . '</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean iaculis egestas sapien, at pretium erat interdum ullamcorper. Aliquam facilisis dolor sit amet nibh imperdiet vestibulum. Aenean et elementum magna, eget blandit arcu. Morbi tellus tortor, gravida vitae rhoncus nec, scelerisque vitae odio. In nulla mi, efficitur interdum scelerisque ac, ultrices non tortor.</p>';
+                } elseif ($setting_id === 'content_text_font') {
+                    if ($setting_value === 'same' && isset($saved_settings['global_font_family'])) {
+                        $attr = ' style=\'font-family:' . My::fontStack($saved_settings['global_font_family']) . '\';';
+                    } else {
+                        $attr = '';
+                    }
+                    echo '<p class=odyssey-font-preview id=odyssey-config-content-font-preview' . $attr . '><strong>' . __('config-preview-font') . '</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean iaculis egestas sapien, at pretium erat interdum ullamcorper. Aliquam facilisis dolor sit amet nibh imperdiet vestibulum. Aenean et elementum magna, eget blandit arcu. Morbi tellus tortor, gravida vitae rhoncus nec, scelerisque vitae odio. In nulla mi, efficitur interdum scelerisque ac, ultrices non tortor.</p>';
+                }
+
+                break;
+
+            case 'image' :
+                $placeholder = isset($default_settings[$setting_id]['placeholder'])
+                ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"'
+                : '';
+
+                if (!empty($setting_value) && $setting_value['url'] !== '') {
+                    $image_src = $setting_value['url'];
+                } else {
+                    $image_src = '';
+                }
+
+                echo '<label for=', $setting_id, '>',
+                $default_settings[$setting_id]['title'],
+                '</label>',
+                Form::field(
+                    $setting_id,
+                    30,
+                    255,
+                    $image_src,
+                    '',
+                    '',
+                    false,
+                    $placeholder
+                );
+
+                break;
+
+            case 'textarea' :
+                $placeholder = isset($default_settings[$setting_id]['placeholder'])
+                ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"'
+                : '';
+
+                echo '<label for=', $setting_id, '>',
+                $default_settings[$setting_id]['title'],
+                '</label>',
+                Form::textArea(
+                    $setting_id,
+                    60,
+                    3,
+                    $setting_value,
+                    '',
+                    '',
+                    false,
+                    $placeholder
+                );
+
+                break;
+
+            default :
+                $placeholder = isset($default_settings[$setting_id]['placeholder'])
+                ? 'placeholder=' . My::attrValue($default_settings[$setting_id]['placeholder'])
+                : '';
+
+                echo '<label for=', $setting_id, '>',
+                $default_settings[$setting_id]['title'],
+                '</label>',
+                Form::field(
+                    $setting_id,
+                    30,
+                    255,
+                    $setting_value,
+                    '',
+                    '',
+                    false,
+                    $placeholder
+                );
+        }
+
+        echo '</p>';
+
+        // Displays the description of the parameter as a note.
+        if ($default_settings[$setting_id]['type'] === 'checkbox' || (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '')) {
+            echo '<p class=form-note id=', $setting_id, '-description>',
+            $default_settings[$setting_id]['description'];
+
+            // If the parameter is a checkbox, displays its default value as a note.
+            if ($default_settings[$setting_id]['type'] === 'checkbox') {
+                if ($default_settings[$setting_id]['default'] === '1') {
+                    echo ' ', __('settings-default-checked');
+                } else {
+                    echo ' ', __('settings-default-unchecked');
+                }
+            }
+
+            echo '</p>';
+        }
+
+        // Header image.
+        if ($setting_id === 'header_image') {
+            if (!empty($setting_value) && isset($setting_value['url'])) {
+                $image_src = $setting_value['url'];
+            } else {
+                $image_src = '';
+            }
+
+            echo '<img alt="', __('header-image-preview-alt'), '" id=', $setting_id, '-src src="', $image_src, '">';
+
+            if (isset($saved_settings['header_image2x'])) {
+                echo '<p id=', $setting_id, '-retina>',
+                __('header-image-retina-ready'),
+                '</p>';
+            }
+
+            echo Form::hidden('header_image-url', $image_src);
+        }
+    }
+
+    /**
+     * Retrieves all theme settings stored in the database.
+     *
+     * @return array The id of the saved parameters associated with their values.
+     */
+    public static function settingsSaved(): array
+    {
+        $saved_settings   = [];
+        $default_settings = My::settingsDefault();
+
+        foreach ($default_settings as $setting_id => $setting_data) {
+            if (App::blog()->settings->odyssey->$setting_id !== null) {
+                if (isset($setting_data['type']) && $setting_data['type'] === 'checkbox') {
+                    $saved_settings[$setting_id] = (bool) App::blog()->settings->odyssey->$setting_id;
+                } elseif (isset($setting_data['type']) && $setting_data['type'] === 'select_int') {
+                    $saved_settings[$setting_id] = (int) App::blog()->settings->odyssey->$setting_id;
+                } else {
+                    $saved_settings[$setting_id] = App::blog()->settings->odyssey->$setting_id;
+                }
+            }
+        }
+
+        return $saved_settings;
+    }
+
+    /**
+     * Renders the page.
+     */
+    public static function render(): void
+    {
+        if (!self::status()) {
+            return;
+        }
+
+        // Creates an array to put all the settings in their sections.
+        $settings_render = [];
+
+        // Adds sections.
+        foreach (My::settingsSections() as $section_id => $section_data) {
+            $settings_render[$section_id] = [];
+        }
+
+        // Adds settings in their section.
+        $settings_ignored = ['header_image2x', 'styles'];
+
+        foreach (My::settingsDefault() as $setting_id => $setting_data) {
+            if (!in_array($setting_id, $settings_ignored, true)) {
+                // If a sub-section is set.
+                if (isset($setting_data['section'][1])) {
+                    $settings_render[$setting_data['section'][0]][$setting_data['section'][1]][] = $setting_id;
+                } else {
+                    $settings_render[$setting_data['section'][0]][] = $setting_id;
+                }
+            }
+        }
+
+        echo '<form action="', App::backend()->url()->get('admin.blog.theme', ['conf' => '1']), '" enctype=multipart/form-data id=theme-config-form method=post>';
+
+        // Displays the setting.
+        foreach ($settings_render as $section_id => $setting_data) {
+            echo '<h3 id=section-', $section_id, '>',
+            My::settingsSections($section_id)['name'],
+            '</h3>',
+            '<div class=fieldset>';
+
+            foreach ($setting_data as $sub_section_id => $setting_id) {
+                // Displays the name of the sub-section unless its ID is "no-title".
+                if ($sub_section_id !== 'no-title') {
+                    echo '<h4 id=section-', $section_id, '-', $sub_section_id, '>',
+                    My::settingsSections($section_id)['sub_sections'][$sub_section_id],
+                    '</h4>';
+                }
+
+                // Displays the parameter.
+                foreach ($setting_id as $setting_id_value) {
+                    self::settingRender($setting_id_value);
+                }
+            }
+
+            echo '</div>';
+        }
+
+        // Hidden inputs.
+        echo form::hidden('page_width_em_default', '30');
+        echo form::hidden('page_width_px_default', '480');
+
+        echo '<p>',
+        App::nonce()->getFormNonce(),
+        '<input name=save type=submit value="', __('settings-save-button-text'), '"> ',
+        '<input class=delete name=reset value="', __('settings-reset-button-text'), '" type=submit>',
+        '</p>',
+        '</form>';
+    }
+
+    /**
+     * Adds custom styles to the theme to apply the settings.
+     *
+     * // @param int $header_image_width The width if the header image.
+     *
+     * @return void
+     */
+    public static function saveStyles(): array
+    {
+        $css_root_array                    = [];
+        $css_root_dark_array               = [];
+        $css_main_array                    = [];
+        $css_supports_initial_letter_array = [];
+        $css_media_array                   = [];
+
+        $default_settings = My::settingsDefault();
+
+        // Page width.
+        if (isset($_POST['global_unit']) && isset($_POST['global_page_width_value'])) {
+            $page_width_unit  = $_POST['global_unit'];
+            $page_width_value = $_POST['global_page_width_value'];
+
+            if ($page_width_unit === 'px' && $page_width_value === '') {
+                $page_width_value = '480';
+            }
+
+            $page_width_data = My::getContentWidth($page_width_unit, $page_width_value);
+
+            if (!empty($page_width_data)) {
+                $css_root_array[':root']['--page-width'] = $page_width_data['value'] . $page_width_data['unit'];
+            }
+        }
+
+        // Font family.
+        if (isset($_POST['global_font_family'])) {
+            $css_root_array[':root']['--font-family'] = My::fontStack($_POST['global_font_family']);
+
+            /*if ($_POST['global_font_family'] === 'serif') {
+                $css_root_array[':root']['--font-family'] = '"Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
+            } elseif ($_POST['global_font_family'] === 'monospace') {
+                $css_root_array[':root']['--font-family'] = 'Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace';
+            } elseif ($_POST['global_font_family'] === 'sans-serif-browser') {
+                $css_root_array[':root']['--font-family'] = 'sans-serif';
+            } elseif ($_POST['global_font_family'] === 'serif-browser') {
+                $css_root_array[':root']['--font-family'] = 'serif';
+            } elseif ($_POST['global_font_family'] === 'monospace-browser') {
+                $css_root_array[':root']['--font-family'] = 'monospace';
+            } elseif ($_POST['global_font_family'] === 'atkinson') {
+                $css_root_array[':root']['--font-family'] = '"Atkinson Hyperlegible", sans-serif';
+
+                $css_main_array[0]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
+                $css_main_array[0]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2")';
+                $css_main_array[0]['@font-face']['font-style']  = 'normal';
+                $css_main_array[0]['@font-face']['font-weight'] = '400';
+
+                $css_main_array[1]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
+                $css_main_array[1]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2")';
+                $css_main_array[1]['@font-face']['font-style']  = 'italic';
+                $css_main_array[1]['@font-face']['font-weight'] = '400';
+
+                $css_main_array[2]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
+                $css_main_array[2]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2")';
+                $css_main_array[2]['@font-face']['font-style']  = 'normal';
+                $css_main_array[2]['@font-face']['font-weight'] = '700';
+
+                $css_main_array[3]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
+                $css_main_array[3]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("woff2")';
+                $css_main_array[3]['@font-face']['font-style']  = 'italic';
+                $css_main_array[3]['@font-face']['font-weight'] = '700';
+            } elseif ($_POST['global_font_family'] === 'didone') {
+                $css_root_array[':root']['--font-family'] = "Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif;
+font-weight: normal";
+            } elseif ($_POST['global_font_family'] === 'eb-garamond') {
+                $css_root_array[':root']['--font-family'] = '"EB Garamond", serif';
+
+                $css_main_array[0]['@font-face']['font-family'] = '"EB Garamond"';
+                $css_main_array[0]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/EBGaramond-Regular.ttf") format("truetype")';
+                $css_main_array[0]['@font-face']['font-style']  = 'normal';
+                $css_main_array[0]['@font-face']['font-weight'] = '400';
+
+                $css_main_array[1]['@font-face']['font-family'] = '"EB Garamond"';
+                $css_main_array[1]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/EBGaramond-Italic.ttf") format("truetype")';
+                $css_main_array[1]['@font-face']['font-style']  = 'italic';
+                $css_main_array[1]['@font-face']['font-weight'] = '400';
+
+                $css_main_array[2]['@font-face']['font-family'] = '"EB Garamond"';
+                $css_main_array[2]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/EBGaramond-Bold.ttf") format("truetype")';
+                $css_main_array[2]['@font-face']['font-style']  = 'normal';
+                $css_main_array[2]['@font-face']['font-weight'] = '700';
+
+                $css_main_array[3]['@font-face']['font-family'] = '"EB Garamond"';
+                $css_main_array[3]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/EBGaramond-BoldItalic.ttf") format("truetype")';
+                $css_main_array[3]['@font-face']['font-style']  = 'italic';
+                $css_main_array[3]['@font-face']['font-weight'] = '700';
+            } elseif ($_POST['global_font_family'] === 'luciole') {
+                $css_root_array[':root']['--font-family'] = 'Luciole, sans-serif';
+
+                $css_main_array[0]['@font-face']['font-family'] = '"Luciole"';
+                $css_main_array[0]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Luciole-Regular.ttf") format("truetype")';
+                $css_main_array[0]['@font-face']['font-style']  = 'normal';
+                $css_main_array[0]['@font-face']['font-weight'] = '400';
+
+                $css_main_array[1]['@font-face']['font-family'] = '"Luciole"';
+                $css_main_array[1]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Luciole-Regular-Italic.ttf") format("truetype")';
+                $css_main_array[1]['@font-face']['font-style']  = 'italic';
+                $css_main_array[1]['@font-face']['font-weight'] = '400';
+
+                $css_main_array[2]['@font-face']['font-family'] = '"Luciole"';
+                $css_main_array[2]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Luciole-Bold.ttf") format("truetype")';
+                $css_main_array[2]['@font-face']['font-style']  = 'normal';
+                $css_main_array[2]['@font-face']['font-weight'] = '700';
+
+                $css_main_array[3]['@font-face']['font-family'] = '"Luciole"';
+                $css_main_array[3]['@font-face']['src']         = 'url("' . My::themeURL() . '/fonts/Luciole-Bold-Italic.ttf") format("truetype")';
+                $css_main_array[3]['@font-face']['font-style']  = 'italic';
+                $css_main_array[3]['@font-face']['font-weight'] = '700';
+            }
+            */
+        }
+
+        // Font size.
+        $font_size_allowed = [80, 90, 110, 120];
+
+        if (isset($_POST['global_font_size']) && in_array((int) $_POST['global_font_size'], $font_size_allowed, true)) {
+            $css_root_array[':root']['--font-size'] = My::removeZero($_POST['global_font_size'] / 100) . 'em';
+        }
+
+        // Font antialiasing.
+        if (isset($_POST['global_font_antialiasing']) && $_POST['global_font_antialiasing'] === '1') {
+            $css_main_array['body']['-moz-osx-font-smoothing'] = 'grayscale';
+            $css_main_array['body']['-webkit-font-smoothing']  = 'antialiased';
+            $css_main_array['body']['font-smooth']             = 'always';
+
+            /*
+            $css_media_contrast_array['body']['-moz-osx-font-smoothing'] = 'unset';
+            $css_media_contrast_array['body']['-webkit-font-smoothing']  = 'unset';
+            $css_media_contrast_array['body']['font-smooth']             = 'unset';
+
+            $css_media_print_array['body']['-moz-osx-font-smoothing'] = 'unset';
+            $css_media_print_array['body']['-webkit-font-smoothing']  = 'unset';
+            $css_media_print_array['body']['font-smooth']             = 'unset';
+            */
+        }
+
+        // Primary color.
+        $primary_colors_allowed = ['gray', 'green', 'red'];
+
+        $primary_colors = [
+            'light' => [
+                'gray'  => '0, 0%, 10%',
+                'green' => '120, 75%, 30%',
+                'red'   => '0, 90%, 45%'
+            ],
+            'light-amplified' => [
+                'gray'  => '0, 0%, 28%',
+                'green' => '120, 60%, 40%',
+                'red'   => '0, 100%, 55%'
+            ],
+            'dark' => [
+                'gray'  => '0, 0%, 99%',
+                'green' => '120, 60%, 80%',
+                'red'   => '0, 70%, 85%'
+            ],
+            'dark-amplified' => [
+                'gray'  => '0, 0%, 80%',
+                'green' => '120, 50%, 60%',
+                'red'   => '0, 70, 70%'
+            ]
+        ];
+
+        // Primary color.
+        if (isset($_POST['global_color_primary']) && in_array($_POST['global_color_primary'], $primary_colors_allowed, true)) {
+
+            // Light.
+            $css_root_array[':root']['--color-primary'] = 'hsl(' . $primary_colors['light'][$_POST['global_color_primary']] . ')';
+
+            // Light & amplified.
+            if (isset($primary_colors['light-amplified'][$_POST['global_color_primary']])) {
+                $css_root_array[':root']['--color-primary-amplified'] = 'hsl(' . $primary_colors['light-amplified'][$_POST['global_color_primary']] . ')';
+            }
+
+            // Dark.
+            if (isset($primary_colors['dark'][$_POST['global_color_primary']])) {
+                $css_root_array[':root']['--color-primary-dark'] = 'hsl(' . $primary_colors['dark'][$_POST['global_color_primary']] . ')';
+            }
+
+            // Dark & amplified.
+            if (isset($primary_colors['dark-amplified'][$_POST['global_color_primary']])) {
+                $css_root_array[':root']['--color-primary-dark-amplified'] = 'hsl(' . $primary_colors['dark-amplified'][$_POST['global_color_primary']] . ')';
+            }
+        }
+
+        // Transitions.
+        if (isset($_POST['global_css_transition']) && $_POST['global_css_transition'] === '1') {
+            $css_root_array[':root']['--color-transition'] = 'all .2s ease-in-out';
+
+            /*
+            $css_media_motion_array['a']['transition'] = 'unset';
+
+            $css_media_motion_array['a:active, a:hover']['transition'] = 'unset';
+
+            $css_media_motion_array['input[type="submit"], .form-submit, .button']['transition'] = 'unset';
+
+            $css_media_motion_array['input[type="submit"]:hover, .button:hover, .form-submit:hover']['transition'] = 'unset';
+            */
+        }
+
+        // Header alignment
+        $header_align_allowed = ['left', 'right'];
+
+        if (isset($_POST['header_align']) && in_array($_POST['header_align'], $header_align_allowed, true)) {
+            $css_root_array[':root']['--header-align'] = $_POST['header_align'];
+        }
+
+        // Header banner
+        if (isset($_POST['header_image']) && $_POST['header_image'] !== '') {
+            $css_main_array['#site-image']['width'] = '100%';
+
+            /*
+            $css_media_contrast_array['#site-image a']['outline'] = 'inherit';
+
+            if (isset($_POST['global_css_border_radius']) && $_POST['global_css_border_radius'] === '1') {
+                $css_main_array['#site-image img']['border-radius'] = 'var(--border-radius)';
+            }
+
+            if (isset($header_image_width) && $header_image_width >= 100) {
+                $css_main_array['#site-image img']['width'] = '100%';
+            }
+            */
+        }
+
+        // Alternate post color
+        if (isset($_POST['content_postlist_altcolor']) && $_POST['content_postlist_altcolor'] === '1') {
+            $css_root_dark_array[':root']['--color-background-even'] = '#000';
+
+            $css_main_array['.entry-list .post:nth-child(even)']['background-color'] = 'var(--color-background-even, #fff)';
+        }
+
+        // Content font family
+        if (isset($_POST['content_text_font']) && $_POST['content_text_font'] !== 'same' && $_POST['global_font_family'] !== $_POST['content_text_font']) {
+            $css_root_array[':root']['--font-family-content'] = My::fontStack($_POST['content_text_font']);
+        }
+
+        // Text align
+        if (isset($_POST['content_text_align'])) {
+            switch ($_POST['content_text_align']) {
+                case 'justify' :
+                    $css_root_array[':root']['--text-align'] = 'justify';
+                    break;
+                case 'justify-not-mobile' :
+                    $css_root_array[':root']['--text-align']  = 'justify';
+                    $css_media_array[':root']['--text-align'] = 'left';
+            }
+        }
+
+        // Line Height
+        $line_height_allowed = [125, 175];
+
+        if (isset($_POST['content_line_height']) && in_array((int) $_POST['content_line_height'], $line_height_allowed, true)) {
+            $css_root_array[':root']['--text-line-height'] = (int) $_POST['content_line_height'] / 100;
+        }
+
+        // Hyphenation.
+        if (isset($_POST['content_hyphens']) && $_POST['content_hyphens'] !== 'disabled') {
+            $css_main_array['.content-text']['-webkit-hyphens'] = 'auto';
+            $css_main_array['.content-text']['-ms-hyphens']     = 'auto';
+            $css_main_array['.content-text']['hyphens']         = 'auto';
+
+            $css_main_array['.content-text']['-webkit-hyphenate-limit-chars'] = '5 2 2';
+            $css_main_array['.content-text']['-moz-hyphenate-limit-chars']    = '5 2 2';
+            $css_main_array['.content-text']['-ms-hyphenate-limit-chars']     = '5 2 2';
+            $css_main_array['.content-text']['hyphenate-limit-chars']         = '5 2 2';
+
+            $css_main_array['.content-text']['-webkit-hyphenate-limit-lines'] = '2';
+            $css_main_array['.content-text']['-moz-hyphenate-limit-lines']    = '2';
+            $css_main_array['.content-text']['-ms-hyphenate-limit-lines']     = '2';
+            $css_main_array['.content-text']['hyphenate-limit-lines']         = '2';
+
+            $css_main_array['.content-text']['-webkit-hyphenate-limit-last'] = 'always';
+            $css_main_array['.content-text']['-moz-hyphenate-limit-last']    = 'always';
+            $css_main_array['.content-text']['-ms-hyphenate-limit-last']     = 'always';
+            $css_main_array['.content-text']['hyphenate-limit-last']         = 'always';
+
+            /*
+            $css_media_contrast_array['.content-text']['-webkit-hyphens'] = 'unset';
+            $css_media_contrast_array['.content-text']['-ms-hyphens']     = 'unset';
+            $css_media_contrast_array['.content-text']['hyphens']         = 'unset';
+
+            $css_media_contrast_array['.content-text']['-webkit-hyphenate-limit-chars'] = 'unset';
+            $css_media_contrast_array['.content-text']['-moz-hyphenate-limit-chars']    = 'unset';
+            $css_media_contrast_array['.content-text']['-ms-hyphenate-limit-chars']     = 'unset';
+            $css_media_contrast_array['.content-text']['hyphenate-limit-chars']         = 'unset';
+
+            $css_media_contrast_array['.content-text']['-webkit-hyphenate-limit-lines'] = 'unset';
+            $css_media_contrast_array['.content-text']['-moz-hyphenate-limit-lines']    = 'unset';
+            $css_media_contrast_array['.content-text']['-ms-hyphenate-limit-lines']     = 'unset';
+            $css_media_contrast_array['.content-text']['hyphenate-limit-lines']         = 'unset';
+
+            $css_media_contrast_array['.content-text']['-webkit-hyphenate-limit-last'] = 'unset';
+            $css_media_contrast_array['.content-text']['-moz-hyphenate-limit-last']    = 'unset';
+            $css_media_contrast_array['.content-text']['-ms-hyphenate-limit-last']     = 'unset';
+            $css_media_contrast_array['.content-text']['hyphenate-limit-last']         = 'unset';
+            */
+
+            if ($_POST['content_hyphens'] === 'enabled-not-mobile') {
+                $css_media_array['.content-text']['-webkit-hyphens'] = 'unset';
+                $css_media_array['.content-text']['-ms-hyphens']     = 'unset';
+                $css_media_array['.content-text']['hyphens']         = 'unset';
+
+                $css_media_array['.content-text']['-webkit-hyphenate-limit-chars'] = 'unset';
+                $css_media_array['.content-text']['-moz-hyphenate-limit-chars']    = 'unset';
+                $css_media_array['.content-text']['-ms-hyphenate-limit-chars']     = 'unset';
+                $css_media_array['.content-text']['hyphenate-limit-chars']         = 'unset';
+
+                $css_media_array['.content-text']['-webkit-hyphenate-limit-lines'] = 'unset';
+                $css_media_array['.content-text']['-moz-hyphenate-limit-lines']    = 'unset';
+                $css_media_array['.content-text']['-ms-hyphenate-limit-lines']     = 'unset';
+                $css_media_array['.content-text']['hyphenate-limit-lines']         = 'unset';
+
+                $css_media_array['.content-text']['-webkit-hyphenate-limit-last'] = 'unset';
+                $css_media_array['.content-text']['-moz-hyphenate-limit-last']    = 'unset';
+                $css_media_array['.content-text']['-ms-hyphenate-limit-last']     = 'unset';
+                $css_media_array['.content-text']['hyphenate-limit-last']         = 'unset';
+            }
+        }
+
+        // Initial letter
+        if (isset($_POST['content_initial_letter']) && $_POST['content_initial_letter'] === '1') {
+            $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['-moz-initial-letter'] = '2';
+            $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['-webkit-initial-letter'] = '2';
+            $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['initial-letter'] = '2';
+            $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['margin-right'] = '.25rem';
+        }
+
+        $css  = !empty($css_root_array) ? My::stylesArrToStr($css_root_array) : '';
+        $css .= !empty($css_root_dark_array) ? '@media (prefers-color-scheme:dark){' . My::stylesArrToStr($css_root_dark_array) . '}' : '';
+        $css .= !empty($css_main_array) ? My::stylesArrToStr($css_main_array) : '';
+        $css .= !empty($css_supports_initial_letter_array) ? '@supports (initial-letter:2) or (-webkit-initial-letter:2) or (-moz-initial-letter:2){' . My::stylesArrToStr($css_supports_initial_letter_array) . '}' : '';
+        $css .= !empty($css_media_array) ? '@media (max-width:34em){' . My::stylesArrToStr($css_media_array) . '}' : '';
+
+        $css = htmlspecialchars($css, ENT_NOQUOTES);
+        $css = str_replace('&gt;', ">", $css);
+
+        if ($css) {
+            return [
+                'value' => $css,
+                'type'  => 'string'
+            ];
+        }
+
+        return [];
     }
 
     /**
@@ -261,7 +790,7 @@ class Config extends dcNsProcess
      */
     public static function sanitizeSetting($setting_type, $setting_id, $setting_value): array
     {
-        $default_settings = odysseySettings::default();
+        $default_settings = My::settingsDefault();
 
         if ($setting_type === 'select' && in_array($setting_value, $default_settings[$setting_id]['choices'])) {
             return [
@@ -323,15 +852,15 @@ class Config extends dcNsProcess
      */
     public static function sanitizeHeaderImage($setting_id, $image_url, $page_width_unit, $page_width_value)
     {
-        $default_settings = odysseySettings::default();
+        $default_settings = My::settingsDefault();
         $image_url        = $image_url ?: '';
         $page_width_unit  = $page_width_unit ?: '';
         $page_width_value = $page_width_value ?: '';
 
         if ($image_url) {
             // Gets relative url and path of the public folder.
-            $public_url  = dcCore::app()->blog->settings->system->public_url;
-            $public_path = dcCore::app()->blog->public_path;
+            $public_url  = App::blog()->settings->system->public_url;
+            $public_path = App::blog()->public_path;
 
             // Converts the absolute URL in a relative one if necessary.
             $image_url = Html::stripHostURL($image_url);
@@ -339,7 +868,7 @@ class Config extends dcNsProcess
             // Retrieves the image path.
             $image_path = $public_path . str_replace($public_url . '/', '/', $image_url);
 
-            if (odysseyUtilsimageExists($image_path)) {
+            if (My::imageExists($image_path)) {
 
                 // Gets the dimensions of the image.
                 list($header_image_width) = getimagesize($image_path);
@@ -348,7 +877,7 @@ class Config extends dcNsProcess
                  * Limits the maximum width value of the image if its superior to the page width,
                  * and sets its height proportionally.
                  */
-                $page_width_data = odysseySettings::getContentWidth($page_width_unit, $page_width_value, true);
+                $page_width_data = My::getContentWidth($page_width_unit, $page_width_value, true);
 
                 $page_width = $page_width_data['value'];
 
@@ -398,1407 +927,35 @@ class Config extends dcNsProcess
     }
 
     /**
-     * Prepares to save custom CSS.
-     *
-     * @param string $setting_id The setting id.
-     * @param string $css_value  The giver CSS to save.
-     *
-     * @return array The CSS to save.
-     */
-    public static function sanitizeCustomCSS($setting_id, $css_value): array
-    {
-        $css_value = $css_value ?: '';
-
-        if ($css_value) {
-            if ($setting_id === 'global_css_custom') {
-                return [
-                    'value' => Html::escapeHTML($css_value),
-                    'type'  => 'string'
-                ];
-            } elseif ($setting_id === 'global_css_custom_mini') {
-                $css_value_mini = str_replace("\n", "", $css_value);
-                $css_value_mini = str_replace("\r", "", $css_value_mini);
-                $css_value_mini = str_replace("  ", " ", $css_value_mini);
-                $css_value_mini = str_replace("  ", " ", $css_value_mini);
-                $css_value_mini = str_replace(" {", "{", $css_value_mini);
-                $css_value_mini = str_replace("{ ", "{", $css_value_mini);
-                $css_value_mini = str_replace(" }", "}", $css_value_mini);
-                $css_value_mini = str_replace("} ", "}", $css_value_mini);
-                $css_value_mini = str_replace(", ", ",", $css_value_mini);
-                $css_value_mini = str_replace("; ", ";", $css_value_mini);
-                $css_value_mini = str_replace(": ", ":", $css_value_mini);
-
-                return [
-                    'value' => Html::escapeHTML($css_value_mini),
-                    'type'  => 'string'
-                ];
-            }
-        }
-
-        return [];
-    }
-
-    /**
      * Prepares to save the page width option.
      *
-     * @param string $setting_id       The setting id.
-     * @param string $page_width_unit  The unit used to define the width (px or em)
-     * @param string $page_width_value The value of the page width.
+     * @param string  $setting_id The setting id.
+     * @param string  $unit       The unit used to define the width (px or em)
+     * @param integer $value      The value of the page width.
      *
      * @return array The page width and its unit.
      */
-    public static function sanitizePageWidth($setting_id, $page_width_unit, $page_width_value): array
+    public static function sanitizePageWidth($setting_id, $unit, $value): array
     {
-        $page_width_unit  = $page_width_unit ?: 'px';
-        $page_width_value = $page_width_value ? (int) $page_width_value : 30;
-        $page_width_data  = odysseySettings::getContentWidth(
-            $page_width_unit,
-            $page_width_value
-        );
+        $unit  = $unit ?: 'px';
+        $value = $value ? (int) $value : 30;
+        $data  = My::getContentWidth($unit, $value);
 
-        if ($setting_id === 'global_page_width_unit' && isset($page_width_data['unit'])) {
+        if ($setting_id === 'global_unit' && isset($data['unit'])) {
+            var_dump("ok");
             return [
-                'value' => Html::escapeHTML($page_width_data['unit']),
+                'value' => Html::escapeHTML($data['unit']),
                 'type'  => 'string'
             ];
         }
 
-        if ($setting_id === 'global_page_width_value' && isset($page_width_data['value'])) {
+        if ($setting_id === 'global_page_width_value' && isset($data['value'])) {
             return [
-                'value' => Html::escapeHTML($page_width_data['value']),
+                'value' => Html::escapeHTML($data['value']),
                 'type'  => 'integer'
             ];
         }
 
         return [];
-    }
-
-    /**
-     * Prepares to save social links.
-     *
-     * @param string $setting_id The social setting id.
-     * @param string $url        The URL of the social account.
-     *
-     * @return array The URL of the account.
-     */
-    public static function sanitizeSocialLink($setting_id, $url): array
-    {
-        $url = $url ? Html::escapeURL($url) : '';
-
-        $output = [];
-
-        $social_url_base = [
-            'footer_social_links_500px'       => 'https://500px.com/',
-            'footer_social_links_dailymotion' => 'https://www.dailymotion.com/',
-            'footer_social_links_discord'     => 'https://discord.com/',
-            'footer_social_links_github'      => 'https://github.com/',
-            'footer_social_links_tiktok'      => 'https://tiktok.com/',
-            'footer_social_links_twitch'      => 'https://www.twitch.tv/',
-            'footer_social_links_vimeo'       => 'https://vimeo.com/',
-            'footer_social_links_youtube'     => 'https://www.youtube.com/',
-        ];
-
-        if ($url) {
-            if (array_key_exists($setting_id, $social_url_base)) {
-                $output['value']['data'] = $url;
-
-                if (str_starts_with($url, $social_url_base[$setting_id])) {
-                    $output['value']['valid'] = true;
-                } else {
-                    $output['value']['valid'] = false;
-                }
-
-                $output['type']  = 'array';
-            } elseif ($setting_id === 'footer_social_links_facebook') {
-                $output['value']['data'] = $url;
-
-                $host = parse_url($url, PHP_URL_HOST) ?: '';
-
-                if (str_contains($host, '.facebook.com')) {
-                    $output['value']['valid'] = true;
-                } else {
-                    $output['value']['valid'] = false;
-                }
-
-                $output['type']  = 'array';
-            }
-        }
-
-        return $output;
-    }
-
-    /**
-     * Prepares to save an X username and its associated URL.
-     *
-     * @param string $username The given username to save.
-     *
-     * @return array The URL of the X account.
-     */
-    public static function sanitizeXUsername($username): array
-    {
-        $username = $username ? Html::escapeHTML($username) : '';
-
-        if (preg_match('/^@[A-Za-z0-9_]{4,15}$/', $username)) {
-            $link = 'https://twitter.com/' . substr($username, 1);
-            
-            if ($link) {
-                return [
-                    'value' => [
-                        'data'  => $link,
-                        'valid' => true
-                    ],
-                    'type'  => 'array'
-                ];
-            }
-        } elseif ($username) {
-            return [
-                'value' => [
-                    'data'  => $username,
-                    'valid' => false
-                ],
-                'type'  => 'array'
-            ];
-        }
-
-        return [];
-    }
-
-    /**
-     * Prepares to save links to messaging app accounts.
-     *
-     * @param string $setting_id The setting id.
-     * @param string $input      The input typed by the user..
-     *
-     * @return array The link.
-     */
-    public static function sanitizeMessagingAppsLink($setting_id, $input): array
-    {
-        $input  = $input ? Html::escapeHTML($input) : '';
-        $output = [];
-
-        if ($setting_id === 'footer_social_links_signal') {
-            if (preg_match('/^\\+[1-9][0-9]{7,14}$/', $input) || str_starts_with($input, 'sgnl://signal.me/') || str_starts_with($input, 'https://signal.me/')) {
-                $output['value']['data'] = $input;
-                $output['type']          = 'array';
-            }
-        } elseif ($setting_id === 'footer_social_links_telegram') {
-            if (str_starts_with($input, 'https://t.me/') || str_starts_with($input, 'https://telegram.me/') || str_starts_with($input, 'tg://')) {
-                $output['value']['data'] = $input;
-                $output['type']          = 'array';
-            }
-        } elseif ($setting_id === 'footer_social_links_whatsapp') {
-            if (preg_match('/^\\+[1-9][0-9]{7,14}$/', $input) || str_starts_with($input, 'https://wa.me/') || str_starts_with($input, 'whatsapp://')) {
-                $output['value']['data'] = $input;
-                $output['type']          = 'array';
-            }
-        }
-
-        if (isset($output['value']['data'])) {
-            $output['value']['valid'] = true;
-        } elseif ($input) {
-            $output = [
-                'value' => [
-                    'data'  => $input,
-                    'valid' => false
-                ],
-                'type'  => 'array'
-            ];
-        }
-
-        return $output;
-    }
-
-    /**
-     * Prepares to save links.
-     *
-     * @param string $input The URL.
-     *
-     * @return array The sanitized URL.
-     */
-    public static function sanitizeLink($input): array
-    {
-        $input  = $input ? Html::escapeURL($input) : '';
-        $output = [];
-
-        if ($input === '') {
-            return $output;
-        }
-
-        if (in_array(parse_url($input, PHP_URL_SCHEME), ['http', 'https'], true)) {
-            $output = [
-                'value' => [
-                    'data'  => $input,
-                    'valid' => true
-                ],
-                'type' => 'array'
-            ];
-        } else {
-            $output = [
-                'value' => [
-                    'data'  => $input,
-                    'valid' => false
-                ],
-                'type' => 'array'
-            ];
-        }
-
-        return $output;
-    }
-
-    /**
-     * Loads styles and scripts of the theme configurator.
-     *
-     * @return void
-     */
-    public static function loadStylesScripts()
-    {
-        echo dcPage::cssLoad(dcCore::app()->blog->settings->system->themes_url . '/odyssey/css/admin.min.css'),
-        dcPage::jsLoad(dcCore::app()->blog->settings->system->themes_url . '/odyssey/js/admin.min.js');
-    }
-
-    /**
-     * Adds custom styles to the theme to apply the settings.
-     *
-     * @param int $header_image_width The width if the header image.
-     *
-     * @return void
-     */
-    public static function saveStyles($header_image_width = '')
-    {
-        $css = '';
-
-        $css_root_array                    = [];
-        $css_root_media_array              = [];
-        $css_main_array                    = [];
-        $css_supports_initial_letter_array = [];
-        $css_media_array                   = [];
-        $css_media_contrast_array          = [];
-        $css_media_motion_array            = [];
-        $css_media_print_array             = [];
-
-        $default_settings = odysseySettings::default();
-
-        // Page width.
-        if (isset($_POST['global_page_width_unit']) && isset($_POST['global_page_width_value'])) {
-            $page_width_unit  = $_POST['global_page_width_unit'];
-            $page_width_value = $_POST['global_page_width_value'];
-
-            if ($page_width_unit === 'px' && $page_width_value === '') {
-                $page_width_value = '480';
-            }
-
-            $page_width_data = odysseySettings::getContentWidth($page_width_unit, $page_width_value);
-
-            if (!empty($page_width_data)) {
-                $css_root_array[':root']['--page-width'] = $page_width_data['value'] . $page_width_data['unit'];
-            }
-        }
-
-        // Font size.
-        $font_size_allowed = [80, 90, 110, 120];
-
-        if (isset($_POST['global_font_size']) && in_array((int) $_POST['global_font_size'], $font_size_allowed, true)) {
-            $css_root_array[':root']['--font-size'] = odysseyUtils::removeZero($_POST['global_font_size'] / 100) . 'em';
-        }
-
-        // Font family.
-        if (isset($_POST['global_font_family'])) {
-            if ($_POST['global_font_family'] === 'serif') {
-                $css_root_array[':root']['--font-family'] = '"Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
-            } elseif ($_POST['global_font_family'] === 'monospace') {
-                $css_root_array[':root']['--font-family'] = 'Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace';
-            } elseif ($_POST['global_font_family'] === 'sans-serif-browser') {
-                $css_root_array[':root']['--font-family'] = 'sans-serif';
-            } elseif ($_POST['global_font_family'] === 'serif-browser') {
-                $css_root_array[':root']['--font-family'] = 'serif';
-            } elseif ($_POST['global_font_family'] === 'monospace-browser') {
-                $css_root_array[':root']['--font-family'] = 'monospace';
-            } elseif ($_POST['global_font_family'] === 'atkinson') {
-                $themes_url = dcCore::app()->blog->settings->system->themes_url;
-
-                $css_root_array[':root']['--font-family'] = '"Atkinson Hyperlegible", sans-serif';
-
-                $css_main_array[0]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2")';
-                $css_main_array[0]['@font-face']['font-style']  = 'normal';
-                $css_main_array[0]['@font-face']['font-weight'] = '400';
-
-                $css_main_array[1]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2")';
-                $css_main_array[1]['@font-face']['font-style']  = 'italic';
-                $css_main_array[1]['@font-face']['font-weight'] = '400';
-
-                $css_main_array[2]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2")';
-                $css_main_array[2]['@font-face']['font-style']  = 'normal';
-                $css_main_array[2]['@font-face']['font-weight'] = '700';
-
-                $css_main_array[3]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("woff2")';
-                $css_main_array[3]['@font-face']['font-style']  = 'italic';
-                $css_main_array[3]['@font-face']['font-weight'] = '700';
-            } elseif ($_POST['global_font_family'] === 'eb-garamond') {
-                $themes_url = dcCore::app()->blog->settings->system->themes_url;
-
-                $css_root_array[':root']['--font-family'] = '"EB Garamond", serif';
-
-                $css_main_array[0]['@font-face']['font-family'] = '"EB Garamond"';
-                $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/EBGaramond-Regular.ttf") format("truetype")';
-                $css_main_array[0]['@font-face']['font-style']  = 'normal';
-                $css_main_array[0]['@font-face']['font-weight'] = '400';
-
-                $css_main_array[1]['@font-face']['font-family'] = '"EB Garamond"';
-                $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/EBGaramond-Italic.ttf") format("truetype")';
-                $css_main_array[1]['@font-face']['font-style']  = 'italic';
-                $css_main_array[1]['@font-face']['font-weight'] = '400';
-
-                $css_main_array[2]['@font-face']['font-family'] = '"EB Garamond"';
-                $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/EBGaramond-Bold.ttf") format("truetype")';
-                $css_main_array[2]['@font-face']['font-style']  = 'normal';
-                $css_main_array[2]['@font-face']['font-weight'] = '700';
-
-                $css_main_array[3]['@font-face']['font-family'] = '"EB Garamond"';
-                $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/EBGaramond-BoldItalic.ttf") format("truetype")';
-                $css_main_array[3]['@font-face']['font-style']  = 'italic';
-                $css_main_array[3]['@font-face']['font-weight'] = '700';
-            } elseif ($_POST['global_font_family'] === 'luciole') {
-                $themes_url = dcCore::app()->blog->settings->system->themes_url;
-
-                $css_root_array[':root']['--font-family'] = 'Luciole, sans-serif';
-
-                $css_main_array[0]['@font-face']['font-family'] = '"Luciole"';
-                $css_main_array[0]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Luciole-Regular.ttf") format("truetype")';
-                $css_main_array[0]['@font-face']['font-style']  = 'normal';
-                $css_main_array[0]['@font-face']['font-weight'] = '400';
-
-                $css_main_array[1]['@font-face']['font-family'] = '"Luciole"';
-                $css_main_array[1]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Luciole-Regular-Italic.ttf") format("truetype")';
-                $css_main_array[1]['@font-face']['font-style']  = 'italic';
-                $css_main_array[1]['@font-face']['font-weight'] = '400';
-
-                $css_main_array[2]['@font-face']['font-family'] = '"Luciole"';
-                $css_main_array[2]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Luciole-Bold.ttf") format("truetype")';
-                $css_main_array[2]['@font-face']['font-style']  = 'normal';
-                $css_main_array[2]['@font-face']['font-weight'] = '700';
-
-                $css_main_array[3]['@font-face']['font-family'] = '"Luciole"';
-                $css_main_array[3]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Luciole-Bold-Italic.ttf") format("truetype")';
-                $css_main_array[3]['@font-face']['font-style']  = 'italic';
-                $css_main_array[3]['@font-face']['font-weight'] = '700';
-            }
-        }
-
-        // Font antialiasing.
-        if (isset($_POST['global_font_antialiasing']) && $_POST['global_font_antialiasing'] === '1') {
-            $css_root_array['body']['-moz-osx-font-smoothing'] = 'grayscale';
-            $css_root_array['body']['-webkit-font-smoothing']  = 'antialiased';
-            $css_root_array['body']['font-smooth']             = 'always';
-
-            $css_media_contrast_array['body']['-moz-osx-font-smoothing'] = 'unset';
-            $css_media_contrast_array['body']['-webkit-font-smoothing']  = 'unset';
-            $css_media_contrast_array['body']['font-smooth']             = 'unset';
-
-            $css_media_print_array['body']['-moz-osx-font-smoothing'] = 'unset';
-            $css_media_print_array['body']['-webkit-font-smoothing']  = 'unset';
-            $css_media_print_array['body']['font-smooth']             = 'unset';
-        }
-
-        // Primary color.
-        $primary_colors_allowed = ['gray', 'green', 'red'];
-
-        $primary_colors = [
-            'light' => [
-                'gray'  => [
-                    'h' => '0',
-                    's' => '0%',
-                    'l' => '10%'
-                ],
-                'green' => [
-                    'h' => '120',
-                    's' => '75%',
-                    'l' => '30%'
-                ],
-                'red'   => [
-                    'h' => '0',
-                    's' => '90%',
-                    'l' => '45%'
-                ]
-            ],
-            'light-amplified' => [
-                'gray'  => [
-                    'l' => '28%'
-                ],
-                'green' => [
-                    's' => '60%',
-                    'l' => '40%'
-                ],
-                'red'   => [
-                    's' => '100%',
-                    'l' => '55%'
-                ]
-            ],
-            'dark' => [
-                'gray'  => [
-                    'h' => '0%',
-                    'l' => '99%'
-                ],
-                'green' => [
-                    's' => '60%',
-                    'l' => '80%'
-                ],
-                'red'   => [
-                    's' => '70%',
-                    'l' => '85%'
-                ]
-            ],
-            'dark-amplified' => [
-                'gray'  => [
-                    'l' => '80%'
-                ],
-                'green' => [
-                    's' => '50%',
-                    'l' => '60%'
-                ],
-                'red'   => [
-                    'l' => '70%'
-                ]
-            ]
-        ];
-
-        if (isset($_POST['global_color_primary']) && in_array($_POST['global_color_primary'], $primary_colors_allowed, true)) {
-
-            // Light.
-            $css_root_array[':root']['--color-primary-h-custom'] = $primary_colors['light'][$_POST['global_color_primary']]['h'];
-            $css_root_array[':root']['--color-primary-s-custom'] = $primary_colors['light'][$_POST['global_color_primary']]['s'];
-            $css_root_array[':root']['--color-primary-l-custom'] = $primary_colors['light'][$_POST['global_color_primary']]['l'];
-
-            // Light & amplified.
-            if (isset($primary_colors['light-amplified'][$_POST['global_color_primary']]['s'])) {
-                $css_root_array[':root']['--color-primary-amplified-s-custom'] = $primary_colors['light-amplified'][$_POST['global_color_primary']]['s'];
-            }
-
-            if (isset($primary_colors['light-amplified'][$_POST['global_color_primary']]['l'])) {
-                $css_root_array[':root']['--color-primary-amplified-l-custom'] = $primary_colors['light-amplified'][$_POST['global_color_primary']]['l'];
-            }
-
-            // Dark.
-            if (isset($primary_colors['dark'][$_POST['global_color_primary']]['h'])) {
-                $css_root_array[':root']['--color-primary-dark-h-custom'] = $primary_colors['dark'][$_POST['global_color_primary']]['h'];
-            }
-
-            if (isset($primary_colors['dark'][$_POST['global_color_primary']]['s'])) {
-                $css_root_array[':root']['--color-primary-dark-s-custom'] = $primary_colors['dark'][$_POST['global_color_primary']]['s'];
-            }
-
-            if (isset($primary_colors['dark'][$_POST['global_color_primary']]['l'])) {
-                $css_root_array[':root']['--color-primary-dark-l-custom'] = $primary_colors['dark'][$_POST['global_color_primary']]['l'];
-            }
-
-            // Dark & amplified.
-            if (isset($primary_colors['dark-amplified'][$_POST['global_color_primary']]['s'])) {
-                $css_root_array[':root']['--color-primary-dark-amplified-s-custom'] = $primary_colors['dark-amplified'][$_POST['global_color_primary']]['s'];
-            }
-
-            if (isset($primary_colors['dark-amplified'][$_POST['global_color_primary']]['l'])) {
-                $css_root_array[':root']['--color-primary-dark-amplified-l-custom'] = $primary_colors['dark-amplified'][$_POST['global_color_primary']]['l'];
-            }
-        }
-
-        // Background color.
-        $background_colors_allowed = ['beige', 'blue', 'gray', 'green', 'red'];
-
-        $background_colors = [
-            'beige' => [
-                'h' => '45',
-                's' => '65%',
-                'l' => '96%'
-            ],
-            'blue'  => [
-                'h' => '226',
-                's' => '100%',
-                'l' => '98%'
-            ],
-            'gray'  => [
-                'h' => '0',
-                's' => '0%',
-                'l' => '97%'
-            ],
-            'green' => [
-                'h' => '105',
-                's' => '90%',
-                'l' => '98%'
-            ],
-            'red'   => [
-                'h' => '0',
-                's' => '90%',
-                'l' => '98%'
-            ]
-        ];
-
-        if (isset($_POST['global_color_background']) && in_array($_POST['global_color_background'], $background_colors_allowed, true)) {
-
-            // Main background.
-            if (isset($background_colors[$_POST['global_color_background']]['h'])) {
-                $css_root_array[':root']['--color-background-h-custom'] = $background_colors[$_POST['global_color_background']]['h'];
-            }
-
-            if (isset($background_colors[$_POST['global_color_background']]['s'])) {
-                $css_root_array[':root']['--color-background-s-custom'] = $background_colors[$_POST['global_color_background']]['s'];
-            }
-
-            if (isset($background_colors[$_POST['global_color_background']]['l'])) {
-                $css_root_array[':root']['--color-background-l-custom'] = $background_colors[$_POST['global_color_background']]['l'];
-            }
-
-            $css_root_array[':root']['--color-input-background'] = '#fff';
-        }
-
-        // Transitions.
-        if (isset($_POST['global_css_transition']) && $_POST['global_css_transition'] === '1') {
-            $css_main_array['a']['transition'] = 'all .2s ease-in-out';
-
-            $css_main_array['a:active, a:hover']['transition'] = 'all .2s ease-in-out';
-
-            $css_main_array['input[type="submit"], .form-submit, .button']['transition'] = 'all .2s ease-in-out';
-
-            $css_main_array['input[type="submit"]:hover, .button:hover, .form-submit:hover']['transition'] = 'all .2s ease-in-out';
-
-            $css_media_motion_array['a']['transition'] = 'unset';
-
-            $css_media_motion_array['a:active, a:hover']['transition'] = 'unset';
-
-            $css_media_motion_array['input[type="submit"], .form-submit, .button']['transition'] = 'unset';
-
-            $css_media_motion_array['input[type="submit"]:hover, .button:hover, .form-submit:hover']['transition'] = 'unset';
-        }
-
-        // Links underline.
-        if (isset($_POST['global_css_links_underline']) && $_POST['global_css_links_underline'] === '1') {
-            $css_root_array[':root']['--link-text-decoration']       = 'underline';
-            $css_root_array[':root']['--link-text-decoration-style'] = 'dotted';
-
-            $css_root_array['.button']['text-decoration']       = 'none';
-            $css_root_array['.button']['text-decoration-style'] = 'none';
-        }
-
-        // Border radius.
-        if (isset($_POST['global_css_border_radius']) && $_POST['global_css_border_radius'] === '1') {
-            $css_root_array[':root']['--border-radius'] = '.168rem';
-        }
-
-        // JS.
-        if (isset($_POST['global_js']) && $_POST['global_js'] === '1') {
-            if (isset($_POST['content_trackback_link']) && $_POST['content_trackback_link'] === '1') {
-                $css_main_array['#trackback-url']['color']                 = 'var(--color-primary)';
-                $css_main_array['#trackback-url']['text-decoration']       = 'var(--link-text-decoration, none)';
-                $css_main_array['#trackback-url']['text-decoration-style'] = 'var(--link-text-decoration-style, unset)';
-
-                $css_main_array['#trackback-url:is(:active, :focus, :hover)']['cursor']                = 'pointer';
-                $css_main_array['#trackback-url:is(:active, :focus, :hover)']['filter']                = 'brightness(1.25)';
-                $css_main_array['#trackback-url:is(:active, :focus, :hover)']['text-decoration']       = 'underline';
-                $css_main_array['#trackback-url:is(:active, :focus, :hover)']['text-decoration-style'] = 'solid';
-
-                $css_main_array['#trackback-url-copied']['display'] = 'none';
-
-                $css_media_contrast_array['#trackback-url:is(:active, :focus, :hover)']['background-color'] = 'var(--color-text-main)';
-                $css_media_contrast_array['#trackback-url:is(:active, :focus, :hover)']['color']            = 'var(--color-background)';
-                $css_media_contrast_array['#trackback-url:is(:active, :focus, :hover)']['outline']          = '.168rem solid var(--color-text-main)';
-                $css_media_contrast_array['#trackback-url:is(:active, :focus, :hover)']['text-decoration']  = 'none';
-            }
-        }
-
-        // Header banner
-        if (isset($_POST['header_image']) && $_POST['header_image'] !== '') {
-            $css_main_array['#site-image']['width'] = '100%';
-
-            $css_media_contrast_array['#site-image a']['outline'] = 'inherit';
-
-            if (isset($_POST['global_css_border_radius']) && $_POST['global_css_border_radius'] === '1') {
-                $css_main_array['#site-image img']['border-radius'] = 'var(--border-radius)';
-            }
-
-            if (isset($header_image_width) && $header_image_width >= 100) {
-                $css_main_array['#site-image img']['width'] = '100%';
-            }
-        }
-
-        // Blog description.
-        if (isset($_POST['header_description']) && $_POST['header_description'] === '1') {
-            $css_main_array['#site-identity']['align-items'] = 'center';
-            $css_main_array['#site-identity']['column-gap']  = '.5rem';
-            $css_main_array['#site-identity']['display']     = 'flex';
-            $css_main_array['#site-identity']['flex-wrap']   = 'wrap';
-            $css_main_array['#site-identity']['row-gap']     = '.5rem';
-
-            $css_main_array['#site-description']['font-size']   = '.8em';
-            $css_main_array['#site-description']['font-style']  = 'italic';
-            $css_main_array['#site-description']['font-weight'] = 'normal';
-            $css_main_array['#site-description']['margin']      = '0';
-        }
-
-        // Content font family.
-        if (isset($_POST['content_text_font']) && $_POST['content_text_font'] !== 'same' && $_POST['global_font_family'] !== $_POST['content_text_font']) {
-            if ($_POST['content_text_font'] === 'sans-serif') {
-                $css_root_array[':root']['--font-family-content'] = '-apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Arial, sans-serif';
-            } elseif ($_POST['content_text_font'] === 'serif') {
-                $css_main_array[':root']['--font-family-content'] = '"Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
-            } elseif ($_POST['content_text_font'] === 'monospace') {
-                $css_main_array[':root']['--font-family-content'] = 'Menlo, Consolas, Monaco, "Liberation Mono", "Lucida Console", monospace';
-            } elseif ($_POST['content_text_font'] === 'sans-serif-browser') {
-                $css_main_array[':root']['--font-family-content'] = 'sans-serif';
-            } elseif ($_POST['content_text_font'] === 'serif-browser') {
-                $css_main_array[':root']['--font-family-content'] = 'serif';
-            } elseif ($_POST['content_text_font'] === 'monospace-browser') {
-                $css_main_array[':root']['--font-family-content'] = 'monospace';
-            } elseif ($_POST['content_text_font'] === 'atkinson') {
-                $themes_url = dcCore::app()->blog->settings->system->themes_url;
-
-                $css_main_array[4]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                $css_main_array[4]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("woff2")';
-                $css_main_array[4]['@font-face']['font-style']  = 'normal';
-                $css_main_array[4]['@font-face']['font-weight'] = '400';
-
-                $css_main_array[5]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                $css_main_array[5]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Atkinson-Hyperlegible-Italic-102a.woff2") format("woff2")';
-                $css_main_array[5]['@font-face']['font-style']  = 'italic';
-                $css_main_array[5]['@font-face']['font-weight'] = '400';
-
-                $css_main_array[6]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                $css_main_array[6]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("woff2")';
-                $css_main_array[6]['@font-face']['font-style']  = 'normal';
-                $css_main_array[6]['@font-face']['font-weight'] = '700';
-
-                $css_main_array[7]['@font-face']['font-family'] = '"Atkinson Hyperlegible"';
-                $css_main_array[7]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("woff2")';
-                $css_main_array[7]['@font-face']['font-style']  = 'italic';
-                $css_main_array[7]['@font-face']['font-weight'] = '700';
-
-                $css_root_array[':root']['--font-family-content'] = '"Atkinson Hyperlegible", sans-serif';
-            } elseif ($_POST['content_text_font'] === 'eb-garamond') {
-                $themes_url = dcCore::app()->blog->settings->system->themes_url;
-
-                $css_main_array[4]['@font-face']['font-family'] = '"EB Garamond"';
-                $css_main_array[4]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/EBGaramond-Regular.ttf") format("truetype")';
-                $css_main_array[4]['@font-face']['font-style']  = 'normal';
-                $css_main_array[4]['@font-face']['font-weight'] = '400';
-
-                $css_main_array[5]['@font-face']['font-family'] = '"EB Garamond"';
-                $css_main_array[5]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/EBGaramond-Italic.ttf") format("truetype")';
-                $css_main_array[5]['@font-face']['font-style']  = 'italic';
-                $css_main_array[5]['@font-face']['font-weight'] = '400';
-
-                $css_main_array[6]['@font-face']['font-family'] = '"EB Garamond"';
-                $css_main_array[6]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/EBGaramond-Bold.ttf") format("truetype")';
-                $css_main_array[6]['@font-face']['font-style']  = 'normal';
-                $css_main_array[6]['@font-face']['font-weight'] = '700';
-
-                $css_main_array[7]['@font-face']['font-family'] = '"EB Garamond"';
-                $css_main_array[7]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/EBGaramond-BoldItalic.ttf") format("truetype")';
-                $css_main_array[7]['@font-face']['font-style']  = 'italic';
-                $css_main_array[7]['@font-face']['font-weight'] = '700';
-
-                $css_root_array[':root']['--font-family-content'] = '"EB Garamond", serif';
-            } elseif ($_POST['content_text_font'] === 'luciole') {
-                $themes_url = dcCore::app()->blog->settings->system->themes_url;
-
-                $css_main_array[4]['@font-face']['font-family'] = '"Luciole"';
-                $css_main_array[4]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Luciole-Regular.ttf") format("truetype")';
-                $css_main_array[4]['@font-face']['font-style']  = 'normal';
-                $css_main_array[4]['@font-face']['font-weight'] = '400';
-
-                $css_main_array[5]['@font-face']['font-family'] = '"Luciole"';
-                $css_main_array[5]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Luciole-Regular-Italic.ttf") format("truetype")';
-                $css_main_array[5]['@font-face']['font-style']  = 'italic';
-                $css_main_array[5]['@font-face']['font-weight'] = '400';
-
-                $css_main_array[6]['@font-face']['font-family'] = '"Luciole"';
-                $css_main_array[6]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Luciole-Bold.ttf") format("truetype")';
-                $css_main_array[6]['@font-face']['font-style']  = 'normal';
-                $css_main_array[6]['@font-face']['font-weight'] = '700';
-
-                $css_main_array[7]['@font-face']['font-family'] = '"Luciole"';
-                $css_main_array[7]['@font-face']['src']         = 'url("' . $themes_url . '/odyssey/fonts/Luciole-Bold-Italic.ttf") format("truetype")';
-                $css_main_array[7]['@font-face']['font-style']  = 'italic';
-                $css_main_array[7]['@font-face']['font-weight'] = '700';
-
-                $css_root_array[':root']['--font-family-content'] = 'Luciole, sans-serif';
-            }
-        }
-
-        // Line Height
-        $line_height_allowed = [125, 175];
-
-        if (isset($_POST['content_line_height']) && in_array((int) $_POST['content_line_height'], $line_height_allowed, true)) {
-            $css_root_array[':root']['--text-line-height'] = (int) $_POST['content_line_height'] / 100;
-        }
-
-        // Text align
-        if (isset($_POST['content_text_align']) && ($_POST['content_text_align'] === 'justify' || $_POST['content_text_align'] === 'justify_not_mobile')) {
-            $css_root_array[':root']['--text-align'] = 'justify';
-
-            $css_media_contrast_array[':root']['--text-align'] = 'left';
-
-            if ($_POST['content_text_align'] === 'justify_not_mobile') {
-                $css_media_array[':root']['--text-align'] = 'left';
-            }
-        }
-
-        // Hyphenation.
-        if (isset($_POST['content_hyphens']) && $_POST['content_hyphens'] !== 'disabled') {
-            $css_main_array['.content-text']['-webkit-hyphens'] = 'auto';
-            $css_main_array['.content-text']['-ms-hyphens']     = 'auto';
-            $css_main_array['.content-text']['hyphens']         = 'auto';
-
-            $css_main_array['.content-text']['-webkit-hyphenate-limit-chars'] = '5 2 2';
-            $css_main_array['.content-text']['-moz-hyphenate-limit-chars']    = '5 2 2';
-            $css_main_array['.content-text']['-ms-hyphenate-limit-chars']     = '5 2 2';
-            $css_main_array['.content-text']['hyphenate-limit-chars']         = '5 2 2';
-
-            $css_main_array['.content-text']['-webkit-hyphenate-limit-lines'] = '2';
-            $css_main_array['.content-text']['-moz-hyphenate-limit-lines']    = '2';
-            $css_main_array['.content-text']['-ms-hyphenate-limit-lines']     = '2';
-            $css_main_array['.content-text']['hyphenate-limit-lines']         = '2';
-
-            $css_main_array['.content-text']['-webkit-hyphenate-limit-last'] = 'always';
-            $css_main_array['.content-text']['-moz-hyphenate-limit-last']    = 'always';
-            $css_main_array['.content-text']['-ms-hyphenate-limit-last']     = 'always';
-            $css_main_array['.content-text']['hyphenate-limit-last']         = 'always';
-
-            $css_media_contrast_array['.content-text']['-webkit-hyphens'] = 'unset';
-            $css_media_contrast_array['.content-text']['-ms-hyphens']     = 'unset';
-            $css_media_contrast_array['.content-text']['hyphens']         = 'unset';
-
-            $css_media_contrast_array['.content-text']['-webkit-hyphenate-limit-chars'] = 'unset';
-            $css_media_contrast_array['.content-text']['-moz-hyphenate-limit-chars']    = 'unset';
-            $css_media_contrast_array['.content-text']['-ms-hyphenate-limit-chars']     = 'unset';
-            $css_media_contrast_array['.content-text']['hyphenate-limit-chars']         = 'unset';
-
-            $css_media_contrast_array['.content-text']['-webkit-hyphenate-limit-lines'] = 'unset';
-            $css_media_contrast_array['.content-text']['-moz-hyphenate-limit-lines']    = 'unset';
-            $css_media_contrast_array['.content-text']['-ms-hyphenate-limit-lines']     = 'unset';
-            $css_media_contrast_array['.content-text']['hyphenate-limit-lines']         = 'unset';
-
-            $css_media_contrast_array['.content-text']['-webkit-hyphenate-limit-last'] = 'unset';
-            $css_media_contrast_array['.content-text']['-moz-hyphenate-limit-last']    = 'unset';
-            $css_media_contrast_array['.content-text']['-ms-hyphenate-limit-last']     = 'unset';
-            $css_media_contrast_array['.content-text']['hyphenate-limit-last']         = 'unset';
-
-            if ($_POST['content_hyphens'] === 'enabled_not_mobile') {
-                $css_media_array['.content-text']['-webkit-hyphens'] = 'unset';
-                $css_media_array['.content-text']['-ms-hyphens']     = 'unset';
-                $css_media_array['.content-text']['hyphens']         = 'unset';
-
-                $css_media_array['.content-text']['-webkit-hyphenate-limit-chars'] = 'unset';
-                $css_media_array['.content-text']['-moz-hyphenate-limit-chars']    = 'unset';
-                $css_media_array['.content-text']['-ms-hyphenate-limit-chars']     = 'unset';
-                $css_media_array['.content-text']['hyphenate-limit-chars']         = 'unset';
-
-                $css_media_array['.content-text']['-webkit-hyphenate-limit-lines'] = 'unset';
-                $css_media_array['.content-text']['-moz-hyphenate-limit-lines']    = 'unset';
-                $css_media_array['.content-text']['-ms-hyphenate-limit-lines']     = 'unset';
-                $css_media_array['.content-text']['hyphenate-limit-lines']         = 'unset';
-
-                $css_media_array['.content-text']['-webkit-hyphenate-limit-last'] = 'unset';
-                $css_media_array['.content-text']['-moz-hyphenate-limit-last']    = 'unset';
-                $css_media_array['.content-text']['-ms-hyphenate-limit-last']     = 'unset';
-                $css_media_array['.content-text']['hyphenate-limit-last']         = 'unset';
-            }
-        }
-
-        // Initial letter.
-        if (isset($_POST['content_initial_letter']) && $_POST['content_initial_letter'] === '1') {
-            $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['-moz-initial-letter']    = '2';
-            $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['-webkit-initial-letter'] = '2';
-            $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['initial-letter']         = '2';
-            $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['margin-right']           = '.25rem';
-        }
-
-        // Post introduction.
-        if (isset($_POST['content_post_intro']) && $_POST['content_post_intro'] === '1') {
-            $css_main_array['#post-intro']['border-block']  = '.063rem solid var(--color-border, #ccc)';
-            $css_main_array['#post-intro']['font-weight']   = '700';
-            $css_main_array['#post-intro']['margin-bottom'] = '2rem';
-
-            $css_main_array['#post-intro strong']['font-weight'] = '900';
-        }
-
-        // Post list appearence.
-        if (isset($_POST['content_post_list_type'])) {
-            if ($_POST['content_post_list_type'] === 'excerpt') {
-                $css_main_array['.entry-list-extended']['list-style'] = 'none';
-                $css_main_array['.entry-list-extended']['margin']     = '0';
-                $css_main_array['.entry-list-extended']['padding']    = '0';
-
-                $css_main_array['.entry-list-extended .post']['margin-bottom'] = '3rem';
-
-                $css_main_array['.entry-list-extended .post-selected']['padding'] = '1rem';
-
-                $css_main_array['.entry-list-extended .entry-title']['margin-block'] = '.5rem';
-
-                $css_main_array['.entry-list-extended .post-excerpt']['margin'] = '.5rem 0 0';
-            } elseif ($_POST['content_post_list_type'] === 'content') {
-                $css_main_array['.entry-list-content .post']['margin-bottom']  = '4rem';
-                $css_main_array['.entry-list-content .post']['border-bottom']  = '.063rem solid var(--color-border, #ccc)';
-                $css_main_array['.entry-list-content .post']['padding-bottom'] = '4rem';
-
-                $css_main_array['.entry-list-content .post:last-child']['margin-bottom'] = '0';
-
-                $css_main_array['.entry-list-content .entry-title']['font-size'] = '1.4em';
-            }
-        }
-
-        // Content links.
-        if (!isset($_POST['content_links_underline'])) {
-            $css_root_array[':root']['--content-link-text-decoration-line']      = 'none';
-            $css_root_array[':root']['--content-link-text-decoration-style']     = 'unset';
-            $css_root_array[':root']['--content-link-text-decoration-thickness'] = '.063rem';
-        }
-
-        // Link to reactions in the post list.
-        if (isset($_POST['content_post_list_reaction_link']) && $_POST['content_post_list_reaction_link'] !== 'disabled') {
-            $css_main_array['.entry-list .post']['flex-wrap'] = 'wrap';
-
-            $css_main_array['.post-reaction-link']['color'] = 'var(--color-text-secondary, #6c6f78)';
-
-            if (!isset($_POST['content_post_list_type']) || (isset($_POST['content_post_list_type']) && $_POST['content_post_list_type'] !== 'excerpt')) {
-                $css_main_array['.post-reaction-link-container']['flex-basis'] = '100%';
-
-                $css_media_array['.post-reaction-link-container']['order'] = '3';
-            } else {
-                $css_main_array['.post-reaction-link-container']['display']    = 'inline-block';
-                $css_main_array['.post-reaction-link-container']['flex-basis'] = '100%';
-                $css_main_array['.post-reaction-link-container']['margin-top'] = '.5rem';
-            }
-        }
-
-        // Hide comment form.
-        if (isset($_POST['content_commentform_hide']) && $_POST['content_commentform_hide'] === '1') {
-            $css_main_array['#react-content']['margin-top'] = '1rem';
-        }
-
-        // Private comments.
-        if (isset($_POST['content_post_email_author']) && $_POST['content_post_email_author'] !== 'disabled') {
-            $css_main_array['.comment-private']['margin-bottom'] = '2rem';
-        }
-
-        // Sets the order of the blog elements.
-        $structure_order = [2 => '',];
-
-        if (isset($_POST['widgets_nav_position']) && $_POST['widgets_nav_position'] === 'header_content') {
-            $structure_order[2] = '--order-widgets-nav';
-        }
-
-        if ($structure_order[2] === '') {
-            $structure_order[2] = '--order-content';
-        } else {
-            $structure_order[] = '--order-content';
-        }
-
-        if (isset($_POST['widgets_nav_position']) && $_POST['widgets_nav_position'] === 'content_footer') {
-            $structure_order[] = '--order-widgets-nav';
-        }
-
-        if (isset($_POST['widgets_extra_enabled']) && $_POST['widgets_extra_enabled'] === '1') {
-            $structure_order[] = '--order-widgets-extra';
-        }
-
-        if (isset($_POST['footer_enabled']) && $_POST['footer_enabled'] === '1') {
-            $structure_order[] = '--order-footer';
-        }
-
-        if (array_search('--order-content', $structure_order) !== 2) {
-            $css_root_array[':root']['--order-content'] = array_search('--order-content', $structure_order);
-        }
-
-        if (in_array('--order-widgets-nav', $structure_order, true) && array_search('--order-widgets-nav', $structure_order) !== 3) {
-            $css_root_array[':root']['--order-widgets-nav'] = array_search('--order-widgets-nav', $structure_order);
-        }
-
-        if (in_array('--order-widgets-extra', $structure_order, true) && array_search('--order-widgets-extra', $structure_order) !== 4) {
-            $css_root_array[':root']['--order-widgets-extra'] = array_search('--order-widgets-extra', $structure_order);
-        }
-
-        if (in_array('--order-footer', $structure_order, true) && array_search('--order-footer', $structure_order) !== 5) {
-            $css_root_array[':root']['--order-footer'] = array_search('--order-footer', $structure_order);
-        }
-
-        // Social links.
-        $social_sites = odysseySettings::socialSites();
-
-        $display_social_links = false;
-
-        foreach ($social_sites as $site_id) {
-            if (isset($_POST['footer_social_links_' . $site_id]) && $_POST['footer_social_links_' . $site_id] !== '') {
-                $display_social_links = true;
-
-                break;
-            }
-        }
-
-        if (isset($_POST['footer_enabled']) && $_POST['footer_enabled'] === '1' && $display_social_links === true) {
-            $css_main_array['.footer-social-links']['margin-bottom'] = '1rem';
-
-            $css_main_array['.footer-social-links ul']['list-style']                 = 'none';
-            $css_main_array['.footer-social-links ul']['margin']                     = '0';
-            $css_main_array['.footer-social-links ul']['padding-left']               = '0';
-            $css_main_array['.footer-social-links ul li']['display']                 = 'inline-block';
-            $css_main_array['.footer-social-links ul li']['margin']                  = '.25em';
-            $css_main_array['.footer-social-links ul li:first-child']['margin-left'] = '0';
-            $css_main_array['.footer-social-links ul li:last-child']['margin-right'] = '0';
-
-            $css_main_array['.footer-social-links a']['display'] = 'inline-block';
-
-            $css_main_array['.footer-social-links-icon-container']['align-items']      = 'center';
-            $css_main_array['.footer-social-links-icon-container']['background-color'] = 'var(--color-primary)';
-            $css_main_array['.footer-social-links-icon-container']['border-radius']    = 'var(--border-radius, unset)';
-            $css_main_array['.footer-social-links-icon-container']['display']          = 'flex';
-            $css_main_array['.footer-social-links-icon-container']['height']           = '1.5rem';
-            $css_main_array['.footer-social-links-icon-container']['justify-content']  = 'center';
-            $css_main_array['.footer-social-links-icon-container']['width']            = '1.5rem';
-
-            $css_main_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['background-color'] = 'var(--color-primary-amplified)';
-
-            $css_main_array['.footer-social-links-icon']['fill']            = 'var(--color-background, #fcfcfd)';
-            $css_main_array['.footer-social-links-icon']['stroke']          = 'none';
-            $css_main_array['.footer-social-links-icon']['width']           = '1rem';
-
-            if (isset($_POST['global_css_transition']) && $_POST['global_css_transition'] === '1') {
-                $css_main_array['.footer-social-links-icon-container']['transition'] = 'all .2s ease-in-out';
-
-                $css_main_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['transition'] = 'all .2s ease-in-out';
-            }
-
-            $css_media_contrast_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['background-color'] = 'var(--color-background)';
-            $css_media_contrast_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['color']            = 'var(--color-text-main)';
-            $css_media_contrast_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['outline']          = '.168rem solid var(--color-text-main)';
-
-            $css_media_contrast_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon']['fill'] = 'var(--color-text-main)';
-        }
-
-        $css .= !empty($css_root_array) ? odysseyUtils::stylesArrayToString($css_root_array) : '';
-        $css .= !empty($css_root_media_array) ? '@media (prefers-color-scheme:dark){' . odysseyUtils::stylesArrayToString($css_root_media_array) . '}' : '';
-        $css .= !empty($css_main_array) ? odysseyUtils::stylesArrayToString($css_main_array) : '';
-        $css .= !empty($css_supports_initial_letter_array) ? '@supports (initial-letter: 2) or (-webkit-initial-letter: 2) or (-moz-initial-letter: 2){' . odysseyUtils::stylesArrayToString($css_supports_initial_letter_array) . '}' : '';
-        $css .= !empty($css_media_array) ? '@media (max-width:34em){' . odysseyUtils::stylesArrayToString($css_media_array) . '}' : '';
-        $css .= !empty($css_media_contrast_array) ? '@media (prefers-contrast:more),(-ms-high-contrast:active),(-ms-high-contrast:black-on-white){' . odysseyUtils::stylesArrayToString($css_media_contrast_array) . '}' : '';
-        $css .= !empty($css_media_motion_array) ? '@media (prefers-reduced-motion:reduce){' . odysseyUtils::stylesArrayToString($css_media_motion_array) . '}' : '';
-        $css .= !empty($css_media_print_array) ? '@media print{' . odysseyUtils::stylesArrayToString($css_media_print_array) . '}' : '';
-
-        if (!empty($css)) {
-            return [
-                'value' => str_replace('&gt;', ">", htmlspecialchars($css, ENT_NOQUOTES)),
-                'type'  => 'string'
-            ];
-        }
-
-        return [];
-    }
-
-    /**
-     * Displays each parameter according to its type.
-     *
-     * @param strong $setting_id The id of the setting to display.
-     *
-     * @return void The parameter.
-     */
-    public static function settingRendering($setting_id = '')
-    {
-        $default_settings = odysseySettings::default();
-        $saved_settings   = odysseySettings::saved();
-
-        if ($setting_id && array_key_exists($setting_id, $default_settings)) {
-            echo '<p id=', $setting_id, '-input>';
-
-            // Displays the default value of the parameter if it is not defined.
-            if (isset($saved_settings[$setting_id])) {
-                $setting_value = $saved_settings[$setting_id];
-            } else {
-                $setting_value = isset($default_settings[$setting_id]['default'])
-                ? $default_settings[$setting_id]['default']
-                : '';
-            }
-
-            $social_setting_error = false;
-
-            if (str_starts_with($setting_id, 'footer_social_links_')) {
-                if (is_array($setting_value)) {
-                    if (isset($setting_value['valid']) && $setting_value['valid'] !== true) {
-                        $social_setting_error = true;
-                    }
-
-                    $setting_value = $setting_value['data'];
-                }
-            }
-
-            // Particular value for X to render.
-            if ($setting_id === 'footer_social_links_x' && $setting_value) {
-                $setting_value = str_replace('https://twitter.com/', '@', $setting_value);
-            }
-
-            switch ($default_settings[$setting_id]['type']) {
-                case 'checkbox' :
-                    echo Form::checkbox(
-                        $setting_id,
-                        true,
-                        $setting_value
-                    ),
-                    '<label class=classic for=', $setting_id, '>',
-                    $default_settings[$setting_id]['title'],
-                    '</label>';
-
-                    break;
-
-                case 'select' :
-                case 'select_int' :
-                    echo '<label for=', $setting_id, '>',
-                    $default_settings[$setting_id]['title'],
-                    '</label>',
-                    Form::combo(
-                        $setting_id,
-                        $default_settings[$setting_id]['choices'],
-                        strval($setting_value)
-                    );
-
-                    break;
-
-                case 'textarea' :
-                    $placeholder = isset($default_settings[$setting_id]['placeholder'])
-                    ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"'
-                    : '';
-
-                    echo '<label for=', $setting_id, '>',
-                    $default_settings[$setting_id]['title'],
-                    '</label>',
-                    Form::textArea(
-                        $setting_id,
-                        60,
-                        3,
-                        $setting_value,
-                        '',
-                        '',
-                        false,
-                        $placeholder
-                    );
-
-                    break;
-
-                case 'image' :
-                    $placeholder = isset($default_settings[$setting_id]['placeholder'])
-                    ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"'
-                    : '';
-
-                    if (!empty($setting_value) && $setting_value['url'] !== '') {
-                        $image_src = $setting_value['url'];
-                    } else {
-                        $image_src = '';
-                    }
-
-                    echo '<label for=', $setting_id, '>',
-                    $default_settings[$setting_id]['title'],
-                    '</label>',
-                    Form::field(
-                        $setting_id,
-                        30,
-                        255,
-                        $image_src,
-                        '',
-                        '',
-                        false,
-                        $placeholder
-                    );
-
-                    break;
-
-                default :
-                    $placeholder = isset($default_settings[$setting_id]['placeholder'])
-                    ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"'
-                    : '';
-
-                    $class = '';
-
-                    if ($social_setting_error === true) {
-                        $class = 'form-field-error';
-
-                        $setting_value = [
-                            'default' => $setting_value,
-                            'extra_html' => 'class=' . $class . ' data-odyssey-value="' . $setting_value . '"'
-                        ];
-                    }
-
-                    echo '<label for=', $setting_id, '>',
-                    $default_settings[$setting_id]['title'],
-                    '</label>',
-                    Form::field(
-                        $setting_id,
-                        30,
-                        255,
-                        $setting_value,
-                        $class,
-                        '',
-                        false,
-                        $placeholder
-                    );
-
-                    break;
-            }
-
-            echo '</p>';
-
-            if ($social_setting_error === true) {
-                echo '<p class=form-note-error id=', $setting_id ,'_error>',
-                __('settings-error'),
-                '</p>';
-            }
-
-            // Displays the description of the parameter as a note.
-            if ($default_settings[$setting_id]['type'] === 'checkbox' || (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '')) {
-                echo '<p class=form-note id=', $setting_id, '-description>',
-                $default_settings[$setting_id]['description'];
-
-                // If the parameter is a checkbox, displays its default value as a note.
-                if ($default_settings[$setting_id]['type'] === 'checkbox') {
-                    if ($default_settings[$setting_id]['default'] === 1) {
-                        echo ' ', __('settings-default-checked');
-                    } else {
-                        echo ' ', __('settings-default-unchecked');
-                    }
-                }
-
-                echo '</p>';
-            }
-
-            // Header image.
-            if ($setting_id === 'header_image') {
-                if (!empty($setting_value) && isset($setting_value['url'])) {
-                    $image_src = $setting_value['url'];
-                } else {
-                    $image_src = '';
-                }
-
-                echo '<img alt="', __('header-image-preview-alt'), '" id=', $setting_id, '-src src="', $image_src, '">';
-
-                if (isset($saved_settings['header_image2x'])) {
-                    echo '<p id=', $setting_id, '-retina>',
-                    __('header-image-retina-ready'),
-                    '</p>';
-                }
-
-                echo Form::hidden('header_image-url', $image_src);
-            }
-        }
-    }
-
-    /**
-     * Displays the theme configuration page.
-     *
-     * @return void
-     */
-    public static function render(): void
-    {
-        if (!static::$init) {
-            return;
-        }
-
-        /*
-        Page::openModule(
-            My::name(),
-            Page::jsPageTabs(dcCore::app()->admin->part)
-        );
-
-        echo Notices::getNotices() .
-        '<div id=section-global class="multi-part" title="Global Settings">' .
-        '<div id=section-header class="multi-part" title="Header Settings">' .
-        '<h3 class="out-of-screen-if-js">' . sprintf(__('Settings for %s'), Html::escapeHTML(dcCore::app()->blog->name)) . '</h3>';
-
-        Page::closeModule();
-        */
-
-        /**
-         * Creates a table that contains all the parameters and their titles according to the following pattern:
-         *
-         * $sections_with_settings_id = [
-         *     'section_1_id' => [
-         *         'sub_section_1_id' => ['setting_1_id', 'option_2_id'],
-         *         'sub_section_2_id' => …
-         *     ]
-         * ];
-         */
-        $sections_with_settings_id = [];
-
-        $sections = odysseySettings::sections();
-        $settings = odysseySettings::default();
-
-        // Puts titles in the setting array.
-        foreach ($sections as $section_id => $section_data) {
-            $sections_with_settings_id[$section_id] = [];
-        }
-
-        // Puts all settings in their section.
-        foreach ($settings as $setting_id => $setting_data) {
-            $ignored_settings = ['header_image2x', 'global_css_custom_mini', 'styles'];
-
-            if (!in_array($setting_id, $ignored_settings, true)) {
-                // If a sub-section is set.
-                if (isset($setting_data['section'][1])) {
-                    $sections_with_settings_id[$setting_data['section'][0]][$setting_data['section'][1]][] = $setting_id;
-                } else {
-                    $sections_with_settings_id[$setting_data['section'][0]][] = $setting_id;
-                }
-            }
-        }
-
-        // Removes the titles if they are not associated with any parameter.
-        $sections_with_settings_id = array_filter($sections_with_settings_id);
-        ?>
-
-        <form action="<?php echo dcCore::app()->adminurl->get('admin.blog.theme', ['module' => 'odyssey', 'conf' => '1']); ?>" enctype=multipart/form-data id=theme-config-form method=post>
-            <?php
-            // Displays the title of each section and places the corresponding parameters under each one.
-            foreach ($sections_with_settings_id as $section_id => $section_data) {
-                echo '<h3 id=section-', $section_id, '>',
-                $sections[$section_id]['name'],
-                '</h3>',
-                '<div class=fieldset>';
-
-                foreach ($section_data as $sub_section_id => $setting_id) {
-                    // Displays the name of the sub-section unless its ID is "no-title".
-                    if ($sub_section_id !== 'no-title') {
-                        echo '<h4 id=section-', $section_id, '-', $sub_section_id, '>',
-                        $sections[$section_id]['sub_sections'][$sub_section_id],
-                        '</h4>';
-                    }
-
-                    // Displays the parameter.
-                    foreach ($setting_id as $setting_id_value) {
-                        self::settingRendering($setting_id_value);
-                    }
-                }
-
-                echo '</div>';
-            }
-
-            echo Form::hidden('page_width_em_default', '30');
-            echo Form::hidden('page_width_px_default', '480');
-            ?>
-
-            <p>
-                <details id=odyssey-message-js>
-                    <summary><?php echo __('settings-scripts-title'); ?></summary>
-
-                    <div class=warning-msg>
-                        <p><?php echo __('settings-scripts-message-intro'); ?></p>
-
-                        <p>
-                            <?php
-                            printf(
-                                __('settings-scripts-message-csp'),
-                                __('settings-scripts-message-csp-href'),
-                                __('settings-scripts-message-csp-title')
-                            );
-                            ?>
-                        </p>
-
-                        <p><?php echo __('settings-scripts-message-hash-intro'); ?></p>
-
-                        <?php
-                        /**
-                         * Displays the list of script hashes if they are loaded.
-                         *
-                         * @see /_prepend.php
-                         */
-                        if (dcCore::app()->blog->settings->odyssey->js_hash) {
-                            $hashes = dcCore::app()->blog->settings->odyssey->js_hash;
-
-                            if (!empty($hashes)) {
-                                echo '<ul>';
-
-                                foreach ($hashes as $script_id => $hash) {
-                                    $hash = '<code>' . $hash . '</code>';
-
-                                    echo '<li id=hash-', $script_id, '>';
-
-                                    switch ($script_id) {
-                                        case 'searchform':
-                                            echo __('settings-scripts-message-hash-searchform'),
-                                            '<br>',
-                                            $hash;
-
-                                            break;
-                                        case 'trackbackurl':
-                                            echo __('settings-scripts-message-hash-trackbackurl'),
-                                            '<br>',
-                                            $hash;
-                                    }
-
-                                    echo '</li>';
-                                }
-
-                                echo '</ul>';
-                            }
-                        }
-                        ?>
-
-                        <p>
-                            <?php
-                            printf(
-                                __('settings-scripts-message-example'),
-                                'https://open-time.net/post/2022/08/15/CSP-mon-amour-en-public',
-                                'fr',
-                                'CSP mon amour en public'
-                            );
-                            ?>
-                        </p>
-
-                        <p><?php echo __('settings-scripts-message-note'); ?></p>
-                    </div>
-                </details>
-            </p>
-
-            <p>
-                <?php echo dcCore::app()->formNonce(); ?>
-
-                <input name=save type=submit value="<?php echo __('settings-save-button-text'); ?>">
-
-                <input class=delete name=reset value="<?php echo __('settings-reset-button-text'); ?>" type=submit>
-            </p>
-        </form>
-
-        <h3><?php echo __('config-about-title'); ?></h3>
-
-        <p><?php echo __('config-about-text'); ?></p>
-
-        <ul id=theme-config-links>
-            <li>
-                <a href="#" title="<?php echo __('config-link-github-title'); ?>">
-                    <svg class=theme-config-icon role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>
-                        <?php echo strip_tags(odysseyUtils::odysseySocialIcons('github'), '<path>'); ?>
-                    </svg>
-
-                    <?php echo __('config-link-github'); ?>
-                </a>
-            </li>
-
-            <li>
-                <a href="#" title="<?php echo __('config-link-dotclear-forum-title'); ?>">
-                    <svg class=theme-config-icon role=img viewBox="0 0 64 49" xmlns=http://www.w3.org/2000/svg>
-                        <path d="m41.106 51.828s-13.196 13.726-13.309 26.99c1.778 13.675 7.537 10.929 13.309 39.539 6.299-2.431 19.033-19.077 16.465-42.569-3.337-16.775-16.465-23.96-16.465-23.96" fill="#88c200" transform="matrix(.605548 .795809 .795809 -.605548 -55.6488 38.9583)"/><path d="m6.936 105.565s14.608-11.719 30.499-19.789c25.131-12.765 31.66-27.311 31.66-27.311s-7.264 13.608-32.395 26.372c-15.891 8.07-30.499 19.789-30.499 19.789z" fill="#676e78" transform="translate(-6.201 -56.844)">
-                    </svg>
-
-                    <?php echo __('config-link-dotclear-forum'); ?>
-                </a>
-            </li>
-
-            <li>
-                <a href="#" title="<?php echo __('config-link-github-issues-title'); ?>">
-                    <svg class=theme-config-icon role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>
-                        <?php echo strip_tags(odysseyUtils::odysseySocialIcons('github'), '<path>'); ?>
-                    </svg>
-
-                    <?php echo __('config-link-github-issues'); ?>
-                </a>
-            </li>
-        </ul>
-
-        <?php
     }
 }
