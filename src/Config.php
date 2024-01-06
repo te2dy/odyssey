@@ -942,7 +942,6 @@ font-weight: normal";
         $data  = My::getContentWidth($unit, $value);
 
         if ($setting_id === 'global_unit' && isset($data['unit'])) {
-            var_dump("ok");
             return [
                 'value' => Html::escapeHTML($data['unit']),
                 'type'  => 'string'
