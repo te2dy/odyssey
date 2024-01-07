@@ -384,7 +384,7 @@ details summary {
 }
 #main-menu li {
   display: inline-block;
-  margin-right: .5em;
+  margin: 0 .5rem .5rem 0;
 }
 #main-menu li:last-child {
   margin-right: 0;
