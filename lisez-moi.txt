@@ -12,6 +12,10 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
+=== 0.9-beta - 7 janvier 2024 ===
+- Ajout : option pour afficher un extrait dans la liste des billets.
+- Correction : marges insuffisantes du menu de navigation sur mobile.
+
 === 0.8-beta - 6 janvier 2024 ===
 - Modification : nouvel ensemble de polices d’écriture avec aperçu depuis le configurateur.
 - Correction : affichage de la liste des billets sur mobile.
