@@ -252,6 +252,15 @@ msgstr ""
 msgid "settings-header-imagedescription-description"
 msgstr ""
 
+msgid "settings-content-postlisttype-title"
+msgstr "Apparence"
+
+msgid "settings-content-postlisttype-oneline-default"
+msgstr ""
+
+msgid "settings-content-postlisttype-excerpt"
+msgstr ""
+
 msgid "settings-content-postlistaltcolor-title"
 msgstr ""
 

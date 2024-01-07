@@ -410,7 +410,8 @@ details summary {
 /**
  * Post list.
  */
-.entry-list {
+.entry-list,
+.entry-list-excerpt {
   list-style: none;
   margin: 0;
   padding: 0;

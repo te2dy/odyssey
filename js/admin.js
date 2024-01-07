@@ -12,6 +12,14 @@ function disableInputs() {
     document.getElementById("header_image_description-description").style.display = "none";
   }
 
+  if (document.getElementById("content_postlist_type").value !== "excerpt") {
+    document.getElementById("content_postlist_thumbnail-input").style.display       = "block";
+    document.getElementById("content_postlist_thumbnail-description").style.display = "block";
+  } else {
+    document.getElementById("content_postlist_thumbnail-input").style.display       = "none";
+    document.getElementById("content_postlist_thumbnail-description").style.display = "none";
+  }
+
   if (!document.getElementById("footer_enabled").checked) {
     document.getElementById("footer_credits-input").style.display               = "none";
     document.getElementById("footer_credits-description").style.display         = "none";

@@ -34,10 +34,12 @@ class Config extends Process
 
     /**
      * Processes the request(s).
+     *
+     * @return bool
      */
     public static function process(): bool
     {
-        // Loads custon styles for the configurator page.
+        // Loads custom styles and scripts for the configurator page.
         App::behavior()->addBehavior(
             'adminPageHTMLHead',
             function () {
@@ -657,11 +659,22 @@ font-weight: normal";
             */
         }
 
+        // Post list type
+        if (isset($_POST['content_postlist_type']) && $_POST['content_postlist_type'] === 'excerpt') {
+            $css_main_array['.entry-list-excerpt .post']['margin-inline'] = '-1rem';
+            $css_main_array['.entry-list-excerpt .post']['padding']       = '1rem';
+
+            $css_main_array['.entry-list-excerpt .entry-title']['font-size']    = '1.1rem';
+            $css_main_array['.entry-list-excerpt .entry-title']['margin-block'] = '.5rem';
+
+            $css_main_array['.entry-list-excerpt .post-excerpt']['margin-block'] = '.5rem';
+        }
+
         // Alternate post color
         if (isset($_POST['content_postlist_altcolor']) && $_POST['content_postlist_altcolor'] === '1') {
             $css_root_dark_array[':root']['--color-background-even'] = '#000';
 
-            $css_main_array['.entry-list .post:nth-child(even)']['background-color'] = 'var(--color-background-even, #fff)';
+            $css_main_array[':is(.entry-list, .entry-list-excerpt) .post:nth-child(even)']['background-color'] = 'var(--color-background-even, #fff)';
         }
 
         // Content font family

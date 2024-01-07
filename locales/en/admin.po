@@ -252,6 +252,15 @@ msgstr "Header image description"
 msgid "settings-header-imagedescription-description"
 msgstr "Useful for accessibility."
 
+msgid "settings-content-postlisttype-title"
+msgstr "Appearance"
+
+msgid "settings-content-postlisttype-oneline-default"
+msgstr "Title and date on a single line (default)"
+
+msgid "settings-content-postlisttype-excerpt"
+msgstr "Title, date and post excerpt"
+
 msgid "settings-content-postlistaltcolor-title"
 msgstr "Alternate colors for links to posts"
 

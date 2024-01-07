@@ -252,6 +252,15 @@ msgstr "Description de l’image d’en-tête"
 msgid "settings-header-imagedescription-description"
 msgstr "Utile pour l’accessibilité."
 
+msgid "settings-content-postlisttype-title"
+msgstr "Apparence"
+
+msgid "settings-content-postlisttype-oneline-default"
+msgstr "Titre et date sur une ligne (par défaut)"
+
+msgid "settings-content-postlisttype-excerpt"
+msgstr "Titre, date et extrait du billet"
+
 msgid "settings-content-postlistaltcolor-title"
 msgstr "Alterner la couleur des liens vers les billets"
 

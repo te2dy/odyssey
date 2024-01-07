@@ -222,7 +222,7 @@ class My extends MyTheme
             'type'        => 'select',
             'choices'     => [
                 __('settings-header-imageposition-top-default') => 'top',
-                __('settings-header-imageposition-bottom')      => 'bottom',
+                __('settings-header-imageposition-bottom')      => 'bottom'
             ],
             'default'     => 'top',
             'section'     => ['header', 'image']
@@ -234,6 +234,18 @@ class My extends MyTheme
             'type'        => 'text',
             'default'     => '',
             'section'     => ['header', 'image']
+        ];
+
+        $default_settings['content_postlist_type'] = [
+            'title'       => __('settings-content-postlisttype-title'),
+            'description' => '',
+            'type'        => 'select',
+            'choices'     => [
+                __('settings-content-postlisttype-oneline-default') => 'one-line',
+                __('settings-content-postlisttype-excerpt')         => 'excerpt',
+            ],
+            'default'     => 'one-line',
+            'section'     => ['content', 'postlist']
         ];
 
         $default_settings['content_postlist_altcolor'] = [

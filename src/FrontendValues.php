@@ -128,6 +128,21 @@ class FrontendValues
     }
 
     /**
+     * Loads the right entry-list template based on theme settings.
+     * Default: one-line
+     *
+     * @return void The entry-list template.
+     */
+    public static function odysseyPostListType()
+    {
+        if (My::settingValue('content_postlist_type') !== 'excerpt') {
+            return App::frontend()->template()->includeFile(['src' => '_entry-list.html']);
+        }
+
+        return App::frontend()->template()->includeFile(['src' => '_entry-list-excerpt.html']);
+    }
+
+    /**
      * Displays a thumbnail in the post list of the first image found in each post.
      *
      * This function replaces the tag {{tpl:EntryFirstImage}} that should have been put
@@ -164,9 +179,69 @@ class FrontendValues
         ?>';
     }
 
+    /**
+     * Returns an excerpt of the post for the entry-list-extended template.
+     *
+     * Gets the excerpt defined by the author or, if it does not exists,
+     * an excerpt from the content.
+     *
+     * @param array $attr Modifying attributes.
+     *
+     * @return void The entry excerpt.
+     */
+    public static function odysseyEntryExcerpt($attr)
+    {
+        return '<?php
+            $the_excerpt = "";
+
+            if (' . sprintf(App::frontend()->template()->getFilters($attr), 'App::frontend()->context()->posts->getExcerpt()') . ') {
+                $the_excerpt = ' . sprintf(App::frontend()->template()->getFilters($attr), 'App::frontend()->context()->posts->getExcerpt()') . ';
+
+                $the_excerpt = Html::clean($the_excerpt);
+                $the_excerpt = Html::decodeEntities($the_excerpt);
+                $the_excerpt = preg_replace("/\s+/", " ", $the_excerpt);
+            } else {
+                $the_excerpt = ' . sprintf(App::frontend()->template()->getFilters($attr), 'App::frontend()->context()->posts->getContent()') . ';
+
+                $the_excerpt = Html::clean($the_excerpt);
+                $the_excerpt = Html::decodeEntities($the_excerpt);
+                $the_excerpt = preg_replace("/\s+/", " ", $the_excerpt);
+
+                if (strlen($the_excerpt) > 200) {
+                    $the_excerpt  = substr($the_excerpt, 0, 200);
+                    $the_excerpt  = preg_replace("/[^a-z0-9]+\Z/i", "", $the_excerpt);
+                    $the_excerpt .= "…";
+                }
+            }
+
+            if ($the_excerpt) {
+                if (App::frontend()->context()->posts->post_lang === App::blog()->settings->system->lang) {
+                    $lang = "";
+                } else {
+                    $lang = " lang=" . App::frontend()->context()->posts->post_lang;
+                }
+
+                echo "<p class=\"content-text post-excerpt text-secondary\"" . $lang . ">",
+                $the_excerpt,
+                // " <a aria-label=\"", sprintf(__("entry-list-open-aria"), App::frontend()->context()->posts->post_title), "\" href=\"", App::frontend()->context()->posts->getURL(), "\">" . __("entry-list-open"), "</a>",
+                "</p>";
+            }
+        ?>';
+    }
+
     public static function odysseyPostListReactions(): string
     {
         if (My::settingValue('content_postlist_reactions') === true) {
+            $separator = '';
+            $tag_open  = '<div class=post-list-reaction-link><small>';
+            $tag_close = '</small></div>';
+
+            if (My::settingValue('content_postlist_type') === 'excerpt') {
+                $separator = '| ';
+                $tag_open  = '';
+                $tag_close = '';
+            }
+
             return '<?php
             $nb_reactions = (int) App::frontend()->context()->posts->nb_comment + (int) App::frontend()->context()->posts->nb_trackback;
 
@@ -174,7 +249,7 @@ class FrontendValues
                 $reaction_text  = (string) $nb_reactions . " reaction";
                 $reaction_text .= $nb_reactions > 1 ? "s" : "";
 
-                echo "<div class=post-list-reaction-link><small><a href=\"" .  App::frontend()->context()->posts->getURL() . "#' . __('reactions-id') . '\">" . $reaction_text . "</a></small></div>";
+                echo "' . $separator . $tag_open . '<a href=\"" .  App::frontend()->context()->posts->getURL() . "#' . __('reactions-id') . '\">" . $reaction_text . "</a>' . $tag_close . '";
             }
             ?>';
         }
