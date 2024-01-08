@@ -595,6 +595,20 @@ class Config extends Process
             $css_main_array[':is(.entry-list, .entry-list-excerpt) .post:nth-child(even)']['background-color'] = 'var(--color-background-even, #fff)';
         }
 
+        // Post thumbnail
+        if (isset($_POST['content_postlist_thumbnail']) && $_POST['content_postlist_thumbnail'] === '1') {
+            $css_main_array['.entry-list-img']['aspect-ratio'] = '1/1';
+            $css_main_array['.entry-list-img']['height']       = 'auto';
+            $css_main_array['.entry-list-img']['object-fit']   = 'cover';
+            $css_main_array['.entry-list-img']['overflow']     = 'hidden';
+            $css_main_array['.entry-list-img']['width']        = '2rem';
+        }
+
+        // Link to reactions
+        if (isset($_POST['content_postlist_reactions']) && $_POST['content_postlist_reactions'] === '1') {
+            $css_main_array['.post-list-reaction-link']['margin-top'] = '.25rem';
+        }
+
         // Content font family
         if (isset($_POST['content_text_font']) && $_POST['content_text_font'] !== 'same' && $_POST['global_font_family'] !== $_POST['content_text_font']) {
             $css_root_array[':root']['--font-family-content'] = My::fontStack($_POST['content_text_font']);
