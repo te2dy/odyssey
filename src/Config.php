@@ -122,7 +122,7 @@ class Config extends Process
                         if (!empty($setting_data)) {
                             $setting_value = isset($setting_data['value']) ? $setting_data['value'] : '';
                             $setting_type  = isset($setting_data['type']) ? $setting_data['type'] : '';
-                            $setting_label = My::settingsDefault($setting_id)['title'];
+                            $setting_label = Html::escapeHTML(My::settingsDefault($setting_id)['title']);
                             $setting_label = Html::clean($setting_label);
 
                             if ($setting_value !== '' && $setting_type !== '') {

@@ -328,7 +328,7 @@ msgid "settings-content-initialletter-description"
 msgstr "Ne fonctionne que sur des versions récentes de Safari et Chrome (janvier 2024)."
 
 msgid "settings-content-imageswide-title"
-msgstr "Agrandir les images suffisamment larges 🧪"
+msgstr "Agrandir les images suffisamment larges (bêta)"
 
 msgid "settings-content-imageswide-description"
 msgstr "Les grandes images dépasseront des bords de la page pour s’afficher en grand. ⚠️ Attention&nbsp;: cette fonctionnalité est expérimentale et pourrait mal fonctionner. N’hésitez pas à me faire part de vos retours par <a href=mailto:zozxebpyr@mozmail.com>courriel</a>."
