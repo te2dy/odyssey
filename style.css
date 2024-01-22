@@ -357,7 +357,8 @@ details summary {
   color: inherit;
 }
 #site-title a:is(:active, :focus, :hover) {
-  color: var(--color-primary-amplified, hsl(226, 95%, 50%));
+  background-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
+  color: var(--color-background, #fafafa);
 }
 #site-title a :is(h1, h4) {
   display: inline;
@@ -370,6 +371,7 @@ details summary {
 }
 #site-header-short #site-title:is(:active, :focus, :hover) {
   color: var(--color-primary-amplified, hsl(226, 95%, 50%));
+  color: var(--color-background, #fafafa);
 }
 #site-header-short h4 {
   display: inline;
@@ -403,8 +405,9 @@ details summary {
     text-decoration: none;
   }
 }
-#main-menu .active a:is(:focus-visible) {
-  text-decoration: none;
+#main-menu .active a:focus {
+  border-bottom: 0;
+  padding-bottom: 0;
 }
 
 /**
@@ -624,6 +627,9 @@ aside .widget:last-child {
   margin-bottom: 0;
 }
 
+/**
+ * Screen size adaptations
+ */
 @media all and (max-width: 34em) {
   #site {
     margin-block: 2rem;
