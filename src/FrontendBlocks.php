@@ -41,7 +41,7 @@ class FrontendBlocks
      */
     public static function odysseyCommentFormWrapper($attr, $content): string
     {
-        if (My::settingValue('reactions_button') !== false) {
+        if (My::settingValue('reactions_button') !== false && (isset(App::frontend()->context()->comment_preview['content']) && App::frontend()->context()->comment_preview['content'] === '')) {
             return '<details id=reactions-react-button><summary class=button>' . __('reactions-react-link-title') . '</summary><div id=react-content>' . $content . '</div></details>';
         }
 
