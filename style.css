@@ -354,9 +354,12 @@ details summary {
   margin-bottom: 0;
 }
 #site-title a {
-  color: inherit;
+  color: var(--color-text-main, #303030);
 }
 #site-title a:is(:active, :focus, :hover) {
+  color: var(--color-primary-amplified, hsl(226, 95%, 50%));
+}
+#site-title a:is(:focus-visible) {
   background-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
   color: var(--color-background, #fafafa);
 }
@@ -371,7 +374,11 @@ details summary {
 }
 #site-header-short #site-title:is(:active, :focus, :hover) {
   color: var(--color-primary-amplified, hsl(226, 95%, 50%));
+  background-color: var(--color-background, #fafafa);
+}
+#site-header-short #site-title:is(:focus-visible) {
   color: var(--color-background, #fafafa);
+  background-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
 }
 #site-header-short h4 {
   display: inline;
