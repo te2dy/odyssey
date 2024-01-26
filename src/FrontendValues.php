@@ -38,7 +38,7 @@ class FrontendValues
     public static function odysseyMetaDescriptionHome($attr): string
     {
         if (My::settingValue('advanced_meta_description')) {
-            return '<?php echo ' . sprintf(App::frontend()->template()->getFilters($attr), 'dcCore::app()->blog->settings->odyssey->advanced_meta_description') . '; ?>';
+            return '<?php echo ' . sprintf(App::frontend()->template()->getFilters($attr), 'App::blog()->settings->odyssey->advanced_meta_description') . '; ?>';
         }
 
         return '<?php echo ' . sprintf(App::frontend()->template()->getFilters($attr), 'App::blog()->desc') . '; ?>';
@@ -256,7 +256,33 @@ class FrontendValues
 
         return '';
     }
-    
+
+    /**
+     * Displays a link to reply to the author of the post by email.
+     *
+     * @return string The private comment section.
+     */
+    public static function odysseyPrivateCommentLink()
+    {
+        if (My::settingValue('reactions_private_comment') !== 'disabled') {
+            return '<?php
+            if (isset(App::frontend()->context()->posts->user_email) && App::frontend()->context()->posts->user_email && (App::blog()->settings->odyssey->reactions_private_comment === "always" || (App::blog()->settings->odyssey->reactions_private_comment === "comments_open" && App::frontend()->context()->posts->post_open_comment === true))
+            ) {
+
+                $body = "' . __('reactions-comment-private-body-post-url') . ' " . App::frontend()->context()->posts->getURL();
+            ?>
+                <div class="comment-private form-entry">
+                    <h3 class=reaction-title>' . __('reactions-comment-private-title') . '</h3>
+
+                    <p>
+                        <a class=button href="mailto:<?php echo urlencode(App::frontend()->context()->posts->user_email); ?>?subject=<?php echo htmlentities("' . __("reactions-comment-private-email-prefix") . ' " . App::frontend()->context()->posts->post_title . "&body=" . $body); ?>">' . __('reactions-comment-private-button-text') . '</a>
+                    </p>
+                </div>
+            <?php }
+            ?>';
+        }
+    }
+
     /**
      * Displays a title for attachments.
      * 

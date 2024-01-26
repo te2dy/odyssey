@@ -342,6 +342,21 @@ msgstr "Permet d’alléger visuellement les pages du blog."
 msgid "settings-reactions-markdownnotice-title"
 msgstr "Afficher un message signalant la prise en charge du balisage Markdown"
 
+msgid "settings-reactions-privatecomment-title"
+msgstr "Commentaires privés"
+
+msgid "settings-reactions-privatecomment-description"
+msgstr "Si cette option est activée, <strong>l’adresse électronique des auteurs sera rendue publique</strong>. Si vous préférez ne pas révéler leur adresse, essayez <a href=%s>l’extension Signal</a>."
+
+msgid "settings-reactions-privatecomment-no-default"
+msgstr "Désactivés (par défaut)"
+
+msgid "settings-reactions-privatecomment-open"
+msgstr "Activés, seulement quand les commentaires sont ouverts"
+
+msgid "settings-reactions-privatecomment-always"
+msgstr "Toujours activés"
+
 msgid "settings-widgets-display-title"
 msgstr "Activer les widgets (volets de navigation et d’extra)"
 

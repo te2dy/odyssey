@@ -705,6 +705,12 @@ class Config extends Process
             $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['margin-right'] = '.25rem';
         }
 
+        // Private comments
+        if (isset($_POST['reactions_private_comment']) && $_POST['reactions_private_comment'] !== 'disabled') {
+            $css_main_array['#react-content .comment-private']['margin-top']      = '2rem';
+            $css_main_array['#react-content .comment-private p']['margin-bottom'] = '0';
+        }
+
         $css  = !empty($css_root_array) ? My::stylesArrToStr($css_root_array) : '';
         $css .= !empty($css_root_dark_array) ? '@media (prefers-color-scheme:dark){' . My::stylesArrToStr($css_root_dark_array) . '}' : '';
         $css .= !empty($css_main_array) ? My::stylesArrToStr($css_main_array) : '';

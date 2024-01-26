@@ -342,6 +342,21 @@ msgstr ""
 msgid "settings-reactions-markdownnotice-title"
 msgstr ""
 
+msgid "settings-reactions-privatecomment-title"
+msgstr ""
+
+msgid "settings-reactions-privatecomment-description"
+msgstr ""
+
+msgid "settings-reactions-privatecomment-no-default"
+msgstr ""
+
+msgid "settings-reactions-privatecomment-open"
+msgstr ""
+
+msgid "settings-reactions-privatecomment-always"
+msgstr ""
+
 msgid "settings-widgets-display-title"
 msgstr ""
 

@@ -222,7 +222,7 @@ msgid "reactions-comment-private-body-post-url"
 msgstr "URL of the post:"
 
 msgid "reactions-comment-private-button-text"
-msgstr "Reply to the author by email"
+msgstr "Reply by email"
 
 msgid "reactions-comment-private-email-prefix"
 msgstr "Re:"

@@ -342,6 +342,21 @@ msgstr "Allows you to visually lighten the blog pages."
 msgid "settings-reactions-markdownnotice-title"
 msgstr "Show a message about Markdown markup support"
 
+msgid "settings-content-privatecomment-title"
+msgstr "Private comments"
+
+msgid "settings-reactions-privatecomment-description"
+msgstr "If this option is enabled, <strong>the authors' email address will be made public</strong>. If you prefer not to reveal their address, try <a href=%s>the Signal plugin</a>."
+
+msgid "settings-reactions-privatecomment-no-default"
+msgstr "Disabled (default)"
+
+msgid "settings-reactions-privatecomment-open"
+msgstr "Enabled, only when comments are open"
+
+msgid "settings-reactions-privatecomment-always"
+msgstr "Always enabled"
+
 msgid "settings-widgets-display-title"
 msgstr "Enable widgets (nav and extra panes)"
 

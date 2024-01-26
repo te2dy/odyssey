@@ -374,6 +374,25 @@ class My extends MyTheme
             ];
         }
 
+        if (App::plugins()->moduleExists('signal')) {
+            $plugin_signal_url = App::backend()->url()->get('admin.blog.pref') . '#params.signal';
+        } else {
+            $plugin_signal_url = App::backend()->url()->get('admin.plugins', ['m_search' => 'signal']) . '#new';
+        }
+
+        $default_settings['reactions_private_comment'] = [
+            'title'       => __('settings-reactions-privatecomment-title'),
+            'description' => sprintf(__('settings-reactions-privatecomment-description'), $plugin_signal_url),
+            'type'        => 'select',
+            'choices'     => [
+                __('settings-reactions-privatecomment-no-default') => 'disabled',
+                __('settings-reactions-privatecomment-open')       => 'comments_open',
+                __('settings-reactions-privatecomment-always')     => 'always'
+            ],
+            'default'     => 'disabled',
+            'section'     => ['reactions', 'no-title']
+        ];
+
         $default_settings['widgets_display'] = [
             'title'       => __('settings-widgets-display-title'),
             'description' => __('settings-widgets-display-description'),
