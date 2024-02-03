@@ -442,6 +442,9 @@ class Config extends Process
         $css_main_array                    = [];
         $css_supports_initial_letter_array = [];
         $css_media_array                   = [];
+        $css_media_contrast_array          = [];
+        $css_media_motion_array            = [];
+        $css_media_print_array             = [];
 
         $default_settings = My::settingsDefault();
 
@@ -479,7 +482,6 @@ class Config extends Process
             $css_main_array['body']['-webkit-font-smoothing']  = 'antialiased';
             $css_main_array['body']['font-smooth']             = 'always';
 
-            /*
             $css_media_contrast_array['body']['-moz-osx-font-smoothing'] = 'unset';
             $css_media_contrast_array['body']['-webkit-font-smoothing']  = 'unset';
             $css_media_contrast_array['body']['font-smooth']             = 'unset';
@@ -487,7 +489,6 @@ class Config extends Process
             $css_media_print_array['body']['-moz-osx-font-smoothing'] = 'unset';
             $css_media_print_array['body']['-webkit-font-smoothing']  = 'unset';
             $css_media_print_array['body']['font-smooth']             = 'unset';
-            */
         }
 
         // Primary color.
@@ -542,15 +543,7 @@ class Config extends Process
         if (isset($_POST['global_css_transition']) && $_POST['global_css_transition'] === '1') {
             $css_root_array[':root']['--color-transition'] = 'all .2s ease-in-out';
 
-            /*
-            $css_media_motion_array['a']['transition'] = 'unset';
-
-            $css_media_motion_array['a:active, a:hover']['transition'] = 'unset';
-
-            $css_media_motion_array['input[type="submit"], .form-submit, .button']['transition'] = 'unset';
-
-            $css_media_motion_array['input[type="submit"]:hover, .button:hover, .form-submit:hover']['transition'] = 'unset';
-            */
+            $css_media_motion_array[':root']['--color-transition'] = 'unset';
         }
 
         // Header alignment
@@ -564,9 +557,9 @@ class Config extends Process
         if (isset($_POST['header_image']) && $_POST['header_image'] !== '') {
             $css_main_array['#site-image']['width'] = '100%';
 
-            /*
             $css_media_contrast_array['#site-image a']['outline'] = 'inherit';
 
+            /*
             if (isset($_POST['global_css_border_radius']) && $_POST['global_css_border_radius'] === '1') {
                 $css_main_array['#site-image img']['border-radius'] = 'var(--border-radius)';
             }
@@ -619,10 +612,16 @@ class Config extends Process
             switch ($_POST['content_text_align']) {
                 case 'justify' :
                     $css_root_array[':root']['--text-align'] = 'justify';
+
+                    $css_media_contrast_array[':root']['--text-align'] = 'left';
+
                     break;
                 case 'justify-not-mobile' :
                     $css_root_array[':root']['--text-align']  = 'justify';
+
                     $css_media_array[':root']['--text-align'] = 'left';
+
+                    $css_media_contrast_array[':root']['--text-align'] = 'left';
             }
         }
 
@@ -654,7 +653,6 @@ class Config extends Process
             $css_main_array['.content-text']['-ms-hyphenate-limit-last']     = 'always';
             $css_main_array['.content-text']['hyphenate-limit-last']         = 'always';
 
-            /*
             $css_media_contrast_array['.content-text']['-webkit-hyphens'] = 'unset';
             $css_media_contrast_array['.content-text']['-ms-hyphens']     = 'unset';
             $css_media_contrast_array['.content-text']['hyphens']         = 'unset';
@@ -673,7 +671,6 @@ class Config extends Process
             $css_media_contrast_array['.content-text']['-moz-hyphenate-limit-last']    = 'unset';
             $css_media_contrast_array['.content-text']['-ms-hyphenate-limit-last']     = 'unset';
             $css_media_contrast_array['.content-text']['hyphenate-limit-last']         = 'unset';
-            */
 
             if ($_POST['content_hyphens'] === 'enabled-not-mobile') {
                 $css_media_array['.content-text']['-webkit-hyphens'] = 'unset';
@@ -716,6 +713,9 @@ class Config extends Process
         $css .= !empty($css_main_array) ? My::stylesArrToStr($css_main_array) : '';
         $css .= !empty($css_supports_initial_letter_array) ? '@supports (initial-letter:2) or (-webkit-initial-letter:2) or (-moz-initial-letter:2){' . My::stylesArrToStr($css_supports_initial_letter_array) . '}' : '';
         $css .= !empty($css_media_array) ? '@media (max-width:34em){' . My::stylesArrToStr($css_media_array) . '}' : '';
+        $css .= !empty($css_media_contrast_array) ? '@media (prefers-contrast:more){' . My::stylesArrToStr($css_media_contrast_array) . '}' : '';
+        $css .= !empty($css_media_motion_array) ? '@media (prefers-reduced-motion:reduce){' . My::stylesArrToStr($css_media_motion_array) . '}' : '';
+        $css .= !empty($css_media_print_array) ? '@media print{' . My::stylesArrToStr($css_media_print_array) . '}' : '';
 
         $css = htmlspecialchars($css, ENT_NOQUOTES);
         $css = str_replace('&gt;', ">", $css);

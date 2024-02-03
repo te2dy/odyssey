@@ -9,6 +9,13 @@
   }
 }
 
+@media (prefers-contrast: more) {
+  :root {
+    --color-background: #fff;
+    --color-text-main: #000;
+  }
+}
+
 /**
  * Site structure and main elements.
  */
@@ -632,6 +639,16 @@ aside .widget:last-child {
 }
 #site-footer :is(.widget, .site-footer-block):last-child {
   margin-bottom: 0;
+}
+
+/**
+ * Accessibility
+ */
+@media (prefers-contrast: more) {
+  #site-header-short #site-title:is(:active, :focus, :hover) {
+    background-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
+    color: var(--color-background, #fafafa);
+  }
 }
 
 /**
