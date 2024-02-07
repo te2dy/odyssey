@@ -12,6 +12,13 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
+=== 0.10 – 7 février 2024 ===
+- Ajout : option pour envoyer des commentaires privés sur les billets et les pages.
+- Ajout : option pour modifier la taille de la police du contenu des billets et des pages.
+- Amélioration : dévoiler le formulaire de commentaire lors de la prévisualisation.
+- Correction : couleur des liens lors de la navigation par le clavier.
+- Correction : le texte pour afficher le nombre de réactions dans la liste des billets n’était par traduit.
+
 === 0.9-beta - 7 janvier 2024 ===
 - Ajout : option pour afficher un extrait dans la liste des billets.
 - Correction : marges insuffisantes du menu de navigation sur mobile.
