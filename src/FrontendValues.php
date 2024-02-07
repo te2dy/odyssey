@@ -246,8 +246,11 @@ class FrontendValues
             $nb_reactions = (int) App::frontend()->context()->posts->nb_comment + (int) App::frontend()->context()->posts->nb_trackback;
 
             if ($nb_reactions > 0) {
-                $reaction_text  = (string) $nb_reactions . " reaction";
-                $reaction_text .= $nb_reactions > 1 ? "s" : "";
+                if ($nb_reactions > 1) {
+                    $reaction_text = (string) sprintf("' . __("reactions-reactions-title-count-multiple") . '", $nb_reactions);
+                } else {
+                    $reaction_text = "' . __("reactions-reactions-title-count-one") . '";
+                }
 
                 echo "' . $separator . $tag_open . '<a href=\"" .  App::frontend()->context()->posts->getURL() . "#' . __('reactions-id') . '\">" . $reaction_text . "</a>' . $tag_close . '";
             }
