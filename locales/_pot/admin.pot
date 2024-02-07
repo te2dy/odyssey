@@ -282,6 +282,12 @@ msgstr ""
 msgid "settings-content-fontfamily-same-default"
 msgstr ""
 
+msgid "settings-content-fontsize-title"
+msgstr ""
+
+msgid "settings-content-fontsize-description"
+msgstr ""
+
 msgid "settings-content-lineheight-title"
 msgstr ""
 

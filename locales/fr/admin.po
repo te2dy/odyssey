@@ -282,6 +282,12 @@ msgstr "Police d’écriture"
 msgid "settings-content-fontfamily-same-default"
 msgstr "Identique à la police globale du thème (par défaut)"
 
+msgid "settings-content-fontsize-title"
+msgstr "Taille de la police"
+
+msgid "settings-content-fontsize-description"
+msgstr "Cette taille est relative à la taille principale."
+
 msgid "settings-content-lineheight-title"
 msgstr "Interligne"
 

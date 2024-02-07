@@ -282,6 +282,12 @@ msgstr "Fonts"
 msgid "settings-content-fontfamily-same-default"
 msgstr "Same as global theme font (default)"
 
+msgid "settings-content-fontsize-title"
+msgstr "Font size"
+
+msgid "settings-content-fontsize-description"
+msgstr "This size is relative to the main size."
+
 msgid "settings-content-lineheight-title"
 msgstr "Line spacing"
 

@@ -89,7 +89,7 @@ class My extends MyTheme
             'description' => __('settings-global-pagewidthvalue-description'),
             'type'        => 'integer',
             'default'     => '',
-            'placeholder' => !My::settingValue('global_unit') ? '30' : '480',
+            'placeholder' => !My::settingValue('global_unit') ? 30 : 480,
             'section'     => ['global', 'layout']
         ];
 
@@ -298,6 +298,21 @@ class My extends MyTheme
                 // __('settings-global-fontfamily-luciole')            => 'luciole'
             ],
             'default'     => 'same',
+            'section'     => ['content', 'text-formatting']
+        ];
+
+        $default_settings['content_font_size'] = [
+            'title'       => __('settings-content-fontsize-title'),
+            'description' => __('settings-content-fontsize-description'),
+            'type'        => 'select_int',
+            'choices'     => [
+                __('settings-global-fontsize-80')          => 80,
+                __('settings-global-fontsize-90')          => 90,
+                __('settings-global-fontsize-100-default') => 100,
+                __('settings-global-fontsize-110')         => 110,
+                __('settings-global-fontsize-120')         => 120
+            ],
+            'default'     => 100,
             'section'     => ['content', 'text-formatting']
         ];
 

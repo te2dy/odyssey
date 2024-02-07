@@ -186,6 +186,7 @@ h6 {
 }
 .content-text {
   font-family: var(--font-family-content, inherit);
+  font-size: var(--content-font-size, inherit);
   line-height: var(--text-line-height, 1.5);
   text-align: var(--text-align, left);
 }

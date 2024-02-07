@@ -607,6 +607,13 @@ class Config extends Process
             $css_root_array[':root']['--font-family-content'] = My::fontStack($_POST['content_text_font']);
         }
 
+        // Content font size
+        $font_size_allowed = [80, 90, 110, 120];
+
+        if (isset($_POST['content_font_size']) && in_array((int) $_POST['content_font_size'], $font_size_allowed, true)) {
+            $css_root_array[':root']['--content-font-size'] = My::removeZero($_POST['content_font_size'] / 100) . 'em';
+        }
+
         // Text align
         if (isset($_POST['content_text_align'])) {
             switch ($_POST['content_text_align']) {
@@ -901,7 +908,7 @@ class Config extends Process
 
         if ($setting_id === 'global_page_width_value' && isset($data['value'])) {
             return [
-                'value' => Html::escapeHTML($data['value']),
+                'value' => (int) $data['value'],
                 'type'  => 'integer'
             ];
         }
