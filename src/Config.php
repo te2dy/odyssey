@@ -243,7 +243,7 @@ class Config extends Process
 
             case 'image' :
                 $placeholder = isset($default_settings[$setting_id]['placeholder'])
-                ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"'
+                ? 'placeholder=' . My::attrValue($default_settings[$setting_id]['placeholder'])
                 : '';
 
                 if (!empty($setting_value) && $setting_value['url'] !== '') {
@@ -270,7 +270,7 @@ class Config extends Process
 
             case 'textarea' :
                 $placeholder = isset($default_settings[$setting_id]['placeholder'])
-                ? 'placeholder="' . $default_settings[$setting_id]['placeholder'] . '"'
+                ? 'placeholder=' . My::attrValue($default_settings[$setting_id]['placeholder'])
                 : '';
 
                 echo '<label for=', $setting_id, '>',
@@ -588,15 +588,6 @@ class Config extends Process
             $css_root_dark_array[':root']['--color-background-even'] = '#000';
 
             $css_main_array[':is(.entry-list, .entry-list-excerpt) .post:nth-child(even)']['background-color'] = 'var(--color-background-even, #fff)';
-        }
-
-        // Post thumbnail
-        if (isset($_POST['content_postlist_thumbnail']) && $_POST['content_postlist_thumbnail'] === '1') {
-            $css_main_array['.entry-list-img']['aspect-ratio'] = '1/1';
-            $css_main_array['.entry-list-img']['height']       = 'auto';
-            $css_main_array['.entry-list-img']['object-fit']   = 'cover';
-            $css_main_array['.entry-list-img']['overflow']     = 'hidden';
-            $css_main_array['.entry-list-img']['width']        = '2rem';
         }
 
         // Link to reactions
