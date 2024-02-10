@@ -54,7 +54,7 @@ class FrontendBlocks
      * @param array $attr    Unused.
      * @param void  $content The sidebar.
      *
-     * @return string The sidebar.
+     * @return mixed The sidebar.
      */
     public static function odysseySidebar($attr, $content): mixed
     {
@@ -71,7 +71,7 @@ class FrontendBlocks
      * @param array $attr    Unused.
      * @param void  $content The content of the footer.
      *
-     * @return string The footer.
+     * @return mixed The footer.
      */
     public static function odysseyFooter($attr, $content): mixed
     {

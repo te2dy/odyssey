@@ -57,9 +57,6 @@ class Config extends Process
                     /**
                      * This part saves each option in the database
                      * only if it is different than the default one.
-                     *
-                     * Custom styles to be inserted in the head of the blog
-                     * will be saved later.
                      */
                     foreach (My::settingsDefault() as $setting_id => $setting_data) {
                         $specific_settings = [
@@ -70,10 +67,11 @@ class Config extends Process
                             'styles'
                         ];
 
+                        // The value of the setting and its type.
                         $setting_data = [];
 
-                        // Saves non specific settings.
                         if (!in_array($setting_id, $specific_settings, true)) {
+                            // Saves non specific settings.
                             if (isset($_POST[$setting_id]) && $_POST[$setting_id] != My::settingsDefault($setting_id)['default']) {
                                 $setting_data = self::sanitizeSetting(
                                     My::settingsDefault($setting_id)['type'],
@@ -81,6 +79,7 @@ class Config extends Process
                                     $_POST[$setting_id]
                                 );
                             } elseif (!isset($_POST[$setting_id]) && My::settingsDefault($setting_id)['type'] === 'checkbox') {
+                                // Specific value for empty checkboxes to save.
                                 $setting_data = self::sanitizeSetting(
                                     My::settingsDefault($setting_id)['type'],
                                     $setting_id,
@@ -118,7 +117,7 @@ class Config extends Process
                             }
                         }
 
-                        // Saves the setting or drop it.
+                        // Saves the setting data or drop it.
                         if (!empty($setting_data)) {
                             $setting_value = isset($setting_data['value']) ? $setting_data['value'] : '';
                             $setting_type  = isset($setting_data['type']) ? $setting_data['type'] : '';
@@ -141,7 +140,7 @@ class Config extends Process
                         }
                     }
 
-                    // Refreshes blog.
+                    // Refreshes the blog.
                     App::blog()->triggerBlog();
 
                     // Resets template cache.
@@ -153,14 +152,16 @@ class Config extends Process
                     // Redirects to refresh form values.
                     App::backend()->url()->redirect('admin.blog.theme', ['conf' => '1']);
                 } elseif (isset($_POST['reset'])) {
-
-                    /**
-                     * Reset button has been clicked.
-                     * Drops all settings.
-                     */
+                    // Drops all settings if the reset button has been clicked.
                     foreach (My::settingsDefault() as $setting_id => $setting_value) {
                         App::blog()->settings->odyssey->drop($setting_id);
                     }
+
+                    // Refreshes the blog.
+                    App::blog()->triggerBlog();
+
+                    // Resets template cache.
+                    App::cache()->emptyTemplatesCache();
 
                     // Displays a success notice.
                     Notices::addSuccessNotice(__('settings-notice-reset'));
@@ -176,6 +177,13 @@ class Config extends Process
         return true;
     }
 
+    /**
+     * Renders the setting for the user in the configurato page.
+     *
+     * @param string $setting_id The id of the setting to display.
+     *
+     * @return void The setting.
+     */
     public static function settingRender($setting_id)
     {
         $default_settings = My::settingsDefault();
@@ -214,15 +222,21 @@ class Config extends Process
                     $setting_value
                 );
 
-                if ($setting_id === 'global_font_family') {
-                    echo '<p class=odyssey-font-preview id=odyssey-config-global-font-preview><strong>' . __('config-preview-font') . '</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean iaculis egestas sapien, at pretium erat interdum ullamcorper. Aliquam facilisis dolor sit amet nibh imperdiet vestibulum. Aenean et elementum magna, eget blandit arcu. Morbi tellus tortor, gravida vitae rhoncus nec, scelerisque vitae odio. In nulla mi, efficitur interdum scelerisque ac, ultrices non tortor.</p>';
-                } elseif ($setting_id === 'content_text_font') {
-                    if ($setting_value === 'same' && isset($saved_settings['global_font_family'])) {
-                        $attr = ' style=\'font-family:' . My::fontStack($saved_settings['global_font_family']) . '\';';
+                // Displays a preview for font changes.
+                if ($setting_id === 'global_font_family' || $setting_id === 'content_text_font') {
+                    $preview_string = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean iaculis egestas sapien, at pretium erat interdum ullamcorper. Aliquam facilisis dolor sit amet nibh imperdiet vestibulum. Aenean et elementum magna, eget blandit arcu. Morbi tellus tortor, gravida vitae rhoncus nec, scelerisque vitae odio. In nulla mi, efficitur interdum scelerisque ac, ultrices non tortor.';
+
+                    if ($setting_id === 'global_font_family') {
+                        echo '<p class=odyssey-font-preview id=odyssey-config-global-font-preview><strong>', __('config-preview-font'), '</strong> ', $preview_string,'</p>';
                     } else {
-                        $attr = '';
+                        if ($setting_value === 'same' && isset($saved_settings['global_font_family'])) {
+                            $attr = ' style="font-family:' . My::fontStack($saved_settings['global_font_family']) . '";';
+                        } else {
+                            $attr = '';
+                        }
+
+                        echo '<p class=odyssey-font-preview id=odyssey-config-content-font-preview', $attr, '><strong>', __('config-preview-font'), '</strong> ', $preview_string,'</p>';
                     }
-                    echo '<p class=odyssey-font-preview id=odyssey-config-content-font-preview' . $attr . '><strong>' . __('config-preview-font') . '</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean iaculis egestas sapien, at pretium erat interdum ullamcorper. Aliquam facilisis dolor sit amet nibh imperdiet vestibulum. Aenean et elementum magna, eget blandit arcu. Morbi tellus tortor, gravida vitae rhoncus nec, scelerisque vitae odio. In nulla mi, efficitur interdum scelerisque ac, ultrices non tortor.</p>';
                 }
 
                 break;
@@ -241,7 +255,7 @@ class Config extends Process
                 echo '<label for=', $setting_id, '>',
                 $default_settings[$setting_id]['title'],
                 '</label>',
-                Form::field(
+                form::field(
                     $setting_id,
                     30,
                     255,
@@ -262,7 +276,7 @@ class Config extends Process
                 echo '<label for=', $setting_id, '>',
                 $default_settings[$setting_id]['title'],
                 '</label>',
-                Form::textArea(
+                form::textArea(
                     $setting_id,
                     60,
                     3,
@@ -283,7 +297,7 @@ class Config extends Process
                 echo '<label for=', $setting_id, '>',
                 $default_settings[$setting_id]['title'],
                 '</label>',
-                Form::field(
+                form::field(
                     $setting_id,
                     30,
                     255,
@@ -330,7 +344,7 @@ class Config extends Process
                 '</p>';
             }
 
-            echo Form::hidden('header_image-url', $image_src);
+            echo form::hidden('header_image-url', $image_src);
         }
     }
 
@@ -351,7 +365,7 @@ class Config extends Process
                 } elseif (isset($setting_data['type']) && $setting_data['type'] === 'select_int') {
                     $saved_settings[$setting_id] = (int) App::blog()->settings->odyssey->$setting_id;
                 } else {
-                    $saved_settings[$setting_id] = App::blog()->settings->odyssey->$setting_id;
+                    $saved_settings[$setting_id] = (string) App::blog()->settings->odyssey->$setting_id;
                 }
             }
         }
@@ -431,9 +445,7 @@ class Config extends Process
     /**
      * Adds custom styles to the theme to apply the settings.
      *
-     * // @param int $header_image_width The width if the header image.
-     *
-     * @return void
+     * @return array The styles.
      */
     public static function saveStyles(): array
     {
@@ -558,16 +570,6 @@ class Config extends Process
             $css_main_array['#site-image']['width'] = '100%';
 
             $css_media_contrast_array['#site-image a']['outline'] = 'inherit';
-
-            /*
-            if (isset($_POST['global_css_border_radius']) && $_POST['global_css_border_radius'] === '1') {
-                $css_main_array['#site-image img']['border-radius'] = 'var(--border-radius)';
-            }
-
-            if (isset($header_image_width) && $header_image_width >= 100) {
-                $css_main_array['#site-image img']['width'] = '100%';
-            }
-            */
         }
 
         // Post list type
@@ -780,7 +782,7 @@ class Config extends Process
             }
         }
 
-        if ($setting_type === 'integer' && is_numeric($setting_value) && $setting_value != $default_settings[$setting_id]['default']) {
+        if ($setting_type === 'integer' && is_numeric($setting_value) && $setting_value !== $default_settings[$setting_id]['default']) {
             return [
                 'value' => (int) $setting_value,
                 'type'  => 'integer'
@@ -806,9 +808,14 @@ class Config extends Process
      *                       (inferior or equal to the page width).
      * 'max-height' => (int) The maximum height of the image.
      *
-     * @return void
+     * @param string $setting_id       The setting id.
+     * @param string $image_url        The image URL.
+     * @param string $page_width_unit  The page width unit (em or px).
+     * @param int    $page_width_value The page width value.
+     *
+     * @return array The image in an array.
      */
-    public static function sanitizeHeaderImage($setting_id, $image_url, $page_width_unit, $page_width_value)
+    public static function sanitizeHeaderImage($setting_id, $image_url, $page_width_unit, $page_width_value): array
     {
         $default_settings = My::settingsDefault();
         $image_url        = $image_url ?: '';

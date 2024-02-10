@@ -453,6 +453,7 @@ class FrontendBehaviors
 
                 return $matches[0];
             },
+
             $args[0]
         );
     }

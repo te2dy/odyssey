@@ -187,7 +187,7 @@ class FrontendValues
      *
      * @param array $attr Modifying attributes.
      *
-     * @return void The entry excerpt.
+     * @return The entry excerpt.
      */
     public static function odysseyEntryExcerpt($attr)
     {
@@ -229,6 +229,11 @@ class FrontendValues
         ?>';
     }
 
+    /**
+     * Displays a link to reactions in the post list.
+     *
+     * @return string The link.
+     */
     public static function odysseyPostListReactions(): string
     {
         if (My::settingValue('content_postlist_reactions') === true) {
@@ -263,7 +268,7 @@ class FrontendValues
     /**
      * Displays a link to reply to the author of the post by email.
      *
-     * @return string The private comment section.
+     * @return The private comment section.
      */
     public static function odysseyPrivateCommentLink()
     {
@@ -289,7 +294,7 @@ class FrontendValues
     /**
      * Displays a title for attachments.
      * 
-     * @return void The title.
+     * @return string The title.
      */
     public static function odysseyAttachmentTitle(): string
     {

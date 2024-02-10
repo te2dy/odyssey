@@ -15,6 +15,13 @@ use Dotclear\Helper\File\Files;
 
 class My extends MyTheme
 {
+    /**
+     * The sections of the theme configuration page.
+     *
+     * @param string $section_id The id of the section.
+     *
+     * @return array All the sections in an array.
+     */
     public static function settingsSections(string $section_id = ''): array
     {
         $sections = [
@@ -70,6 +77,13 @@ class My extends MyTheme
         return $sections;
     }
 
+    /**
+     * The settings of the theme configurator.
+     *
+     * @param string $setting_id The id of the setting.
+     *
+     * @return array The setting.
+     */
     public static function settingsDefault(string $setting_id = ''): array
     {
         $default_settings['global_unit'] = [
@@ -113,9 +127,6 @@ class My extends MyTheme
                 __('settings-global-fontfamily-antique')            => 'antique',
                 __('settings-global-fontfamily-didone')             => 'didone',
                 __('settings-global-fontfamily-handwritten')        => 'handwritten'
-                // __('settings-global-fontfamily-atkinson')          => 'atkinson',
-                // __('settings-global-fontfamily-ebgaramond')        => 'eb-garamond',
-                // __('settings-global-fontfamily-luciole')           => 'luciole'
             ],
             'default'     => 'sans-serif',
             'section'     => ['global', 'fonts']
@@ -293,9 +304,6 @@ class My extends MyTheme
                 __('settings-global-fontfamily-antique')            => 'antique',
                 __('settings-global-fontfamily-didone')             => 'didone',
                 __('settings-global-fontfamily-handwritten')        => 'handwritten'
-                // __('settings-global-fontfamily-atkinson')           => 'atkinson',
-                // __('settings-global-fontfamily-ebgaramond')         => 'eb-garamond',
-                // __('settings-global-fontfamily-luciole')            => 'luciole'
             ],
             'default'     => 'same',
             'section'     => ['content', 'text-formatting']
@@ -685,7 +693,7 @@ class My extends MyTheme
      *
      * @param string $fontname The name of the font to return the CSS rule.
      *
-     * @return The font rule.
+     * @return string The font rule.
      */
     public static function fontStack($fontname = ''): string
     {
