@@ -274,7 +274,7 @@ class FrontendValues
     {
         if (My::settingValue('reactions_private_comment') !== 'disabled') {
             return '<?php
-            if (isset(App::frontend()->context()->posts->user_email) && App::frontend()->context()->posts->user_email && (App::blog()->settings->odyssey->reactions_private_comment === "always" || (App::blog()->settings->odyssey->reactions_private_comment === "comments_open" && App::frontend()->context()->posts->post_open_comment === true))
+            if (isset(App::frontend()->context()->posts->user_email) && App::frontend()->context()->posts->user_email && (App::blog()->settings->odyssey->reactions_private_comment === "always" || (App::blog()->settings->odyssey->reactions_private_comment === "comments_open" && App::frontend()->context()->posts->post_open_comment === "1"))
             ) {
 
                 $body = "' . __('reactions-comment-private-body-post-url') . ' " . App::frontend()->context()->posts->getURL();
