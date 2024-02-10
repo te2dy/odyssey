@@ -192,7 +192,7 @@ function fontsPreview() {
 
   if (document.getElementById("content_text_font").value === "sans-serif") {
     document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "system-ui, sans-serif";
-  } else if (document.getElementById("global_font_family").value === "transitional") {
+  } else if (document.getElementById("content_text_font").value === "transitional") {
     document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "Charter, \"Bitstream Charter\", \"Sitka Text\", Cambria, serif";
   } else if (document.getElementById("content_text_font").value === "old-style") {
     document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "\"Iowan Old Style\", \"Palatino Linotype\", \"URW Palladio L\", P052, serif";
