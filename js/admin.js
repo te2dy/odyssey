@@ -23,33 +23,9 @@ function disableInputs() {
   if (!document.getElementById("footer_enabled").checked) {
     document.getElementById("footer_credits-input").style.display               = "none";
     document.getElementById("footer_credits-description").style.display         = "none";
-    /*
-    document.getElementById("section-footer-social-links").style.display        = "none";
-    document.getElementById("footer_social_links_diaspora-input").style.display = "none";
-    document.getElementById("footer_social_links_discord-input").style.display  = "none";
-    document.getElementById("footer_social_links_facebook-input").style.display = "none";
-    document.getElementById("footer_social_links_github-input").style.display   = "none";
-    document.getElementById("footer_social_links_mastodon-input").style.display = "none";
-    document.getElementById("footer_social_links_signal-input").style.display   = "none";
-    document.getElementById("footer_social_links_tiktok-input").style.display   = "none";
-    document.getElementById("footer_social_links_whatsapp-input").style.display = "none";
-    document.getElementById("footer_social_links_x-input").style.display        = "none";
-    */
   } else {
     document.getElementById("footer_credits-input").style.display               = "block";
     document.getElementById("footer_credits-description").style.display         = "block";
-    /*
-    document.getElementById("section-footer-social-links").style.display        = "block";
-    document.getElementById("footer_social_links_diaspora-input").style.display = "block";
-    document.getElementById("footer_social_links_discord-input").style.display  = "block";
-    document.getElementById("footer_social_links_facebook-input").style.display = "block";
-    document.getElementById("footer_social_links_github-input").style.display   = "block";
-    document.getElementById("footer_social_links_mastodon-input").style.display = "block";
-    document.getElementById("footer_social_links_signal-input").style.display   = "block";
-    document.getElementById("footer_social_links_tiktok-input").style.display   = "block";
-    document.getElementById("footer_social_links_whatsapp-input").style.display = "block";
-    document.getElementById("footer_social_links_x-input").style.display        = "block";
-    */
   }
 }
 
@@ -150,78 +126,36 @@ function changeImage() {
 }
 
 function fontsPreview() {
-  if (document.getElementById("content_text_font").value === 'same') {
-    document.getElementById("odyssey-config-content-font-preview").style.display = "none";
-  } else {
+  var fonts = {
+    "sans-serif": "system-ui, sans-serif",
+    "transitional": "Charter, \"Bitstream Charter\", \"Sitka Text\", Cambria, serif",
+    "old-style": "\"Iowan Old Style\", \"Palatino Linotype\", \"URW Palladio L\", P052, serif",
+    "humanist": "Seravek, \"Gill Sans Nova\", Ubuntu, Calibri, \"DejaVu Sans\", source-sans-pro, sans-serif",
+    "geometric-humanist": "Avenir, Montserrat, Corbel, \"URW Gothic\", source-sans-pro, sans-serif",
+    "classical-humanist": "Optima, Candara, \"Noto Sans\", source-sans-pro, sans-serif",
+    "neo-grotesque": "Inter, Roboto, \"Helvetica Neue\", \"Arial Nova\", \"Nimbus Sans\", Arial, sans-serif",
+    "monospace-slab-serif": "\"Nimbus Mono PS\", \"Courier New\", monospace",
+    "monospace-code": "ui-monospace, \"Cascadia Code\", \"Source Code Pro\", Menlo, Consolas, \"DejaVu Sans Mono\", monospace",
+    "industrial": "Bahnschrift, \"DIN Alternate\", \"Franklin Gothic Medium\", \"Nimbus Sans Narrow\", sans-serif-condensed, sans-serif",
+    "rounded-sans": "ui-rounded, \"Hiragino Maru Gothic ProN\", Quicksand, Comfortaa, Manjari, \"Arial Rounded MT\", \"Arial Rounded MT Bold\", Calibri, source-sans-pro, sans-serif",
+    "slab-serif": "Rockwell, \"Rockwell Nova\", \"Roboto Slab\", \"DejaVu Serif\", \"Sitka Small\", serif",
+    "antique": "Superclarendon, \"Bookman Old Style\", \"URW Bookman\", \"URW Bookman L\", \"Georgia Pro\", Georgia, serif",
+    "didone": "Didot, \"Bodoni MT\", \"Noto Serif Display\", \"URW Palladio L\", P052, Sylfaen, serif",
+    "handwritten": "\"Segoe Print\", \"Bradley Hand\", Chilanka, TSCu_Comic, casual, cursive"
+  }
+
+  if (fonts[document.getElementById("global_font_family").value]) {
+    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = fonts[document.getElementById("global_font_family").value];
+  }
+
+  if (document.getElementById("content_text_font").value !== "same") {
     document.getElementById("odyssey-config-content-font-preview").style.display = "block";
-  }
 
-  if (document.getElementById("global_font_family").value === "sans-serif") {
-    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "system-ui, sans-serif";
-  } else if (document.getElementById("global_font_family").value === "transitional") {
-    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "Charter, \"Bitstream Charter\", \"Sitka Text\", Cambria, serif";
-  } else if (document.getElementById("global_font_family").value === "old-style") {
-    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "\"Iowan Old Style\", \"Palatino Linotype\", \"URW Palladio L\", P052, serif";
-  } else if (document.getElementById("global_font_family").value === "humanist") {
-    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "Seravek, \"Gill Sans Nova\", Ubuntu, Calibri, \"DejaVu Sans\", source-sans-pro, sans-serif";
-  } else if (document.getElementById("global_font_family").value === "geometric-humanist") {
-    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "Avenir, Montserrat, Corbel, \"URW Gothic\", source-sans-pro, sans-serif";
-  } else if (document.getElementById("global_font_family").value === "classical-humanist") {
-    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "Optima, Candara, \"Noto Sans\", source-sans-pro, sans-serif";
-  } else if (document.getElementById("global_font_family").value === "neo-grotesque") {
-    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "Inter, Roboto, \"Helvetica Neue\", \"Arial Nova\", \"Nimbus Sans\", Arial, sans-serif";
-  } else if (document.getElementById("global_font_family").value === "monospace-slab-serif") {
-    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "\"Nimbus Mono PS\", \"Courier New\", monospace";
-
-  } else if (document.getElementById("global_font_family").value === "monospace-code") {
-    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "ui-monospace, \"Cascadia Code\", \"Source Code Pro\", Menlo, Consolas, \"DejaVu Sans Mono\", monospace";
-  } else if (document.getElementById("global_font_family").value === "industrial") {
-    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "Bahnschrift, \"DIN Alternate\", \"Franklin Gothic Medium\", \"Nimbus Sans Narrow\", sans-serif-condensed, sans-serif";
-  } else if (document.getElementById("global_font_family").value === "rounded-sans") {
-    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "ui-rounded, \"Hiragino Maru Gothic ProN\", Quicksand, Comfortaa, Manjari, \"Arial Rounded MT\", \"Arial Rounded MT Bold\", Calibri, source-sans-pro, sans-serif";
-  } else if (document.getElementById("global_font_family").value === "slab-serif") {
-    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "Rockwell, \"Rockwell Nova\", \"Roboto Slab\", \"DejaVu Serif\", \"Sitka Small\", serif";
-
-  } else if (document.getElementById("global_font_family").value === "antique") {
-    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "Superclarendon, \"Bookman Old Style\", \"URW Bookman\", \"URW Bookman L\", \"Georgia Pro\", Georgia, serif";
-  } else if (document.getElementById("global_font_family").value === "didone") {
-    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "Didot, \"Bodoni MT\", \"Noto Serif Display\", \"URW Palladio L\", P052, Sylfaen, serif";
-  } else if (document.getElementById("global_font_family").value === "handwritten") {
-    document.getElementById("odyssey-config-global-font-preview").style.fontFamily = "\"Segoe Print\", \"Bradley Hand\", Chilanka, TSCu_Comic, casual, cursive";
-  }
-
-  if (document.getElementById("content_text_font").value === "sans-serif") {
-    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "system-ui, sans-serif";
-  } else if (document.getElementById("content_text_font").value === "transitional") {
-    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "Charter, \"Bitstream Charter\", \"Sitka Text\", Cambria, serif";
-  } else if (document.getElementById("content_text_font").value === "old-style") {
-    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "\"Iowan Old Style\", \"Palatino Linotype\", \"URW Palladio L\", P052, serif";
-  } else if (document.getElementById("content_text_font").value === "humanist") {
-    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "Seravek, \"Gill Sans Nova\", Ubuntu, Calibri, \"DejaVu Sans\", source-sans-pro, sans-serif";
-  } else if (document.getElementById("content_text_font").value === "geometric-humanist") {
-    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "Avenir, Montserrat, Corbel, \"URW Gothic\", source-sans-pro, sans-serif";
-  } else if (document.getElementById("content_text_font").value === "classical-humanist") {
-    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "Optima, Candara, \"Noto Sans\", source-sans-pro, sans-serif";
-  } else if (document.getElementById("content_text_font").value === "neo-grotesque") {
-    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "Inter, Roboto, \"Helvetica Neue\", \"Arial Nova\", \"Nimbus Sans\", Arial, sans-serif";
-  } else if (document.getElementById("content_text_font").value === "monospace-slab-serif") {
-    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "\"Nimbus Mono PS\", \"Courier New\", monospace";
-
-  } else if (document.getElementById("content_text_font").value === "monospace-code") {
-    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "ui-monospace, \"Cascadia Code\", \"Source Code Pro\", Menlo, Consolas, \"DejaVu Sans Mono\", monospace";
-  } else if (document.getElementById("content_text_font").value === "industrial") {
-    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "Bahnschrift, \"DIN Alternate\", \"Franklin Gothic Medium\", \"Nimbus Sans Narrow\", sans-serif-condensed, sans-serif";
-  } else if (document.getElementById("content_text_font").value === "rounded-sans") {
-    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "ui-rounded, \"Hiragino Maru Gothic ProN\", Quicksand, Comfortaa, Manjari, \"Arial Rounded MT\", \"Arial Rounded MT Bold\", Calibri, source-sans-pro, sans-serif";
-  } else if (document.getElementById("content_text_font").value === "slab-serif") {
-    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "Rockwell, \"Rockwell Nova\", \"Roboto Slab\", \"DejaVu Serif\", \"Sitka Small\", serif";
-
-  } else if (document.getElementById("content_text_font").value === "antique") {
-    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "Superclarendon, \"Bookman Old Style\", \"URW Bookman\", \"URW Bookman L\", \"Georgia Pro\", Georgia, serif";
-  } else if (document.getElementById("content_text_font").value === "didone") {
-    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "Didot, \"Bodoni MT\", \"Noto Serif Display\", \"URW Palladio L\", P052, Sylfaen, serif";
-  } else if (document.getElementById("content_text_font").value === "handwritten") {
-    document.getElementById("odyssey-config-content-font-preview").style.fontFamily = "\"Segoe Print\", \"Bradley Hand\", Chilanka, TSCu_Comic, casual, cursive";
+    if (fonts[document.getElementById("content_text_font").value]) {
+      document.getElementById("odyssey-config-content-font-preview").style.fontFamily = fonts[document.getElementById("content_text_font").value];
+    }
+  } else {
+    document.getElementById("odyssey-config-content-font-preview").style.display = "none";
   }
 }
 
@@ -245,7 +179,6 @@ window.onload = function() {
 
   window.oninput = function() {
     inputValidation();
-    // inputChange();
   };
 
   document.getElementById("header_image").onchange = function() {
