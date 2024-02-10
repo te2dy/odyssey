@@ -534,7 +534,10 @@ class My extends MyTheme
         }
 
         if ($unit === 'px' && ($value < 480 || $value > 1280)) {
-            return $content_width_default;
+            return [
+                'unit'  => 'px',
+                'value' => 480
+            ];
         }
 
         if (!in_array($unit, ['em', 'px'], true)) {

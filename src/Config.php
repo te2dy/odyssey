@@ -893,7 +893,7 @@ class Config extends Process
      */
     public static function sanitizePageWidth($setting_id, $unit, $value): array
     {
-        $unit  = $unit ?: 'px';
+        $unit  = $unit ?: 'em';
         $value = $value ? (int) $value : 30;
         $data  = My::getContentWidth($unit, $value);
 
