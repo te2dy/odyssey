@@ -266,52 +266,31 @@ msgstr ""
 
 # Social links
 
-msgid "site-name-500px"
+msgid "social-site-diaspora"
 msgstr ""
 
-msgid "site-name-dailymotion"
+msgid "social-site-facebook"
 msgstr ""
 
-msgid "site-name-diaspora"
+msgid "social-site-instagram"
 msgstr ""
 
-msgid "site-name-discord"
+msgid "social-site-mastodon"
 msgstr ""
 
-msgid "site-name-facebook"
+msgid "social-site-signal"
 msgstr ""
 
-msgid "site-name-github"
+msgid "social-site-youtube"
 msgstr ""
 
-msgid "site-name-mastodon"
+msgid "social-site-whatsapp"
 msgstr ""
 
-msgid "site-name-peertube"
+msgid "social-site-x"
 msgstr ""
 
-msgid "site-name-signal"
-msgstr ""
-
-msgid "site-name-telegram"
-msgstr ""
-
-msgid "site-name-tiktok"
-msgstr ""
-
-msgid "site-name-twitch"
-msgstr ""
-
-msgid "site-name-vimeo"
-msgstr ""
-
-msgid "site-name-whatsapp"
-msgstr ""
-
-msgid "site-name-youtube"
-msgstr ""
-
-msgid "site-name-x"
+msgid "social-site-other"
 msgstr ""
 
 # Archives

@@ -70,7 +70,7 @@ class Config extends Process
                         // The value of the setting and its type.
                         $setting_data = [];
 
-                        if (!in_array($setting_id, $specific_settings, true)) {
+                        if (!in_array($setting_id, $specific_settings, true) && !str_contains($setting_id, 'footer_social_')) {
                             // Saves non specific settings.
                             if (isset($_POST[$setting_id]) && $_POST[$setting_id] != My::settingsDefault($setting_id)['default']) {
                                 $setting_data = self::sanitizeSetting(
@@ -90,30 +90,34 @@ class Config extends Process
                             }
                         } else {
                             // Saves each specific settings.
-                            switch ($setting_id) {
-                                case 'global_unit' :
-                                case 'global_page_width_value' :
-                                    $setting_data = self::sanitizePageWidth(
-                                        $setting_id,
-                                        $_POST['global_unit'],
-                                        $_POST['global_page_width_value']
-                                    );
+                            if (!str_contains($setting_id, 'footer_social_')) {
+                                switch ($setting_id) {
+                                    case 'global_unit' :
+                                    case 'global_page_width_value' :
+                                        $setting_data = self::sanitizePageWidth(
+                                            $setting_id,
+                                            $_POST['global_unit'],
+                                            $_POST['global_page_width_value']
+                                        );
 
-                                    break;
+                                        break;
 
-                                case 'header_image':
-                                case 'header_image2x':
-                                    $setting_data = self::sanitizeHeaderImage(
-                                        $setting_id,
-                                        $_POST['header_image'],
-                                        $_POST['global_unit'],
-                                        $_POST['global_page_width_value']
-                                    );
+                                    case 'header_image':
+                                    case 'header_image2x':
+                                        $setting_data = self::sanitizeHeaderImage(
+                                            $setting_id,
+                                            $_POST['header_image'],
+                                            $_POST['global_unit'],
+                                            $_POST['global_page_width_value']
+                                        );
 
-                                    break;
+                                        break;
 
-                                case 'styles' :
-                                    $setting_data = self::saveStyles();
+                                    case 'styles' :
+                                        $setting_data = self::saveStyles();
+                                }
+                            } else {
+                                $setting_data = self::sanitizeSocialLink($setting_id, $_POST[$setting_id]);
                             }
                         }
 
@@ -708,6 +712,55 @@ class Config extends Process
             $css_main_array['#react-content .comment-private p']['margin-bottom'] = '0';
         }
 
+        // Social links
+        $footer_social_links = false;
+
+        // Checks if a link as been set.
+        foreach (My::socialSites() as $id => $data) {
+            if (My::settingValue('footer_social_' . $id)) {
+                $footer_social_links = true;
+
+                break;
+            }
+        }
+
+        if ($footer_social_links === true) {
+            $css_main_array['.footer-social-links']['margin-bottom'] = '1rem';
+
+            $css_main_array['.footer-social-links']['list-style']                 = 'none';
+            $css_main_array['.footer-social-links']['margin']                     = '0';
+            $css_main_array['.footer-social-links']['padding-left']               = '0';
+            $css_main_array['.footer-social-links li']['display']                 = 'inline-block';
+            $css_main_array['.footer-social-links li']['margin']                  = '.25em';
+            $css_main_array['.footer-social-links li:first-child']['margin-left'] = '0';
+            $css_main_array['.footer-social-links li:last-child']['margin-right'] = '0';
+
+            $css_main_array['.footer-social-links a']['display'] = 'inline-block';
+
+            $css_main_array['.footer-social-links-icon-container']['align-items']      = 'center';
+            $css_main_array['.footer-social-links-icon-container']['background-color'] = 'var(--color-input-background, #f2f2f2)';
+            $css_main_array['.footer-social-links-icon-container']['display']          = 'flex';
+            $css_main_array['.footer-social-links-icon-container']['justify-content']  = 'center';
+            $css_main_array['.footer-social-links-icon-container']['width']            = '1.5rem';
+            $css_main_array['.footer-social-links-icon-container']['height']           = '1.5rem';
+
+            $css_main_array['.footer-social-links-icon']['border']          = '0';
+            $css_main_array['.footer-social-links-icon']['fill']            = 'var(--color-text-main, #303030)';
+            $css_main_array['.footer-social-links-icon']['stroke']          = 'none';
+            $css_main_array['.footer-social-links-icon']['stroke-linecap']  = 'round';
+            $css_main_array['.footer-social-links-icon']['stroke-linejoin'] = 'round';
+            $css_main_array['.footer-social-links-icon']['stroke-width']    = '0';
+            $css_main_array['.footer-social-links-icon']['width']           = '1rem';
+
+            $css_main_array['.footer-social-links a:active .footer-social-links-icon-container, .footer-social-links a:focus .footer-social-links-icon-container, .footer-social-links a:hover .footer-social-links-icon-container']['background-color'] = 'var(--color-primary, hsl(226, 80%, 45%))';
+
+            $css_main_array['.footer-social-links a']['border-bottom'] = 'none';
+
+            $css_main_array['.footer-social-links a:active, .footer-social-links a:focus, .footer-social-links a:hover']['border-bottom'] = 'none';
+
+            $css_main_array['.footer-social-links a:active .footer-social-links-icon, .footer-social-links a:focus .footer-social-links-icon, .footer-social-links a:hover .footer-social-links-icon']['fill'] = 'var(--color-background, #fcfcfd)';
+        }
+
         $css  = !empty($css_root_array) ? My::stylesArrToStr($css_root_array) : '';
         $css .= !empty($css_root_dark_array) ? '@media (prefers-color-scheme:dark){' . My::stylesArrToStr($css_root_dark_array) . '}' : '';
         $css .= !empty($css_main_array) ? My::stylesArrToStr($css_main_array) : '';
@@ -909,6 +962,82 @@ class Config extends Process
                 'value' => (int) $data['value'],
                 'type'  => 'integer'
             ];
+        }
+
+        return [];
+    }
+
+    public static function sanitizeSocialLink($setting_id, $value)
+    {
+        if ($value === '') {
+            return [];
+        }
+
+        $id = str_replace('footer_social_', '', $setting_id);
+
+        $site_name = My::socialSites($id)['name'];
+        $site_base = isset(My::socialSites($id)['base']) ? My::socialSites($id)['base'] : '';
+        $site_type = My::socialSites($id)['type'];
+
+        switch ($site_type) {
+            case 'phone-number':
+                if (str_starts_with($value, $site_base) && is_numeric(substr($value, 1))) {
+                    return [
+                        'value' => Html::escapeHTML($value),
+                        'type'  => 'string',
+                    ];
+                }
+
+                break;
+            case 'url':
+                if (str_starts_with($value, $site_base)) {
+                    return [
+                        'value' => Html::escapeURL($value),
+                        'type'  => 'string',
+                    ];
+                }
+
+                break;
+            case 'username':
+                if (str_starts_with($value, $site_base)) {
+                    return [
+                        'value' => Html::escapeHTML($value),
+                        'type'  => 'string',
+                    ];
+                }
+
+                break;
+            case 'signal':
+                if (preg_match('/^\+[1-9]\d{1,14}$/', $value)) {
+                    return [
+                        'value' => 'https://signal.me/#p/' . Html::escapeURL($value),
+                        'type'  => 'string',
+                    ];
+                } elseif (
+                    str_starts_with($value, 'https://signal.me/#p/')
+                    || str_starts_with($value, 'sgnl://signal.me/#p/')
+                    || str_starts_with($value, 'sgnl://signal.me/#u/')
+                    || str_starts_with($value, 'sgnl://signal.me/#eu/')
+                ) {
+                    return [
+                        'value' => Html::escapeURL($value),
+                        'type'  => 'string',
+                    ];
+                }
+
+                break;
+            case 'x':
+                if (preg_match('/\@[\w+]{0,15}/', $value)) {
+                    return [
+                        'value' => Html::escapeURL('https://x.com/' . substr($value, 1)),
+                        'type'  => 'string',
+                    ];
+                } elseif (str_starts_with($value, 'https://x.com/') || str_starts_with($value, 'https://twitter.com/')) {
+                    return [
+                        'value' => Html::escapeURL($value),
+                        'type'  => 'string',
+                    ];
+                }
         }
 
         return [];

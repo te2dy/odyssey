@@ -60,6 +60,9 @@ msgstr "Paramètres des widgets"
 msgid "section-footer"
 msgstr "Paramètres du pied de page"
 
+msgid "section-footer-social"
+msgstr "Liens sociaux"
+
 msgid "section-advanced"
 msgstr "Paramètres avancés"
 
@@ -70,7 +73,7 @@ msgid "settings-global-unit-title"
 msgstr "Unité de base"
 
 msgid "settings-global-unit-description"
-msgstr "Avec le cadratin (em), votre blog s’adapte mieux aux paramètres du navigateur de vos visiteurs (très utile d’un point de vue accessibilité, pour les personnes qui utilisent une taille de police plus grande par défaut). L’inconvénient est qu’il peut s’afficher différemment d’un appareil à l’autre. Pour garder la maîtrise de l’apparence de votre blog (pour blog photo par exemple), il est recommandé d’utiliser le pixel comme unité de base."
+msgstr "Avec le cadratin (em), votre blog s’adapte mieux aux paramètres du navigateur de vos visiteurs (très utile d’un point de vue accessibilité, pour les personnes qui utilisent une taille de police plus grande par défaut). L’inconvénient est qu’il peut s’afficher différemment d’un appareil à l’autre. Pour garder la maîtrise de l’apparence de votre blog (pour un blog photo par exemple), il est recommandé d’utiliser le pixel comme unité de base."
 
 msgid "settings-global-unit-relative-default"
 msgstr "Cadratin (par défaut)"
@@ -101,6 +104,9 @@ msgstr "Transition"
 
 msgid "settings-global-fontfamily-oldstyle"
 msgstr "Style ancien"
+
+msgid "settings-global-fontfamily-garamond"
+msgstr "Garamond"
 
 msgid "settings-global-fontfamily-humanist"
 msgstr "Humane"
@@ -380,6 +386,33 @@ msgstr "Afficher une mention à Dotclear et au thème"
 
 msgid "settings-footer-credits-description"
 msgstr "Permet de faire de la publicité à Dotclear et à ce thème."
+
+msgid "settings-footer-social-diaspora-description"
+msgstr "Adresse d’une page ou d’un profil %s."
+
+msgid "settings-footer-social-facebook-description"
+msgstr "Adresse d’une page ou d’un profil %s."
+
+msgid "settings-footer-social-instagram-description"
+msgstr "Adresse d’une page %s."
+
+msgid "settings-footer-social-mastodon-description"
+msgstr "Adresse d’un compte %s."
+
+msgid "settings-footer-social-signal-description"
+msgstr "Numéro de téléphone ou adresse d’un compte ou groupe %s."
+
+msgid "settings-footer-social-youtube-description"
+msgstr "Adresse d’une chaîne %s"
+
+msgid "settings-footer-social-whatsapp-description"
+msgstr "Numéro de téléphone %s"
+
+msgid "settings-footer-social-x-description"
+msgstr "Adresse d’un compte %s"
+
+msgid "settings-footer-social-other-description"
+msgstr "Adresse d’une autre page de votre choix."
 
 msgid "settings-advanced-metadescription-title"
 msgstr "Description de la page d’accueil"

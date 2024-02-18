@@ -391,6 +391,42 @@ class FrontendValues
         return '<br><small class=text-secondary><em>' . $markdown_notice . '</em></small>';
     }
 
+    public static function odysseyFooterSocialLinks()
+    {
+        $social_sites = My::socialSites();
+        $output       = '';
+        $count        = 0;
+
+        foreach ($social_sites as $id => $data) {
+            if (My::settingValue('footer_social_' . $id) !== null) {
+                $count++;
+
+                if ($count === 1) {
+                    $output .= '<div class=site-footer-block>';
+                    $output .= '<ul class=footer-social-links>';
+                }
+
+                $output .= '<li>';
+                $output .= '<a href="' . My::settingValue('footer_social_' . $id) . '">';
+                $output .= '<span class=footer-social-links-icon-container>';
+                $output .= '<svg class=footer-social-links-icon role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>';
+                $output .= '<title>' . $data['name'] . '</title>';
+                $output .= My::svgIcons($id);
+                $output .= '</svg>';
+                $output .= '</span>';
+                $output .= '</a>';
+                $output .= '</li>';
+            }
+        }
+
+        if ($count > 0) {
+            $output .= '</ul>';
+            $output .= '</div>';
+        }
+
+        return $output;
+    }
+
     /**
      * Displays Dotclear and Odyssey as credits in the footer.
      *

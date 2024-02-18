@@ -60,6 +60,9 @@ msgstr ""
 msgid "section-footer"
 msgstr ""
 
+msgid "section-footer-social"
+msgstr ""
+
 msgid "section-advanced"
 msgstr ""
 
@@ -100,6 +103,9 @@ msgid "settings-global-fontfamily-transitional"
 msgstr ""
 
 msgid "settings-global-fontfamily-oldstyle"
+msgstr ""
+
+msgid "settings-global-fontfamily-garamond"
 msgstr ""
 
 msgid "settings-global-fontfamily-humanist"
@@ -379,6 +385,33 @@ msgid "settings-footer-credits-title"
 msgstr ""
 
 msgid "settings-footer-credits-description"
+msgstr ""
+
+msgid "settings-footer-social-diaspora-description"
+msgstr ""
+
+msgid "settings-footer-social-facebook-description"
+msgstr ""
+
+msgid "settings-footer-social-instagram-description"
+msgstr ""
+
+msgid "settings-footer-social-mastodon-description"
+msgstr ""
+
+msgid "settings-footer-social-signal-description"
+msgstr ""
+
+msgid "settings-footer-social-youtube-description"
+msgstr ""
+
+msgid "settings-footer-social-whatsapp-description"
+msgstr ""
+
+msgid "settings-footer-social-x-description"
+msgstr ""
+
+msgid "settings-footer-social-other-description"
 msgstr ""
 
 msgid "settings-advanced-metadescription-title"
