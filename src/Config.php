@@ -708,8 +708,8 @@ class Config extends Process
 
         // Private comments
         if (isset($_POST['reactions_private_comment']) && $_POST['reactions_private_comment'] !== 'disabled') {
-            $css_main_array['#react-content .comment-private']['margin-top']      = '2rem';
-            $css_main_array['#react-content .comment-private p']['margin-bottom'] = '0';
+            $css_main_array['#comment-form .comment-private']['margin-top']      = '2rem';
+            $css_main_array['#comment-form .comment-private p']['margin-bottom'] = '0';
         }
 
         // Social links
@@ -1018,6 +1018,8 @@ class Config extends Process
                     || str_starts_with($value, 'sgnl://signal.me/#p/')
                     || str_starts_with($value, 'sgnl://signal.me/#u/')
                     || str_starts_with($value, 'sgnl://signal.me/#eu/')
+                    || str_starts_with($value, 'https://signal.group/#')
+                    || str_starts_with($value, 'sgnl://signal.group/#')
                 ) {
                     return [
                         'value' => Html::escapeURL($value),

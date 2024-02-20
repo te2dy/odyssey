@@ -407,7 +407,7 @@ class FrontendValues
                 }
 
                 $output .= '<li>';
-                $output .= '<a href="' . My::settingValue('footer_social_' . $id) . '">';
+                $output .= '<a href=' . My::attrValue(My::settingValue('footer_social_' . $id)) . '>';
                 $output .= '<span class=footer-social-links-icon-container>';
                 $output .= '<svg class=footer-social-links-icon role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>';
                 $output .= '<title>' . $data['name'] . '</title>';
