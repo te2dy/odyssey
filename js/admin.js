@@ -130,6 +130,7 @@ function fontsPreview() {
     "sans-serif": "system-ui, sans-serif",
     "transitional": "Charter, \"Bitstream Charter\", \"Sitka Text\", Cambria, serif",
     "old-style": "\"Iowan Old Style\", \"Palatino Linotype\", \"URW Palladio L\", P052, serif",
+    "garamond": "Garamond, Baskerville, \"Baskerville Old Face\", \"Hoefler Text\", \"Times New Roman\", serif",
     "humanist": "Seravek, \"Gill Sans Nova\", Ubuntu, Calibri, \"DejaVu Sans\", source-sans-pro, sans-serif",
     "geometric-humanist": "Avenir, Montserrat, Corbel, \"URW Gothic\", source-sans-pro, sans-serif",
     "classical-humanist": "Optima, Candara, \"Noto Sans\", source-sans-pro, sans-serif",
