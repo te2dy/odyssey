@@ -1014,12 +1014,10 @@ class Config extends Process
                         'type'  => 'string',
                     ];
                 } elseif (
-                    str_starts_with($value, 'https://signal.me/#p/')
-                    || str_starts_with($value, 'sgnl://signal.me/#p/')
-                    || str_starts_with($value, 'sgnl://signal.me/#u/')
-                    || str_starts_with($value, 'sgnl://signal.me/#eu/')
-                    || str_starts_with($value, 'https://signal.group/#')
-                    || str_starts_with($value, 'sgnl://signal.group/#')
+                    str_starts_with($value, 'https://signal.me/')
+                    || str_starts_with($value, 'sgnl://signal.me/')
+                    || str_starts_with($value, 'https://signal.group/')
+                    || str_starts_with($value, 'sgnl://signal.group/')
                 ) {
                     return [
                         'value' => Html::escapeURL($value),
