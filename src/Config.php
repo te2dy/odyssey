@@ -368,8 +368,10 @@ class Config extends Process
                     $saved_settings[$setting_id] = (bool) App::blog()->settings->odyssey->$setting_id;
                 } elseif (isset($setting_data['type']) && $setting_data['type'] === 'select_int') {
                     $saved_settings[$setting_id] = (int) App::blog()->settings->odyssey->$setting_id;
-                } else {
+                } elseif (isset($setting_data['type']) && ($setting_data['type'] === 'text' || $setting_data['type'] === 'textarea')) {
                     $saved_settings[$setting_id] = (string) App::blog()->settings->odyssey->$setting_id;
+                } else {
+                    $saved_settings[$setting_id] = App::blog()->settings->odyssey->$setting_id;
                 }
             }
         }
