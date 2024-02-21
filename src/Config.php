@@ -529,7 +529,7 @@ class Config extends Process
             'dark-amplified' => [
                 'gray'  => '0, 0%, 80%',
                 'green' => '120, 50%, 60%',
-                'red'   => '0, 70, 70%'
+                'red'   => '0, 70%, 70%'
             ]
         ];
 
