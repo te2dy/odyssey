@@ -481,7 +481,7 @@ class Config extends Process
         }
 
         // Font family.
-        if (isset($_POST['global_font_family'])) {
+        if (isset($_POST['global_font_family']) && $_POST['global_font_family'] !== 'sans-serif') {
             $css_root_array[':root']['--font-family'] = My::fontStack($_POST['global_font_family']);
         }
 
