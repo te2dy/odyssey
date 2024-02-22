@@ -107,21 +107,44 @@ function imageExists(url) {
  */
 function changeImage() {
   if (imageExists(document.getElementById("header_image").value) === true) {
-    document.getElementById("header_image-src").removeAttribute("style");
-    document.getElementById("header_image-src").setAttribute("src", encodeURI(document.getElementById("header_image").value));
+    let img = document.getElementById("header_image").value;
 
-    if (document.getElementById("header_image_position-retina") && document.getElementById("header_image-url").value !== document.getElementById("header_image").value) {
+    document.getElementById("header_image-src").removeAttribute("style");
+    document.getElementById("header_image-src").setAttribute("src", encodeURI(img));
+
+    if (document.getElementById("header_image_position-retina") && document.getElementById("header_image-url").value !== img) {
       document.getElementById("header_image-retina").style.display = "none";
     }
 
     document.getElementById("header_image_position-input").style.display = "block";
     document.getElementById("header_image_description-input").style.display = "block";
     document.getElementById("header_image_description-description").style.display = "block";
+
+    let imgExt = img.split('.').pop(),
+        imgExtLength = imgExt.length,
+        img2x = img.substring(0, img.length - (imgExtLength + 1)) + "-2x." + imgExt;
+
+    if (imageExists(img2x) === true) {
+      if (document.getElementById("header_image-retina")) {
+        document.getElementById("header_image-retina").style.display = "block";
+      } else {
+        var retinaNotice = document.createElement('p');
+        retinaNotice.setAttribute("id", "header_image-retina");
+        retinaNotice.innerText = document.getElementById("header_image-retina-text").value;
+
+        var retinaNoticeElementAfter = document.getElementById("header_image-url");
+        retinaNoticeElementAfter.parentNode.insertBefore(retinaNotice, retinaNoticeElementAfter);
+      }
+    }
   } else {
     document.getElementById("header_image-src").style.display = "none";
     document.getElementById("header_image_position-input").style.display = "none";
     document.getElementById("header_image_description-input").style.display = "none";
     document.getElementById("header_image_description-description").style.display = "none";
+
+    if (document.getElementById("header_image-retina")) {
+      document.getElementById("header_image-retina").style.display = "none";
+    }
   }
 }
 

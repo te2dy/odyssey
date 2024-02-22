@@ -348,7 +348,8 @@ class Config extends Process
                 '</p>';
             }
 
-            echo form::hidden('header_image-url', $image_src);
+            echo form::hidden('header_image-url', $image_src),
+            form::hidden('header_image-retina-text', Html::escapeHTML(__('header-image-retina-ready')));
         }
     }
 
