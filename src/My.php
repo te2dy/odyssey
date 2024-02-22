@@ -12,6 +12,7 @@ namespace Dotclear\Theme\odyssey;
 use Dotclear\App;
 use Dotclear\Module\MyTheme;
 use Dotclear\Helper\File\Files;
+use Dotclear\Helper\Html\Html;
 
 class My extends MyTheme
 {
@@ -515,6 +516,20 @@ class My extends MyTheme
     public static function attrValue(string $value): string
     {
         return str_contains($value, ' ') === false ? $value : '"' . $value . '"';
+    }
+
+    /**
+     * Cleans string to be put in an HTML attribute.
+     *
+     * @param string $string The string.
+     *
+     * @return string The cleaned string.
+     */
+    public static function cleanAttr(string $string): string
+    {
+        $string = Html::decodeEntities(Html::clean($string));
+
+        return preg_replace('/\s+/', ' ', $string);
     }
 
     /**

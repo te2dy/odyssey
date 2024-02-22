@@ -64,9 +64,7 @@ class FrontendBehaviors
                     $title = App::frontend()->context()->posts->post_title;
 
                     $desc = App::frontend()->context()->posts->getExcerpt() ?: App::frontend()->context()->posts->getContent();
-                    $desc = Html::clean($desc);
-                    $desc = Html::decodeEntities($desc);
-                    $desc = preg_replace('/\s+/', ' ', $desc);
+                    $desc = My::cleanAttr($desc);
 
                     if (strlen($desc) > 180) {
                         $desc = Text::cutString($desc, 179) . '…';
@@ -77,7 +75,6 @@ class FrontendBehaviors
                     }
 
                     break;
-
                 case 'default':
                 case 'default-page':
                     $title = App::blog()->name;
@@ -100,9 +97,7 @@ class FrontendBehaviors
                             $desc .= App::blog()->desc;
                         }
 
-                        $desc = Html::clean($desc);
-                        $desc = Html::decodeEntities($desc);
-                        $desc = preg_replace('/\s+/', ' ', $desc);
+                        $desc = My::cleanAttr($desc);
 
                         if (strlen($desc) > 180) {
                             $desc = Text::cutString($desc, 179) . '…';
@@ -110,16 +105,12 @@ class FrontendBehaviors
                     }
 
                     break;
-
-
                 case 'category':
                     $title = App::frontend()->context()->categories->cat_title;
 
                     if (App::frontend()->context()->categories->cat_desc) {
                         $desc = App::frontend()->context()->categories->cat_desc;
-                        $desc = Html::clean($desc);
-                        $desc = Html::decodeEntities($desc);
-                        $desc = preg_replace('/\s+/', ' ', $desc);
+                        $desc = My::cleanAttr($desc);
 
                         if (strlen($desc) > 180) {
                             $desc = Text::cutString($desc, 179) . '…';
@@ -127,7 +118,6 @@ class FrontendBehaviors
                     }
 
                     break;
-
                 case 'tag':
                     if (App::frontend()->context()->meta->meta_type === 'tag') {
                         $title = App::frontend()->context()->meta->meta_id;
