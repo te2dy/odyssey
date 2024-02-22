@@ -323,6 +323,11 @@ class FrontendBehaviors
                 $src_attr  = isset($src_match[0]) ? $src_match[0] . '"' : '';
                 $src_value = isset($src_match[1]) ? $src_match[1] : '';
 
+                // Transforms absolute URLs in relative ones.
+                if (str_starts_with($src_value, My::blogBaseURL())) {
+                    $src_value = str_replace(My::blogBaseURL(), '', $src_value);
+                }
+
                 // Builds an array that will contain all image sizes.
                 $img = [
                     'o' => [
@@ -333,7 +338,7 @@ class FrontendBehaviors
                 ];
 
                 // If the original image size exists.
-                if (file_exists(App::config()->dotclearRoot() . $src_value)) {
+                if (file_exists(App::config()->dotclearRoot() . $src_value) && str_starts_with($src_value, '/')) {
                     /**
                      * Sets the maximum width of the image to display.
                      *
