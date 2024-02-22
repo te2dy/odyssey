@@ -21,11 +21,50 @@ function disableInputs() {
   }
 
   if (!document.getElementById("footer_enabled").checked) {
-    document.getElementById("footer_credits-input").style.display               = "none";
-    document.getElementById("footer_credits-description").style.display         = "none";
+    document.getElementById("footer_credits-input").style.display                = "none";
+    document.getElementById("footer_credits-description").style.display          = "none";
+    document.getElementById("section-footer-social").style.display               = "none";
+    document.getElementById("footer_social_diaspora-input").style.display        = "none";
+    document.getElementById("footer_social_facebook-input").style.display        = "none";
+    document.getElementById("footer_social_instagram-input").style.display       = "none";
+    document.getElementById("footer_social_mastodon-input").style.display        = "none";
+    document.getElementById("footer_social_signal-input").style.display          = "none";
+    document.getElementById("footer_social_youtube-input").style.display         = "none";
+    document.getElementById("footer_social_whatsapp-input").style.display        = "none";
+    document.getElementById("footer_social_x-input").style.display               = "none";
+    document.getElementById("footer_social_other-input").style.display           = "none";
+    document.getElementById("footer_social_diaspora-description").style.display  = "none";
+    document.getElementById("footer_social_facebook-description").style.display  = "none";
+    document.getElementById("footer_social_instagram-description").style.display = "none";
+    document.getElementById("footer_social_mastodon-description").style.display  = "none";
+    document.getElementById("footer_social_signal-description").style.display    = "none";
+    document.getElementById("footer_social_youtube-description").style.display   = "none";
+    document.getElementById("footer_social_whatsapp-description").style.display  = "none";
+    document.getElementById("footer_social_x-description").style.display         = "none";
+    document.getElementById("footer_social_other-description").style.display     = "none";
   } else {
-    document.getElementById("footer_credits-input").style.display               = "block";
-    document.getElementById("footer_credits-description").style.display         = "block";
+    document.getElementById("footer_credits-input").style.display                = "block";
+    document.getElementById("footer_credits-description").style.display          = "block";
+    document.getElementById("section-footer-social").style.display               = "block";
+    document.getElementById("footer_social_diaspora-input").style.display        = "block";
+    document.getElementById("footer_social_facebook-input").style.display        = "block";
+    document.getElementById("footer_social_instagram-input").style.display       = "block";
+    document.getElementById("footer_social_mastodon-input").style.display        = "block";
+    document.getElementById("footer_social_signal-input").style.display          = "block";
+    document.getElementById("footer_social_youtube-input").style.display         = "block";
+    document.getElementById("footer_social_whatsapp-input").style.display        = "block";
+    document.getElementById("footer_social_x-input").style.display               = "block";
+    document.getElementById("footer_social_other-input").style.display           = "block";
+    document.getElementById("footer_social_other-description").style.display     = "block";
+    document.getElementById("footer_social_diaspora-description").style.display  = "block";
+    document.getElementById("footer_social_facebook-description").style.display  = "block";
+    document.getElementById("footer_social_instagram-description").style.display = "block";
+    document.getElementById("footer_social_mastodon-description").style.display  = "block";
+    document.getElementById("footer_social_signal-description").style.display    = "block";
+    document.getElementById("footer_social_youtube-description").style.display   = "block";
+    document.getElementById("footer_social_whatsapp-description").style.display  = "block";
+    document.getElementById("footer_social_x-description").style.display         = "block";
+    document.getElementById("footer_social_other-description").style.display     = "block";
   }
 }
 
