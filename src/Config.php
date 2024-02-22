@@ -720,10 +720,12 @@ class Config extends Process
 
         // Checks if a link as been set.
         foreach (My::socialSites() as $id => $data) {
-            if (My::settingValue('footer_social_' . $id)) {
-                $footer_social_links = true;
+            if (isset($_POST['footer_social_' . $id]) && $_POST['footer_social_' . $id] !== '') {
+                if (!empty(self::sanitizeSocialLink('footer_social_' . $id, $_POST['footer_social_' . $id]))) {
+                    $footer_social_links = true;
 
-                break;
+                    break;
+                }
             }
         }
 
@@ -993,7 +995,12 @@ class Config extends Process
 
                 break;
             case 'url':
-                if (str_starts_with($value, $site_base)) {
+                if ($site_base !== '' && str_starts_with($value, $site_base)) {
+                    return [
+                        'value' => Html::escapeURL($value),
+                        'type'  => 'string',
+                    ];
+                } elseif (filter_var($value, FILTER_VALIDATE_URL) !== false) {
                     return [
                         'value' => Html::escapeURL($value),
                         'type'  => 'string',
