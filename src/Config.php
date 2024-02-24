@@ -95,9 +95,9 @@ class Config extends Process
                                     case 'global_unit' :
                                     case 'global_page_width_value' :
                                         $setting_data = self::sanitizePageWidth(
-                                            $setting_id,
                                             $_POST['global_unit'],
-                                            $_POST['global_page_width_value']
+                                            $_POST['global_page_width_value'],
+                                            $setting_id
                                         );
 
                                         break;
@@ -469,14 +469,7 @@ class Config extends Process
 
         // Page width.
         if (isset($_POST['global_unit']) && isset($_POST['global_page_width_value'])) {
-            $page_width_unit  = $_POST['global_unit'];
-            $page_width_value = $_POST['global_page_width_value'];
-
-            if ($page_width_unit === 'px' && $page_width_value === '') {
-                $page_width_value = '480';
-            }
-
-            $page_width_data = My::getContentWidth($page_width_unit, $page_width_value);
+            $page_width_data = self::sanitizePageWidth($_POST['global_unit'], $_POST['global_page_width_value']);
 
             if (!empty($page_width_data)) {
                 $css_root_array[':root']['--page-width'] = $page_width_data['value'] . $page_width_data['unit'];
@@ -891,7 +884,12 @@ class Config extends Process
                  * Limits the maximum width value of the image if its superior to the page width,
                  * and sets its height proportionally.
                  */
-                $page_width_data = My::getContentWidth($page_width_unit, $page_width_value, true);
+                $page_width_data = My::sanitizePageWidth($page_width_unit, $page_width_value);
+
+                if (empty($page_width_data)) {
+                    $page_width_data['unit']  = 'em';
+                    $page_width_data['value'] = 480;
+                }
 
                 $page_width = $page_width_data['value'];
 
@@ -943,29 +941,37 @@ class Config extends Process
     /**
      * Prepares to save the page width option.
      *
-     * @param string  $setting_id The setting id.
      * @param string  $unit       The unit used to define the width (px or em)
      * @param integer $value      The value of the page width.
+     * @param string  $setting_id The setting id.
      *
      * @return array The page width and its unit.
      */
-    public static function sanitizePageWidth($setting_id, $unit, $value): array
+    public static function sanitizePageWidth($unit, $value, $setting_id = null): array
     {
         $unit  = $unit ?: 'em';
         $value = $value ? (int) $value : 30;
-        $data  = My::getContentWidth($unit, $value);
 
-        if ($setting_id === 'global_unit' && isset($data['unit'])) {
-            return [
-                'value' => Html::escapeHTML($data['unit']),
-                'type'  => 'string'
-            ];
-        }
+        if (($unit === 'em' && ($value > 30 && $value <= 80))
+            || ($unit === 'px' && ($value >= 480 && $value <= 1280))
+        ) {
+            if ($setting_id === 'global_unit') {
+                return [
+                    'value' => Html::escapeHTML($unit),
+                    'type'  => 'string'
+                ];
+            }
 
-        if ($setting_id === 'global_page_width_value' && isset($data['value'])) {
+            if ($setting_id === 'global_page_width_value') {
+                return [
+                    'value' => (int) $value,
+                    'type'  => 'integer'
+                ];
+            }
+
             return [
-                'value' => (int) $data['value'],
-                'type'  => 'integer'
+                'unit'  => Html::escapeHTML($unit),
+                'value' => (int) $value
             ];
         }
 

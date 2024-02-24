@@ -329,36 +329,16 @@ class FrontendBehaviors
 
                 // If the original image size exists.
                 if (file_exists(App::config()->dotclearRoot() . $src_value) && str_starts_with($src_value, '/')) {
-                    /**
-                     * Sets the maximum width of the image to display.
-                     *
-                     * It can be superior to the content width
-                     * if the option "content_images_wide" is enabled.
-                     *
-                     * @see Config.php
-                     */
-                    $option_image_wide = false;
+                    if (App::url()->type === 'post' || App::url()->type === 'pages') {
+                        $option_image_wide = true;
+                    } else {
+                        $option_image_wide = false;
+                    }
 
-                    // switch (My::settingValue('content_images_wide')) {
-                        // case 'posts-pages' :
-                            if (App::url()->type === 'post' || App::url()->type === 'pages') {
-                                $option_image_wide = true;
-                            }
-
-                            // break;
-                        // case 'always' :
-                            // $option_image_wide = true;
-                    // }
-
-                    // $img_width_max = odysseySettings::contentWidth('px');
-                    $img_width_max = 480;
+                    $img_width_max = My::getContentWidth('px')['value'];
 
                     if ($option_image_wide === true) {
-                        // if (My::settingValue('content_images_wide_size')) {
-                            // $img_width_max += (int) (My::settingValue('content_images_wide_size') * 2);
-                        // } else {
-                            $img_width_max += 120 * 2;
-                        // }
+                        $img_width_max += 120 * 2;
                     }
 
                     // Gets original image dimensions.
@@ -368,18 +348,6 @@ class FrontendBehaviors
                     $img['o']['height'] = $height;
 
                     $media_sizes = App::media()->thumb_sizes;
-
-                    // Adds eventual custom image sizes.
-                    /*if (My::settingValue('content_image_custom_size')) {
-                        $custom_image_sizes = explode(',', My::settingValue('content_image_custom_size'));
-
-                        foreach ($custom_image_sizes as $size_id) {
-                            $media_sizes[$size_id] = [
-                                0, // Width.
-                                'ratio'
-                            ];
-                        }
-                    }*/
 
                     $info = Path::info($src_value);
 

@@ -535,47 +535,28 @@ class My extends MyTheme
     /**
      * Gets an array of the content width of the blog.
      *
-     * @param string $unit           Should be 'em' or 'px'.
-     * @param int    $value          The value of the width.
-     * @param bool   $return_default If true, the default width will be returned.
+     * @param string $unit Must be 'em' or 'px'.
      *
      * @return array The unit and the value of the width.
      */
-    public static function getContentWidth($unit = 'em', $value = 30, $return_default = false)
+    public static function getContentWidth($unit = 'em')
     {
-        $value = (int) $value;
+        $page_width_unit  = self::settingValue('global_unit') ?: 'em' ;
+        $page_width_value = self::settingValue('global_page_width_value') ?: 30;
 
-        $content_width_default = [];
-
-        if ($return_default === true) {
-            $content_width_default = [
-                'unit'  => 'em',
-                'value' => 30
-            ];
-        }
-
-        if ($unit === 'em' && $value === 30 && $return_default === false) {
-            return $content_width_default;
-        }
-
-        if ($unit === 'em' && ($value < 30 || $value > 80)) {
-            return $content_width_default;
-        }
-
-        if ($unit === 'px' && ($value < 480 || $value > 1280)) {
-            return [
-                'unit'  => 'px',
-                'value' => 480
-            ];
-        }
-
-        if (!in_array($unit, ['em', 'px'], true)) {
-            return $content_width_default;
+        if ($page_width_unit !== $unit) {
+            if ($unit === 'px') {
+                $page_width_unit  = 'px';
+                $page_width_value = $page_width_value * 16;
+            } else {
+                $page_width_unit  = 'em';
+                $page_width_value = (int) ($page_width_value / 16);
+            }
         }
 
         return [
-            'unit'  => $unit,
-            'value' => $value
+            'unit'  => $page_width_unit,
+            'value' => $page_width_value
         ];
     }
 
