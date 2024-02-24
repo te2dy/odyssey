@@ -12,6 +12,9 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
+=== VERSION SUIVANTE ===
+- Ajout :
+
 === 0.11 – 24 février 2024 ===
 - Ajout : liens sociaux dans le pied de page.
 - Ajout : police de type Garamond.
@@ -45,12 +48,17 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 Odyssée remercie les auteurs des ressources suivantes qui lui ont permis de réaliser ce thème :
 
-Simple Icons
-Auteur : Simple Icons
-Adresse : https://simpleicons.org/
-Licence : Creative Commons Zero v1.0 Universal
+Feather Icons
+Auteur : Cole Bemis
+Adresse : https://feathericons.com/
+Licence : MIT
 
 Modern font stacks
 Auteur : Tom MacWright
 Adresse : https://modernfontstacks.com/
+Licence : Creative Commons Zero v1.0 Universal
+
+Simple Icons
+Auteur : Simple Icons
+Adresse : https://simpleicons.org/
 Licence : Creative Commons Zero v1.0 Universal
