@@ -391,6 +391,11 @@ class FrontendValues
         return '<br><small class=text-secondary><em>' . $markdown_notice . '</em></small>';
     }
 
+    /**
+     * Displays social links in the footer.
+     *
+     * @return Social links.
+     */
     public static function odysseyFooterSocialLinks()
     {
         $social_sites = My::socialSites();
@@ -406,12 +411,19 @@ class FrontendValues
                     $output .= '<ul class=footer-social-links>';
                 }
 
+
+                if (My::svgIcons($id)['author'] === 'simpleicons') {
+                    $class = 'footer-social-links-icon-si';
+                } elseif (My::svgIcons($id)['author'] === 'feathericons') {
+                    $class = 'footer-social-links-icon-fi';
+                }
+
                 $output .= '<li>';
                 $output .= '<a href=' . My::attrValue(My::settingValue('footer_social_' . $id)) . '>';
                 $output .= '<span class=footer-social-links-icon-container>';
-                $output .= '<svg class=footer-social-links-icon role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>';
+                $output .= '<svg class=' . $class . ' role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>';
                 $output .= '<title>' . $data['name'] . '</title>';
-                $output .= My::svgIcons($id);
+                $output .= My::svgIcons($id)['path'];
                 $output .= '</svg>';
                 $output .= '</span>';
                 $output .= '</a>';

@@ -717,7 +717,11 @@ class Config extends Process
                 if (!empty(self::sanitizeSocialLink('footer_social_' . $id, $_POST['footer_social_' . $id]))) {
                     $footer_social_links = true;
 
-                    break;
+                    if (My::svgIcons($id)['author'] === 'simpleicons') {
+                        $simpleicons_styles  = true;
+                    } elseif (My::svgIcons($id)['author'] === 'feathericons') {
+                        $feathericons_styles = true;
+                    }
                 }
             }
         }
@@ -742,13 +746,25 @@ class Config extends Process
             $css_main_array['.footer-social-links-icon-container']['width']            = '1.5rem';
             $css_main_array['.footer-social-links-icon-container']['height']           = '1.5rem';
 
-            $css_main_array['.footer-social-links-icon']['border']          = '0';
-            $css_main_array['.footer-social-links-icon']['fill']            = 'var(--color-text-main, #303030)';
-            $css_main_array['.footer-social-links-icon']['stroke']          = 'none';
-            $css_main_array['.footer-social-links-icon']['stroke-linecap']  = 'round';
-            $css_main_array['.footer-social-links-icon']['stroke-linejoin'] = 'round';
-            $css_main_array['.footer-social-links-icon']['stroke-width']    = '0';
-            $css_main_array['.footer-social-links-icon']['width']           = '1rem';
+            if ($simpleicons_styles === true) {
+                $css_main_array['.footer-social-links-icon-si']['border']          = '0';
+                $css_main_array['.footer-social-links-icon-si']['fill']            = 'var(--color-text-main, #303030)';
+                $css_main_array['.footer-social-links-icon-si']['stroke']          = 'none';
+                $css_main_array['.footer-social-links-icon-si']['stroke-linecap']  = 'round';
+                $css_main_array['.footer-social-links-icon-si']['stroke-linejoin'] = 'round';
+                $css_main_array['.footer-social-links-icon-si']['stroke-width']    = '0';
+                $css_main_array['.footer-social-links-icon-si']['width']           = '1rem';
+            }
+
+            if ($feathericons_styles === true) {
+                $css_main_array['.footer-social-links-icon-fi']['border']          = '0';
+                $css_main_array['.footer-social-links-icon-fi']['fill']            = 'none';
+                $css_main_array['.footer-social-links-icon-fi']['stroke']          = 'var(--color-text-main, #303030)';
+                $css_main_array['.footer-social-links-icon-fi']['stroke-linecap']  = 'round';
+                $css_main_array['.footer-social-links-icon-fi']['stroke-linejoin'] = 'round';
+                $css_main_array['.footer-social-links-icon-fi']['stroke-width']    = '2';
+                $css_main_array['.footer-social-links-icon-fi']['width']           = '1rem';
+            }
 
             $css_main_array['.footer-social-links a:active .footer-social-links-icon-container, .footer-social-links a:focus .footer-social-links-icon-container, .footer-social-links a:hover .footer-social-links-icon-container']['background-color'] = 'var(--color-primary, hsl(226, 80%, 45%))';
 
@@ -756,7 +772,13 @@ class Config extends Process
 
             $css_main_array['.footer-social-links a:active, .footer-social-links a:focus, .footer-social-links a:hover']['border-bottom'] = 'none';
 
-            $css_main_array['.footer-social-links a:active .footer-social-links-icon, .footer-social-links a:focus .footer-social-links-icon, .footer-social-links a:hover .footer-social-links-icon']['fill'] = 'var(--color-background, #fcfcfd)';
+            if ($simpleicons_styles === true) {
+                $css_main_array['.footer-social-links a:active .footer-social-links-icon-si, .footer-social-links a:focus .footer-social-links-icon-si, .footer-social-links a:hover .footer-social-links-icon-si']['fill'] = 'var(--color-background, #fcfcfd)';
+            }
+
+            if ($feathericons_styles === true) {
+                $css_main_array['.footer-social-links a:active .footer-social-links-icon-fi, .footer-social-links a:focus .footer-social-links-icon-fi, .footer-social-links a:hover .footer-social-links-icon-fi']['stroke'] = 'var(--color-background, #fcfcfd)';
+            }
         }
 
         $css  = !empty($css_root_array) ? My::stylesArrToStr($css_root_array) : '';
