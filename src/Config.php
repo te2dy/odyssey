@@ -884,7 +884,7 @@ class Config extends Process
                  * Limits the maximum width value of the image if its superior to the page width,
                  * and sets its height proportionally.
                  */
-                $page_width_data = My::sanitizePageWidth($page_width_unit, $page_width_value);
+                $page_width_data = self::sanitizePageWidth($page_width_unit, $page_width_value);
 
                 if (empty($page_width_data)) {
                     $page_width_data['unit']  = 'em';
