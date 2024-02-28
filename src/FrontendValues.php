@@ -78,7 +78,7 @@ class FrontendValues
                 || ($attr['position'] === 'top' && !My::settingValue('header_image_position')))
             ) {
                 $image_url  = Html::escapeURL(My::settingValue('header_image')['url']);
-                $image_size = My::settingValue('header_image')['width'];
+                $image_size = (int) My::settingValue('header_image')['width'];
 
                 $srcset = '';
                 $sizes  = '';

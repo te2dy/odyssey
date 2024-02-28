@@ -471,7 +471,6 @@ class My extends MyTheme
             'section'     => ['advanced', 'seo']
         ];
 
-        /*
         $default_settings['advanced_json'] = [
             'title'       => __('settings-advanced-json-title'),
             'description' => __('settings-advanced-json-description'),
@@ -479,7 +478,6 @@ class My extends MyTheme
             'default'     => '0',
             'section'     => ['advanced', 'seo']
         ];
-        */
 
         $default_settings['styles'] = [
             'title' => __('settings-footer-odysseystyles-title'),
@@ -816,6 +814,13 @@ class My extends MyTheme
         return '';
     }
 
+    /**
+     * Gets SVG info of a social site to display its icon.
+     *
+     * @param string $id The social site id.
+     *
+     * @return array SVG info.
+     */
     public static function svgIcons($id = ''): array
     {
         $icons = [];
@@ -871,4 +876,22 @@ class My extends MyTheme
 
         return [];
     }
+
+    /**
+     * Validates JSON.
+     *
+     * @param string $string The JSON input.
+     *
+     * @return bool
+     *
+     * @link https://www.php.net/releases/8.3/en.php#json_validate
+     * To be replace by json_validate() function available in PHP 8.3.
+     */
+    public static function odysseyJsonValidate(string $string): bool
+    {
+        json_decode($string);
+
+        return json_last_error() === JSON_ERROR_NONE;
+    }
+
 }
