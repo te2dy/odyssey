@@ -101,7 +101,6 @@ class Config extends Process
                                         );
 
                                         break;
-
                                     case 'header_image':
                                     case 'header_image2x':
                                         $setting_data = self::sanitizeHeaderImage(
@@ -112,7 +111,6 @@ class Config extends Process
                                         );
 
                                         break;
-
                                     case 'styles' :
                                         $setting_data = self::saveStyles();
                                 }
@@ -898,7 +896,6 @@ class Config extends Process
             $image_path = $public_path . str_replace($public_url . '/', '/', $image_url);
 
             if (My::imageExists($image_path)) {
-
                 // Gets the dimensions of the image.
                 list($header_image_width) = getimagesize($image_path);
 
@@ -910,7 +907,7 @@ class Config extends Process
 
                 if (empty($page_width_data)) {
                     $page_width_data['unit']  = 'em';
-                    $page_width_data['value'] = 480;
+                    $page_width_data['value'] = 30;
                 }
 
                 $page_width = $page_width_data['value'];
@@ -928,7 +925,7 @@ class Config extends Process
                 // Sets the array which contains the image data.
                 $image_data = [
                     'url'   => Html::sanitizeURL($image_url),
-                    'width' => (int) $header_image_width,
+                    'width' => (int) $header_image_width
                 ];
 
                 if ($setting_id === 'header_image' && !empty($image_data)) {

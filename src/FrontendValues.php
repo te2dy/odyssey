@@ -77,8 +77,11 @@ class FrontendValues
                 && (($attr['position'] === 'bottom' && My::settingValue('header_image_position') === 'bottom')
                 || ($attr['position'] === 'top' && !My::settingValue('header_image_position')))
             ) {
-                $image_url = Html::escapeURL(My::settingValue('header_image')['url']);
-                $srcset    = '';
+                $image_url  = Html::escapeURL(My::settingValue('header_image')['url']);
+                $image_size = My::settingValue('header_image')['width'];
+
+                $srcset = '';
+                $sizes  = '';
 
                 if (My::settingValue('header_image_description')) {
                     $alt = ' alt="' . Html::escapeHTML(My::settingValue('header_image_description')) . '"';
@@ -93,14 +96,16 @@ class FrontendValues
                     $srcset .= $image_url . ' 1x, ';
                     $srcset .= $image2x_url . ' 2x';
                     $srcset .= '"';
+
+                    $sizes = ' sizes=' . $image_size . 'vw';
                 }
 
                 // Does not add a link to the home page on home page.
                 if (App::url()->type === 'default') {
-                    return '<div id=site-image><img' . $alt . ' src="' . $image_url . '"' . $srcset . '></div>';
+                    return '<div id=site-image><img' . $alt . ' src="' . $image_url . '"' . $srcset . $sizes . '></div>';
                 }
 
-                return '<div id=site-image><a href="' . App::blog()->url . '" rel=home><img' . $alt . ' src="' . $image_url . '"' . $srcset . '></a></div>';
+                return '<div id=site-image><a href="' . App::blog()->url . '" rel=home><img' . $alt . ' src="' . $image_url . '"' . $srcset . $sizes . '></a></div>';
             }
         }
     }
