@@ -176,6 +176,7 @@ class FrontendBehaviors
                             '@type' => 'Organization',
                             'name'  => App::blog()->name
                         ],
+                        'name'  => App::blog()->name,
                         'description' => My::settingValue('advanced_meta_description') ?: App::blog()->desc,
                         'url'         => App::blog()->url
                     ];
