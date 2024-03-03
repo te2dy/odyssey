@@ -168,12 +168,46 @@ class My extends MyTheme
 
         ksort($global_color_primary_choices);
 
+        $global_color_primary_choices[__('settings-global-primarycolor-custom')] = 'custom';
+
         $default_settings['global_color_primary'] = [
             'title'       => __('settings-global-primarycolor-title'),
             'description' => __('settings-global-primarycolor-description'),
             'type'        => 'select',
             'choices'     => $global_color_primary_choices,
             'default'     => 'blue',
+            'section'     => ['global', 'colors']
+        ];
+
+        $default_settings['global_color_primary_custom'] = [
+            'title'       => __('settings-global-primarycolorcustom-title'),
+            'description' => '',
+            'type'        => 'color',
+            'default'     => '#1742cf',
+            'section'     => ['global', 'colors']
+        ];
+
+        $default_settings['global_color_primary_amplified_custom'] = [
+            'title'       => __('settings-global-primarycoloramplifiedcustom-title'),
+            'description' => '',
+            'type'        => 'color',
+            'default'     => '#063ff9',
+            'section'     => ['global', 'colors']
+        ];
+
+        $default_settings['global_color_primary_dark_custom'] = [
+            'title'       => __('settings-global-primarycolordarkcustom-title'),
+            'description' => '',
+            'type'        => 'color',
+            'default'     => '#7592f0',
+            'section'     => ['global', 'colors']
+        ];
+
+        $default_settings['global_color_primary_dark_amplified_custom'] = [
+            'title'       => __('settings-global-primarycolordarkamplifiedcustom-title'),
+            'description' => '',
+            'type'        => 'color',
+            'default'     => '#9cb2fc',
             'section'     => ['global', 'colors']
         ];
 

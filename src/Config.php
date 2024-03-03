@@ -270,6 +270,35 @@ class Config extends Process
 
                 break;
 
+            case 'color' :
+                $placeholder = isset($default_settings[$setting_id]['placeholder'])
+                ? 'placeholder=' . My::attrValue($default_settings[$setting_id]['placeholder'])
+                : '';
+
+                echo '<span class=odyssey-color-setting><label for=', $setting_id, '>',
+                $default_settings[$setting_id]['title'],
+                '</label>',
+
+                form::color(
+                    $setting_id . '-picker',
+                    7,
+                    7,
+                    $setting_value ?: $default_settings[$setting_id]['default']
+                ),
+
+                '<input id=', $setting_id, ' value=',
+                $setting_value ?: $default_settings[$setting_id]['default'],
+                '>',
+
+                ' <input id=', $setting_id, '-default-button type=button value="', __('default'), '">',
+
+                form::hidden(
+                    $setting_id . '-default-value',
+                    Html::escapeHTML($default_settings[$setting_id]['default'])
+                );
+
+                break;
+
             case 'textarea' :
                 $placeholder = isset($default_settings[$setting_id]['placeholder'])
                 ? 'placeholder=' . My::attrValue($default_settings[$setting_id]['placeholder'])
@@ -367,7 +396,7 @@ class Config extends Process
                     $saved_settings[$setting_id] = (bool) App::blog()->settings->odyssey->$setting_id;
                 } elseif (isset($setting_data['type']) && $setting_data['type'] === 'select_int') {
                     $saved_settings[$setting_id] = (int) App::blog()->settings->odyssey->$setting_id;
-                } elseif (isset($setting_data['type']) && ($setting_data['type'] === 'text' || $setting_data['type'] === 'textarea')) {
+                } elseif (isset($setting_data['type']) && ($setting_data['type'] === 'text' || $setting_data['type'] === 'textarea' || $setting_data['type'] === 'color')) {
                     $saved_settings[$setting_id] = (string) App::blog()->settings->odyssey->$setting_id;
                 } else {
                     $saved_settings[$setting_id] = App::blog()->settings->odyssey->$setting_id;
@@ -528,24 +557,41 @@ class Config extends Process
         ];
 
         // Primary color.
-        if (isset($_POST['global_color_primary']) && in_array($_POST['global_color_primary'], $primary_colors_allowed, true)) {
+        if (isset($_POST['global_color_primary'])) {
+            if (in_array($_POST['global_color_primary'], $primary_colors_allowed, true)) {
+                // Light.
+                $css_root_array[':root']['--color-primary'] = 'hsl(' . $primary_colors['light'][$_POST['global_color_primary']] . ')';
 
-            // Light.
-            $css_root_array[':root']['--color-primary'] = 'hsl(' . $primary_colors['light'][$_POST['global_color_primary']] . ')';
+                // Light & amplified.
+                if (isset($primary_colors['light-amplified'][$_POST['global_color_primary']])) {
+                    $css_root_array[':root']['--color-primary-amplified'] = 'hsl(' . $primary_colors['light-amplified'][$_POST['global_color_primary']] . ')';
+                }
 
-            // Light & amplified.
-            if (isset($primary_colors['light-amplified'][$_POST['global_color_primary']])) {
-                $css_root_array[':root']['--color-primary-amplified'] = 'hsl(' . $primary_colors['light-amplified'][$_POST['global_color_primary']] . ')';
-            }
+                // Dark.
+                if (isset($primary_colors['dark'][$_POST['global_color_primary']])) {
+                    $css_root_array[':root']['--color-primary-dark'] = 'hsl(' . $primary_colors['dark'][$_POST['global_color_primary']] . ')';
+                }
 
-            // Dark.
-            if (isset($primary_colors['dark'][$_POST['global_color_primary']])) {
-                $css_root_array[':root']['--color-primary-dark'] = 'hsl(' . $primary_colors['dark'][$_POST['global_color_primary']] . ')';
-            }
+                // Dark & amplified.
+                if (isset($primary_colors['dark-amplified'][$_POST['global_color_primary']])) {
+                    $css_root_array[':root']['--color-primary-dark-amplified'] = 'hsl(' . $primary_colors['dark-amplified'][$_POST['global_color_primary']] . ')';
+                }
+            } elseif ($_POST['global_color_primary'] === 'custom') {
+                if (isset($_POST['global_color_primary_custom'])) {
+                    $css_root_array[':root']['--color-primary'] = $_POST['global_color_primary_custom'];
+                }
 
-            // Dark & amplified.
-            if (isset($primary_colors['dark-amplified'][$_POST['global_color_primary']])) {
-                $css_root_array[':root']['--color-primary-dark-amplified'] = 'hsl(' . $primary_colors['dark-amplified'][$_POST['global_color_primary']] . ')';
+                if (isset($_POST['global_color_primary_amplified_custom'])) {
+                    $css_root_array[':root']['--color-primary-amplified'] = $_POST['global_color_primary_amplified_custom'];
+                }
+
+                if (isset($_POST['global_color_primary_dark_custom'])) {
+                    $css_root_array[':root']['--color-primary'] = $_POST['global_color_primary_dark_custom'];
+                }
+
+                if (isset($_POST['global_color_primary_dark_amplified_custom'])) {
+                    $css_root_array[':root']['--color-primary-amplified'] = $_POST['global_color_primary_dark_amplified_custom'];
+                }
             }
         }
 

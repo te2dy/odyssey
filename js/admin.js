@@ -2,6 +2,18 @@
  * Shows or hides settings depending on others.
  */
 function disableInputs() {
+  if (document.getElementById("global_color_primary").value === "custom") {
+    document.getElementById("global_color_primary_custom-input").style.display                = "block";
+    document.getElementById("global_color_primary_amplified_custom-input").style.display      = "block";
+    document.getElementById("global_color_primary_dark_custom-input").style.display           = "block";
+    document.getElementById("global_color_primary_dark_amplified_custom-input").style.display = "block";
+  } else {
+    document.getElementById("global_color_primary_custom-input").style.display                = "none";
+    document.getElementById("global_color_primary_amplified_custom-input").style.display      = "none";
+    document.getElementById("global_color_primary_dark_custom-input").style.display           = "none";
+    document.getElementById("global_color_primary_dark_amplified_custom-input").style.display = "none";
+  }
+
   if (document.getElementById("header_image").value !== "") {
     document.getElementById("header_image_position-input").style.display          = "block";
     document.getElementById("header_image_description-input").style.display       = "block";
@@ -222,6 +234,26 @@ function fontsPreview() {
   }
 }
 
+/**
+ * Applies color change to the HTML5 picker and the text input.
+ */
+function changeColorInput(settingId, context) {
+  let colorPicker  = document.getElementById(settingId + "-picker").value,
+      colorInput   = document.getElementById(settingId).value;
+      colorDefault = document.getElementById(settingId + "-default-value").value;
+
+  if (colorPicker !== colorInput) {
+    if (context === "picker") {
+      document.getElementById(settingId).value = colorPicker;
+    } else if (context === "field") {
+      document.getElementById(settingId + "-picker").value = colorInput;
+    }
+  } else if (context === "default") {
+    document.getElementById(settingId + "-picker").value = colorDefault;
+    document.getElementById(settingId).value             = colorDefault;
+  }
+}
+
 window.onload = function() {
   disableInputs();
   changeImage();
@@ -243,6 +275,34 @@ window.onload = function() {
   window.oninput = function() {
     inputValidation();
   };
+
+  /**
+   * Puts choosen color with HTML5 code picker
+   * in its associated input field,
+   * or puts the color typed in the input color field
+   * in the HTML color picker.
+   *
+   * @see function changeColorInput()
+   */
+  const colorSettings = document.getElementsByClassName("odyssey-color-setting");
+
+  Array.prototype.forEach.call(colorSettings, function(colorSetting) {
+    var settingId = colorSetting.firstElementChild.getAttribute("for"),
+        pickerId  = settingId + "-picker";
+        defaultId = settingId + "-default-button";
+
+    document.getElementById(pickerId).oninput = function() {
+      changeColorInput(settingId, "picker");
+    };
+
+    document.getElementById(settingId).oninput = function() {
+      changeColorInput(settingId, "field");
+    };
+
+    document.getElementById(defaultId).onclick = function() {
+      changeColorInput(settingId, "default");
+    };
+  });
 
   document.getElementById("header_image").onchange = function() {
     disableInputs();
