@@ -3,15 +3,17 @@
  */
 function disableInputs() {
   if (document.getElementById("global_color_primary").value === "custom") {
-    document.getElementById("global_color_primary_custom-input").style.display                = "block";
-    document.getElementById("global_color_primary_amplified_custom-input").style.display      = "block";
-    document.getElementById("global_color_primary_dark_custom-input").style.display           = "block";
-    document.getElementById("global_color_primary_dark_amplified_custom-input").style.display = "block";
+    document.getElementById("global_color_primary_custom-input").style.display                 = "block";
+    document.getElementById("global_color_primary_amplified_custom-input").style.display       = "block";
+    document.getElementById("global_color_primary_amplified_custom-description").style.display = "block";
+    document.getElementById("global_color_primary_dark_custom-input").style.display            = "block";
+    document.getElementById("global_color_primary_dark_amplified_custom-input").style.display  = "block";
   } else {
-    document.getElementById("global_color_primary_custom-input").style.display                = "none";
-    document.getElementById("global_color_primary_amplified_custom-input").style.display      = "none";
-    document.getElementById("global_color_primary_dark_custom-input").style.display           = "none";
-    document.getElementById("global_color_primary_dark_amplified_custom-input").style.display = "none";
+    document.getElementById("global_color_primary_custom-input").style.display                 = "none";
+    document.getElementById("global_color_primary_amplified_custom-input").style.display       = "none";
+    document.getElementById("global_color_primary_amplified_custom-description").style.display = "none";
+    document.getElementById("global_color_primary_dark_custom-input").style.display            = "none";
+    document.getElementById("global_color_primary_dark_amplified_custom-input").style.display  = "none";
   }
 
   if (document.getElementById("header_image").value !== "") {
@@ -238,19 +240,25 @@ function fontsPreview() {
  * Applies color change to the HTML5 picker and the text input.
  */
 function changeColorInput(settingId, context) {
-  let colorPicker  = document.getElementById(settingId + "-picker").value,
-      colorInput   = document.getElementById(settingId).value;
+  let colorPicker  = document.getElementById(settingId).value,
+      colorText    = document.getElementById(settingId + "-text").value;
       colorDefault = document.getElementById(settingId + "-default-value").value;
 
-  if (colorPicker !== colorInput) {
+  if (colorPicker !== colorText && context !== "default") {
     if (context === "picker") {
-      document.getElementById(settingId).value = colorPicker;
-    } else if (context === "field") {
-      document.getElementById(settingId + "-picker").value = colorInput;
+      document.getElementById(settingId + "-text").value = colorPicker;
+    } else if (context === "text") {
+      if (colorText !== '') {
+        document.getElementById(settingId).value = colorText;
+      } else {
+        document.getElementById(settingId).value = colorDefault;
+      }
     }
-  } else if (context === "default") {
-    document.getElementById(settingId + "-picker").value = colorDefault;
-    document.getElementById(settingId).value             = colorDefault;
+  }
+
+  if (context === "default") {
+    document.getElementById(settingId).value           = colorDefault;
+    document.getElementById(settingId + "-text").value = colorDefault;
   }
 }
 
@@ -288,15 +296,15 @@ window.onload = function() {
 
   Array.prototype.forEach.call(colorSettings, function(colorSetting) {
     var settingId = colorSetting.firstElementChild.getAttribute("for"),
-        pickerId  = settingId + "-picker";
+        textId  = settingId + "-text";
         defaultId = settingId + "-default-button";
 
-    document.getElementById(pickerId).oninput = function() {
+    document.getElementById(settingId).oninput = function() {
       changeColorInput(settingId, "picker");
     };
 
-    document.getElementById(settingId).oninput = function() {
-      changeColorInput(settingId, "field");
+    document.getElementById(textId).oninput = function() {
+      changeColorInput(settingId, "text");
     };
 
     document.getElementById(defaultId).onclick = function() {

@@ -272,7 +272,7 @@ class Config extends Process
 
             case 'color' :
                 $placeholder = isset($default_settings[$setting_id]['placeholder'])
-                ? 'placeholder=' . My::attrValue($default_settings[$setting_id]['placeholder'])
+                ? ' placeholder=' . My::attrValue($default_settings[$setting_id]['placeholder'])
                 : '';
 
                 echo '<span class=odyssey-color-setting><label for=', $setting_id, '>',
@@ -280,17 +280,17 @@ class Config extends Process
                 '</label>',
 
                 form::color(
-                    $setting_id . '-picker',
+                    $setting_id,
                     7,
                     7,
                     $setting_value ?: $default_settings[$setting_id]['default']
                 ),
 
-                '<input id=', $setting_id, ' value=',
+                '<input id=', $setting_id, '-text', $placeholder , ' value=',
                 $setting_value ?: $default_settings[$setting_id]['default'],
                 '>',
 
-                ' <input id=', $setting_id, '-default-button type=button value="', __('default'), '">',
+                ' <input id=', $setting_id, '-default-button type=button value="', __('settings-colors-reset'), '">',
 
                 form::hidden(
                     $setting_id . '-default-value',
@@ -558,7 +558,7 @@ class Config extends Process
 
         // Primary color.
         if (isset($_POST['global_color_primary'])) {
-            if (in_array($_POST['global_color_primary'], $primary_colors_allowed, true)) {
+            if ($_POST['global_color_primary'] !== 'custom' && in_array($_POST['global_color_primary'], $primary_colors_allowed, true)) {
                 // Light.
                 $css_root_array[':root']['--color-primary'] = 'hsl(' . $primary_colors['light'][$_POST['global_color_primary']] . ')';
 
@@ -586,11 +586,11 @@ class Config extends Process
                 }
 
                 if (isset($_POST['global_color_primary_dark_custom'])) {
-                    $css_root_array[':root']['--color-primary'] = $_POST['global_color_primary_dark_custom'];
+                    $css_root_dark_array[':root']['--color-primary-dark'] = $_POST['global_color_primary_dark_custom'];
                 }
 
                 if (isset($_POST['global_color_primary_dark_amplified_custom'])) {
-                    $css_root_array[':root']['--color-primary-amplified'] = $_POST['global_color_primary_dark_amplified_custom'];
+                    $css_root_dark_array[':root']['--color-primary-dark-amplified'] = $_POST['global_color_primary_dark_amplified_custom'];
                 }
             }
         }
@@ -894,6 +894,17 @@ class Config extends Process
             return [
                 'value' => (int) $setting_value,
                 'type'  => 'integer'
+            ];
+        }
+
+        if ($setting_type === 'color') {
+            if (preg_match('/#[A-Fa-f0-9]{6}/', $setting_value) === false) {
+                $setting_value = $default_settings[$setting_id]['default'];
+            }
+
+            return [
+                'value' => strtolower($setting_value),
+                'type'  => 'string'
             ];
         }
 

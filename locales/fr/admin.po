@@ -201,6 +201,27 @@ msgstr "Vert"
 msgid "settings-global-primarycolor-red"
 msgstr "Rouge"
 
+msgid "settings-global-primarycolor-custom"
+msgstr "Personnalisée"
+
+msgid "settings-global-primarycolorcustom-title"
+msgstr "Couleur principale (thème clair)"
+
+msgid "settings-global-primarycoloramplifiedcustom-title"
+msgstr "Couleur principale nuancée (thème clair)"
+
+msgid "settings-global-primarycoloramplifiedcustom-description"
+msgstr "Il s’agit de la couleur utilisée au survol avec la souris (ou au toucher sur mobile) de la couleur principale (exemple&nbsp;: survol d’un lien)."
+
+msgid "settings-global-primarycolordarkcustom-title"
+msgstr "Couleur principale (thème sombre)"
+
+msgid "settings-global-primarycolordarkamplifiedcustom-title"
+msgstr "Couleur principale nuancée (thème sombre)"
+
+msgid "settings-colors-reset"
+msgstr "par défaut"
+
 msgid "settings-global-colortransition-title"
 msgstr "Activer les transitions de couleur"
 

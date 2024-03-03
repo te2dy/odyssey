@@ -201,6 +201,27 @@ msgstr "Green"
 msgid "settings-global-primarycolor-red"
 msgstr "Red"
 
+msgid "settings-global-primarycolor-custom"
+msgstr "Custom"
+
+msgid "settings-global-primarycolorcustom-title"
+msgstr "Primary color (light theme)"
+
+msgid "settings-global-primarycoloramplifiedcustom-title"
+msgstr "Primary color on hover (light theme)"
+
+msgid "settings-global-primarycoloramplifiedcustom-description"
+msgstr "This is the color used when the primary color is hovered over with the mouse (or touched on mobile) (example: hovering over a link)."
+
+msgid "settings-global-primarycolordarkcustom-title"
+msgstr "Primary color (dark theme)"
+
+msgid "settings-global-primarycolordarkamplifiedcustom-title"
+msgstr "Primary color on hover (dark theme)"
+
+msgid "settings-colors-reset"
+msgstr "default"
+
 msgid "settings-global-colortransition-title"
 msgstr "Enable color transitions"
 

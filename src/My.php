@@ -184,14 +184,16 @@ class My extends MyTheme
             'description' => '',
             'type'        => 'color',
             'default'     => '#1742cf',
+            'placeholder' => '#1742cf',
             'section'     => ['global', 'colors']
         ];
 
         $default_settings['global_color_primary_amplified_custom'] = [
             'title'       => __('settings-global-primarycoloramplifiedcustom-title'),
-            'description' => '',
+            'description' => __('settings-global-primarycoloramplifiedcustom-description'),
             'type'        => 'color',
             'default'     => '#063ff9',
+            'placeholder' => '#063ff9',
             'section'     => ['global', 'colors']
         ];
 
@@ -200,6 +202,7 @@ class My extends MyTheme
             'description' => '',
             'type'        => 'color',
             'default'     => '#7592f0',
+            'placeholder' => '#7592f0',
             'section'     => ['global', 'colors']
         ];
 
@@ -208,6 +211,7 @@ class My extends MyTheme
             'description' => '',
             'type'        => 'color',
             'default'     => '#9cb2fc',
+            'placeholder' => '#9cb2fc',
             'section'     => ['global', 'colors']
         ];
 

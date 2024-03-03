@@ -201,6 +201,27 @@ msgstr ""
 msgid "settings-global-primarycolor-red"
 msgstr ""
 
+msgid "settings-global-primarycolor-custom"
+msgstr ""
+
+msgid "settings-global-primarycolorcustom-title"
+msgstr ""
+
+msgid "settings-global-primarycoloramplifiedcustom-title"
+msgstr ""
+
+msgid "settings-global-primarycoloramplifiedcustom-description"
+msgstr ""
+
+msgid "settings-global-primarycolordarkcustom-title"
+msgstr ""
+
+msgid "settings-global-primarycolordarkamplifiedcustom-title"
+msgstr ""
+
+msgid "settings-colors-reset"
+msgstr ""
+
 msgid "settings-global-colortransition-title"
 msgstr ""
 
