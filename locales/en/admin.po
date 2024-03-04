@@ -421,13 +421,13 @@ msgid "settings-footer-social-mastodon-description"
 msgstr "URL of a %s account."
 
 msgid "settings-footer-social-signal-description"
-msgstr "Phone number or %s account or group."
+msgstr "Phone number (warning: it will be public) or %s account or group."
 
 msgid "settings-footer-social-youtube-description"
 msgstr "URL of a %s channel."
 
 msgid "settings-footer-social-whatsapp-description"
-msgstr "%s phone number."
+msgstr "%s phone number (warning: it will be public)."
 
 msgid "settings-footer-social-x-description"
 msgstr "URL of an %s account."
