@@ -12,8 +12,13 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
-=== VERSION SUIVANTE ===
-- Ajout :
+=== 0.12 – 4 mars 2024 ===
+- Ajout : option pour personnaliser les couleurs du thème.
+- Ajout : option JSON LD dans l’en-tête de la page d’accueil et des billets.
+- Correction : l’option de transition de couleurs ne s’appliquait pas aux liens sociaux.
+- Correction : attribut "sizes" manquant pour l’image d’en-tête avec "srcset".
+- Mise à jour : traductions.
+- Mise à jour : mentions dans le lisez-moi.
 
 === 0.11 – 24 février 2024 ===
 - Ajout : liens sociaux dans le pied de page.
