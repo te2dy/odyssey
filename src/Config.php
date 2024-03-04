@@ -789,6 +789,7 @@ class Config extends Process
             $css_main_array['.footer-social-links-icon-container']['justify-content']  = 'center';
             $css_main_array['.footer-social-links-icon-container']['width']            = '1.5rem';
             $css_main_array['.footer-social-links-icon-container']['height']           = '1.5rem';
+            $css_main_array['.footer-social-links-icon-container']['transition']       = 'var(--color-transition, unset)';
 
             if ($simpleicons_styles === true) {
                 $css_main_array['.footer-social-links-icon-si']['border']          = '0';
@@ -798,6 +799,7 @@ class Config extends Process
                 $css_main_array['.footer-social-links-icon-si']['stroke-linejoin'] = 'round';
                 $css_main_array['.footer-social-links-icon-si']['stroke-width']    = '0';
                 $css_main_array['.footer-social-links-icon-si']['width']           = '1rem';
+                $css_main_array['.footer-social-links-icon-si']['transition']      = 'var(--color-transition, unset)';
             }
 
             if ($feathericons_styles === true) {
@@ -808,9 +810,12 @@ class Config extends Process
                 $css_main_array['.footer-social-links-icon-fi']['stroke-linejoin'] = 'round';
                 $css_main_array['.footer-social-links-icon-fi']['stroke-width']    = '2';
                 $css_main_array['.footer-social-links-icon-fi']['width']           = '1rem';
+                $css_main_array['.footer-social-links-icon-fi']['transition']      = 'var(--color-transition, unset)';
             }
 
             $css_main_array['.footer-social-links a:active .footer-social-links-icon-container, .footer-social-links a:focus .footer-social-links-icon-container, .footer-social-links a:hover .footer-social-links-icon-container']['background-color'] = 'var(--color-primary, hsl(226, 80%, 45%))';
+
+            $css_main_array['.footer-social-links a:active .footer-social-links-icon-container, .footer-social-links a:focus .footer-social-links-icon-container, .footer-social-links a:hover .footer-social-links-icon-container']['transition'] = 'var(--color-transition, unset)';
 
             $css_main_array['.footer-social-links a']['border-bottom'] = 'none';
 
@@ -818,10 +823,14 @@ class Config extends Process
 
             if ($simpleicons_styles === true) {
                 $css_main_array['.footer-social-links a:active .footer-social-links-icon-si, .footer-social-links a:focus .footer-social-links-icon-si, .footer-social-links a:hover .footer-social-links-icon-si']['fill'] = 'var(--color-background, #fcfcfd)';
+
+                $css_main_array['.footer-social-links a:active .footer-social-links-icon-si, .footer-social-links a:focus .footer-social-links-icon-si, .footer-social-links a:hover .footer-social-links-icon-si']['transition'] = 'var(--color-transition, unset)';
             }
 
             if ($feathericons_styles === true) {
                 $css_main_array['.footer-social-links a:active .footer-social-links-icon-fi, .footer-social-links a:focus .footer-social-links-icon-fi, .footer-social-links a:hover .footer-social-links-icon-fi']['stroke'] = 'var(--color-background, #fcfcfd)';
+
+                $css_main_array['.footer-social-links a:active .footer-social-links-icon-fi, .footer-social-links a:focus .footer-social-links-icon-fi, .footer-social-links a:hover .footer-social-links-icon-fi']['transition'] = 'var(--color-transition, unset)';
             }
         }
 
