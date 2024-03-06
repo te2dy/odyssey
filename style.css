@@ -240,6 +240,16 @@ h6 {
 :is(.content-text, .widget) ol li::before {
   content: counter(list) ".";
 }
+sub, sup {
+  vertical-align: baseline;
+  position: relative;
+}
+sub {
+  top: 0.4em;
+}
+sup {
+  top: -0.4em;
+}
 
 /* Images & media. */
 figure {
