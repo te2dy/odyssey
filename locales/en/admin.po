@@ -54,6 +54,12 @@ msgstr "Comment and trackback settings"
 msgid "section-reactions-form"
 msgstr "Comment form"
 
+msgid "section-reactions-trackbacks"
+msgstr "Trackbacks"
+
+msgid "section-reactions-other"
+msgstr "Other reaction methods"
+
 msgid "section-widgets"
 msgstr "Widgets settings"
 
@@ -62,6 +68,9 @@ msgstr "Footer settings"
 
 msgid "section-footer-social"
 msgstr "Social links"
+
+msgid "section-social"
+msgstr "Social settings"
 
 msgid "section-advanced"
 msgstr "Advanced settings"
@@ -375,20 +384,65 @@ msgstr "Allows you to visually lighten the blog pages."
 msgid "settings-reactions-markdownnotice-title"
 msgstr "Show a message about Markdown markup support"
 
-msgid "settings-content-privatecomment-title"
-msgstr "Private comments"
+msgid "settings-reactions-other-trackbacks-title"
+msgstr "Display a link to add trackbacks"
 
-msgid "settings-reactions-privatecomment-description"
-msgstr "If this option is enabled, <strong>the authors' email address will be made public</strong>. If you prefer not to reveal their address, try <a href=%s>the Signal plugin</a>."
+msgid "settings-reactions-other-title"
+msgstr "Allow other reaction methods"
 
-msgid "settings-reactions-privatecomment-no-default"
-msgstr "Disabled (default)"
+msgid "settings-reactions-other-description"
+msgstr "You can offer your readers the opportunity to react to your posts via e-mail, social networks or other apps."
 
-msgid "settings-reactions-privatecomment-open"
-msgstr "Enabled, only when comments are open"
+msgid "settings-reactions-other-disabled-default"
+msgstr "No"
 
-msgid "settings-reactions-privatecomment-always"
-msgstr "Always enabled"
+msgid "settings-reactions-other-commentsopen"
+msgstr "Yes, only when comments are opened"
+
+msgid "settings-reactions-other-always"
+msgstr "Yes, always"
+
+msgid "settings-reactions-otheremail-title"
+msgstr "Allow replies by e-mail"
+
+msgid "settings-reactions-otheremail-description"
+msgstr "Warning: your e-mail address will be revealed and may be used by malicious parties (spam). To avoid revealing your address, you can try the <a href="%s">Signal</a> plugin."
+
+msgid "settings-reactions-other-facebook-title"
+msgstr "Allow sharing on %s"
+
+msgid "settings-reactions-other-facebook-description"
+msgstr "Your readers can reply to you on Facebook by public message."
+
+msgid "settings-reactions-other-mastodon-title"
+msgstr "Allow sharing on %s"
+
+msgid "settings-reactions-other-mastodon-description"
+msgstr "Your readers can reply to you on Mastodon by public message."
+
+msgid "settings-reactions-other-signal-title"
+msgstr "Allow replies on %s"
+
+msgid "settings-reactions-other-signal-description"
+msgstr "Warning: if you have entered a phone number or user name, it will be made public and could fall into the wrong hands."
+
+msgid "settings-reactions-other-sms-title"
+msgstr "Allow replies by %s"
+
+msgid "settings-reactions-other-sms-description"
+msgstr "Warning: your telephone number will be made public and could fall into the wrong hands."
+
+msgid "settings-reactions-other-whatsapp-title"
+msgstr "Allow replies on %s"
+
+msgid "settings-reactions-other-whatsapp-description"
+msgstr "Warning: your telephone number will be made public and could fall into the wrong hands."
+
+msgid "settings-reactions-other-x-title"
+msgstr "Allow sharing on %s"
+
+msgid "settings-reactions-other-x-description"
+msgstr "Your readers can reply to you on X by public message."
 
 msgid "settings-widgets-display-title"
 msgstr "Enable widgets (nav and extra panes)"
@@ -408,31 +462,79 @@ msgstr "Show a mention to Dotclear and the theme"
 msgid "settings-footer-credits-description"
 msgstr "Allows you to advertise Dotclear and this theme."
 
-msgid "settings-footer-social-diaspora-description"
+msgid "settings-social-diaspora-description"
 msgstr "URL of a %s profile or page."
 
-msgid "settings-footer-social-facebook-description"
+msgid "settings-social-facebook-description"
 msgstr "URL of a %s profile or page."
 
-msgid "settings-footer-social-instagram-description"
+msgid "settings-social-instagram-description"
 msgstr "URL of an %s page."
 
-msgid "settings-footer-social-mastodon-description"
+msgid "settings-social-mastodon-description"
 msgstr "URL of a %s account."
 
-msgid "settings-footer-social-signal-description"
-msgstr "Phone number (warning: it will be public) or %s account or group."
+msgid "settings-footer-social-diaspora-title"
+msgstr "Display a link to %s"
 
-msgid "settings-footer-social-youtube-description"
-msgstr "URL of a %s channel."
+msgid "settings-footer-social-facebook-title"
+msgstr "Display a link to %s"
+
+msgid "settings-footer-social-instagram-title"
+msgstr "Display a link to %s"
+
+msgid "settings-footer-social-mastodon-title"
+msgstr "Display a link to %s"
+
+msgid "settings-footer-social-phone-title"
+msgstr "Display a link to call you"
+
+msgid "settings-footer-social-signal-title"
+msgstr "Display a link to %s"
+
+msgid "settings-footer-social-sms-title"
+msgstr "Display a link to text you"
+
+msgid "settings-footer-social-youtube-title"
+msgstr "Display a link to %s"
+
+msgid "settings-footer-social-whatsapp-title"
+msgstr "Display a link to %s"
+
+msgid "settings-footer-social-x-title"
+msgstr "Display a link to %s"
+
+msgid "settings-footer-social-other-title"
+msgstr "Display a link to your custom link"
+
+msgid "settings-footer-social-sms-description"
+msgstr "Attention&nbsp;: votre numéro de téléphone sera rendu public et pourrait tomber entre des mains malveillantes."
+
+msgid "settings-footer-social-signal-description"
+msgstr "Warning: if you have entered a phone number or user name, it will be made public and could fall into the wrong hands."
 
 msgid "settings-footer-social-whatsapp-description"
-msgstr "%s phone number (warning: it will be public)."
+msgstr "Warning: your telephone number will be made public and could fall into the wrong hands."
 
-msgid "settings-footer-social-x-description"
+msgid "settings-social-phone-description"
+msgstr "Phone number in +1234567890 format."
+
+msgid "settings-social-signal-description"
+msgstr "Phone number in +1234567890 format or URL of an %s account or group"
+
+msgid "settings-social-sms-description"
+msgstr "Phone number in +1234567890 format."
+
+msgid "settings-social-youtube-description"
+msgstr "URL of a %s channel"
+
+msgid "settings-social-whatsapp-description"
+msgstr "Phone number in +1234567890 format."
+
+msgid "settings-social-x-description"
 msgstr "URL of an %s account."
 
-msgid "settings-footer-social-other-description"
+msgid "settings-social-other-description"
 msgstr "URL of a webpage of your choice."
 
 msgid "settings-advanced-metadescription-title"

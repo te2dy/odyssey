@@ -204,7 +204,7 @@ msgid "reactions-comment-form-comment-label"
 msgstr "Commentaire"
 
 msgid "reactions-comment-markdown-support"
-msgstr "Vous pouvez mettre en forme votre commentaire avec le balisage <a href=%s hreflang=en rel=external target=_blank>Markdown</a>."
+msgstr "Balisage <a href=%s hreflang=en rel=external target=_blank>Markdown</a> autorisé."
 
 msgid "reactions-comment-markdown-support-link"
 msgstr "https://www.markdownguide.org/basic-syntax"
@@ -215,17 +215,35 @@ msgstr "Prévisualiser"
 msgid "reactions-comment-form-submit-button"
 msgstr "Envoyer"
 
-msgid "reactions-comment-private-title"
-msgstr "Envoyer un commentaire privé"
+msgid "reactions-other-title"
+msgstr "Réagir par un autre moyen"
 
-msgid "reactions-comment-private-body-post-url"
+msgid "reactions-other-email-body-post-url"
 msgstr "Adresse du billet&nbsp;:"
 
-msgid "reactions-comment-private-button-text"
+msgid "reactions-other-email-button-text"
 msgstr "Répondre par courriel"
 
-msgid "reactions-comment-private-email-prefix"
+msgid "reactions-other-email-prefix"
 msgstr "Re:"
+
+msgid "reactions-other-facebook-button"
+msgstr "Publier sur %s"
+
+msgid "reactions-other-mastodon-button"
+msgstr "Publier sur %s"
+
+msgid "reactions-other-signal-button"
+msgstr "Répondre sur %s"
+
+msgid "reactions-other-sms-button"
+msgstr "Répondre par %s"
+
+msgid "reactions-other-whatsapp-button"
+msgstr "Répondre sur %s"
+
+msgid "reactions-other-x-button"
+msgstr "Publier sur %s"
 
 msgid "reactions-subscribe-link-reactions"
 msgstr "S’abonner aux réactions"
@@ -278,8 +296,14 @@ msgstr "Instagram"
 msgid "social-site-mastodon"
 msgstr "Mastodon"
 
+msgid "social-site-phone"
+msgstr "Téléphone"
+
 msgid "social-site-signal"
 msgstr "Signal"
+
+msgid "social-site-sms"
+msgstr "SMS"
 
 msgid "social-site-youtube"
 msgstr "YouTube"

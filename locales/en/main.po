@@ -204,7 +204,7 @@ msgid "reactions-comment-form-comment-label"
 msgstr "Comment"
 
 msgid "reactions-comment-markdown-support"
-msgstr "You can format your comment with <a href=%s rel=external target=_blank>Markdown</a> markup."
+msgstr "<a href=%s rel=external target=_blank>Markdown</a> markup allowed."
 
 msgid "reactions-comment-markdown-support-link"
 msgstr "https://www.markdownguide.org/basic-syntax"
@@ -215,17 +215,35 @@ msgstr "Preview"
 msgid "reactions-comment-form-submit-button"
 msgstr "Send"
 
-msgid "reactions-comment-private-title"
-msgstr "Send a private comment"
+msgid "reactions-other-title"
+msgstr "React by another method"
 
-msgid "reactions-comment-private-body-post-url"
+msgid "reactions-other-email-body-post-url"
 msgstr "URL of the post:"
 
-msgid "reactions-comment-private-button-text"
+msgid "reactions-other-email-button-text"
 msgstr "Reply by email"
 
-msgid "reactions-comment-private-email-prefix"
+msgid "reactions-other-email-prefix"
 msgstr "Re:"
+
+msgid "reactions-other-facebook-button"
+msgstr "Share on %s"
+
+msgid "reactions-other-mastodon-button"
+msgstr "Share on %s"
+
+msgid "reactions-other-signal-button"
+msgstr "Reply on %s"
+
+msgid "reactions-other-sms-button"
+msgstr "Reply by %s"
+
+msgid "reactions-other-whatsapp-button"
+msgstr "Reply on %s"
+
+msgid "reactions-other-x-button"
+msgstr "Share on %s"
 
 msgid "reactions-subscribe-link-reactions"
 msgstr "Subscribe to reactions"
@@ -278,8 +296,14 @@ msgstr "Instagram"
 msgid "social-site-mastodon"
 msgstr "Mastodon"
 
+msgid "social-site-phone"
+msgstr "Phone"
+
 msgid "social-site-signal"
 msgstr "Signal"
+
+msgid "social-site-sms"
+msgstr "SMS"
 
 msgid "social-site-youtube"
 msgstr "YouTube"

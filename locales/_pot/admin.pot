@@ -54,6 +54,12 @@ msgstr ""
 msgid "section-reactions-form"
 msgstr ""
 
+msgid "section-reactions-trackbacks"
+msgstr ""
+
+msgid "section-reactions-other"
+msgstr ""
+
 msgid "section-widgets"
 msgstr ""
 
@@ -61,6 +67,9 @@ msgid "section-footer"
 msgstr ""
 
 msgid "section-footer-social"
+msgstr ""
+
+msgid "section-social"
 msgstr ""
 
 msgid "section-advanced"
@@ -280,7 +289,7 @@ msgid "settings-header-imagedescription-description"
 msgstr ""
 
 msgid "settings-content-postlisttype-title"
-msgstr "Apparence"
+msgstr ""
 
 msgid "settings-content-postlisttype-oneline-default"
 msgstr ""
@@ -375,19 +384,64 @@ msgstr ""
 msgid "settings-reactions-markdownnotice-title"
 msgstr ""
 
-msgid "settings-reactions-privatecomment-title"
+msgid "settings-reactions-other-trackbacks-title"
 msgstr ""
 
-msgid "settings-reactions-privatecomment-description"
+msgid "settings-reactions-other-title"
 msgstr ""
 
-msgid "settings-reactions-privatecomment-no-default"
+msgid "settings-reactions-other-description"
 msgstr ""
 
-msgid "settings-reactions-privatecomment-open"
+msgid "settings-reactions-other-disabled-default"
 msgstr ""
 
-msgid "settings-reactions-privatecomment-always"
+msgid "settings-reactions-other-commentsopen"
+msgstr ""
+
+msgid "settings-reactions-other-always"
+msgstr ""
+
+msgid "settings-reactions-otheremail-title"
+msgstr ""
+
+msgid "settings-reactions-otheremail-description"
+msgstr ""%s">Signal</a> plugin."
+
+msgid "settings-reactions-other-facebook-title"
+msgstr ""
+
+msgid "settings-reactions-other-facebook-description"
+msgstr ""
+
+msgid "settings-reactions-other-mastodon-title"
+msgstr ""
+
+msgid "settings-reactions-other-mastodon-description"
+msgstr ""
+
+msgid "settings-reactions-other-signal-title"
+msgstr ""
+
+msgid "settings-reactions-other-signal-description"
+msgstr ""
+
+msgid "settings-reactions-other-sms-title"
+msgstr ""
+
+msgid "settings-reactions-other-sms-description"
+msgstr ""
+
+msgid "settings-reactions-other-whatsapp-title"
+msgstr ""
+
+msgid "settings-reactions-other-whatsapp-description"
+msgstr ""
+
+msgid "settings-reactions-other-x-title"
+msgstr ""
+
+msgid "settings-reactions-other-x-description"
 msgstr ""
 
 msgid "settings-widgets-display-title"
@@ -408,31 +462,79 @@ msgstr ""
 msgid "settings-footer-credits-description"
 msgstr ""
 
-msgid "settings-footer-social-diaspora-description"
+msgid "settings-social-diaspora-description"
 msgstr ""
 
-msgid "settings-footer-social-facebook-description"
+msgid "settings-social-facebook-description"
 msgstr ""
 
-msgid "settings-footer-social-instagram-description"
+msgid "settings-social-instagram-description"
 msgstr ""
 
-msgid "settings-footer-social-mastodon-description"
+msgid "settings-social-mastodon-description"
+msgstr ""
+
+msgid "settings-footer-social-diaspora-title"
+msgstr ""
+
+msgid "settings-footer-social-facebook-title"
+msgstr ""
+
+msgid "settings-footer-social-instagram-title"
+msgstr ""
+
+msgid "settings-footer-social-mastodon-title"
+msgstr ""
+
+msgid "settings-footer-social-phone-title"
+msgstr ""
+
+msgid "settings-footer-social-signal-title"
+msgstr ""
+
+msgid "settings-footer-social-sms-title"
+msgstr ""
+
+msgid "settings-footer-social-youtube-title"
+msgstr ""
+
+msgid "settings-footer-social-whatsapp-title"
+msgstr ""
+
+msgid "settings-footer-social-x-title"
+msgstr ""
+
+msgid "settings-footer-social-other-title"
+msgstr ""
+
+msgid "settings-footer-social-sms-description"
 msgstr ""
 
 msgid "settings-footer-social-signal-description"
 msgstr ""
 
-msgid "settings-footer-social-youtube-description"
-msgstr ""
-
 msgid "settings-footer-social-whatsapp-description"
 msgstr ""
 
-msgid "settings-footer-social-x-description"
+msgid "settings-social-phone-description"
 msgstr ""
 
-msgid "settings-footer-social-other-description"
+msgid "settings-social-signal-description"
+msgstr ""
+
+msgid "settings-social-sms-description"
+msgstr ""
+
+msgid "settings-social-youtube-description"
+msgstr ""
+
+msgid "settings-social-whatsapp-description"
+msgstr ""
+
+msgid "settings-social-x-description"
+msgstr ""
+
+msgid "settings-social-other-description"
 msgstr ""
 
 msgid "settings-advanced-metadescription-title"

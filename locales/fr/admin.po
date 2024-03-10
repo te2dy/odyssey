@@ -54,6 +54,12 @@ msgstr "Paramètres des commentaires et rétroliens"
 msgid "section-reactions-form"
 msgstr "Formulaire de commentaires"
 
+msgid "section-reactions-trackbacks"
+msgstr "Rétroliens"
+
+msgid "section-reactions-other"
+msgstr "Autres moyens de réponse"
+
 msgid "section-widgets"
 msgstr "Paramètres des widgets"
 
@@ -62,6 +68,9 @@ msgstr "Paramètres du pied de page"
 
 msgid "section-footer-social"
 msgstr "Liens sociaux"
+
+msgid "section-social"
+msgstr "Paramètres sociaux"
 
 msgid "section-advanced"
 msgstr "Paramètres avancés"
@@ -375,20 +384,65 @@ msgstr "Permet d’alléger visuellement les pages du blog."
 msgid "settings-reactions-markdownnotice-title"
 msgstr "Afficher un message signalant la prise en charge du balisage Markdown"
 
-msgid "settings-reactions-privatecomment-title"
-msgstr "Commentaires privés"
+msgid "settings-reactions-other-trackbacks-title"
+msgstr "Afficher un lien pour ajouter des rétroliens"
 
-msgid "settings-reactions-privatecomment-description"
-msgstr "Si cette option est activée, <strong>l’adresse électronique des auteurs sera rendue publique</strong>. Si vous préférez ne pas révéler leur adresse, essayez <a href=%s>l’extension Signal</a>."
+msgid "settings-reactions-other-title"
+msgstr "Autoriser d’autres moyens de réaction"
 
-msgid "settings-reactions-privatecomment-no-default"
-msgstr "Désactivés (par défaut)"
+msgid "settings-reactions-other-description"
+msgstr "Vous pouvez proposer à vos lecteurs de réagir à vos billets par courriel, sur les réseaux sociaux ou par le biais d’autres applications."
 
-msgid "settings-reactions-privatecomment-open"
-msgstr "Activés, seulement quand les commentaires sont ouverts"
+msgid "settings-reactions-other-disabled-default"
+msgstr "Non"
 
-msgid "settings-reactions-privatecomment-always"
-msgstr "Toujours activés"
+msgid "settings-reactions-other-commentsopen"
+msgstr "Oui, seulement quand les commentaires sont ouverts"
+
+msgid "settings-reactions-other-always"
+msgstr "Oui, toujours"
+
+msgid "settings-reactions-otheremail-title"
+msgstr "Autoriser les réponses par courriel"
+
+msgid "settings-reactions-otheremail-description"
+msgstr "Attention&nbsp;: votre adresse électronique sera dévoilée et pourra être utilisée par des personnes malveillantes (pourriels). Pour ne pas révéler votre adresse, vous pouvez essayer l’extension <a href="%s">Signal</a>."
+
+msgid "settings-reactions-other-facebook-title"
+msgstr "Autoriser le partage sur %s"
+
+msgid "settings-reactions-other-facebook-description"
+msgstr "Vos lecteurs pourrons vous répondre sur Facebook par message public."
+
+msgid "settings-reactions-other-mastodon-title"
+msgstr "Autoriser le partage sur %s"
+
+msgid "settings-reactions-other-mastodon-description"
+msgstr "Vos lecteurs pourrons vous répondre sur Mastodon par message public."
+
+msgid "settings-reactions-other-signal-title"
+msgstr "Autoriser les réponses par %s"
+
+msgid "settings-reactions-other-signal-description"
+msgstr "Attention&nbsp;: si vous avez saisi un numéro de téléphone ou un nom d’utilisateur, celui-ci sera rendu public et pourrait tomber entre des mains malveillantes."
+
+msgid "settings-reactions-other-sms-title"
+msgstr "Autoriser les réponses par %s"
+
+msgid "settings-reactions-other-sms-description"
+msgstr "Attention&nbsp;: votre numéro de téléphone sera rendu public et pourrait tomber entre des mains malveillantes."
+
+msgid "settings-reactions-other-whatsapp-title"
+msgstr "Autoriser les réponses par %s"
+
+msgid "settings-reactions-other-whatsapp-description"
+msgstr "Attention&nbsp;: votre numéro de téléphone sera rendu public et pourrait tomber entre des mains malveillantes."
+
+msgid "settings-reactions-other-x-title"
+msgstr "Autoriser le partage sur %s"
+
+msgid "settings-reactions-other-x-description"
+msgstr "Vos lecteurs pourrons vous répondre sur X par message public."
 
 msgid "settings-widgets-display-title"
 msgstr "Activer les widgets (volets de navigation et d’extra)"
@@ -408,31 +462,79 @@ msgstr "Afficher une mention à Dotclear et au thème"
 msgid "settings-footer-credits-description"
 msgstr "Permet de faire de la publicité à Dotclear et à ce thème."
 
-msgid "settings-footer-social-diaspora-description"
+msgid "settings-social-diaspora-description"
 msgstr "Adresse d’une page ou d’un profil %s."
 
-msgid "settings-footer-social-facebook-description"
+msgid "settings-social-facebook-description"
 msgstr "Adresse d’une page ou d’un profil %s."
 
-msgid "settings-footer-social-instagram-description"
+msgid "settings-social-instagram-description"
 msgstr "Adresse d’une page %s."
 
-msgid "settings-footer-social-mastodon-description"
+msgid "settings-social-mastodon-description"
 msgstr "Adresse d’un compte %s."
 
-msgid "settings-footer-social-signal-description"
-msgstr "Numéro de téléphone (attention&nbsp;: il sera public) ou adresse d’un compte ou groupe %s."
+msgid "settings-footer-social-diaspora-title"
+msgstr "Afficher un lien vers %s"
 
-msgid "settings-footer-social-youtube-description"
-msgstr "Adresse d’une chaîne %s"
+msgid "settings-footer-social-facebook-title"
+msgstr "Afficher un lien vers %s"
+
+msgid "settings-footer-social-instagram-title"
+msgstr "Afficher un lien vers %s"
+
+msgid "settings-footer-social-mastodon-title"
+msgstr "Afficher un lien vers %s"
+
+msgid "settings-footer-social-phone-title"
+msgstr "Afficher un lien pour vous téléphoner"
+
+msgid "settings-footer-social-signal-title"
+msgstr "Afficher un lien vers %s"
+
+msgid "settings-footer-social-sms-title"
+msgstr "Afficher un lien pour vous écrire par SMS"
+
+msgid "settings-footer-social-youtube-title"
+msgstr "Afficher un lien vers %s"
+
+msgid "settings-footer-social-whatsapp-title"
+msgstr "Afficher un lien vers %s"
+
+msgid "settings-footer-social-x-title"
+msgstr "Afficher un lien vers %s"
+
+msgid "settings-footer-social-other-title"
+msgstr "Afficher votre lien personnalisé"
+
+msgid "settings-footer-social-sms-description"
+msgstr "Attention&nbsp;: votre numéro de téléphone sera rendu public et pourrait tomber entre des mains malveillantes."
+
+msgid "settings-footer-social-signal-description"
+msgstr "Attention&nbsp;: si vous avez saisi un numéro de téléphone ou un nom d’utilisateur, celui-ci sera rendu public et pourrait tomber entre des mains malveillantes."
 
 msgid "settings-footer-social-whatsapp-description"
-msgstr "Numéro de téléphone (attention&nbsp;: il sera public) %s"
+msgstr "Attention&nbsp;: votre numéro de téléphone sera rendu public et pourrait tomber entre des mains malveillantes."
 
-msgid "settings-footer-social-x-description"
+msgid "settings-social-phone-description"
+msgstr "Numéro de téléphone au format +33123456789."
+
+msgid "settings-social-signal-description"
+msgstr "Numéro de téléphone au format +33123456789 ou adresse d’un compte ou groupe %s."
+
+msgid "settings-social-sms-description"
+msgstr "Numéro de téléphone au format +33123456789."
+
+msgid "settings-social-youtube-description"
+msgstr "Adresse d’une chaîne %s"
+
+msgid "settings-social-whatsapp-description"
+msgstr "Numéro de téléphone %s au format +33123456789"
+
+msgid "settings-social-x-description"
 msgstr "Adresse d’un compte %s"
 
-msgid "settings-footer-social-other-description"
+msgid "settings-social-other-description"
 msgstr "Adresse d’une autre page de votre choix."
 
 msgid "settings-advanced-metadescription-title"

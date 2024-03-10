@@ -1,84 +1,122 @@
 /**
- * Shows or hides settings depending on others.
+ * Displays a setting or multiple ones as "block" or "none"
+ * by its or their id.
  */
+function setStyle(id, display) {
+  if (!Array.isArray(id)) {
+    id = [id];
+  }
+
+  for (let idIndividual of id) {
+    let idInput       = idIndividual + "-input",
+        idDescription = idIndividual + "-description";
+
+    if (document.getElementById(idInput)) {
+      document.getElementById(idInput).style.display = display;
+    }
+
+    if (document.getElementById(idDescription)) {
+      document.getElementById(idDescription).style.display = display;
+    }
+  }
+}
+
+// An array of social sites supported by the theme.
+function socialSites() {
+  return ['diaspora', 'facebook', 'instagram', 'mastodon', 'phone', 'signal', 'sms', 'youtube', 'whatsapp', 'x', 'other'];
+}
+
+// Toogles footer social settings.
+function toggleFooterSocialSetting(id) {
+  if (document.getElementById("social_" + id).value !== "") {
+    setStyle("footer_social_" + id, "block");
+
+    if (document.getElementById("reactions_other").value !== "disabled") {
+      setStyle("reactions_other_" + id, "block");
+    } else {
+      setStyle("reactions_other_" + id, "none");
+    }
+  } else {
+    setStyle(
+      [
+        "footer_social_" + id,
+        "reactions_other_" + id
+      ],
+      "none"
+    );
+  }
+}
+
+// Shows or hides settings depending on others.
 function disableInputs() {
   if (document.getElementById("global_color_primary").value === "custom") {
-    document.getElementById("global_color_primary_custom-input").style.display                 = "block";
-    document.getElementById("global_color_primary_amplified_custom-input").style.display       = "block";
-    document.getElementById("global_color_primary_amplified_custom-description").style.display = "block";
-    document.getElementById("global_color_primary_dark_custom-input").style.display            = "block";
-    document.getElementById("global_color_primary_dark_amplified_custom-input").style.display  = "block";
+    setStyle(
+      [
+        "global_color_primary_custom",
+        "global_color_primary_amplified_custom",
+        "global_color_primary_dark_custom",
+        "global_color_primary_dark_amplified_custom"
+      ],
+      "block"
+    );
   } else {
-    document.getElementById("global_color_primary_custom-input").style.display                 = "none";
-    document.getElementById("global_color_primary_amplified_custom-input").style.display       = "none";
-    document.getElementById("global_color_primary_amplified_custom-description").style.display = "none";
-    document.getElementById("global_color_primary_dark_custom-input").style.display            = "none";
-    document.getElementById("global_color_primary_dark_amplified_custom-input").style.display  = "none";
+    setStyle(
+      [
+        "global_color_primary_custom",
+        "global_color_primary_amplified_custom",
+        "global_color_primary_dark_custom",
+        "global_color_primary_dark_amplified_custom"
+      ],
+      "none"
+    );
   }
 
   if (document.getElementById("header_image").value !== "") {
-    document.getElementById("header_image_position-input").style.display          = "block";
-    document.getElementById("header_image_description-input").style.display       = "block";
-    document.getElementById("header_image_description-description").style.display = "block";
+    setStyle(
+      [
+        "header_image_position",
+        "header_image_description"
+      ],
+      "block"
+    );
   } else {
-    document.getElementById("header_image_position-input").style.display          = "none";
-    document.getElementById("header_image_description-input").style.display       = "none";
-    document.getElementById("header_image_description-description").style.display = "none";
+    setStyle(
+      [
+        "header_image_position",
+        "header_image_description"
+      ],
+      "none"
+    );
   }
 
   if (document.getElementById("content_postlist_type").value !== "excerpt") {
-    document.getElementById("content_postlist_thumbnail-input").style.display       = "block";
-    document.getElementById("content_postlist_thumbnail-description").style.display = "block";
+    setStyle("content_postlist_thumbnail", "block");
   } else {
-    document.getElementById("content_postlist_thumbnail-input").style.display       = "none";
-    document.getElementById("content_postlist_thumbnail-description").style.display = "none";
+    setStyle("content_postlist_thumbnail", "none");
   }
 
-  if (!document.getElementById("footer_enabled").checked) {
-    document.getElementById("footer_credits-input").style.display                = "none";
-    document.getElementById("footer_credits-description").style.display          = "none";
-    document.getElementById("section-footer-social").style.display               = "none";
-    document.getElementById("footer_social_diaspora-input").style.display        = "none";
-    document.getElementById("footer_social_facebook-input").style.display        = "none";
-    document.getElementById("footer_social_instagram-input").style.display       = "none";
-    document.getElementById("footer_social_mastodon-input").style.display        = "none";
-    document.getElementById("footer_social_signal-input").style.display          = "none";
-    document.getElementById("footer_social_youtube-input").style.display         = "none";
-    document.getElementById("footer_social_whatsapp-input").style.display        = "none";
-    document.getElementById("footer_social_x-input").style.display               = "none";
-    document.getElementById("footer_social_other-input").style.display           = "none";
-    document.getElementById("footer_social_diaspora-description").style.display  = "none";
-    document.getElementById("footer_social_facebook-description").style.display  = "none";
-    document.getElementById("footer_social_instagram-description").style.display = "none";
-    document.getElementById("footer_social_mastodon-description").style.display  = "none";
-    document.getElementById("footer_social_signal-description").style.display    = "none";
-    document.getElementById("footer_social_youtube-description").style.display   = "none";
-    document.getElementById("footer_social_whatsapp-description").style.display  = "none";
-    document.getElementById("footer_social_x-description").style.display         = "none";
-    document.getElementById("footer_social_other-description").style.display     = "none";
+  if (document.getElementById("reactions_other").value !== "disabled") {
+    setStyle("reactions_other_email", "block");
   } else {
-    document.getElementById("footer_credits-input").style.display                = "block";
-    document.getElementById("footer_credits-description").style.display          = "block";
-    document.getElementById("section-footer-social").style.display               = "block";
-    document.getElementById("footer_social_diaspora-input").style.display        = "block";
-    document.getElementById("footer_social_facebook-input").style.display        = "block";
-    document.getElementById("footer_social_instagram-input").style.display       = "block";
-    document.getElementById("footer_social_mastodon-input").style.display        = "block";
-    document.getElementById("footer_social_signal-input").style.display          = "block";
-    document.getElementById("footer_social_youtube-input").style.display         = "block";
-    document.getElementById("footer_social_whatsapp-input").style.display        = "block";
-    document.getElementById("footer_social_x-input").style.display               = "block";
-    document.getElementById("footer_social_other-input").style.display           = "block";
-    document.getElementById("footer_social_other-description").style.display     = "block";
-    document.getElementById("footer_social_diaspora-description").style.display  = "block";
-    document.getElementById("footer_social_facebook-description").style.display  = "block";
-    document.getElementById("footer_social_instagram-description").style.display = "block";
-    document.getElementById("footer_social_mastodon-description").style.display  = "block";
-    document.getElementById("footer_social_signal-description").style.display    = "block";
-    document.getElementById("footer_social_youtube-description").style.display   = "block";
-    document.getElementById("footer_social_whatsapp-description").style.display  = "block";
-    document.getElementById("footer_social_x-description").style.display         = "block";
-    document.getElementById("footer_social_other-description").style.display     = "block";
+    setStyle("reactions_other_email", "none");
+  }
+
+  const socialSitesId = socialSites();
+
+  var displayFooterSocialTitle = false;
+
+  for (let siteId of socialSitesId) {
+    if (document.getElementById("social_" + siteId).value !== "") {
+      displayFooterSocialTitle = true;
+    }
+
+    toggleFooterSocialSetting(siteId);
+  }
+
+  if (displayFooterSocialTitle === true) {
+    document.getElementById("section-footer-social").style.display = "block";
+  } else {
+    document.getElementById("section-footer-social").style.display = "none";
   }
 }
 
@@ -169,9 +207,13 @@ function changeImage() {
       document.getElementById("header_image-retina").style.display = "none";
     }
 
-    document.getElementById("header_image_position-input").style.display = "block";
-    document.getElementById("header_image_description-input").style.display = "block";
-    document.getElementById("header_image_description-description").style.display = "block";
+    setStyle(
+      [
+        "header_image_position",
+        "header_image_description"
+      ],
+      "block"
+    );
 
     let imgExt = img.split('.').pop(),
         imgExtLength = imgExt.length,
@@ -191,9 +233,13 @@ function changeImage() {
     }
   } else {
     document.getElementById("header_image-src").style.display = "none";
-    document.getElementById("header_image_position-input").style.display = "none";
-    document.getElementById("header_image_description-input").style.display = "none";
-    document.getElementById("header_image_description-description").style.display = "none";
+    setStyle(
+      [
+        "header_image_position",
+        "header_image_description"
+      ],
+      "block"
+    );
 
     if (document.getElementById("header_image-retina")) {
       document.getElementById("header_image-retina").style.display = "none";
@@ -281,6 +327,7 @@ window.onload = function() {
   }
 
   window.oninput = function() {
+    disableInputs();
     inputValidation();
   };
 

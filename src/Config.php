@@ -70,7 +70,7 @@ class Config extends Process
                         // The value of the setting and its type.
                         $setting_data = [];
 
-                        if (!in_array($setting_id, $specific_settings, true) && !str_contains($setting_id, 'footer_social_')) {
+                        if (!in_array($setting_id, $specific_settings, true) && !str_starts_with($setting_id, 'social_')) {
                             // Saves non specific settings.
                             if (isset($_POST[$setting_id]) && $_POST[$setting_id] != My::settingsDefault($setting_id)['default']) {
                                 $setting_data = self::sanitizeSetting(
@@ -90,7 +90,7 @@ class Config extends Process
                             }
                         } else {
                             // Saves each specific settings.
-                            if (!str_contains($setting_id, 'footer_social_')) {
+                            if (!str_starts_with($setting_id, 'social_')) {
                                 switch ($setting_id) {
                                     case 'global_unit' :
                                     case 'global_page_width_value' :
@@ -746,25 +746,85 @@ class Config extends Process
             $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['margin-right'] = '.25rem';
         }
 
-        // Private comments
-        if (isset($_POST['reactions_private_comment']) && $_POST['reactions_private_comment'] !== 'disabled') {
-            $css_main_array['#comment-form .comment-private']['margin-top']      = '2rem';
-            $css_main_array['#comment-form .comment-private p']['margin-bottom'] = '0';
-        }
-
-        // Social links
-        $footer_social_links = false;
+        // Social icons.
+        $simpleicons_styles  = false;
+        $feathericons_styles = false;
 
         // Checks if a link as been set.
         foreach (My::socialSites() as $id => $data) {
-            if (isset($_POST['footer_social_' . $id]) && $_POST['footer_social_' . $id] !== '') {
-                if (!empty(self::sanitizeSocialLink('footer_social_' . $id, $_POST['footer_social_' . $id]))) {
-                    $footer_social_links = true;
+            if (isset($_POST['social_' . $id]) && $_POST['social_' . $id] !== '') {
+                if ((isset($_POST['reactions_other']) && $_POST['reactions_other'] !== 'disabled' && isset($_POST['reactions_other_' . $id]) && $_POST['reactions_other_' . $id] !== '')
+                    || (isset($_POST['footer_social_' . $id]) && $_POST['footer_social_' . $id] !== '')
+                ) {
+                    if (!empty(self::sanitizeSocialLink('social_' . $id, $_POST['social_' . $id]))) {
+                        if (My::svgIcons($id)['author'] === 'simpleicons') {
+                            $simpleicons_styles  = true;
+                        } elseif (My::svgIcons($id)['author'] === 'feathericons') {
+                            $feathericons_styles = true;
+                        }
+                    }
+                }
+            }
+        }
 
-                    if (My::svgIcons($id)['author'] === 'simpleicons') {
-                        $simpleicons_styles  = true;
-                    } elseif (My::svgIcons($id)['author'] === 'feathericons') {
-                        $feathericons_styles = true;
+        if ($simpleicons_styles === true) {
+            $css_main_array['.social-icon-si']['border']          = '0';
+            $css_main_array['.social-icon-si']['stroke']          = 'none';
+            $css_main_array['.social-icon-si']['stroke-linecap']  = 'round';
+            $css_main_array['.social-icon-si']['stroke-linejoin'] = 'round';
+            $css_main_array['.social-icon-si']['stroke-width']    = '0';
+            $css_main_array['.social-icon-si']['width']           = '1rem';
+            $css_main_array['.social-icon-si']['transition']      = 'var(--color-transition, unset)';
+        }
+
+        if ($feathericons_styles === true) {
+            $css_main_array['.social-icon-fi']['border']          = '0';
+            $css_main_array['.social-icon-fi']['fill']            = 'none';
+            $css_main_array['.social-icon-fi']['stroke-linecap']  = 'round';
+            $css_main_array['.social-icon-fi']['stroke-linejoin'] = 'round';
+            $css_main_array['.social-icon-fi']['stroke-width']    = '2';
+            $css_main_array['.social-icon-fi']['width']           = '1rem';
+            $css_main_array['.social-icon-fi']['transition']      = 'var(--color-transition, unset)';
+        }
+
+        // Other reaction methods
+        if (isset($_POST['reactions_other']) && $_POST['reactions_other'] !== 'disabled') {
+            $css_main_array['#comment-form .reactions-other']['margin-top']      = '2rem';
+            $css_main_array['#comment-form .reactions-other p']['margin-bottom'] = '0';
+
+            $css_main_array['.reactions-other-icon']['display']        = 'inline-block';
+            $css_main_array['.reactions-other-icon']['vertical-align'] = 'middle';
+
+            $css_main_array['.reactions-other-icon-si']['fill'] = 'var(--color-primary, hsl(226, 80%, 45%))';
+
+            $css_main_array['.reactions-other-icon-fi']['stroke'] = 'var(--color-primary, hsl(226, 80%, 45%))';
+
+            $css_main_array['.reactions-other .button:is(:active, :hover, :focus) .reactions-other-icon-si']['fill'] = 'var(--color-background, #fcfcfd)';
+
+            $css_main_array['.reactions-other .button:is(:active, :hover, :focus) .reactions-other-icon-fi']['stroke'] = 'var(--color-background, #fcfcfd)';
+
+            $css_main_array['.reactions-other-text']['display']        = 'inline-block';
+            $css_main_array['.reactions-other-text']['vertical-align'] = 'middle';
+
+            $css_main_array['.reactions-other .button:is(:active, :focus, :hover) .reaction-other-email-icon']['stroke'] = 'var(--color-background, #fcfcfd)';
+        }
+
+        // Footer social links.
+        $footer_social_links = false;
+        $simpleicons_styles  = false;
+        $feathericons_styles = false;
+
+        foreach (My::socialSites() as $id => $data) {
+            if (isset($_POST['social_' . $id]) && $_POST['social_' . $id] !== '') {
+                if (isset($_POST['footer_social_' . $id]) && $_POST['footer_social_' . $id] !== '') {
+                    if (!empty(self::sanitizeSocialLink('social_' . $id, $_POST['social_' . $id]))) {
+                        $footer_social_links = true;
+
+                        if (My::svgIcons($id)['author'] === 'simpleicons') {
+                            $simpleicons_styles = true;
+                        } elseif (My::svgIcons($id)['author'] === 'feathericons') {
+                            $feathericons_styles = true;
+                        }
                     }
                 }
             }
@@ -792,25 +852,12 @@ class Config extends Process
             $css_main_array['.footer-social-links-icon-container']['transition']       = 'var(--color-transition, unset)';
 
             if ($simpleicons_styles === true) {
-                $css_main_array['.footer-social-links-icon-si']['border']          = '0';
-                $css_main_array['.footer-social-links-icon-si']['fill']            = 'var(--color-text-main, #303030)';
-                $css_main_array['.footer-social-links-icon-si']['stroke']          = 'none';
-                $css_main_array['.footer-social-links-icon-si']['stroke-linecap']  = 'round';
-                $css_main_array['.footer-social-links-icon-si']['stroke-linejoin'] = 'round';
-                $css_main_array['.footer-social-links-icon-si']['stroke-width']    = '0';
-                $css_main_array['.footer-social-links-icon-si']['width']           = '1rem';
-                $css_main_array['.footer-social-links-icon-si']['transition']      = 'var(--color-transition, unset)';
+                $css_main_array['.footer-social-links-icon-si']['fill'] = 'var(--color-text-main, #303030)';
+
             }
 
             if ($feathericons_styles === true) {
-                $css_main_array['.footer-social-links-icon-fi']['border']          = '0';
-                $css_main_array['.footer-social-links-icon-fi']['fill']            = 'none';
-                $css_main_array['.footer-social-links-icon-fi']['stroke']          = 'var(--color-text-main, #303030)';
-                $css_main_array['.footer-social-links-icon-fi']['stroke-linecap']  = 'round';
-                $css_main_array['.footer-social-links-icon-fi']['stroke-linejoin'] = 'round';
-                $css_main_array['.footer-social-links-icon-fi']['stroke-width']    = '2';
-                $css_main_array['.footer-social-links-icon-fi']['width']           = '1rem';
-                $css_main_array['.footer-social-links-icon-fi']['transition']      = 'var(--color-transition, unset)';
+                $css_main_array['.footer-social-links-icon-fi']['stroke'] = 'var(--color-text-main, #303030)';
             }
 
             $css_main_array['.footer-social-links a:active .footer-social-links-icon-container, .footer-social-links a:focus .footer-social-links-icon-container, .footer-social-links a:hover .footer-social-links-icon-container']['background-color'] = 'var(--color-primary, hsl(226, 80%, 45%))';
@@ -1063,24 +1110,31 @@ class Config extends Process
         return [];
     }
 
+    /**
+     * Prepares to save social links.
+     *
+     * @param string $setting_id The social setting id.
+     * @param string $value      The value of the social setting.
+     *
+     * @return array The value of the setting and its type.
+     */
     public static function sanitizeSocialLink($setting_id, $value)
     {
         if ($value === '') {
             return [];
         }
 
-        $id = str_replace('footer_social_', '', $setting_id);
+        $id = str_replace('social_', '', $setting_id);
 
-        $site_name = My::socialSites($id)['name'];
         $site_base = isset(My::socialSites($id)['base']) ? My::socialSites($id)['base'] : '';
-        $site_type = My::socialSites($id)['type'];
+        $site_type = isset(My::socialSites($id)['type']) ? My::socialSites($id)['type'] : '';
 
         switch ($site_type) {
             case 'phone-number':
                 if (str_starts_with($value, $site_base) && is_numeric(substr($value, 1))) {
                     return [
                         'value' => Html::escapeHTML($value),
-                        'type'  => 'string',
+                        'type'  => 'string'
                     ];
                 }
 
@@ -1089,12 +1143,12 @@ class Config extends Process
                 if ($site_base !== '' && str_starts_with($value, $site_base)) {
                     return [
                         'value' => Html::escapeURL($value),
-                        'type'  => 'string',
+                        'type'  => 'string'
                     ];
                 } elseif (filter_var($value, FILTER_VALIDATE_URL) !== false) {
                     return [
                         'value' => Html::escapeURL($value),
-                        'type'  => 'string',
+                        'type'  => 'string'
                     ];
                 }
 
@@ -1103,26 +1157,41 @@ class Config extends Process
                 if (str_starts_with($value, $site_base)) {
                     return [
                         'value' => Html::escapeHTML($value),
-                        'type'  => 'string',
+                        'type'  => 'string'
                     ];
                 }
 
                 break;
             case 'signal':
-                if (preg_match('/^\+[1-9]\d{1,14}$/', $value)) {
+                if (str_starts_with($value, '+') && preg_match('/\+[0-9]+/', $value)) {
                     return [
                         'value' => 'https://signal.me/#p/' . Html::escapeURL($value),
                         'type'  => 'string',
                     ];
-                } elseif (
-                    str_starts_with($value, 'https://signal.me/')
+                } elseif (str_starts_with($value, 'https://signal.me/')
                     || str_starts_with($value, 'sgnl://signal.me/')
                     || str_starts_with($value, 'https://signal.group/')
                     || str_starts_with($value, 'sgnl://signal.group/')
                 ) {
                     return [
                         'value' => Html::escapeURL($value),
-                        'type'  => 'string',
+                        'type'  => 'string'
+                    ];
+                }
+
+                break;
+            case 'whatsapp':
+                if (str_starts_with($value, '+') && preg_match('/\+[0-9]+/', $value)) {
+                    return [
+                        'value' => 'https://wa.me/' . Html::escapeURL(substr($value, 1)),
+                        'type'  => 'string'
+                    ];
+                } elseif (str_starts_with($value, 'https://wa.me/')
+                    || str_starts_with($value, 'whatsapp://wa.me/')
+                ) {
+                    return [
+                        'value' => Html::escapeURL($value),
+                        'type'  => 'string'
                     ];
                 }
 
@@ -1131,12 +1200,12 @@ class Config extends Process
                 if (preg_match('/\@[\w+]{0,15}/', $value)) {
                     return [
                         'value' => Html::escapeURL('https://x.com/' . substr($value, 1)),
-                        'type'  => 'string',
+                        'type'  => 'string'
                     ];
                 } elseif (str_starts_with($value, 'https://x.com/') || str_starts_with($value, 'https://twitter.com/')) {
                     return [
                         'value' => Html::escapeURL($value),
-                        'type'  => 'string',
+                        'type'  => 'string'
                     ];
                 }
         }

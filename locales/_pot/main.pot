@@ -215,16 +215,34 @@ msgstr ""
 msgid "reactions-comment-form-submit-button"
 msgstr ""
 
-msgid "reactions-comment-private-title"
+msgid "reactions-other-title"
 msgstr ""
 
-msgid "reactions-comment-private-body-post-url"
+msgid "reactions-other-email-body-post-url"
 msgstr ""
 
-msgid "reactions-comment-private-button-text"
+msgid "reactions-other-email-button-text"
 msgstr ""
 
-msgid "reactions-comment-private-email-prefix"
+msgid "reactions-other-email-prefix"
+msgstr ""
+
+msgid "reactions-other-facebook-button"
+msgstr ""
+
+msgid "reactions-other-mastodon-button"
+msgstr ""
+
+msgid "reactions-other-signal-button"
+msgstr ""
+
+msgid "reactions-other-sms-button"
+msgstr ""
+
+msgid "reactions-other-whatsapp-button"
+msgstr ""
+
+msgid "reactions-other-x-button"
 msgstr ""
 
 msgid "reactions-subscribe-link-reactions"
@@ -278,7 +296,13 @@ msgstr ""
 msgid "social-site-mastodon"
 msgstr ""
 
+msgid "social-site-phone"
+msgstr ""
+
 msgid "social-site-signal"
+msgstr ""
+
+msgid "social-site-sms"
 msgstr ""
 
 msgid "social-site-youtube"
