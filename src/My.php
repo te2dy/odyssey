@@ -12,16 +12,19 @@ namespace Dotclear\Theme\odyssey;
 use Dotclear\App;
 use Dotclear\Module\MyTheme;
 use Dotclear\Helper\File\Files;
+use Dotclear\Helper\File\Path;
 use Dotclear\Helper\Html\Html;
 
 class My extends MyTheme
 {
     /**
-     * The sections of the theme configuration page.
+     * Declares the sections of the theme configuration page.
      *
-     * @param string $section_id The id of the section.
+     * Returns a section information if a section ID is provided.
      *
-     * @return array All the sections in an array.
+     * @param string $section_id The ID of the section (optional).
+     *
+     * @return array All the sections or only on section data.
      */
     public static function settingsSections(string $section_id = ''): array
     {
@@ -37,7 +40,7 @@ class My extends MyTheme
             'header' => [
                 'name'         => __('section-header'),
                 'sub_sections' => [
-                    'no-title' => '',
+                    'no-title' => null,
                     'image'    => __('section-header-image')
                 ]
             ],
@@ -70,7 +73,7 @@ class My extends MyTheme
             'social' => [
                 'name'         => __('section-social'),
                 'sub_sections' => [
-                    'no-title' => ''
+                    'no-title' => null
                 ]
             ],
             'advanced' => [
@@ -89,11 +92,13 @@ class My extends MyTheme
     }
 
     /**
-     * The settings of the theme configurator.
+     * Declares all the settings of the theme configurator.
      *
-     * @param string $setting_id The id of the setting.
+     * Returns a setting information if a setting ID is provided.
      *
-     * @return array The setting.
+     * @param string $setting_id The id of the setting (optional).
+     *
+     * @return array All the sections or only on setting data.
      */
     public static function settingsDefault(string $setting_id = ''): array
     {
@@ -114,7 +119,7 @@ class My extends MyTheme
             'description' => __('settings-global-pagewidthvalue-description'),
             'type'        => 'integer',
             'default'     => '',
-            'placeholder' => !My::settingValue('global_unit') ? 30 : 480,
+            'placeholder' => !My::settingValue('global_unit') ? '30' : '480',
             'section'     => ['global', 'layout']
         ];
 
@@ -520,15 +525,14 @@ class My extends MyTheme
         ];
 
         foreach (self::socialSites() as $site => $base) {
-            $description = '';
-
-            if ($site === 'signal' || $site === 'sms' || $site === 'whatsapp') {
-                $description = __('settings-footer-social-' . $site . '-description');
-            }
+            // Provides a description for some sites only.
+            $add_description = ['signal', 'sms', 'whatsapp'];
 
             $default_settings['footer_social_' . $site] = [
                 'title'       => sprintf(__('settings-footer-social-' . $site . '-title'), $base['name']),
-                'description' => $description,
+                'description' => in_array($site, $add_description, true)
+                    ? sprintf(__('settings-footer-social-' . $site . '-description'), $base['name'])
+                    : '',
                 'type'        => 'checkbox',
                 'default'     => '1',
                 'section'     => ['footer', 'social']
@@ -583,11 +587,11 @@ class My extends MyTheme
     /**
      * Returns the value of a saved theme setting.
      *
-     * @param string $setting_id The setting id.
+     * @param string $setting_id The setting ID (optional).
      *
      * @return mixed The value of the setting.
      */
-    public static function settingValue($setting_id = ''): mixed
+    public static function settingValue(string $setting_id = ''): mixed
     {
         return $setting_id ? App::blog()->settings->odyssey->$setting_id : '';
     }
@@ -630,7 +634,7 @@ class My extends MyTheme
     public static function getContentWidth($unit = 'em')
     {
         $page_width_unit  = self::settingValue('global_unit') ?: 'em' ;
-        $page_width_value = self::settingValue('global_page_width_value') ?: 30;
+        $page_width_value = (int) self::settingValue('global_page_width_value') ?: 30;
 
         if ($page_width_unit !== $unit) {
             if ($unit === 'px') {
@@ -638,7 +642,7 @@ class My extends MyTheme
                 $page_width_value = $page_width_value * 16;
             } else {
                 $page_width_unit  = 'em';
-                $page_width_value = (int) ($page_width_value / 16);
+                $page_width_value = $page_width_value / 16;
             }
         }
 
@@ -756,32 +760,17 @@ class My extends MyTheme
      *
      * @return bool true if the image exists.
      */
-    public static function imageExists($path): bool
+    public static function imageExists(string $path): bool
     {
-        // Extensions allowed for image files in Dotclear.
-        $img_ext_allowed = [
-            'bmp',
-            'gif',
-            'ico',
-            'jpeg',
-            'jpg',
-            'jpe',
-            'png',
-            'svg',
-            'tiff',
-            'tif',
-            'webp',
-            'xbm'
-        ];
+        $mime_types_supported = files::mimeTypes();
+        $mime_type            = files::getMimeType($path);
+        $file_extension       = strtolower(files::getExtension($path));
 
         // Returns true if the file exists and is an allowed type of image.
         if (file_exists($path)
-            && in_array(
-                strtolower(files::getExtension($path)),
-                $img_ext_allowed,
-                true
-            )
-            && substr(mime_content_type($path), 0, 6) === 'image/'
+            && str_contains($mime_type, 'image')
+            && array_key_exists($file_extension, $mime_types_supported)
+            && in_array($mime_type, $mime_types_supported, true)
         ) {
             return true;
         }
@@ -796,9 +785,9 @@ class My extends MyTheme
      *
      * @return string The font rule.
      */
-    public static function fontStack($fontname = ''): string
+    public static function fontStack(string $fontname = ''): string
     {
-        if (!$fontname) {
+        if ($fontname === '') {
             return '';
         }
 
@@ -838,11 +827,25 @@ class My extends MyTheme
             case 'handwritten' :
                 return '"Segoe Print", "Bradley Hand", Chilanka, TSCu_Comic, casual, cursive' . $emoji;
             default :
-                return '';
+                return 'system-ui, sans-serif' . $emoji;
         }
     }
 
-    public static function socialSites($site_id = ''): mixed
+    /**
+     * Defines the social sites supported by the theme.
+     *
+     * $social_sites['site_id'] = [
+     *      'name'      => string 'The name of the site',
+     *      'base'      => string 'If type is "url", the base of the URL of the site',
+     *      'type'      => string 'The type of value (URL, phone number…)',
+     *      'reactions' => bool '"true" if the site can be used as another method of reaction'
+     * ];
+     *
+     * @param string $site_id The ID of a social site to retrieve the data.
+     *
+     * @return mixed A social site information or an array of all the sites.
+     */
+    public static function socialSites(string $site_id = ''): mixed
     {
         $social_sites = [];
 
@@ -871,8 +874,8 @@ class My extends MyTheme
         ];
 
         $social_sites['phone'] = [
-            'name'      => __('social-site-phone'),
-            'type'      => 'phone-number'
+            'name' => __('social-site-phone'),
+            'type' => 'phone-number'
         ];
 
         $social_sites['signal'] = [
@@ -922,9 +925,9 @@ class My extends MyTheme
     /**
      * Gets SVG info of a social site to display its icon.
      *
-     * @param string $id The social site id.
+     * @param string $id The social site ID.
      *
-     * @return array SVG info.
+     * @return array The SVG info.
      */
     public static function svgIcons($id = ''): array
     {

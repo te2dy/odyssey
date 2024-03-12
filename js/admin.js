@@ -233,12 +233,13 @@ function changeImage() {
     }
   } else {
     document.getElementById("header_image-src").style.display = "none";
+
     setStyle(
       [
         "header_image_position",
         "header_image_description"
       ],
-      "block"
+      "none"
     );
 
     if (document.getElementById("header_image-retina")) {

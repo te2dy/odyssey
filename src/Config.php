@@ -33,7 +33,7 @@ class Config extends Process
     }
 
     /**
-     * Processes the request(s).
+     * Processes the requests.
      *
      * @return bool
      */
@@ -50,13 +50,12 @@ class Config extends Process
 
         if (!empty($_POST)) {
             try {
-
                 // If the save button has been clicked.
                 if (isset($_POST['save'])) {
 
                     /**
-                     * This part saves each option in the database
-                     * only if it is different than the default one.
+                     * This part saves each setting in the database
+                     * only if there are different than the default one.
                      */
                     foreach (My::settingsDefault() as $setting_id => $setting_data) {
                         $specific_settings = [
@@ -67,7 +66,7 @@ class Config extends Process
                             'styles'
                         ];
 
-                        // The value of the setting and its type.
+                        // Now, set the value of the setting and its type.
                         $setting_data = [];
 
                         if (!in_array($setting_id, $specific_settings, true) && !str_starts_with($setting_id, 'social_')) {
@@ -119,12 +118,11 @@ class Config extends Process
                             }
                         }
 
-                        // Saves the setting data or drop it.
+                        // Saves the setting data or drop it if it's empty.
                         if (!empty($setting_data)) {
                             $setting_value = isset($setting_data['value']) ? $setting_data['value'] : '';
                             $setting_type  = isset($setting_data['type']) ? $setting_data['type'] : '';
-                            $setting_label = Html::escapeHTML(My::settingsDefault($setting_id)['title']);
-                            $setting_label = Html::clean($setting_label);
+                            $setting_label = Html::clean(Html::escapeHTML(My::settingsDefault($setting_id)['title']));
 
                             if ($setting_value !== '' && $setting_type !== '') {
                                 App::blog()->settings->odyssey->put(
@@ -159,16 +157,12 @@ class Config extends Process
                         App::blog()->settings->odyssey->drop($setting_id);
                     }
 
-                    // Refreshes the blog.
                     App::blog()->triggerBlog();
 
-                    // Resets template cache.
                     App::cache()->emptyTemplatesCache();
 
-                    // Displays a success notice.
                     Notices::addSuccessNotice(__('settings-notice-reset'));
 
-                    // Redirects to refresh form values.
                     App::backend()->url()->redirect('admin.blog.theme', ['conf' => '1']);
                 }
             } catch (Exception $e) {
@@ -180,13 +174,13 @@ class Config extends Process
     }
 
     /**
-     * Renders the setting for the user in the configurato page.
+     * Renders the setting in the configurato page.
      *
      * @param string $setting_id The id of the setting to display.
      *
      * @return void The setting.
      */
-    public static function settingRender($setting_id)
+    public static function settingRender(string $setting_id): void
     {
         $default_settings = My::settingsDefault();
         $saved_settings   = self::settingsSaved();
@@ -367,7 +361,7 @@ class Config extends Process
                 $image_src = '';
             }
 
-            echo '<img alt="', __('header-image-preview-alt'), '" id=', $setting_id, '-src src="', $image_src, '">';
+            echo '<img alt="', __('header-image-preview-alt'), '" id=', $setting_id, '-src src="', Html::escapeURL($image_src), '">';
 
             if (isset($saved_settings['header_image2x'])) {
                 echo '<p id=', $setting_id, '-retina>',
@@ -375,7 +369,7 @@ class Config extends Process
                 '</p>';
             }
 
-            echo form::hidden('header_image-url', $image_src),
+            echo form::hidden('header_image-url', Html::escapeURL($image_src)),
             form::hidden('header_image-retina-text', Html::escapeHTML(__('header-image-retina-ready')));
         }
     }
@@ -396,8 +390,6 @@ class Config extends Process
                     $saved_settings[$setting_id] = (bool) App::blog()->settings->odyssey->$setting_id;
                 } elseif (isset($setting_data['type']) && $setting_data['type'] === 'select_int') {
                     $saved_settings[$setting_id] = (int) App::blog()->settings->odyssey->$setting_id;
-                } elseif (isset($setting_data['type']) && ($setting_data['type'] === 'text' || $setting_data['type'] === 'textarea' || $setting_data['type'] === 'color')) {
-                    $saved_settings[$setting_id] = (string) App::blog()->settings->odyssey->$setting_id;
                 } else {
                     $saved_settings[$setting_id] = App::blog()->settings->odyssey->$setting_id;
                 }
@@ -409,6 +401,8 @@ class Config extends Process
 
     /**
      * Renders the page.
+     *
+     * @return void The page.
      */
     public static function render(): void
     {
@@ -492,14 +486,12 @@ class Config extends Process
         $css_media_motion_array            = [];
         $css_media_print_array             = [];
 
-        $default_settings = My::settingsDefault();
-
         // Page width.
         if (isset($_POST['global_unit']) && isset($_POST['global_page_width_value'])) {
             $page_width_data = self::sanitizePageWidth($_POST['global_unit'], $_POST['global_page_width_value']);
 
             if (!empty($page_width_data)) {
-                $css_root_array[':root']['--page-width'] = $page_width_data['value'] . $page_width_data['unit'];
+                $css_root_array[':root']['--page-width'] = Html::escapeHTML($page_width_data['value'] . $page_width_data['unit']);
             }
         }
 
@@ -512,7 +504,7 @@ class Config extends Process
         $font_size_allowed = [80, 90, 110, 120];
 
         if (isset($_POST['global_font_size']) && in_array((int) $_POST['global_font_size'], $font_size_allowed, true)) {
-            $css_root_array[':root']['--font-size'] = My::removeZero($_POST['global_font_size'] / 100) . 'em';
+            $css_root_array[':root']['--font-size'] = My::removeZero((int) $_POST['global_font_size'] / 100) . 'em';
         }
 
         // Font antialiasing.
@@ -908,11 +900,11 @@ class Config extends Process
      *
      * @param string $setting_type  The type of the setting (integer, checkbox, etc.).
      * @param string $setting_id    The id of the setting.
-     * @param string $setting_value The value of the setting.
+     * @param mixed  $setting_value The value of the setting.
      *
      * @return array The value of the setting and its type.
      */
-    public static function sanitizeSetting($setting_type, $setting_id, $setting_value): array
+    public static function sanitizeSetting(string $setting_type, string $setting_id, mixed $setting_value): array
     {
         $default_settings = My::settingsDefault();
 
@@ -959,7 +951,7 @@ class Config extends Process
             }
 
             return [
-                'value' => strtolower($setting_value),
+                'value' => Html::escapeHTML(strtolower($setting_value)),
                 'type'  => 'string'
             ];
         }
@@ -990,12 +982,12 @@ class Config extends Process
      *
      * @return array The image in an array.
      */
-    public static function sanitizeHeaderImage($setting_id, $image_url, $page_width_unit, $page_width_value): array
+    public static function sanitizeHeaderImage(string $setting_id, string $image_url, string $page_width_unit, int $page_width_value): array
     {
         $default_settings = My::settingsDefault();
-        $image_url        = $image_url ?: '';
+        $image_url        = Html::sanitizeURL($image_url) ?: '';
         $page_width_unit  = $page_width_unit ?: '';
-        $page_width_value = $page_width_value ?: '';
+        $page_width_value = $page_width_value ?: null;
 
         if ($image_url) {
             // Gets relative url and path of the public folder.
@@ -1016,7 +1008,7 @@ class Config extends Process
                  * Limits the maximum width value of the image if its superior to the page width,
                  * and sets its height proportionally.
                  */
-                $page_width_data = self::sanitizePageWidth($page_width_unit, $page_width_value);
+                $page_width_data = self::sanitizePageWidth($page_width_unit, (int) $page_width_value);
 
                 if (empty($page_width_data)) {
                     $page_width_data['unit']  = 'em';
@@ -1059,7 +1051,7 @@ class Config extends Process
 
                     if (file_exists($image_path_2x) && getimagesize($image_path_2x) !== false) {
                         return [
-                            'value' => $image_url_2x,
+                            'value' => Html::sanitizeURL($image_url_2x),
                             'type'  => 'string'
                         ];
                     }
@@ -1079,7 +1071,7 @@ class Config extends Process
      *
      * @return array The page width and its unit.
      */
-    public static function sanitizePageWidth($unit, $value, $setting_id = null): array
+    public static function sanitizePageWidth(string $unit, int $value, $setting_id = null): array
     {
         $unit  = $unit ?: 'em';
         $value = $value ? (int) $value : 30;
@@ -1118,7 +1110,7 @@ class Config extends Process
      *
      * @return array The value of the setting and its type.
      */
-    public static function sanitizeSocialLink($setting_id, $value)
+    public static function sanitizeSocialLink(string $setting_id, string $value)
     {
         if ($value === '') {
             return [];
@@ -1199,7 +1191,7 @@ class Config extends Process
             case 'x':
                 if (preg_match('/\@[\w+]{0,15}/', $value)) {
                     return [
-                        'value' => Html::escapeURL('https://x.com/' . substr($value, 1)),
+                        'value' => 'https://x.com/' . Html::escapeURL(substr($value, 1)),
                         'type'  => 'string'
                     ];
                 } elseif (str_starts_with($value, 'https://x.com/') || str_starts_with($value, 'https://twitter.com/')) {
