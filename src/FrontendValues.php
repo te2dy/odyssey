@@ -49,7 +49,7 @@ class FrontendValues
      *
      * @return string The styles.
      */
-    public static function odysseyStylesInline()//: string
+    public static function odysseyStylesInline(): string
     {
         if (!My::settingValue('styles')) {
             return '';
@@ -59,7 +59,8 @@ class FrontendValues
     }
 
     /**
-     * Displays in the header an image defined in the theme configuration page.
+     * Displays an image in the header that has been defined
+     * in the theme configuration page.
      *
      * @param array $attr Attributes to customize the value.
      *                    Attribute allowed: position, to define the place
@@ -84,17 +85,17 @@ class FrontendValues
                 $sizes  = '';
 
                 if (My::settingValue('header_image_description')) {
-                    $alt = ' alt="' . Html::escapeHTML(My::settingValue('header_image_description')) . '"';
+                    $alt = ' alt=' . My::attrValue(Html::escapeHTML(My::settingValue('header_image_description')));
                 } else {
-                    $alt = ' alt="' . __('header-image-alt') . '"';
+                    $alt = ' alt=' . My::attrValue(__('header-image-alt'));
                 }
 
                 if (My::settingValue('header_image2x')) {
                     $image2x_url = Html::escapeURL(My::settingValue('header_image2x'));
 
                     $srcset  = ' srcset="';
-                    $srcset .= $image_url . ' 1x, ';
-                    $srcset .= $image2x_url . ' 2x';
+                    $srcset .= Html::escapeURL($image_url) . ' 1x, ';
+                    $srcset .= Html::escapeURL($image2x_url) . ' 2x';
                     $srcset .= '"';
 
                     $sizes = ' sizes=' . $image_size . 'vw';
@@ -102,10 +103,10 @@ class FrontendValues
 
                 // Does not add a link to the home page on home page.
                 if (App::url()->type === 'default') {
-                    return '<div id=site-image><img' . $alt . ' src="' . $image_url . '"' . $srcset . $sizes . '></div>';
+                    return '<div id=site-image><img' . $alt . ' src=' . My::attrValue($image_url) . '' . $srcset . $sizes . '></div>';
                 }
 
-                return '<div id=site-image><a href="' . App::blog()->url . '" rel=home><img' . $alt . ' src="' . $image_url . '"' . $srcset . $sizes . '></a></div>';
+                return '<div id=site-image><a href=' . My::attrValue(App::blog()->url) . ' rel=home><img' . $alt . ' src=' . My::attrValue($image_url) . $srcset . $sizes . '></a></div>';
             }
         }
     }
@@ -123,10 +124,8 @@ class FrontendValues
 
         if (App::blog()->desc) {
             $desc = strip_tags(App::blog()->desc, ['<em>', '<strong>']);
-            $desc = Html::decodeEntities($desc);
-            $desc = preg_replace('/\s+/', ' ', $desc);
 
-            return '<div id=site-desc>' . $desc . '</div>';
+            return '<div id=site-desc>' . My::cleanAttr($desc) . '</div>';
         }
 
         return '';
@@ -136,7 +135,7 @@ class FrontendValues
      * Loads the right entry-list template based on theme settings.
      * Default: one-line
      *
-     * @return void The entry-list template.
+     * @return The entry-list template.
      */
     public static function odysseyPostListType()
     {
@@ -185,16 +184,16 @@ class FrontendValues
     }
 
     /**
-     * Returns an excerpt of the post for the entry-list-extended template.
+     * Returns an excerpt of the post for the entry-list-excerpt template.
      *
      * Gets the excerpt defined by the author or, if it does not exists,
      * an excerpt from the content.
      *
      * @param array $attr Modifying attributes.
      *
-     * @return The entry excerpt.
+     * @return string The entry excerpt.
      */
-    public static function odysseyEntryExcerpt($attr)
+    public static function odysseyEntryExcerpt($attr): string
     {
         return '<?php
             $the_excerpt = "";
@@ -228,7 +227,6 @@ class FrontendValues
 
                 echo "<p class=\"content-text post-excerpt text-secondary\"" . $lang . ">",
                 $the_excerpt,
-                // " <a aria-label=\"", sprintf(__("entry-list-open-aria"), App::frontend()->context()->posts->post_title), "\" href=\"", App::frontend()->context()->posts->getURL(), "\">" . __("entry-list-open"), "</a>",
                 "</p>";
             }
         ?>';
@@ -280,7 +278,6 @@ class FrontendValues
         if (!My::settingValue('reactions_other')) {
             return '';
         }
-
 
         if (My::settingValue('reactions_other_email') !== true
             && My::settingValue('reactions_other_facebook') !== true
@@ -506,7 +503,7 @@ class FrontendValues
      *
      * @return string The text string.
      */
-    public static function odysseyPostTagsBefore()
+    public static function odysseyPostTagsBefore(): string
     {
         return '<?php
             if (App::frontend()->context()->posts->post_meta) {
@@ -524,7 +521,8 @@ class FrontendValues
     }
 
     /**
-     * Displays a notice informing about the support of the Markdown syntax in comments.
+     * Displays a notice informing about the support of the Markdown syntax
+     * in comments.
      *
      * @return string The notice.
      */
