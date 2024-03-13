@@ -22,7 +22,7 @@ class Frontend extends Process
     }
 
     /**
-     * Performs action and/or prepares render.
+     * Performs actions and/or prepares render.
      *
      * @return bool
      */

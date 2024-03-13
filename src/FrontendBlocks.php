@@ -20,7 +20,7 @@ class FrontendBlocks
      * @param array $attr    Unused.
      * @param void  $content The full header.
      *
-     * @return string The header.
+     * @return mixed The header.
      */
     public static function odysseyHeaderMinimal($attr, $content): mixed
     {

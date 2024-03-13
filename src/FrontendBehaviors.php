@@ -18,8 +18,6 @@ use Dotclear\Helper\Text;
 use Dotclear\Helper\File\Path;
 use Dotclear\Helper\Html\Html;
 
-use context;
-
 class FrontendBehaviors
 {
     /**
@@ -27,7 +25,7 @@ class FrontendBehaviors
      *
      * @return void The head meta.
      */
-    public static function odysseyHeadMeta()
+    public static function odysseyHeadMeta(): void
     {
         // Adds the name of the editor.
         if (App::blog()->settings->system->editor) {
@@ -70,8 +68,8 @@ class FrontendBehaviors
                         $desc = Text::cutString($desc, 179) . '…';
                     }
 
-                    if (context::EntryFirstImageHelper('o', true, '', true)) {
-                        $img = My::blogBaseURL() . context::EntryFirstImageHelper('o', true, '', true);
+                    if (Ctx::EntryFirstImageHelper('o', true, '', true)) {
+                        $img = My::blogBaseURL() . Ctx::EntryFirstImageHelper('o', true, '', true);
                     }
 
                     break;
@@ -176,7 +174,7 @@ class FrontendBehaviors
                             '@type' => 'Organization',
                             'name'  => App::blog()->name
                         ],
-                        'name'  => App::blog()->name,
+                        'name'        => App::blog()->name,
                         'description' => My::settingValue('advanced_meta_description') ?: App::blog()->desc,
                         'url'         => App::blog()->url
                     ];
@@ -187,14 +185,14 @@ class FrontendBehaviors
                         $image_path = App::blog()->public_path . str_replace(
                             App::blog()->settings->system->public_url . '/',
                             '/',
-                            My::settingValue('header_image')['url']
+                            Html::escapeURL(My::settingValue('header_image')['url'])
                         );
 
                         list($width, $height) = getimagesize($image_path);
 
                         $json_ld['publisher']['logo'] = [
                             '@type'  => 'ImageObject',
-                            'url'    => My::blogBaseURL() . My::settingValue('header_image')['url'],
+                            'url'    => Html::escapeURL(My::blogBaseURL() . My::settingValue('header_image')['url']),
                             'width'  => (int) $width,
                             'height' => (int) $height
                         ];
@@ -203,7 +201,7 @@ class FrontendBehaviors
                     // Social links
                     $social_sites   = My::socialSites();
                     $social_links   = [];
-                    $social_exclude = ['signal', 'whatsapp'];
+                    $social_exclude = ['phone', 'signal', 'sms', 'whatsapp'];
 
                     foreach ($social_sites as $id => $data) {
                         if (My::settingValue('footer_social_' . $id) !== null && !in_array($id, $social_exclude, true)) {
@@ -234,14 +232,14 @@ class FrontendBehaviors
                         $image_path = App::blog()->public_path . str_replace(
                             App::blog()->settings->system->public_url . '/',
                             '/',
-                            Ctx::EntryFirstImageHelper('o', false, '', true)
+                            Html::escapeHTML(Ctx::EntryFirstImageHelper('o', false, '', true))
                         );
 
                         list($width, $height) = getimagesize($image_path);
 
                         $json_ld['image'] = [
                             '@type'  => 'ImageObject',
-                            'url'    => Ctx::EntryFirstImageHelper("o", false, "", true),
+                            'url'    => Html::escapeURL(My::blogBaseURL() . Ctx::EntryFirstImageHelper("o", false, "", true)),
                             'width'  => (int) $width,
                             'height' => (int) $height
                         ];
@@ -252,13 +250,13 @@ class FrontendBehaviors
                         $json_ld['author'] = [
                             '@type' => 'Person',
                             'name'  => App::frontend()->context()->posts->user_displayname,
-                            'url'  => App::frontend()->context()->posts->user_url
+                            'url'   => App::frontend()->context()->posts->user_url
                         ];
                     } elseif (App::frontend()->context()->posts->user_name || App::frontend()->context()->posts->user_firstname) {
                         $json_ld['author'] = [
                             '@type' => 'Person',
                             'name'  => trim(App::frontend()->context()->posts->user_name . ' ' . App::frontend()->context()->posts->user_firstname),
-                            'url'  => App::frontend()->context()->posts->user_url
+                            'url'   => App::frontend()->context()->posts->user_url
                         ];
                     }
 
@@ -280,7 +278,7 @@ class FrontendBehaviors
 
                         $json_ld['publisher']['logo'] = [
                             '@type'  => 'ImageObject',
-                            'url'    => My::blogBaseURL() . My::settingValue('header_image')['url'],
+                            'url'    => Html::escapeURL(My::blogBaseURL() . My::settingValue('header_image')['url']),
                             'width'  => (int) $width,
                             'height' => (int) $height
                         ];
@@ -440,12 +438,12 @@ class FrontendBehaviors
                     });
 
                     // Defines image attributes.
-                    $attr  = 'src="' . $img[$src_image_size]['url'] . '" ';
+                    $attr  = 'src="' . Html::escapeURL($img[$src_image_size]['url']) . '" ';
                     $attr .= 'srcset="';
 
                     // Puts every image size in the srcset attribute.
                     foreach ($img as $img_id => $img_data) {
-                        $attr .= $img_data['url'] . ' ' . $img_data['width'] . 'w';
+                        $attr .= Html::escapeURL($img_data['url']) . ' ' . $img_data['width'] . 'w';
 
                         if ($img_id !== array_key_last($img)) {
                             $attr .= ', ';

@@ -978,14 +978,14 @@ class Config extends Process
      * @param string $setting_id       The setting id.
      * @param string $image_url        The image URL.
      * @param string $page_width_unit  The page width unit (em or px).
-     * @param int    $page_width_value The page width value.
+     * @param string $page_width_value The page width value.
      *
      * @return array The image in an array.
      */
-    public static function sanitizeHeaderImage(string $setting_id, string $image_url, string $page_width_unit, int $page_width_value): array
+    public static function sanitizeHeaderImage(string $setting_id, string $image_url, string $page_width_unit, string $page_width_value): array
     {
         $default_settings = My::settingsDefault();
-        $image_url        = Html::sanitizeURL($image_url) ?: '';
+        $image_url        = Html::escapeURL($image_url) ?: '';
         $page_width_unit  = $page_width_unit ?: '';
         $page_width_value = $page_width_value ?: null;
 
@@ -1065,13 +1065,13 @@ class Config extends Process
     /**
      * Prepares to save the page width option.
      *
-     * @param string  $unit       The unit used to define the width (px or em)
-     * @param integer $value      The value of the page width.
-     * @param string  $setting_id The setting id.
+     * @param string $unit       The unit used to define the width (px or em)
+     * @param string $value      The value of the page width.
+     * @param string $setting_id The setting id.
      *
      * @return array The page width and its unit.
      */
-    public static function sanitizePageWidth(string $unit, int $value, $setting_id = null): array
+    public static function sanitizePageWidth(string $unit, string $value, $setting_id = null): array
     {
         $unit  = $unit ?: 'em';
         $value = $value ? (int) $value : 30;
