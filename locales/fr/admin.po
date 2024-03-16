@@ -304,10 +304,7 @@ msgid "settings-content-postlistaltcolor-description"
 msgstr "Permet de mieux distinguer chaque billet dans la liste."
 
 msgid "settings-content-postlistthumbnail-title"
-msgstr "Afficher des miniatures"
-
-msgid "settings-content-postlistthumbnail-description"
-msgstr "Si un billet comprend une image, affiche une miniature devant son titre."
+msgstr "Afficher un aperçu de la première image des billets"
 
 msgid "settings-content-postlistreactions-title"
 msgstr "Afficher un lien vers les réactions"

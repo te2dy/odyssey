@@ -374,7 +374,7 @@ class FrontendBehaviors
                 // Builds an array that will contain all image sizes.
                 $img = [
                     'o' => [
-                        'url'    => $src_value,
+                        'url'    => Html::escapeURL($src_value),
                         'width'  => null,
                         'height' => null
                     ]

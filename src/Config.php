@@ -626,6 +626,16 @@ class Config extends Process
             $css_main_array[':is(.entry-list, .entry-list-excerpt) .post:nth-child(even)']['background-color'] = 'var(--color-background-even, #fff)';
         }
 
+        // Post thumbnail
+        if (isset($_POST['content_postlist_thumbnail']) && $_POST['content_postlist_thumbnail'] === '1') {
+            if (isset($_POST['content_postlist_type']) && $_POST['content_postlist_type'] === 'excerpt') {
+                $css_main_array['.post-list-excerpt']['display'] = 'block';
+
+                $css_main_array['.entry-list-excerpt-img']['display']      = 'block';
+                $css_main_array['.entry-list-excerpt-img']['margin-block'] = '1rem';
+            }
+        }
+
         // Link to reactions
         if (isset($_POST['content_postlist_reactions']) && $_POST['content_postlist_reactions'] === '1') {
             $css_main_array['.post-list-reaction-link']['margin-top'] = '.25rem';

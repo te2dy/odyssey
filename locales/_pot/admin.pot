@@ -306,9 +306,6 @@ msgstr ""
 msgid "settings-content-postlistthumbnail-title"
 msgstr ""
 
-msgid "settings-content-postlistthumbnail-description"
-msgstr ""
-
 msgid "settings-content-postlistreactions-title"
 msgstr ""
 

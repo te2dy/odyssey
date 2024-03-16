@@ -304,10 +304,7 @@ msgid "settings-content-postlistaltcolor-description"
 msgstr "Allows you to better distinguish each ticket in the list."
 
 msgid "settings-content-postlistthumbnail-title"
-msgstr "Display thumbnails"
-
-msgid "settings-content-postlistthumbnail-description"
-msgstr "If a post includes an image, display a thumbnail in front of its title."
+msgstr "Show a preview of the first image of posts"
 
 msgid "settings-content-postlistreactions-title"
 msgstr "Show a link to reactions"

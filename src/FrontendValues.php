@@ -149,36 +149,90 @@ class FrontendValues
     /**
      * Displays a thumbnail in the post list of the first image found in each post.
      *
-     * This function replaces the tag {{tpl:EntryFirstImage}} that should have been put
-     * in the template in order to support responsive images with the srcset attribute.
+     * This function replaces the tag {{tpl:EntryFirstImage}}
+     * that should have been put in the template in order to support
+     * responsive images with the srcset attribute.
+     *
+     * @param array $attr Attributes to customize the value.
      *
      * @return string The image.
      */
-    public static function odysseyEntryListImage(): string
+    public static function odysseyEntryListImage($attr): string
     {
         if (My::settingValue('content_postlist_thumbnail') === false) {
             return '';
         }
 
         return '<?php
-            $img = ' . Ctx::class . '::EntryFirstImageHelper("t", false, "entry-list-img");
+            $context = "' . $attr['context'] . '";
 
-            if ($img) {
-                $img_t   = ' . Ctx::class . '::EntryFirstImageHelper("t", false, "", true);
-                $width_t = ' . App::media()->thumb_sizes['t'][0] . ';
+            switch ($context) {
+                case "entry-list" :
+                    $img = ' . Ctx::class . '::EntryFirstImageHelper("t", false, "entry-list-img");
 
-                $img_s   = ' . Ctx::class . '::EntryFirstImageHelper("s", false, "", true);
-                $width_s = ' . App::media()->thumb_sizes['s'][0] . ';
+                    if ($img) {
+                        $img_t   = ' . Ctx::class . '::EntryFirstImageHelper("t", false, "", true);
+                        $width_t = ' . App::media()->thumb_sizes['t'][0] . ';
 
-                if ($img_s && $img_s !== $img_t) {
-                    $img_src = "src=\"" . $img_t . "\"";
+                        $img_s   = ' . Ctx::class . '::EntryFirstImageHelper("s", false, "", true);
+                        $width_s = ' . App::media()->thumb_sizes['s'][0] . ';
 
-                    $img_src_srcset = $img_src . " srcset=\"" . $img_s . " " . $width_s . "w, " . $img_t . " " . $width_t . "w\" size=100vw";
+                        if ($img_s && $img_s !== $img_t) {
+                            $img_src = "src=\"" . Html::escapeURL($img_t) . "\"";
 
-                    $img = str_replace($img_src, $img_src_srcset, $img);
-                }
+                            $img_src_srcset = $img_src . " srcset=\"" . Html::escapeURL($img_s) . " " . Html::escapeHTML($width_s) . "w, " . Html::escapeURL($img_t) . " " . Html::escapeHTML($width_t) . "w\" size=100vw";
 
-                echo $img;
+                            $img = str_replace($img_src, $img_src_srcset, $img);
+                        }
+
+                        echo $img;
+                    }
+
+                    break;
+                case "entry-list-excerpt" :
+                    $img = ' . Ctx::class . '::EntryFirstImageHelper("o", false, "entry-list-excerpt-img");
+
+                    if ($img) {
+                        $content_width = "' . My::getContentWidth('px')['value'] . '";
+
+                        $img_o         = ' . Ctx::class . '::EntryFirstImageHelper("o", false, "", true) ?: null;
+                        $img_o_path    = App::blog()->public_path . str_replace(
+                            App::blog()->settings->system->public_url . "/",
+                            "/",
+                            $img_o
+                        );
+                        list($width_o) = getimagesize($img_o_path);
+
+                        $img_m   = ' . Ctx::class . '::EntryFirstImageHelper("m", false, "", true) ?: null;
+                        $width_m = ' . App::media()->thumb_sizes['m'][0] . ';
+
+                        $img_s   = ' . Ctx::class . '::EntryFirstImageHelper("s", false, "", true) ?: null;
+                        $width_s = ' . App::media()->thumb_sizes['s'][0] . ';
+
+                        if ($img_o && $width_o >= $content_width) {
+                            $img_src = "src=\"" . Html::escapeURL($img_o) . "\"";
+
+                            if ($img_m || $img_s) {
+                                $img_src_srcset = "";
+
+                                if ($img_s) {
+                                    $img_src_srcset .= Html::escapeURL($img_s) . " " . Html::escapeHTML($width_s) . "w, ";
+                                }
+
+                                if ($img_m) {
+                                    $img_src_srcset .= Html::escapeURL($img_m) . " " . Html::escapeHTML($width_m) . "w, ";
+                                }
+
+                                $img_src_srcset .= Html::escapeURL($img_o) . " " . Html::escapeHTML($width_o) . "w";
+                            }
+
+                            $img_src_srcset = $img_src . " srcset=\"" . $img_src_srcset . "\" size=100vw";
+
+                            $img = str_replace($img_src, $img_src_srcset, $img);
+                        }
+
+                        echo $img;
+                    }
             }
         ?>';
     }
@@ -251,18 +305,18 @@ class FrontendValues
             }
 
             return '<?php
-            $nb_reactions = (int) App::frontend()->context()->posts->nb_comment + (int) App::frontend()->context()->posts->nb_trackback;
+                $nb_reactions = (int) App::frontend()->context()->posts->nb_comment + (int) App::frontend()->context()->posts->nb_trackback;
 
-            if ($nb_reactions > 0) {
-                if ($nb_reactions > 1) {
-                    $reaction_text = (string) sprintf("' . __("reactions-reactions-title-count-multiple") . '", $nb_reactions);
-                } else {
-                    $reaction_text = "' . __("reactions-reactions-title-count-one") . '";
+                if ($nb_reactions > 0) {
+                    if ($nb_reactions > 1) {
+                        $reaction_text = (string) sprintf("' . __("reactions-reactions-title-count-multiple") . '", $nb_reactions);
+                    } else {
+                        $reaction_text = "' . __("reactions-reactions-title-count-one") . '";
+                    }
+
+                    echo "' . $separator . $tag_open . '<a href=\"" .  App::frontend()->context()->posts->getURL() . "#' . __('reactions-id') . '\">" . $reaction_text . "</a>' . $tag_close . '";
                 }
-
-                echo "' . $separator . $tag_open . '<a href=\"" .  App::frontend()->context()->posts->getURL() . "#' . __('reactions-id') . '\">" . $reaction_text . "</a>' . $tag_close . '";
-            }
-            ?>';
+                ?>';
         }
 
         return '';

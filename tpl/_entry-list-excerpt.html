@@ -8,9 +8,9 @@
       <small class="post-date text-secondary"><time aria-label="{{tpl:lang entry-list-date-aria-label}}" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%M"}}>{{tpl:EntryDate}}</time></small>
     </tpl:EntryIf>
 
-    <!--{{tpl:odysseyEntryListImage}}-->
-
     <h3 class=entry-title><tpl:EntryIf selected="1"><span class=post-selected-star>⭐️</span> </tpl:EntryIf><a href="{{tpl:EntryURL}}" rel=bookmark>{{tpl:EntryTitle}}</a></h3>
+
+    {{tpl:odysseyEntryListImage context="entry-list-excerpt"}}
 
     {{tpl:odysseyEntryExcerpt}}
 

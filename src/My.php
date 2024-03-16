@@ -324,7 +324,7 @@ class My extends MyTheme
 
         $default_settings['content_postlist_thumbnail'] = [
             'title'       => __('settings-content-postlistthumbnail-title'),
-            'description' => __('settings-content-postlistthumbnail-description'),
+            'description' => '',
             'type'        => 'checkbox',
             'default'     => '1',
             'section'     => ['content', 'postlist']
