@@ -929,7 +929,7 @@ class My extends MyTheme
      *
      * @return array The SVG info.
      */
-    public static function svgIcons($id = ''): array
+    public static function svgIcons(string $id = ''): array
     {
         $icons = [];
 
