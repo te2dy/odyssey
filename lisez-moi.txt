@@ -12,6 +12,14 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
+=== 0.13 - 23 mars 2024 ===
+- Ajout : possibilité de réagir à un billet par d’autres moyens que les commentaires (courriel, SMS, Signal, WhatsApp et X).
+- Ajout : SMS et téléphone dans la liste des liens sociaux.
+- Ajout : option pour afficher la première image d’un billet dans la liste des billets avec extrait.
+- Amélioration : nouveau système de liens sociaux.
+- Amélioration : revue générale du code PHP.
+- Correction : l’avertissement d’utilisation du Markdown dans les commentaires ne s’affichait plus.
+
 === 0.12 – 4 mars 2024 ===
 - Ajout : option pour personnaliser les couleurs du thème.
 - Ajout : option JSON LD dans l’en-tête de la page d’accueil et des billets.
