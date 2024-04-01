@@ -342,8 +342,7 @@ class FrontendValues
             return '';
         }
 
-        $output  = '';
-        $output .= '<div class="reactions-other form-entry">';
+        $output  = '<div class="reactions-other form-entry">';
         $output .= '<h3 class=reaction-title>' . __('reactions-other-title') . '</h3>';
 
         if (My::settingValue('social_email') && My::settingValue('reactions_other_email') === true) {

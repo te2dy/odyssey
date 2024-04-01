@@ -913,13 +913,11 @@ class My extends MyTheme
             'type' => 'url'
         ];
 
-        if ($site_id === '') {
-            return $social_sites;
-        } elseif (array_key_exists($site_id, $social_sites)) {
+        if (array_key_exists($site_id, $social_sites)) {
             return $social_sites[$site_id];
         }
 
-        return '';
+        return $social_sites;
     }
 
     /**
@@ -993,7 +991,7 @@ class My extends MyTheme
             'author' => 'feathericons'
         ];
 
-        if ($id !== '' && isset($icons[$id])) {
+        if ($id && isset($icons[$id])) {
             return $icons[$id];
         }
 
