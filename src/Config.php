@@ -593,7 +593,7 @@ class Config extends Process
         }
 
         // Font antialiasing.
-        if (isset($_POST['global_font_antialiasing']) && $_POST['global_font_antialiasing'] === '1') {
+        if (isset($_POST['global_font_antialiasing']) && $_POST['global_font_antialiasing'] === 'on') {
             $css_main_array['body']['-moz-osx-font-smoothing'] = 'grayscale';
             $css_main_array['body']['-webkit-font-smoothing']  = 'antialiased';
             $css_main_array['body']['font-smooth']             = 'always';
@@ -673,7 +673,7 @@ class Config extends Process
         }
 
         // Transitions.
-        if (isset($_POST['global_css_transition']) && $_POST['global_css_transition'] === '1') {
+        if (isset($_POST['global_css_transition']) && $_POST['global_css_transition'] === 'on') {
             $css_root_array[':root']['--color-transition'] = 'all .2s ease-in-out';
 
             $css_media_motion_array[':root']['--color-transition'] = 'unset';
@@ -705,14 +705,14 @@ class Config extends Process
         }
 
         // Alternate post color
-        if (isset($_POST['content_postlist_altcolor']) && $_POST['content_postlist_altcolor'] === '1') {
+        if (isset($_POST['content_postlist_altcolor']) && $_POST['content_postlist_altcolor'] === 'on') {
             $css_root_dark_array[':root']['--color-background-even'] = '#000';
 
             $css_main_array[':is(.entry-list, .entry-list-excerpt) .post:nth-child(even)']['background-color'] = 'var(--color-background-even, #fff)';
         }
 
         // Post thumbnail
-        if (isset($_POST['content_postlist_thumbnail']) && $_POST['content_postlist_thumbnail'] === '1') {
+        if (isset($_POST['content_postlist_thumbnail']) && $_POST['content_postlist_thumbnail'] === 'on') {
             if (isset($_POST['content_postlist_type']) && $_POST['content_postlist_type'] === 'excerpt') {
                 $css_main_array['.post-list-excerpt']['display'] = 'block';
 
@@ -722,7 +722,7 @@ class Config extends Process
         }
 
         // Link to reactions
-        if (isset($_POST['content_postlist_reactions']) && $_POST['content_postlist_reactions'] === '1') {
+        if (isset($_POST['content_postlist_reactions']) && $_POST['content_postlist_reactions'] === 'on') {
             $css_main_array['.post-list-reaction-link']['margin-top'] = '.25rem';
         }
 
@@ -826,7 +826,7 @@ class Config extends Process
         }
 
         // Initial letter
-        if (isset($_POST['content_initial_letter']) && $_POST['content_initial_letter'] === '1') {
+        if (isset($_POST['content_initial_letter']) && $_POST['content_initial_letter'] === 'on') {
             $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['-moz-initial-letter'] = '2';
             $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['-webkit-initial-letter'] = '2';
             $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['initial-letter'] = '2';
