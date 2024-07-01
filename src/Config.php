@@ -15,26 +15,23 @@ use Dotclear\Core\Backend\Notices;
 use Dotclear\Core\Backend\Page;
 use Dotclear\Helper\File\Path;
 use Dotclear\Helper\Html\Html;
-use Dotclear\Helper\Network\Http;
-
-// use form;
-
-use Dotclear\Helper\Html\Form\Form;
+use Dotclear\Helper\Html\Form\Button;
 use Dotclear\Helper\Html\Form\Checkbox;
+use Dotclear\Helper\Html\Form\Color;
+use Dotclear\Helper\Html\Form\Fieldset;
+use Dotclear\Helper\Html\Form\Form;
 use Dotclear\Helper\Html\Form\Hidden;
+use Dotclear\Helper\Html\Form\Image;
+use Dotclear\Helper\Html\Form\Input;
 use Dotclear\Helper\Html\Form\Label;
+use Dotclear\Helper\Html\Form\Legend;
+use Dotclear\Helper\Html\Form\Option;
 use Dotclear\Helper\Html\Form\Para;
+use Dotclear\Helper\Html\Form\Select;
 use Dotclear\Helper\Html\Form\Submit;
 use Dotclear\Helper\Html\Form\Text;
 use Dotclear\Helper\Html\Form\Textarea;
-use Dotclear\Helper\Html\Form\Fieldset;
-use Dotclear\Helper\Html\Form\Legend;
-use Dotclear\Helper\Html\Form\Select;
-use Dotclear\Helper\Html\Form\Option;
-use Dotclear\Helper\Html\Form\Image;
-use Dotclear\Helper\Html\Form\Color;
-use Dotclear\Helper\Html\Form\Button;
-use Dotclear\Helper\Html\Form\Input;
+use Dotclear\Helper\Network\Http;
 
 class Config extends Process
 {
@@ -280,7 +277,10 @@ class Config extends Process
                         $the_setting[] = (new Para())
                             ->id('odyssey-config-global-font-preview')
                             ->class('odyssey-font-preview')
-                            ->items([(new Text('null', '<strong>' . __('config-preview-font') . '</strong> ' . $preview_string))]);
+                            ->items([
+                                (new Text('strong', __('config-preview-font'))),
+                                (new Text(null, ' ' . $preview_string))
+                            ]);
                     } else {
                         if ($setting_value === 'same' && isset($saved_settings['global_font_family'])) {
                             $attr = ' style="font-family:' . My::fontStack($saved_settings['global_font_family']) . '";';
@@ -291,7 +291,10 @@ class Config extends Process
                         $the_setting[] = (new Para())
                             ->id('odyssey-config-content-font-preview')
                             ->class('odyssey-font-preview')
-                            ->items([(new Text('null', '<strong>' . __('config-preview-font') . '</strong> ' . $preview_string))]);
+                            ->items([
+                                (new Text('strong', __('config-preview-font'))),
+                                (new Text(null, ' ' . $preview_string))
+                            ]);
                     }
                 }
 
@@ -361,31 +364,6 @@ class Config extends Process
                         (new Button($setting_id . '-default-button', __('settings-colors-reset'))),
                         (new Hidden($setting_id . '-default-value', Html::escapeHTML($default_settings[$setting_id]['default'])))
                     ]);
-
-                /*
-                echo '<span class=odyssey-color-setting><label for=', $setting_id, '>',
-                $default_settings[$setting_id]['title'],
-                '</label>',
-
-                form::color(
-                    $setting_id,
-                    7,
-                    7,
-                    $setting_value ?: $default_settings[$setting_id]['default']
-                ),
-
-                '<input id=', $setting_id, '-text', $placeholder , ' value=',
-                $setting_value ?: $default_settings[$setting_id]['default'],
-                '>',
-
-                ' <input id=', $setting_id, '-default-button type=button value="', __('settings-colors-reset'), '">',
-
-                /*
-                form::hidden(
-                    $setting_id . '-default-value',
-                    Html::escapeHTML($default_settings[$setting_id]['default'])
-                );
-                */
 
                 break;
 
