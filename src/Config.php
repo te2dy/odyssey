@@ -18,7 +18,6 @@ use Dotclear\Helper\Html\Html;
 use Dotclear\Helper\Html\Form\Button;
 use Dotclear\Helper\Html\Form\Checkbox;
 use Dotclear\Helper\Html\Form\Color;
-use Dotclear\Helper\Html\Form\Fieldset;
 use Dotclear\Helper\Html\Form\Form;
 use Dotclear\Helper\Html\Form\Hidden;
 use Dotclear\Helper\Html\Form\Image;
@@ -192,9 +191,9 @@ class Config extends Process
      *
      * @param string $setting_id The id of the setting to display.
      *
-     * @return void The setting.
+     * @return array The setting.
      */
-    public static function settingRender(string $setting_id, bool $description = false)
+    public static function settingRender(string $setting_id): array
     {
         $default_settings = My::settingsDefault();
         $saved_settings   = self::settingsSaved();
