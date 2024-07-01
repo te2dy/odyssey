@@ -17,7 +17,24 @@ use Dotclear\Helper\File\Path;
 use Dotclear\Helper\Html\Html;
 use Dotclear\Helper\Network\Http;
 
-use form;
+// use form;
+
+use Dotclear\Helper\Html\Form\Form;
+use Dotclear\Helper\Html\Form\Checkbox;
+use Dotclear\Helper\Html\Form\Hidden;
+use Dotclear\Helper\Html\Form\Label;
+use Dotclear\Helper\Html\Form\Para;
+use Dotclear\Helper\Html\Form\Submit;
+use Dotclear\Helper\Html\Form\Text;
+use Dotclear\Helper\Html\Form\Textarea;
+use Dotclear\Helper\Html\Form\Fieldset;
+use Dotclear\Helper\Html\Form\Legend;
+use Dotclear\Helper\Html\Form\Select;
+use Dotclear\Helper\Html\Form\Option;
+use Dotclear\Helper\Html\Form\Image;
+use Dotclear\Helper\Html\Form\Color;
+use Dotclear\Helper\Html\Form\Button;
+use Dotclear\Helper\Html\Form\Input;
 
 class Config extends Process
 {
@@ -180,7 +197,7 @@ class Config extends Process
      *
      * @return void The setting.
      */
-    public static function settingRender(string $setting_id): void
+    public static function settingRender(string $setting_id, bool $description = false)
     {
         $default_settings = My::settingsDefault();
         $saved_settings   = self::settingsSaved();
@@ -192,38 +209,78 @@ class Config extends Process
             $setting_value = $default_settings[$setting_id]['default'];
         }
 
-        echo '<p id=', $setting_id, '-input>';
+        $the_setting = [];
 
         switch ($default_settings[$setting_id]['type']) {
             case 'checkbox' :
-                echo form::checkbox(
-                    $setting_id,
-                    true,
-                    $setting_value
-                ),
-                '<label class=classic for=', $setting_id, '>',
-                $default_settings[$setting_id]['title'],
-                '</label>';
+                $the_setting[] = (new Para())
+                    ->id($setting_id . '-input')
+                    ->items([
+                        (new Checkbox($setting_id, $setting_value))
+                            ->checked($setting_value)
+                            ->label(
+                                (new Label($default_settings[$setting_id]['title'], Label::OUTSIDE_TEXT_AFTER))
+                                ->class('classic')
+                            )
+                        ]
+                    );
+
+                $checkbox_default = '';
+
+                if ($default_settings[$setting_id]['type'] === 'checkbox') {
+                    if ($default_settings[$setting_id]['default'] === true) {
+                        $checkbox_default = ' ' . __('settings-default-checked');
+                    } else {
+                        $checkbox_default = ' ' . __('settings-default-unchecked');
+                    }
+                }
+
+                if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
+                    $the_setting[] = (new Para())
+                        ->id($setting_id . '-description')
+                        ->class('form-note')
+                        ->items([
+                            (new Text(null, $default_settings[$setting_id]['description'] . $checkbox_default))
+                       ]);
+                } elseif ($checkbox_default !== '') {
+                    $the_setting[] = (new Para())
+                        ->id($setting_id . '-description')
+                        ->class('form-note')
+                        ->items([
+                            (new Text(null, $checkbox_default))
+                       ]);
+                }
 
                 break;
 
             case 'select' :
             case 'select_int' :
-                echo '<label for=', $setting_id, '>',
-                $default_settings[$setting_id]['title'],
-                '</label>',
-                form::combo(
-                    $setting_id,
-                    $default_settings[$setting_id]['choices'],
-                    $setting_value
-                );
+
+                $combo = [];
+
+                foreach ($default_settings[$setting_id]['choices'] as $name => $value) {
+                    $combo[] = new Option($name, $value);
+                }
+
+                $the_setting[] = (new Para())
+                    ->id($setting_id . '-input')
+                    ->items([
+                        (new Select($setting_id))
+                            ->default((string) $setting_value)
+                            ->items($combo)
+                            ->label(new Label($default_settings[$setting_id]['title'], Label::OL_TF))
+                        ]
+                    );
 
                 // Displays a preview for font changes.
                 if ($setting_id === 'global_font_family' || $setting_id === 'content_text_font') {
                     $preview_string = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean iaculis egestas sapien, at pretium erat interdum ullamcorper. Aliquam facilisis dolor sit amet nibh imperdiet vestibulum. Aenean et elementum magna, eget blandit arcu. Morbi tellus tortor, gravida vitae rhoncus nec, scelerisque vitae odio. In nulla mi, efficitur interdum scelerisque ac, ultrices non tortor.';
 
                     if ($setting_id === 'global_font_family') {
-                        echo '<p class=odyssey-font-preview id=odyssey-config-global-font-preview><strong>', __('config-preview-font'), '</strong> ', $preview_string,'</p>';
+                        $the_setting[] = (new Para())
+                            ->id('odyssey-config-global-font-preview')
+                            ->class('odyssey-font-preview')
+                            ->items([(new Text('null', '<strong>' . __('config-preview-font') . '</strong> ' . $preview_string))]);
                     } else {
                         if ($setting_value === 'same' && isset($saved_settings['global_font_family'])) {
                             $attr = ' style="font-family:' . My::fontStack($saved_settings['global_font_family']) . '";';
@@ -231,15 +288,27 @@ class Config extends Process
                             $attr = '';
                         }
 
-                        echo '<p class=odyssey-font-preview id=odyssey-config-content-font-preview', $attr, '><strong>', __('config-preview-font'), '</strong> ', $preview_string,'</p>';
+                        $the_setting[] = (new Para())
+                            ->id('odyssey-config-content-font-preview')
+                            ->class('odyssey-font-preview')
+                            ->items([(new Text('null', '<strong>' . __('config-preview-font') . '</strong> ' . $preview_string))]);
                     }
+                }
+
+                if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
+                    $the_setting[] = (new Para())
+                        ->id($setting_id . '-description')
+                        ->class('form-note')
+                        ->items([
+                            (new Text(null, $default_settings[$setting_id]['description']))
+                        ]);
                 }
 
                 break;
 
             case 'image' :
                 $placeholder = isset($default_settings[$setting_id]['placeholder'])
-                ? 'placeholder=' . My::attrValue($default_settings[$setting_id]['placeholder'])
+                ? $default_settings[$setting_id]['placeholder']
                 : '';
 
                 if (!empty($setting_value) && $setting_value['url'] !== '') {
@@ -248,27 +317,52 @@ class Config extends Process
                     $image_src = '';
                 }
 
-                echo '<label for=', $setting_id, '>',
-                $default_settings[$setting_id]['title'],
-                '</label>',
-                form::field(
-                    $setting_id,
-                    30,
-                    255,
-                    $image_src,
-                    '',
-                    '',
-                    false,
-                    $placeholder
-                );
+                $the_setting[] = (new Para())
+                    ->id($setting_id . '-input')
+                    ->items([
+                        (new Input($setting_id))
+                            ->label(
+                                (new Label($default_settings[$setting_id]['title'], 2))
+                                    ->for($setting_id)
+                            )
+                            ->maxlength(255)
+                            ->placeholder($placeholder)
+                            ->size(30)
+                            ->value($image_src)
+                    ]);
+
+                if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
+                    $the_setting[] = (new Para())
+                        ->id($setting_id . '-description')
+                        ->class('form-note')
+                        ->items([
+                            (new Text(null, $default_settings[$setting_id]['description']))
+                        ]);
+                }
 
                 break;
 
             case 'color' :
                 $placeholder = isset($default_settings[$setting_id]['placeholder'])
-                ? ' placeholder=' . My::attrValue($default_settings[$setting_id]['placeholder'])
+                ? My::attrValue($default_settings[$setting_id]['placeholder'])
                 : '';
 
+                $setting_value = $setting_value ?: $default_settings[$setting_id]['default'];
+
+                $the_setting[] = (new Para())
+                    ->id($setting_id . '-input')
+                    ->class('odyssey-color-setting')
+                    ->items([
+                        (new Label($default_settings[$setting_id]['title'], 0, $setting_id))
+                            ->extra('for=' . $setting_id),
+                        (new Color($setting_id, $setting_value)),
+                        (new Input($setting_id . '-text', $setting_value))
+                            ->placeholder($placeholder),
+                        (new Button($setting_id . '-default-button', __('settings-colors-reset'))),
+                        (new Hidden($setting_id . '-default-value', Html::escapeHTML($default_settings[$setting_id]['default'])))
+                    ]);
+
+                /*
                 echo '<span class=odyssey-color-setting><label for=', $setting_id, '>',
                 $default_settings[$setting_id]['title'],
                 '</label>',
@@ -286,10 +380,12 @@ class Config extends Process
 
                 ' <input id=', $setting_id, '-default-button type=button value="', __('settings-colors-reset'), '">',
 
+                /*
                 form::hidden(
                     $setting_id . '-default-value',
                     Html::escapeHTML($default_settings[$setting_id]['default'])
                 );
+                */
 
                 break;
 
@@ -298,59 +394,55 @@ class Config extends Process
                 ? 'placeholder=' . My::attrValue($default_settings[$setting_id]['placeholder'])
                 : '';
 
-                echo '<label for=', $setting_id, '>',
-                $default_settings[$setting_id]['title'],
-                '</label>',
-                form::textArea(
-                    $setting_id,
-                    60,
-                    3,
-                    $setting_value,
-                    '',
-                    '',
-                    false,
-                    $placeholder
-                );
+                $the_setting[] = (new Para())
+                    ->id($setting_id . '-input')
+                    ->items([
+                        (new Label($default_settings[$setting_id]['title'], 2))
+                            ->for($setting_id),
+                        (new Textarea($setting_id, $setting_value))
+                            ->placeholder($placeholder)
+                            ->cols(60)
+                            ->rows(3)
+                    ]);
+
+                if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
+                    $the_setting[] = (new Para())
+                        ->id($setting_id . '-description')
+                        ->class('form-note')
+                        ->items([
+                            (new Text(null, $default_settings[$setting_id]['description']))
+                        ]);
+                }
 
                 break;
 
             default :
                 $placeholder = isset($default_settings[$setting_id]['placeholder'])
-                ? 'placeholder=' . My::attrValue($default_settings[$setting_id]['placeholder'])
+                ? My::attrValue($default_settings[$setting_id]['placeholder'])
                 : '';
 
-                echo '<label for=', $setting_id, '>',
-                $default_settings[$setting_id]['title'],
-                '</label>',
-                form::field(
-                    $setting_id,
-                    30,
-                    255,
-                    $setting_value,
-                    '',
-                    '',
-                    false,
-                    $placeholder
-                );
-        }
+                $the_setting[] = (new Para())
+                    ->id($setting_id . '-input')
+                    ->items([
+                        (new Input($setting_id))
+                            ->label(
+                                (new Label($default_settings[$setting_id]['title'], 2))
+                                    ->for($setting_id)
+                            )
+                            ->maxlength(255)
+                            ->placeholder($placeholder)
+                            ->size(30)
+                            ->value($setting_value)
+                    ]);
 
-        echo '</p>';
-
-        // Displays the description of the parameter as a note.
-        if ($default_settings[$setting_id]['type'] === 'checkbox' || (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '')) {
-            echo '<p class=form-note id=', $setting_id, '-description>',
-            $default_settings[$setting_id]['description'];
-
-            // If the parameter is a checkbox, displays its default value as a note.
-            if ($default_settings[$setting_id]['type'] === 'checkbox') {
-                if ($default_settings[$setting_id]['default'] === '1') {
-                    echo ' ', __('settings-default-checked');
-                } else {
-                    echo ' ', __('settings-default-unchecked');
+                if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
+                    $the_setting[] = (new Para())
+                        ->id($setting_id . '-description')
+                        ->class('form-note')
+                        ->items([
+                            (new Text(null, $default_settings[$setting_id]['description']))
+                        ]);
                 }
-            }
-
-            echo '</p>';
         }
 
         // Header image.
@@ -361,17 +453,23 @@ class Config extends Process
                 $image_src = '';
             }
 
-            echo '<img alt="', __('header-image-preview-alt'), '" id=', $setting_id, '-src src="', Html::escapeURL($image_src), '">';
+
+            $the_setting[] = (new Text(
+                null,
+                '<img alt="' . __('header-image-preview-alt') . '" id=' . $setting_id . '-src src="' . Html::escapeURL($image_src) . '">'
+            ));
+
 
             if (isset($saved_settings['header_image2x'])) {
-                echo '<p id=', $setting_id, '-retina>',
-                __('header-image-retina-ready'),
-                '</p>';
+                $the_setting[] = (new Text(null, __('header-image-retina-ready')))
+                    ->id($setting_id . '-retina');
             }
 
-            echo form::hidden('header_image-url', Html::escapeURL($image_src)),
-            form::hidden('header_image-retina-text', Html::escapeHTML(__('header-image-retina-ready')));
+            $the_setting[] = (new Hidden($setting_id . '-url', Html::escapeURL($image_src)));
+            $the_setting[] = (new Hidden($setting_id . '-text', Html::escapeHTML(__('header-image-retina-ready'))));
         }
+
+        return $the_setting;
     }
 
     /**
@@ -432,42 +530,51 @@ class Config extends Process
             }
         }
 
-        echo '<form action="', App::backend()->url()->get('admin.blog.theme', ['conf' => '1']), '" enctype=multipart/form-data id=theme-config-form method=post>';
+        $fields = [];
 
-        // Displays the setting.
         foreach ($settings_render as $section_id => $setting_data) {
-            echo '<h3 id=section-', $section_id, '>',
-            My::settingsSections($section_id)['name'],
-            '</h3>',
-            '<div class=fieldset>';
+            $fields[] = (new Text('', '<h3>' . My::settingsSections($section_id)['name'] . '</h3>'))
+                ->id('section-' . $section_id);
+            $fields[] = (new Text('', '<div class=fieldset>'));
 
             foreach ($setting_data as $sub_section_id => $setting_id) {
                 // Displays the name of the sub-section unless its ID is "no-title".
                 if ($sub_section_id !== 'no-title') {
-                    echo '<h4 id=section-', $section_id, '-', $sub_section_id, '>',
-                    My::settingsSections($section_id)['sub_sections'][$sub_section_id],
-                    '</h4>';
+                    $fields[] = (new Text('h4', My::settingsSections($section_id)['sub_sections'][$sub_section_id]))
+                        ->id('section-' . $section_id . '-' . $sub_section_id);
                 }
 
                 // Displays the parameter.
                 foreach ($setting_id as $setting_id_value) {
-                    self::settingRender($setting_id_value);
+                    if (is_array(self::settingRender($setting_id_value))) {
+                        foreach (self::settingRender($setting_id_value) as $item) {
+                            $fields[] = $item;
+                        }
+                    }
                 }
             }
 
-            echo '</div>';
+            $fields[] = (new Text(null, '</div>'));
         }
 
-        // Hidden inputs.
-        echo form::hidden('page_width_em_default', '30');
-        echo form::hidden('page_width_px_default', '480');
+        $fields[] = (new Hidden('page_width_em_default', '30'));
+        $fields[] = (new Hidden('page_width_px_default', '480'));
 
-        echo '<p>',
-        App::nonce()->getFormNonce(),
-        '<input name=save type=submit value="', __('settings-save-button-text'), '"> ',
-        '<input class=delete name=reset value="', __('settings-reset-button-text'), '" type=submit>',
-        '</p>',
-        '</form>';
+        $fields[] = (new Para())
+            ->items([
+                App::nonce()->formNonce(),
+                (new Submit(null, __('settings-save-button-text')))
+                    ->name('save'),
+                (new Submit(null,  __('settings-reset-button-text')))
+                    ->class('delete')
+                    ->name('reset')
+            ]);
+
+        echo (new Form('theme-config-form'))
+            ->action(App::backend()->url()->get('admin.blog.theme', ['conf' => '1']))
+            ->method('post')
+            ->fields($fields)
+            ->render();
     }
 
     /**
@@ -933,14 +1040,14 @@ class Config extends Process
         }
 
         if ($setting_type === 'checkbox') {
-            if ($setting_value === '1' && $default_settings[$setting_id]['default'] !== '1') {
+            if ($setting_value === '1' && $default_settings[$setting_id]['default'] !== true) {
                 return [
                     'value' => '1',
                     'type'  => 'boolean'
                 ];
             }
 
-            if ($setting_value === '0' && $default_settings[$setting_id]['default'] !== '0') {
+            if ($setting_value === '0' && $default_settings[$setting_id]['default'] !== false) {
                 return [
                     'value' => '0',
                     'type'  => 'boolean'

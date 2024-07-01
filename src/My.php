@@ -168,7 +168,7 @@ class My extends MyTheme
             'title'       => __('settings-global-fontantialiasing-title'),
             'description' => __('settings-global-fontantialiasing-description'),
             'type'        => 'checkbox',
-            'default'     => '0',
+            'default'     => false,
             'section'     => ['global', 'fonts']
         ];
 
@@ -232,7 +232,7 @@ class My extends MyTheme
             'title'       => __('settings-global-colortransition-title'),
             'description' => __('settings-global-colortransition-description'),
             'type'        => 'checkbox',
-            'default'     => '0',
+            'default'     => false,
             'section'     => ['global', 'colors']
         ];
 
@@ -253,7 +253,7 @@ class My extends MyTheme
             'title'       => __('settings-header-description-title'),
             'description' => '',
             'type'        => 'checkbox',
-            'default'     => '1',
+            'default'     => true,
             'section'     => ['header', 'no-title']
         ];
 
@@ -261,7 +261,7 @@ class My extends MyTheme
             'title'       => __('settings-header-postfull-title'),
             'description' => __('settings-header-postfull-description'),
             'type'        => 'checkbox',
-            'default'     => '0',
+            'default'     => false,
             'section'     => ['header', 'no-title']
         ];
 
@@ -318,7 +318,7 @@ class My extends MyTheme
             'title'       => __('settings-content-postlistaltcolor-title'),
             'description' => __('settings-content-postlistaltcolor-description'),
             'type'        => 'checkbox',
-            'default'     => '0',
+            'default'     => false,
             'section'     => ['content', 'postlist']
         ];
 
@@ -326,7 +326,7 @@ class My extends MyTheme
             'title'       => __('settings-content-postlistthumbnail-title'),
             'description' => '',
             'type'        => 'checkbox',
-            'default'     => '1',
+            'default'     => true,
             'section'     => ['content', 'postlist']
         ];
 
@@ -334,7 +334,7 @@ class My extends MyTheme
             'title'       => __('settings-content-postlistreactions-title'),
             'description' => '',
             'type'        => 'checkbox',
-            'default'     => '0',
+            'default'     => false,
             'section'     => ['content', 'postlist']
         ];
 
@@ -423,7 +423,7 @@ class My extends MyTheme
             'title'       => __('settings-content-initialletter-title'),
             'description' => __('settings-content-initialletter-description'),
             'type'        => 'checkbox',
-            'default'     => '0',
+            'default'     => false,
             'section'     => ['content', 'text-formatting']
         ];
 
@@ -431,7 +431,7 @@ class My extends MyTheme
             'title'       => __('settings-content-imageswide-title'),
             'description' => __('settings-content-imageswide-description'),
             'type'        => 'checkbox',
-            'default'     => '0',
+            'default'     => false,
             'section'     => ['content', 'images']
         ];
 
@@ -439,7 +439,7 @@ class My extends MyTheme
             'title'       => __('settings-reactions-button-title'),
             'description' => __('settings-reactions-button-description'),
             'type'        => 'checkbox',
-            'default'     => '1',
+            'default'     => true,
             'section'     => ['reactions', 'form']
         ];
 
@@ -448,7 +448,7 @@ class My extends MyTheme
                 'title'       => __('settings-reactions-markdownnotice-title'),
                 'description' => '',
                 'type'        => 'checkbox',
-                'default'     => '0',
+                'default'     => false,
                 'section'     => ['reactions', 'form']
             ];
         }
@@ -457,7 +457,7 @@ class My extends MyTheme
             'title'       => __('settings-reactions-other-trackbacks-title'),
             'description' => '',
             'type'        => 'checkbox',
-            'default'     => '1',
+            'default'     => true,
             'section'     => ['reactions', 'trackbacks']
         ];
 
@@ -484,7 +484,7 @@ class My extends MyTheme
             'title'       => __('settings-reactions-otheremail-title'),
             'description' => sprintf(__('settings-reactions-otheremail-description'), $plugin_signal_url),
             'type'        => 'checkbox',
-            'default'     => '0',
+            'default'     => false,
             'section'     => ['reactions', 'other']
         ];
 
@@ -494,7 +494,7 @@ class My extends MyTheme
                     'title'       => sprintf(__('settings-reactions-other-' . $site . '-title'), $base['name']),
                     'description' => __('settings-reactions-other-' . $site . '-description'),
                     'type'        => 'checkbox',
-                    'default'     => '0',
+                    'default'     => false,
                     'section'     => ['reactions', 'other']
                 ];
             }
@@ -504,7 +504,7 @@ class My extends MyTheme
             'title'       => __('settings-widgets-display-title'),
             'description' => __('settings-widgets-display-description'),
             'type'        => 'checkbox',
-            'default'     => '1',
+            'default'     => true,
             'section'     => ['widgets', 'no-title']
         ];
 
@@ -512,7 +512,7 @@ class My extends MyTheme
             'title'       => __('settings-footer-activation-title'),
             'description' => __('settings-footer-activation-description'),
             'type'        => 'checkbox',
-            'default'     => '1',
+            'default'     => true,
             'section'     => ['footer', 'no-title']
         ];
 
@@ -520,7 +520,7 @@ class My extends MyTheme
             'title'       => __('settings-footer-credits-title'),
             'description' => __('settings-footer-credits-description'),
             'type'        => 'checkbox',
-            'default'     => '1',
+            'default'     => true,
             'section'     => ['footer', 'no-title']
         ];
 
@@ -534,7 +534,7 @@ class My extends MyTheme
                     ? sprintf(__('settings-footer-social-' . $site . '-description'), $base['name'])
                     : '',
                 'type'        => 'checkbox',
-                'default'     => '1',
+                'default'     => true,
                 'section'     => ['footer', 'social']
             ];
         }
@@ -561,7 +561,7 @@ class My extends MyTheme
             'title'       => __('settings-advanced-metasocial-title'),
             'description' => __('settings-advanced-metasocial-description'),
             'type'        => 'checkbox',
-            'default'     => '0',
+            'default'     => false,
             'section'     => ['advanced', 'seo']
         ];
 
@@ -569,7 +569,7 @@ class My extends MyTheme
             'title'       => __('settings-advanced-json-title'),
             'description' => __('settings-advanced-json-description'),
             'type'        => 'checkbox',
-            'default'     => '0',
+            'default'     => false,
             'section'     => ['advanced', 'seo']
         ];
 
