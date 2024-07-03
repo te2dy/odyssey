@@ -93,7 +93,7 @@ class Config extends Process
                             } elseif (!isset($_POST[$setting_id]) && My::settingsDefault($setting_id)['type'] === 'checkbox') {
                                 // Specific value for empty checkboxes to save.
                                 $setting_data = self::sanitizeSetting(
-                                    My::settingsDefault($setting_id)['type'],
+                                    'checkbox',
                                     $setting_id,
                                     '0'
                                 );
@@ -251,7 +251,6 @@ class Config extends Process
 
             case 'select' :
             case 'select_int' :
-
                 $combo = [];
 
                 foreach ($default_settings[$setting_id]['choices'] as $name => $value) {
@@ -1017,7 +1016,7 @@ class Config extends Process
         }
 
         if ($setting_type === 'checkbox') {
-            if ($setting_value === '1' && $default_settings[$setting_id]['default'] !== true) {
+            if ($setting_value === 'on' && $default_settings[$setting_id]['default'] !== true) {
                 return [
                     'value' => '1',
                     'type'  => 'boolean'

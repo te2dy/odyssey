@@ -343,7 +343,6 @@ class FrontendBehaviors
      */
     public static function odysseyImageWide($tag, $args): void
     {
-
         // If only on Entry content.
         if (!in_array($tag, ['EntryContent'])) {
             return;
