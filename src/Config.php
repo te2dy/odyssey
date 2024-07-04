@@ -836,6 +836,11 @@ class Config extends Process
         $simpleicons_styles  = false;
         $feathericons_styles = false;
 
+        // Checks if email as been set as a reaction method.
+        if (isset($_POST['reactions_other']) && $_POST['reactions_other'] !== 'disabled' && isset($_POST['reactions_other_email']) && $_POST['reactions_other_email'] === 'on') {
+            $feathericons_styles = true;
+        }
+
         // Checks if a link as been set.
         foreach (My::socialSites() as $id => $data) {
             if (isset($_POST['social_' . $id]) && $_POST['social_' . $id] !== '') {
