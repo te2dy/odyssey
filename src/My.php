@@ -228,6 +228,14 @@ class My extends MyTheme
             'section'     => ['global', 'colors']
         ];
 
+        $default_settings['global_links_underline'] = [
+            'title'       => __('settings-global-linksunderline-title'),
+            'description' => __('settings-global-linksunderline-description'),
+            'type'        => 'checkbox',
+            'default'     => false,
+            'section'     => ['global', 'colors']
+        ];
+
         $default_settings['global_css_transition'] = [
             'title'       => __('settings-global-colortransition-title'),
             'description' => __('settings-global-colortransition-description'),
@@ -249,9 +257,11 @@ class My extends MyTheme
             'section'     => ['header', 'no-title']
         ];
 
+        $blog_settings_url = App::backend()->url()->get('admin.blog.pref');
+
         $default_settings['header_description'] = [
             'title'       => __('settings-header-description-title'),
-            'description' => '',
+            'description' => sprintf(__('settings-header-description-description'), $blog_settings_url),
             'type'        => 'checkbox',
             'default'     => true,
             'section'     => ['header', 'no-title']
