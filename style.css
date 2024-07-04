@@ -119,8 +119,8 @@ code {
 /* Links */
 :is(a, details summary) {
   color: var(--color-primary, hsl(226, 80%, 45%));
-  text-decoration: none;
-  text-decoration-style: unset;
+  text-decoration: var(--link-decoration, none);
+  text-decoration-style: var(--link-decoration-style, unset);
   transition: var(--color-transition, unset);
 }
 :is(a, details summary):is(:active, :focus, :hover):not(.button) {
@@ -538,6 +538,9 @@ details summary {
 }
 #comment-form {
   margin-top: 4rem;
+}
+#comment-form h3:not(:first-child) {
+  margin-top: 2rem;
 }
 .reaction {
   margin-block: 2rem;

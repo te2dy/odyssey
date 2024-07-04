@@ -124,8 +124,6 @@
             </tpl:IfCommentPreviewOptional>
           </div>
 
-          {{tpl:odysseyPrivateCommentLink}}
-
           <tpl:odysseyTrackbackLink>
             <tpl:EntryIf pings_active="1">
               <h3>{{tpl:lang reactions-trackbacks-add-title}}</h3>
@@ -135,6 +133,8 @@
               </p>
             </tpl:EntryIf>
           </tpl:odysseyTrackbackLink>
+
+          {{tpl:odysseyPrivateCommentLink}}
         </tpl:odysseyCommentFormWrapper>
       </tpl:Block>
     </form>

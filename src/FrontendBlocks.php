@@ -49,7 +49,24 @@ class FrontendBlocks
     }
 
     /**
-     * Display/hides the sidebar.
+     * Displays/hides the trackback link in posts.
+     *
+     * @param array $attr    Unused.
+     * @param void  $content The comment form.
+     *
+     * @return string The comment form.
+     */
+    public static function odysseyTrackbackLink($attr, $content): mixed
+    {
+        if (My::settingValue('reactions_other_trackbacks') !== false) {
+            return $content;
+        }
+
+        return '';
+    }
+
+    /**
+     * Displays/hides the sidebar.
      *
      * @param array $attr    Unused.
      * @param void  $content The sidebar.
@@ -66,7 +83,7 @@ class FrontendBlocks
     }
 
     /**
-     * Displays the footer.
+     * Displays/hides the footer.
      *
      * @param array $attr    Unused.
      * @param void  $content The content of the footer.

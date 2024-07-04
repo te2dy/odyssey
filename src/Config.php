@@ -437,12 +437,12 @@ class Config extends Process
 
 
             if (isset($saved_settings['header_image2x'])) {
-                $the_setting[] = (new Text(null, __('header-image-retina-ready')))
+                $the_setting[] = (new Text('div', __('header-image-retina-ready')))
                     ->id($setting_id . '-retina');
             }
 
             $the_setting[] = (new Hidden($setting_id . '-url', Html::escapeURL($image_src)));
-            $the_setting[] = (new Hidden($setting_id . '-text', Html::escapeHTML(__('header-image-retina-ready'))));
+            $the_setting[] = (new Hidden($setting_id . '-retina-text', Html::escapeHTML(__('header-image-retina-ready'))));
         }
 
         return $the_setting;
@@ -537,6 +537,7 @@ class Config extends Process
         $fields[] = (new Hidden('page_width_px_default', '480'));
 
         $fields[] = (new Para())
+            ->class('form-buttons')
             ->items([
                 App::nonce()->formNonce(),
                 (new Submit(null, __('settings-save-button-text')))
@@ -668,6 +669,12 @@ class Config extends Process
                     $css_root_dark_array[':root']['--color-primary-dark-amplified'] = $_POST['global_color_primary_dark_amplified_custom'];
                 }
             }
+        }
+
+        // Links underline.
+        if (isset($_POST['global_links_underline']) && $_POST['global_links_underline'] === 'on') {
+            $css_root_array[':root']['--link-decoration']       = 'underline';
+            $css_root_array[':root']['--link-decoration-style'] = 'dotted';
         }
 
         // Transitions.
@@ -874,9 +881,6 @@ class Config extends Process
 
         // Other reaction methods
         if (isset($_POST['reactions_other']) && $_POST['reactions_other'] !== 'disabled') {
-            $css_main_array['#comment-form .reactions-other']['margin-top']      = '2rem';
-            $css_main_array['#comment-form .reactions-other p']['margin-bottom'] = '0';
-
             $css_main_array['.reactions-other-icon']['display']        = 'inline-block';
             $css_main_array['.reactions-other-icon']['vertical-align'] = 'middle';
 
@@ -884,14 +888,16 @@ class Config extends Process
 
             $css_main_array['.reactions-other-icon-fi']['stroke'] = 'var(--color-primary, hsl(226, 80%, 45%))';
 
-            $css_main_array['.reactions-other .button:is(:active, :hover, :focus) .reactions-other-icon-si']['fill'] = 'var(--color-background, #fcfcfd)';
+            $css_main_array['.reactions-other a:is(:active, :hover, :focus):not(.button)']['text-decoration'] = 'none';
 
-            $css_main_array['.reactions-other .button:is(:active, :hover, :focus) .reactions-other-icon-fi']['stroke'] = 'var(--color-background, #fcfcfd)';
+            $css_main_array['.reactions-other a:is(:active, :hover, :focus):not(.button) .reactions-other-text']['text-decoration'] = 'underline';
 
-            $css_main_array['.reactions-other-text']['display']        = 'inline-block';
-            $css_main_array['.reactions-other-text']['vertical-align'] = 'middle';
+            $css_main_array['.reactions-other a:is(:active, :hover, :focus) .reactions-other-icon-si']['fill'] = 'var(--color-primary-amplified, hsl(226, 95%, 50%))';
 
-            $css_main_array['.reactions-other .button:is(:active, :focus, :hover) .reaction-other-email-icon']['stroke'] = 'var(--color-background, #fcfcfd)';
+            $css_main_array['.reactions-other a:is(:active, :hover, :focus) .reactions-other-icon-fi']['stroke'] = 'var(--color-primary-amplified, hsl(226, 95%, 50%))';
+
+            $css_main_array['.reactions-other-text']['display']         = 'inline-block';
+            $css_main_array['.reactions-other-text']['vertical-align']  = 'middle';
         }
 
         // Footer social links.
