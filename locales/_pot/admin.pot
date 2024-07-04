@@ -231,6 +231,12 @@ msgstr ""
 msgid "settings-colors-reset"
 msgstr ""
 
+msgid "settings-global-linksunderline-title"
+msgstr ""
+
+msgid "settings-global-linksunderline-description"
+msgstr ""
+
 msgid "settings-global-colortransition-title"
 msgstr ""
 
@@ -251,6 +257,9 @@ msgstr ""
 
 msgid "settings-header-description-title"
 msgstr ""
+
+msgid "settings-header-description-description"
+msgstr ""%s">paramètres du blog</a>."
 
 msgid "settings-header-postfull-title"
 msgstr ""
@@ -403,7 +412,7 @@ msgid "settings-reactions-otheremail-title"
 msgstr ""
 
 msgid "settings-reactions-otheremail-description"
-msgstr ""%s">Signal</a> plugin."
+msgstr ""%s">Signal</a>."
 
 msgid "settings-reactions-other-facebook-title"
 msgstr ""
@@ -445,7 +454,7 @@ msgid "settings-widgets-display-title"
 msgstr ""
 
 msgid "settings-widgets-display-description"
-msgstr ""
+msgstr ""%s">page de configuration des widgets</a>)."
 
 msgid "settings-footer-activation-title"
 msgstr ""

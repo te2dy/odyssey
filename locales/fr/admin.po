@@ -58,7 +58,7 @@ msgid "section-reactions-trackbacks"
 msgstr "Rétroliens"
 
 msgid "section-reactions-other"
-msgstr "Autres moyens de réponse"
+msgstr "Autres moyens de réaction"
 
 msgid "section-widgets"
 msgstr "Paramètres des widgets"
@@ -82,7 +82,7 @@ msgid "settings-global-unit-title"
 msgstr "Unité de base"
 
 msgid "settings-global-unit-description"
-msgstr "Avec le cadratin (em), votre blog s’adapte mieux aux paramètres du navigateur de vos visiteurs (très utile d’un point de vue accessibilité, pour les personnes qui utilisent une taille de police plus grande par défaut). L’inconvénient est qu’il peut s’afficher différemment d’un appareil à l’autre. Pour garder la maîtrise de l’apparence de votre blog (pour un blog photo par exemple), il est recommandé d’utiliser le pixel comme unité de base."
+msgstr "En cadratin (em), les dimensions de votre blog s’adaptent aux paramètres du navigateur de vos visiteurs (utile pour l’accessibilité), mais son affichage peut différer d’un appareil à l’autre. Pour garder la maîtrise de l’apparence de votre blog (utile pour un blog photo par exemple), il est recommandé d’utiliser le pixel comme unité de base."
 
 msgid "settings-global-unit-relative-default"
 msgstr "Cadratin (par défaut)"
@@ -94,19 +94,19 @@ msgid "settings-global-pagewidthvalue-title"
 msgstr "Largeur"
 
 msgid "settings-global-pagewidthvalue-description"
-msgstr "En cadratin, la largeur doit être comprise entre 30 et 80 ; en pixel, entre 480 et 1 280. Par défaut, 30 em ou 480 px."
+msgstr "En cadratin, la largeur doit être comprise entre 30 et 80 ; en pixel, entre 480 et 1 280. Par défaut&nbsp;: 30 em ou 480 px."
 
 msgid "settings-global-fontfamily-title"
 msgstr "Police d’écriture"
 
 msgid "settings-global-fontfamily-description"
-msgstr "Vous avez le choix d’utiliser des polices système (susceptibles de changer d’un appareil à un autre), des polices du navigateur (susceptibles de changer d’un navigateur à un autre, y compris sur le même système), ou des polices sélectionnées pour leur lisibilité, conçues pour faciliter la lecture des personnes malvoyantes (à noter que ces dernières sont plus gourmandes en ressources)."
+msgstr "Votre blog utilise seulement les polices installées sur l’appareil de vos lecteurs pour afficher les textes. Aucune police n’est téléchargée pour assurer le rendu, ce qui est moins gourmand en ressources. Leur affichage peut varier d’un appareil à l’autre."
 
 msgid "settings-global-fontfamily-sansserif-default"
-msgstr "IU du système (par défaut)"
+msgstr "Système (par défaut)"
 
 msgid "settings-global-fontfamily-sansserif"
-msgstr "IU du système"
+msgstr "Système"
 
 msgid "settings-global-fontfamily-transitional"
 msgstr "Transition"
@@ -169,7 +169,7 @@ msgid "settings-global-fontsize-title"
 msgstr "Taille de la police"
 
 msgid "settings-global-fontsize-description"
-msgstr "Cette taille est relative à celle du navigateur ; elle peut varier d’un appareil à l’autre."
+msgstr "Cette taille est relative à la taille de police du navigateur ; elle peut varier d’un appareil à l’autre."
 
 msgid "settings-global-fontsize-80"
 msgstr "80 %"
@@ -190,7 +190,7 @@ msgid "settings-global-fontantialiasing-title"
 msgstr "Activer le lissage des caractères"
 
 msgid "settings-global-fontantialiasing-description"
-msgstr "Prévient l’effet de crénelage mais peut rendre les caractères très (trop) fins."
+msgstr "Prévient l’effet de crénelage, mais peut rendre les caractères très (trop) fins."
 
 msgid "settings-global-primarycolor-title"
 msgstr "Couleur principale"
@@ -231,11 +231,17 @@ msgstr "Couleur principale nuancée (thème sombre)"
 msgid "settings-colors-reset"
 msgstr "par défaut"
 
+msgid "settings-global-linksunderline-title"
+msgstr "Souligner les liens"
+
+msgid "settings-global-linksunderline-description"
+msgstr "Souligner les liens pour les mettre en évidence."
+
 msgid "settings-global-colortransition-title"
 msgstr "Activer les transitions de couleur"
 
 msgid "settings-global-colortransition-description"
-msgstr "Entraîne un changement doux de couleur au survol des liens et des boutons."
+msgstr "Entraîne un changement progressif de la couleur des liens et des boutons à leur survol à la souris."
 
 msgid "settings-header-align-title"
 msgstr "Alignement"
@@ -252,11 +258,14 @@ msgstr "Droite"
 msgid "settings-header-description-title"
 msgstr "Afficher la description du blog"
 
+msgid "settings-header-description-description"
+msgstr "La description peut être personnalisée dans les <a href="%s">paramètres du blog</a>."
+
 msgid "settings-header-postfull-title"
 msgstr "Afficher l’en-tête complète sur toutes les pages du blog"
 
 msgid "settings-header-postfull-description"
-msgstr "Désactive l’en-tête réduite affichée sur les pages des billets."
+msgstr "Désactive l’en-tête réduite affichée sur les pages des billets pour afficher la même en-tête qu’en page d’accueil."
 
 msgid "settings-header-image-title"
 msgstr "Adresse de l’image"
@@ -364,7 +373,7 @@ msgid "settings-content-initialletter-title"
 msgstr "Ajouter une lettrine au premier paragraphe des billets et des pages."
 
 msgid "settings-content-initialletter-description"
-msgstr "Ne fonctionne que sur des versions récentes de Safari et Chrome (janvier 2024)."
+msgstr "Ne fonctionne que sur des versions récentes de Safari et Chrome (juillet 2024)."
 
 msgid "settings-content-imageswide-title"
 msgstr "Agrandir les images suffisamment larges (bêta)"
@@ -445,7 +454,7 @@ msgid "settings-widgets-display-title"
 msgstr "Activer les widgets (volets de navigation et d’extra)"
 
 msgid "settings-widgets-display-description"
-msgstr "Il est recommandé de désactiver cette option si vous n’avez configuré aucun widget dans le volet de navigation et le volet d’extra."
+msgstr "Il est recommandé de désactiver cette option si vous n’avez configuré aucun widget dans le volet de navigation et le volet d’extra (voir la <a href="%s">page de configuration des widgets</a>)."
 
 msgid "settings-footer-activation-title"
 msgstr "Activer le pied de page"

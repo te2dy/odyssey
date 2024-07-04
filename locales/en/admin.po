@@ -82,7 +82,7 @@ msgid "settings-global-unit-title"
 msgstr "Base unit"
 
 msgid "settings-global-unit-description"
-msgstr "With em, your blog adapts better to your visitors' browser settings (very useful from an accessibility point of view, for people who use a larger font size by default). The downside is that it may display differently from one device to another. To keep control of your blog's appearance (for photo blogs, for example), we recommend using pixels as the basic unit."
+msgstr "With em, the dimensions of your blog adapt to your visitors' browser settings (useful for accessibility), but its display may differ from one device to another. To keep control of your blog's appearance (useful for a photo blog, for example), using pixels as the basic unit is recommended."
 
 msgid "settings-global-unit-relative-default"
 msgstr "Em (default)"
@@ -94,19 +94,19 @@ msgid "settings-global-pagewidthvalue-title"
 msgstr "Width"
 
 msgid "settings-global-pagewidthvalue-description"
-msgstr "In the case of em, the width must be between 30 and 80; in the case of pixels, between 480 and 1,280. The default is 30em or 480px."
+msgstr "In the case of em, the width must be between 30 and 80; in the case of pixels, between 480 and 1,280. Default: 30em or 480px."
 
 msgid "settings-global-fontfamily-title"
 msgstr "Fonts"
 
 msgid "settings-global-fontfamily-description"
-msgstr "You have the choice of using system fonts (which may change from one device to another), browser fonts (which may change from one browser to another, even on the same system), or fonts selected for their legibility, designed to make reading easier for the visually impaired (note that the latter are more resource-intensive)."
+msgstr "Your blog uses only the fonts installed on your readers' devices to display text. No fonts are downloaded for rendering, which is less resource-intensive. Their display may vary from one device to another."
 
 msgid "settings-global-fontfamily-sansserif-default"
-msgstr "System UI (default)"
+msgstr "System (default)"
 
 msgid "settings-global-fontfamily-sansserif"
-msgstr "System UI"
+msgstr "System"
 
 msgid "settings-global-fontfamily-transitional"
 msgstr "Transitional"
@@ -169,7 +169,7 @@ msgid "settings-global-fontsize-title"
 msgstr "Font size"
 
 msgid "settings-global-fontsize-description"
-msgstr "This size is relative to that of the browser, and may vary from one device to another."
+msgstr "This size is relative to the browser font size and may vary from one device to another."
 
 msgid "settings-global-fontsize-80"
 msgstr "80%"
@@ -190,7 +190,7 @@ msgid "settings-global-fontantialiasing-title"
 msgstr "Enable character smoothing"
 
 msgid "settings-global-fontantialiasing-description"
-msgstr "Prevents aliasing but can make characters very (too) fine."
+msgstr "Prevents aliasing, but can make characters very (too) fine."
 
 msgid "settings-global-primarycolor-title"
 msgstr "Main color"
@@ -231,11 +231,17 @@ msgstr "Primary color on hover (dark theme)"
 msgid "settings-colors-reset"
 msgstr "default"
 
+msgid "settings-global-linksunderline-title"
+msgstr "Underline links"
+
+msgid "settings-global-linksunderline-description"
+msgstr "Underline links to highlight them."
+
 msgid "settings-global-colortransition-title"
 msgstr "Enable color transitions"
 
 msgid "settings-global-colortransition-description"
-msgstr "Produces a smooth color change when hovering over links and buttons."
+msgstr "Gradually changes the color of links and buttons as the mouse hovers over them."
 
 msgid "settings-header-align-title"
 msgstr "Alignment"
@@ -252,11 +258,14 @@ msgstr "Right"
 msgid "settings-header-description-title"
 msgstr "Display blog description"
 
+msgid "settings-header-description-description"
+msgstr "The description can be customized in the <a href="%s">blog settings</a>."
+
 msgid "settings-header-postfull-title"
 msgstr "Display full header on all blog posts"
 
 msgid "settings-header-postfull-description"
-msgstr "Disables the reduced header displayed on posts."
+msgstr "Disables the reduced header displayed on posts to show the same header as on the home page."
 
 msgid "settings-header-image-title"
 msgstr "URL of the image"
@@ -364,7 +373,7 @@ msgid "settings-content-initialletter-title"
 msgstr "Add a drop cap to the first paragraph of posts and pages."
 
 msgid "settings-content-initialletter-description"
-msgstr "Only works on recent versions of Safari and Chrome (January 2024)."
+msgstr "Only works on recent versions of Safari and Chrome (July 2024)."
 
 msgid "settings-content-imageswide-title"
 msgstr "Enlarge images wide enough (beta)"
@@ -445,7 +454,7 @@ msgid "settings-widgets-display-title"
 msgstr "Enable widgets (nav and extra panes)"
 
 msgid "settings-widgets-display-description"
-msgstr "It is recommended to disable this option if you have not configured any widgets in the nav and extra pane."
+msgstr "It is recommended to disable this option if you have not configured any widgets in the nav and extra pane (see the <a href="%s">widget configuration page</a>)."
 
 msgid "settings-footer-activation-title"
 msgstr "Enable footer"
