@@ -1,1 +1,10 @@
-.odyssey-value-error{background-color:#fccece}.odyssey-font-preview{border-left:.252rem solid var(--fieldset-border);padding-left:.5rem}
+.odyssey-value-error {
+  background-color: hsl(0, 90%, 90%);
+}
+.odyssey-font-preview {
+  border-left: .252rem solid var(--fieldset-border);
+  padding-left: .5rem;
+}
+#header_image-retina {
+  margin-bottom: 1em;
+}

@@ -5,3 +5,6 @@
   border-left: .252rem solid var(--fieldset-border);
   padding-left: .5rem;
 }
+#header_image-retina {
+  margin-bottom: 1em;
+}

@@ -71,24 +71,6 @@ function disableInputs() {
     );
   }
 
-  if (document.getElementById("header_image").value !== "") {
-    setStyle(
-      [
-        "header_image_position",
-        "header_image_description"
-      ],
-      "block"
-    );
-  } else {
-    setStyle(
-      [
-        "header_image_position",
-        "header_image_description"
-      ],
-      "none"
-    );
-  }
-
   /*
   if (document.getElementById("content_postlist_type").value !== "excerpt") {
     setStyle("content_postlist_thumbnail", "block");
@@ -182,59 +164,87 @@ function inputValidation() {
  * @link https://stackoverflow.com/a/14651421
  */
 function imageExists(url) {
-    var image = new Image();
+    let imgExist = {
+      src: false,
+      src2x: false
+    };
+
+    let image = new Image();
 
     image.src = url;
 
-    if (!image.complete || image.height === 0) {
-      return false;
-    } else {
-      return true;
+    if (image.complete && image.height > 0) {
+      imgExist.src = true;
     }
 
-    image.reset();
+    // Check Retina image then.
+    image2x = new Image();
+
+    let imgExt       = url.split('.').pop(),
+        imgExtLength = imgExt.length;
+
+    image2x.src = url.substring(0, url.length - (imgExtLength + 1)) + "-2x." + imgExt;
+
+    if (image2x.complete && image2x.height > 0) {
+      imgExist.src2x = true;
+    }
+
+    return imgExist;
 }
 
 /**
  * Displays the image with the URL typed by the user.
  */
-function changeImage() {
-  if (imageExists(document.getElementById("header_image").value) === true) {
-    let img = document.getElementById("header_image").value;
+function changeImage(inputImgURL) {
+  if (inputImgURL !== "") {
+    let imgExist = imageExists(inputImgURL);
 
-    document.getElementById("header_image-src").removeAttribute("style");
-    document.getElementById("header_image-src").setAttribute("src", encodeURI(img));
+    if (imgExist.src === true) {
+      setStyle(
+        [
+          "header_image_position",
+          "header_image_description"
+        ],
+        "block"
+      );
 
-    if (document.getElementById("header_image_position-retina") && document.getElementById("header_image-url").value !== img) {
-      document.getElementById("header_image-retina").style.display = "none";
-    }
+      document.getElementById("header_image-src").removeAttribute("style");
+      document.getElementById("header_image-src").setAttribute("src", encodeURI(inputImgURL));
 
-    setStyle(
-      [
-        "header_image_position",
-        "header_image_description"
-      ],
-      "block"
-    );
+      if (document.getElementById("header_image_position-retina") && document.getElementById("header_image-url").value !== inputImgURL) {
+        document.getElementById("header_image-retina").style.display = "none";
+      }
 
-    let imgExt = img.split('.').pop(),
-        imgExtLength = imgExt.length,
-        img2x = img.substring(0, img.length - (imgExtLength + 1)) + "-2x." + imgExt;
+      if (imgExist.src2x === true) {
+        if (document.getElementById("header_image-retina")) {
+          document.getElementById("header_image-retina").style.display = "block";
+        } else {
+          var retinaNotice = document.createElement('p');
+          retinaNotice.setAttribute("id", "header_image-retina");
+          retinaNotice.innerText = document.getElementById("header_image-retina-text").value;
 
-    if (imageExists(img2x) === true) {
+          var retinaNoticeElementAfter = document.getElementById("header_image-url");
+          retinaNoticeElementAfter.parentNode.insertBefore(retinaNotice, retinaNoticeElementAfter);
+        }
+      }
+    } else {
+      document.getElementById("header_image-src").style.display = "none";
+
+      setStyle(
+        [
+          "header_image-src",
+          "header_image_position",
+          "header_image_description"
+        ],
+        "none"
+      );
+
       if (document.getElementById("header_image-retina")) {
-        document.getElementById("header_image-retina").style.display = "block";
-      } else {
-        var retinaNotice = document.createElement('p');
-        retinaNotice.setAttribute("id", "header_image-retina");
-        retinaNotice.innerText = document.getElementById("header_image-retina-text").value;
-
-        var retinaNoticeElementAfter = document.getElementById("header_image-url");
-        retinaNoticeElementAfter.parentNode.insertBefore(retinaNotice, retinaNoticeElementAfter);
+        document.getElementById("header_image-retina").style.display = "none";
       }
     }
   } else {
-    document.getElementById("header_image-src").style.display = "none";
+    document.getElementById("header_image-src").style.display    = "none";
 
     setStyle(
       [
@@ -312,8 +322,12 @@ function changeColorInput(settingId, context) {
 }
 
 window.onload = function() {
+  let inputImgURL = "";
+
+  inputImgURL = document.getElementById("header_image").value;
+
   disableInputs();
-  changeImage();
+  changeImage(inputImgURL);
   fontsPreview();
 
   window.onchange = function() {
@@ -321,7 +335,7 @@ window.onload = function() {
     fontsPreview();
   };
 
-  var pageWidthUnitDefault = document.getElementById("global_unit").value,
+  var pageWidthUnitDefault  = document.getElementById("global_unit").value,
       pageWidthValueDefault = document.getElementById("global_page_width_value").value;
 
   document.getElementById("global_unit").onchange = function() {
@@ -363,25 +377,31 @@ window.onload = function() {
   });
 
   document.getElementById("header_image").onchange = function() {
-    disableInputs();
-    changeImage();
+    inputImgURL = document.getElementById("header_image").value;
+
+    changeImage(inputImgURL);
   };
 
   document.getElementById("header_image").oncut = function() {
-    changeImage();
+    inputImgURL = document.getElementById("header_image").value;
+
+    changeImage(inputImgURL);
   };
 
   document.getElementById("header_image").onpaste = function() {
-    changeImage();
+    inputImgURL = document.getElementById("header_image").value;
+
+    changeImage(inputImgURL);
   };
 
-  document.getElementById("header_image").addEventListener("input", (e) => {
+  document.getElementById("header_image").oninput = function() {
     let searchtimer;
-
     clearTimeout(searchtimer);
 
     searchtimer = setTimeout(() => {
-      changeImage();
+      inputImgURL = document.getElementById("header_image").value;
+
+      changeImage(inputImgURL);
     }, 1000);
-  });
+  };
 };
