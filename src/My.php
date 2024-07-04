@@ -257,11 +257,12 @@ class My extends MyTheme
             'section'     => ['header', 'no-title']
         ];
 
-        $blog_settings_url = App::backend()->url()->get('admin.blog.pref');
-
         $default_settings['header_description'] = [
             'title'       => __('settings-header-description-title'),
-            'description' => sprintf(__('settings-header-description-description'), $blog_settings_url),
+            'description' => sprintf(
+                __('settings-header-description-description'),
+                App::backend()->url()->get('admin.blog.pref')
+            ),
             'type'        => 'checkbox',
             'default'     => true,
             'section'     => ['header', 'no-title']
@@ -501,7 +502,10 @@ class My extends MyTheme
         foreach (self::socialSites() as $site => $base) {
             if (isset($base['reactions']) && $base['reactions'] === true) {
                 $default_settings['reactions_other_' . $site] = [
-                    'title'       => sprintf(__('settings-reactions-other-' . $site . '-title'), $base['name']),
+                    'title'       => sprintf(
+                        __('settings-reactions-other-' . $site . '-title'),
+                        $base['name']
+                    ),
                     'description' => __('settings-reactions-other-' . $site . '-description'),
                     'type'        => 'checkbox',
                     'default'     => false,
@@ -510,13 +514,18 @@ class My extends MyTheme
             }
         }
 
-        $default_settings['widgets_display'] = [
-            'title'       => __('settings-widgets-display-title'),
-            'description' => __('settings-widgets-display-description'),
-            'type'        => 'checkbox',
-            'default'     => true,
-            'section'     => ['widgets', 'no-title']
-        ];
+        if (App::plugins()->moduleExists('widgets')) {
+            $default_settings['widgets_display'] = [
+                'title'       => __('settings-widgets-display-title'),
+                'description' => sprintf(
+                    __('settings-widgets-display-description'),
+                    App::backend()->url()->get('admin.plugin.widgets')
+                ),
+                'type'        => 'checkbox',
+                'default'     => true,
+                'section'     => ['widgets', 'no-title']
+            ];
+        }
 
         $default_settings['footer_enabled'] = [
             'title'       => __('settings-footer-activation-title'),
