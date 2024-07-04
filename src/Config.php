@@ -671,12 +671,6 @@ class Config extends Process
             }
         }
 
-        // Links underline.
-        if (isset($_POST['global_links_underline']) && $_POST['global_links_underline'] === 'on') {
-            $css_root_array[':root']['--link-decoration']       = 'underline';
-            $css_root_array[':root']['--link-decoration-style'] = 'dotted';
-        }
-
         // Transitions.
         if (isset($_POST['global_css_transition']) && $_POST['global_css_transition'] === 'on') {
             $css_root_array[':root']['--color-transition'] = 'all .2s ease-in-out';

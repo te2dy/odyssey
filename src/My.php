@@ -228,14 +228,6 @@ class My extends MyTheme
             'section'     => ['global', 'colors']
         ];
 
-        $default_settings['global_links_underline'] = [
-            'title'       => __('settings-global-linksunderline-title'),
-            'description' => __('settings-global-linksunderline-description'),
-            'type'        => 'checkbox',
-            'default'     => false,
-            'section'     => ['global', 'colors']
-        ];
-
         $default_settings['global_css_transition'] = [
             'title'       => __('settings-global-colortransition-title'),
             'description' => __('settings-global-colortransition-description'),
