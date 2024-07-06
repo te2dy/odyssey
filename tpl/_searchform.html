@@ -1,6 +1,8 @@
-<form action={{tpl:BlogURL}} class=search-form method=get role=search>
-  <input aria-label="{{tpl:lang search-input-aria-label}}" class=search-form-field name=q placeholder="{{tpl:lang search-input-placeholder}}" value="{{tpl:SysSearchString}}">
+<search>
+  <form action={{tpl:BlogURL}} class=search-form method=get role=search>
+    <input aria-label="{{tpl:lang search-input-aria-label}}" class=search-form-field name=q placeholder="{{tpl:lang search-input-placeholder}}" value="{{tpl:SysSearchString}}">
 
-  <!-- # Display only if the used type a new search query. -->
-  <input class=search-form-submit type=submit value="{{tpl:lang search-submit-button}}">
-</form>
+    <!-- # Display only if the user type a new search query. -->
+    <input class=search-form-submit type=submit value="{{tpl:lang search-submit-button}}">
+  </form>
+</search>
