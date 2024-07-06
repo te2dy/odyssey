@@ -1,16 +1,25 @@
 = Odyssée =
 
 Nom du thème : Odyssée
-Description : Écrivez la vôtre
+Description : Un thème simple et personnalisable
 Auteur : Teddy
 Licence : GPLv3 ou ultérieure
 Adresse de la licence : https://www.gnu.org/licenses/gpl-3.0.fr.html
 
 == Note ==
 Ce thème n’aurait pu avoir vu le jour sans les ressources mises à disposition librement par la communauté Dotclear.
-Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://blog.jim-nielsen.com/), des travaux réalisés sur les thèmes Ductile et Berlin, et des billets de Franck (https://open-time.net/).
+Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://blog.jim-nielsen.com/), des travaux réalisés sur les thèmes Ductile et Berlin pour Dotclear, et des billets de Franck Paul (https://open-time.net/).
 
 == Notes de version ==
+
+=== 0.2 - 6 juillet 2024 ===
+- Ajout : élément <search> au formulaire de recherche.
+- Amélioration : compatibilité des formulaires avec les futures version de Dotclear (passage de form:: à \Helper\Html\Form\…).
+- Correction : affichage erratique de l’aperçu de l’image d’en-tête dans le configurateur.
+- Correction : problèmes d’affichage des autres moyens de réactions aux billets et aux pages.
+- Limitation : Odyssée nécessite désormais la version 2.30 de Dotclear.
+- Mise à jour : traductions.
+- Corrections variées.
 
 === 0.13 - 23 mars 2024 ===
 - Ajout : possibilité de réagir à un billet par d’autres moyens que les commentaires (courriel, SMS, Signal, WhatsApp et X).
