@@ -505,6 +505,29 @@ details summary {
 .post-meta:not(:last-child) {
   margin-bottom: .5rem;
 }
+.footnotes hr {
+  border-bottom: 0;
+  border-left: 0;
+  border-right: 0;
+  border-top: .063rem solid var(--color-text-secondary, #6c6f78);
+  display: block;
+  height: 1px;
+  margin: 3rem 0 2rem;
+  padding: 0;
+  width: 2rem;
+}
+.footnotes ol {
+  margin: 0;
+}
+.footnotes ol li p {
+  margin-block: .25rem;
+}
+.footnotes ol li:first-child p {
+  margin-top: 0;
+}
+.footnotes ol li:last-child p {
+  margin-bottom: 0;
+}
 
 /* Post pagination */
 .post-pagination {
