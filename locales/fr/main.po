@@ -219,7 +219,7 @@ msgid "reactions-other-title"
 msgstr "Vous pouvez aussi…"
 
 msgid "reactions-other-email-body-post-url"
-msgstr "Adresse du billet&nbsp;:"
+msgstr "Adresse du billet :"
 
 msgid "reactions-other-email-button-text"
 msgstr "Répondre par courriel"
