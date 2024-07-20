@@ -449,13 +449,10 @@ class FrontendBehaviors
                         }
                     }
 
-                    $attr .= '" ';
-
-                    $attr .= 'sizes="100vw" ';
+                    $attr .= '" sizes="100vw" ';
 
                     // If it's a landscape format image only, displays it wide.
-                    if (//My::settingValue('content_images_wide') &&
-                        $img[$src_image_size]['width'] > $img[$src_image_size]['height']
+                    if ($img[$src_image_size]['width'] > $img[$src_image_size]['height']
                         && $img[$src_image_size]['width'] >= $img_width_max
                     ) {
                         $attr .= 'style="display: block; margin-left: 50%; transform: translateX(-50%); max-width: 95vw;" ';
