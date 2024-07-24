@@ -355,7 +355,7 @@ class Config extends Process
                     ->class('odyssey-color-setting')
                     ->items([
                         (new Label($default_settings[$setting_id]['title'], 0, $setting_id))
-                            ->extra('for=' . $setting_id),
+                            ->extra('for=' . $setting_id . '-text'),
                         (new Color($setting_id, $setting_value)),
                         (new Input($setting_id . '-text', $setting_value))
                             ->placeholder($placeholder),
