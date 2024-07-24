@@ -210,6 +210,15 @@ class My extends MyTheme
             'section'     => ['global', 'colors']
         ];
 
+        $default_settings['global_color_background_custom'] = [
+            'title'       => __('settings-global-primarycolorbackgroundcustom-title'),
+            'description' => '',
+            'type'        => 'color',
+            'default'     => '#fafafa',
+            'placeholder' => '#fafafa',
+            'section'     => ['global', 'colors']
+        ];
+
         $default_settings['global_color_primary_dark_custom'] = [
             'title'       => __('settings-global-primarycolordarkcustom-title'),
             'description' => '',
@@ -225,6 +234,15 @@ class My extends MyTheme
             'type'        => 'color',
             'default'     => '#9cb2fc',
             'placeholder' => '#9cb2fc',
+            'section'     => ['global', 'colors']
+        ];
+
+        $default_settings['global_color_background_dark_custom'] = [
+            'title'       => __('settings-global-primarycolorbackgrounddarkcustom-title'),
+            'description' => '',
+            'type'        => 'color',
+            'default'     => '#16161d',
+            'placeholder' => '#16161d',
             'section'     => ['global', 'colors']
         ];
 

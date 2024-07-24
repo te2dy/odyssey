@@ -54,8 +54,10 @@ function disableInputs() {
       [
         "global_color_primary_custom",
         "global_color_primary_amplified_custom",
+        "global_color_background_custom",
         "global_color_primary_dark_custom",
-        "global_color_primary_dark_amplified_custom"
+        "global_color_primary_dark_amplified_custom",
+        "global_color_background_dark_custom"
       ],
       "block"
     );
@@ -64,8 +66,10 @@ function disableInputs() {
       [
         "global_color_primary_custom",
         "global_color_primary_amplified_custom",
+        "global_color_background_custom",
         "global_color_primary_dark_custom",
-        "global_color_primary_dark_amplified_custom"
+        "global_color_primary_dark_amplified_custom",
+        "global_color_background_dark_custom"
       ],
       "none"
     );
@@ -359,21 +363,28 @@ window.onload = function() {
   const colorSettings = document.getElementsByClassName("odyssey-color-setting");
 
   Array.prototype.forEach.call(colorSettings, function(colorSetting) {
-    var settingId = colorSetting.firstElementChild.getAttribute("for"),
+    let settingInputId = colorSetting.getAttribute("id"),
+        settingId      = "",
+        textId         = "",
+        defaultId      = "";
+
+    if (settingInputId.substr(settingInputId.length - 6) === "-input") {
+        settingId = settingInputId.substr(0, settingInputId.length - 6),
         textId  = settingId + "-text";
         defaultId = settingId + "-default-button";
 
-    document.getElementById(settingId).oninput = function() {
-      changeColorInput(settingId, "picker");
-    };
+        document.getElementById(settingId).oninput = function() {
+          changeColorInput(settingId, "picker");
+        };
 
-    document.getElementById(textId).oninput = function() {
-      changeColorInput(settingId, "text");
-    };
+        document.getElementById(textId).oninput = function() {
+          changeColorInput(settingId, "text");
+        };
 
-    document.getElementById(defaultId).onclick = function() {
-      changeColorInput(settingId, "default");
-    };
+        document.getElementById(defaultId).onclick = function() {
+          changeColorInput(settingId, "default");
+        };
+    }
   });
 
   document.getElementById("header_image").onchange = function() {

@@ -219,6 +219,9 @@ msgstr "Primary color (light theme)"
 msgid "settings-global-primarycoloramplifiedcustom-title"
 msgstr "Primary color on hover (light theme)"
 
+msgid "settings-global-primarycolorbackgroundcustom-title"
+msgstr "Background color (light theme)"
+
 msgid "settings-global-primarycoloramplifiedcustom-description"
 msgstr "This is the color used when the primary color is hovered over with the mouse (or touched on mobile) (example: hovering over a link)."
 
@@ -227,6 +230,9 @@ msgstr "Primary color (dark theme)"
 
 msgid "settings-global-primarycolordarkamplifiedcustom-title"
 msgstr "Primary color on hover (dark theme)"
+
+msgid "settings-global-primarycolorbackgrounddarkcustom-title"
+msgstr "Background color (dark theme)"
 
 msgid "settings-colors-reset"
 msgstr "default"

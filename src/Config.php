@@ -350,6 +350,10 @@ class Config extends Process
 
                 $setting_value = $setting_value ?: $default_settings[$setting_id]['default'];
 
+                $setting_value_input = $setting_value !== $default_settings[$setting_id]['default']
+                ? $setting_value
+                : '';
+
                 $the_setting[] = (new Para())
                     ->id($setting_id . '-input')
                     ->class('odyssey-color-setting')
@@ -358,10 +362,20 @@ class Config extends Process
                             ->extra('for=' . $setting_id . '-text'),
                         (new Color($setting_id, $setting_value)),
                         (new Input($setting_id . '-text', $setting_value))
-                            ->placeholder($placeholder),
+                            ->placeholder($placeholder)
+                            ->value($setting_value_input),
                         (new Button($setting_id . '-default-button', __('settings-colors-reset'))),
                         (new Hidden($setting_id . '-default-value', Html::escapeHTML($default_settings[$setting_id]['default'])))
                     ]);
+
+                if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
+                    $the_setting[] = (new Para())
+                        ->id($setting_id . '-description')
+                        ->class('form-note')
+                        ->items([
+                            (new Text(null, $default_settings[$setting_id]['description']))
+                        ]);
+                }
 
                 break;
 
@@ -606,6 +620,15 @@ class Config extends Process
             $css_media_print_array['body']['font-smooth']             = 'unset';
         }
 
+        // Background color.
+        if (isset($_POST['global_color_background_custom']) && self::isHexColor($_POST['global_color_background_custom'])) {
+            $css_root_array[':root']['--color-background'] = Html::escapeHTML($_POST['global_color_background_custom']);
+        }
+
+        if (isset($_POST['global_color_background_dark_custom']) && self::isHexColor($_POST['global_color_background_dark_custom'])) {
+            $css_root_array[':root']['--color-background-dark'] = Html::escapeHTML($_POST['global_color_background_dark_custom']);
+        }
+
         // Primary color.
         $primary_colors_allowed = ['gray', 'green', 'red'];
 
@@ -632,7 +655,6 @@ class Config extends Process
             ]
         ];
 
-        // Primary color.
         if (isset($_POST['global_color_primary'])) {
             if ($_POST['global_color_primary'] !== 'custom' && in_array($_POST['global_color_primary'], $primary_colors_allowed, true)) {
                 // Light.
@@ -653,20 +675,20 @@ class Config extends Process
                     $css_root_array[':root']['--color-primary-dark-amplified'] = 'hsl(' . $primary_colors['dark-amplified'][$_POST['global_color_primary']] . ')';
                 }
             } elseif ($_POST['global_color_primary'] === 'custom') {
-                if (isset($_POST['global_color_primary_custom'])) {
-                    $css_root_array[':root']['--color-primary'] = $_POST['global_color_primary_custom'];
+                if (isset($_POST['global_color_primary_custom']) && self::isHexColor($_POST['global_color_primary_custom'])) {
+                    $css_root_array[':root']['--color-primary'] = Html::escapeHTML($_POST['global_color_primary_custom']);
                 }
 
-                if (isset($_POST['global_color_primary_amplified_custom'])) {
-                    $css_root_array[':root']['--color-primary-amplified'] = $_POST['global_color_primary_amplified_custom'];
+                if (isset($_POST['global_color_primary_amplified_custom']) && self::isHexColor($_POST['global_color_primary_amplified_custom'])) {
+                    $css_root_array[':root']['--color-primary-amplified'] = Html::escapeHTML($_POST['global_color_primary_amplified_custom']);
                 }
 
-                if (isset($_POST['global_color_primary_dark_custom'])) {
-                    $css_root_dark_array[':root']['--color-primary-dark'] = $_POST['global_color_primary_dark_custom'];
+                if (isset($_POST['global_color_primary_dark_custom']) && self::isHexColor($_POST['global_color_primary_dark_custom'])) {
+                    $css_root_dark_array[':root']['--color-primary-dark'] = Html::escapeHTML($_POST['global_color_primary_dark_custom']);
                 }
 
-                if (isset($_POST['global_color_primary_dark_amplified_custom'])) {
-                    $css_root_dark_array[':root']['--color-primary-dark-amplified'] = $_POST['global_color_primary_dark_amplified_custom'];
+                if (isset($_POST['global_color_primary_dark_amplified_custom']) && self::isHexColor($_POST['global_color_primary_dark_amplified_custom'])) {
+                    $css_root_dark_array[':root']['--color-primary-dark-amplified'] = Html::escapeHTML($_POST['global_color_primary_dark_amplified_custom']);
                 }
             }
         }
@@ -1276,9 +1298,7 @@ class Config extends Process
                         'value' => 'https://wa.me/' . Html::escapeURL(substr($value, 1)),
                         'type'  => 'string'
                     ];
-                } elseif (str_starts_with($value, 'https://wa.me/')
-                    || str_starts_with($value, 'whatsapp://wa.me/')
-                ) {
+                } elseif (str_starts_with($value, 'https://wa.me/') || str_starts_with($value, 'whatsapp://wa.me/')) {
                     return [
                         'value' => Html::escapeURL($value),
                         'type'  => 'string'
@@ -1301,5 +1321,21 @@ class Config extends Process
         }
 
         return [];
+    }
+
+    /**
+     * Checks if the input is an Hex color code.
+     *
+     * @param string $color The Hex color code.
+     *
+     * @return bool
+     */
+    public static function isHexColor(string $color): bool
+    {
+        if (preg_match('/#[A-Fa-f0-9]{6}/', $color) !== false) {
+            return true;
+        }
+
+        return false;
     }
 }

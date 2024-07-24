@@ -219,6 +219,9 @@ msgstr "Couleur principale (thème clair)"
 msgid "settings-global-primarycoloramplifiedcustom-title"
 msgstr "Couleur principale nuancée (thème clair)"
 
+msgid "settings-global-primarycolorbackgroundcustom-title"
+msgstr "Couleur d’arrière-plan (thème clair)"
+
 msgid "settings-global-primarycoloramplifiedcustom-description"
 msgstr "Il s’agit de la couleur utilisée au survol avec la souris (ou au toucher sur mobile) de la couleur principale (exemple&nbsp;: survol d’un lien)."
 
@@ -227,6 +230,9 @@ msgstr "Couleur principale (thème sombre)"
 
 msgid "settings-global-primarycolordarkamplifiedcustom-title"
 msgstr "Couleur principale nuancée (thème sombre)"
+
+msgid "settings-global-primarycolorbackgrounddarkcustom-title"
+msgstr "Couleur d’arrière-plan (thème sombre)"
 
 msgid "settings-colors-reset"
 msgstr "par défaut"

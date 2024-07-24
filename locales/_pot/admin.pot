@@ -219,6 +219,9 @@ msgstr ""
 msgid "settings-global-primarycoloramplifiedcustom-title"
 msgstr ""
 
+msgid "settings-global-primarycolorbackgroundcustom-title"
+msgstr ""
+
 msgid "settings-global-primarycoloramplifiedcustom-description"
 msgstr ""
 
@@ -226,6 +229,9 @@ msgid "settings-global-primarycolordarkcustom-title"
 msgstr ""
 
 msgid "settings-global-primarycolordarkamplifiedcustom-title"
+msgstr ""
+
+msgid "settings-global-primarycolorbackgrounddarkcustom-title"
 msgstr ""
 
 msgid "settings-colors-reset"
