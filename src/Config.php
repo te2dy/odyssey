@@ -368,15 +368,6 @@ class Config extends Process
                         (new Hidden($setting_id . '-default-value', Html::escapeHTML($default_settings[$setting_id]['default'])))
                     ]);
 
-                if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
-                    $the_setting[] = (new Para())
-                        ->id($setting_id . '-description')
-                        ->class('form-note')
-                        ->items([
-                            (new Text(null, $default_settings[$setting_id]['description']))
-                        ]);
-                }
-
                 break;
 
             case 'textarea' :
@@ -621,29 +612,53 @@ class Config extends Process
         }
 
         // Main text color.
-        if (isset($_POST['global_color_text_custom']) && self::isHexColor($_POST['global_color_text_custom'])) {
+        if (isset($_POST['global_color_text_custom'])
+            && isset($_POST['global_color_text_custom-default-value'])
+            && self::isHexColor($_POST['global_color_text_custom'])
+            && $_POST['global_color_text_custom'] !== $_POST['global_color_text_custom-default-value']
+        ) {
             $css_root_array[':root']['--color-text-main'] = Html::escapeHTML($_POST['global_color_text_custom']);
         }
 
-        if (isset($_POST['global_color_text_dark_custom']) && self::isHexColor($_POST['global_color_text_dark_custom'])) {
+        if (isset($_POST['global_color_text_dark_custom'])
+            && isset($_POST['global_color_text_dark_custom-default-value'])
+            && self::isHexColor($_POST['global_color_text_dark_custom'])
+            && $_POST['global_color_text_dark_custom'] !== $_POST['global_color_text_dark_custom-default-value']
+        ) {
             $css_root_array[':root']['--color-text-main-dark'] = Html::escapeHTML($_POST['global_color_text_dark_custom']);
         }
 
         // Text secondary color.
-        if (isset($_POST['global_color_text_secondary_custom']) && self::isHexColor($_POST['global_color_text_secondary_custom'])) {
+        if (isset($_POST['global_color_text_secondary_custom'])
+            && isset($_POST['global_color_text_secondary_custom-default-value'])
+            && self::isHexColor($_POST['global_color_text_secondary_custom'])
+            && $_POST['global_color_text_secondary_custom'] !== $_POST['global_color_text_secondary_custom-default-value']
+        ) {
             $css_root_array[':root']['--color-text-secondary'] = Html::escapeHTML($_POST['global_color_text_secondary_custom']);
         }
 
-        if (isset($_POST['global_color_text_secondary_dark_custom']) && self::isHexColor($_POST['global_color_text_secondary_dark_custom'])) {
+        if (isset($_POST['global_color_text_secondary_dark_custom'])
+            && isset($_POST['global_color_text_secondary_dark_custom-default-value'])
+            && self::isHexColor($_POST['global_color_text_secondary_dark_custom'])
+            && $_POST['global_color_text_secondary_dark_custom'] !== $_POST['global_color_text_secondary_dark_custom-default-value']
+        ) {
             $css_root_array[':root']['--color-text-secondary-dark'] = Html::escapeHTML($_POST['global_color_text_secondary_dark_custom']);
         }
 
         // Background color.
-        if (isset($_POST['global_color_background_custom']) && self::isHexColor($_POST['global_color_background_custom'])) {
+        if (isset($_POST['global_color_background_custom'])
+            && isset($_POST['global_color_background_custom-default-value'])
+            && self::isHexColor($_POST['global_color_background_custom'])
+            && $_POST['global_color_background_custom'] !== $_POST['global_color_background_custom-default-value']
+        ) {
             $css_root_array[':root']['--color-background'] = Html::escapeHTML($_POST['global_color_background_custom']);
         }
 
-        if (isset($_POST['global_color_background_dark_custom']) && self::isHexColor($_POST['global_color_background_dark_custom'])) {
+        if (isset($_POST['global_color_background_dark_custom'])
+            && isset($_POST['global_color_background_custom-default-value'])
+            && self::isHexColor($_POST['global_color_background_dark_custom'])
+            && $_POST['global_color_background_dark_custom'] !== $_POST['global_color_background_dark_custom-default-value']
+        ) {
             $css_root_array[':root']['--color-background-dark'] = Html::escapeHTML($_POST['global_color_background_dark_custom']);
         }
 
@@ -693,19 +708,35 @@ class Config extends Process
                     $css_root_array[':root']['--color-primary-dark-amplified'] = 'hsl(' . $primary_colors['dark-amplified'][$_POST['global_color_primary']] . ')';
                 }
             } elseif ($_POST['global_color_primary'] === 'custom') {
-                if (isset($_POST['global_color_primary_custom']) && self::isHexColor($_POST['global_color_primary_custom'])) {
+                if (isset($_POST['global_color_primary_custom'])
+                    && isset($_POST['global_color_primary_custom-default-value'])
+                    && self::isHexColor($_POST['global_color_primary_custom'])
+                    && $_POST['global_color_primary_custom'] !== $_POST['global_color_primary_custom-default-value']
+                ) {
                     $css_root_array[':root']['--color-primary'] = Html::escapeHTML($_POST['global_color_primary_custom']);
                 }
 
-                if (isset($_POST['global_color_primary_amplified_custom']) && self::isHexColor($_POST['global_color_primary_amplified_custom'])) {
+                if (isset($_POST['global_color_primary_amplified_custom'])
+                    && isset($_POST['global_color_primary_amplified_custom-default-value'])
+                    && self::isHexColor($_POST['global_color_primary_amplified_custom'])
+                    && $_POST['global_color_primary_amplified_custom'] !== $_POST['global_color_primary_amplified_custom-default-value']
+                ) {
                     $css_root_array[':root']['--color-primary-amplified'] = Html::escapeHTML($_POST['global_color_primary_amplified_custom']);
                 }
 
-                if (isset($_POST['global_color_primary_dark_custom']) && self::isHexColor($_POST['global_color_primary_dark_custom'])) {
+                if (isset($_POST['global_color_primary_dark_custom'])
+                    && isset($_POST['global_color_primary_dark_custom-default-value'])
+                    && self::isHexColor($_POST['global_color_primary_dark_custom'])
+                    && $_POST['global_color_primary_dark_custom'] !== $_POST['global_color_primary_dark_custom-default-value']
+                ) {
                     $css_root_dark_array[':root']['--color-primary-dark'] = Html::escapeHTML($_POST['global_color_primary_dark_custom']);
                 }
 
-                if (isset($_POST['global_color_primary_dark_amplified_custom']) && self::isHexColor($_POST['global_color_primary_dark_amplified_custom'])) {
+                if (isset($_POST['global_color_primary_dark_amplified_custom'])
+                    && isset($_POST['global_color_primary_dark_amplified_custom-default-value'])
+                    && self::isHexColor($_POST['global_color_primary_dark_amplified_custom'])
+                    && $_POST['global_color_primary_dark_amplified_custom'] !== $_POST['global_color_primary_dark_amplified_custom-default-value']
+                ) {
                     $css_root_dark_array[':root']['--color-primary-dark-amplified'] = Html::escapeHTML($_POST['global_color_primary_dark_amplified_custom']);
                 }
             }
