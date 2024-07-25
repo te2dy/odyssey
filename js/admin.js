@@ -26,9 +26,9 @@ function socialSites() {
   return ['diaspora', 'facebook', 'instagram', 'mastodon', 'phone', 'signal', 'sms', 'youtube', 'whatsapp', 'x', 'other'];
 }
 
-// Toogles footer social settings.
+// Toggles footer social settings.
 function toggleFooterSocialSetting(id) {
-  if (document.getElementById("social_" + id).value !== "") {
+  if (document.getElementById("social_" + id).value !== "" && document.getElementById("footer_enabled").checked) {
     setStyle("footer_social_" + id, "block");
 
     if (document.getElementById("reactions_other").value !== "disabled") {
@@ -95,12 +95,31 @@ function disableInputs() {
     setStyle("reactions_other_email", "none");
   }
 
+  // Footer
+  if (document.getElementById("footer_enabled").checked) {
+    setStyle(
+      [
+        "footer_align",
+        "footer_credits"
+      ],
+      "block"
+    );
+  } else {
+    setStyle(
+      [
+        "footer_align",
+        "footer_credits"
+      ],
+      "none"
+    );
+  }
+
   const socialSitesId = socialSites();
 
   var displayFooterSocialTitle = false;
 
   for (let siteId of socialSitesId) {
-    if (document.getElementById("social_" + siteId).value !== "") {
+    if (document.getElementById("social_" + siteId).value && document.getElementById("footer_enabled").checked) {
       displayFooterSocialTitle = true;
     }
 
