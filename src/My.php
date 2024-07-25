@@ -32,9 +32,11 @@ class My extends MyTheme
             'global' => [
                 'name'         => __('section-global'),
                 'sub_sections' => [
-                    'layout' => __('section-global-layout'),
-                    'fonts'  => __('section-global-fonts'),
-                    'colors' => __('section-global-colors')
+                    'layout'       => __('section-global-layout'),
+                    'fonts'        => __('section-global-fonts'),
+                    'colors'       => __('section-global-colors'),
+                    'colors-light' => __('section-global-colorslight'),
+                    'colors-dark'  => __('section-global-colorsdark')
                 ]
             ],
             'header' => [
@@ -192,22 +194,40 @@ class My extends MyTheme
             'section'     => ['global', 'colors']
         ];
 
+        $default_settings['global_color_text_custom'] = [
+            'title'       => __('settings-global-maintextcolorcustom-title'),
+            'description' => '',
+            'type'        => 'color',
+            'default'     => '#303030',
+            'placeholder' => '#303030',
+            'section'     => ['global', 'colors-light']
+        ];
+
+        $default_settings['global_color_text_secondary_custom'] = [
+            'title'       => __('settings-global-secondarytextcolorcustom-title'),
+            'description' => '',
+            'type'        => 'color',
+            'default'     => '#6c6f78',
+            'placeholder' => '#6c6f78',
+            'section'     => ['global', 'colors-light']
+        ];
+
         $default_settings['global_color_primary_custom'] = [
             'title'       => __('settings-global-primarycolorcustom-title'),
             'description' => '',
             'type'        => 'color',
             'default'     => '#1742cf',
             'placeholder' => '#1742cf',
-            'section'     => ['global', 'colors']
+            'section'     => ['global', 'colors-light']
         ];
 
         $default_settings['global_color_primary_amplified_custom'] = [
             'title'       => __('settings-global-primarycoloramplifiedcustom-title'),
-            'description' => __('settings-global-primarycoloramplifiedcustom-description'),
+            'description' => '',
             'type'        => 'color',
             'default'     => '#063ff9',
             'placeholder' => '#063ff9',
-            'section'     => ['global', 'colors']
+            'section'     => ['global', 'colors-light']
         ];
 
         $default_settings['global_color_background_custom'] = [
@@ -216,34 +236,52 @@ class My extends MyTheme
             'type'        => 'color',
             'default'     => '#fafafa',
             'placeholder' => '#fafafa',
-            'section'     => ['global', 'colors']
+            'section'     => ['global', 'colors-light']
+        ];
+
+        $default_settings['global_color_text_dark_custom'] = [
+            'title'       => __('settings-global-maintextcolorcustom-title'),
+            'description' => '',
+            'type'        => 'color',
+            'default'     => '#cccccc',
+            'placeholder' => '#cccccc',
+            'section'     => ['global', 'colors-dark']
+        ];
+
+        $default_settings['global_color_text_secondary_dark_custom'] = [
+            'title'       => __('settings-global-secondarytextcolorcustom-title'),
+            'description' => '',
+            'type'        => 'color',
+            'default'     => '#969696',
+            'placeholder' => '#969696',
+            'section'     => ['global', 'colors-dark']
         ];
 
         $default_settings['global_color_primary_dark_custom'] = [
-            'title'       => __('settings-global-primarycolordarkcustom-title'),
+            'title'       => __('settings-global-primarycolorcustom-title'),
             'description' => '',
             'type'        => 'color',
             'default'     => '#7592f0',
             'placeholder' => '#7592f0',
-            'section'     => ['global', 'colors']
+            'section'     => ['global', 'colors-dark']
         ];
 
         $default_settings['global_color_primary_dark_amplified_custom'] = [
-            'title'       => __('settings-global-primarycolordarkamplifiedcustom-title'),
+            'title'       => __('settings-global-primarycoloramplifiedcustom-title'),
             'description' => '',
             'type'        => 'color',
             'default'     => '#9cb2fc',
             'placeholder' => '#9cb2fc',
-            'section'     => ['global', 'colors']
+            'section'     => ['global', 'colors-dark']
         ];
 
         $default_settings['global_color_background_dark_custom'] = [
-            'title'       => __('settings-global-primarycolorbackgrounddarkcustom-title'),
+            'title'       => __('settings-global-primarycolorbackgroundcustom-title'),
             'description' => '',
             'type'        => 'color',
             'default'     => '#16161d',
             'placeholder' => '#16161d',
-            'section'     => ['global', 'colors']
+            'section'     => ['global', 'colors-dark']
         ];
 
         $default_settings['global_css_transition'] = [
@@ -251,7 +289,7 @@ class My extends MyTheme
             'description' => __('settings-global-colortransition-description'),
             'type'        => 'checkbox',
             'default'     => false,
-            'section'     => ['global', 'colors']
+            'section'     => ['global', 'colors-dark']
         ];
 
         $default_settings['header_align'] = [

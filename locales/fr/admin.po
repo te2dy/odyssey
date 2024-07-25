@@ -30,6 +30,12 @@ msgstr "Textes"
 msgid "section-global-colors"
 msgstr "Couleurs"
 
+msgid "section-global-colorslight"
+msgstr "Thème clair"
+
+msgid "section-global-colorsdark"
+msgstr "Thème sombre"
+
 msgid "section-header"
 msgstr "Paramètres de l’en-tête"
 
@@ -213,26 +219,20 @@ msgstr "Rouge"
 msgid "settings-global-primarycolor-custom"
 msgstr "Personnalisée"
 
+msgid "settings-global-maintextcolorcustom-title"
+msgstr "Couleur de texte"
+
+msgid "settings-global-secondarytextcolorcustom-title"
+msgstr "Couleur de texte secondaire"
+
 msgid "settings-global-primarycolorcustom-title"
-msgstr "Couleur principale (thème clair)"
+msgstr "Couleur principale"
 
 msgid "settings-global-primarycoloramplifiedcustom-title"
-msgstr "Couleur principale nuancée (thème clair)"
+msgstr "Couleur principale secondaire"
 
 msgid "settings-global-primarycolorbackgroundcustom-title"
-msgstr "Couleur d’arrière-plan (thème clair)"
-
-msgid "settings-global-primarycoloramplifiedcustom-description"
-msgstr "Il s’agit de la couleur utilisée au survol avec la souris (ou au toucher sur mobile) de la couleur principale (exemple&nbsp;: survol d’un lien)."
-
-msgid "settings-global-primarycolordarkcustom-title"
-msgstr "Couleur principale (thème sombre)"
-
-msgid "settings-global-primarycolordarkamplifiedcustom-title"
-msgstr "Couleur principale nuancée (thème sombre)"
-
-msgid "settings-global-primarycolorbackgrounddarkcustom-title"
-msgstr "Couleur d’arrière-plan (thème sombre)"
+msgstr "Couleur d’arrière-plan"
 
 msgid "settings-colors-reset"
 msgstr "par défaut"

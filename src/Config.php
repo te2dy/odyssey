@@ -620,6 +620,24 @@ class Config extends Process
             $css_media_print_array['body']['font-smooth']             = 'unset';
         }
 
+        // Main text color.
+        if (isset($_POST['global_color_text_custom']) && self::isHexColor($_POST['global_color_text_custom'])) {
+            $css_root_array[':root']['--color-text-main'] = Html::escapeHTML($_POST['global_color_text_custom']);
+        }
+
+        if (isset($_POST['global_color_text_dark_custom']) && self::isHexColor($_POST['global_color_text_dark_custom'])) {
+            $css_root_array[':root']['--color-text-main-dark'] = Html::escapeHTML($_POST['global_color_text_dark_custom']);
+        }
+
+        // Text secondary color.
+        if (isset($_POST['global_color_text_secondary_custom']) && self::isHexColor($_POST['global_color_text_secondary_custom'])) {
+            $css_root_array[':root']['--color-text-secondary'] = Html::escapeHTML($_POST['global_color_text_secondary_custom']);
+        }
+
+        if (isset($_POST['global_color_text_secondary_dark_custom']) && self::isHexColor($_POST['global_color_text_secondary_dark_custom'])) {
+            $css_root_array[':root']['--color-text-secondary-dark'] = Html::escapeHTML($_POST['global_color_text_secondary_dark_custom']);
+        }
+
         // Background color.
         if (isset($_POST['global_color_background_custom']) && self::isHexColor($_POST['global_color_background_custom'])) {
             $css_root_array[':root']['--color-background'] = Html::escapeHTML($_POST['global_color_background_custom']);

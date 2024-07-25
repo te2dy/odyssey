@@ -50,11 +50,18 @@ function toggleFooterSocialSetting(id) {
 // Shows or hides settings depending on others.
 function disableInputs() {
   if (document.getElementById("global_color_primary").value === "custom") {
+    document.getElementById("section-global-colors-light").style.display = "block";
+    document.getElementById("section-global-colors-dark").style.display  = "block";
+
     setStyle(
       [
+        "global_color_text_custom",
+        "global_color_text_secondary_custom",
         "global_color_primary_custom",
         "global_color_primary_amplified_custom",
         "global_color_background_custom",
+        "global_color_text_dark_custom",
+        "global_color_text_secondary_dark_custom",
         "global_color_primary_dark_custom",
         "global_color_primary_dark_amplified_custom",
         "global_color_background_dark_custom"
@@ -62,11 +69,18 @@ function disableInputs() {
       "block"
     );
   } else {
+    document.getElementById("section-global-colors-light").style.display = "none";
+    document.getElementById("section-global-colors-dark").style.display  = "none";
+
     setStyle(
       [
+        "global_color_text_custom",
+        "global_color_text_secondary_custom",
         "global_color_primary_custom",
         "global_color_primary_amplified_custom",
         "global_color_background_custom",
+        "global_color_text_dark_custom",
+        "global_color_text_secondary_dark_custom",
         "global_color_primary_dark_custom",
         "global_color_primary_dark_amplified_custom",
         "global_color_background_dark_custom"
@@ -74,14 +88,6 @@ function disableInputs() {
       "none"
     );
   }
-
-  /*
-  if (document.getElementById("content_postlist_type").value !== "excerpt") {
-    setStyle("content_postlist_thumbnail", "block");
-  } else {
-    setStyle("content_postlist_thumbnail", "none");
-  }
-  */
 
   if (document.getElementById("reactions_other").value !== "disabled") {
     setStyle("reactions_other_email", "block");

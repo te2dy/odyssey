@@ -1,8 +1,8 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --color-background: var(--color-background-dark, #16161d);
-    --color-text-main: #ccc;
-    --color-text-secondary: #969696;
+    --color-text-main: var(--color-text-main-dark, #ccc);
+    --color-text-secondary: var(--color-text-secondary-dark, #969696);
     --color-primary: var(--color-primary-dark, hsl(226, 80%, 70%));
     --color-primary-amplified: var(--color-primary-dark-amplified, hsl(226, 95%, 80%));
     --color-input-background: #2b2a33;
