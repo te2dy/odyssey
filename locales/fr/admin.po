@@ -468,6 +468,18 @@ msgstr "Activer le pied de page"
 msgid "settings-footer-activation-description"
 msgstr "Il est recommandé de décocher cet paramètre si le pied de page ne contient aucun élément."
 
+msgid "settings-footer-align-title"
+msgstr "Alignement"
+
+msgid "settings-footer-align-left-default"
+msgstr "Gauche (par défaut)"
+
+msgid "settings-footer-align-center"
+msgstr "Centre"
+
+msgid "settings-footer-align-right"
+msgstr "Droite"
+
 msgid "settings-footer-credits-title"
 msgstr "Afficher une mention à Dotclear et au thème"
 

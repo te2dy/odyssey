@@ -468,6 +468,18 @@ msgstr "Enable footer"
 msgid "settings-footer-activation-description"
 msgstr "It is recommended to uncheck this setting if the footer does not contain any elements."
 
+msgid "settings-footer-align-title"
+msgstr "Alignment"
+
+msgid "settings-footer-align-left-default"
+msgstr "Left (default)"
+
+msgid "settings-footer-align-center"
+msgstr "Center"
+
+msgid "settings-footer-align-right"
+msgstr "Right"
+
 msgid "settings-footer-credits-title"
 msgstr "Show a mention to Dotclear and the theme"
 

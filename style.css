@@ -68,6 +68,7 @@ body {
 #site-footer {
   font-size: .8em;
   order: 5;
+  text-align: var(--footer-align, unset);
 }
 
 /**

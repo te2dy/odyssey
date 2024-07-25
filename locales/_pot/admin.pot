@@ -468,6 +468,18 @@ msgstr ""
 msgid "settings-footer-activation-description"
 msgstr ""
 
+msgid "settings-footer-align-title"
+msgstr ""
+
+msgid "settings-footer-align-left-default"
+msgstr ""
+
+msgid "settings-footer-align-center"
+msgstr ""
+
+msgid "settings-footer-align-right"
+msgstr ""
+
 msgid "settings-footer-credits-title"
 msgstr ""
 

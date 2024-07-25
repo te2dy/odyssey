@@ -903,6 +903,13 @@ class Config extends Process
             $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['margin-right'] = '.25rem';
         }
 
+        // Footer align
+        $footer_align_allowed = ['center', 'right'];
+
+        if (isset($_POST['footer_align']) && in_array($_POST['footer_align'], $footer_align_allowed, true)) {
+            $css_root_array[':root']['--footer-align'] = $_POST['footer_align'];
+        }
+
         // Social icons.
         $simpleicons_styles  = false;
         $feathericons_styles = false;

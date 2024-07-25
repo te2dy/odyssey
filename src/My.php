@@ -583,6 +583,19 @@ class My extends MyTheme
             'section'     => ['footer', 'no-title']
         ];
 
+        $default_settings['footer_align'] = [
+            'title'       => __('settings-footer-align-title'),
+            'description' => '',
+            'type'        => 'select',
+            'choices'     => [
+                __('settings-footer-align-left-default') => 'left',
+                __('settings-footer-align-center')       => 'center',
+                __('settings-footer-align-right')        => 'right'
+            ],
+            'default'     => 'center',
+            'section'     => ['footer', 'no-title']
+        ];
+
         $default_settings['footer_credits'] = [
             'title'       => __('settings-footer-credits-title'),
             'description' => __('settings-footer-credits-description'),
