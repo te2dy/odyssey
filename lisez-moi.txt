@@ -12,6 +12,15 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
+=== 0.3 - 25 juillet 2024 ===
+- Ajout : option de couleurs personnalisées pour les textes et l’arrière-plan.
+- Correction : erreur d’affichage des couleurs personnalisées dans le configurateur de thème.
+- Mise à jour des traductions.
+
+=== 0.2.1 - 8 juillet 2024 ===
+- Ajout : styles pour les notes de bas de page.
+- Correction : affichage du titre des autres réactions alors qu’aucun contenu n’est affiché.
+
 === 0.2 - 6 juillet 2024 ===
 - Ajout : élément <search> au formulaire de recherche.
 - Amélioration : compatibilité des formulaires avec les futures version de Dotclear (passage de form:: à \Helper\Html\Form\…).
