@@ -28,8 +28,10 @@ function socialSites() {
 
 // Toggles footer social settings.
 function toggleFooterSocialSetting(id) {
-  if (document.getElementById("social_" + id).value !== "" && document.getElementById("footer_enabled").checked) {
-    setStyle("footer_social_" + id, "block");
+  if (document.getElementById("social_" + id).value !== "") {
+    if (document.getElementById("footer_enabled").checked) {
+      setStyle("footer_social_" + id, "block");
+    }
 
     if (document.getElementById("reactions_other").value !== "disabled") {
       setStyle("reactions_other_" + id, "block");
