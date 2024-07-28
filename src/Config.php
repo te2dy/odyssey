@@ -906,8 +906,10 @@ class Config extends Process
         // Footer align
         $footer_align_allowed = ['center', 'right'];
 
-        if (isset($_POST['footer_align']) && in_array($_POST['footer_align'], $footer_align_allowed, true)) {
-            $css_root_array[':root']['--footer-align'] = $_POST['footer_align'];
+        if (isset($_POST['footer_enabled']) && $_POST['footer_enabled'] === '1') {
+            if (isset($_POST['footer_align']) && in_array($_POST['footer_align'], $footer_align_allowed, true)) {
+                $css_root_array[':root']['--footer-align'] = $_POST['footer_align'];
+            }
         }
 
         // Social icons.
