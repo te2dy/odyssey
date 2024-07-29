@@ -602,7 +602,7 @@ class My extends MyTheme
                 __('settings-footer-align-center')       => 'center',
                 __('settings-footer-align-right')        => 'right'
             ],
-            'default'     => 'center',
+            'default'     => 'left',
             'section'     => ['footer', 'no-title']
         ];
 
