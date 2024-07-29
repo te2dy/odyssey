@@ -912,14 +912,8 @@ class Config extends Process
             }
         }
 
-        // Social icons.
+        // Social icons
         $simpleicons_styles  = false;
-        $feathericons_styles = false;
-
-        // Checks if email as been set as a reaction method.
-        if (isset($_POST['reactions_other']) && $_POST['reactions_other'] !== 'disabled' && isset($_POST['reactions_other_email']) && $_POST['reactions_other_email'] === 'on') {
-            $feathericons_styles = true;
-        }
 
         // Checks if a link as been set.
         foreach (My::socialSites() as $id => $data) {
@@ -930,8 +924,6 @@ class Config extends Process
                     if (!empty(self::sanitizeSocialLink('social_' . $id, $_POST['social_' . $id]))) {
                         if (My::svgIcons($id)['author'] === 'simpleicons') {
                             $simpleicons_styles  = true;
-                        } elseif (My::svgIcons($id)['author'] === 'feathericons') {
-                            $feathericons_styles = true;
                         }
                     }
                 }
@@ -948,38 +940,26 @@ class Config extends Process
             $css_main_array['.social-icon-si']['transition']      = 'var(--color-transition, unset)';
         }
 
-        if ($feathericons_styles === true) {
-            $css_main_array['.social-icon-fi']['border']          = '0';
-            $css_main_array['.social-icon-fi']['fill']            = 'none';
-            $css_main_array['.social-icon-fi']['stroke-linecap']  = 'round';
-            $css_main_array['.social-icon-fi']['stroke-linejoin'] = 'round';
-            $css_main_array['.social-icon-fi']['stroke-width']    = '2';
-            $css_main_array['.social-icon-fi']['width']           = '1rem';
-            $css_main_array['.social-icon-fi']['transition']      = 'var(--color-transition, unset)';
-        }
-
         // Other reaction methods
         if (isset($_POST['reactions_other']) && $_POST['reactions_other'] !== 'disabled') {
-            $css_main_array['.reactions-other-icon']['display']        = 'inline-block';
-            $css_main_array['.reactions-other-icon']['vertical-align'] = 'middle';
+            $css_main_array['.reactions-other :is(.social-icon-fi, .social-icon-si)']['display']        = 'inline-block';
+            $css_main_array['.reactions-other :is(.social-icon-fi, .social-icon-si)']['vertical-align'] = 'middle';
 
-            $css_main_array['.reactions-other-icon-si']['fill'] = 'var(--color-primary, hsl(226, 80%, 45%))';
+            $css_main_array['.social-icon-si']['fill'] = 'var(--color-primary, hsl(226, 80%, 45%))';
 
-            $css_main_array['.reactions-other-icon-fi']['stroke'] = 'var(--color-primary, hsl(226, 80%, 45%))';
+            $css_main_array['.reactions-other:is(:active, :hover, :focus):not(.button)']['text-decoration'] = 'none';
 
-            $css_main_array['.reactions-other a:is(:active, :hover, :focus):not(.button)']['text-decoration'] = 'none';
+            $css_main_array['.reactions-other:is(:active, :hover, :focus):not(.button) .reactions-other-text']['text-decoration'] = 'underline';
 
-            $css_main_array['.reactions-other a:is(:active, :hover, :focus):not(.button) .reactions-other-text']['text-decoration'] = 'underline';
+            $css_main_array['.reactions-other:is(:active, :hover, :focus) .social-icon-si']['fill'] = 'var(--color-primary-amplified, hsl(226, 95%, 50%))';
 
-            $css_main_array['.reactions-other a:is(:active, :hover, :focus) .reactions-other-icon-si']['fill'] = 'var(--color-primary-amplified, hsl(226, 95%, 50%))';
-
-            $css_main_array['.reactions-other a:is(:active, :hover, :focus) .reactions-other-icon-fi']['stroke'] = 'var(--color-primary-amplified, hsl(226, 95%, 50%))';
+            $css_main_array['.reactions-other:is(:active, :hover, :focus) .social-icon-fi']['stroke'] = 'var(--color-primary-amplified, hsl(226, 95%, 50%))';
 
             $css_main_array['.reactions-other-text']['display']         = 'inline-block';
             $css_main_array['.reactions-other-text']['vertical-align']  = 'middle';
         }
 
-        // Footer social links.
+        // Footer social links
         $footer_social_links = false;
         $simpleicons_styles  = false;
         $feathericons_styles = false;

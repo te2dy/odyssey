@@ -592,23 +592,38 @@ details summary {
 #comment-feed-link {
   margin-top: 2rem;
 }
-#reactions-react-button > summary {
+.reactions-details summary {
   list-style-type: none;
 }
-#reactions-react-button > summary::-webkit-details-marker {
+.reactions-details summary::-webkit-details-marker {
   display: none;
 }
-#reactions-react-button[open] > summary::after {
-  content: '\2193';
-  margin-left: .25rem;
+.reactions-details[open] .reactions-react-button-text {
+  font-weight: 700;
 }
-#react-content {
-  border: .063rem solid #ccc;
-  margin-top: 1rem;
-  padding: 1rem;
+.reactions-details-content {
+  margin-block: 1rem 2rem;
 }
-#react-content *:last-child {
-  margin-bottom: 0;
+.social-icon-fi {
+  border: 0;
+  fill: none;
+  stroke: var(--color-primary, hsl(226, 80%, 45%));
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  width: 1rem;
+  transition: var(--color-transition, unset);
+}
+#reactions-react-button :is(.social-icon-fi, .reactions-react-button-text) {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.reactions-details summary:is(:active, :focus, :hover):not(.button) {
+  text-decoration: none;
+}
+.reactions-details summary:is(:active, :focus, :hover):not(.button) .reactions-react-button-text {
+  text-decoration: underline;
 }
 
 /**

@@ -182,7 +182,7 @@ msgstr ""
 msgid "reactions-comment-send-button"
 msgstr ""
 
-msgid "reactions-react-link-title"
+msgid "reactions-comment-form-title"
 msgstr ""
 
 msgid "reactions-comment-form-title"

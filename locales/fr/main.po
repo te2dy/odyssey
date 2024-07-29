@@ -182,9 +182,6 @@ msgstr "Prévisualisation"
 msgid "reactions-comment-send-button"
 msgstr "Envoyer le commentaire"
 
-msgid "reactions-react-link-title"
-msgstr "Réagir"
-
 msgid "reactions-comment-form-title"
 msgstr "Écrire un commentaire"
 

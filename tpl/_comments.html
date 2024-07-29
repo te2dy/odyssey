@@ -86,9 +86,13 @@
 
       <tpl:Block name="comment-form-add">
         <tpl:odysseyCommentFormWrapper>
-          <h3 class=reaction-title>{{tpl:lang reactions-comment-form-title}}</h3>
-
           {{tpl:SysBehavior behavior="publicCommentFormBeforeContent"}}
+
+          <div class=form-entry>
+            <label for=c_content>{{tpl:lang reactions-comment-form-comment-label}}</label>
+            <br>
+            <textarea id=c_content name=c_content required rows=8>{{tpl:CommentPreviewContent raw="1" encode_html="1"}}</textarea>{{tpl:odysseyMarkdownSupportInfo}}
+          </div>
 
           <div class=form-entry>
             <label for=c_name>{{tpl:lang reactions-comment-form-name-label}}</label>
@@ -108,12 +112,6 @@
             <input id=c_site name=c_site maxlength=255 placeholder=https://… value="{{tpl:CommentPreviewSite encode_html="1"}}">
           </div>
 
-          <div class=form-entry>
-            <label for=c_content>{{tpl:lang reactions-comment-form-comment-label}}</label>
-            <br>
-            <textarea id=c_content name=c_content required rows=8>{{tpl:CommentPreviewContent raw="1" encode_html="1"}}</textarea>{{tpl:odysseyMarkdownSupportInfo}}
-          </div>
-
           {{tpl:SysBehavior behavior="publicCommentFormAfterContent"}}
 
           <div class=form-entry>
@@ -123,31 +121,19 @@
               <input type=submit value="{{tpl:lang reactions-comment-form-submit-button}}">
             </tpl:IfCommentPreviewOptional>
           </div>
-
-          <tpl:odysseyTrackbackLink>
-            <tpl:EntryIf pings_active="1">
-              <h3>{{tpl:lang reactions-trackbacks-add-title}}</h3>
-
-              <p class=text-secondary id=trackback-link-container>
-                <span id=trackback-url>{{tpl:EntryPingLink}}</span>{{tpl:odysseyScriptTrackbackURLCopied}}
-              </p>
-            </tpl:EntryIf>
-          </tpl:odysseyTrackbackLink>
-
-          {{tpl:odysseyPrivateCommentLink}}
         </tpl:odysseyCommentFormWrapper>
       </tpl:Block>
     </form>
+
+    {{tpl:odysseyTrackbackLink}}
+
+    <tpl:odysseyFeedLink>
+      {{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}}
+    </tpl:odysseyFeedLink>
+
+    {{tpl:odysseyPrivateCommentLink}}
   </tpl:Block>
 </tpl:EntryIf>
-
-<tpl:odysseyReactionFeedLink>
-  <tpl:EntryIf operator="or" comments_active="1" pings_active="1" has_comment="1" has_ping="1">
-    <p class=text-secondary id=comment-feed-link>
-      <small><a href="{{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}}" rel=nofollow>{{tpl:lang reactions-subscribe-link-reactions}}</a></small>
-    </p>
-  </tpl:EntryIf>
-</tpl:odysseyReactionFeedLink>
 
 <tpl:EntryIf operator="or" comments_active="1" pings_active="1">
   </div>

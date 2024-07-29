@@ -42,27 +42,45 @@ class FrontendBlocks
     public static function odysseyCommentFormWrapper($attr, $content): string
     {
         if (My::settingValue('reactions_button') !== false && (isset(App::frontend()->context()->comment_preview['content']) && App::frontend()->context()->comment_preview['content'] === '')) {
-            return '<details id=reactions-react-button><summary class=button>' . __('reactions-react-link-title') . '</summary><div id=react-content>' . $content . '</div></details>';
+            return '<details class=reactions-details>
+                <summary id=reactions-react-button>
+                    <svg class=social-icon-fi role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>' . My::svgIcons('comment')['path'] . '</svg>
+
+                    <span class=reactions-react-button-text>' . __('reactions-comment-form-title') . '</span>
+                </summary>
+
+                <div class=reactions-details-content>' . $content . '</div>
+            </details>';
         }
 
         return $content;
     }
 
     /**
-     * Displays/hides the trackback link in posts.
+     * Displays the RSS/Atom feed link of the current post.
      *
-     * @param array $attr    Unused.
-     * @param void  $content The comment form.
-     *
-     * @return string The comment form.
+     * @return string The feed link.
      */
-    public static function odysseyTrackbackLink($attr, $content): mixed
+    public static function odysseyFeedLink($attr, $content): string
     {
-        if (My::settingValue('reactions_other_trackbacks') !== false) {
-            return $content;
+        if (My::settingValue('reactions_feed_link') !== true) {
+            return '';
         }
 
-        return '';
+        return '<?php
+            if (App::frontend()->context()->posts->commentsActive() === true
+                || App::frontend()->context()->posts->trackbacksActive() === true
+                || App::frontend()->context()->posts->hasComments() === true
+                || App::frontend()->context()->posts->hasTrackbacks() === true
+            ) : ?>
+            <p>
+                <a class=reactions-other href="' . $content . '" rel=nofollow>
+                    <svg class="reactions-other-icon social-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>' . My::svgIcons('rss')['path'] . '</svg>
+
+                    <span class=reactions-other-text>' . __('reactions-subscribe-link-reactions') . '</span>
+                </a>
+            </p>
+        <?php endif; ?>';
     }
 
     /**

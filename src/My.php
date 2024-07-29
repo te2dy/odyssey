@@ -59,6 +59,7 @@ class My extends MyTheme
                 'sub_sections' => [
                     'form'       => __('section-reactions-form'),
                     'trackbacks' => __('section-reactions-trackbacks'),
+                    'feed'       => __('section-reactions-feed'),
                     'other'      => __('section-reactions-other')
                 ]
             ],
@@ -404,6 +405,7 @@ class My extends MyTheme
             'choices'     => [
                 __('settings-content-fontfamily-same-default')      => 'same',
                 __('settings-global-fontfamily-sansserif')          => 'sans-serif',
+                __('settings-global-fontfamily-serif')               => 'serif',
                 __('settings-global-fontfamily-transitional')       => 'transitional',
                 __('settings-global-fontfamily-oldstyle')           => 'old-style',
                 __('settings-global-fontfamily-garamond')           => 'garamond',
@@ -518,6 +520,14 @@ class My extends MyTheme
             'type'        => 'checkbox',
             'default'     => true,
             'section'     => ['reactions', 'trackbacks']
+        ];
+
+        $default_settings['reactions_feed_link'] = [
+            'title'       => __('settings-reactions-feedlink-title'),
+            'description' => '',
+            'type'        => 'checkbox',
+            'default'     => false,
+            'section'     => ['reactions', 'feed']
         ];
 
         $default_settings['reactions_other'] = [
@@ -875,7 +885,9 @@ class My extends MyTheme
 
         switch ($fontname) {
             case 'sans-serif' :
-                return 'system-ui, sans-serif' . $emoji;
+                return 'system-ui, ui-sans-serif, sans-serif' . $emoji;
+            case 'serif' :
+                return 'ui-serif, serif' . $emoji;
             case 'transitional' :
                 return 'Charter, "Bitstream Charter", "Sitka Text", Cambria, serif' . $emoji;
             case 'old-style' :
@@ -1011,6 +1023,11 @@ class My extends MyTheme
     {
         $icons = [];
 
+        $icons['comment'] = [
+            'path' => '<polyline points="9 14 4 9 9 4" /><path d="M20 20v-7a4 4 0 0 0-4-4H4" />',
+            'author' => 'feathericons'
+        ];
+
         $icons['diaspora'] = [
             'path' => '<path d="M15.257 21.928l-2.33-3.255c-.622-.87-1.128-1.549-1.155-1.55-.027 0-1.007 1.317-2.317 3.115-1.248 1.713-2.28 3.115-2.292 3.115-.035 0-4.5-3.145-4.51-3.178-.006-.016 1.003-1.497 2.242-3.292 1.239-1.794 2.252-3.29 2.252-3.325 0-.056-.401-.197-3.55-1.247a1604.93 1604.93 0 0 1-3.593-1.2c-.033-.013.153-.635.79-2.648.46-1.446.845-2.642.857-2.656.013-.015 1.71.528 3.772 1.207 2.062.678 3.766 1.233 3.787 1.233.021 0 .045-.032.053-.07.008-.039.026-1.794.04-3.902.013-2.107.036-3.848.05-3.87.02-.03.599-.038 2.725-.038 1.485 0 2.716.01 2.735.023.023.016.064 1.175.132 3.776.112 4.273.115 4.33.183 4.33.026 0 1.66-.547 3.631-1.216 1.97-.668 3.593-1.204 3.605-1.191.04.045 1.656 5.307 1.636 5.327-.011.01-1.656.574-3.655 1.252-2.75.932-3.638 1.244-3.645 1.284-.006.029.94 1.442 2.143 3.202 1.184 1.733 2.148 3.164 2.143 3.18-.012.036-4.442 3.299-4.48 3.299-.015 0-.577-.767-1.249-1.705z" />',
             'author' => 'simpleicons'
@@ -1041,6 +1058,11 @@ class My extends MyTheme
             'author' => 'feathericons'
         ];
 
+        $icons['rss'] = [
+            'path' => '<path d="M4 11a9 9 0 0 1 9 9" /><path d="M4 4a16 16 0 0 1 16 16" /><circle cx="5" cy="19" r="1" />',
+            'author' => 'feathericons'
+        ];
+
         $icons['signal'] = [
             'path' => '<path d="m9.12.35.27 1.09a10.845 10.845 0 0 0-3.015 1.248l-.578-.964A11.955 11.955 0 0 1 9.12.35zm5.76 0-.27 1.09a10.845 10.845 0 0 1 3.015 1.248l.581-.964A11.955 11.955 0 0 0 14.88.35zM1.725 5.797A11.955 11.955 0 0 0 .351 9.119l1.09.27A10.845 10.845 0 0 1 2.69 6.374zm-.6 6.202a10.856 10.856 0 0 1 .122-1.63l-1.112-.168a12.043 12.043 0 0 0 0 3.596l1.112-.169A10.856 10.856 0 0 1 1.125 12zm17.078 10.275-.578-.964a10.845 10.845 0 0 1-3.011 1.247l.27 1.091a11.955 11.955 0 0 0 3.319-1.374zM22.875 12a10.856 10.856 0 0 1-.122 1.63l1.112.168a12.043 12.043 0 0 0 0-3.596l-1.112.169a10.856 10.856 0 0 1 .122 1.63zm.774 2.88-1.09-.27a10.845 10.845 0 0 1-1.248 3.015l.964.581a11.955 11.955 0 0 0 1.374-3.326zm-10.02 7.875a10.952 10.952 0 0 1-3.258 0l-.17 1.112a12.043 12.043 0 0 0 3.597 0zm7.125-4.303a10.914 10.914 0 0 1-2.304 2.302l.668.906a12.019 12.019 0 0 0 2.542-2.535zM18.45 3.245a10.914 10.914 0 0 1 2.304 2.304l.906-.675a12.019 12.019 0 0 0-2.535-2.535zM3.246 5.549A10.914 10.914 0 0 1 5.55 3.245l-.675-.906A12.019 12.019 0 0 0 2.34 4.874zm19.029.248-.964.577a10.845 10.845 0 0 1 1.247 3.011l1.091-.27a11.955 11.955 0 0 0-1.374-3.318zM10.371 1.246a10.952 10.952 0 0 1 3.258 0L13.8.134a12.043 12.043 0 0 0-3.597 0zM3.823 21.957 1.5 22.5l.542-2.323-1.095-.257-.542 2.323a1.125 1.125 0 0 0 1.352 1.352l2.321-.532zm-2.642-3.041 1.095.255.375-1.61a10.828 10.828 0 0 1-1.21-2.952l-1.09.27a11.91 11.91 0 0 0 1.106 2.852zm5.25 2.437-1.61.375.255 1.095 1.185-.275a11.91 11.91 0 0 0 2.851 1.106l.27-1.091a10.828 10.828 0 0 1-2.943-1.217zM12 2.25a9.75 9.75 0 0 0-8.25 14.938l-.938 4 4-.938A9.75 9.75 0 1 0 12 2.25z" />',
             'author' => 'simpleicons'
@@ -1048,6 +1070,11 @@ class My extends MyTheme
 
         $icons['sms'] = [
             'path' => '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />',
+            'author' => 'feathericons'
+        ];
+
+        $icons['trackback'] = [
+            'path' => '<polyline points="17 1 21 5 17 9" /><path d="M3 11V9a4 4 0 0 1 4-4h14" /><polyline points="7 23 3 19 7 15" /><path d="M21 13v2a4 4 0 0 1-4 4H3" />',
             'author' => 'feathericons'
         ];
 

@@ -182,8 +182,8 @@ msgstr "Preview"
 msgid "reactions-comment-send-button"
 msgstr "Send comment"
 
-msgid "reactions-react-link-title"
-msgstr "React"
+msgid "reactions-comment-form-title"
+msgstr "Write a comment"
 
 msgid "reactions-comment-form-title"
 msgstr "Write a comment"
