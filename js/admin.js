@@ -28,7 +28,7 @@ function socialSites() {
 
 // Toggles footer social settings.
 function toggleFooterSocialSetting(id) {
-  if (document.getElementById("social_" + id).value !== "") {
+  if (document.getElementById("social_" + id).value !== "" && document.getElementById("footer_enabled").checked) {
     if (document.getElementById("footer_enabled").checked) {
       setStyle("footer_social_" + id, "block");
     }
