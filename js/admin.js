@@ -102,6 +102,7 @@ function disableInputs() {
     setStyle(
       [
         "footer_align",
+        "footer_feed",
         "footer_credits"
       ],
       "block"
@@ -110,6 +111,7 @@ function disableInputs() {
     setStyle(
       [
         "footer_align",
+        "footer_feed",
         "footer_credits"
       ],
       "none"

@@ -606,6 +606,14 @@ class My extends MyTheme
             'section'     => ['footer', 'no-title']
         ];
 
+        $default_settings['footer_feed'] = [
+            'title'       => __('settings-footer-feed-title'),
+            'description' => '',
+            'type'        => 'checkbox',
+            'default'     => false,
+            'section'     => ['footer', 'no-title']
+        ];
+
         $default_settings['footer_credits'] = [
             'title'       => __('settings-footer-credits-title'),
             'description' => __('settings-footer-credits-description'),

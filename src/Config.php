@@ -915,7 +915,7 @@ class Config extends Process
         // Social icons
         $simpleicons_styles  = false;
 
-        // Checks if a link as been set.
+        // Checks if a link has been set.
         foreach (My::socialSites() as $id => $data) {
             if (isset($_POST['social_' . $id]) && $_POST['social_' . $id] !== '') {
                 if ((isset($_POST['reactions_other']) && $_POST['reactions_other'] !== 'disabled' && isset($_POST['reactions_other_' . $id]) && $_POST['reactions_other_' . $id] !== '')
@@ -963,6 +963,11 @@ class Config extends Process
         $footer_social_links = false;
         $simpleicons_styles  = false;
         $feathericons_styles = false;
+
+        if (isset($_POST['footer_feed']) && $_POST['footer_feed'] === 'on') {
+            $footer_social_links = true;
+            $feathericons_styles = true;
+        }
 
         foreach (My::socialSites() as $id => $data) {
             if (isset($_POST['social_' . $id]) && $_POST['social_' . $id] !== '') {

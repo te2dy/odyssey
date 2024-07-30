@@ -276,6 +276,9 @@ msgstr ""
 
 # Footer
 
+msgid "footer-social-links-feed-title"
+msgstr ""
+
 msgid "footer-powered-by"
 msgstr ""
 

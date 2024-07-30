@@ -273,6 +273,9 @@ msgstr "Page suivante ›"
 
 # Footer
 
+msgid "footer-social-links-feed-title"
+msgstr "Fil RSS/Atom"
+
 msgid "footer-powered-by"
 msgstr "Propulsé par <a href=https://fr.dotclear.org/>Dotclear</a> et <a href=https://themes.dotaddict.org/galerie-dc2/details/odyssey>%s</a>"
 

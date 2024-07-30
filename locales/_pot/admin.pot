@@ -480,6 +480,9 @@ msgstr ""
 msgid "settings-footer-align-right"
 msgstr ""
 
+msgid "settings-footer-feed-title"
+msgstr ""
+
 msgid "settings-footer-credits-title"
 msgstr ""
 

@@ -480,6 +480,9 @@ msgstr "Centre"
 msgid "settings-footer-align-right"
 msgstr "Droite"
 
+msgid "settings-footer-feed-title"
+msgstr "Afficher un lien vers le flux RSS/Atom du blog"
+
 msgid "settings-footer-credits-title"
 msgstr "Afficher une mention à Dotclear et au thème"
 

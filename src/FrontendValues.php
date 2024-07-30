@@ -648,6 +648,26 @@ class FrontendValues
             }
         }
 
+        if (My::settingValue('footer_feed') === true) {
+            if ($count === 0) {
+                $count++;
+
+                $output .= '<div class=site-footer-block>';
+                $output .= '<ul class=footer-social-links>';
+            }
+
+            $output .= '<li>';
+            $output .= '<a href=' . App::blog()->url() . App::url()->getURLFor('feed', 'atom') . '>';
+            $output .= '<span class=footer-social-links-icon-container>';
+            $output .= '<svg class="social-icon-fi footer-social-links-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>';
+            $output .= '<title>' . __('footer-social-links-feed-title') . '</title>';
+            $output .= My::svgIcons('rss')['path'];
+            $output .= '</svg>';
+            $output .= '</span>';
+            $output .= '</a>';
+            $output .= '</li>';
+        }
+
         if ($count > 0) {
             $output .= '</ul>';
             $output .= '</div>';
