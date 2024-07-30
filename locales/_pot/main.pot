@@ -185,9 +185,6 @@ msgstr ""
 msgid "reactions-comment-form-title"
 msgstr ""
 
-msgid "reactions-comment-form-title"
-msgstr ""
-
 msgid "reactions-comment-form-preview-title"
 msgstr ""
 

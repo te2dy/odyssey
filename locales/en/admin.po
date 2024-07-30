@@ -63,6 +63,9 @@ msgstr "Comment form"
 msgid "section-reactions-trackbacks"
 msgstr "Trackbacks"
 
+msgid "section-reactions-feed"
+msgstr "Feed"
+
 msgid "section-reactions-other"
 msgstr "Other reaction methods"
 
@@ -398,6 +401,9 @@ msgstr "Show a message about Markdown markup support"
 
 msgid "settings-reactions-other-trackbacks-title"
 msgstr "Display a link to add trackbacks"
+
+msgid "settings-reactions-feedlink-title"
+msgstr "Propose a link to follow the feed of reactions by RSS/Atom"
 
 msgid "settings-reactions-other-title"
 msgstr "Allow other reaction methods"

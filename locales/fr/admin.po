@@ -63,6 +63,9 @@ msgstr "Formulaire de commentaires"
 msgid "section-reactions-trackbacks"
 msgstr "Rétroliens"
 
+msgid "section-reactions-feed"
+msgstr "Fil de syndication"
+
 msgid "section-reactions-other"
 msgstr "Autres moyens de réaction"
 
@@ -398,6 +401,9 @@ msgstr "Afficher un message signalant la prise en charge du balisage Markdown"
 
 msgid "settings-reactions-other-trackbacks-title"
 msgstr "Afficher un lien pour ajouter des rétroliens"
+
+msgid "settings-reactions-feedlink-title"
+msgstr "Proposer un lien pour suivre le fil des réactions par RSS/Atom"
 
 msgid "settings-reactions-other-title"
 msgstr "Autoriser d’autres moyens de réaction"

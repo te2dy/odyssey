@@ -63,6 +63,9 @@ msgstr ""
 msgid "section-reactions-trackbacks"
 msgstr ""
 
+msgid "section-reactions-feed"
+msgstr ""
+
 msgid "section-reactions-other"
 msgstr ""
 
@@ -397,6 +400,9 @@ msgid "settings-reactions-markdownnotice-title"
 msgstr ""
 
 msgid "settings-reactions-other-trackbacks-title"
+msgstr ""
+
+msgid "settings-reactions-feedlink-title"
 msgstr ""
 
 msgid "settings-reactions-other-title"
