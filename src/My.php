@@ -231,6 +231,24 @@ class My extends MyTheme
             'section'     => ['global', 'colors-light']
         ];
 
+        $default_settings['global_color_input_custom'] = [
+            'title'       => __('settings-global-inputcustom-title'),
+            'description' => '',
+            'type'        => 'color',
+            'default'     => '#f2f2f2',
+            'placeholder' => '#f2f2f2',
+            'section'     => ['global', 'colors-light']
+        ];
+
+        $default_settings['global_color_border_custom'] = [
+            'title'       => __('settings-global-bordercustom-title'),
+            'description' => '',
+            'type'        => 'color',
+            'default'     => '#cccccc',
+            'placeholder' => '#cccccc',
+            'section'     => ['global', 'colors-light']
+        ];
+
         $default_settings['global_color_background_custom'] = [
             'title'       => __('settings-global-primarycolorbackgroundcustom-title'),
             'description' => '',
@@ -273,6 +291,24 @@ class My extends MyTheme
             'type'        => 'color',
             'default'     => '#9cb2fc',
             'placeholder' => '#9cb2fc',
+            'section'     => ['global', 'colors-dark']
+        ];
+
+        $default_settings['global_color_input_dark_custom'] = [
+            'title'       => __('settings-global-inputcustom-title'),
+            'description' => '',
+            'type'        => 'color',
+            'default'     => '#2b2a33',
+            'placeholder' => '#2b2a33',
+            'section'     => ['global', 'colors-dark']
+        ];
+
+        $default_settings['global_color_border_dark_custom'] = [
+            'title'       => __('settings-global-bordercustom-title'),
+            'description' => '',
+            'type'        => 'color',
+            'default'     => '#cccccc',
+            'placeholder' => '#cccccc',
             'section'     => ['global', 'colors-dark']
         ];
 

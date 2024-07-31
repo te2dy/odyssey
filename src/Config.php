@@ -645,6 +645,40 @@ class Config extends Process
             $css_root_array[':root']['--color-text-secondary-dark'] = Html::escapeHTML($_POST['global_color_text_secondary_dark_custom']);
         }
 
+        // Input color.
+        if (isset($_POST['global_color_input_custom'])
+            && isset($_POST['global_color_input_custom-default-value'])
+            && self::isHexColor($_POST['global_color_input_custom'])
+            && $_POST['global_color_input_custom'] !== $_POST['global_color_input_custom-default-value']
+        ) {
+            $css_root_array[':root']['--color-input-background'] = Html::escapeHTML($_POST['global_color_input_custom']);
+        }
+
+        if (isset($_POST['global_color_input_dark_custom'])
+            && isset($_POST['global_color_input_dark_custom-default-value'])
+            && self::isHexColor($_POST['global_color_input_dark_custom'])
+            && $_POST['global_color_input_dark_custom'] !== $_POST['global_color_input_dark_custom-default-value']
+        ) {
+            $css_root_array[':root']['--color-input-background-dark'] = Html::escapeHTML($_POST['global_color_input_dark_custom']);
+        }
+
+        // Border color.
+        if (isset($_POST['global_color_border_custom'])
+            && isset($_POST['global_color_border_custom-default-value'])
+            && self::isHexColor($_POST['global_color_border_custom'])
+            && $_POST['global_color_border_custom'] !== $_POST['global_color_border_custom-default-value']
+        ) {
+            $css_root_array[':root']['--color-border'] = Html::escapeHTML($_POST['global_color_border_custom']);
+        }
+
+        if (isset($_POST['global_color_border_dark_custom'])
+            && isset($_POST['global_color_border_dark_custom-default-value'])
+            && self::isHexColor($_POST['global_color_border_dark_custom'])
+            && $_POST['global_color_border_dark_custom'] !== $_POST['global_color_border_dark_custom-default-value']
+        ) {
+            $css_root_array[':root']['--color-border-dark'] = Html::escapeHTML($_POST['global_color_border_dark_custom']);
+        }
+
         // Background color.
         if (isset($_POST['global_color_background_custom'])
             && isset($_POST['global_color_background_custom-default-value'])

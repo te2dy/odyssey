@@ -5,7 +5,8 @@
     --color-text-secondary: var(--color-text-secondary-dark, #969696);
     --color-primary: var(--color-primary-dark, hsl(226, 80%, 70%));
     --color-primary-amplified: var(--color-primary-dark-amplified, hsl(226, 95%, 80%));
-    --color-input-background: #2b2a33;
+    --color-input-background: var(--color-input-background-dark, #2b2a33);
+    --color-border: var(--color-border-dark, #ccc);
   }
 }
 
@@ -95,7 +96,7 @@ mark {
   background-color: #fbf7a6;
 }
 blockquote {
-  border-left: .063rem solid #ccc;
+  border-left: .063rem solid var(--color-border, #ccc);
   margin: 1rem 0 1rem 1rem;
   padding: 0 0 0 .5rem;
 }
@@ -277,7 +278,7 @@ img + em { /* Image caption */
 input,
 textarea {
   background-color: var(--color-input-background, #f2f2f2);
-  border: .063rem solid #ccc;
+  border: .063rem solid var(--color-border, #ccc);
   border-radius: unset;
   box-sizing: border-box;
   color: var(--color-text-main, #303030);
@@ -344,7 +345,7 @@ input:disabled {
 }
 input[type="submit"]:disabled {
   background-color: #fcfcfd;
-  border-color: #ccc;
+  border-color: var(--color-border, #ccc);
 }
 input[type="submit"]:is(:active, :focus, :hover):disabled {
   background-color: inherit;
@@ -570,7 +571,7 @@ details summary {
   margin-block: 2rem;
 }
 .comment {
-  border-left: .063rem solid #ccc;
+  border-left: .063rem solid var(--color-border, #ccc);
   padding-left: 1rem;
 }
 .comment-author {
@@ -578,14 +579,14 @@ details summary {
   font-weight: 700;
 }
 .comment-message {
-  border: .063rem solid #ccc;
+  border: .063rem solid var(--color-border, #ccc);
   display: block;
   margin-top: 4rem;
   padding: .5rem;
   text-align: center;
 }
 .comment-preview {
-  border: .063rem solid #ccc;
+  border: .063rem solid var(--color-border, #ccc);
   margin-bottom: 2rem;
   padding: 1rem 1rem 0;
 }

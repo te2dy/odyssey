@@ -234,6 +234,12 @@ msgstr "Primary color"
 msgid "settings-global-primarycoloramplifiedcustom-title"
 msgstr "Primary color on hover"
 
+msgid "settings-global-inputcustom-title"
+msgstr "Form inputs"
+
+msgid "settings-global-bordercustom-title"
+msgstr "Border color"
+
 msgid "settings-global-primarycolorbackgroundcustom-title"
 msgstr "Background color"
 

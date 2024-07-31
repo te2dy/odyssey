@@ -61,11 +61,15 @@ function disableInputs() {
         "global_color_text_secondary_custom",
         "global_color_primary_custom",
         "global_color_primary_amplified_custom",
+        "global_color_input_custom",
+        "global_color_border_custom",
         "global_color_background_custom",
         "global_color_text_dark_custom",
         "global_color_text_secondary_dark_custom",
         "global_color_primary_dark_custom",
         "global_color_primary_dark_amplified_custom",
+        "global_color_input_dark_custom",
+        "global_color_border_dark_custom",
         "global_color_background_dark_custom"
       ],
       "block"
@@ -80,11 +84,15 @@ function disableInputs() {
         "global_color_text_secondary_custom",
         "global_color_primary_custom",
         "global_color_primary_amplified_custom",
+        "global_color_input_custom",
+        "global_color_border_custom",
         "global_color_background_custom",
         "global_color_text_dark_custom",
         "global_color_text_secondary_dark_custom",
         "global_color_primary_dark_custom",
         "global_color_primary_dark_amplified_custom",
+        "global_color_input_dark_custom",
+        "global_color_border_dark_custom",
         "global_color_background_dark_custom"
       ],
       "none"

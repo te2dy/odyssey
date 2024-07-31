@@ -234,6 +234,12 @@ msgstr "Couleur principale"
 msgid "settings-global-primarycoloramplifiedcustom-title"
 msgstr "Couleur principale secondaire"
 
+msgid "settings-global-inputcustom-title"
+msgstr "Couleur des champs de formulaire"
+
+msgid "settings-global-bordercustom-title"
+msgstr "Couleur des bordures"
+
 msgid "settings-global-primarycolorbackgroundcustom-title"
 msgstr "Couleur d’arrière-plan"
 

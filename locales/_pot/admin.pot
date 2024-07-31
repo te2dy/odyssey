@@ -234,6 +234,12 @@ msgstr ""
 msgid "settings-global-primarycoloramplifiedcustom-title"
 msgstr ""
 
+msgid "settings-global-inputcustom-title"
+msgstr ""
+
+msgid "settings-global-bordercustom-title"
+msgstr ""
+
 msgid "settings-global-primarycolorbackgroundcustom-title"
 msgstr ""
 
