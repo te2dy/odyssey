@@ -224,6 +224,9 @@ h6 {
 :is(.content-text, .widget) :is(ul li, ol li) {
   margin-block: .5em;
 }
+:is(.content-text, .widget) :is(ul li, ol li) > p {
+  display: inline-block;
+}
 sub, sup {
   vertical-align: baseline;
   position: relative;
