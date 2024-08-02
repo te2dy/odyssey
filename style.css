@@ -211,9 +211,12 @@ h6 {
   margin-top: 1rem;
 }
 :is(.content-text, .widget) :is(ul, ol) {
-  display: table;
   margin: 1em 0;
-  padding-inline-start: 0;
+  list-style: none;
+  padding-left: 1rem;
+}
+:is(.content-text, .widget) > :is(ul, ol) {
+  padding-inline: 0;
 }
 :is(.content-text, .widget) ol {
   counter-reset: list;
@@ -221,19 +224,14 @@ h6 {
 :is(.content-text, .widget) :is(ol ol, ul ul) {
   margin: 0 0 .5rem;
 }
-:is(.content-text, .widget) :is(ul li, ol li) {
-  display: table-row;
-}
 :is(.content-text, .widget) ul li {
   margin: .5rem 0;
 }
 :is(.content-text, .widget) ol li {
   counter-increment: list;
-  display: table-row;
   list-style: none;
 }
 :is(.content-text, .widget) :is(ul li, ol li)::before {
-  display: table-cell;
   padding-right: .25rem;
 }
 :is(.content-text, .widget) ul li::before {
