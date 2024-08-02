@@ -78,7 +78,7 @@ body {
 
 /* Main. */
 p {
-  margin: 1em 0;
+  margin-block: 1em;
 }
 strong {
   font-weight: 700;
@@ -286,6 +286,9 @@ textarea {
   margin-bottom: 1rem;
   max-width: 100%;
   padding: .5em;
+}
+textarea {
+  resize: vertical;
 }
 input[type=checkbox] {
   margin: 0;
@@ -590,8 +593,14 @@ details summary {
   margin-bottom: 2rem;
   padding: 1rem 1rem 0;
 }
+#comment-form .form-entry input:not([type="submit"]) {
+  width: 100%;
+}
 #comment-feed-link {
   margin-top: 2rem;
+}
+.reactions-details {
+  margin-block: 1em;
 }
 .reactions-details summary {
   list-style-type: none;
@@ -599,7 +608,7 @@ details summary {
 .reactions-details summary::-webkit-details-marker {
   display: none;
 }
-.reactions-details[open] .reactions-react-button-text {
+.reactions-details[open] .reactions-button-text {
   font-weight: 700;
 }
 .reactions-details-content {
@@ -615,15 +624,14 @@ details summary {
   width: 1rem;
   transition: var(--color-transition, unset);
 }
-#reactions-react-button :is(.social-icon-fi, .reactions-react-button-text) {
+.reactions-button :is(.reactions-button-icon, .reactions-button-text) {
   display: inline-block;
   vertical-align: middle;
 }
-
-.reactions-details summary:is(:active, :focus, :hover):not(.button) {
+.reactions-button summary:is(:active, :focus, :hover):not(.button) {
   text-decoration: none;
 }
-.reactions-details summary:is(:active, :focus, :hover):not(.button) .reactions-react-button-text {
+.reactions-button summary:is(:active, :focus, :hover):not(.button) .reactions-button-text {
   text-decoration: underline;
 }
 

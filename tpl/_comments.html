@@ -89,25 +89,25 @@
           {{tpl:SysBehavior behavior="publicCommentFormBeforeContent"}}
 
           <div class=form-entry>
-            <label for=c_content>{{tpl:lang reactions-comment-form-comment-label}}</label>
+            <label for=c_content><small>{{tpl:lang reactions-comment-form-comment-label}}</small></label>
             <br>
             <textarea id=c_content name=c_content required rows=8>{{tpl:CommentPreviewContent raw="1" encode_html="1"}}</textarea>{{tpl:odysseyMarkdownSupportInfo}}
           </div>
 
           <div class=form-entry>
-            <label for=c_name>{{tpl:lang reactions-comment-form-name-label}}</label>
+            <label for=c_name><small>{{tpl:lang reactions-comment-form-name-label}}</small></label>
             <br>
             <input id=c_name name=c_name maxlength=255 value="{{tpl:CommentPreviewName encode_html="1"}}" required>
           </div>
 
           <div class=form-entry>
-            <label for=c_mail>{{tpl:lang reactions-comment-form-email-label}}</label>
+            <label for=c_mail><small>{{tpl:lang reactions-comment-form-email-label}}</small></label>
             <br>
             <input id=c_mail name=c_mail type=email maxlength=255 value="{{tpl:CommentPreviewEmail encode_html="1"}}" required>
           </div>
 
           <div class=form-entry>
-            <label for=c_site>{{tpl:lang reactions-comment-form-website-label}}</label>
+            <label for=c_site><small>{{tpl:lang reactions-comment-form-website-label}}</small></label>
             <br>
             <input id=c_site name=c_site maxlength=255 placeholder=https://… value="{{tpl:CommentPreviewSite encode_html="1"}}">
           </div>

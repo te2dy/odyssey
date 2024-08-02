@@ -946,8 +946,23 @@ class Config extends Process
             }
         }
 
-        // Social icons
-        $simpleicons_styles  = false;
+        // Other reaction methods with Feather Icons
+        $reactions_feathericons_styles = false;
+
+        if (isset($_POST['reactions_feed_link']) && $_POST['reactions_feed_link'] === 'on') {
+            $reactions_feathericons_styles = true;
+        } elseif (isset($_POST['reactions_other_trackbacks']) && $_POST['reactions_other_trackbacks'] === 'on') {
+            $reactions_feathericons_styles = true;
+        }
+
+        if ($reactions_feathericons_styles === true) {
+            $css_main_array['.reactions-button:is(:active, :focus, :hover):not(.button)']['text-decoration'] = 'none';
+
+            $css_main_array['.reactions-button:is(:active, :focus, :hover):not(.button) .reactions-button-text']['text-decoration'] = 'underline';
+        }
+
+        // Displays Simple Icons styles if necessary.
+        $simpleicons_styles = false;
 
         // Checks if a link has been set.
         foreach (My::socialSites() as $id => $data) {
@@ -974,26 +989,12 @@ class Config extends Process
             $css_main_array['.social-icon-si']['transition']      = 'var(--color-transition, unset)';
         }
 
-        // Other reaction methods
+        // Other reactions
         if (isset($_POST['reactions_other']) && $_POST['reactions_other'] !== 'disabled') {
-            $css_main_array['.reactions-other :is(.social-icon-fi, .social-icon-si)']['display']        = 'inline-block';
-            $css_main_array['.reactions-other :is(.social-icon-fi, .social-icon-si)']['vertical-align'] = 'middle';
-
-            $css_main_array['.social-icon-si']['fill'] = 'var(--color-primary, hsl(226, 80%, 45%))';
-
-            $css_main_array['.reactions-other:is(:active, :hover, :focus):not(.button)']['text-decoration'] = 'none';
-
-            $css_main_array['.reactions-other:is(:active, :hover, :focus):not(.button) .reactions-other-text']['text-decoration'] = 'underline';
-
-            $css_main_array['.reactions-other:is(:active, :hover, :focus) .social-icon-si']['fill'] = 'var(--color-primary-amplified, hsl(226, 95%, 50%))';
-
-            $css_main_array['.reactions-other:is(:active, :hover, :focus) .social-icon-fi']['stroke'] = 'var(--color-primary-amplified, hsl(226, 95%, 50%))';
-
-            $css_main_array['.reactions-other-text']['display']         = 'inline-block';
-            $css_main_array['.reactions-other-text']['vertical-align']  = 'middle';
+            $css_main_array['.reactions-button .social-icon-si']['fill'] = 'var(--color-primary, hsl(226, 80%, 45%))';
         }
 
-        // Footer social links
+        // Footer links
         $footer_social_links = false;
         $simpleicons_styles  = false;
         $feathericons_styles = false;
@@ -1017,6 +1018,10 @@ class Config extends Process
                     }
                 }
             }
+
+            if ($footer_social_links === true && $simpleicons_styles === true && $feathericons_styles === true) {
+                break;
+            }
         }
 
         if ($footer_social_links === true) {
@@ -1034,6 +1039,7 @@ class Config extends Process
 
             $css_main_array['.footer-social-links-icon-container']['align-items']      = 'center';
             $css_main_array['.footer-social-links-icon-container']['background-color'] = 'var(--color-input-background, #f2f2f2)';
+            $css_main_array['.footer-social-links-icon-container']['bor'] = 'var(--color-input-background, #f2f2f2)';
             $css_main_array['.footer-social-links-icon-container']['display']          = 'flex';
             $css_main_array['.footer-social-links-icon-container']['justify-content']  = 'center';
             $css_main_array['.footer-social-links-icon-container']['width']            = '1.5rem';
@@ -1041,12 +1047,12 @@ class Config extends Process
             $css_main_array['.footer-social-links-icon-container']['transition']       = 'var(--color-transition, unset)';
 
             if ($simpleicons_styles === true) {
-                $css_main_array['.footer-social-links-icon-si']['fill'] = 'var(--color-text-main, #303030)';
+                $css_main_array['.footer-social-links-icon-container .footer-social-links-icon-si']['fill'] = 'var(--color-text-main, #303030)';
 
             }
 
             if ($feathericons_styles === true) {
-                $css_main_array['.footer-social-links-icon-fi']['stroke'] = 'var(--color-text-main, #303030)';
+                $css_main_array['.footer-social-links-icon-container .footer-social-links-icon-fi']['stroke'] = 'var(--color-text-main, #303030)';
             }
 
             $css_main_array['.footer-social-links a:active .footer-social-links-icon-container, .footer-social-links a:focus .footer-social-links-icon-container, .footer-social-links a:hover .footer-social-links-icon-container']['background-color'] = 'var(--color-primary, hsl(226, 80%, 45%))';
@@ -1080,7 +1086,7 @@ class Config extends Process
         $css .= !empty($css_media_print_array) ? '@media print{' . My::stylesArrToStr($css_media_print_array) . '}' : '';
 
         $css = htmlspecialchars($css, ENT_NOQUOTES);
-        $css = str_replace('&gt;', ">", $css);
+        $css = str_replace('&gt;', '>', $css);
 
         if ($css) {
             return [

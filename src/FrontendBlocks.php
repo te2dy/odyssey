@@ -42,18 +42,18 @@ class FrontendBlocks
     public static function odysseyCommentFormWrapper($attr, $content): string
     {
         if (My::settingValue('reactions_button') !== false && (isset(App::frontend()->context()->comment_preview['content']) && App::frontend()->context()->comment_preview['content'] === '')) {
-            return '<details class=reactions-details>
-                <summary id=reactions-react-button>
-                    <svg class=social-icon-fi role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>' . My::svgIcons('comment')['path'] . '</svg>
+            return '<details class="reactions-button reactions-details">
+                <summary>
+                    <svg class="reactions-button-icon social-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>' . My::svgIcons('comment')['path'] . '</svg>
 
-                    <span class=reactions-react-button-text>' . __('reactions-comment-form-title') . '</span>
+                    <span class=reactions-button-text>' . __('reactions-comment-form-title') . '</span>
                 </summary>
 
                 <div class=reactions-details-content>' . $content . '</div>
             </details>';
         }
 
-        return $content;
+        return '<h3>' . __('reactions-comment-form-title') . '</h3>' . $content;
     }
 
     /**
@@ -74,10 +74,10 @@ class FrontendBlocks
                 || App::frontend()->context()->posts->hasTrackbacks() === true
             ) : ?>
             <p>
-                <a class=reactions-other href="' . $content . '" rel=nofollow>
-                    <svg class="reactions-other-icon social-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>' . My::svgIcons('rss')['path'] . '</svg>
+                <a class=reactions-button href="' . $content . '" rel=nofollow>
+                    <svg class="reactions-button-icon social-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>' . My::svgIcons('rss')['path'] . '</svg>
 
-                    <span class=reactions-other-text>' . __('reactions-subscribe-link-reactions') . '</span>
+                    <span class=reactions-button-text>' . __('reactions-subscribe-link-reactions') . '</span>
                 </a>
             </p>
         <?php endif; ?>';
