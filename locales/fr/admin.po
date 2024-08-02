@@ -111,11 +111,17 @@ msgstr "Police d’écriture"
 msgid "settings-global-fontfamily-description"
 msgstr "Votre blog utilise seulement les polices installées sur l’appareil de vos lecteurs pour afficher les textes. Aucune police n’est téléchargée pour assurer le rendu, ce qui est moins gourmand en ressources. Leur affichage peut varier d’un appareil à l’autre."
 
-msgid "settings-global-fontfamily-sansserif-default"
+msgid "settings-global-fontfamily-system-default"
 msgstr "Système (par défaut)"
 
-msgid "settings-global-fontfamily-sansserif"
+msgid "settings-global-fontfamily-system"
 msgstr "Système"
+
+msgid "settings-global-fontfamily-sansserif"
+msgstr "Sans empattement"
+
+msgid "settings-global-fontfamily-serif"
+msgstr "Avec empattements"
 
 msgid "settings-global-fontfamily-transitional"
 msgstr "Transition"

@@ -131,7 +131,9 @@ class My extends MyTheme
             'description' => __('settings-global-fontfamily-description'),
             'type'        => 'select',
             'choices'     => [
-                __('settings-global-fontfamily-sansserif-default')  => 'sans-serif',
+                __('settings-global-fontfamily-system-default')     => 'system',
+                __('settings-global-fontfamily-sansserif')          => 'sans-serif',
+                __('settings-global-fontfamily-serif')              => 'serif',
                 __('settings-global-fontfamily-transitional')       => 'transitional',
                 __('settings-global-fontfamily-oldstyle')           => 'old-style',
                 __('settings-global-fontfamily-garamond')           => 'garamond',
@@ -148,7 +150,7 @@ class My extends MyTheme
                 __('settings-global-fontfamily-didone')             => 'didone',
                 __('settings-global-fontfamily-handwritten')        => 'handwritten'
             ],
-            'default'     => 'sans-serif',
+            'default'     => 'system',
             'section'     => ['global', 'fonts']
         ];
 
@@ -443,8 +445,9 @@ class My extends MyTheme
             'type'        => 'select',
             'choices'     => [
                 __('settings-content-fontfamily-same-default')      => 'same',
+                __('settings-global-fontfamily-system')             => 'system',
                 __('settings-global-fontfamily-sansserif')          => 'sans-serif',
-                __('settings-global-fontfamily-serif')               => 'serif',
+                __('settings-global-fontfamily-serif')              => 'serif',
                 __('settings-global-fontfamily-transitional')       => 'transitional',
                 __('settings-global-fontfamily-oldstyle')           => 'old-style',
                 __('settings-global-fontfamily-garamond')           => 'garamond',
@@ -931,8 +934,10 @@ class My extends MyTheme
         $emoji = ', "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"';
 
         switch ($fontname) {
-            case 'sans-serif' :
+            case 'system' :
                 return 'system-ui, ui-sans-serif, sans-serif' . $emoji;
+            case 'sans-serif' :
+                return 'ui-sans-serif, sans-serif' . $emoji;
             case 'serif' :
                 return 'ui-serif, serif' . $emoji;
             case 'transitional' :

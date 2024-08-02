@@ -111,10 +111,16 @@ msgstr ""
 msgid "settings-global-fontfamily-description"
 msgstr ""
 
-msgid "settings-global-fontfamily-sansserif-default"
+msgid "settings-global-fontfamily-system-default"
+msgstr ""
+
+msgid "settings-global-fontfamily-system"
 msgstr ""
 
 msgid "settings-global-fontfamily-sansserif"
+msgstr ""
+
+msgid "settings-global-fontfamily-serif"
 msgstr ""
 
 msgid "settings-global-fontfamily-transitional"

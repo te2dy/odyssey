@@ -111,11 +111,17 @@ msgstr "Fonts"
 msgid "settings-global-fontfamily-description"
 msgstr "Your blog uses only the fonts installed on your readers' devices to display text. No fonts are downloaded for rendering, which is less resource-intensive. Their display may vary from one device to another."
 
-msgid "settings-global-fontfamily-sansserif-default"
+msgid "settings-global-fontfamily-system-default"
 msgstr "System (default)"
 
-msgid "settings-global-fontfamily-sansserif"
+msgid "settings-global-fontfamily-system"
 msgstr "System"
+
+msgid "settings-global-fontfamily-sansserif"
+msgstr "Sans-serif"
+
+msgid "settings-global-fontfamily-serif"
+msgstr "Serif"
 
 msgid "settings-global-fontfamily-transitional"
 msgstr "Transitional"

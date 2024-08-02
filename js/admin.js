@@ -303,7 +303,9 @@ function changeImage(inputImgURL) {
 
 function fontsPreview() {
   var fonts = {
-    "sans-serif": "system-ui, sans-serif",
+    "system": "system-ui, ui-sans-serif, sans-serif",
+    "sans-serif": "ui-sans-serif, sans-serif",
+    "serif": "ui-serif, serif",
     "transitional": "Charter, \"Bitstream Charter\", \"Sitka Text\", Cambria, serif",
     "old-style": "\"Iowan Old Style\", \"Palatino Linotype\", \"URW Palladio L\", P052, serif",
     "garamond": "Garamond, Baskerville, \"Baskerville Old Face\", \"Hoefler Text\", \"Times New Roman\", serif",
