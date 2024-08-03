@@ -31,14 +31,14 @@ class FrontendBehaviors
         if (App::blog()->settings->system->editor) {
             echo '<meta name=author content=',
             My::attrValue(App::blog()->settings->system->editor),
-            '>' . "\n";
+            '>', "\n";
         }
 
         // Adds the content of the copyright notice.
         if (App::blog()->settings->system->copyright_notice) {
             echo '<meta name=copyright content=',
             My::attrValue(App::blog()->settings->system->copyright_notice),
-            '>' . "\n";
+            '>', "\n";
         }
     }
 
@@ -78,10 +78,7 @@ class FrontendBehaviors
                     $title = App::blog()->name;
 
                     if ((int) Ctx::PaginationPosition() > 1) {
-                        $desc = sprintf(
-                            __('meta-social-page-with-number'),
-                            Ctx::PaginationPosition()
-                        );
+                        $desc = sprintf(__('meta-social-page-with-number'), Ctx::PaginationPosition());
                     }
 
                     if (My::settingValue('advanced_meta_description') || App::blog()->desc) {
@@ -119,10 +116,7 @@ class FrontendBehaviors
                 case 'tag':
                     if (App::frontend()->context()->meta->meta_type === 'tag') {
                         $title = App::frontend()->context()->meta->meta_id;
-                        $desc  = sprintf(
-                            __('meta-social-tags-post-related'),
-                            $title
-                        );
+                        $desc  = sprintf(__('meta-social-tags-post-related'), $title);
                     }
             }
 
@@ -130,12 +124,11 @@ class FrontendBehaviors
 
             if ($title) {
                 $desc = Html::escapeHTML($desc);
+                $img  = Html::escapeURL($img);
 
                 if (!$img && isset(My::settingValue('header_image')['url'])) {
-                    $img = My::blogBaseURL() . My::settingValue('header_image')['url'];
+                    $img = Html::escapeURL(My::blogBaseURL() . My::settingValue('header_image')['url']);
                 }
-
-                $img = Html::escapeURL($img);
 
                 if ($img) {
                     echo '<meta name=twitter:card content=summary_large_image>', "\n";
@@ -175,7 +168,7 @@ class FrontendBehaviors
                             'name'  => App::blog()->name
                         ],
                         'name'        => App::blog()->name,
-                        'description' => My::settingValue('advanced_meta_description') ?: App::blog()->desc,
+                        'description' => Html::escapeHTML(My::settingValue('advanced_meta_description')) ?: App::blog()->desc,
                         'url'         => App::blog()->url
                     ];
 

@@ -971,7 +971,7 @@ class My extends MyTheme
             case 'handwritten' :
                 return '"Segoe Print", "Bradley Hand", Chilanka, TSCu_Comic, casual, cursive' . $emoji;
             default :
-                return 'system-ui, sans-serif' . $emoji;
+                return 'system-ui, ui-sans-serif, sans-serif' . $emoji;
         }
     }
 
