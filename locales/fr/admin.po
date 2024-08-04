@@ -415,7 +415,16 @@ msgid "settings-reactions-other-trackbacks-title"
 msgstr "Afficher un lien pour ajouter des rétroliens"
 
 msgid "settings-reactions-feedlink-title"
-msgstr "Proposer un lien pour suivre le fil des réactions par RSS/Atom"
+msgstr "Afficher un lien pour suivre le fil des réactions par RSS/Atom"
+
+msgid "settings-reactions-feedlink-disabled-default"
+msgstr "Non (par défaut)"
+
+msgid "settings-reactions-feedlink-atom"
+msgstr "Oui (Atom)"
+
+msgid "settings-reactions-feedlink-rss2"
+msgstr "Oui (RSS 2)"
 
 msgid "settings-reactions-other-title"
 msgstr "Autoriser d’autres moyens de réaction"
@@ -500,6 +509,15 @@ msgstr "Droite"
 
 msgid "settings-footer-feed-title"
 msgstr "Afficher un lien vers le flux RSS/Atom du blog"
+
+msgid "settings-footer-feed-disabled-default"
+msgstr "Non (par défaut)"
+
+msgid "settings-footer-feed-atom"
+msgstr "Oui (Atom)"
+
+msgid "settings-footer-feed-rss2"
+msgstr "Oui (RSS 2)"
 
 msgid "settings-footer-credits-title"
 msgstr "Afficher une mention à Dotclear et au thème"

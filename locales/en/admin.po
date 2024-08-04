@@ -415,7 +415,16 @@ msgid "settings-reactions-other-trackbacks-title"
 msgstr "Display a link to add trackbacks"
 
 msgid "settings-reactions-feedlink-title"
-msgstr "Propose a link to follow the feed of reactions by RSS/Atom"
+msgstr "Display a link to follow the feed of reactions by RSS/Atom"
+
+msgid "settings-reactions-feedlink-disabled-default"
+msgstr "No (default)"
+
+msgid "settings-reactions-feedlink-atom"
+msgstr "Yes (Atom)"
+
+msgid "settings-reactions-feedlink-rss2"
+msgstr "Yes (RSS 2)"
 
 msgid "settings-reactions-other-title"
 msgstr "Allow other reaction methods"
@@ -500,6 +509,15 @@ msgstr "Right"
 
 msgid "settings-footer-feed-title"
 msgstr "Display a link to the RSS/Atom feed of the blog"
+
+msgid "settings-footer-feed-disabled-default"
+msgstr "No (default)"
+
+msgid "settings-footer-feed-atom"
+msgstr "Yes (Atom)"
+
+msgid "settings-footer-feed-rss2"
+msgstr "Yes (RSS 2)"
 
 msgid "settings-footer-credits-title"
 msgstr "Show a mention to Dotclear and the theme"

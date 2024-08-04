@@ -41,7 +41,6 @@ class Frontend extends Process
         // Blocks
         App::frontend()->template()->addBlock('odysseyHeaderMinimal', FrontendBlocks::odysseyHeaderMinimal(...));
         App::frontend()->template()->addBlock('odysseyCommentFormWrapper', FrontendBlocks::odysseyCommentFormWrapper(...));
-        App::frontend()->template()->addBlock('odysseyFeedLink', FrontendBlocks::odysseyFeedLink(...));
         App::frontend()->template()->addBlock('odysseySidebar', FrontendBlocks::odysseySidebar(...));
         App::frontend()->template()->addBlock('odysseyFooter', FrontendBlocks::odysseyFooter(...));
 
@@ -56,6 +55,7 @@ class Frontend extends Process
         App::frontend()->template()->addValue('odysseyEntryExcerpt', FrontendValues::odysseyEntryExcerpt(...));
         App::frontend()->template()->addValue('odysseyPostListReactions', FrontendValues::odysseyPostListReactions(...));
         App::frontend()->template()->addValue('odysseyTrackbackLink', FrontendValues::odysseyTrackbackLink(...));
+        App::frontend()->template()->addValue('odysseyFeedLink', FrontendValues::odysseyFeedLink(...));
         App::frontend()->template()->addValue('odysseyPrivateCommentLink', FrontendValues::odysseyPrivateCommentLink(...));
         App::frontend()->template()->addValue('odysseyAttachmentTitle', FrontendValues::odysseyAttachmentTitle(...));
         App::frontend()->template()->addValue('odysseyAttachmentSize', FrontendValues::odysseyAttachmentSize(...));

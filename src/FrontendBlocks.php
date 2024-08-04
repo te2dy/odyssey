@@ -57,33 +57,6 @@ class FrontendBlocks
     }
 
     /**
-     * Displays the RSS/Atom feed link of the current post.
-     *
-     * @return string The feed link.
-     */
-    public static function odysseyFeedLink($attr, $content): string
-    {
-        if (My::settingValue('reactions_feed_link') !== true) {
-            return '';
-        }
-
-        return '<?php
-            if (App::frontend()->context()->posts->commentsActive() === true
-                || App::frontend()->context()->posts->trackbacksActive() === true
-                || App::frontend()->context()->posts->hasComments() === true
-                || App::frontend()->context()->posts->hasTrackbacks() === true
-            ) : ?>
-            <p>
-                <a class=reactions-button href="' . $content . '" rel=nofollow>
-                    <svg class="reactions-button-icon social-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>' . My::svgIcons('rss')['path'] . '</svg>
-
-                    <span class=reactions-button-text>' . __('reactions-subscribe-link-reactions') . '</span>
-                </a>
-            </p>
-        <?php endif; ?>';
-    }
-
-    /**
      * Displays/hides the sidebar.
      *
      * @param array $attr    Unused.

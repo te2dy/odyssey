@@ -344,6 +344,39 @@ class FrontendValues
     }
 
     /**
+     * Displays the RSS/Atom feed link of the current post.
+     *
+     * @return string The feed link.
+     */
+    public static function odysseyFeedLink(): string
+    {
+        if (My::settingValue('reactions_feed_link') === null) {
+            return '';
+        }
+
+        $feed_type = Html::escapeHTML(My::settingValue('reactions_feed_link'));
+
+        return '<?php
+            if (App::frontend()->context()->posts->commentsActive() === true
+                || App::frontend()->context()->posts->trackbacksActive() === true
+                || App::frontend()->context()->posts->hasComments() === true
+                || App::frontend()->context()->posts->hasTrackbacks() === true
+            ) :
+
+            $feed_link = App::blog()->url() . App::url()->getURLFor("feed", "' . $feed_type . '") . "/comments/" . App::frontend()->context()->posts->post_id;
+            ?>
+
+            <p>
+                <a class=reactions-button href="<?php echo $feed_link; ?>" rel=nofollow>
+                    <svg class="reactions-button-icon social-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>' . My::svgIcons('feed')['path'] . '</svg>
+
+                    <span class=reactions-button-text>' . __('reactions-subscribe-link-reactions') . '</span>
+                </a>
+            </p>
+        <?php endif; ?>';
+    }
+
+    /**
      * Displays a link to reply to the author of the post by email.
      *
      * @return string The private comment section.
@@ -646,7 +679,7 @@ class FrontendValues
             }
         }
 
-        if (My::settingValue('footer_feed') === true) {
+        if (My::settingValue('footer_feed') !== null) {
             if ($count === 0) {
                 $count++;
 
@@ -654,12 +687,14 @@ class FrontendValues
                 $output .= '<ul class=footer-social-links>';
             }
 
+            $feed_link = App::blog()->url() . App::url()->getURLFor("feed", My::settingValue('footer_feed'));
+
             $output .= '<li>';
-            $output .= '<a href=' . App::blog()->url() . App::url()->getURLFor('feed', 'atom') . '>';
+            $output .= '<a href=' . Html::escapeURL($feed_link) . '>';
             $output .= '<span class=footer-social-links-icon-container>';
             $output .= '<svg class="social-icon-fi footer-social-links-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>';
             $output .= '<title>' . __('footer-social-links-feed-title') . '</title>';
-            $output .= My::svgIcons('rss')['path'];
+            $output .= My::svgIcons('feed')['path'];
             $output .= '</svg>';
             $output .= '</span>';
             $output .= '</a>';

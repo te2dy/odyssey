@@ -417,6 +417,15 @@ msgstr ""
 msgid "settings-reactions-feedlink-title"
 msgstr ""
 
+msgid "settings-reactions-feedlink-disabled-default"
+msgstr ""
+
+msgid "settings-reactions-feedlink-atom"
+msgstr ""
+
+msgid "settings-reactions-feedlink-rss2"
+msgstr ""
+
 msgid "settings-reactions-other-title"
 msgstr ""
 
@@ -499,6 +508,15 @@ msgid "settings-footer-align-right"
 msgstr ""
 
 msgid "settings-footer-feed-title"
+msgstr ""
+
+msgid "settings-footer-feed-disabled-default"
+msgstr ""
+
+msgid "settings-footer-feed-atom"
+msgstr ""
+
+msgid "settings-footer-feed-rss2"
 msgstr ""
 
 msgid "settings-footer-credits-title"
