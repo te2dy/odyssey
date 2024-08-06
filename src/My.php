@@ -1,6 +1,6 @@
 <?php
 /**
- * Odyssey, a customizable Dotclear theme.
+ * Odyssey, a simple and customizable Dotclear theme.
  *
  * @author    Teddy <zozxebpyr@mozmail.com>
  * @copyright 2022-2024 Teddy
@@ -560,7 +560,7 @@ class My extends MyTheme
             'title'       => __('settings-reactions-other-trackbacks-title'),
             'description' => '',
             'type'        => 'checkbox',
-            'default'     => true,
+            'default'     => false,
             'section'     => ['reactions', 'trackbacks']
         ];
 
@@ -825,7 +825,7 @@ class My extends MyTheme
      *
      * @return string $css The minified styles.
      */
-    public static function stylesArrToStr($rules): string
+    public static function stylesArrToStr(array $rules): string
     {
         $css = '';
 
@@ -891,16 +891,6 @@ class My extends MyTheme
         }
 
         return $number;
-    }
-
-    /**
-     * Displays the theme relative URL
-     *
-     * @return string The URL.
-     */
-    public static function themeURL(): string
-    {
-        return App::blog()->settings->system->themes_url . '/odyssey';
     }
 
     /**
@@ -992,7 +982,7 @@ class My extends MyTheme
      *      'name'      => string 'The name of the site',
      *      'base'      => string 'If type is "url", the base of the URL of the site',
      *      'type'      => string 'The type of value (URL, phone number…)',
-     *      'reactions' => bool '"true" if the site can be used as another method of reaction'
+     *      'reactions' => bool   '"true" if the site can be used as another reaction method for posts'
      * ];
      *
      * @param string $site_id The ID of a social site to retrieve the data.
@@ -1080,6 +1070,9 @@ class My extends MyTheme
      * @param string $id The social site ID.
      *
      * @return array The SVG info.
+     *
+     * @link https://simpleicons.org/
+     * @link https://feathericons.com/
      */
     public static function svgIcons(string $id = ''): array
     {
@@ -1160,7 +1153,7 @@ class My extends MyTheme
             'author' => 'feathericons'
         ];
 
-        if ($id && isset($icons[$id])) {
+        if ($id !== '' && isset($icons[$id])) {
             return $icons[$id];
         }
 

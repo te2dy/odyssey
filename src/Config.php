@@ -1,6 +1,6 @@
 <?php
 /**
- * Odyssey, a customizable Dotclear theme.
+ * Odyssey, a simple and customizable Dotclear theme.
  *
  * @author    Teddy <zozxebpyr@mozmail.com>
  * @copyright 2022-2024 Teddy
@@ -83,7 +83,7 @@ class Config extends Process
                         $setting_data = [];
 
                         if (!in_array($setting_id, $specific_settings, true) && !str_starts_with($setting_id, 'social_')) {
-                            // Saves non specific settings.
+                            // Prepares non specific settings to save.
                             if (isset($_POST[$setting_id]) && $_POST[$setting_id] != My::settingsDefault($setting_id)['default']) {
                                 $setting_data = self::sanitizeSetting(
                                     My::settingsDefault($setting_id)['type'],
@@ -91,14 +91,17 @@ class Config extends Process
                                     $_POST[$setting_id]
                                 );
                             } elseif (!isset($_POST[$setting_id]) && My::settingsDefault($setting_id)['type'] === 'checkbox') {
-                                // Specific value for empty checkboxes to save.
+                                // Prepares empty checkboxes to save.
                                 $setting_data = self::sanitizeSetting(
                                     'checkbox',
                                     $setting_id,
                                     '0'
                                 );
                             } else {
-                                App::blog()->settings->odyssey->drop($setting_id);
+                                // Otherwise, deletes the value if it exists.
+                                if (App::blog()->settings->odyssey->$setting_id) {
+                                    App::blog()->settings->odyssey->drop($setting_id);
+                                }
                             }
                         } else {
                             // Saves each specific settings.
@@ -146,10 +149,14 @@ class Config extends Process
                                     true
                                 );
                             } else {
-                                App::blog()->settings->odyssey->drop($setting_id);
+                                if (App::blog()->settings->odyssey->$setting_id) {
+                                    App::blog()->settings->odyssey->drop($setting_id);
+                                }
                             }
                         } else {
-                            App::blog()->settings->odyssey->drop($setting_id);
+                            if (App::blog()->settings->odyssey->$setting_id) {
+                                App::blog()->settings->odyssey->drop($setting_id);
+                            }
                         }
                     }
 
@@ -497,12 +504,11 @@ class Config extends Process
             $settings_render[$section_id] = [];
         }
 
-        // Adds settings in their section.
         $settings_ignored = ['header_image2x', 'styles'];
 
         foreach (My::settingsDefault() as $setting_id => $setting_data) {
             if (!in_array($setting_id, $settings_ignored, true)) {
-                // If a sub-section is set.
+                // If a sub-section has been set.
                 if (isset($setting_data['section'][1])) {
                     $settings_render[$setting_data['section'][0]][$setting_data['section'][1]][] = $setting_id;
                 } else {
@@ -511,6 +517,7 @@ class Config extends Process
             }
         }
 
+        // Adds settings in their section.
         $fields = [];
 
         foreach ($settings_render as $section_id => $setting_data) {
@@ -949,7 +956,7 @@ class Config extends Process
         // Other reaction methods with Feather Icons
         $reactions_feathericons_styles = false;
 
-        if (isset($_POST['reactions_feed_link']) && $_POST['reactions_feed_link'] === 'on') {
+        if (isset($_POST['reactions_feed_link']) && $_POST['reactions_feed_link'] !== 'disabled') {
             $reactions_feathericons_styles = true;
         } elseif (isset($_POST['reactions_other_trackbacks']) && $_POST['reactions_other_trackbacks'] === 'on') {
             $reactions_feathericons_styles = true;
@@ -999,7 +1006,7 @@ class Config extends Process
         $simpleicons_styles  = false;
         $feathericons_styles = false;
 
-        if (isset($_POST['footer_feed']) && $_POST['footer_feed'] === 'on') {
+        if (isset($_POST['footer_feed']) && $_POST['footer_feed'] !== 'disabled') {
             $footer_social_links = true;
             $feathericons_styles = true;
         }

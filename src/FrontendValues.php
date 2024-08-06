@@ -1,6 +1,6 @@
 <?php
 /**
- * Odyssey, a customizable Dotclear theme.
+ * Odyssey, a simple and customizable Dotclear theme.
  *
  * @author    Teddy <zozxebpyr@mozmail.com>
  * @copyright 2022-2024 Teddy
