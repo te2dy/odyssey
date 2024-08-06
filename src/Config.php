@@ -98,10 +98,8 @@ class Config extends Process
                                     '0'
                                 );
                             } else {
-                                // Otherwise, deletes the value if it exists.
-                                if (App::blog()->settings->odyssey->$setting_id) {
-                                    App::blog()->settings->odyssey->drop($setting_id);
-                                }
+                                // Otherwise, deletes the value.
+                                App::blog()->settings->odyssey->drop($setting_id);
                             }
                         } else {
                             // Saves each specific settings.
@@ -149,14 +147,10 @@ class Config extends Process
                                     true
                                 );
                             } else {
-                                if (App::blog()->settings->odyssey->$setting_id) {
-                                    App::blog()->settings->odyssey->drop($setting_id);
-                                }
-                            }
-                        } else {
-                            if (App::blog()->settings->odyssey->$setting_id) {
                                 App::blog()->settings->odyssey->drop($setting_id);
                             }
+                        } else {
+                            App::blog()->settings->odyssey->drop($setting_id);
                         }
                     }
 
