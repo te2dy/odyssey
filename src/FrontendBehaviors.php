@@ -138,7 +138,7 @@ class FrontendBehaviors
 
                 // Quotes seem required for the following meta properties.
                 if ($desc) {
-                    echo '<meta property="og:description" name="description" content="', $desc, '">', "\n";
+                    echo '<meta property="og:description" content="', $desc, '">', "\n";
                 }
 
                 if ($img) {
