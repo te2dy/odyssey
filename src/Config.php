@@ -172,10 +172,7 @@ class Config extends Process
                     // Redirects to refresh form values.
                     App::backend()->url()->redirect('admin.blog.theme', ['conf' => '1']);
                 } elseif (isset($_POST['reset'])) {
-                    // Drops all settings if the reset button has been clicked.
-                    foreach (My::settingsDefault() as $setting_id => $setting_value) {
-                        App::blog()->settings->odyssey->drop($setting_id);
-                    }
+                    App::blog()->settings->odyssey->dropAll();
 
                     App::blog()->triggerBlog();
 
