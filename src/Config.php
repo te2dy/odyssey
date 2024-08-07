@@ -944,21 +944,6 @@ class Config extends Process
             }
         }
 
-        // Other reaction methods with Feather Icons
-        $reactions_feathericons_styles = false;
-
-        if (isset($_POST['reactions_feed_link']) && $_POST['reactions_feed_link'] !== 'disabled') {
-            $reactions_feathericons_styles = true;
-        } elseif (isset($_POST['reactions_other_trackbacks']) && $_POST['reactions_other_trackbacks'] === 'on') {
-            $reactions_feathericons_styles = true;
-        }
-
-        if ($reactions_feathericons_styles === true) {
-            $css_main_array['.reactions-button:is(:active, :focus, :hover):not(.button)']['text-decoration'] = 'none';
-
-            $css_main_array['.reactions-button:is(:active, :focus, :hover):not(.button) .reactions-button-text']['text-decoration'] = 'underline';
-        }
-
         // Displays Simple Icons styles if necessary.
         $simpleicons_styles = false;
 

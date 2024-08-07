@@ -588,6 +588,7 @@ details summary {
   margin-block: 1em;
 }
 .reactions-details summary {
+  display: inline-block; /* For Safari - 2024, August */
   list-style-type: none;
 }
 .reactions-details summary::-webkit-details-marker {
@@ -613,10 +614,10 @@ details summary {
   display: inline-block;
   vertical-align: middle;
 }
-.reactions-button summary:is(:active, :focus, :hover):not(.button) {
+.reactions-button:is(:active, :focus, :hover):not(.button) {
   text-decoration: none;
 }
-.reactions-button summary:is(:active, :focus, :hover):not(.button) .reactions-button-text {
+.reactions-button:is(:active, :focus, :hover):not(.button) .reactions-button-text {
   text-decoration: underline;
 }
 
