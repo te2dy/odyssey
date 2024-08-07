@@ -42,8 +42,8 @@ class FrontendBlocks
     public static function odysseyCommentFormWrapper($attr, $content): string
     {
         if (My::settingValue('reactions_button') !== false && (isset(App::frontend()->context()->comment_preview['content']) && App::frontend()->context()->comment_preview['content'] === '')) {
-            return '<details class="reactions-button reactions-details">
-                <summary>
+            return '<details class=reactions-details>
+                <summary class=reactions-button>
                     <svg class="reactions-button-icon social-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>' . My::svgIcons('comment')['path'] . '</svg>
 
                     <span class=reactions-button-text>' . __('reactions-comment-form-title') . '</span>

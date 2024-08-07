@@ -329,8 +329,8 @@ class FrontendValues
     {
         if (My::settingValue('reactions_other_trackbacks') !== false) {
             return '<?php if (App::frontend()->context()->posts->trackbacksActive() === true) : ?>
-              <details class="reactions-button reactions-details">
-                <summary>
+              <details class=reactions-details>
+                <summary class=reactions-button>
                   <svg class="reactions-button-icon social-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>' . My::svgIcons('trackback')['path'] . '</svg>
                   <span class=reactions-button-text>' . __('reactions-trackbacks-add-title') . '</span>
                 </summary>
