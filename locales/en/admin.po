@@ -397,10 +397,10 @@ msgid "settings-content-initialletter-description"
 msgstr "Only works on recent versions of Safari and Chrome (July 2024)."
 
 msgid "settings-content-imageswide-title"
-msgstr "Enlarge images wide enough (beta)"
+msgstr "Enlarge images wide enough"
 
 msgid "settings-content-imageswide-description"
-msgstr "Large images will extend beyond the edges of the page to display large. ⚠️ Warning: This feature is experimental and may malfunction. Do not hesitate to send me your feedback by <a href=mailto:zozxebpyr@mozmail.com>email</a>."
+msgstr "Large images will extend beyond the edges of the page to display large."
 
 msgid "settings-reactions-button-title"
 msgstr "Unveil the form by clicking a button"
