@@ -13,6 +13,7 @@ use Dotclear\App;
 use Dotclear\Core\Process;
 use Dotclear\Core\Backend\Notices;
 use Dotclear\Core\Backend\Page;
+use Dotclear\Core\Backend\ThemeConfig;
 use Dotclear\Helper\File\Path;
 use Dotclear\Helper\Html\Html;
 use Dotclear\Helper\Html\Form\Button;
@@ -126,6 +127,11 @@ class Config extends Process
                                         break;
                                     case 'styles' :
                                         $setting_data = self::saveStyles();
+
+                                        // Dev
+                                        if (isset($setting_data['value'])) {
+                                            $styles_min = $setting_data['value'];
+                                        }
                                 }
                             } else {
                                 $setting_data = self::sanitizeSocialLink($setting_id, $_POST[$setting_id]);
@@ -154,6 +160,14 @@ class Config extends Process
                         }
                     }
 
+                    $styles_min = isset($styles_min) ? $styles_min : '';
+
+                    if ($styles_min) {
+                        var_dump($styles_min);
+                        ThemeConfig::canWriteCss(My::id() . '/css/', true);
+                        ThemeConfig::writeCss(My::id() . '/css/', 'styles.min', $styles_min);
+                    }
+
                     // Refreshes the blog.
                     App::blog()->triggerBlog();
 
@@ -164,7 +178,7 @@ class Config extends Process
                     Notices::addSuccessNotice(__('settings-notice-saved'));
 
                     // Redirects to refresh form values.
-                    App::backend()->url()->redirect('admin.blog.theme', ['conf' => '1']);
+                    // App::backend()->url()->redirect('admin.blog.theme', ['conf' => '1']);
                 } elseif (isset($_POST['reset'])) {
                     App::blog()->settings->odyssey->dropAll();
 
