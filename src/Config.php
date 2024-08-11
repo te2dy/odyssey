@@ -129,8 +129,10 @@ class Config extends Process
                                         $setting_data = self::saveStyles();
 
                                         // Dev
+                                        $styles_custom = '';
+
                                         if (isset($setting_data['value'])) {
-                                            $styles_min = $setting_data['value'];
+                                            $styles_custom = $setting_data['value'];
                                         }
                                 }
                             } else {
@@ -160,12 +162,43 @@ class Config extends Process
                         }
                     }
 
-                    $styles_min = isset($styles_min) ? $styles_min : '';
+                    $styles_default   = '';
+                    $styles_custom    = isset($styles_custom) ? $styles_custom : '';
+                    $css_file_name    = 'style.min';
+                    $css_default_path = App::blog()->themesPath() . '/' . My::id() . '/' . $css_file_name . '.css';
+                    $css_custom_path  = App::blog()->publicPath() . '/'  . App::blog()->settings()->system->theme . '/css/' . $css_file_name . '.css';
 
-                    if ($styles_min) {
-                        var_dump($styles_min);
-                        ThemeConfig::canWriteCss(My::id() . '/css/', true);
-                        ThemeConfig::writeCss(My::id() . '/css/', 'styles.min', $styles_min);
+                    if ($styles_custom) {
+                        // Gets default CSS.
+                        if (file_exists($css_default_path) && (string) file_get_contents($css_default_path) !== '') {
+                            $styles_default = file_get_contents($css_default_path);
+                        }
+
+                        // Creates a custom CSS file in the public folder.
+                        if (ThemeConfig::canWriteCss(App::blog()->settings()->system->theme . '/css/', true) === true) {
+                            ThemeConfig::writeCss(
+                                App::blog()->settings()->system->theme . '/css/',
+                                $css_file_name,
+                                $styles_custom . $styles_default
+                            );
+                        }
+
+                        // Creates a database entry that contains the CSS URL.
+                        App::blog()->settings->odyssey->put(
+                            'styles_url',
+                            App::blog()->settings()->system->public_url . '/' . App::blog()->settings()->system->theme . '/css/' . $css_file_name . '.css',
+                            'string',
+                            'Custom CSS URL',
+                            true
+                        );
+                    } else {
+                        // Removes the custom CSS file if it exists.
+                        if (file_exists($css_custom_path)) {
+                            ThemeConfig::dropCss(
+                                App::blog()->settings()->system->theme . '/css/',
+                                $css_file_name
+                            );
+                        }
                     }
 
                     // Refreshes the blog.
@@ -178,9 +211,20 @@ class Config extends Process
                     Notices::addSuccessNotice(__('settings-notice-saved'));
 
                     // Redirects to refresh form values.
-                    // App::backend()->url()->redirect('admin.blog.theme', ['conf' => '1']);
+                    App::backend()->url()->redirect('admin.blog.theme', ['conf' => '1']);
                 } elseif (isset($_POST['reset'])) {
                     App::blog()->settings->odyssey->dropAll();
+
+                    // Removes the custom CSS file if it exists.
+                    $css_file_name   = 'style.min';
+                    $css_custom_path  = App::blog()->publicPath() . '/'  . App::blog()->settings()->system->theme . '/css/' . $css_file_name . '.css';
+
+                    if (file_exists($css_custom_path)) {
+                        ThemeConfig::dropCss(
+                            App::blog()->settings()->system->theme . '/css/',
+                            $css_file_name
+                        );
+                    }
 
                     App::blog()->triggerBlog();
 
