@@ -163,10 +163,9 @@ class Config extends Process
                     }
 
                     $styles_default   = '';
-                    $styles_custom    = isset($styles_custom) ? $styles_custom : '';
-                    $css_file_name    = 'style.min';
-                    $css_default_path = App::blog()->themesPath() . '/' . My::id() . '/' . $css_file_name . '.css';
-                    $css_custom_path  = App::blog()->publicPath() . '/'  . App::blog()->settings()->system->theme . '/css/' . $css_file_name . '.css';
+                    $styles_custom    = $styles_custom ?: '';
+                    $css_default_path = App::blog()->themesPath() . '/' . App::blog()->settings()->system->theme . '/style.min.css';
+                    $css_custom_path  = App::blog()->publicPath() . '/'  . App::blog()->settings()->system->theme . '/css/style.min.css';
 
                     if ($styles_custom) {
                         // Gets default CSS.
@@ -178,7 +177,7 @@ class Config extends Process
                         if (ThemeConfig::canWriteCss(App::blog()->settings()->system->theme . '/css/', true) === true) {
                             ThemeConfig::writeCss(
                                 App::blog()->settings()->system->theme . '/css/',
-                                $css_file_name,
+                                'style.min',
                                 $styles_custom . $styles_default
                             );
                         }
@@ -186,9 +185,9 @@ class Config extends Process
                         // Creates a database entry that contains the CSS URL.
                         App::blog()->settings->odyssey->put(
                             'styles_url',
-                            App::blog()->settings()->system->public_url . '/' . App::blog()->settings()->system->theme . '/css/' . $css_file_name . '.css',
+                            App::blog()->settings()->system->public_url . '/' . App::blog()->settings()->system->theme . '/css/style.min.css',
                             'string',
-                            'Custom CSS URL',
+                            'Custom CSS URL', // Chaîne à traduire.
                             true
                         );
                     } else {
@@ -196,9 +195,11 @@ class Config extends Process
                         if (file_exists($css_custom_path)) {
                             ThemeConfig::dropCss(
                                 App::blog()->settings()->system->theme . '/css/',
-                                $css_file_name
+                                'style.min'
                             );
                         }
+
+                        App::blog()->settings->odyssey->drop('styles_url');
                     }
 
                     // Refreshes the blog.
@@ -216,13 +217,12 @@ class Config extends Process
                     App::blog()->settings->odyssey->dropAll();
 
                     // Removes the custom CSS file if it exists.
-                    $css_file_name   = 'style.min';
-                    $css_custom_path  = App::blog()->publicPath() . '/'  . App::blog()->settings()->system->theme . '/css/' . $css_file_name . '.css';
+                    $css_custom_path = App::blog()->publicPath() . '/'  . App::blog()->settings()->system->theme . '/css/style.min.css';
 
                     if (file_exists($css_custom_path)) {
                         ThemeConfig::dropCss(
                             App::blog()->settings()->system->theme . '/css/',
-                            $css_file_name
+                            'style.min'
                         );
                     }
 

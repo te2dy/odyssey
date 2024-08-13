@@ -52,10 +52,10 @@ class FrontendValues
     public static function odysseyStyles(): string
     {
         if (!My::settingValue('styles_url')) {
-            return '<link rel=stylesheet href="' . Html::escapeURL(App::blog()->settings()->system->themes_url . '/' . App::blog()->settings()->system->theme . '/style.min.css') . '">';
+            return '<link rel=stylesheet href=' . My::attrValue(Html::escapeURL(App::blog()->settings()->system->themes_url . '/' . App::blog()->settings()->system->theme . '/style.min.css')) . '>';
         }
 
-        return '<link rel=stylesheet href="' . Html::escapeURL(My::settingValue('styles_url')) . '">';
+        return '<link rel=stylesheet href=' . My::attrValue(Html::escapeURL(My::settingValue('styles_url'))) . '>';
     }
 
     /**
