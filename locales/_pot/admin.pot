@@ -12,6 +12,9 @@ msgstr ""
 msgid "settings-notice-reset"
 msgstr ""
 
+msgid "setting-css-custom-url"
+msgstr ""
+
 msgid "settings-default-checked"
 msgstr ""
 

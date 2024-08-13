@@ -12,6 +12,9 @@ msgstr "Theme settings have been saved."
 msgid "settings-notice-reset"
 msgstr "Theme settings have been reset."
 
+msgid "setting-css-custom-url"
+msgstr "Custom CSS URL"
+
 msgid "settings-default-checked"
 msgstr "Default: checked."
 

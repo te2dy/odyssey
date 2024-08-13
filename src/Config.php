@@ -187,7 +187,7 @@ class Config extends Process
                             'styles_url',
                             App::blog()->settings()->system->public_url . '/' . App::blog()->settings()->system->theme . '/css/style.min.css',
                             'string',
-                            'Custom CSS URL', // Chaîne à traduire.
+                            __('setting-css-custom-url'),
                             true
                         );
                     } else {
