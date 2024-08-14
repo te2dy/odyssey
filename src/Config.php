@@ -126,14 +126,8 @@ class Config extends Process
 
                                         break;
                                     case 'styles' :
-                                        $setting_data = self::saveStyles();
-
-                                        // Dev
-                                        $styles_custom = '';
-
-                                        if (isset($setting_data['value'])) {
-                                            $styles_custom = $setting_data['value'];
-                                        }
+                                        $setting_data  = self::saveStyles();
+                                        $styles_custom = isset($setting_data['value']) ? $setting_data['value'] : '';
                                 }
                             } else {
                                 $setting_data = self::sanitizeSocialLink($setting_id, $_POST[$setting_id]);
@@ -163,7 +157,7 @@ class Config extends Process
                     }
 
                     $styles_default   = '';
-                    $styles_custom    = $styles_custom ?: '';
+                    $styles_custom    = isset($styles_custom) ? $styles_custom : '';
                     $css_default_path = App::blog()->themesPath() . '/' . App::blog()->settings()->system->theme . '/style.min.css';
                     $css_custom_path  = App::blog()->publicPath() . '/'  . App::blog()->settings()->system->theme . '/css/style.min.css';
 
@@ -182,7 +176,7 @@ class Config extends Process
                             );
                         }
 
-                        // Creates a database entry that contains the CSS URL.
+                        // Creates a entry in the database that contains the CSS URL.
                         App::blog()->settings->odyssey->put(
                             'styles_url',
                             App::blog()->settings()->system->public_url . '/' . App::blog()->settings()->system->theme . '/css/style.min.css',
@@ -199,6 +193,7 @@ class Config extends Process
                             );
                         }
 
+                        // Removes the database entry.
                         App::blog()->settings->odyssey->drop('styles_url');
                     }
 
