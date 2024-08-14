@@ -79,7 +79,7 @@
               {{tpl:CommentPreviewContent}}
             </div>
 
-            <input type=submit class=submit value="{{tpl:lang reactions-comment-send-button}}">
+            <input class=button-priority type=submit value="{{tpl:lang reactions-comment-send-button}}">
           </div>
         </tpl:IfCommentPreview>
       </tpl:Block>
@@ -115,10 +115,10 @@
           {{tpl:SysBehavior behavior="publicCommentFormAfterContent"}}
 
           <div class=form-entry>
-            <input type=submit name=preview value="{{tpl:lang reactions-comment-form-preview-button}}">
+            <input name=preview type=submit value="{{tpl:lang reactions-comment-form-preview-button}}">
 
             <tpl:IfCommentPreviewOptional>
-              <input type=submit value="{{tpl:lang reactions-comment-form-submit-button}}">
+              <input class=button-priority type=submit value="{{tpl:lang reactions-comment-form-submit-button}}">
             </tpl:IfCommentPreviewOptional>
           </div>
         </tpl:odysseyCommentFormWrapper>
