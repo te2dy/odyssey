@@ -30,14 +30,14 @@ class FrontendBehaviors
         // Adds the name of the editor.
         if (App::blog()->settings->system->editor) {
             echo '<meta name=author content=',
-            My::attrValue(App::blog()->settings->system->editor),
+            My::attrValue(My::cleanAttr(App::blog()->settings->system->editor, true)),
             '>', "\n";
         }
 
         // Adds the content of the copyright notice.
         if (App::blog()->settings->system->copyright_notice) {
             echo '<meta name=copyright content=',
-            My::attrValue(App::blog()->settings->system->copyright_notice),
+            My::attrValue(My::cleanAttr(App::blog()->settings->system->copyright_notice, true)),
             '>', "\n";
         }
     }

@@ -767,9 +767,13 @@ class My extends MyTheme
      *
      * @return string The cleaned string.
      */
-    public static function cleanAttr(string $string): string
+    public static function cleanAttr(string $string, bool $remove_quotes = false): string
     {
         $string = Html::decodeEntities(Html::clean($string));
+
+        if ($remove_quotes === true) {
+            $string = str_replace('"', '', $string);
+        }
 
         return preg_replace('/\s+/', ' ', $string);
     }
