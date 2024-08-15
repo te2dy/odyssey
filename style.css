@@ -570,11 +570,14 @@ details summary {
   font-weight: 700;
 }
 .comment-message {
-  border: .063rem solid var(--color-border, #ccc);
-  display: block;
   margin-top: 4rem;
-  padding: .5rem;
   text-align: center;
+}
+.comment-message-content {
+  border: .063rem solid var(--color-border, #ccc);
+  border-radius: .168rem;
+  display: inline-block;
+  padding: .5rem;
 }
 .comment-preview {
   border: .063rem solid var(--color-border, #ccc);
