@@ -15,8 +15,7 @@
 </tpl:Block>
 
 <tpl:Block name="head-link">
-  {{tpl:odysseyStylesInline}}
-  <link rel=stylesheet href="{{tpl:BlogThemeURL}}/style.min.css">
+  {{tpl:odysseyStyles}}
   <link rel=alternate type=application/atom+xml title="{{tpl:lang feed-title}}" href="{{tpl:BlogFeedURL}}">
   <link rel=alternate type=application/atom+xml title="{{tpl:lang feed-comments-title}}" href="{{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}}">
   <tpl:EntryIf pings_active="1"><link rel=pingback href="{{tpl:BlogXMLRPCURL}}"></tpl:EntryIf>

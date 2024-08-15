@@ -13,7 +13,9 @@ use Dotclear\App;
 use Dotclear\Core\Process;
 use Dotclear\Core\Backend\Notices;
 use Dotclear\Core\Backend\Page;
+use Dotclear\Core\Backend\ThemeConfig;
 use Dotclear\Helper\File\Path;
+use Dotclear\Helper\File\Files;
 use Dotclear\Helper\Html\Html;
 use Dotclear\Helper\Html\Form\Button;
 use Dotclear\Helper\Html\Form\Checkbox;
@@ -65,7 +67,6 @@ class Config extends Process
             try {
                 // If the save button has been clicked.
                 if (isset($_POST['save'])) {
-
                     /**
                      * This part saves each setting in the database
                      * only if there are different than the default one.
@@ -125,7 +126,8 @@ class Config extends Process
 
                                         break;
                                     case 'styles' :
-                                        $setting_data = self::saveStyles();
+                                        $setting_data  = self::saveStyles();
+                                        $styles_custom = isset($setting_data['value']) ? $setting_data['value'] : '';
                                 }
                             } else {
                                 $setting_data = self::sanitizeSocialLink($setting_id, $_POST[$setting_id]);
@@ -154,6 +156,67 @@ class Config extends Process
                         }
                     }
 
+                    $styles_default = '';
+                    $styles_custom  = isset($styles_custom) ? $styles_custom : '';
+
+                    $css_default_path_file  = App::blog()->themesPath() . '/' . App::blog()->settings()->system->theme . '/' . 'style.min.css';
+                    $css_custom_path_folder = App::blog()->settings()->system->theme . '/css/';
+                    $css_custom_path_file   = $css_custom_path_folder . 'style.min.css';
+
+                    if ($styles_custom) {
+                        // Gets default CSS content.
+                        if (file_exists($css_default_path_file) && (string) file_get_contents($css_default_path_file) !== '') {
+                            $styles_default = (string) file_get_contents($css_default_path_file);
+                        }
+
+                        // Creates a custom CSS file in the public folder.
+                        if (ThemeConfig::canWriteCss(App::blog()->settings()->system->theme, true) && ThemeConfig::canWriteCss($css_custom_path_folder, true) === true) {
+                            ThemeConfig::writeCss(
+                                $css_custom_path_folder,
+                                'style.min',
+                                $styles_custom . $styles_default
+                            );
+
+                            // Creates a entry in the database that contains the CSS URL.
+                            App::blog()->settings->odyssey->put(
+                                'styles_url',
+                                App::blog()->settings()->system->public_url . '/' . App::blog()->settings()->system->theme . '/css/style.min.css',
+                                'string',
+                                __('setting-css-custom-url'),
+                                true
+                            );
+                        } else {
+                            if (file_exists($css_custom_path_file)) {
+                                ThemeConfig::dropCss(
+                                    App::blog()->settings()->system->theme . '/css/',
+                                    'style.min'
+                                );
+                            }
+
+                            App::blog()->settings->odyssey->drop('styles_url');
+                        }
+                    } else {
+                        if (file_exists(ThemeConfig::cssPath($css_custom_path_file))) {
+                            ThemeConfig::dropCss(
+                                App::blog()->settings()->system->theme . '/css/',
+                                'style.min'
+                            );
+                        }
+
+                        /**
+                         * Removes the CSS folder if if exists.
+                         *
+                         * Impossible to remove the odyssey folder yet,
+                         * created in the public folder.
+                         */
+                        if (Files::isDeletable(ThemeConfig::cssPath($css_custom_path_folder)) === true) {
+                            Files::deltree(ThemeConfig::cssPath($css_custom_path_folder));
+                        }
+
+                        // Removes the database entry.
+                        App::blog()->settings->odyssey->drop('styles_url');
+                    }
+
                     // Refreshes the blog.
                     App::blog()->triggerBlog();
 
@@ -167,6 +230,28 @@ class Config extends Process
                     App::backend()->url()->redirect('admin.blog.theme', ['conf' => '1']);
                 } elseif (isset($_POST['reset'])) {
                     App::blog()->settings->odyssey->dropAll();
+
+                    // Removes the custom CSS file if it exists.
+                    $css_custom_path = App::blog()->publicPath() . '/'  . App::blog()->settings()->system->theme . '/css/style.min.css';
+
+                    if (file_exists($css_custom_path)) {
+                        ThemeConfig::dropCss(
+                            App::blog()->settings()->system->theme . '/css/',
+                            'style.min'
+                        );
+                    }
+
+                    /**
+                     * Removes the CSS folder if if exists.
+                     *
+                     * Impossible to remove the odyssey folder yet,
+                     * created in the public folder.
+                     */
+                    $css_custom_path_folder = App::blog()->settings()->system->theme . '/css/';
+
+                    if (Files::isDeletable(ThemeConfig::cssPath($css_custom_path_folder)) === true) {
+                        Files::deltree(ThemeConfig::cssPath($css_custom_path_folder));
+                    }
 
                     App::blog()->triggerBlog();
 
@@ -1132,7 +1217,7 @@ class Config extends Process
         }
 
         if ($setting_type === 'color') {
-            if (preg_match('/#[A-Fa-f0-9]{6}/', $setting_value) === false) {
+            if (self::isHexColor($setting_value) === false) {
                 $setting_value = $default_settings[$setting_id]['default'];
             }
 
@@ -1260,7 +1345,7 @@ class Config extends Process
     public static function sanitizePageWidth(string $unit, string $value, $setting_id = null): array
     {
         $unit  = $unit ?: 'em';
-        $value = $value ? (int) $value : 30;
+        $value = (int) $value ?: 30;
 
         if (($unit === 'em' && ($value > 30 && $value <= 80))
             || ($unit === 'px' && ($value >= 480 && $value <= 1280))
@@ -1296,7 +1381,7 @@ class Config extends Process
      *
      * @return array The value of the setting and its type.
      */
-    public static function sanitizeSocialLink(string $setting_id, string $value)
+    public static function sanitizeSocialLink(string $setting_id, string $value): array
     {
         if ($value === '') {
             return [];

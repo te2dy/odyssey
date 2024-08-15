@@ -49,13 +49,13 @@ class FrontendValues
      *
      * @return string The styles.
      */
-    public static function odysseyStylesInline(): string
+    public static function odysseyStyles(): string
     {
-        if (!My::settingValue('styles')) {
-            return '';
+        if (!My::settingValue('styles_url')) {
+            return '<link rel=stylesheet href=' . My::attrValue(Html::escapeURL(App::blog()->settings()->system->themes_url . '/' . App::blog()->settings()->system->theme . '/style.min.css')) . '>';
         }
 
-        return '<style>' . My::settingValue('styles') . '</style>';
+        return '<link rel=stylesheet href=' . My::attrValue(Html::escapeURL(My::settingValue('styles_url'))) . '>';
     }
 
     /**
