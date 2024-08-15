@@ -50,15 +50,19 @@
 <tpl:EntryIf comments_active="1">
   <tpl:Block name="comment-alerts">
     <tpl:SysIfCommentPublished>
-      <p class=comment-message id={{tpl:lang reactions-comment-id}}>
-        {{tpl:lang reactions-comment-alert-published}}
-      </p>
+      <div class=comment-message id={{tpl:lang reactions-comment-id}}>
+        <div class=comment-message-content>
+          {{tpl:lang reactions-comment-alert-published}}
+        </div>
+      </div>
     </tpl:SysIfCommentPublished>
 
     <tpl:SysIfCommentPending>
-      <p class=comment-message id={{tpl:lang reactions-comment-id}}>
-        {{tpl:lang reactions-comment-alert-review}}
-      </p>
+      <div class=comment-message id={{tpl:lang reactions-comment-id}}>
+        <div class=comment-message-content>
+          {{tpl:lang reactions-comment-alert-review}}
+        </div>
+      </div>
     </tpl:SysIfCommentPending>
 
     <tpl:SysIfFormError>
