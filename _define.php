@@ -1,6 +1,6 @@
-<?php
+    <?php
 /**
- * Odyssey, a customizable Dotclear theme.
+ * Odyssey, a simple and customizable Dotclear theme.
  *
  * @author    Teddy <zozxebpyr@mozmail.com>
  * @copyright 2022-2024 Teddy
@@ -9,9 +9,9 @@
 
 $this->registerModule(
     'Odyssey',
-    'Write your own with this theme',
+    'A simple and customizable theme.',
     'Teddy',
-    '0.3',
+    '1',
     [
         'requires' => [
             ['core', '2.30'],
