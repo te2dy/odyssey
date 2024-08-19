@@ -1055,6 +1055,8 @@ class Config extends Process
             $css_main_array['.social-icon-si']['stroke-width']    = '0';
             $css_main_array['.social-icon-si']['width']           = '1rem';
             $css_main_array['.social-icon-si']['transition']      = 'var(--color-transition, unset)';
+
+            $css_media_contrast_array['.reactions-button:is(:active, :focus, :hover) .reactions-button-icon.social-icon-si']['fill'] = 'var(--color-background)';
         }
 
         // Other reactions
@@ -1107,12 +1109,13 @@ class Config extends Process
 
             $css_main_array['.footer-social-links-icon-container']['align-items']      = 'center';
             $css_main_array['.footer-social-links-icon-container']['background-color'] = 'var(--color-input-background, #f2f2f2)';
-            $css_main_array['.footer-social-links-icon-container']['bor'] = 'var(--color-input-background, #f2f2f2)';
             $css_main_array['.footer-social-links-icon-container']['display']          = 'flex';
             $css_main_array['.footer-social-links-icon-container']['justify-content']  = 'center';
             $css_main_array['.footer-social-links-icon-container']['width']            = '1.5rem';
             $css_main_array['.footer-social-links-icon-container']['height']           = '1.5rem';
             $css_main_array['.footer-social-links-icon-container']['transition']       = 'var(--color-transition, unset)';
+
+            $css_media_contrast_array['.footer-social-links-icon-container']['border'] = '.063rem solid var(--color-border, #ccc)';
 
             if ($simpleicons_styles === true) {
                 $css_main_array['.footer-social-links-icon-container .footer-social-links-icon-si']['fill'] = 'var(--color-text-main, #303030)';
@@ -1130,6 +1133,8 @@ class Config extends Process
             $css_main_array['.footer-social-links a']['border-bottom'] = 'none';
 
             $css_main_array['.footer-social-links a:active, .footer-social-links a:focus, .footer-social-links a:hover']['border-bottom'] = 'none';
+
+            $css_media_contrast_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['border-color'] = 'var(--color-primary-amplified, hsl(226, 95%, 50%))';
 
             if ($simpleicons_styles === true) {
                 $css_main_array['.footer-social-links a:active .footer-social-links-icon-si, .footer-social-links a:focus .footer-social-links-icon-si, .footer-social-links a:hover .footer-social-links-icon-si']['fill'] = 'var(--color-background, #fcfcfd)';

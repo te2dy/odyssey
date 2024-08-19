@@ -329,9 +329,8 @@ input[type="submit"].button-priority:is(:active, :focus, :hover),
        (-ms-high-contrast: active),
        (-ms-high-contrast: black-on-white) {
   :is(input[type="submit"], .form-submit):is(:active, :focus, :hover) {
-    background-color: var(--color-background, #fafafa);
-    color: var(--color-text-main, #303030);
-    outline: .168rem solid #303030;
+    background-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
+    color: var(--color-background, #fcfcfd);
   }
 }
 input:disabled {
@@ -419,7 +418,10 @@ details summary {
 @media (prefers-contrast: more),
        (-ms-high-contrast: active),
        (-ms-high-contrast: black-on-white) {
-  #main-menu .active a:is(:active, :focus, :hover) {
+  #main-menu li:not(.active) a {
+    text-decoration: underline dotted;
+  }
+  #main-menu li a:is(:active, :focus, :hover) {
     text-decoration: none;
   }
 }
@@ -626,6 +628,22 @@ details summary {
 .reactions-button:is(:active, :focus, :hover) .reactions-button-text {
   text-decoration: underline;
 }
+@media (prefers-contrast: more),
+       (-ms-high-contrast: active),
+       (-ms-high-contrast: black-on-white) {
+  .reactions-button {
+    text-decoration: none;
+  }
+  .reactions-button .reactions-button-text {
+    text-decoration: underline dotted;
+  }
+  .reactions-button:is(:active, :focus, :hover) .reactions-button-icon.social-icon-fi {
+    stroke: var(--color-background);
+  }
+  .reactions-button:is(:active, :focus, :hover) .reactions-button-text {
+    text-decoration: none;
+  }
+}
 
 /**
  * Archives
@@ -703,16 +721,6 @@ aside .widget:last-child {
 }
 #site-footer :is(.widget, .site-footer-block):last-child {
   margin-bottom: 0;
-}
-
-/**
- * Accessibility
- */
-@media (prefers-contrast: more) {
-  #site-header-short #site-title:is(:active, :focus, :hover) {
-    background-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
-    color: var(--color-background, #fafafa);
-  }
 }
 
 /**
