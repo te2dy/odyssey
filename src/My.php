@@ -120,9 +120,8 @@ class My extends MyTheme
         $default_settings['global_page_width_value'] = [
             'title'       => __('settings-global-pagewidthvalue-title'),
             'description' => __('settings-global-pagewidthvalue-description'),
-            'type'        => 'integer',
-            'default'     => '',
-            'placeholder' => !My::settingValue('global_unit') ? '30' : '480',
+            'type'        => 'range-width',
+            'default'     => !My::settingValue('global_unit') ? '30' : '480',
             'section'     => ['global', 'layout']
         ];
 

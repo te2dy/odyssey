@@ -108,6 +108,9 @@ msgstr "Largeur"
 msgid "settings-global-pagewidthvalue-description"
 msgstr "En cadratin, la largeur doit être comprise entre 30 et 80 ; en pixel, entre 480 et 1 280. Par défaut&nbsp;: 30 em ou 480 px."
 
+msgid "settings-input-width-range-output"
+msgstr "%1$s %2$s"
+
 msgid "settings-global-fontfamily-title"
 msgstr "Police d’écriture"
 

@@ -108,6 +108,9 @@ msgstr ""
 msgid "settings-global-pagewidthvalue-description"
 msgstr ""
 
+msgid "settings-input-width-range-output"
+msgstr ""
+
 msgid "settings-global-fontfamily-title"
 msgstr ""
 

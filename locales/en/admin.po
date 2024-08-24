@@ -108,6 +108,9 @@ msgstr "Width"
 msgid "settings-global-pagewidthvalue-description"
 msgstr "In the case of em, the width must be between 30 and 80; in the case of pixels, between 480 and 1,280. Default: 30em or 480px."
 
+msgid "settings-input-width-range-output"
+msgstr "%1$s%2$s"
+
 msgid "settings-global-fontfamily-title"
 msgstr "Fonts"
 

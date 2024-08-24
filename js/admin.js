@@ -146,6 +146,26 @@ function disableInputs() {
 }
 
 /**
+ * Updates the page width output from the page width input.
+ */
+function pageWidthOutput(pageWidthUnitDefault, pageWidthValueDefault) {
+  let pageWidthUnit  = pageWidthUnitDefault,
+      pageWidthValue = pageWidthValueDefault;
+
+  if (document.getElementById("global_unit").value === "em") {
+    pageWidthUnit = "em";
+  } else if (document.getElementById("global_unit").value === "px") {
+    pageWidthUnit = "px";
+  }
+
+  if (document.getElementById("global_page_width_value").value) {
+    pageWidthValue = document.getElementById("global_page_width_value").value;
+  }
+
+  document.getElementById("global_page_width_value-output-value").innerHTML = pageWidthValue;
+}
+
+/**
  * Updates page width settings depending on its values.
  */
 function updatePageWidthSetting(pageWidthUnitDefault, pageWidthValueDefault) {
@@ -158,16 +178,29 @@ function updatePageWidthSetting(pageWidthUnitDefault, pageWidthValueDefault) {
 
   // Converts the page width value when the unit is changed.
   if (document.getElementById("global_page_width_value").value) {
-    var pageWidthUnitNew = document.getElementById("global_unit").value;
+    var pageWidthUnitNew  = document.getElementById("global_unit").value
+        pageWidthValueNew = null;
 
     if (pageWidthUnitNew === "px") {
-      var pageWidthValueNew = parseInt(document.getElementById("global_page_width_value").value, 10) * 16;
+      pageWidthValueNew = parseInt(document.getElementById("global_page_width_value").value, 10) * 16;
 
+      document.getElementById("global_page_width_value").setAttribute("min", "480");
+      document.getElementById("global_page_width_value").setAttribute("max", "1280");
+      document.getElementById("global_page_width_value").setAttribute("step", "2");
       document.getElementById("global_page_width_value").value = pageWidthValueNew.toString();
+
+      document.getElementById("global_page_width_value-output-value").innerHTML = pageWidthValueNew.toString();
+      document.getElementById("global_page_width_value-output-unit").innerHTML  = "px";
     } else if (pageWidthUnitNew === 'em') {
-      var pageWidthValueNew = parseInt(Number(document.getElementById("global_page_width_value").value) / 16, 10);
+      pageWidthValueNew = parseInt(Number(document.getElementById("global_page_width_value").value) / 16, 10);
 
+      document.getElementById("global_page_width_value").setAttribute("min", "30");
+      document.getElementById("global_page_width_value").setAttribute("max", "80");
+      document.getElementById("global_page_width_value").setAttribute("step", "1");
       document.getElementById("global_page_width_value").value = pageWidthValueNew.toString();
+
+      document.getElementById("global_page_width_value-output-value").innerHTML = pageWidthValueNew.toString();
+      document.getElementById("global_page_width_value-output-unit").innerHTML  = "em";
     }
   }
 }
@@ -380,6 +413,10 @@ window.onload = function() {
 
   var pageWidthUnitDefault  = document.getElementById("global_unit").value,
       pageWidthValueDefault = document.getElementById("global_page_width_value").value;
+
+  document.getElementById("global_page_width_value").oninput = function() {
+    pageWidthOutput(pageWidthUnitDefault, pageWidthValueDefault);
+  }
 
   document.getElementById("global_unit").onchange = function() {
     updatePageWidthSetting(pageWidthUnitDefault, pageWidthValueDefault);

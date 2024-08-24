@@ -480,6 +480,52 @@ class Config extends Process
 
                 break;
 
+            case 'range-width' :
+                $range_default = [
+                    'unit'  => 'em',
+                    'value' => My::settingValue('global_page_width_value') ?: My::attrValue($default_settings[$setting_id]['default']),
+                    'min'   => 30,
+                    'max'   => 80,
+                    'step'  => 1
+                ];
+
+                if (My::settingValue('global_unit') === 'px') {
+                    $range_default['unit'] = 'px';
+                    $range_default['min']  = 480;
+                    $range_default['max']  = 1280;
+                    $range_default['step'] = 2;
+                }
+
+                $default_output = sprintf(
+                    __('settings-input-width-range-output'),
+                    '<span id=' . $setting_id . '-output-value>' . $range_default['value'] . '</span>',
+                    '<span id=' . $setting_id . '-output-unit>' . $range_default['unit'] . '</span>',
+                );
+
+                $the_setting[] = (new Para())
+                    ->id($setting_id . '-input')
+                    ->items([
+                        (new Label($default_settings[$setting_id]['title'], 2))
+                            ->for($setting_id),
+                        (new Input($setting_id, 'range'))
+                            ->default($range_default['value'])
+                            ->min($range_default['min'])
+                            ->max($range_default['max'])
+                            ->step($range_default['step']),
+                        (new Text(null, ' <output name=' . $setting_id . '-output>' . $default_output . '</output>'))
+                    ]);
+
+                if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
+                    $the_setting[] = (new Para())
+                        ->id($setting_id . '-description')
+                        ->class('form-note')
+                        ->items([
+                            (new Text(null, $default_settings[$setting_id]['description']))
+                        ]);
+                }
+
+                break;
+
             default :
                 $placeholder = isset($default_settings[$setting_id]['placeholder'])
                 ? My::attrValue($default_settings[$setting_id]['placeholder'])
