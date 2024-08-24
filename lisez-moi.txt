@@ -12,6 +12,11 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
+=== 1.1 - 24 août 2024 ===
+- Amélioration : l’option permettant de régler la largeur de la page est un "input" de type "range".
+- Correction : styles quand l’option de contrastes élevés est activée.
+- Modifications mineures.
+
 === 1 - 15 août 2024 ===
 - Ajout : option d’alignement du pied de page.
 - Ajout : option pour ajouter un lien vers le flux RSS/Atom du blog dans le pied de page.

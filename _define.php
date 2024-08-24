@@ -9,9 +9,9 @@
 
 $this->registerModule(
     'Odyssey',
-    'A simple and customizable theme.',
+    'A simple and customizable theme',
     'Teddy',
-    '1',
+    '1.1',
     [
         'requires' => [
             ['core', '2.30'],
