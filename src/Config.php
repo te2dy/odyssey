@@ -480,27 +480,32 @@ class Config extends Process
 
                 break;
 
-            case 'range-width' :
+            case 'range' :
                 $range_default = [
                     'unit'  => 'em',
-                    'value' => My::settingValue('global_page_width_value') ?: My::attrValue($default_settings[$setting_id]['default']),
-                    'min'   => 30,
-                    'max'   => 80,
-                    'step'  => 1
+                    'value' => (int) My::settingValue($setting_id) ?: (int) $default_settings[$setting_id]['default'],
+                    'min'   => (int) $default_settings[$setting_id]['range']['min'],
+                    'max'   => (int) $default_settings[$setting_id]['range']['max'],
+                    'step'  => (int) $default_settings[$setting_id]['range']['step']
                 ];
 
-                if (My::settingValue('global_unit') === 'px') {
-                    $range_default['unit'] = 'px';
-                    $range_default['min']  = 480;
-                    $range_default['max']  = 1280;
-                    $range_default['step'] = 2;
-                }
+                $range_default_output = $range_default['value'];
 
-                $default_output = sprintf(
-                    __('settings-input-width-range-output'),
-                    '<span id=' . $setting_id . '-output-value>' . $range_default['value'] . '</span>',
-                    '<span id=' . $setting_id . '-output-unit>' . $range_default['unit'] . '</span>',
-                );
+                //
+                if ($setting_id === 'global_page_width_value') {
+                    if (My::settingValue('global_unit') === 'px') {
+                        $range_default['unit'] = 'px';
+                        $range_default['min']  = 480;
+                        $range_default['max']  = 1280;
+                        $range_default['step'] = 2;
+                    }
+
+                    $range_default_output = sprintf(
+                        __('settings-input-width-range-output'),
+                        '<span id=' . $setting_id . '-output-value>' . $range_default['value'] . '</span>',
+                        '<span id=' . $setting_id . '-output-unit>' . $range_default['unit'] . '</span>',
+                    );
+                }
 
                 $the_setting[] = (new Para())
                     ->id($setting_id . '-input')
@@ -512,7 +517,7 @@ class Config extends Process
                             ->min($range_default['min'])
                             ->max($range_default['max'])
                             ->step($range_default['step']),
-                        (new Text(null, ' <output name=' . $setting_id . '-output>' . $default_output . '</output>'))
+                        (new Text(null, ' <output name=' . $setting_id . '-output>' . $range_default_output . '</output>'))
                     ]);
 
                 if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
