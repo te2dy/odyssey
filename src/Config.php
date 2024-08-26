@@ -292,7 +292,7 @@ class Config extends Process
                         ->id($setting_id . '-input')
                         ->items([
                             (new Checkbox($setting_id, (bool) $setting_value))
-                                ->checked($setting_value)
+                                ->checked((bool) $setting_value)
                                 ->label(
                                     (new Label($default_settings[$setting_id]['title'], 3))
                                     ->class('classic')

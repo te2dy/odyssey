@@ -327,7 +327,7 @@ class FrontendValues
      */
     public static function odysseyTrackbackLink(): string
     {
-        if (My::settingValue('reactions_other_trackbacks') !== false) {
+        if (My::settingValue('reactions_other_trackbacks') === true) {
             return '<?php if (App::frontend()->context()->posts->trackbacksActive() === true) : ?>
               <details class=reactions-details>
                 <summary class=reactions-button>
