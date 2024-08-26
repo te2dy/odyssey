@@ -377,7 +377,7 @@ class FrontendValues
     }
 
     /**
-     * Displays a link to reply to the author of the post by email.
+     * Displays links to reply to the author of a post.
      *
      * @return string The private comment section.
      */

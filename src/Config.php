@@ -270,7 +270,7 @@ class Config extends Process
     }
 
     /**
-     * Renders the setting in the configurato page.
+     * Renders the setting in the configurator page.
      *
      * @param string $setting_id The id of the setting to display.
      *
@@ -292,7 +292,7 @@ class Config extends Process
                         ->id($setting_id . '-input')
                         ->items([
                             (new Checkbox($setting_id, (bool) $setting_value))
-                                ->checked((bool) $setting_value)
+                                ->checked($setting_value)
                                 ->label(
                                     (new Label($default_settings[$setting_id]['title'], 3))
                                     ->class('classic')
