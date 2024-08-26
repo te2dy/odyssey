@@ -12,6 +12,9 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
+=== 1.2.1 - 26 août 2024 ===
+- Correction : enregistrement dysfonctionnel des options à cocher.
+
 === 1.2 - 26 août 2024 ===
 - Revue de code.
 
