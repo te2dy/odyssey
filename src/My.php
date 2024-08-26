@@ -20,11 +20,10 @@ class My extends MyTheme
     /**
      * Declares the sections of the theme configuration page.
      *
-     * Returns a section information if a section ID is provided.
-     *
      * @param string $section_id The ID of the section (optional).
      *
-     * @return array All the sections or only on section data.
+     * @return array All the sections or only one section data
+     *               if a section ID is set.
      */
     public static function settingsSections(string $section_id = ''): array
     {
@@ -97,11 +96,10 @@ class My extends MyTheme
     /**
      * Declares all the settings of the theme configurator.
      *
-     * Returns a setting information if a setting ID is provided.
-     *
      * @param string $setting_id The id of the setting (optional).
      *
-     * @return array All the sections or only on setting data.
+     * @return array All the sections or only on setting data
+     *               if a setting ID is set.
      */
     public static function settingsDefault(string $setting_id = ''): array
     {
@@ -594,11 +592,9 @@ class My extends MyTheme
             'section'     => ['reactions', 'other']
         ];
 
-        if (App::plugins()->moduleExists('signal')) {
-            $plugin_signal_url = App::backend()->url()->get('admin.blog.pref') . '#params.signal';
-        } else {
-            $plugin_signal_url = App::backend()->url()->get('admin.plugins', ['m_search' => 'signal']) . '#new';
-        }
+        $plugin_signal_url = App::plugins()->moduleExists('signal')
+        ? App::backend()->url()->get('admin.blog.pref') . '#params.signal'
+        : App::backend()->url()->get('admin.plugins', ['m_search' => 'signal']) . '#new';
 
         $default_settings['reactions_other_email'] = [
             'title'       => __('settings-reactions-otheremail-title'),
@@ -756,18 +752,24 @@ class My extends MyTheme
      * Avoids unnecessarily wrapping attributes in quotation marks.
      *
      * @param string $value The value.
+     * @param bool   $clean Use cleanAttr function or not.
      *
      * @return string The string.
      */
-    public static function attrValue(string $value): string
+    public static function attrValue(string $value, bool $clean = false): string
     {
+        if ($clean === true) {
+            $value = self::cleanAttr($value, true);
+        }
+
         return str_contains($value, ' ') === false ? $value : '"' . $value . '"';
     }
 
     /**
-     * Cleans string to be put in an HTML attribute.
+     * Cleans a string to be put in an HTML attribute.
      *
-     * @param string $string The string.
+     * @param string $string        The string.
+     * @param bool   $remove_quotes Remove quotes in the string.
      *
      * @return string The cleaned string.
      */
@@ -789,7 +791,7 @@ class My extends MyTheme
      *
      * @return array The unit and the value of the width.
      */
-    public static function getContentWidth($unit = 'em')
+    public static function getContentWidth($unit = 'em'): array
     {
         $page_width_unit  = self::settingValue('global_unit') ?: 'em' ;
         $page_width_value = (int) self::settingValue('global_page_width_value') ?: 30;
@@ -820,10 +822,9 @@ class My extends MyTheme
         $parsed_url = parse_url(App::blog()->url);
 
         $scheme = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
-        $host   = isset($parsed_url['host']) ? $parsed_url['host'] : '';
-        $port   = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
+        $host   = $parsed_url['host'] ?? '';
 
-        return $scheme . $host . $port;
+        return $scheme . $host;
     }
 
     /**
@@ -988,9 +989,11 @@ class My extends MyTheme
      *
      * $social_sites['site_id'] = [
      *      'name'      => string 'The name of the site',
-     *      'base'      => string 'If type is "url", the base of the URL of the site',
+     *      'base'      => string 'If type is "url", the base of the URL
+     *                            of the site',
      *      'type'      => string 'The type of value (URL, phone number…)',
-     *      'reactions' => bool   '"true" if the site can be used as another reaction method for posts'
+     *      'reactions' => bool   '"true" if the site can be used
+     *                            as another reaction method for posts'
      * ];
      *
      * @param string $site_id The ID of a social site to retrieve the data.

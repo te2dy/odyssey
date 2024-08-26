@@ -30,14 +30,14 @@ class FrontendBehaviors
         // Adds the name of the editor.
         if (App::blog()->settings->system->editor) {
             echo '<meta name=author content=',
-            My::attrValue(My::cleanAttr(App::blog()->settings->system->editor, true)),
+            My::attrValue(App::blog()->settings->system->editor, true),
             '>', "\n";
         }
 
         // Adds the content of the copyright notice.
         if (App::blog()->settings->system->copyright_notice) {
             echo '<meta name=copyright content=',
-            My::attrValue(My::cleanAttr(App::blog()->settings->system->copyright_notice, true)),
+            My::attrValue(App::blog()->settings->system->copyright_notice, true),
             '>', "\n";
         }
     }
@@ -86,11 +86,7 @@ class FrontendBehaviors
                             $desc .= ' – ';
                         }
 
-                        if (My::settingValue('advanced_meta_description')) {
-                            $desc .= My::settingValue('advanced_meta_description');
-                        } elseif (App::blog()->desc) {
-                            $desc .= App::blog()->desc;
-                        }
+                        $desc .= My::settingValue('advanced_meta_description') ?? App::blog()->desc ?? '';
 
                         $desc = My::cleanAttr($desc);
 
@@ -120,14 +116,9 @@ class FrontendBehaviors
                     }
             }
 
-            $title = Html::escapeHTML($title);
-
             if ($title) {
-                $desc = Html::escapeHTML($desc);
-                $img  = Html::escapeURL($img);
-
                 if (!$img && isset(My::settingValue('header_image')['url'])) {
-                    $img = Html::escapeURL(My::blogBaseURL() . My::settingValue('header_image')['url']);
+                    $img = My::blogBaseURL() . My::settingValue('header_image')['url'];
                 }
 
                 if ($img) {
@@ -168,7 +159,7 @@ class FrontendBehaviors
                             'name'  => App::blog()->name
                         ],
                         'name'        => App::blog()->name,
-                        'description' => Html::escapeHTML(My::settingValue('advanced_meta_description')) ?: App::blog()->desc,
+                        'description' => My::settingValue('advanced_meta_description') ?: App::blog()->desc,
                         'url'         => App::blog()->url
                     ];
 
@@ -178,14 +169,14 @@ class FrontendBehaviors
                         $image_path = App::blog()->public_path . str_replace(
                             App::blog()->settings->system->public_url . '/',
                             '/',
-                            Html::escapeURL(My::settingValue('header_image')['url'])
+                            My::settingValue('header_image')['url']
                         );
 
                         list($width, $height) = getimagesize($image_path);
 
                         $json_ld['publisher']['logo'] = [
                             '@type'  => 'ImageObject',
-                            'url'    => Html::escapeURL(My::blogBaseURL() . My::settingValue('header_image')['url']),
+                            'url'    => My::blogBaseURL() . My::settingValue('header_image')['url'],
                             'width'  => (int) $width,
                             'height' => (int) $height
                         ];
@@ -198,7 +189,7 @@ class FrontendBehaviors
 
                     foreach ($social_sites as $id => $data) {
                         if (My::settingValue('footer_social_' . $id) !== null && !in_array($id, $social_exclude, true)) {
-                            $json_ld['sameAs'][] = Html::escapeURL(My::settingValue('footer_social_' . $id));
+                            $json_ld['sameAs'][] = My::settingValue('footer_social_' . $id);
                         }
                     }
 
@@ -225,14 +216,14 @@ class FrontendBehaviors
                         $image_path = App::blog()->public_path . str_replace(
                             App::blog()->settings->system->public_url . '/',
                             '/',
-                            Html::escapeHTML(Ctx::EntryFirstImageHelper('o', false, '', true))
+                            Ctx::EntryFirstImageHelper('o', false, '', true)
                         );
 
                         list($width, $height) = getimagesize($image_path);
 
                         $json_ld['image'] = [
                             '@type'  => 'ImageObject',
-                            'url'    => Html::escapeURL(My::blogBaseURL() . Ctx::EntryFirstImageHelper("o", false, "", true)),
+                            'url'    => My::blogBaseURL() . Ctx::EntryFirstImageHelper("o", false, "", true),
                             'width'  => (int) $width,
                             'height' => (int) $height
                         ];
@@ -271,7 +262,7 @@ class FrontendBehaviors
 
                         $json_ld['publisher']['logo'] = [
                             '@type'  => 'ImageObject',
-                            'url'    => Html::escapeURL(My::blogBaseURL() . My::settingValue('header_image')['url']),
+                            'url'    => My::blogBaseURL() . My::settingValue('header_image')['url'],
                             'width'  => (int) $width,
                             'height' => (int) $height
                         ];
@@ -366,7 +357,7 @@ class FrontendBehaviors
                 // Builds an array that will contain all image sizes.
                 $img = [
                     'o' => [
-                        'url'    => Html::escapeURL($src_value),
+                        'url'    => $src_value,
                         'width'  => null,
                         'height' => null
                     ]
@@ -430,12 +421,12 @@ class FrontendBehaviors
                     });
 
                     // Defines image attributes.
-                    $attr  = 'src="' . Html::escapeURL($img[$src_image_size]['url']) . '" ';
+                    $attr  = 'src="' . $img[$src_image_size]['url'] . '" ';
                     $attr .= 'srcset="';
 
                     // Puts every image size in the srcset attribute.
                     foreach ($img as $img_id => $img_data) {
-                        $attr .= Html::escapeURL($img_data['url']) . ' ' . $img_data['width'] . 'w';
+                        $attr .= $img_data['url'] . ' ' . $img_data['width'] . 'w';
 
                         if ($img_id !== array_key_last($img)) {
                             $attr .= ', ';

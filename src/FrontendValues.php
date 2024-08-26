@@ -52,10 +52,10 @@ class FrontendValues
     public static function odysseyStyles(): string
     {
         if (!My::settingValue('styles_url')) {
-            return '<link rel=stylesheet href=' . My::attrValue(Html::escapeURL(App::blog()->settings()->system->themes_url . '/' . App::blog()->settings()->system->theme . '/style.min.css')) . '>';
+            return '<link rel=stylesheet href=' . My::attrValue(App::blog()->settings()->system->themes_url . '/' . App::blog()->settings()->system->theme . '/style.min.css') . '>';
         }
 
-        return '<link rel=stylesheet href=' . My::attrValue(Html::escapeURL(My::settingValue('styles_url'))) . '>';
+        return '<link rel=stylesheet href=' . My::attrValue(My::settingValue('styles_url')) . '>';
     }
 
     /**
@@ -78,24 +78,24 @@ class FrontendValues
                 && (($attr['position'] === 'bottom' && My::settingValue('header_image_position') === 'bottom')
                 || ($attr['position'] === 'top' && !My::settingValue('header_image_position')))
             ) {
-                $image_url  = Html::escapeURL(My::settingValue('header_image')['url']);
+                $image_url  = My::settingValue('header_image')['url'];
                 $image_size = (int) My::settingValue('header_image')['width'];
 
                 $srcset = '';
                 $sizes  = '';
 
                 if (My::settingValue('header_image_description')) {
-                    $alt = ' alt=' . My::attrValue(Html::escapeHTML(My::settingValue('header_image_description')));
+                    $alt = ' alt=' . My::attrValue(My::settingValue('header_image_description'));
                 } else {
                     $alt = ' alt=' . My::attrValue(__('header-image-alt'));
                 }
 
                 if (My::settingValue('header_image2x')) {
-                    $image2x_url = Html::escapeURL(My::settingValue('header_image2x'));
+                    $image2x_url = My::settingValue('header_image2x');
 
                     $srcset  = ' srcset="';
-                    $srcset .= Html::escapeURL($image_url) . ' 1x, ';
-                    $srcset .= Html::escapeURL($image2x_url) . ' 2x';
+                    $srcset .= $image_url . ' 1x, ';
+                    $srcset .= $image2x_url . ' 2x';
                     $srcset .= '"';
 
                     $sizes = ' sizes=' . $image_size . 'vw';
@@ -178,9 +178,9 @@ class FrontendValues
                     $width_s = ' . App::media()->thumb_sizes['s'][0] . ';
 
                     if ($img_s && $img_s !== $img_t) {
-                        $img_src = "src=\"" . Html::escapeURL($img_t) . "\"";
+                        $img_src = "src=\"" . $img_t . "\"";
 
-                        $img_src_srcset = $img_src . " srcset=\"" . Html::escapeURL($img_s) . " " . Html::escapeHTML($width_s) . "w, " . Html::escapeURL($img_t) . " " . Html::escapeHTML($width_t) . "w\" size=100vw";
+                        $img_src_srcset = $img_src . " srcset=\"" . $img_s . " " . $width_s . "w, " . $img_t . " " . $width_t . "w\" size=100vw";
 
                         $img = str_replace($img_src, $img_src_srcset, $img);
                     }
@@ -210,20 +210,20 @@ class FrontendValues
                     $width_s = ' . App::media()->thumb_sizes['s'][0] . ';
 
                     if ($img_o && $width_o >= $content_width) {
-                        $img_src = "src=\"" . Html::escapeURL($img_o) . "\"";
+                        $img_src = "src=\"" . $img_o . "\"";
 
                         if ($img_m || $img_s) {
                             $img_src_srcset = "";
 
                             if ($img_s) {
-                                $img_src_srcset .= Html::escapeURL($img_s) . " " . Html::escapeHTML($width_s) . "w, ";
+                                $img_src_srcset .= $img_s . " " . $width_s . "w, ";
                             }
 
                             if ($img_m) {
-                                $img_src_srcset .= Html::escapeURL($img_m) . " " . Html::escapeHTML($width_m) . "w, ";
+                                $img_src_srcset .= $img_m . " " . $width_m . "w, ";
                             }
 
-                            $img_src_srcset .= Html::escapeURL($img_o) . " " . Html::escapeHTML($width_o) . "w";
+                            $img_src_srcset .= $img_o . " " . $width_o . "w";
                         }
 
                         $img_src_srcset = $img_src . " srcset=\"" . $img_src_srcset . "\" size=100vw";
@@ -354,7 +354,7 @@ class FrontendValues
             return '';
         }
 
-        $feed_type = Html::escapeHTML(My::settingValue('reactions_feed_link'));
+        $feed_type = My::settingValue('reactions_feed_link');
 
         return '<?php
             if (App::frontend()->context()->posts->commentsActive() === true
@@ -428,7 +428,7 @@ class FrontendValues
             }
 
             if ($facebook_url !== "") {
-                $reactions_other .= "<p><a class=reactions-button href=\"" . Html::escapeURL($facebook_url) . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('facebook')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-facebook-button'), My::socialSites('facebook')['name']) . '</span></a></p>";
+                $reactions_other .= "<p><a class=reactions-button href=\"" . $facebook_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('facebook')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-facebook-button'), My::socialSites('facebook')['name']) . '</span></a></p>";
             }
             ?>';
         }
@@ -446,7 +446,7 @@ class FrontendValues
             }
 
             if ($mastodon_url !== "") {
-                $reactions_other .= "<p><a class=reactions-button href=\"" . Html::escapeURL($mastodon_url) . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('mastodon')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-mastodon-button'), My::socialSites('mastodon')['name']) . '</span></a></p>";
+                $reactions_other .= "<p><a class=reactions-button href=\"" . $mastodon_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('mastodon')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-mastodon-button'), My::socialSites('mastodon')['name']) . '</span></a></p>";
             }
             ?>';
         }
@@ -462,7 +462,7 @@ class FrontendValues
                     $sms_href .= "?body=' . __('reactions-other-email-prefix') . ' " . App::frontend()->context()->posts->post_title;
                 }
 
-                $reactions_other .= "<p><a class=reactions-button href=\"" . Html::escapeURL($sms_href) . "\"><svg class=\"reactions-button-icon social-icon-fi\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('sms')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-sms-button'), My::socialSites('sms')['name']) . '</span></a></p>";
+                $reactions_other .= "<p><a class=reactions-button href=\"" . $sms_href . "\"><svg class=\"reactions-button-icon social-icon-fi\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('sms')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-sms-button'), My::socialSites('sms')['name']) . '</span></a></p>";
             }
             ?>';
         }
@@ -472,7 +472,7 @@ class FrontendValues
             $signal_url = "' . My::settingValue('social_signal') . '";
 
             if ($signal_url !== "") {
-                $reactions_other .= "<p><a class=reactions-button href=\"' . Html::escapeURL(My::settingValue('social_signal')) . '\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('signal')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-signal-button'), My::socialSites('signal')['name']) . '</span></a></p>";
+                $reactions_other .= "<p><a class=reactions-button href=\"' . My::settingValue('social_signal') . '\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('signal')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-signal-button'), My::socialSites('signal')['name']) . '</span></a></p>";
             }
             ?>';
         }
@@ -485,7 +485,7 @@ class FrontendValues
             $whatsapp_url  = "' . My::settingValue('social_whatsapp') . '" . $whatsapp_text;
 
             if ($whatsapp_url !== "") {
-                $reactions_other .= "<p><a class=reactions-button href=\"" . Html::escapeURL($whatsapp_url) . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('whatsapp')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-whatsapp-button'), My::socialSites('whatsapp')['name']) . '</span></a></p>";
+                $reactions_other .= "<p><a class=reactions-button href=\"" . $whatsapp_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('whatsapp')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-whatsapp-button'), My::socialSites('whatsapp')['name']) . '</span></a></p>";
             }
             ?>';
         }
@@ -515,7 +515,7 @@ class FrontendValues
 
                 $x_url_share = substr($x_url_share, 0, -1);
 
-                $reactions_other .= "<p><a class=reactions-button href=\"" . Html::escapeURL($x_url_share) . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('x')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-x-button'), My::socialSites('x')['name']) . '</span></a></p>";
+                $reactions_other .= "<p><a class=reactions-button href=\"" . $x_url_share . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('x')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-x-button'), My::socialSites('x')['name']) . '</span></a></p>";
             }
             ?>';
         }
@@ -667,10 +667,10 @@ class FrontendValues
                 }
 
                 $output .= '<li>';
-                $output .= '<a href=' . My::attrValue(Html::escapeURL($url)) . '>';
+                $output .= '<a href=' . My::attrValue($url) . '>';
                 $output .= '<span class=footer-social-links-icon-container>';
                 $output .= '<svg class="' . $class . '" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>';
-                $output .= '<title>' . Html::escapeHTML($data['name']) . '</title>';
+                $output .= '<title>' . $data['name'] . '</title>';
                 $output .= My::svgIcons($id)['path'];
                 $output .= '</svg>';
                 $output .= '</span>';
@@ -690,7 +690,7 @@ class FrontendValues
             $feed_link = App::blog()->url() . App::url()->getURLFor("feed", My::settingValue('footer_feed'));
 
             $output .= '<li>';
-            $output .= '<a href=' . Html::escapeURL($feed_link) . '>';
+            $output .= '<a href=' . My::attrValue($feed_link) . '>';
             $output .= '<span class=footer-social-links-icon-container>';
             $output .= '<svg class="social-icon-fi footer-social-links-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>';
             $output .= '<title>' . __('footer-social-links-feed-title') . '</title>';

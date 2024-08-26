@@ -448,7 +448,7 @@ class Config extends Process
                             ->placeholder($placeholder)
                             ->value($setting_value_input),
                         (new Button($setting_id . '-default-button', __('settings-colors-reset'))),
-                        (new Hidden($setting_id . '-default-value', Html::escapeHTML($default_settings[$setting_id]['default'])))
+                        (new Hidden($setting_id . '-default-value', $default_settings[$setting_id]['default']))
                     ]);
 
                 break;
@@ -568,10 +568,9 @@ class Config extends Process
                 $image_src = '';
             }
 
-
             $the_setting[] = (new Text(
                 null,
-                '<img alt="' . __('header-image-preview-alt') . '" id=' . $setting_id . '-src src="' . Html::escapeURL($image_src) . '">'
+                '<img alt="' . __('header-image-preview-alt') . '" id=' . $setting_id . '-src src="' . $image_src . '">'
             ));
 
 
@@ -580,8 +579,8 @@ class Config extends Process
                     ->id($setting_id . '-retina');
             }
 
-            $the_setting[] = (new Hidden($setting_id . '-url', Html::escapeURL($image_src)));
-            $the_setting[] = (new Hidden($setting_id . '-retina-text', Html::escapeHTML(__('header-image-retina-ready'))));
+            $the_setting[] = (new Hidden($setting_id . '-url', $image_src));
+            $the_setting[] = (new Hidden($setting_id . '-retina-text', __('header-image-retina-ready')));
         }
 
         return $the_setting;
