@@ -30,7 +30,7 @@ class Install extends Process
             return false;
         }
 
-        self::odysseyUpdateStyles();
+        self::_odysseyUpdateStyles();
 
         return true;
     }
@@ -43,24 +43,25 @@ class Install extends Process
      *
      * @return void
      */
-    private static function odysseyUpdateStyles(): void
+    private static function _odysseyUpdateStyles(): void
     {
         $styles_custom = My::settingValue('styles');
 
         if ($styles_custom !== '') {
-            // Gets default CSS content.
             $styles_default = '';
 
             $css_default_path_file = App::blog()->themesPath() . '/' . App::blog()->settings()->system->theme . '/' . 'style.min.css';
 
-            if (file_exists($css_default_path_file) && (string) file_get_contents($css_default_path_file) !== '') {
+            if (file_exists($css_default_path_file) && file_get_contents($css_default_path_file) !== '') {
                 $styles_default = (string) file_get_contents($css_default_path_file);
             }
 
             $css_custom_path_folder = App::blog()->settings()->system->theme . '/css/';
             $css_custom_path_file   = $css_custom_path_folder . 'style.min.css';
 
-            if (ThemeConfig::canWriteCss(App::blog()->settings()->system->theme, true) && ThemeConfig::canWriteCss($css_custom_path_folder, true) === true) {
+            if (ThemeConfig::canWriteCss(App::blog()->settings()->system->theme, true)
+                && ThemeConfig::canWriteCss($css_custom_path_folder, true) === true
+            ) {
                 ThemeConfig::writeCss(
                     $css_custom_path_folder,
                     'style.min',

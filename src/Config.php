@@ -280,297 +280,273 @@ class Config extends Process
     {
         $default_settings = My::settingsDefault();
         $saved_settings   = self::settingsSaved();
+        $setting_value    = $saved_settings[$setting_id] ?? $default_settings[$setting_id]['default'];
+        $placeholder      = $default_settings[$setting_id]['placeholder'] ?? '';
+        $the_setting      = [];
 
-        // Displays the default value of the parameter if it is not defined.
-        if (isset($saved_settings[$setting_id])) {
-            $setting_value = $saved_settings[$setting_id];
-        } else {
-            $setting_value = $default_settings[$setting_id]['default'];
-        }
-
-        $the_setting = [];
-
-        switch ($default_settings[$setting_id]['type']) {
-            case 'checkbox' :
-                $the_setting[] = (new Para())
-                    ->id($setting_id . '-input')
-                    ->items([
-                        (new Checkbox($setting_id, $setting_value))
-                            ->checked($setting_value)
-                            ->label(
-                                (new Label($default_settings[$setting_id]['title'], Label::OUTSIDE_TEXT_AFTER))
-                                ->class('classic')
-                            )
-                        ]
-                    );
-
-                $checkbox_default = '';
-
-                if ($default_settings[$setting_id]['type'] === 'checkbox') {
-                    if ($default_settings[$setting_id]['default'] === true) {
-                        $checkbox_default = ' ' . __('settings-default-checked');
-                    } else {
-                        $checkbox_default = ' ' . __('settings-default-unchecked');
-                    }
-                }
-
-                if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
+        // If the setting does not exist.
+        if (!empty(My::settingsDefault($setting_id))) {
+            switch ($default_settings[$setting_id]['type']) {
+                case 'checkbox' :
                     $the_setting[] = (new Para())
-                        ->id($setting_id . '-description')
-                        ->class('form-note')
+                        ->id($setting_id . '-input')
                         ->items([
-                            (new Text(null, $default_settings[$setting_id]['description'] . $checkbox_default))
-                       ]);
-                } elseif ($checkbox_default !== '') {
-                    $the_setting[] = (new Para())
-                        ->id($setting_id . '-description')
-                        ->class('form-note')
-                        ->items([
-                            (new Text(null, $checkbox_default))
-                       ]);
-                }
+                            (new Checkbox($setting_id, (bool) $setting_value))
+                                ->checked((bool) $setting_value)
+                                ->label(
+                                    (new Label($default_settings[$setting_id]['title'], 3))
+                                    ->class('classic')
+                                )
+                            ]
+                        );
 
-                break;
+                    $checkbox_default = '';
 
-            case 'select' :
-            case 'select_int' :
-                $combo = [];
-
-                foreach ($default_settings[$setting_id]['choices'] as $name => $value) {
-                    $combo[] = new Option($name, $value);
-                }
-
-                $the_setting[] = (new Para())
-                    ->id($setting_id . '-input')
-                    ->items([
-                        (new Select($setting_id))
-                            ->default((string) $setting_value)
-                            ->items($combo)
-                            ->label(new Label($default_settings[$setting_id]['title'], Label::OL_TF))
-                        ]
-                    );
-
-                // Displays a preview for font changes.
-                if ($setting_id === 'global_font_family' || $setting_id === 'content_text_font') {
-                    $preview_string = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean iaculis egestas sapien, at pretium erat interdum ullamcorper. Aliquam facilisis dolor sit amet nibh imperdiet vestibulum. Aenean et elementum magna, eget blandit arcu. Morbi tellus tortor, gravida vitae rhoncus nec, scelerisque vitae odio. In nulla mi, efficitur interdum scelerisque ac, ultrices non tortor.';
-
-                    if ($setting_id === 'global_font_family') {
-                        $the_setting[] = (new Para())
-                            ->id('odyssey-config-global-font-preview')
-                            ->class('odyssey-font-preview')
-                            ->items([
-                                (new Text('strong', __('config-preview-font'))),
-                                (new Text(null, ' ' . $preview_string))
-                            ]);
-                    } else {
-                        if ($setting_value === 'same' && isset($saved_settings['global_font_family'])) {
-                            $attr = ' style="font-family:' . My::fontStack($saved_settings['global_font_family']) . '";';
+                    if ($default_settings[$setting_id]['type'] === 'checkbox') {
+                        if ($default_settings[$setting_id]['default'] === true) {
+                            $checkbox_default = ' ' . __('settings-default-checked');
                         } else {
-                            $attr = '';
+                            $checkbox_default = ' ' . __('settings-default-unchecked');
+                        }
+                    }
+
+                    if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
+                        $the_setting[] = (new Para())
+                            ->id($setting_id . '-description')
+                            ->class('form-note')
+                            ->items([
+                                (new Text(
+                                    null,
+                                    $default_settings[$setting_id]['description'] . $checkbox_default
+                                ))
+                           ]);
+                    } elseif ($checkbox_default !== '') {
+                        $the_setting[] = (new Para())
+                            ->id($setting_id . '-description')
+                            ->class('form-note')
+                            ->items([
+                                (new Text(
+                                    null,
+                                    $checkbox_default
+                                ))
+                            ]);
+                    }
+
+                    break;
+                case 'select' :
+                case 'select_int' :
+                    $combo = [];
+
+                    foreach ($default_settings[$setting_id]['choices'] as $name => $value) {
+                        $combo[] = new Option($name, $value);
+                    }
+
+                    $the_setting[] = (new Para())
+                        ->id($setting_id . '-input')
+                        ->items([
+                            (new Select($setting_id))
+                                ->default((string) $setting_value)
+                                ->items($combo)
+                                ->label(
+                                    new Label($default_settings[$setting_id]['title'], 2)
+                                )
+                            ]
+                        );
+
+                    // Displays a preview for font changes.
+                    if ($setting_id === 'global_font_family' || $setting_id === 'content_text_font') {
+                        $preview_string = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean iaculis egestas sapien, at pretium erat interdum ullamcorper. Aliquam facilisis dolor sit amet nibh imperdiet vestibulum. Aenean et elementum magna, eget blandit arcu. Morbi tellus tortor, gravida vitae rhoncus nec, scelerisque vitae odio. In nulla mi, efficitur interdum scelerisque ac, ultrices non tortor.';
+
+                        if ($setting_id === 'global_font_family') {
+                            $the_setting[] = (new Para())
+                                ->id('odyssey-config-global-font-preview')
+                                ->class('odyssey-font-preview')
+                                ->items([
+                                    (new Text('strong', __('config-preview-font'))),
+                                    (new Text(null, ' ' . $preview_string))
+                                ]);
+                        } else {
+                            /*
+                            // TO DO. Doesn't work yet.
+                            if ($setting_value === 'same' && isset($saved_settings['global_font_family'])) {
+                                $style = ' style="font-family:' . My::fontStack($saved_settings['global_font_family']) . '";';
+                            } else {
+                                $style = '';
+                            }
+                            */
+
+                            $the_setting[] = (new Para())
+                                ->id('odyssey-config-content-font-preview')
+                                ->class('odyssey-font-preview')
+                                // ->extra($style)
+                                ->items([
+                                    (new Text('strong', __('config-preview-font'))),
+                                    (new Text(null, ' ' . $preview_string))
+                                ]);
+                        }
+                    }
+
+                    if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
+                        $the_setting[] = (new Para())
+                            ->id($setting_id . '-description')
+                            ->class('form-note')
+                            ->items([
+                                (new Text(null, $default_settings[$setting_id]['description']))
+                            ]);
+                    }
+
+                    break;
+                case 'image' :
+                    $image_src = $setting_value['url'] ?? '';
+
+                    $the_setting[] = (new Para())
+                        ->id($setting_id . '-input')
+                        ->items([
+                            (new Input($setting_id))
+                                ->label(
+                                    (new Label($default_settings[$setting_id]['title'], 2))
+                                    ->for($setting_id)
+                                )
+                                ->maxlength(255)
+                                ->placeholder($placeholder)
+                                ->size(30)
+                                ->value(Html::escapeURL($image_src))
+                        ]);
+
+                    if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
+                        $the_setting[] = (new Para())
+                            ->id($setting_id . '-description')
+                            ->class('form-note')
+                            ->items([
+                                (new Text(null, $default_settings[$setting_id]['description']))
+                            ]);
+                    }
+
+                    break;
+                case 'color' :
+                    $setting_value_input = $setting_value !== $default_settings[$setting_id]['default']
+                    ? $setting_value
+                    : '';
+
+                    $the_setting[] = (new Para())
+                        ->id($setting_id . '-input')
+                        ->class('odyssey-color-setting')
+                        ->items([
+                            (new Label($default_settings[$setting_id]['title'], 0))
+                                ->extra('for=' . $setting_id . '-text'),
+                            (new Color($setting_id, $setting_value)),
+                            (new Input($setting_id . '-text', $setting_value))
+                                ->placeholder($placeholder)
+                                ->value($setting_value_input),
+                            (new Button($setting_id . '-default-button', __('settings-colors-reset'))),
+                            (new Hidden($setting_id . '-default-value', $default_settings[$setting_id]['default']))
+                        ]);
+
+                    break;
+                case 'textarea' :
+                    $the_setting[] = (new Para())
+                        ->id($setting_id . '-input')
+                        ->items([
+                            (new Label($default_settings[$setting_id]['title'], 2))
+                                ->for($setting_id),
+                            (new Textarea($setting_id, $setting_value))
+                                ->placeholder($placeholder)
+                                ->cols(60)
+                                ->rows(3)
+                        ]);
+
+                    if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
+                        $the_setting[] = (new Para())
+                            ->id($setting_id . '-description')
+                            ->class('form-note')
+                            ->items([
+                                (new Text(null, $default_settings[$setting_id]['description']))
+                            ]);
+                    }
+
+                    break;
+                case 'range' :
+                    $range_default = [
+                        'unit'  => 'em',
+                        'value' => (int) My::settingValue($setting_id) ?: (int) $default_settings[$setting_id]['default'],
+                        'min'   => (int) $default_settings[$setting_id]['range']['min'],
+                        'max'   => (int) $default_settings[$setting_id]['range']['max'],
+                        'step'  => (int) $default_settings[$setting_id]['range']['step']
+                    ];
+
+                    $range_default_output = $range_default['value'];
+
+                    if ($setting_id === 'global_page_width_value') {
+                        if (My::settingValue('global_unit') === 'px') {
+                            $range_default['unit'] = 'px';
+                            $range_default['min']  = 480;
+                            $range_default['max']  = 1280;
+                            $range_default['step'] = 2;
                         }
 
+                        $range_default_output = sprintf(
+                            __('settings-input-width-range-output'),
+                            '<span id=' . $setting_id . '-output-value>' . $range_default['value'] . '</span>',
+                            '<span id=' . $setting_id . '-output-unit>' . $range_default['unit'] . '</span>',
+                        );
+                    }
+
+                    $the_setting[] = (new Para())
+                        ->id($setting_id . '-input')
+                        ->items([
+                            (new Label($default_settings[$setting_id]['title'], 2))
+                                ->for($setting_id),
+                            (new Input($setting_id, 'range'))
+                                ->default($range_default['value'])
+                                ->min($range_default['min'])
+                                ->max($range_default['max'])
+                                ->step($range_default['step']),
+                            (new Text(null, ' <output name=' . $setting_id . '-output>' . $range_default_output . '</output>'))
+                        ]);
+
+                    if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
                         $the_setting[] = (new Para())
-                            ->id('odyssey-config-content-font-preview')
-                            ->class('odyssey-font-preview')
+                            ->id($setting_id . '-description')
+                            ->class('form-note')
                             ->items([
-                                (new Text('strong', __('config-preview-font'))),
-                                (new Text(null, ' ' . $preview_string))
+                                (new Text(null, $default_settings[$setting_id]['description']))
                             ]);
                     }
-                }
 
-                if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
+                    break;
+                default :
                     $the_setting[] = (new Para())
-                        ->id($setting_id . '-description')
-                        ->class('form-note')
+                        ->id($setting_id . '-input')
                         ->items([
-                            (new Text(null, $default_settings[$setting_id]['description']))
+                            (new Input($setting_id))
+                                ->label(
+                                    (new Label($default_settings[$setting_id]['title'], 2))
+                                        ->for($setting_id)
+                                )
+                                ->maxlength(255)
+                                ->placeholder($placeholder)
+                                ->size(30)
+                                ->value($setting_value)
                         ]);
-                }
 
-                break;
-
-            case 'image' :
-                $placeholder = isset($default_settings[$setting_id]['placeholder'])
-                ? $default_settings[$setting_id]['placeholder']
-                : '';
-
-                if (!empty($setting_value) && $setting_value['url'] !== '') {
-                    $image_src = $setting_value['url'];
-                } else {
-                    $image_src = '';
-                }
-
-                $the_setting[] = (new Para())
-                    ->id($setting_id . '-input')
-                    ->items([
-                        (new Input($setting_id))
-                            ->label(
-                                (new Label($default_settings[$setting_id]['title'], 2))
-                                    ->for($setting_id)
-                            )
-                            ->maxlength(255)
-                            ->placeholder($placeholder)
-                            ->size(30)
-                            ->value($image_src)
-                    ]);
-
-                if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
-                    $the_setting[] = (new Para())
-                        ->id($setting_id . '-description')
-                        ->class('form-note')
-                        ->items([
-                            (new Text(null, $default_settings[$setting_id]['description']))
-                        ]);
-                }
-
-                break;
-
-            case 'color' :
-                $placeholder = isset($default_settings[$setting_id]['placeholder'])
-                ? My::attrValue($default_settings[$setting_id]['placeholder'])
-                : '';
-
-                $setting_value = $setting_value ?: $default_settings[$setting_id]['default'];
-
-                $setting_value_input = $setting_value !== $default_settings[$setting_id]['default']
-                ? $setting_value
-                : '';
-
-                $the_setting[] = (new Para())
-                    ->id($setting_id . '-input')
-                    ->class('odyssey-color-setting')
-                    ->items([
-                        (new Label($default_settings[$setting_id]['title'], 0, $setting_id))
-                            ->extra('for=' . $setting_id . '-text'),
-                        (new Color($setting_id, $setting_value)),
-                        (new Input($setting_id . '-text', $setting_value))
-                            ->placeholder($placeholder)
-                            ->value($setting_value_input),
-                        (new Button($setting_id . '-default-button', __('settings-colors-reset'))),
-                        (new Hidden($setting_id . '-default-value', $default_settings[$setting_id]['default']))
-                    ]);
-
-                break;
-
-            case 'textarea' :
-                $placeholder = isset($default_settings[$setting_id]['placeholder'])
-                ? 'placeholder=' . My::attrValue($default_settings[$setting_id]['placeholder'])
-                : '';
-
-                $the_setting[] = (new Para())
-                    ->id($setting_id . '-input')
-                    ->items([
-                        (new Label($default_settings[$setting_id]['title'], 2))
-                            ->for($setting_id),
-                        (new Textarea($setting_id, $setting_value))
-                            ->placeholder($placeholder)
-                            ->cols(60)
-                            ->rows(3)
-                    ]);
-
-                if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
-                    $the_setting[] = (new Para())
-                        ->id($setting_id . '-description')
-                        ->class('form-note')
-                        ->items([
-                            (new Text(null, $default_settings[$setting_id]['description']))
-                        ]);
-                }
-
-                break;
-
-            case 'range' :
-                $range_default = [
-                    'unit'  => 'em',
-                    'value' => (int) My::settingValue($setting_id) ?: (int) $default_settings[$setting_id]['default'],
-                    'min'   => (int) $default_settings[$setting_id]['range']['min'],
-                    'max'   => (int) $default_settings[$setting_id]['range']['max'],
-                    'step'  => (int) $default_settings[$setting_id]['range']['step']
-                ];
-
-                $range_default_output = $range_default['value'];
-
-                //
-                if ($setting_id === 'global_page_width_value') {
-                    if (My::settingValue('global_unit') === 'px') {
-                        $range_default['unit'] = 'px';
-                        $range_default['min']  = 480;
-                        $range_default['max']  = 1280;
-                        $range_default['step'] = 2;
+                    if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
+                        $the_setting[] = (new Para())
+                            ->id($setting_id . '-description')
+                            ->class('form-note')
+                            ->items([
+                                (new Text(null, $default_settings[$setting_id]['description']))
+                            ]);
                     }
-
-                    $range_default_output = sprintf(
-                        __('settings-input-width-range-output'),
-                        '<span id=' . $setting_id . '-output-value>' . $range_default['value'] . '</span>',
-                        '<span id=' . $setting_id . '-output-unit>' . $range_default['unit'] . '</span>',
-                    );
-                }
-
-                $the_setting[] = (new Para())
-                    ->id($setting_id . '-input')
-                    ->items([
-                        (new Label($default_settings[$setting_id]['title'], 2))
-                            ->for($setting_id),
-                        (new Input($setting_id, 'range'))
-                            ->default($range_default['value'])
-                            ->min($range_default['min'])
-                            ->max($range_default['max'])
-                            ->step($range_default['step']),
-                        (new Text(null, ' <output name=' . $setting_id . '-output>' . $range_default_output . '</output>'))
-                    ]);
-
-                if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
-                    $the_setting[] = (new Para())
-                        ->id($setting_id . '-description')
-                        ->class('form-note')
-                        ->items([
-                            (new Text(null, $default_settings[$setting_id]['description']))
-                        ]);
-                }
-
-                break;
-
-            default :
-                $placeholder = isset($default_settings[$setting_id]['placeholder'])
-                ? My::attrValue($default_settings[$setting_id]['placeholder'])
-                : '';
-
-                $the_setting[] = (new Para())
-                    ->id($setting_id . '-input')
-                    ->items([
-                        (new Input($setting_id))
-                            ->label(
-                                (new Label($default_settings[$setting_id]['title'], 2))
-                                    ->for($setting_id)
-                            )
-                            ->maxlength(255)
-                            ->placeholder($placeholder)
-                            ->size(30)
-                            ->value($setting_value)
-                    ]);
-
-                if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
-                    $the_setting[] = (new Para())
-                        ->id($setting_id . '-description')
-                        ->class('form-note')
-                        ->items([
-                            (new Text(null, $default_settings[$setting_id]['description']))
-                        ]);
-                }
+            }
         }
 
         // Header image.
         if ($setting_id === 'header_image') {
-            if (!empty($setting_value) && isset($setting_value['url'])) {
-                $image_src = $setting_value['url'];
-            } else {
-                $image_src = '';
-            }
+            $image_src = $setting_value['url'] ?? '';
 
             $the_setting[] = (new Text(
                 null,
-                '<img alt="' . __('header-image-preview-alt') . '" id=' . $setting_id . '-src src="' . $image_src . '">'
+                '<img alt="' . __('header-image-preview-alt') . '" id=' . $setting_id . '-src src=' . My::attrValue($image_src) . '>'
             ));
 
 
@@ -713,7 +689,7 @@ class Config extends Process
             $page_width_data = self::sanitizePageWidth($_POST['global_unit'], $_POST['global_page_width_value']);
 
             if (!empty($page_width_data)) {
-                $css_root_array[':root']['--page-width'] = Html::escapeHTML($page_width_data['value'] . $page_width_data['unit']);
+                $css_root_array[':root']['--page-width'] = $page_width_data['value'] . $page_width_data['unit'];
             }
         }
 
@@ -744,89 +720,91 @@ class Config extends Process
             $css_media_print_array['body']['font-smooth']             = 'unset';
         }
 
-        // Main text color.
-        if (isset($_POST['global_color_text_custom'])
-            && isset($_POST['global_color_text_custom-default-value'])
-            && self::isHexColor($_POST['global_color_text_custom'])
-            && $_POST['global_color_text_custom'] !== $_POST['global_color_text_custom-default-value']
-        ) {
-            $css_root_array[':root']['--color-text-main'] = Html::escapeHTML($_POST['global_color_text_custom']);
-        }
+        if (isset($_POST['global_color_primary']) && $_POST['global_color_primary'] === 'custom') {
+            // Main text color.
+            if (isset($_POST['global_color_text_custom'])
+                && isset($_POST['global_color_text_custom-default-value'])
+                && self::isHexColor($_POST['global_color_text_custom'])
+                && $_POST['global_color_text_custom'] !== $_POST['global_color_text_custom-default-value']
+            ) {
+                $css_root_array[':root']['--color-text-main'] = $_POST['global_color_text_custom'];
+            }
 
-        if (isset($_POST['global_color_text_dark_custom'])
-            && isset($_POST['global_color_text_dark_custom-default-value'])
-            && self::isHexColor($_POST['global_color_text_dark_custom'])
-            && $_POST['global_color_text_dark_custom'] !== $_POST['global_color_text_dark_custom-default-value']
-        ) {
-            $css_root_array[':root']['--color-text-main-dark'] = Html::escapeHTML($_POST['global_color_text_dark_custom']);
-        }
+            if (isset($_POST['global_color_text_dark_custom'])
+                && isset($_POST['global_color_text_dark_custom-default-value'])
+                && self::isHexColor($_POST['global_color_text_dark_custom'])
+                && $_POST['global_color_text_dark_custom'] !== $_POST['global_color_text_dark_custom-default-value']
+            ) {
+                $css_root_array[':root']['--color-text-main-dark'] = $_POST['global_color_text_dark_custom'];
+            }
 
-        // Text secondary color.
-        if (isset($_POST['global_color_text_secondary_custom'])
-            && isset($_POST['global_color_text_secondary_custom-default-value'])
-            && self::isHexColor($_POST['global_color_text_secondary_custom'])
-            && $_POST['global_color_text_secondary_custom'] !== $_POST['global_color_text_secondary_custom-default-value']
-        ) {
-            $css_root_array[':root']['--color-text-secondary'] = Html::escapeHTML($_POST['global_color_text_secondary_custom']);
-        }
+            // Text secondary color.
+            if (isset($_POST['global_color_text_secondary_custom'])
+                && isset($_POST['global_color_text_secondary_custom-default-value'])
+                && self::isHexColor($_POST['global_color_text_secondary_custom'])
+                && $_POST['global_color_text_secondary_custom'] !== $_POST['global_color_text_secondary_custom-default-value']
+            ) {
+                $css_root_array[':root']['--color-text-secondary'] = $_POST['global_color_text_secondary_custom'];
+            }
 
-        if (isset($_POST['global_color_text_secondary_dark_custom'])
-            && isset($_POST['global_color_text_secondary_dark_custom-default-value'])
-            && self::isHexColor($_POST['global_color_text_secondary_dark_custom'])
-            && $_POST['global_color_text_secondary_dark_custom'] !== $_POST['global_color_text_secondary_dark_custom-default-value']
-        ) {
-            $css_root_array[':root']['--color-text-secondary-dark'] = Html::escapeHTML($_POST['global_color_text_secondary_dark_custom']);
-        }
+            if (isset($_POST['global_color_text_secondary_dark_custom'])
+                && isset($_POST['global_color_text_secondary_dark_custom-default-value'])
+                && self::isHexColor($_POST['global_color_text_secondary_dark_custom'])
+                && $_POST['global_color_text_secondary_dark_custom'] !== $_POST['global_color_text_secondary_dark_custom-default-value']
+            ) {
+                $css_root_array[':root']['--color-text-secondary-dark'] = $_POST['global_color_text_secondary_dark_custom'];
+            }
 
-        // Input color.
-        if (isset($_POST['global_color_input_custom'])
-            && isset($_POST['global_color_input_custom-default-value'])
-            && self::isHexColor($_POST['global_color_input_custom'])
-            && $_POST['global_color_input_custom'] !== $_POST['global_color_input_custom-default-value']
-        ) {
-            $css_root_array[':root']['--color-input-background'] = Html::escapeHTML($_POST['global_color_input_custom']);
-        }
+            // Input color.
+            if (isset($_POST['global_color_input_custom'])
+                && isset($_POST['global_color_input_custom-default-value'])
+                && self::isHexColor($_POST['global_color_input_custom'])
+                && $_POST['global_color_input_custom'] !== $_POST['global_color_input_custom-default-value']
+            ) {
+                $css_root_array[':root']['--color-input-background'] = $_POST['global_color_input_custom'];
+            }
 
-        if (isset($_POST['global_color_input_dark_custom'])
-            && isset($_POST['global_color_input_dark_custom-default-value'])
-            && self::isHexColor($_POST['global_color_input_dark_custom'])
-            && $_POST['global_color_input_dark_custom'] !== $_POST['global_color_input_dark_custom-default-value']
-        ) {
-            $css_root_array[':root']['--color-input-background-dark'] = Html::escapeHTML($_POST['global_color_input_dark_custom']);
-        }
+            if (isset($_POST['global_color_input_dark_custom'])
+                && isset($_POST['global_color_input_dark_custom-default-value'])
+                && self::isHexColor($_POST['global_color_input_dark_custom'])
+                && $_POST['global_color_input_dark_custom'] !== $_POST['global_color_input_dark_custom-default-value']
+            ) {
+                $css_root_array[':root']['--color-input-background-dark'] = $_POST['global_color_input_dark_custom'];
+            }
 
-        // Border color.
-        if (isset($_POST['global_color_border_custom'])
-            && isset($_POST['global_color_border_custom-default-value'])
-            && self::isHexColor($_POST['global_color_border_custom'])
-            && $_POST['global_color_border_custom'] !== $_POST['global_color_border_custom-default-value']
-        ) {
-            $css_root_array[':root']['--color-border'] = Html::escapeHTML($_POST['global_color_border_custom']);
-        }
+            // Border color.
+            if (isset($_POST['global_color_border_custom'])
+                && isset($_POST['global_color_border_custom-default-value'])
+                && self::isHexColor($_POST['global_color_border_custom'])
+                && $_POST['global_color_border_custom'] !== $_POST['global_color_border_custom-default-value']
+            ) {
+                $css_root_array[':root']['--color-border'] = $_POST['global_color_border_custom'];
+            }
 
-        if (isset($_POST['global_color_border_dark_custom'])
-            && isset($_POST['global_color_border_dark_custom-default-value'])
-            && self::isHexColor($_POST['global_color_border_dark_custom'])
-            && $_POST['global_color_border_dark_custom'] !== $_POST['global_color_border_dark_custom-default-value']
-        ) {
-            $css_root_array[':root']['--color-border-dark'] = Html::escapeHTML($_POST['global_color_border_dark_custom']);
-        }
+            if (isset($_POST['global_color_border_dark_custom'])
+                && isset($_POST['global_color_border_dark_custom-default-value'])
+                && self::isHexColor($_POST['global_color_border_dark_custom'])
+                && $_POST['global_color_border_dark_custom'] !== $_POST['global_color_border_dark_custom-default-value']
+            ) {
+                $css_root_array[':root']['--color-border-dark'] = $_POST['global_color_border_dark_custom'];
+            }
 
-        // Background color.
-        if (isset($_POST['global_color_background_custom'])
-            && isset($_POST['global_color_background_custom-default-value'])
-            && self::isHexColor($_POST['global_color_background_custom'])
-            && $_POST['global_color_background_custom'] !== $_POST['global_color_background_custom-default-value']
-        ) {
-            $css_root_array[':root']['--color-background'] = Html::escapeHTML($_POST['global_color_background_custom']);
-        }
+            // Background color.
+            if (isset($_POST['global_color_background_custom'])
+                && isset($_POST['global_color_background_custom-default-value'])
+                && self::isHexColor($_POST['global_color_background_custom'])
+                && $_POST['global_color_background_custom'] !== $_POST['global_color_background_custom-default-value']
+            ) {
+                $css_root_array[':root']['--color-background'] = $_POST['global_color_background_custom'];
+            }
 
-        if (isset($_POST['global_color_background_dark_custom'])
-            && isset($_POST['global_color_background_custom-default-value'])
-            && self::isHexColor($_POST['global_color_background_dark_custom'])
-            && $_POST['global_color_background_dark_custom'] !== $_POST['global_color_background_dark_custom-default-value']
-        ) {
-            $css_root_array[':root']['--color-background-dark'] = Html::escapeHTML($_POST['global_color_background_dark_custom']);
+            if (isset($_POST['global_color_background_dark_custom'])
+                && isset($_POST['global_color_background_custom-default-value'])
+                && self::isHexColor($_POST['global_color_background_dark_custom'])
+                && $_POST['global_color_background_dark_custom'] !== $_POST['global_color_background_dark_custom-default-value']
+            ) {
+                $css_root_array[':root']['--color-background-dark'] = $_POST['global_color_background_dark_custom'];
+            }
         }
 
         // Primary color.
@@ -880,7 +858,7 @@ class Config extends Process
                     && self::isHexColor($_POST['global_color_primary_custom'])
                     && $_POST['global_color_primary_custom'] !== $_POST['global_color_primary_custom-default-value']
                 ) {
-                    $css_root_array[':root']['--color-primary'] = Html::escapeHTML($_POST['global_color_primary_custom']);
+                    $css_root_array[':root']['--color-primary'] = $_POST['global_color_primary_custom'];
                 }
 
                 if (isset($_POST['global_color_primary_amplified_custom'])
@@ -888,7 +866,7 @@ class Config extends Process
                     && self::isHexColor($_POST['global_color_primary_amplified_custom'])
                     && $_POST['global_color_primary_amplified_custom'] !== $_POST['global_color_primary_amplified_custom-default-value']
                 ) {
-                    $css_root_array[':root']['--color-primary-amplified'] = Html::escapeHTML($_POST['global_color_primary_amplified_custom']);
+                    $css_root_array[':root']['--color-primary-amplified'] = $_POST['global_color_primary_amplified_custom'];
                 }
 
                 if (isset($_POST['global_color_primary_dark_custom'])
@@ -896,7 +874,7 @@ class Config extends Process
                     && self::isHexColor($_POST['global_color_primary_dark_custom'])
                     && $_POST['global_color_primary_dark_custom'] !== $_POST['global_color_primary_dark_custom-default-value']
                 ) {
-                    $css_root_dark_array[':root']['--color-primary-dark'] = Html::escapeHTML($_POST['global_color_primary_dark_custom']);
+                    $css_root_dark_array[':root']['--color-primary-dark'] = $_POST['global_color_primary_dark_custom'];
                 }
 
                 if (isset($_POST['global_color_primary_dark_amplified_custom'])
@@ -904,7 +882,7 @@ class Config extends Process
                     && self::isHexColor($_POST['global_color_primary_dark_amplified_custom'])
                     && $_POST['global_color_primary_dark_amplified_custom'] !== $_POST['global_color_primary_dark_amplified_custom-default-value']
                 ) {
-                    $css_root_dark_array[':root']['--color-primary-dark-amplified'] = Html::escapeHTML($_POST['global_color_primary_dark_amplified_custom']);
+                    $css_root_dark_array[':root']['--color-primary-dark-amplified'] = $_POST['global_color_primary_dark_amplified_custom'];
                 }
             }
         }
@@ -972,7 +950,7 @@ class Config extends Process
         $font_size_allowed = [80, 90, 110, 120];
 
         if (isset($_POST['content_font_size']) && in_array((int) $_POST['content_font_size'], $font_size_allowed, true)) {
-            $css_root_array[':root']['--content-font-size'] = My::removeZero($_POST['content_font_size'] / 100) . 'em';
+            $css_root_array[':root']['--content-font-size'] = My::removeZero((int) $_POST['content_font_size'] / 100) . 'em';
         }
 
         // Text align
@@ -1208,12 +1186,9 @@ class Config extends Process
         $css .= !empty($css_media_motion_array) ? '@media (prefers-reduced-motion:reduce){' . My::stylesArrToStr($css_media_motion_array) . '}' : '';
         $css .= !empty($css_media_print_array) ? '@media print{' . My::stylesArrToStr($css_media_print_array) . '}' : '';
 
-        $css = htmlspecialchars($css, ENT_NOQUOTES);
-        $css = str_replace('&gt;', '>', $css);
-
         if ($css) {
             return [
-                'value' => $css,
+                'value' => filter_var($css),
                 'type'  => 'string'
             ];
         }
@@ -1236,7 +1211,7 @@ class Config extends Process
 
         if ($setting_type === 'select' && in_array($setting_value, $default_settings[$setting_id]['choices'])) {
             return [
-                'value' => Html::escapeHTML($setting_value),
+                'value' => $setting_value,
                 'type'  => 'string'
             ];
         }
@@ -1272,19 +1247,17 @@ class Config extends Process
         }
 
         if ($setting_type === 'color') {
-            if (self::isHexColor($setting_value) === false) {
-                $setting_value = $default_settings[$setting_id]['default'];
+            if (self::isHexColor($setting_value) === true) {
+                return [
+                    'value' => strtolower($setting_value),
+                    'type'  => 'string'
+                ];
             }
-
-            return [
-                'value' => Html::escapeHTML(strtolower($setting_value)),
-                'type'  => 'string'
-            ];
         }
 
         if ($setting_value != $default_settings[$setting_id]['default']) {
             return [
-                'value' => Html::escapeHTML($setting_value),
+                'value' => filter_var($setting_value),
                 'type'  => 'string'
             ];
         }
@@ -1308,8 +1281,12 @@ class Config extends Process
      *
      * @return array The image in an array.
      */
-    public static function sanitizeHeaderImage(string $setting_id, string $image_url, string $page_width_unit, string $page_width_value): array
-    {
+    public static function sanitizeHeaderImage(
+        string $setting_id,
+        string $image_url,
+        string $page_width_unit,
+        string $page_width_value
+    ): array {
         $default_settings = My::settingsDefault();
         $image_url        = Html::escapeURL($image_url) ?: '';
         $page_width_unit  = $page_width_unit ?: '';
@@ -1355,7 +1332,7 @@ class Config extends Process
 
                 // Sets the array which contains the image data.
                 $image_data = [
-                    'url'   => Html::sanitizeURL($image_url),
+                    'url'   => filter_var($image_url, FILTER_SANITIZE_URL),
                     'width' => (int) $header_image_width
                 ];
 
@@ -1377,7 +1354,7 @@ class Config extends Process
 
                     if (file_exists($image_path_2x) && getimagesize($image_path_2x) !== false) {
                         return [
-                            'value' => Html::sanitizeURL($image_url_2x),
+                            'value' => filter_var($image_url_2x, FILTER_SANITIZE_URL),
                             'type'  => 'string'
                         ];
                     }
@@ -1399,7 +1376,9 @@ class Config extends Process
      */
     public static function sanitizePageWidth(string $unit, string $value, $setting_id = null): array
     {
-        $unit  = $unit ?: 'em';
+        $units_allowed = ['em', 'px'];
+
+        $unit  = in_array($unit, $units_allowed, true) ? $unit : 'em';
         $value = (int) $value ?: 30;
 
         if (($unit === 'em' && ($value > 30 && $value <= 80))
@@ -1407,7 +1386,7 @@ class Config extends Process
         ) {
             if ($setting_id === 'global_unit') {
                 return [
-                    'value' => Html::escapeHTML($unit),
+                    'value' => $unit,
                     'type'  => 'string'
                 ];
             }
@@ -1420,7 +1399,7 @@ class Config extends Process
             }
 
             return [
-                'unit'  => Html::escapeHTML($unit),
+                'unit'  => $unit,
                 'value' => (int) $value
             ];
         }
@@ -1438,7 +1417,7 @@ class Config extends Process
      */
     public static function sanitizeSocialLink(string $setting_id, string $value): array
     {
-        if ($value === '') {
+        if (!$setting_id || !$value) {
             return [];
         }
 
@@ -1451,7 +1430,7 @@ class Config extends Process
             case 'phone-number':
                 if (str_starts_with($value, $site_base) && is_numeric(substr($value, 1))) {
                     return [
-                        'value' => Html::escapeHTML($value),
+                        'value' => '+' . str_replace('+', '', (int) $value),
                         'type'  => 'string'
                     ];
                 }
@@ -1460,21 +1439,12 @@ class Config extends Process
             case 'url':
                 if ($site_base !== '' && str_starts_with($value, $site_base)) {
                     return [
-                        'value' => Html::escapeURL($value),
+                        'value' => filter_var($value, FILTER_SANITIZE_URL),
                         'type'  => 'string'
                     ];
                 } elseif (filter_var($value, FILTER_VALIDATE_URL) !== false) {
                     return [
-                        'value' => Html::escapeURL($value),
-                        'type'  => 'string'
-                    ];
-                }
-
-                break;
-            case 'username':
-                if (str_starts_with($value, $site_base)) {
-                    return [
-                        'value' => Html::escapeHTML($value),
+                        'value' => filter_var($value, FILTER_SANITIZE_URL),
                         'type'  => 'string'
                     ];
                 }
@@ -1492,7 +1462,7 @@ class Config extends Process
                     || str_starts_with($value, 'sgnl://signal.group/')
                 ) {
                     return [
-                        'value' => Html::escapeURL($value),
+                        'value' => filter_var($value, FILTER_SANITIZE_URL),
                         'type'  => 'string'
                     ];
                 }
@@ -1501,12 +1471,12 @@ class Config extends Process
             case 'whatsapp':
                 if (str_starts_with($value, '+') && preg_match('/\+[0-9]+/', $value)) {
                     return [
-                        'value' => 'https://wa.me/' . Html::escapeURL(substr($value, 1)),
+                        'value' => filter_var('https://wa.me/' . substr($value, 1), FILTER_SANITIZE_URL),
                         'type'  => 'string'
                     ];
                 } elseif (str_starts_with($value, 'https://wa.me/') || str_starts_with($value, 'whatsapp://wa.me/')) {
                     return [
-                        'value' => Html::escapeURL($value),
+                        'value' => filter_var($value, FILTER_SANITIZE_URL),
                         'type'  => 'string'
                     ];
                 }
@@ -1515,12 +1485,12 @@ class Config extends Process
             case 'x':
                 if (preg_match('/\@[\w+]{0,15}/', $value)) {
                     return [
-                        'value' => 'https://x.com/' . Html::escapeURL(substr($value, 1)),
+                        'value' => filter_var('https://x.com/' . substr($value, 1), FILTER_SANITIZE_URL),
                         'type'  => 'string'
                     ];
                 } elseif (str_starts_with($value, 'https://x.com/') || str_starts_with($value, 'https://twitter.com/')) {
                     return [
-                        'value' => Html::escapeURL($value),
+                        'value' => filter_var($value, FILTER_SANITIZE_URL),
                         'type'  => 'string'
                     ];
                 }

@@ -727,8 +727,8 @@ class My extends MyTheme
             'title' => __('settings-footer-odysseystyles-title'),
         ];
 
-        if ($setting_id && isset($default_settings[$setting_id])) {
-            return $default_settings[$setting_id];
+        if ($setting_id) {
+            return $default_settings[$setting_id] ?? [];
         }
 
         return $default_settings;
