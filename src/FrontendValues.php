@@ -20,9 +20,9 @@ class FrontendValues
      *
      * @return string The relative URI.
      */
-    public static function odysseyURIRelative(): string
+    public static function odysseyGetURI(): string
     {
-        return '<?php echo Html::escapeURL($_SERVER["REQUEST_URI"]); ?>';
+        return Html::escapeURL($_SERVER['REQUEST_URI']);
     }
 
     /**
@@ -35,13 +35,17 @@ class FrontendValues
      *
      * @return string The description.
      */
-    public static function odysseyMetaDescriptionHome($attr): string
+    public static function odysseyMetaDescriptionHome(): string
     {
-        if (My::settingValue('advanced_meta_description')) {
-            return '<?php echo ' . sprintf(App::frontend()->template()->getFilters($attr), 'App::blog()->settings->odyssey->advanced_meta_description') . '; ?>';
+        $description = My::settingValue('advanced_meta_description') ?? App::blog()->desc ?? '';
+
+        if ($description !== '') {
+            $description = preg_replace('/\s+/', ' ', Ctx::remove_html($description));
+
+            return '<meta name=description content=' . My::escapeAttr($description) . '>';
         }
 
-        return '<?php echo ' . sprintf(App::frontend()->template()->getFilters($attr), 'App::blog()->desc') . '; ?>';
+        return '';
     }
 
     /**
@@ -51,11 +55,12 @@ class FrontendValues
      */
     public static function odysseyStyles(): string
     {
-        if (!My::settingValue('styles_url')) {
-            return '<link rel=stylesheet href=' . My::attrValue(App::blog()->settings()->system->themes_url . '/' . App::blog()->settings()->system->theme . '/style.min.css') . '>';
-        }
+        $css_url_default = App::blog()->settings()->system->themes_url . '/' . App::blog()->settings()->system->theme . '/style.min.css';
 
-        return '<link rel=stylesheet href=' . My::attrValue(My::settingValue('styles_url')) . '>';
+        $css_url = My::settingValue('styles_url') ?? $css_url_default;
+        $css_url = Html::escapeURL($css_url);
+
+        return '<link rel=stylesheet href=' . My::escapeAttr($css_url) . '>';
     }
 
     /**
@@ -69,46 +74,44 @@ class FrontendValues
      *                    - (string) top
      *                    - (string) bottom
      *
-     * @return string
+     * @return string The header image.
      */
-    public static function odysseyHeaderImage($attr)
+    public static function odysseyHeaderImage($attr): string
     {
-        if (My::settingValue('header_image') && isset(My::settingValue('header_image')['url'])) {
-            if (!empty($attr['position'])
-                && (($attr['position'] === 'bottom' && My::settingValue('header_image_position') === 'bottom')
-                || ($attr['position'] === 'top' && !My::settingValue('header_image_position')))
-            ) {
-                $image_url  = My::settingValue('header_image')['url'];
-                $image_size = (int) My::settingValue('header_image')['width'];
+        $image_url  = My::settingValue('header_image')['url'] ?? null;
+        $image_size = My::settingValue('header_image')['width'] ?? null;
 
-                $srcset = '';
-                $sizes  = '';
-
-                if (My::settingValue('header_image_description')) {
-                    $alt = ' alt=' . My::attrValue(My::settingValue('header_image_description'));
-                } else {
-                    $alt = ' alt=' . My::attrValue(__('header-image-alt'));
-                }
-
-                if (My::settingValue('header_image2x')) {
-                    $image2x_url = My::settingValue('header_image2x');
-
-                    $srcset  = ' srcset="';
-                    $srcset .= $image_url . ' 1x, ';
-                    $srcset .= $image2x_url . ' 2x';
-                    $srcset .= '"';
-
-                    $sizes = ' sizes=' . $image_size . 'vw';
-                }
-
-                // Does not add a link to the home page on home page.
-                if (App::url()->type === 'default') {
-                    return '<div id=site-image><img' . $alt . ' src=' . My::attrValue($image_url) . '' . $srcset . $sizes . '></div>';
-                }
-
-                return '<div id=site-image><a href=' . My::attrValue(App::blog()->url) . ' rel=home><img' . $alt . ' src=' . My::attrValue($image_url) . $srcset . $sizes . '></a></div>';
-            }
+        if (!$image_url || !$image_size) {
+            return '';
         }
+
+        $srcset = '';
+        $sizes  = '';
+
+        $image2x_url = My::settingValue('header_image2x') ?? null;
+
+        if ($image2x_url) {
+            $srcset  = ' srcset="';
+            $srcset .= Html::escapeURL($image_url) . ' 1x, ';
+            $srcset .= Html::escapeURL($image2x_url) . ' 2x';
+            $srcset .= '"';
+
+            $sizes = ' sizes=' . Html::escapeHTML($image_size) . 'vw';
+        }
+
+        $img_description = My::settingValue('header_image_description') ?: __('header-image-alt');
+        $img_position    = !My::settingValue('header_image_position') ? 'top' : 'bottom';
+
+        if (isset($attr['position']) && $img_position === $attr['position']) {
+            // Home page image
+            if (App::url()->type === 'default') {
+                return '<div id=site-image><img alt=' . My::escapeAttr($img_description) . ' src=' . My::escapeAttr($image_url) . '' . $srcset . $sizes . '></div>';
+            }
+
+            return '<div id=site-image><a href=' . My::escapeAttr(App::blog()->url) . ' rel=home><img alt=' . My::escapeAttr($img_description) . ' src=' . My::escapeAttr($image_url) . $srcset . $sizes . '></a></div>';
+        }
+
+        return '';
     }
 
     /**
@@ -123,9 +126,9 @@ class FrontendValues
         }
 
         if (App::blog()->desc) {
-            $desc = strip_tags(App::blog()->desc, ['<em>', '<strong>']);
+            $tags_allowed = ['<b>', '<strong>', '<i>', '<em>', '<mark>', '<del>', '<sub>', '<sup>'];
 
-            return '<div id=site-desc>' . My::cleanAttr($desc) . '</div>';
+            return '<div id=site-desc>' . My::cleanStr(App::blog()->desc, $tags_allowed) . '</div>';
         }
 
         return '';
@@ -180,7 +183,7 @@ class FrontendValues
                     if ($img_s && $img_s !== $img_t) {
                         $img_src = "src=\"" . $img_t . "\"";
 
-                        $img_src_srcset = $img_src . " srcset=\"" . $img_s . " " . $width_s . "w, " . $img_t . " " . $width_t . "w\" size=100vw";
+                        $img_src_srcset = Html::escapeHTML($img_src) . " srcset=\"" . Html::escapeHTML($img_s) . " " . (int) $width_s . "w, " . Html::escapeHTML($img_t) . " " . (int) $width_t . "w\" size=100vw";
 
                         $img = str_replace($img_src, $img_src_srcset, $img);
                     }
@@ -195,7 +198,7 @@ class FrontendValues
                 if ($img) {
                     $content_width = "' . My::getContentWidth('px')['value'] . '";
 
-                    $img_o         = ' . Ctx::class . '::EntryFirstImageHelper("o", false, "", true) ?: null;
+                    $img_o         = ' . Ctx::class . '::EntryFirstImageHelper("o", false, "", true) ?: "";
                     $img_o_path    = App::blog()->public_path . str_replace(
                         App::blog()->settings->system->public_url . "/",
                         "/",
@@ -209,24 +212,24 @@ class FrontendValues
                     $img_s   = ' . Ctx::class . '::EntryFirstImageHelper("s", false, "", true) ?: null;
                     $width_s = ' . App::media()->thumb_sizes['s'][0] . ';
 
-                    if ($img_o && $width_o >= $content_width) {
+                    if ($img_o !== "" && $width_o >= $content_width) {
                         $img_src = "src=\"" . $img_o . "\"";
 
                         if ($img_m || $img_s) {
                             $img_src_srcset = "";
 
                             if ($img_s) {
-                                $img_src_srcset .= $img_s . " " . $width_s . "w, ";
+                                $img_src_srcset .= Html::escapeHTML($img_s) . " " . (int) $width_s . "w, ";
                             }
 
                             if ($img_m) {
-                                $img_src_srcset .= $img_m . " " . $width_m . "w, ";
+                                $img_src_srcset .= Html::escapeHTML($img_m) . " " . (int) $width_m . "w, ";
                             }
 
-                            $img_src_srcset .= $img_o . " " . $width_o . "w";
+                            $img_src_srcset .= Html::escapeHTML($img_o) . " " . (int) $width_o . "w";
                         }
 
-                        $img_src_srcset = $img_src . " srcset=\"" . $img_src_srcset . "\" size=100vw";
+                        $img_src_srcset = Html::escapeHTML($img_src) . " srcset=\"" . $img_src_srcset . "\" size=100vw";
 
                         $img = str_replace($img_src, $img_src_srcset, $img);
                     }
@@ -272,9 +275,9 @@ class FrontendValues
         }
 
         if ($the_excerpt) {
-            if (App::frontend()->context()->posts->post_lang === App::blog()->settings->system->lang) {
-                $lang = "";
-            } else {
+            $lang = "";
+
+            if (App::frontend()->context()->posts->post_lang !== App::blog()->settings->system->lang) {
                 $lang = " lang=" . App::frontend()->context()->posts->post_lang;
             }
 
@@ -306,13 +309,15 @@ class FrontendValues
             $nb_reactions = (int) App::frontend()->context()->posts->nb_comment + (int) App::frontend()->context()->posts->nb_trackback;
 
             if ($nb_reactions > 0) {
+                $reaction_url = App::frontend()->context()->posts->getURL() . "#' . __('reactions-id') . '";
+
                 if ($nb_reactions > 1) {
                     $reaction_text = (string) sprintf("' . __("reactions-reactions-title-count-multiple") . '", $nb_reactions);
                 } else {
                     $reaction_text = "' . __("reactions-reactions-title-count-one") . '";
                 }
 
-                echo "' . $separator . $tag_open . '<a href=\"" .  App::frontend()->context()->posts->getURL() . "#' . __('reactions-id') . '\">" . $reaction_text . "</a>' . $tag_close . '";
+                echo "' . $separator . $tag_open . '<a href=\"" . Html::escapeHTML($reaction_url) . "\">" . Html::escapeHTML($reaction_text) . "</a>' . $tag_close . '";
             }
             ?>';
         }
@@ -350,7 +355,7 @@ class FrontendValues
      */
     public static function odysseyFeedLink(): string
     {
-        if (My::settingValue('reactions_feed_link') === null) {
+        if (!My::settingValue('reactions_feed_link')) {
             return '';
         }
 
@@ -365,7 +370,6 @@ class FrontendValues
 
             $feed_link = App::blog()->url() . App::url()->getURLFor("feed", "' . $feed_type . '") . "/comments/" . App::frontend()->context()->posts->post_id;
             ?>
-
             <p>
                 <a class=reactions-button href="<?php echo $feed_link; ?>" rel=nofollow>
                     <svg class="reactions-button-icon social-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>' . My::svgIcons('feed')['path'] . '</svg>
@@ -562,9 +566,7 @@ class FrontendValues
 
         $size = $attach_f->size;
 
-        // Setting ignored for some reason:
-        // setlocale(LC_ALL, "fr_FR");
-
+        // Typo for French
         if (App::lang()->getLang() === "fr") {
             $locale_decimal = ",";
         } else {
@@ -667,10 +669,10 @@ class FrontendValues
                 }
 
                 $output .= '<li>';
-                $output .= '<a href=' . My::attrValue($url) . '>';
+                $output .= '<a href=' . My::escapeAttr($url) . '>';
                 $output .= '<span class=footer-social-links-icon-container>';
                 $output .= '<svg class="' . $class . '" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>';
-                $output .= '<title>' . $data['name'] . '</title>';
+                $output .= '<title>' . Html::escapeHTML($data['name']) . '</title>';
                 $output .= My::svgIcons($id)['path'];
                 $output .= '</svg>';
                 $output .= '</span>';
@@ -690,10 +692,10 @@ class FrontendValues
             $feed_link = App::blog()->url() . App::url()->getURLFor("feed", My::settingValue('footer_feed'));
 
             $output .= '<li>';
-            $output .= '<a href=' . My::attrValue($feed_link) . '>';
+            $output .= '<a href=' . My::escapeAttr($feed_link) . '>';
             $output .= '<span class=footer-social-links-icon-container>';
             $output .= '<svg class="social-icon-fi footer-social-links-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>';
-            $output .= '<title>' . __('footer-social-links-feed-title') . '</title>';
+            $output .= '<title>' . Html::escapeHTML(__('footer-social-links-feed-title')) . '</title>';
             $output .= My::svgIcons('feed')['path'];
             $output .= '</svg>';
             $output .= '</span>';

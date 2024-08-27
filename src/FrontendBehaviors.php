@@ -30,14 +30,14 @@ class FrontendBehaviors
         // Adds the name of the editor.
         if (App::blog()->settings->system->editor) {
             echo '<meta name=author content=',
-            My::attrValue(App::blog()->settings->system->editor, true),
+            My::escapeAttr(App::blog()->settings->system->editor),
             '>', "\n";
         }
 
         // Adds the content of the copyright notice.
         if (App::blog()->settings->system->copyright_notice) {
             echo '<meta name=copyright content=',
-            My::attrValue(App::blog()->settings->system->copyright_notice, true),
+            My::escapeAttr(App::blog()->settings->system->copyright_notice),
             '>', "\n";
         }
     }
@@ -62,7 +62,7 @@ class FrontendBehaviors
                     $title = App::frontend()->context()->posts->post_title;
 
                     $desc = App::frontend()->context()->posts->getExcerpt() ?: App::frontend()->context()->posts->getContent();
-                    $desc = My::cleanAttr($desc);
+                    $desc = My::cleanStr($desc);
 
                     if (strlen($desc) > 180) {
                         $desc = Text::cutString($desc, 179) . '…';
@@ -88,7 +88,7 @@ class FrontendBehaviors
 
                         $desc .= My::settingValue('advanced_meta_description') ?? App::blog()->desc ?? '';
 
-                        $desc = My::cleanAttr($desc);
+                        $desc = My::cleanStr($desc);
 
                         if (strlen($desc) > 180) {
                             $desc = Text::cutString($desc, 179) . '…';
@@ -101,7 +101,7 @@ class FrontendBehaviors
 
                     if (App::frontend()->context()->categories->cat_desc) {
                         $desc = App::frontend()->context()->categories->cat_desc;
-                        $desc = My::cleanAttr($desc);
+                        $desc = My::cleanStr($desc);
 
                         if (strlen($desc) > 180) {
                             $desc = Text::cutString($desc, 179) . '…';
@@ -116,7 +116,11 @@ class FrontendBehaviors
                     }
             }
 
+            $title = Html::escapeHTML($title);
+
             if ($title) {
+                $img = Html::escapeHTML($img);
+
                 if (!$img && isset(My::settingValue('header_image')['url'])) {
                     $img = My::blogBaseURL() . My::settingValue('header_image')['url'];
                 }
@@ -128,6 +132,8 @@ class FrontendBehaviors
                 echo '<meta property=og:title content="', $title, '">', "\n";
 
                 // Quotes seem required for the following meta properties.
+                $desc = Html::escapeHTML($desc);
+
                 if ($desc) {
                     echo '<meta property="og:description" content="', $desc, '">', "\n";
                 }
@@ -207,7 +213,7 @@ class FrontendBehaviors
 
                     $json_ld['headline'] = App::frontend()->context()->posts->post_title;
 
-                    $json_ld['description'] = My::cleanAttr(App::frontend()->context()->posts->post_excerpt_xhtml);
+                    $json_ld['description'] = My::cleanStr(App::frontend()->context()->posts->post_excerpt_xhtml);
 
                     $json_ld['articleBody'] = App::frontend()->context()->posts->post_content_xhtml;
 
@@ -380,8 +386,8 @@ class FrontendBehaviors
                     // Gets original image dimensions.
                     list($width, $height) = getimagesize(App::config()->dotclearRoot() . $src_value);
 
-                    $img['o']['width']  = $width;
-                    $img['o']['height'] = $height;
+                    $img['o']['width']  = (int) $width;
+                    $img['o']['height'] = (int) $height;
 
                     $media_sizes = App::media()->thumb_sizes;
 
@@ -401,11 +407,11 @@ class FrontendBehaviors
                             list($width, $height) = getimagesize(App::config()->dotclearRoot() . $img[$size_id]['url']);
 
                             if (!$img[$size_id]['width']) {
-                                $img[$size_id]['width']   = $width;
-                                $media_sizes[$size_id][0] = $width;
+                                $img[$size_id]['width']   = (int) $width;
+                                $media_sizes[$size_id][0] = (int) $width;
                             }
 
-                            $img[$size_id]['height'] = $height;
+                            $img[$size_id]['height'] = (int) $height;
 
                             if ($media_sizes[$size_id][0] >= $img_width_max
                                 && $img[$src_image_size]['width'] > $img[$size_id]['width']
@@ -421,12 +427,12 @@ class FrontendBehaviors
                     });
 
                     // Defines image attributes.
-                    $attr  = 'src="' . $img[$src_image_size]['url'] . '" ';
+                    $attr  = 'src=' . My::escapeAttr($img[$src_image_size]['url']) . ' ';
                     $attr .= 'srcset="';
 
                     // Puts every image size in the srcset attribute.
                     foreach ($img as $img_id => $img_data) {
-                        $attr .= $img_data['url'] . ' ' . $img_data['width'] . 'w';
+                        $attr .= Html::escapeHtml($img_data['url']) . ' ' . $img_data['width'] . 'w';
 
                         if ($img_id !== array_key_last($img)) {
                             $attr .= ', ';
@@ -439,9 +445,9 @@ class FrontendBehaviors
                     if ($img[$src_image_size]['width'] > $img[$src_image_size]['height']
                         && $img[$src_image_size]['width'] >= $img_width_max
                     ) {
-                        $attr .= 'style="display: block; margin-left: 50%; transform: translateX(-50%); max-width: 95vw;" ';
+                        $attr .= 'style="display:block;margin-left:50%;transform:translateX(-50%);max-width:95vw;" ';
                         $attr .= 'width=' . $img_width_max . ' ';
-                        $attr .= 'height=' . (int) ($img_width_max * $img[$src_image_size]['height'] / $img[$src_image_size]['width'] );
+                        $attr .= 'height=' . (int) ($img_width_max * $img[$src_image_size]['height'] / $img[$src_image_size]['width']);
                     }
 
                     return str_replace($src_attr, trim($attr), $matches[0]);

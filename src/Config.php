@@ -14,15 +14,14 @@ use Dotclear\Core\Process;
 use Dotclear\Core\Backend\Notices;
 use Dotclear\Core\Backend\Page;
 use Dotclear\Core\Backend\ThemeConfig;
-use Dotclear\Helper\File\Path;
 use Dotclear\Helper\File\Files;
+use Dotclear\Helper\File\Path;
 use Dotclear\Helper\Html\Html;
 use Dotclear\Helper\Html\Form\Button;
 use Dotclear\Helper\Html\Form\Checkbox;
 use Dotclear\Helper\Html\Form\Color;
 use Dotclear\Helper\Html\Form\Form;
 use Dotclear\Helper\Html\Form\Hidden;
-use Dotclear\Helper\Html\Form\Image;
 use Dotclear\Helper\Html\Form\Input;
 use Dotclear\Helper\Html\Form\Label;
 use Dotclear\Helper\Html\Form\Legend;
@@ -546,7 +545,7 @@ class Config extends Process
 
             $the_setting[] = (new Text(
                 null,
-                '<img alt="' . __('header-image-preview-alt') . '" id=' . $setting_id . '-src src=' . My::attrValue($image_src) . '>'
+                '<img alt="' . __('header-image-preview-alt') . '" id=' . $setting_id . '-src src=' . My::escapeAttr($image_src) . '>'
             ));
 
 

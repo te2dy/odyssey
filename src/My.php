@@ -747,39 +747,39 @@ class My extends MyTheme
     }
 
     /**
-     * Wraps a string in quotes if it contains a least one space.
+     * Wraps a string in quotes if it contains a least one space,
+     * and escapes HTML inside it.
      *
-     * Avoids unnecessarily wrapping attributes in quotation marks.
+     * Avoids unnecessarily quotation marks wrapping attributes.
      *
      * @param string $value The value.
-     * @param bool   $clean Use cleanAttr function or not.
      *
      * @return string The string.
      */
-    public static function attrValue(string $value, bool $clean = false): string
+    public static function escapeAttr(string $value): string
     {
-        if ($clean === true) {
-            $value = self::cleanAttr($value, true);
-        }
+        $value = Html::escapeHTML($value);
 
         return str_contains($value, ' ') === false ? $value : '"' . $value . '"';
     }
 
     /**
-     * Cleans a string to be put in an HTML attribute.
+     * Cleans a string to be displayed.
      *
-     * @param string $string        The string.
-     * @param bool   $remove_quotes Remove quotes in the string.
+     * @param string $string       The string.
+     * @param array  $tags_allowed A list of allowed tags (optional).
      *
      * @return string The cleaned string.
      */
-    public static function cleanAttr(string $string, bool $remove_quotes = false): string
+    public static function cleanStr(string $string, array $tags_allowed = []): string
     {
-        $string = Html::decodeEntities(Html::clean($string));
-
-        if ($remove_quotes === true) {
-            $string = str_replace('"', '', $string);
+        if (empty($tags_allowed)) {
+            $string = strip_tags($string);
+        } else {
+            $string = strip_tags($string, $tags_allowed);
         }
+
+        $string = Html::decodeEntities($string);
 
         return preg_replace('/\s+/', ' ', $string);
     }
