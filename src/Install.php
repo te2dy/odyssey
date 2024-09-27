@@ -37,7 +37,7 @@ class Install extends Process
 
     /**
      * If custom styles have been set on a previous version of the theme,
-     * saves them again with the updated default styles.
+     * saves them again with the updated default stylesheet.
      *
      * This prevents new styles from not being applied after a theme update.
      *
@@ -52,7 +52,7 @@ class Install extends Process
 
             $css_default_path_file = App::blog()->themesPath() . '/' . App::blog()->settings()->system->theme . '/' . 'style.min.css';
 
-            if (file_exists($css_default_path_file) && file_get_contents($css_default_path_file) !== '') {
+            if (file_exists($css_default_path_file) && (string) file_get_contents($css_default_path_file) !== '') {
                 $styles_default = (string) file_get_contents($css_default_path_file);
             }
 
