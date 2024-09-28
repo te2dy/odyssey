@@ -295,8 +295,13 @@ label:hover {
   margin-bottom: 0;
 }
 button {
-  cursor: pointer;
   display: inline-block;
+}
+button:is(:hover) {
+  background-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
+  border-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
+  color: var(--color-background, #fcfcfd);
+  cursor: pointer;
 }
 input[type="submit"],
 .form-submit {
