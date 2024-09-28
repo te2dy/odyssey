@@ -260,6 +260,7 @@ img + em { /* Image caption */
 }
 
 /* Forms & buttons. */
+button,
 input,
 textarea {
   background-color: var(--color-input-background, #f2f2f2);
@@ -294,10 +295,8 @@ label:hover {
   margin-bottom: 0;
 }
 button {
-  border: unset;
+  cursor: pointer;
   display: inline-block;
-  font: inherit;
-  margin: 0;
 }
 input[type="submit"],
 .form-submit {
@@ -313,12 +312,14 @@ input[type="submit"],
   cursor: pointer;
   transition: var(--color-transition, unset);
 }
+button.button-priority,
 input[type="submit"].button-priority,
 .form-submit.button-priority {
   background-color: var(--color-primary, hsl(226, 80%, 45%));
   border-color: var(--color-primary, hsl(226, 80%, 45%));
   color: var(--color-background, #fcfcfd);
 }
+button.button-priority:is(:hover),
 input[type="submit"].button-priority:is(:active, :focus, :hover),
 .form-submit.button-priority:is(:active, :focus, :hover) {
   background-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
