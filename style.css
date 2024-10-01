@@ -294,12 +294,14 @@ label:hover {
 }
 button {
   display: inline-block;
+  transition: var(--color-transition, unset);
 }
 button:is(:hover) {
   background-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
   border-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
   color: var(--color-background, #fcfcfd);
   cursor: pointer;
+  transition: var(--color-transition, unset);
 }
 input[type="submit"],
 .form-submit {
