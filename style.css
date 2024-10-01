@@ -269,7 +269,7 @@ textarea {
   box-sizing: border-box;
   color: var(--color-text-main, #303030);
   font-family: var(--font-family, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji');
-  font-size: 1em;
+  font-size: 1rem;
   line-height: 1.5;
   margin-bottom: 1rem;
   max-width: 100%;
