@@ -215,9 +215,6 @@ h6 {
   margin: 1em 0;
   padding-left: 1em;
 }
-:is(.content-text, .widget) > :is(ul, ol) {
-  padding-inline: 0;
-}
 :is(.content-text, .widget) :is(ol ol, ul ul) {
   margin-top: .5em;
 }
@@ -520,6 +517,7 @@ details summary {
 }
 .footnotes ol {
   margin: 0;
+  padding-left: 0;
 }
 .footnotes ol li p {
   display: inline;
