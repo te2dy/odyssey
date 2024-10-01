@@ -528,7 +528,8 @@ details summary {
   margin-top: 0;
 }
 .footnotes ol li:last-child p {
-  margin-bottom: 0;
+  display: inline;
+  margin: 0;
 }
 
 /* Post pagination */
