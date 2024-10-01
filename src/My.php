@@ -760,7 +760,11 @@ class My extends MyTheme
     {
         $value = Html::escapeHTML($value);
 
-        return str_contains($value, ' ') === false ? $value : '"' . $value . '"';
+        if (str_contains($value, ' ') === false && str_contains($value, '=') === false) {
+            return $value;
+        }
+
+        return '"' . $value . '"';
     }
 
     /**
