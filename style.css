@@ -522,14 +522,8 @@ details summary {
   margin: 0;
 }
 .footnotes ol li p {
-  margin-block: .25rem;
-}
-.footnotes ol li:first-child p {
-  margin-top: 0;
-}
-.footnotes ol li:last-child p {
   display: inline;
-  margin: 0;
+  margin-block: 0;
 }
 
 /* Post pagination */
