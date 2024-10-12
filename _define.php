@@ -1,4 +1,4 @@
-    <?php
+<?php
 /**
  * Odyssey, a simple and customizable Dotclear theme.
  *
@@ -11,7 +11,7 @@ $this->registerModule(
     'Odyssey',
     'A simple and customizable theme',
     'Teddy',
-    '1.3',
+    '1.4',
     [
         'requires' => [
             ['core', '2.30'],
