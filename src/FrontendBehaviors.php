@@ -422,9 +422,12 @@ class FrontendBehaviors
                     }
 
                     // Sort $img by width.
-                    uasort($img, function ($a, $b) {
-                        return $a['width'] <=> $b['width'];
-                    });
+                    uasort(
+                        $img,
+                        function ($a, $b) {
+                            return $a['width'] <=> $b['width'];
+                        }
+                    );
 
                     // Defines image attributes.
                     $attr  = 'src=' . My::escapeAttr($img[$src_image_size]['url']) . ' ';
