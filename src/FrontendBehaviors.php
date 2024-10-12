@@ -317,7 +317,7 @@ class FrontendBehaviors
                  * available on PHP 8.3.
                  */
                 if (My::odysseyJsonValidate($json_ld)) {
-                    echo '<script type="application/ld+json">', $json_ld, '</script>', "\n";
+                    echo '<script type=application/ld+json>', $json_ld, '</script>', "\n";
                 }
             }
         }
@@ -445,7 +445,7 @@ class FrontendBehaviors
                     if ($img[$src_image_size]['width'] > $img[$src_image_size]['height']
                         && $img[$src_image_size]['width'] >= $img_width_max
                     ) {
-                        $attr .= 'style="display:block;margin-left:50%;transform:translateX(-50%);max-width:95vw;" ';
+                        $attr .= 'style=display:block;margin-left:50%;transform:translateX(-50%);max-width:95vw; ';
                         $attr .= 'width=' . $img_width_max . ' ';
                         $attr .= 'height=' . (int) ($img_width_max * $img[$src_image_size]['height'] / $img[$src_image_size]['width']);
                     }
@@ -455,8 +455,24 @@ class FrontendBehaviors
 
                 return $matches[0];
             },
-
             $args[0]
         );
+    }
+
+    /**
+     * Adds quotes to a template value only if is_attr argument is set.
+     *
+     * @param array $tag  The tags.
+     * @param array $args The args.
+     *
+     * @return string The template value.
+     */
+    public static function addAttrFilter($tag, $args): string
+    {
+        if (isset($args['is_attr']) && $args['is_attr'] === '1') {
+            $args[0] = My::escapeAttr($args[0]);
+        }
+
+        return $args[0];
     }
 }

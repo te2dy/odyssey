@@ -1,20 +1,20 @@
 <tpl:Entries no_content="0">
   <tpl:EntriesHeader>
-    <ul aria-label="{{tpl:lang entry-list-aria-label}}" class=entry-list-excerpt>
+    <ul aria-label={{tpl:odysseyLang id="entry-list-aria-label" is_attr="1"}} class=entry-list-excerpt>
   </tpl:EntriesHeader>
 
   <li class="post post-list-excerpt<tpl:EntryIf selected="1"> post-selected</tpl:EntryIf>" id={{tpl:lang post-id}}-{{tpl:EntryID}}>
     <tpl:EntryIf type="post">
-      <small class="post-date text-secondary"><time aria-label="{{tpl:lang entry-list-date-aria-label}}" datetime={{tpl:EntryDate format="%Y-%m-%dT%H:%M"}}>{{tpl:EntryDate}}</time></small>
+      <small class="post-date text-secondary"><time aria-label={{tpl:odysseyLang id="entry-list-date-aria-label" is_attr="1"}} datetime={{tpl:EntryDate iso8601="1"}}>{{tpl:EntryDate}}</time></small>
     </tpl:EntryIf>
 
-    <h3 class=entry-title><tpl:EntryIf selected="1"><span class=post-selected-star>⭐️</span> </tpl:EntryIf><a href="{{tpl:EntryURL}}" rel=bookmark>{{tpl:EntryTitle}}</a></h3>
+    <h3 class=entry-title><tpl:EntryIf selected="1"><span class=post-selected-star>⭐️</span> </tpl:EntryIf><a href={{tpl:EntryURL is_attr="1"}} rel=bookmark>{{tpl:EntryTitle}}</a></h3>
 
     {{tpl:odysseyEntryListImage context="entry-list-excerpt"}}
 
     {{tpl:odysseyEntryExcerpt}}
 
-    <a href="{{tpl:EntryURL}}" rel=bookmark>Lire la suite</a> {{tpl:odysseyPostListReactions}}
+    <a href={{tpl:EntryURL is_attr="1"}} rel=bookmark>Lire la suite</a> {{tpl:odysseyPostListReactions}}
   </li>
 
   <tpl:EntriesFooter>

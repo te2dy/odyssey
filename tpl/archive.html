@@ -24,7 +24,7 @@
           </tpl:ArchivesYearHeader>
 
           <li>
-            <a href="{{tpl:ArchiveURL}}" title="{{tpl:ArchiveDate encode_html="1"}}">{{tpl:ArchiveDate encode_html="1" format="%B"}}</a> ({{tpl:ArchiveEntriesCount}})
+            <a href={{tpl:ArchiveURL is_attr="1"}} title={{tpl:ArchiveDate encode_html="1" is_attr="1"}}>{{tpl:ArchiveDate encode_html="1" format="%B"}}</a> ({{tpl:ArchiveEntriesCount}})
           </li>
 
           <tpl:ArchivesYearFooter>
@@ -42,7 +42,7 @@
         </tpl:CategoriesHeader>
 
         <li>
-          <a href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a>
+          <a href={{tpl:CategoryURL is_attr="1"}}>{{tpl:CategoryTitle encode_html="1"}}</a>
 
         <tpl:CategoryFirstChildren>
           <tpl:CategoriesHeader>
@@ -50,7 +50,7 @@
           </tpl:CategoriesHeader>
 
           <li>
-            <a href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a>
+            <a href={{tpl:CategoryURL is_attr="1"}}>{{tpl:CategoryTitle encode_html="1"}}</a>
           </li>
 
           <tpl:CategoriesFooter>
@@ -72,7 +72,7 @@
           <ul>
         </tpl:TagsHeader>
 
-        <li><a href="{{tpl:TagURL}}" class=tag{{tpl:TagRoundPercent}}>{{tpl:TagID}}</a></li>
+        <li><a href={{tpl:TagURL is_attr="1"}} class=tag{{tpl:TagRoundPercent}}>{{tpl:TagID}}</a></li>
 
         <tpl:TagsFooter>
           </ul>
@@ -87,7 +87,7 @@
         </tpl:EntriesHeader>
 
         <li>
-          <a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a>
+          <a href={{tpl:EntryURL is_attr="1"}}>{{tpl:EntryTitle encode_html="1"}}</a>
         </li>
 
         <tpl:EntriesFooter>

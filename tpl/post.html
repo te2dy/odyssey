@@ -6,7 +6,7 @@
 
 <tpl:Block name="head-description">
   <tpl:EntryIf extended="1">
-    <meta name=description content="{{tpl:EntryExcerpt encode_html="1" remove_html="1"}}">
+    <meta name=description content={{tpl:EntryExcerpt encode_html="1" remove_html="1" is_attr="1"}}>
   </tpl:EntryIf>
 
   <tpl:EntryIf extended="0">
@@ -16,15 +16,15 @@
 
 <tpl:Block name="head-link">
   {{tpl:odysseyStyles}}
-  <link rel=alternate type=application/atom+xml title="{{tpl:lang feed-title}}" href="{{tpl:BlogFeedURL}}">
-  <link rel=alternate type=application/atom+xml title="{{tpl:lang feed-comments-title}}" href="{{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}}">
-  <tpl:EntryIf pings_active="1"><link rel=pingback href="{{tpl:BlogXMLRPCURL}}"></tpl:EntryIf>
+  <link rel=alternate type=application/atom+xml title={{tpl:odysseyLang id="feed-title" is_attr="1"}} href={{tpl:BlogFeedURL is_attr="1"}}>
+  <link rel=alternate type=application/atom+xml title={{tpl:odysseyLang id="feed-comments-title" is_attr="1"}} href={{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}}>
+  <tpl:EntryIf pings_active="1"><link rel=pingback href={{tpl:BlogXMLRPCURL is_attr="1"}}></tpl:EntryIf>
 </tpl:Block>
 
 <tpl:Block name="site-header">
   <tpl:odysseyHeaderMinimal>
     <header id=site-header-short>
-      <a href="{{tpl:BlogURL}}" id=site-title rel=home title="{{tpl:lang post-home-link-title}}">‹&nbsp;<h4>{{tpl:BlogName}}</h4></a>
+      <a href={{tpl:BlogURL is_attr="1"}} id=site-title rel=home title={{tpl:odysseyLang id="post-home-link-title" is_attr="1"}}>‹&nbsp;<h4>{{tpl:BlogName}}</h4></a>
 
       {{tpl:SimpleMenu id="main-menu"}}
 

@@ -6,7 +6,7 @@
 
 <tpl:Block name="head-description">
   <tpl:CategoryIf has_description="1">
-    <meta name=description content="{{tpl:CategoryDescription encode_html="1" remove_html="1"}}">
+    <meta name=description content={{tpl:CategoryDescription encode_html="1" remove_html="1" is_attr="1"}}>
   </tpl:CategoryIf>
 
   <tpl:CategoryIf has_description="0">

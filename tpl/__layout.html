@@ -9,16 +9,16 @@
     </tpl:Block>
 
     <tpl:Block name="head-description">
-      <meta name=description content="{{tpl:BlogDescription remove_html="1" encode_html="1"}}">
+      <meta name=description content={{tpl:BlogDescription remove_html="1" encode_html="1" is_attr="1"}}>
     </tpl:Block>
 
     <tpl:Block name="head-meta">
-      <meta name=robots content="{{tpl:BlogMetaRobots}}">
+      {{tpl:odysseyMetaRobots}}
     </tpl:Block>
 
     <tpl:Block name="head-link">
       {{tpl:odysseyStyles}}
-      <link rel=alternate type=application/atom+xml title="{{tpl:lang feed-title}}" href="{{tpl:BlogFeedURL}}">
+      <link rel=alternate type=application/atom+xml title={{tpl:odysseyLang id="feed-title" is_attr="1"}} href={{tpl:BlogFeedURL is_attr="1"}}>
     </tpl:Block>
 
     {{tpl:SysBehavior behavior="publicHeadContent"}}
@@ -33,7 +33,7 @@
           {{tpl:odysseyHeaderImage position="top"}}
 
           <div id=site-title>
-            <a href="{{tpl:BlogURL}}" rel=home><h4>{{tpl:BlogName}}</h4></a>
+            <a href={{tpl:BlogURL is_attr="1"}} rel=home><h4>{{tpl:BlogName}}</h4></a>
           </div>
 
           {{tpl:odysseyBlogDescription}}

@@ -26,12 +26,34 @@ class FrontendValues
     }
 
     /**
+     * Custom lang template value.
+     *
+     * Made in order to support the is_attr custom option.
+     *
+     * @param array $attr The attributes of the template.
+     *
+     * @return string The translated string.
+     */
+    public static function odysseyLang($attr): string
+    {
+        $str_id = $attr['id'] ?? '';
+        $str_id = (string) preg_replace('/\s+/x', ' ', $str_id);
+        $str_id = str_replace("'", "\\'", $str_id);
+
+        if ($str_id) {
+            $filters = App::frontend()->template()->getFilters($attr);
+
+            return '<?= ' . sprintf($filters, '__("' . $str_id . '")') . '; ?>';
+        }
+
+        return '';
+    }
+
+    /**
      * Displays the description of the blog homepage in a meta description tag.
      *
      * If a custom description has not been set in the configurator,
      * displays the blog description.
-     *
-     * @param array $attr Unused.
      *
      * @return string The description.
      */
@@ -46,6 +68,20 @@ class FrontendValues
         }
 
         return '';
+    }
+
+    /**
+     * Adds the meta robot tag in head.
+     *
+     * @param array $attr Unused.
+     *
+     * @return string The description.
+     */
+    public static function odysseyMetaRobots(): string
+    {
+        $robots = strtolower(App::blog()->settings()->system->robots_policy);
+
+        return '<meta name=robots content=' . My::escapeAttr($robots) . '>';
     }
 
     /**

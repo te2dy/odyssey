@@ -7,7 +7,7 @@
   </tpl:AttachmentsHeader>
 
   <li class={{tpl:AttachmentType}}>
-    <a href="{{tpl:AttachmentURL}}" type={{tpl:AttachmentMimeType}}>{{tpl:AttachmentTitle}}</a> ({{tpl:odysseyAttachmentSize}})
+    <a href={{tpl:AttachmentURL is_attr="1"}} type={{tpl:AttachmentMimeType}}>{{tpl:AttachmentTitle}}</a> ({{tpl:odysseyAttachmentSize}})
   </li>
 
   <tpl:AttachmentsFooter>

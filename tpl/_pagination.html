@@ -6,11 +6,11 @@
 
     <div class=pagination-links>
       <tpl:PaginationIf start="0">
-        <a aria-label="{{tpl:lang pagination-previous-aria-label}}" href="{{tpl:PaginationURL offset="-1"}}">{{tpl:lang pagination-previous-label}}</a>
+        <a aria-label={{tpl:odysseyLang id="pagination-previous-aria-label" is_attr="1"}} href={{tpl:PaginationURL offset="-1" is_attr="1"}}>{{tpl:lang pagination-previous-label}}</a>
       </tpl:PaginationIf>
 
       <tpl:PaginationIf end="0">
-        <a aria-label="{{tpl:lang pagination-next-aria-label}}" class=page-next href="{{tpl:PaginationURL offset="+1"}}">{{tpl:lang pagination-next-label}}</a>
+        <a aria-label={{tpl:odysseyLang id="pagination-next-aria-label" is_attr="1"}} class=page-next href={{tpl:PaginationURL offset="+1" is_attr="1"}}>{{tpl:lang pagination-next-label}}</a>
       </tpl:PaginationIf>
     </div>
   </div>

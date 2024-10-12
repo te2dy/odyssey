@@ -10,11 +10,11 @@
   <header class=content-info>
     <nav id=nav-archive>
       <tpl:ArchivePrevious>
-        <a href="{{tpl:ArchiveURL}}">‹ {{tpl:ArchiveDate encode_html="1"}}</a>
+        <a href={{tpl:ArchiveURL is_attr="1"}}>‹ {{tpl:ArchiveDate encode_html="1"}}</a>
       </tpl:ArchivePrevious>
 
       <tpl:ArchiveNext>
-        <a class=nav-archive-next href="{{tpl:ArchiveURL}}">{{tpl:ArchiveDate encode_html="1"}} ›</a>
+        <a class=nav-archive-next href={{tpl:ArchiveURL is_attr="1"}}>{{tpl:ArchiveDate encode_html="1"}} ›</a>
       </tpl:ArchiveNext>
     </nav>
 

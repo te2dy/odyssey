@@ -37,6 +37,7 @@ class Frontend extends Process
         App::behavior()->addBehavior('publicHeadContent', FrontendBehaviors::odysseySocialMarkups(...));
         App::behavior()->addBehavior('publicHeadContent', FrontendBehaviors::odysseyJsonLd(...));
         App::behavior()->addBehavior('publicAfterContentFilterV2', FrontendBehaviors::odysseyImageWide(...));
+        App::behavior()->addBehavior('publicAfterContentFilterV2', FrontendBehaviors::addAttrFilter(...));
 
         // Blocks
         App::frontend()->template()->addBlock('odysseyHeaderMinimal', FrontendBlocks::odysseyHeaderMinimal(...));
@@ -46,7 +47,9 @@ class Frontend extends Process
 
         // Values.
         App::frontend()->template()->addValue('odysseyGetURI', FrontendValues::odysseyGetURI(...));
+        App::frontend()->template()->addValue('odysseyLang', FrontendValues::odysseyLang(...));
         App::frontend()->template()->addValue('odysseyMetaDescriptionHome', FrontendValues::odysseyMetaDescriptionHome(...));
+        App::frontend()->template()->addValue('odysseyMetaRobots', FrontendValues::odysseyMetaRobots(...));
         App::frontend()->template()->addValue('odysseyStyles', FrontendValues::odysseyStyles(...));
         App::frontend()->template()->addValue('odysseyHeaderImage', FrontendValues::odysseyHeaderImage(...));
         App::frontend()->template()->addValue('odysseyBlogDescription', FrontendValues::odysseyBlogDescription(...));
