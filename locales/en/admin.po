@@ -408,6 +408,12 @@ msgstr "Enlarge images wide enough"
 msgid "settings-content-imageswide-description"
 msgstr "Large images will extend beyond the edges of the page to display large."
 
+msgid "settings-content-imagesgrayscale-title"
+msgstr "Enable black and white mode"
+
+msgid "settings-content-imagesgrayscale-description"
+msgstr "Images in posts and pages will be displayed in black and white to reduce distraction. Colors will be displayed on mouseover or touch on mobile."
+
 msgid "settings-reactions-button-title"
 msgstr "Unveil the form by clicking a button"
 

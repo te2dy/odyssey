@@ -408,6 +408,12 @@ msgstr ""
 msgid "settings-content-imageswide-description"
 msgstr ""
 
+msgid "settings-content-imagesgrayscale-title"
+msgstr ""
+
+msgid "settings-content-imagesgrayscale-description"
+msgstr ""
+
 msgid "settings-reactions-button-title"
 msgstr ""
 

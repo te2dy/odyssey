@@ -540,6 +540,14 @@ class My extends MyTheme
             'section'     => ['content', 'images']
         ];
 
+        $default_settings['content_images_grayscale'] = [
+            'title'       => __('settings-content-imagesgrayscale-title'),
+            'description' => __('settings-content-imagesgrayscale-description'),
+            'type'        => 'checkbox',
+            'default'     => false,
+            'section'     => ['content', 'images']
+        ];
+
         $default_settings['reactions_button'] = [
             'title'       => __('settings-reactions-button-title'),
             'description' => __('settings-reactions-button-description'),

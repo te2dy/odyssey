@@ -1047,6 +1047,11 @@ class Config extends Process
             $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['margin-right'] = '.25rem';
         }
 
+        // Grayscale images
+        if (isset($_POST['content_images_grayscale']) && $_POST['content_images_grayscale'] === 'on') {
+            $css_main_array['.content-text img:not(:active, :focus, :hover)']['filter'] = 'grayscale(1)';
+        }
+
         // Footer align
         $footer_align_allowed = ['center', 'right'];
 

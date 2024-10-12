@@ -408,6 +408,12 @@ msgstr "Agrandir les images suffisamment larges"
 msgid "settings-content-imageswide-description"
 msgstr "Les grandes images dépasseront des bords de la page pour s’afficher en grand."
 
+msgid "settings-content-imagesgrayscale-title"
+msgstr "Activer le mode noir et blanc"
+
+msgid "settings-content-imagesgrayscale-description"
+msgstr "Les images contenues dans les billets et les pages s’afficheront en noir et blanc pour réduire la distraction. Les couleurs s’afficheront au survol avec la souris ou au toucher sur mobile."
+
 msgid "settings-reactions-button-title"
 msgstr "Dévoiler le formulaire en cliquant sur un bouton"
 
