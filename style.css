@@ -506,6 +506,9 @@ details summary {
 .post-meta:not(:last-child) {
   margin-bottom: .5rem;
 }
+.footnotes :not(h3, h4, h5, h6) {
+  font-size: .8em;
+}
 .footnotes hr {
   border-bottom: 0;
   border-left: 0;
