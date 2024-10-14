@@ -793,7 +793,7 @@ class My extends MyTheme
 
         $string = Html::decodeEntities($string);
 
-        return preg_replace('/\s+/', ' ', $string);
+        return preg_replace('/\s+/mu', ' ', $string);
     }
 
     /**
