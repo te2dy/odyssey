@@ -708,21 +708,15 @@ details summary {
 /**
  * Widgets
  */
-aside .widget {
+aside .widget:not(:last-child) {
   margin-bottom: 2rem;
-}
-aside .widget:last-child {
-  margin-bottom: 0;
 }
 
 /**
  * Footer
  */
-#site-footer :is(.widget, .site-footer-block) {
+#site-footer :is(.widget, .site-footer-block):not(:last-child) {
   margin-bottom: 1rem;
-}
-#site-footer :is(.widget, .site-footer-block):last-child {
-  margin-bottom: 0;
 }
 
 /**
