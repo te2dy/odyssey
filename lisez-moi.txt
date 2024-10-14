@@ -12,6 +12,13 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
+=== 1.5 - 14 octobre 2024 ===
+- Amélioration : suppression des espaces multiples éventuels dans la description du blog.
+- Amélioration : simplification de quelques règles CSS.
+- Correction : valeur de "mailto" dans les réponses par courriel.
+- Correction : mauvaises couleurs lors du mode contraste élevés en mode sombre.
+- Modification : diminution de la taille de police pour les notes de bas de page.
+
 === 1.4 - 12 octobre 2024 ===
 - Ajout : option pour afficher les images en noir et blanc par défaut, afin de réduire la distraction lors de la lecture des billets.
 - Amélioration : suppresion de guillemets superflus à l’affichage du code HTML du blog.
