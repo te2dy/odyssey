@@ -13,11 +13,11 @@
     </tpl:Block>
 
     <tpl:Block name="head-meta">
-      {{tpl:odysseyMetaRobots}}
+      <meta name=robots content={{tpl:odysseyMetaRobots}}>
     </tpl:Block>
 
     <tpl:Block name="head-link">
-      {{tpl:odysseyStyles}}
+      <link rel=stylesheet href={{tpl:odysseyStylesheetURL}}>
       <link rel=alternate type=application/atom+xml title={{tpl:odysseyLang id="feed-title" is_attr="1"}} href={{tpl:BlogFeedURL is_attr="1"}}>
     </tpl:Block>
 

@@ -50,7 +50,7 @@ class Frontend extends Process
         App::frontend()->template()->addValue('odysseyLang', FrontendValues::odysseyLang(...));
         App::frontend()->template()->addValue('odysseyMetaDescriptionHome', FrontendValues::odysseyMetaDescriptionHome(...));
         App::frontend()->template()->addValue('odysseyMetaRobots', FrontendValues::odysseyMetaRobots(...));
-        App::frontend()->template()->addValue('odysseyStyles', FrontendValues::odysseyStyles(...));
+        App::frontend()->template()->addValue('odysseyStylesheetURL', FrontendValues::odysseyStylesheetURL(...));
         App::frontend()->template()->addValue('odysseyHeaderImage', FrontendValues::odysseyHeaderImage(...));
         App::frontend()->template()->addValue('odysseyBlogDescription', FrontendValues::odysseyBlogDescription(...));
         App::frontend()->template()->addValue('odysseyPostListType', FrontendValues::odysseyPostListType(...));

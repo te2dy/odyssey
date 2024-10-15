@@ -62,7 +62,7 @@ class FrontendValues
         $description = My::settingValue('advanced_meta_description') ?? App::blog()->desc ?? '';
 
         if ($description !== '') {
-            $description = preg_replace('/\s+/', ' ', Ctx::remove_html($description));
+            $description = My::cleanStr(Ctx::remove_html($description));
 
             return '<meta name=description content=' . My::escapeAttr($description) . '>';
         }
@@ -81,7 +81,7 @@ class FrontendValues
     {
         $robots = strtolower(App::blog()->settings()->system->robots_policy);
 
-        return '<meta name=robots content=' . My::escapeAttr($robots) . '>';
+        return My::escapeAttr($robots);
     }
 
     /**
@@ -89,14 +89,14 @@ class FrontendValues
      *
      * @return string The styles.
      */
-    public static function odysseyStyles(): string
+    public static function odysseyStylesheetURL(): string
     {
         $css_url_default = App::blog()->settings()->system->themes_url . '/' . App::blog()->settings()->system->theme . '/style.min.css';
 
         $css_url = My::settingValue('styles_url') ?? $css_url_default;
         $css_url = Html::escapeURL($css_url);
 
-        return '<link rel=stylesheet href=' . My::escapeAttr($css_url) . '>';
+        return My::escapeAttr($css_url);
     }
 
     /**
