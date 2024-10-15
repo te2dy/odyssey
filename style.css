@@ -512,7 +512,7 @@ details summary {
   margin-bottom: .5rem;
 }
 .footnotes > *:not(h3, h4, h5, h6) {
-  font-size: .8em;
+  font-size: .9em;
 }
 .footnotes hr {
   border-bottom: 0;
