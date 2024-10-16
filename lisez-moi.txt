@@ -12,6 +12,11 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
+=== 1.6 - 16 octobre 2024 ===
+- Correction : la description des catégories ne s’affiche pas.
+- Modification : augmentation de la taille de police pour les notes de bas de page.
+- Modification : transfert de contenus HTML de fonctions PHP aux modèles.
+
 === 1.5 - 14 octobre 2024 ===
 - Amélioration : suppression des espaces multiples éventuels dans la description du blog.
 - Amélioration : simplification de quelques règles CSS.
