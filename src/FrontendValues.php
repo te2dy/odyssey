@@ -665,7 +665,7 @@ class FrontendValues
                 __('reactions-comment-markdown-support-link')
             );
 
-            return '<br><small class=text-secondary><em>' . $markdown_notice . '</em></small>';
+            return '<br><small class=text-secondary>' . $markdown_notice . '</small>';
         }
 
         return '';
