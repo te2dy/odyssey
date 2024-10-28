@@ -411,12 +411,12 @@ details summary {
 }
 #main-menu {
   list-style: none;
-  margin: 0 0 0 auto;
+  margin: 0;
   padding: 0;
 }
 #main-menu li {
   display: inline-block;
-  margin: 0 .5rem .5rem 0;
+  margin-right: .5rem;
 }
 #main-menu li:last-child {
   margin-right: 0;
@@ -428,11 +428,14 @@ details summary {
   border-bottom: .168rem solid var(--color-primary, hsl(226, 80%, 45%));
   padding-bottom: .1rem;
 }
+#main-menu :not(.active) a:is(:active, :focus, :hover) {
+  text-decoration: underline;
+}
 @media (prefers-contrast: more),
        (-ms-high-contrast: active),
        (-ms-high-contrast: black-on-white) {
   #main-menu li:not(.active) a {
-    text-decoration: underline dotted;
+    text-decoration-style: underline dotted;
   }
   #main-menu li a:is(:active, :focus, :hover) {
     text-decoration: none;
