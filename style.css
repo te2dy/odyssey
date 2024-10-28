@@ -10,7 +10,9 @@
   }
 }
 
-@media (prefers-contrast: more) {
+@media (prefers-contrast: more),
+       (-ms-high-contrast: active),
+       (-ms-high-contrast: black-on-white) {
   :root {
     --color-background: #fff;
     --color-text-main: #000;
