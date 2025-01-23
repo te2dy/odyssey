@@ -6,3 +6,6 @@ _disabled
 
 # Ignore "code" folder.
 /prive
+
+# Custom
+/tpl/_entry-list-photo.html
