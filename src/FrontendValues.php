@@ -3,7 +3,7 @@
  * Odyssey, a simple and customizable Dotclear theme.
  *
  * @author    Teddy <zozxebpyr@mozmail.com>
- * @copyright 2022-2024 Teddy
+ * @copyright 2022-2025 Teddy
  * @license   GPL-3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
  */
 
@@ -22,13 +22,13 @@ class FrontendValues
      */
     public static function odysseyGetURI(): string
     {
-        return '<?php echo Html::escapeURL($_SERVER["REQUEST_URI"]); ?>';
+        return '<?= Html::escapeURL($_SERVER["REQUEST_URI"]); ?>';
     }
 
     /**
      * Custom lang template value.
      *
-     * Made in order to support the is_attr custom option.
+     * Made in order to support the is_attr custom attribute.
      *
      * @param array $attr The attributes of the template.
      *
@@ -36,14 +36,10 @@ class FrontendValues
      */
     public static function odysseyLang($attr): string
     {
-        $str_id = $attr['id'] ?? '';
-        $str_id = (string) preg_replace('/\s+/x', ' ', $str_id);
-        $str_id = str_replace("'", "\\'", $str_id);
-
-        if ($str_id) {
+        if (isset($attr['id'])) {
             $filters = App::frontend()->template()->getFilters($attr);
 
-            return '<?= ' . sprintf($filters, '__("' . $str_id . '")') . '; ?>';
+            return '<?= ' . sprintf($filters, '__("' . $attr['id'] . '")') . '; ?>';
         }
 
         return '';
@@ -55,13 +51,13 @@ class FrontendValues
      * If a custom description has not been set in the configurator,
      * displays the blog description.
      *
-     * @return string The description.
+     * @return string The meta description tag.
      */
     public static function odysseyMetaDescriptionHome(): string
     {
-        $description = My::settingValue('advanced_meta_description') ?? App::blog()->desc ?? '';
+        $description = My::settingValue('advanced_meta_description') ?? App::blog()->desc ?? null;
 
-        if ($description !== '') {
+        if ($description) {
             $description = My::cleanStr(Ctx::remove_html($description));
 
             return '<meta name=description content=' . My::escapeAttr($description) . '>';
@@ -71,32 +67,25 @@ class FrontendValues
     }
 
     /**
-     * Adds the meta robot tag in head.
+     * Adds the meta robot tag in head in lowercase.
      *
-     * @param array $attr Unused.
-     *
-     * @return string The description.
+     * @return string The meta robot tag.
      */
     public static function odysseyMetaRobots(): string
     {
-        $robots = strtolower(App::blog()->settings()->system->robots_policy);
-
-        return My::escapeAttr($robots);
+        return My::escapeAttr(strtolower(App::blog()->settings()->system->robots_policy));
     }
 
     /**
-     * Adds styles in the head.
+     * Returns stylesheet URL to be displayed in head.
      *
-     * @return string The styles.
+     * @return string The stylesheet URL.
      */
     public static function odysseyStylesheetURL(): string
     {
-        $css_url_default = App::blog()->settings()->system->themes_url . '/' . App::blog()->settings()->system->theme . '/style.min.css';
+        $css_url = My::settingValue('styles_url') ?: My::themeFile('/style.min.css');
 
-        $css_url = My::settingValue('styles_url') ?? $css_url_default;
-        $css_url = Html::escapeURL($css_url);
-
-        return My::escapeAttr($css_url);
+        return My::escapeAttr(Html::escapeURL($css_url));
     }
 
     /**
@@ -104,7 +93,7 @@ class FrontendValues
      * in the theme configuration page.
      *
      * @param array $attr Attributes to customize the value.
-     *                    Attribute allowed: position, to define the place
+     *                    Attribute allowed: "position", to define the place
      *                    of the image in the header.
      *                    Values allowed:
      *                    - (string) top
@@ -127,20 +116,16 @@ class FrontendValues
         $image2x_url = My::settingValue('header_image2x') ?? null;
 
         if ($image2x_url) {
-            $srcset  = ' srcset="';
-            $srcset .= Html::escapeURL($image_url) . ' 1x, ';
-            $srcset .= Html::escapeURL($image2x_url) . ' 2x';
-            $srcset .= '"';
-
-            $sizes = ' sizes=' . Html::escapeHTML($image_size) . 'vw';
+            $srcset  = ' srcset="' . Html::escapeURL($image_url) . ' 1x, ' . Html::escapeURL($image2x_url) . ' 2x"';
+            $sizes   = ' sizes=' . Html::escapeHTML($image_size) . 'vw';
         }
 
         $img_description = My::settingValue('header_image_description') ?: __('header-image-alt');
         $img_position    = !My::settingValue('header_image_position') ? 'top' : 'bottom';
 
         if (isset($attr['position']) && $img_position === $attr['position']) {
-            // Home page image
             if (App::url()->type === 'default') {
+                // Do not add a link to the home page on home page.
                 return '<div id=site-image><img alt=' . My::escapeAttr($img_description) . ' src=' . My::escapeAttr($image_url) . '' . $srcset . $sizes . '></div>';
             }
 
@@ -162,9 +147,12 @@ class FrontendValues
         }
 
         if (App::blog()->desc) {
-            $tags_allowed = ['<b>', '<strong>', '<i>', '<em>', '<mark>', '<del>', '<sub>', '<sup>'];
+            $description = My::cleanStr(
+                App::blog()->desc,
+                ['<b>', '<strong>', '<i>', '<em>', '<mark>', '<del>', '<sub>', '<sup>']
+            );
 
-            return '<div id=site-desc>' . My::cleanStr(App::blog()->desc, $tags_allowed) . '</div>';
+            return '<div id=site-desc>' . $description . '</div>';
         }
 
         return '';
@@ -174,15 +162,19 @@ class FrontendValues
      * Loads the right entry-list template based on theme settings.
      * Default: one-line
      *
-     * @return The entry-list template.
+     * @return string The entry-list template.
      */
-    public static function odysseyPostListType()
+    public static function odysseyPostListType(): string
     {
-        if (My::settingValue('content_postlist_type') !== 'excerpt') {
+        if (!My::settingValue('content_postlist_type')) {
             return App::frontend()->template()->includeFile(['src' => '_entry-list.html']);
+        } elseif (My::settingValue('content_postlist_type') === 'excerpt') {
+            return App::frontend()->template()->includeFile(['src' => '_entry-list-excerpt.html']);
+        } elseif (My::settingValue('content_postlist_type') === 'custom') {
+            return App::frontend()->template()->includeFile(['src' => My::settingValue('content_postlist_custom')]);
         }
 
-        return App::frontend()->template()->includeFile(['src' => '_entry-list-excerpt.html']);
+        return '';
     }
 
     /**
@@ -292,13 +284,11 @@ class FrontendValues
 
         if (' . sprintf(App::frontend()->template()->getFilters($attr), 'App::frontend()->context()->posts->getExcerpt()') . ') {
             $the_excerpt = ' . sprintf(App::frontend()->template()->getFilters($attr), 'App::frontend()->context()->posts->getExcerpt()') . ';
-
             $the_excerpt = Html::clean($the_excerpt);
             $the_excerpt = Html::decodeEntities($the_excerpt);
             $the_excerpt = preg_replace("/\s+/", " ", $the_excerpt);
         } else {
             $the_excerpt = ' . sprintf(App::frontend()->template()->getFilters($attr), 'App::frontend()->context()->posts->getContent()') . ';
-
             $the_excerpt = Html::clean($the_excerpt);
             $the_excerpt = Html::decodeEntities($the_excerpt);
             $the_excerpt = preg_replace("/\s+/", " ", $the_excerpt);
@@ -317,9 +307,7 @@ class FrontendValues
                 $lang = " lang=" . App::frontend()->context()->posts->post_lang;
             }
 
-            echo "<p class=\"content-text post-excerpt text-secondary\"" . $lang . ">",
-            $the_excerpt,
-            "</p>";
+            echo "<p class=\"content-text post-excerpt text-secondary\"" . $lang . ">", $the_excerpt, "</p>";
         } ?>';
     }
 
@@ -330,35 +318,51 @@ class FrontendValues
      */
     public static function odysseyPostListReactions(): string
     {
-        if (My::settingValue('content_postlist_reactions') === true) {
-            $separator = '';
-            $tag_open  = '<div class=post-list-reaction-link><small>';
-            $tag_close = '</small></div>';
-
-            if (My::settingValue('content_postlist_type') === 'excerpt') {
-                $separator = '| ';
-                $tag_open  = '';
-                $tag_close = '';
-            }
-
-            return '<?php
-            $nb_reactions = (int) App::frontend()->context()->posts->nb_comment + (int) App::frontend()->context()->posts->nb_trackback;
-
-            if ($nb_reactions > 0) {
-                $reaction_url = App::frontend()->context()->posts->getURL() . "#' . __('reactions-id') . '";
-
-                if ($nb_reactions > 1) {
-                    $reaction_text = (string) sprintf("' . __("reactions-reactions-title-count-multiple") . '", $nb_reactions);
-                } else {
-                    $reaction_text = "' . __("reactions-reactions-title-count-one") . '";
-                }
-
-                echo "' . $separator . $tag_open . '<a href=\"" . Html::escapeHTML($reaction_url) . "\">" . Html::escapeHTML($reaction_text) . "</a>' . $tag_close . '";
-            }
-            ?>';
+        if (My::settingValue('content_postlist_reactions') !== true) {
+            return '';
         }
 
-        return '';
+        $separator = '';
+        $tag_open  = '<div class=post-list-reaction-link><small>';
+        $tag_close = '</small></div>';
+
+        if (My::settingValue('content_postlist_type') === 'excerpt') {
+            $separator = '| ';
+            $tag_open  = '';
+            $tag_close = '';
+        }
+
+        return '<?php
+        $nb_reactions = (int) App::frontend()->context()->posts->nb_comment + (int) App::frontend()->context()->posts->nb_trackback;
+
+        if ($nb_reactions > 0) {
+            $reaction_url = App::frontend()->context()->posts->getURL() . "#' . __('reactions-id') . '";
+
+            if ($nb_reactions > 1) {
+                $reaction_text = (string) sprintf("' . __("reactions-reactions-title-count-multiple") . '", $nb_reactions);
+            } else {
+                $reaction_text = "' . __("reactions-reactions-title-count-one") . '";
+            }
+
+            echo "' . $separator . $tag_open . '<a href=\"" . Html::escapeHTML($reaction_url) . "\">" . Html::escapeHTML($reaction_text) . "</a>' . $tag_close . '";
+        }
+        ?>';
+    }
+
+    /**
+     * Displays the post template.
+     *
+     * The template can be customized in the theme customizer.
+     *
+     * @return void The post template.
+     */
+    public static function odysseyPostTemplate()
+    {
+        if (!My::settingValue('content_posttemplate_custom')) {
+            return App::frontend()->template()->includeFile(['src' => '_entry-post.html']);
+        }
+
+        return App::frontend()->template()->includeFile(['src' => My::settingValue('content_posttemplate_custom')]);
     }
 
     /**
@@ -368,20 +372,20 @@ class FrontendValues
      */
     public static function odysseyTrackbackLink(): string
     {
-        if (My::settingValue('reactions_other_trackbacks') === true) {
-            return '<?php if (App::frontend()->context()->posts->trackbacksActive() === true) : ?>
-              <details class=reactions-details>
-                <summary class=reactions-button>
-                  <svg class="reactions-button-icon social-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>' . My::svgIcons('trackback')['path'] . '</svg>
-                  <span class=reactions-button-text>' . __('reactions-trackbacks-add-title') . '</span>
-                </summary>
-
-                <div class=reactions-details-content><code><?php echo App::frontend()->context()->posts->getTrackbackLink(); ?></code></div>
-              </details>
-            <?php endif; ?>';
+        if (My::settingValue('reactions_other_trackbacks') !== true) {
+            return '';
         }
 
-        return '';
+        return '<?php if (App::frontend()->context()->posts->trackbacksActive() === true) : ?>
+          <details class=reactions-details>
+            <summary class=reactions-button>
+              <svg class="reactions-button-icon social-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>' . My::svgIcons('trackback')['path'] . '</svg>
+              <span class=reactions-button-text>' . __('reactions-trackbacks-add-title') . '</span>
+            </summary>
+
+            <div class=reactions-details-content><code><?php echo App::frontend()->context()->posts->getTrackbackLink(); ?></code></div>
+          </details>
+        <?php endif; ?>';
     }
 
     /**
@@ -754,30 +758,28 @@ class FrontendValues
      */
     public static function odysseyFooterCredits(): string
     {
-        if (My::settingValue('footer_credits') !== false) {
-            // If we are not in a development environment.
-            if (!defined('DC_DEV') || (defined('DC_DEV') && DC_DEV === false)) {
-                return '<div class=site-footer-block>' . sprintf(
-                    __('footer-powered-by'),
-                    My::name()
-                ) . '</div>';
-            }
+        if (My::settingValue('footer_credits') === false) {
+            return '';
+        }
 
-            // Otherwise, displays a more detailed information.
-            $dc_version       = App::config()->dotclearVersion();
-            $dc_version_short = explode('-', $dc_version)[0] ?? $dc_version;
-            $theme_name       = My::name();
-            $theme_version    = App::themes()->moduleInfo(My::id(), 'version');
-
+        // If we are not in a development environment.
+        if (!defined('DC_DEV') || (defined('DC_DEV') && DC_DEV === false)) {
             return '<div class=site-footer-block>' . sprintf(
-                __('footer-powered-by-dev'),
-                $dc_version,
-                $dc_version_short,
-                $theme_name,
-                $theme_version
+                __('footer-powered-by'),
+                My::name()
             ) . '</div>';
         }
 
-        return '';
+        // Otherwise, displays a more detailed information.
+        $dc_version       = App::config()->dotclearVersion();
+        $dc_version_short = explode('-', $dc_version)[0] ?? $dc_version;
+
+        return '<div class=site-footer-block>' . sprintf(
+            __('footer-powered-by-dev'),
+            $dc_version,
+            $dc_version_short,
+            My::name(),
+            App::themes()->moduleInfo(My::id(), 'version')
+        ) . '</div>';
     }
 }
