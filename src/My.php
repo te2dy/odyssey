@@ -3,7 +3,7 @@
  * Odyssey, a simple and customizable Dotclear theme.
  *
  * @author    Teddy <zozxebpyr@mozmail.com>
- * @copyright 2022-2024 Teddy
+ * @copyright 2022-2025 Teddy
  * @license   GPL-3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
  */
 
@@ -49,6 +49,7 @@ class My extends MyTheme
                 'name'         => __('section-content'),
                 'sub_sections' => [
                     'postlist'        => __('section-content-postlist'),
+                    'post'            => __('section-content-post'),
                     'text-formatting' => __('section-content-textformatting'),
                     'images'          => __('section-content-images')
                 ]
@@ -409,8 +410,17 @@ class My extends MyTheme
             'choices'     => [
                 __('settings-content-postlisttype-oneline-default') => 'one-line',
                 __('settings-content-postlisttype-excerpt')         => 'excerpt',
+                __('settings-content-postlisttype-custom')          => 'custom'
             ],
             'default'     => 'one-line',
+            'section'     => ['content', 'postlist']
+        ];
+
+        $default_settings['content_postlist_custom'] = [
+            'title'       => __('settings-content-postlistcustom-title'),
+            'description' => __('settings-content-postlistcustom-description'),
+            'type'        => 'text',
+            'default'     => '',
             'section'     => ['content', 'postlist']
         ];
 
@@ -439,6 +449,14 @@ class My extends MyTheme
             'type'        => 'checkbox',
             'default'     => false,
             'section'     => ['content', 'postlist']
+        ];
+
+        $default_settings['content_posttemplate_custom'] = [
+            'title'       => __('settings-content-posttemplatecustom-title'),
+            'description' => __('settings-content-posttemplatecustom-description'),
+            'type'        => 'text',
+            'default'     => '',
+            'section'     => ['content', 'post']
         ];
 
         $default_settings['content_text_font'] = [
@@ -835,8 +853,26 @@ class My extends MyTheme
 
         $scheme = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
         $host   = $parsed_url['host'] ?? '';
+        $port   = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
 
-        return $scheme . $host;
+        return $scheme . $host . $port;
+    }
+
+    /**
+     * Returns the relative path to the theme
+     * or to a file located inside the theme folder.
+     *
+     * @param string $file_path The path to file inside the theme folder (optional).
+     *
+     * @return string The path.
+     */
+    public static function themeFile(string $file_path = ''): string
+    {
+        if ($file_path === '') {
+            return App::blog()->settings()->system->themes_url . '/' . App::blog()->settings()->system->theme;
+        }
+
+        return App::blog()->settings()->system->themes_url . '/' . App::blog()->settings()->system->theme . $file_path;
     }
 
     /**
@@ -908,7 +944,7 @@ class My extends MyTheme
         $number = strval($number);
 
         if (str_starts_with($number, '0.')) {
-            $number = substr($number, 1);
+            return substr($number, 1);
         }
 
         return $number;

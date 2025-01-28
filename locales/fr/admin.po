@@ -51,6 +51,9 @@ msgstr "Paramètres du contenu"
 msgid "section-content-postlist"
 msgstr "Liste des billets"
 
+msgid "section-content-post"
+msgstr "Billets"
+
 msgid "section-content-textformatting"
 msgstr "Mise en forme"
 
@@ -333,6 +336,15 @@ msgstr "Titre et date sur une ligne (par défaut)"
 msgid "settings-content-postlisttype-excerpt"
 msgstr "Titre, date et extrait du billet"
 
+msgid "settings-content-postlisttype-custom"
+msgstr "Personnalisée"
+
+msgid "settings-content-postlistcustom-title"
+msgstr "Modèle personnalisé"
+
+msgid "settings-content-postlistcustom-description"
+msgstr "Renseignez ici le chemin vers un modèle (<em>template</em>) personnalisé pour afficher une liste de billet personnalisée. Le fichier doit se trouver dans le dossier du thème."
+
 msgid "settings-content-postlistaltcolor-title"
 msgstr "Alterner la couleur des liens vers les billets"
 
@@ -344,6 +356,12 @@ msgstr "Afficher un aperçu de la première image des billets"
 
 msgid "settings-content-postlistreactions-title"
 msgstr "Afficher un lien vers les réactions"
+
+msgid "settings-content-posttemplatecustom-title"
+msgstr "Modèle personnalisé"
+
+msgid "settings-content-posttemplatecustom-description"
+msgstr "Renseignez ici le chemin vers un modèle (<em>template</em>) personnalisé pour afficher des billets personnalisés. Le fichier doit se trouver dans le dossier du thème."
 
 msgid "settings-content-fontfamily-title"
 msgstr "Police d’écriture"

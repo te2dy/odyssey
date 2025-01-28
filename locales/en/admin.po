@@ -51,6 +51,9 @@ msgstr "Content settings"
 msgid "section-content-postlist"
 msgstr "Post list"
 
+msgid "section-content-post"
+msgstr "Posts"
+
 msgid "section-content-textformatting"
 msgstr "Formatting"
 
@@ -333,6 +336,15 @@ msgstr "Title and date on a single line (default)"
 msgid "settings-content-postlisttype-excerpt"
 msgstr "Title, date and post excerpt"
 
+msgid "settings-content-postlisttype-custom"
+msgstr "Custom"
+
+msgid "settings-content-postlistcustom-title"
+msgstr "Custom template"
+
+msgid "settings-content-postlistcustom-description"
+msgstr "Type here the path to a custom template to display a custom post list. The file must be located in the theme folder."
+
 msgid "settings-content-postlistaltcolor-title"
 msgstr "Alternate colors for links to posts"
 
@@ -344,6 +356,12 @@ msgstr "Show a preview of the first image of posts"
 
 msgid "settings-content-postlistreactions-title"
 msgstr "Show a link to reactions"
+
+msgid "settings-content-posttemplatecustom-title"
+msgstr "Custom template"
+
+msgid "settings-content-posttemplatecustom-description"
+msgstr "Type here the path to a custom template to display custom posts. The file must be located in the theme folder."
 
 msgid "settings-content-fontfamily-title"
 msgstr "Fonts"

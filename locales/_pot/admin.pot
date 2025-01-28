@@ -51,6 +51,9 @@ msgstr ""
 msgid "section-content-postlist"
 msgstr ""
 
+msgid "section-content-post"
+msgstr ""
+
 msgid "section-content-textformatting"
 msgstr ""
 
@@ -333,6 +336,15 @@ msgstr ""
 msgid "settings-content-postlisttype-excerpt"
 msgstr ""
 
+msgid "settings-content-postlisttype-custom"
+msgstr ""
+
+msgid "settings-content-postlistcustom-title"
+msgstr ""
+
+msgid "settings-content-postlistcustom-description"
+msgstr ""
+
 msgid "settings-content-postlistaltcolor-title"
 msgstr ""
 
@@ -343,6 +355,12 @@ msgid "settings-content-postlistthumbnail-title"
 msgstr ""
 
 msgid "settings-content-postlistreactions-title"
+msgstr ""
+
+msgid "settings-content-posttemplatecustom-title"
+msgstr ""
+
+msgid "settings-content-posttemplatecustom-description"
 msgstr ""
 
 msgid "settings-content-fontfamily-title"
