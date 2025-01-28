@@ -148,9 +148,9 @@ class FrontendBehaviors
     /**
      * Displays structured data as JSON-LD.
      *
-     * @return string The structured data.
+     * @return void The structured data.
      */
-    public static function odysseyJsonLd()
+    public static function odysseyJsonLd(): void
     {
         if (My::settingValue('advanced_json') === true) {
             $json_ld = [];
@@ -229,7 +229,7 @@ class FrontendBehaviors
 
                         $json_ld['image'] = [
                             '@type'  => 'ImageObject',
-                            'url'    => My::blogBaseURL() . Ctx::EntryFirstImageHelper("o", false, "", true),
+                            'url'    => My::blogBaseURL() . Ctx::EntryFirstImageHelper('o', false, '', true),
                             'width'  => (int) $width,
                             'height' => (int) $height
                         ];
@@ -352,8 +352,8 @@ class FrontendBehaviors
                 // Gets the image src attribute.
                 preg_match('/src="([^"]*)/', $img, $src_match);
 
-                $src_attr  = isset($src_match[0]) ? $src_match[0] . '"' : '';
-                $src_value = isset($src_match[1]) ? $src_match[1] : '';
+                $src_attr  = $src_match[0] ?? '';
+                $src_value = $src_match[1] ?? '';
 
                 // Transforms absolute URLs in relative ones.
                 if (str_starts_with($src_value, My::blogBaseURL())) {
@@ -453,7 +453,7 @@ class FrontendBehaviors
                         $attr .= 'height=' . (int) ($img_width_max * $img[$src_image_size]['height'] / $img[$src_image_size]['width']);
                     }
 
-                    return str_replace($src_attr, trim($attr), $matches[0]);
+                    return str_replace($src_attr . '"', trim($attr), $matches[0]);
                 }
 
                 return $matches[0];
