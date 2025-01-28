@@ -3,7 +3,7 @@
  * Odyssey, a simple and customizable Dotclear theme.
  *
  * @author    Teddy <zozxebpyr@mozmail.com>
- * @copyright 2022-2024 Teddy
+ * @copyright 2022-2025 Teddy
  * @license   GPL-3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
  */
 
@@ -102,7 +102,7 @@ class Config extends Process
                                 App::blog()->settings->odyssey->drop($setting_id);
                             }
                         } else {
-                            // Saves each specific settings.
+                            // Prepares value for each specific settings.
                             if (!str_starts_with($setting_id, 'social_')) {
                                 switch ($setting_id) {
                                     case 'global_unit' :
@@ -203,7 +203,7 @@ class Config extends Process
                         }
 
                         /**
-                         * Removes the CSS folder if if exists.
+                         * Removes the CSS folder if it exists.
                          *
                          * Impossible to remove the odyssey folder yet,
                          * created in the public folder.
