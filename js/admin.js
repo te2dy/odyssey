@@ -49,7 +49,7 @@ function toggleFooterSocialSetting(id) {
   }
 }
 
-// Shows or hides settings depending on others.
+// Shows or hides settings depending on other ones.
 function disableInputs() {
   if (document.getElementById("global_color_primary").value === "custom") {
     document.getElementById("section-global-colors-light").style.display = "block";
@@ -97,6 +97,12 @@ function disableInputs() {
       ],
       "none"
     );
+  }
+
+  if (document.getElementById("content_postlist_type").value === "custom") {
+    setStyle("content_postlist_custom", "block");
+  } else {
+    setStyle("content_postlist_custom", "none");
   }
 
   if (document.getElementById("reactions_other").value !== "disabled") {
