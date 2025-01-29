@@ -83,7 +83,7 @@ class FrontendValues
      */
     public static function odysseyStylesheetURL(): string
     {
-        $css_url = My::settingValue('styles_url') ?: My::themeFile('/style.min.css');
+        $css_url = My::settingValue('styles_url') ?: My::getInThemeFolder('style.min.css');
 
         return My::escapeAttr(Html::escapeURL($css_url));
     }

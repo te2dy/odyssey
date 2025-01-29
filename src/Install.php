@@ -47,10 +47,10 @@ class Install extends Process
     {
         $styles_custom = My::settingValue('styles');
 
-        if ($styles_custom !== '') {
+        if ($styles_custom) {
             $styles_default = '';
 
-            $css_default_path_file = App::blog()->themesPath() . '/' . App::blog()->settings()->system->theme . '/' . 'style.min.css';
+            $css_default_path_file = My::getInThemeFolder('style.min.css', 'path');
 
             if (file_exists($css_default_path_file) && (string) file_get_contents($css_default_path_file) !== '') {
                 $styles_default = (string) file_get_contents($css_default_path_file);
@@ -61,7 +61,7 @@ class Install extends Process
 
             if (ThemeConfig::canWriteCss(App::blog()->settings()->system->theme, true)
                 && ThemeConfig::canWriteCss($css_custom_path_folder, true) === true
-                && $styles_default !== ''
+                && $styles_default
             ) {
                 ThemeConfig::writeCss(
                     $css_custom_path_folder,
