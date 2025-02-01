@@ -118,7 +118,7 @@ msgid "settings-global-fontfamily-title"
 msgstr "Police d’écriture"
 
 msgid "settings-global-fontfamily-description"
-msgstr "Votre blog utilise seulement les polices installées sur l’appareil de vos lecteurs pour afficher les textes. Aucune police n’est téléchargée pour assurer le rendu, ce qui est moins gourmand en ressources. Leur affichage peut varier d’un appareil à l’autre."
+msgstr "Le thème utilise les polices installées sur l’appareil de vos lecteurs pour afficher les textes. Aucune police n’est téléchargée pour assurer le rendu, ce qui est moins gourmand en ressources. Leur affichage peut néanmoins varier d’un appareil à l’autre."
 
 msgid "settings-global-fontfamily-system-default"
 msgstr "Système (par défaut)"
@@ -220,7 +220,7 @@ msgid "settings-global-primarycolor-title"
 msgstr "Couleur principale"
 
 msgid "settings-global-primarycolor-description"
-msgstr "Notamment utilisée pour les liens."
+msgstr "Cette couleur est principalement utilisée pour mettre les liens en évidence."
 
 msgid "settings-global-primarycolor-blue-default"
 msgstr "Bleu (par défaut)"
@@ -403,7 +403,7 @@ msgid "settings-content-initialletter-title"
 msgstr "Ajouter une lettrine au premier paragraphe des billets et des pages."
 
 msgid "settings-content-initialletter-description"
-msgstr "Ne fonctionne que sur des versions récentes de Safari et Chrome (juillet 2024)."
+msgstr "Aux dernières nouvelles (février 2025), ne fonctionne que sur des versions récentes de Safari et Chrome."
 
 msgid "settings-content-imageswide-title"
 msgstr "Agrandir les images suffisamment larges"
@@ -421,7 +421,7 @@ msgid "settings-reactions-button-title"
 msgstr "Dévoiler le formulaire en cliquant sur un bouton"
 
 msgid "settings-reactions-button-description"
-msgstr "Permet d’alléger visuellement les pages du blog."
+msgstr "Permet d’alléger visuellement les billets du blog."
 
 msgid "settings-reactions-markdownnotice-title"
 msgstr "Afficher un message signalant la prise en charge du balisage Markdown"
@@ -460,7 +460,7 @@ msgid "settings-reactions-otheremail-title"
 msgstr "Autoriser les réponses par courriel"
 
 msgid "settings-reactions-otheremail-description"
-msgstr "Attention&nbsp;: votre adresse électronique sera dévoilée et pourra être utilisée par des personnes malveillantes (pourriels). Pour ne pas révéler votre adresse, vous pouvez essayer l’extension <a href="%s">Signal</a>."
+msgstr "Attention&nbsp;: votre adresse électronique sera dévoilée et pourrait être utilisée par des personnes malveillantes (pourriels). Pour ne pas révéler votre adresse, vous pouvez essayer l’extension <a href="%s">Signal</a> ou un service tiers comme <a href=https://relay.firefox.com/>Firefox Relay</a>."
 
 msgid "settings-reactions-other-facebook-title"
 msgstr "Autoriser le partage sur %s"
@@ -502,7 +502,7 @@ msgid "settings-widgets-display-title"
 msgstr "Activer les widgets (volets de navigation et d’extra)"
 
 msgid "settings-widgets-display-description"
-msgstr "Il est recommandé de désactiver cette option si vous n’avez configuré aucun widget dans le volet de navigation et le volet d’extra (voir la <a href="%s">page de configuration des widgets</a>)."
+msgstr "Il est recommandé de désactiver cette option si vous avez décidé de n’afficher aucun widget dans le volet de navigation et le volet d’extra (voir la <a href="%s">page de configuration des widgets</a>)."
 
 msgid "settings-footer-activation-title"
 msgstr "Activer le pied de page"

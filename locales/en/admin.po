@@ -118,7 +118,7 @@ msgid "settings-global-fontfamily-title"
 msgstr "Fonts"
 
 msgid "settings-global-fontfamily-description"
-msgstr "Your blog uses only the fonts installed on your readers' devices to display text. No fonts are downloaded for rendering, which is less resource-intensive. Their display may vary from one device to another."
+msgstr "The theme uses the fonts installed on your readers' devices to display text. No fonts are downloaded for rendering, which is less resource-intensive. However, their display may vary from one device to another."
 
 msgid "settings-global-fontfamily-system-default"
 msgstr "System (default)"
@@ -220,7 +220,7 @@ msgid "settings-global-primarycolor-title"
 msgstr "Main color"
 
 msgid "settings-global-primarycolor-description"
-msgstr "Particularly used for links."
+msgstr "This color is mainly used to highlight links."
 
 msgid "settings-global-primarycolor-blue-default"
 msgstr "Blue (default)"
@@ -403,7 +403,7 @@ msgid "settings-content-initialletter-title"
 msgstr "Add a drop cap to the first paragraph of posts and pages."
 
 msgid "settings-content-initialletter-description"
-msgstr "Only works on recent versions of Safari and Chrome (July 2024)."
+msgstr "At last count (February 2025), only works on recent versions of Safari and Chrome."
 
 msgid "settings-content-imageswide-title"
 msgstr "Enlarge images wide enough"
@@ -421,7 +421,7 @@ msgid "settings-reactions-button-title"
 msgstr "Unveil the form by clicking a button"
 
 msgid "settings-reactions-button-description"
-msgstr "Allows you to visually lighten the blog pages."
+msgstr "Makes blog posts visually lighter."
 
 msgid "settings-reactions-markdownnotice-title"
 msgstr "Show a message about Markdown markup support"
@@ -460,7 +460,7 @@ msgid "settings-reactions-otheremail-title"
 msgstr "Allow replies by e-mail"
 
 msgid "settings-reactions-otheremail-description"
-msgstr "Warning: your e-mail address will be revealed and may be used by malicious parties (spam). To avoid revealing your address, you can try the <a href="%s">Signal</a> plugin."
+msgstr "Warning: your e-mail address will be revealed and could be used by malicious parties (spam). To avoid revealing your address, you can try the <a href="%s">Signal</a> plugin or a third-party service such as <a href=https://relay.firefox.com/>Firefox Relay</a>."
 
 msgid "settings-reactions-other-facebook-title"
 msgstr "Allow sharing on %s"
