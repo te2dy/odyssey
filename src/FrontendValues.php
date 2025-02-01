@@ -278,34 +278,34 @@ class FrontendValues
     public static function odysseyEntryExcerpt($attr): string
     {
         return '<?php
-        $the_excerpt = "";
+        $excerpt = "";
 
         if (' . sprintf(App::frontend()->template()->getFilters($attr), 'App::frontend()->context()->posts->getExcerpt()') . ') {
-            $the_excerpt = ' . sprintf(App::frontend()->template()->getFilters($attr), 'App::frontend()->context()->posts->getExcerpt()') . ';
-            $the_excerpt = Html::clean($the_excerpt);
-            $the_excerpt = Html::decodeEntities($the_excerpt);
-            $the_excerpt = preg_replace("/\s+/", " ", $the_excerpt);
+            $excerpt = ' . sprintf(App::frontend()->template()->getFilters($attr), 'App::frontend()->context()->posts->getExcerpt()') . ';
+            $excerpt = Html::clean($excerpt);
+            $excerpt = Html::decodeEntities($excerpt);
+            $excerpt = preg_replace("/\s+/", " ", $excerpt);
         } else {
-            $the_excerpt = ' . sprintf(App::frontend()->template()->getFilters($attr), 'App::frontend()->context()->posts->getContent()') . ';
-            $the_excerpt = Html::clean($the_excerpt);
-            $the_excerpt = Html::decodeEntities($the_excerpt);
-            $the_excerpt = preg_replace("/\s+/", " ", $the_excerpt);
+            $excerpt = ' . sprintf(App::frontend()->template()->getFilters($attr), 'App::frontend()->context()->posts->getContent()') . ';
+            $excerpt = Html::clean($excerpt);
+            $excerpt = Html::decodeEntities($excerpt);
+            $excerpt = preg_replace("/\s+/", " ", $excerpt);
 
-            if (strlen($the_excerpt) > 200) {
-                $the_excerpt  = substr($the_excerpt, 0, 200);
-                $the_excerpt  = preg_replace("/[^a-z0-9]+\Z/i", "", $the_excerpt);
-                $the_excerpt .= "…";
+            if (strlen($excerpt) > 200) {
+                $excerpt  = substr($excerpt, 0, 200);
+                $excerpt  = preg_replace("/[^a-z0-9]+\Z/i", "", $excerpt);
+                $excerpt .= "…";
             }
         }
 
-        if ($the_excerpt) {
+        if ($excerpt) {
             $lang = "";
 
             if (App::frontend()->context()->posts->post_lang !== App::blog()->settings->system->lang) {
                 $lang = " lang=" . App::frontend()->context()->posts->post_lang;
             }
 
-            echo "<p class=\"content-text post-excerpt text-secondary\"" . $lang . ">", $the_excerpt, "</p>";
+            echo "<p class=\"content-text post-excerpt text-secondary\"" . $lang . ">", $excerpt, "</p>";
         } ?>';
     }
 

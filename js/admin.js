@@ -238,6 +238,24 @@ function inputValidation() {
   }
 }
 
+/*
+ * Gets the HTTP status code of a file based on its URL.
+ *
+ * @return bool
+ */
+function httpStatus(url) {
+  let http = new XMLHttpRequest();
+
+  http.open('HEAD', url, false);
+  http.send();
+
+  if (http.status === 200) {
+    return true;
+  }
+
+  return false;
+}
+
 /**
  * Checks if an image exists via its URL.
  *
@@ -249,25 +267,14 @@ function imageExists(url) {
       src2x: false
     };
 
-    let image = new Image();
+    imgExist.src = httpStatus(url);
 
-    image.src = url;
-
-    if (image.complete && image.height > 0) {
-      imgExist.src = true;
-    }
-
-    // Check Retina image then.
-    image2x = new Image();
-
+    // Check Retina image then
     let imgExt       = url.split('.').pop(),
-        imgExtLength = imgExt.length;
+        imgExtLength = imgExt.length,
+        url2x        = url.substring(0, url.length - (imgExtLength + 1)) + "-2x." + imgExt;
 
-    image2x.src = url.substring(0, url.length - (imgExtLength + 1)) + "-2x." + imgExt;
-
-    if (image2x.complete && image2x.height > 0) {
-      imgExist.src2x = true;
-    }
+    imgExist.src2x = httpStatus(url2x);
 
     return imgExist;
 }

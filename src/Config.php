@@ -1049,6 +1049,7 @@ class Config extends Process
 
         // Grayscale images
         if (isset($_POST['content_images_grayscale']) && $_POST['content_images_grayscale'] === 'on') {
+            $css_main_array['.content-text img']['transition'] = 'var(--color-transition, unset)';
             $css_main_array['.content-text img:not(:active, :focus, :hover)']['filter'] = 'grayscale(1)';
         }
 
