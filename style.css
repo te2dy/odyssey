@@ -610,9 +610,6 @@ details summary {
 .reactions-details summary::-webkit-details-marker {
   display: none;
 }
-.reactions-details[open] .reactions-button-text {
-  font-weight: 700;
-}
 .reactions-details-content {
   margin-block: 1rem 2rem;
 }
