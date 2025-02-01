@@ -424,10 +424,7 @@ details summary {
 #main-menu a {
   text-decoration: none;
 }
-#main-menu .active a {
-  border-bottom: .168rem solid var(--color-primary, hsl(226, 80%, 45%));
-  padding-bottom: .1rem;
-}
+#main-menu .active a,
 #main-menu :not(.active) a:is(:active, :focus, :hover) {
   text-decoration: underline;
 }
@@ -440,10 +437,6 @@ details summary {
   #main-menu li a:is(:active, :focus, :hover) {
     text-decoration: none;
   }
-}
-#main-menu .active a:focus {
-  border-bottom: 0;
-  padding-bottom: 0;
 }
 
 /**
