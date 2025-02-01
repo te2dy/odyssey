@@ -920,9 +920,7 @@ class Config extends Process
 
         // Alternate post color
         if (isset($_POST['content_postlist_altcolor']) && $_POST['content_postlist_altcolor'] === 'on') {
-            $css_root_dark_array[':root']['--color-background-even'] = '#000';
-
-            $css_main_array[':is(.entry-list, .entry-list-excerpt) .post:nth-child(even)']['background-color'] = 'var(--color-background-even, #fff)';
+            $css_main_array[':is(.entry-list, .entry-list-excerpt) .post:nth-child(even)']['background-color'] = 'var(--color-input-background,#f2f2f2);';
         }
 
         // Post thumbnail

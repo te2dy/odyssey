@@ -415,8 +415,6 @@ class My extends MyTheme
             'section'     => ['content', 'postlist']
         ];
 
-        /*
-        // TO DO: combine this setting with the customizable color system.
         $default_settings['content_postlist_altcolor'] = [
             'title'       => __('settings-content-postlistaltcolor-title'),
             'description' => __('settings-content-postlistaltcolor-description'),
@@ -424,7 +422,6 @@ class My extends MyTheme
             'default'     => false,
             'section'     => ['content', 'postlist']
         ];
-        */
 
         $default_settings['content_postlist_thumbnail'] = [
             'title'       => __('settings-content-postlistthumbnail-title'),
