@@ -12,6 +12,14 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
+=== 1.7 - 1er février 2025 ===
+- Ajout : option pour différencier les liens dans la liste des billets.
+- Correction : l’adresse affichée sur la page d’erreur 404 est incorrecte.
+- Modification : année 2024 en 2025 dans le "copyright".
+- Modification mineure des styles.
+- Mise à jour des traductions.
+- Revue de code.
+
 === 1.6 - 16 octobre 2024 ===
 - Correction : la description des catégories ne s’affiche pas.
 - Modification : augmentation de la taille de police pour les notes de bas de page.
