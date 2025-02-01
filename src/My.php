@@ -416,14 +416,6 @@ class My extends MyTheme
             'section'     => ['content', 'postlist']
         ];
 
-        $default_settings['content_postlist_custom'] = [
-            'title'       => __('settings-content-postlistcustom-title'),
-            'description' => __('settings-content-postlistcustom-description'),
-            'type'        => 'text',
-            'default'     => '',
-            'section'     => ['content', 'postlist']
-        ];
-
         /*
         // TO DO: combine this setting with the customizable color system.
         $default_settings['content_postlist_altcolor'] = [
@@ -449,14 +441,6 @@ class My extends MyTheme
             'type'        => 'checkbox',
             'default'     => false,
             'section'     => ['content', 'postlist']
-        ];
-
-        $default_settings['content_posttemplate_custom'] = [
-            'title'       => __('settings-content-posttemplatecustom-title'),
-            'description' => __('settings-content-posttemplatecustom-description'),
-            'type'        => 'text',
-            'default'     => '',
-            'section'     => ['content', 'post']
         ];
 
         $default_settings['content_text_font'] = [

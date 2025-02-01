@@ -170,8 +170,6 @@ class FrontendValues
             return App::frontend()->template()->includeFile(['src' => '_entry-list.html']);
         } elseif (My::settingValue('content_postlist_type') === 'excerpt') {
             return App::frontend()->template()->includeFile(['src' => '_entry-list-excerpt.html']);
-        } elseif (My::settingValue('content_postlist_type') === 'custom') {
-            return App::frontend()->template()->includeFile(['src' => My::settingValue('content_postlist_custom')]);
         }
 
         return '';
@@ -347,22 +345,6 @@ class FrontendValues
             echo "' . $separator . $tag_open . '<a href=\"" . Html::escapeHTML($reaction_url) . "\">" . Html::escapeHTML($reaction_text) . "</a>' . $tag_close . '";
         }
         ?>';
-    }
-
-    /**
-     * Displays the post template.
-     *
-     * The template can be customized in the theme customizer.
-     *
-     * @return void The post template.
-     */
-    public static function odysseyPostTemplate()
-    {
-        if (!My::settingValue('content_posttemplate_custom')) {
-            return App::frontend()->template()->includeFile(['src' => '_entry-post.html']);
-        }
-
-        return App::frontend()->template()->includeFile(['src' => My::settingValue('content_posttemplate_custom')]);
     }
 
     /**
