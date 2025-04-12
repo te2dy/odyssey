@@ -336,6 +336,9 @@ msgstr "Titre et date sur une ligne (par défaut)"
 msgid "settings-content-postlisttype-excerpt"
 msgstr "Titre, date et extrait du billet"
 
+msgid "settings-content-postlisttype-content"
+msgstr "Titre, date et contenu du billet"
+
 msgid "settings-content-postlistaltcolor-title"
 msgstr "Alterner la couleur des liens vers les billets"
 

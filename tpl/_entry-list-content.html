@@ -1,0 +1,53 @@
+<tpl:Entries no_content="0">
+  <tpl:EntriesHeader>
+    <div aria-label={{tpl:odysseyLang id="entry-list-aria-label" is_attr="1"}} class=entry-list-content>
+  </tpl:EntriesHeader>
+
+  <article class="post<tpl:EntryIf selected="1"> post-selected</tpl:EntryIf>" id={{tpl:lang post-id}}-{{tpl:EntryID}}>
+    <header>
+      <tpl:EntryIf type="post">
+        <time class="post-date text-secondary" datetime={{tpl:EntryDate iso8601="1"}}>{{tpl:EntryDate}}</time><tpl:EntryIf selected="1"><span class=text-secondary> – {{tpl:lang post-selected-label}} ⭐️</span></tpl:EntryIf>
+      </tpl:EntryIf>
+
+      <h3 class=entry-title><a href={{tpl:EntryURL is_attr="1"}} rel=bookmark>{{tpl:EntryTitle}}</a></h3>
+    </header>
+
+    <div class=content-text>
+      {{tpl:EntryContent}}
+    </div>
+
+    <footer class=post-footer>
+      <tpl:EntryIf has_attachment="1">
+        {{tpl:include src="_attachments.html"}}
+      </tpl:EntryIf>
+
+      <tpl:EntryIf has_category="1">
+        <div class="post-meta text-secondary">
+          {{tpl:lang post-category-prefix}} <a href={{tpl:EntryCategoryURL is_attr="1"}} rel=tag>{{tpl:EntryCategory}}</a>
+        </div>
+      </tpl:EntryIf>
+
+      <tpl:EntryIf>
+        <tpl:EntryTags>
+          <tpl:TagsHeader>
+            <div class="post-meta text-secondary">{{tpl:odysseyPostTagsBefore}}
+          </tpl:TagsHeader>
+
+          <a href={{tpl:TagURL is_attr="1"}} rel=tag>{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
+
+          <tpl:TagsFooter>
+            </div>
+          </tpl:TagsFooter>
+        </tpl:EntryTags>
+      </tpl:EntryIf>
+
+      {{tpl:odysseyPostListReactions}}
+    </footer>
+  </article>
+
+  <tpl:EntriesFooter>
+    </div>
+
+    {{tpl:include src="_pagination.html"}}
+  </tpl:EntriesFooter>
+</tpl:Entries>

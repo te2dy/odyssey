@@ -168,11 +168,17 @@ class FrontendValues
     {
         if (!My::settingValue('content_postlist_type')) {
             return App::frontend()->template()->includeFile(['src' => '_entry-list.html']);
-        } elseif (My::settingValue('content_postlist_type') === 'excerpt') {
+        }
+
+        if (My::settingValue('content_postlist_type') === 'excerpt') {
             return App::frontend()->template()->includeFile(['src' => '_entry-list-excerpt.html']);
         }
 
-        return '';
+        if (My::settingValue('content_postlist_type') === 'content') {
+            return App::frontend()->template()->includeFile(['src' => '_entry-list-content.html']);
+        }
+
+        return App::frontend()->template()->includeFile(['src' => '_entry-list.html']);
     }
 
     /**
@@ -328,6 +334,10 @@ class FrontendValues
             $separator = '| ';
             $tag_open  = '';
             $tag_close = '';
+        } elseif (My::settingValue('content_postlist_type') === 'content') {
+            $separator = '';
+            $tag_open  = '<p>';
+            $tag_close = '</p>';
         }
 
         return '<?php

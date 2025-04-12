@@ -99,10 +99,20 @@ function disableInputs() {
     );
   }
 
-  if (document.getElementById("content_postlist_type").value === "custom") {
-    setStyle("content_postlist_custom", "block");
+  if (document.getElementById("content_postlist_type").value !== "content") {
+    setStyle([
+      "content_postlist_altcolor",
+      "content_postlist_thumbnail"
+      ],
+      "block"
+    );
   } else {
-    setStyle("content_postlist_custom", "none");
+    setStyle([
+      "content_postlist_altcolor",
+      "content_postlist_thumbnail"
+      ],
+      "none"
+    );
   }
 
   if (document.getElementById("reactions_other").value !== "disabled") {

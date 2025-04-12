@@ -336,6 +336,9 @@ msgstr ""
 msgid "settings-content-postlisttype-excerpt"
 msgstr ""
 
+msgid "settings-content-postlisttype-content"
+msgstr ""
+
 msgid "settings-content-postlistaltcolor-title"
 msgstr ""
 

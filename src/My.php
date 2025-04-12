@@ -409,7 +409,8 @@ class My extends MyTheme
             'type'        => 'select',
             'choices'     => [
                 __('settings-content-postlisttype-oneline-default') => 'one-line',
-                __('settings-content-postlisttype-excerpt')         => 'excerpt'
+                __('settings-content-postlisttype-excerpt')         => 'excerpt',
+                __('settings-content-postlisttype-content')         => 'content'
             ],
             'default'     => 'one-line',
             'section'     => ['content', 'postlist']
