@@ -630,6 +630,12 @@ msgstr "Add minimalist social tags"
 msgid "settings-advanced-metasocial-description"
 msgstr "Ensures better display of the blog on social networks and can be useful for SEO."
 
+msgid "settings-advanced-canonical-title"
+msgstr "Add canonical URLs"
+
+msgid "settings-advanced-canonical-description"
+msgstr "Useful for search engine optimization. Add the canonical URL to home page, post and page headers."
+
 msgid "settings-advanced-json-title"
 msgstr "Add metadata in JSON format"
 

@@ -630,6 +630,12 @@ msgstr "Ajouter des balises sociales minimalistes"
 msgid "settings-advanced-metasocial-description"
 msgstr "Assure un meilleur affichage du blog sur les réseaux sociaux et peut être utile pour le référencement."
 
+msgid "settings-advanced-canonical-title"
+msgstr "Ajouter des URL canoniques"
+
+msgid "settings-advanced-canonical-description"
+msgstr "Utile pour le référencement. Ajouter l’URL canonique dans les en-têtes de la page d’accueil, des billets et des pages."
+
 msgid "settings-advanced-json-title"
 msgstr "Ajouter des métadonnées au format JSON"
 

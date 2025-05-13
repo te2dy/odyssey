@@ -722,6 +722,14 @@ class My extends MyTheme
             'section'     => ['advanced', 'seo']
         ];
 
+        $default_settings['advanced_canonical'] = [
+            'title'       => __('settings-advanced-canonical-title'),
+            'description' => __('settings-advanced-canonical-description'),
+            'type'        => 'checkbox',
+            'default'     => false,
+            'section'     => ['advanced', 'seo']
+        ];
+
         $default_settings['advanced_json'] = [
             'title'       => __('settings-advanced-json-title'),
             'description' => __('settings-advanced-json-description'),

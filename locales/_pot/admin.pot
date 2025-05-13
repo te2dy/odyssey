@@ -630,6 +630,12 @@ msgstr ""
 msgid "settings-advanced-metasocial-description"
 msgstr ""
 
+msgid "settings-advanced-canonical-title"
+msgstr ""
+
+msgid "settings-advanced-canonical-description"
+msgstr ""
+
 msgid "settings-advanced-json-title"
 msgstr ""
 

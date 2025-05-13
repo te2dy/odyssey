@@ -51,7 +51,7 @@ class FrontendValues
      * If a custom description has not been set in the configurator,
      * displays the blog description.
      *
-     * @return string The meta description tag.
+     * @return string The description tag.
      */
     public static function odysseyMetaDescriptionHome(): string
     {
@@ -74,6 +74,30 @@ class FrontendValues
     public static function odysseyMetaRobots(): string
     {
         return My::escapeAttr(strtolower(App::blog()->settings()->system->robots_policy));
+    }
+
+    /**
+     * Adds a link to the canonical URL of the current page in head.
+     *
+     * @return string The canonical URL tag.
+     */
+    public static function odysseyMetaCanonical(): string
+    {
+        if (My::settingValue('advanced_canonical') === true) {
+            switch (App::url()->type) {
+                case 'post':
+                case 'pages':
+                    return '<link rel=canonical href="<?= App::frontend()->context()->posts->getURL() ?>">' . "\n";
+                    break;
+                case 'default':
+                    return '<link rel=canonical href=' . My::escapeAttr(App::blog()->url) . '>' . "\n";
+                    break;
+                default:
+                    return '';
+            }
+        }
+
+        return '';
     }
 
     /**
@@ -375,7 +399,7 @@ class FrontendValues
               <span class=reactions-button-text>' . __('reactions-trackbacks-add-title') . '</span>
             </summary>
 
-            <div class=reactions-details-content><code><?php echo App::frontend()->context()->posts->getTrackbackLink(); ?></code></div>
+            <div class=reactions-details-content><code><?= App::frontend()->context()->posts->getTrackbackLink(); ?></code></div>
           </details>
         <?php endif; ?>';
     }
@@ -403,7 +427,7 @@ class FrontendValues
             $feed_link = App::blog()->url() . App::url()->getURLFor("feed", "' . $feed_type . '") . "/comments/" . App::frontend()->context()->posts->post_id;
             ?>
             <p>
-                <a class=reactions-button href="<?php echo $feed_link; ?>" rel=nofollow>
+                <a class=reactions-button href="<?= $feed_link; ?>" rel=nofollow>
                     <svg class="reactions-button-icon social-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>' . My::svgIcons('feed')['path'] . '</svg>
 
                     <span class=reactions-button-text>' . __('reactions-subscribe-link-reactions') . '</span>
