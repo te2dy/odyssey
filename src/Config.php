@@ -919,12 +919,16 @@ class Config extends Process
         } elseif (isset($_POST['content_postlist_type']) && $_POST['content_postlist_type'] === 'content') {
             $css_main_array['.entry-list-content .post']['border-bottom'] = '.063em solid var(--color-border, #ccc)';
             $css_main_array['.entry-list-content .post']['margin-bottom'] = '4em';
-            $css_main_array['.entry-list-content .post']['padding-bottom'] = '4em';
 
             $css_main_array['.entry-list-content .post:last-child']['margin-bottom'] = '0';
             $css_main_array['.entry-list-content .post:last-child']['border-bottom'] = 'none';
 
             $css_main_array['.entry-list-content .entry-title']['font-size'] = '1.4em';
+
+            $css_main_array['.entry-list-content .post-footer']['font-size']    = '.8em';
+            $css_main_array['.entry-list-content .post-footer']['margin-block'] = '2rem 4rem';
+
+            $css_main_array['.content-info']['padding-bottom'] = '2em';
         }
 
         // Alternate post color
