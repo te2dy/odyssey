@@ -10,7 +10,17 @@ Adresse de la licence : https://www.gnu.org/licenses/gpl-3.0.fr.html
 Ce thème n’aurait pu avoir vu le jour sans les ressources mises à disposition librement par la communauté Dotclear.
 Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://blog.jim-nielsen.com/), des travaux réalisés sur les thèmes Ductile et Berlin pour Dotclear, et des billets de Franck Paul (https://open-time.net/).
 
+== Feuille de route ==
+- Ajouter un message de confirmation avant la réinitialisation des paramètres du thème.
+- Amélioration de la désinstallation du thème avec l’utilisation de l’extension Uninstaller.
+  Voir https://dotclear.watch/Billet/Le-plugin-Uninstaller
+
 == Notes de version ==
+
+=== 1.8 - 13 mai 2025 ===
+- Ajout : option pour afficher le contenu complet dans la liste des billets.
+- Ajout : option pour ajouter d’URL canonique danas l’en-tête.
+- Ajout : lien vers le fil du forum officiel pour les questions liées au thème et l’assistance.
 
 === 1.7.1 - 2 février 2025 ===
 - Correction : oubli de minification de la feuille de styles principale.
