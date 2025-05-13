@@ -19,7 +19,7 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 === 1.8 - 13 mai 2025 ===
 - Ajout : option pour afficher le contenu complet dans la liste des billets.
-- Ajout : option pour ajouter d’URL canonique danas l’en-tête.
+- Ajout : option pour ajouter l’URL canonique dans l’en-tête.
 - Ajout : lien vers le fil du forum officiel pour les questions liées au thème et l’assistance.
 
 === 1.7.1 - 2 février 2025 ===
