@@ -360,8 +360,8 @@ class FrontendValues
             $tag_close = '';
         } elseif (My::settingValue('content_postlist_type') === 'content') {
             $separator = '';
-            $tag_open  = '<p>';
-            $tag_close = '</p>';
+            $tag_open  = '<div class=\"post-meta text-secondary\">';
+            $tag_close = '</div>';
         }
 
         return '<?php
