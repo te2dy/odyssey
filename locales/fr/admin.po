@@ -642,6 +642,12 @@ msgstr "Ajouter des métadonnées au format JSON"
 msgid "settings-advanced-json-description"
 msgstr "Utile pour le référencement sur les moteurs de recherche."
 
+msgid "settings-page-intro"
+msgstr "C’est ici que vous pouvez personnaliser votre thème pour l’adapter à vos besoins."
+
+msgid "settings-page-forum-link"
+msgstr "Pour toute question, suggestion, demande, retour d’expérience ou autre, rendez-vous sur <a href="%s">le fil de discussion dédié à Odyssée sur le forum officiel de Dotclear</a>."
+
 msgid "settings-save-button-text"
 msgstr "Enregistrer les paramètres"
 

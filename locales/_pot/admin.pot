@@ -642,6 +642,12 @@ msgstr ""
 msgid "settings-advanced-json-description"
 msgstr ""
 
+msgid "settings-page-intro"
+msgstr ""
+
+msgid "settings-page-forum-link"
+msgstr ""
+
 msgid "settings-save-button-text"
 msgstr ""
 

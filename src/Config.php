@@ -621,6 +621,25 @@ class Config extends Process
         // Adds settings in their section.
         $fields = [];
 
+        $fields[] = (new Para())
+            ->items([
+                (new Text(
+                    null,
+                    __('settings-page-intro')
+                ))
+            ]);
+
+        $fields[] = (new Para())
+            ->items([
+                (new Text(
+                    null,
+                    sprintf(
+                        __('settings-page-forum-link'),
+                        'https://forum.dotclear.org/viewtopic.php?id=51635'
+                    )
+                ))
+            ]);
+
         foreach ($settings_render as $section_id => $setting_data) {
             $fields[] = (new Text('', '<h3>' . My::settingsSections($section_id)['name'] . '</h3>'))
                 ->id('section-' . $section_id);
