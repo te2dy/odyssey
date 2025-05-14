@@ -1050,8 +1050,9 @@ class My extends MyTheme
         $social_sites = [];
 
         $social_sites['bluesky'] = [
-            'name' => __('social-site-bluesky'),
-            'type' => 'url',
+            'name'      => __('social-site-bluesky'),
+            'base'      => 'https://bsky.app/',
+            'type'      => 'url',
             'reactions' => true
         ];
 
