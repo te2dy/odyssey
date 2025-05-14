@@ -9,6 +9,7 @@
 
 namespace Dotclear\Theme\odyssey;
 
+use ArrayObject;
 use Dotclear\App;
 use Dotclear\Core\Process;
 use Dotclear\Core\Frontend\Ctx;
@@ -477,5 +478,28 @@ class FrontendBehaviors
         }
 
         return $args[0];
+    }
+
+    /**
+     * Adds new conditions to tpl:EntryIf.
+     *
+     * @param string                     $tag     The EntryIf tag
+     * @param ArrayObject<string, mixed> $attr    The attributes
+     * @param string                     $content The content
+     * @param ArrayObject<string, mixed> $if      The if conditions
+     *
+     * @return void
+     */
+    public static function odysseyTplConditions(string $tag, ArrayObject $attr, string $content, ArrayObject $if): void
+    {
+        if ($tag === 'EntryIf' && isset($attr['has_tag'])) {
+            $sign = (bool) $attr['has_tag'] ? '' : '!';
+            $if->append($sign . 'App::frontend()->context()->posts->post_meta');
+        }
+
+        if ($tag === 'EntryIf' && isset($attr['has_reaction']) && My::settingValue('content_postlist_reactions') === true) {
+            $sign = (bool) $attr['has_reaction'] ? '' : '!';
+            $if->append($sign . 'App::frontend()->context()->posts->hasComments() || App::frontend()->context()->posts->hasTrackbacks()');
+        }
     }
 }

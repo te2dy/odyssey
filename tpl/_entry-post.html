@@ -13,31 +13,33 @@
     {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
   </div>
 
-  <footer class=post-footer>
-    <tpl:EntryIf has_attachment="1">
-      {{tpl:include src="_attachments.html"}}
-    </tpl:EntryIf>
+  <tpl:EntryIf has_attachment="1" has_category="1" has_tag="1" operator="or">
+    <footer class=post-footer>
+      <tpl:EntryIf has_attachment="1">
+        {{tpl:include src="_attachments.html"}}
+      </tpl:EntryIf>
 
-    <tpl:EntryIf has_category="1">
-      <div class="post-meta text-secondary">
-        {{tpl:lang post-category-prefix}} <a href={{tpl:EntryCategoryURL is_attr="1"}} rel=tag>{{tpl:EntryCategory}}</a>
-      </div>
-    </tpl:EntryIf>
+      <tpl:EntryIf has_category="1">
+        <div class="post-meta text-secondary">
+          {{tpl:lang post-category-prefix}} <a href={{tpl:EntryCategoryURL is_attr="1"}} rel=tag>{{tpl:EntryCategory}}</a>
+        </div>
+      </tpl:EntryIf>
 
-    <tpl:EntryIf>
-      <tpl:EntryTags>
-        <tpl:TagsHeader>
-          <div class="post-meta text-secondary">{{tpl:odysseyPostTagsBefore}}
-        </tpl:TagsHeader>
+      <tpl:EntryIf>
+        <tpl:EntryTags>
+          <tpl:TagsHeader>
+            <div class="post-meta text-secondary">{{tpl:odysseyPostTagsBefore}}
+          </tpl:TagsHeader>
 
-        <a href={{tpl:TagURL is_attr="1"}} rel=tag>{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
+          <a href={{tpl:TagURL is_attr="1"}} rel=tag>{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
 
-        <tpl:TagsFooter>
-          </div>
-        </tpl:TagsFooter>
-      </tpl:EntryTags>
-    </tpl:EntryIf>
-  </footer>
+          <tpl:TagsFooter>
+            </div>
+          </tpl:TagsFooter>
+        </tpl:EntryTags>
+      </tpl:EntryIf>
+    </footer>
+  </tpl:EntryIf>
 </article>
 
 <div class="post-pagination text-secondary">
