@@ -224,6 +224,9 @@ msgstr "Répondre par courriel"
 msgid "reactions-other-email-prefix"
 msgstr "Re:"
 
+msgid "reactions-other-bluesky-button"
+msgstr "Publier sur %s"
+
 msgid "reactions-other-facebook-button"
 msgstr "Publier sur %s"
 
@@ -286,6 +289,9 @@ msgstr "Propulsé par <a href=https://fr.dotclear.org/ title=%s>Dotclear %s</a> 
 
 msgid "social-site-diaspora"
 msgstr "diaspora*"
+
+msgid "social-site-bluesky"
+msgstr "Bluesky"
 
 msgid "social-site-facebook"
 msgstr "Facebook"

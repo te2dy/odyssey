@@ -224,6 +224,9 @@ msgstr ""
 msgid "reactions-other-email-prefix"
 msgstr ""
 
+msgid "reactions-other-bluesky-button"
+msgstr ""
+
 msgid "reactions-other-facebook-button"
 msgstr ""
 
@@ -285,6 +288,9 @@ msgstr ""
 # Social links
 
 msgid "social-site-diaspora"
+msgstr ""
+
+msgid "social-site-bluesky"
 msgstr ""
 
 msgid "social-site-facebook"

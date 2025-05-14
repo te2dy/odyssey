@@ -465,6 +465,12 @@ msgstr ""
 msgid "settings-reactions-otheremail-description"
 msgstr ""%s">Signal</a>."
 
+msgid "settings-reactions-other-bluesky-title"
+msgstr ""
+
+msgid "settings-reactions-other-bluesky-description"
+msgstr ""
+
 msgid "settings-reactions-other-facebook-title"
 msgstr ""
 
@@ -546,6 +552,9 @@ msgstr ""
 msgid "settings-social-diaspora-description"
 msgstr ""
 
+msgid "settings-social-bluesky-description"
+msgstr ""
+
 msgid "settings-social-facebook-description"
 msgstr ""
 
@@ -556,6 +565,9 @@ msgid "settings-social-mastodon-description"
 msgstr ""
 
 msgid "settings-footer-social-diaspora-title"
+msgstr ""
+
+msgid "settings-footer-social-bluesky-title"
 msgstr ""
 
 msgid "settings-footer-social-facebook-title"

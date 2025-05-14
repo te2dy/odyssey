@@ -448,6 +448,7 @@ class FrontendValues
         }
 
         if (My::settingValue('reactions_other_email') !== true
+            && My::settingValue('reactions_other_bluesky') !== true
             && My::settingValue('reactions_other_facebook') !== true
             && My::settingValue('reactions_other_mastodon') !== true
             && My::settingValue('reactions_other_sms') !== true
@@ -465,7 +466,7 @@ class FrontendValues
             if (isset(App::frontend()->context()->posts->user_email) && App::frontend()->context()->posts->user_email && (App::blog()->settings->odyssey->reactions_other === "always" || (App::blog()->settings->odyssey->reactions_other === "comments_open" && App::frontend()->context()->posts->post_open_comment === "1"))
             ) {
                 $mailto  = Html::escapeHTML(App::frontend()->context()->posts->user_email);
-                $subject = "' . __("reactions-other-email-prefix") . '" . App::frontend()->context()->posts->post_title;
+                $subject = "' . __('reactions-other-email-prefix') . '" . App::frontend()->context()->posts->post_title;
                 $body    = "' . __('reactions-other-email-body-post-url') . ' " . App::frontend()->context()->posts->getURL();
                 $href    = "mailto:" . $mailto . "?subject=" . rawurlencode($subject) . "&body=" . rawurlencode($body);
 
@@ -475,12 +476,32 @@ class FrontendValues
             ?>';
         }
 
+        if (My::settingValue('social_bluesky') && My::settingValue('reactions_other_bluesky') === true) {
+            $output .= '<?php
+            $bluesky_url = "";
+
+            if (App::frontend()->context()->posts->post_title) {
+                $bluesky_url .= "https://bsky.app/intent/compose?text=" . App::frontend()->context()->posts->post_title;
+
+            }
+
+            if (App::frontend()->context()->posts->getURL()) {
+                $bluesky_url .= $bluesky_url ? " " : "";
+                $bluesky_url .= urlencode(App::frontend()->context()->posts->getURL());
+            }
+
+            if ($bluesky_url !== "") {
+                $reactions_other .= "<p><a class=reactions-button href=\"" . $bluesky_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('bluesky')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-bluesky-button'), My::socialSites('bluesky')['name']) . '</span></a></p>";
+            }
+            ?>';
+        }
+
         if (My::settingValue('social_facebook') && My::settingValue('reactions_other_facebook') === true) {
             $output .= '<?php
             $facebook_url = "";
 
             if (App::frontend()->context()->posts->getURL()) {
-                $facebook_url = "https://www.facebook.com/sharer/sharer.php?u=" . urlencode(App::frontend()->context()->posts->getURL());
+                $facebook_url .= "https://www.facebook.com/sharer/sharer.php?u=" . urlencode(App::frontend()->context()->posts->getURL());
 
                 if (App::frontend()->context()->posts->post_title) {
                     $facebook_url .= "&t=" . App::frontend()->context()->posts->post_title;
@@ -498,7 +519,7 @@ class FrontendValues
             $mastodon_url = "";
 
             if (App::frontend()->context()->posts->getURL()) {
-                $mastodon_url = "https://mastodonshare.com/?url=" . urlencode(App::frontend()->context()->posts->getURL());
+                $mastodon_url .= "https://mastodonshare.com/?url=" . urlencode(App::frontend()->context()->posts->getURL());
 
                 if (App::frontend()->context()->posts->post_title) {
                     $mastodon_url .= "&text=" . App::frontend()->context()->posts->post_title;

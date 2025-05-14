@@ -465,6 +465,12 @@ msgstr "Allow replies by e-mail"
 msgid "settings-reactions-otheremail-description"
 msgstr "Warning: your e-mail address will be revealed and could be used by malicious parties (spam). To avoid revealing your address, you can try the <a href="%s">Signal</a> plugin or a third-party service such as <a href=https://relay.firefox.com/>Firefox Relay</a>."
 
+msgid "settings-reactions-other-bluesky-title"
+msgstr "Allow sharing on %s"
+
+msgid "settings-reactions-other-bluesky-description"
+msgstr "Your readers can reply to you on Bluesky by public message."
+
 msgid "settings-reactions-other-facebook-title"
 msgstr "Allow sharing on %s"
 
@@ -546,6 +552,9 @@ msgstr "Allows you to advertise Dotclear and this theme."
 msgid "settings-social-diaspora-description"
 msgstr "URL of a %s profile or page."
 
+msgid "settings-social-bluesky-description"
+msgstr "URL of a %s account."
+
 msgid "settings-social-facebook-description"
 msgstr "URL of a %s profile or page."
 
@@ -556,6 +565,9 @@ msgid "settings-social-mastodon-description"
 msgstr "URL of a %s account."
 
 msgid "settings-footer-social-diaspora-title"
+msgstr "Display a link to %s"
+
+msgid "settings-footer-social-bluesky-title"
 msgstr "Display a link to %s"
 
 msgid "settings-footer-social-facebook-title"
