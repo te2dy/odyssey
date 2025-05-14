@@ -292,10 +292,10 @@ msgid "settings-header-description-description"
 msgstr "La description peut être personnalisée dans les <a href="%s">paramètres du blog</a>."
 
 msgid "settings-header-postfull-title"
-msgstr "Afficher l’en-tête complète sur toutes les pages du blog"
+msgstr "Afficher l’en-tête complet sur toutes les pages du blog"
 
 msgid "settings-header-postfull-description"
-msgstr "Désactive l’en-tête réduite affichée sur les pages des billets pour afficher la même en-tête qu’en page d’accueil."
+msgstr "Désactive l’en-tête réduit des billets pour afficher le même en-tête qu’en page d’accueil."
 
 msgid "settings-header-image-title"
 msgstr "Adresse de l’image"
