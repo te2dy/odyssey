@@ -514,4 +514,15 @@ window.onload = function() {
       changeImage(inputImgURL);
     }, 1000);
   };
+
+  // Reset button warning
+  const buttonReset = document.getElementById("odyssey-reset");
+
+  if (buttonReset) {
+    buttonReset.addEventListener("click", function(event) {
+      if (!confirm(document.getElementById("reset_warning").value)) {
+        event.preventDefault();
+      }
+    });
+  }
 };

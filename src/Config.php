@@ -667,6 +667,7 @@ class Config extends Process
 
         $fields[] = (new Hidden('page_width_em_default', '30'));
         $fields[] = (new Hidden('page_width_px_default', '480'));
+        $fields[] = (new Hidden('reset_warning', __('settings-reset-warning')));
 
         $fields[] = (new Para())
             ->class('form-buttons')
@@ -676,6 +677,7 @@ class Config extends Process
                     ->name('save'),
                 (new Submit(null,  __('settings-reset-button-text')))
                     ->class('delete')
+                    ->id('odyssey-reset')
                     ->name('reset')
             ]);
 

@@ -660,6 +660,9 @@ msgstr "C’est ici que vous pouvez personnaliser votre thème pour l’adapter 
 msgid "settings-page-forum-link"
 msgstr "Pour toute question, suggestion, demande, retour d’expérience ou autre, rendez-vous sur <a href="%s">le fil de discussion dédié à Odyssée sur le forum officiel de Dotclear</a>."
 
+msgid "settings-reset-warning"
+msgstr "Attention : vous êtes sur le point de réinitialiser les paramètres de votre thème. Cette action est irréversible."
+
 msgid "settings-save-button-text"
 msgstr "Enregistrer les paramètres"
 
