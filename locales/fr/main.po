@@ -63,6 +63,9 @@ msgstr "Sélection"
 msgid "entry-list-date-aria-label"
 msgstr "Date de publication du billet"
 
+msgid "entry-list-read-more"
+msgstr "Lire la suite"
+
 msgid "entry-list-one-reaction-link-aria-label"
 msgstr "Lien vers la publication d’une réaction à ce billet"
 

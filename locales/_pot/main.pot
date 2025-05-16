@@ -63,6 +63,9 @@ msgstr ""
 msgid "entry-list-date-aria-label"
 msgstr ""
 
+msgid "entry-list-read-more"
+msgstr ""
+
 msgid "entry-list-one-reaction-link-aria-label"
 msgstr ""
 

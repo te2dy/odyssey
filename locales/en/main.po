@@ -63,6 +63,9 @@ msgstr "Selected post"
 msgid "entry-list-date-aria-label"
 msgstr "Date of publication of the post"
 
+msgid "entry-list-read-more"
+msgstr "Read more"
+
 msgid "entry-list-one-reaction-link-aria-label"
 msgstr "Link to publish a reaction to this post"
 
