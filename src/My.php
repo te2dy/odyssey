@@ -36,7 +36,7 @@ class My extends MyTheme
                     'colors'       => __('section-global-colors'),
                     'colors-light' => __('section-global-colorslight'),
                     'colors-dark'  => __('section-global-colorsdark'),
-                    'links'        => __('section-global-links')
+                    'other'        => __('section-global-other')
                 ]
             ],
             'header' => [
@@ -340,7 +340,15 @@ class My extends MyTheme
             'description' => __('settings-global-linksunderline-description'),
             'type'        => 'checkbox',
             'default'     => false,
-            'section'     => ['global', 'links']
+            'section'     => ['global', 'other']
+        ];
+
+        $default_settings['global_border_radius'] = [
+            'title'       => __('settings-global-borderradius-title'),
+            'description' => __('settings-global-borderradius-description'),
+            'type'        => 'checkbox',
+            'default'     => false,
+            'section'     => ['global', 'other']
         ];
 
         $default_settings['header_align'] = [

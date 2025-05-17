@@ -920,6 +920,11 @@ class Config extends Process
             $css_root_array[':root']['--link-text-decoration-style'] = 'dotted';
         }
 
+        // Border radius
+        if (isset($_POST['global_border_radius']) && $_POST['global_border_radius'] === 'on') {
+            $css_root_array[':root']['--border-radius'] = '.168em';
+        }
+
         // Header alignment
         $header_align_allowed = ['left', 'right'];
 
@@ -936,8 +941,11 @@ class Config extends Process
 
         // Post list type
         if (isset($_POST['content_postlist_type']) && $_POST['content_postlist_type'] === 'excerpt') {
-            $css_main_array['.entry-list-excerpt .post']['margin-inline'] = '-1rem';
-            $css_main_array['.entry-list-excerpt .post']['padding']       = '1rem';
+            $css_main_array['.entry-list-excerpt .post']['margin']  = '1em -1rem';
+            $css_main_array['.entry-list-excerpt .post']['padding'] = '1rem';
+
+            $css_main_array['.entry-list-excerpt .post:first-child']['margin-top']   = '0';
+            $css_main_array['.entry-list-excerpt .post:last-child']['margin-bottom'] = '0';
 
             $css_main_array['.entry-list-excerpt .entry-title']['font-size']    = '1.1rem';
             $css_main_array['.entry-list-excerpt .entry-title']['margin-block'] = '.5rem';
@@ -953,6 +961,7 @@ class Config extends Process
             $css_main_array['.entry-list-content .entry-title']['font-size'] = '1.4em';
 
             $css_main_array['.entry-list-content .post-footer']['background-color'] = 'var(--color-input-background, #f2f2f2)';
+            $css_main_array['.entry-list-content .post-footer']['border-radius']    = 'var(--border-radius, unset)';
             $css_main_array['.entry-list-content .post-footer']['margin-block']     = '2em 4em';
             $css_main_array['.entry-list-content .post-footer']['padding']          = '1em';
 
@@ -961,7 +970,8 @@ class Config extends Process
 
         // Alternate post color
         if (isset($_POST['content_postlist_altcolor']) && $_POST['content_postlist_altcolor'] === 'on') {
-            $css_main_array[':is(.entry-list, .entry-list-excerpt) .post:nth-child(even)']['background-color'] = 'var(--color-input-background,#f2f2f2);';
+            $css_main_array[':is(.entry-list, .entry-list-excerpt) .post:nth-child(even)']['background-color'] = 'var(--color-input-background, #f2f2f2)';
+            $css_main_array[':is(.entry-list, .entry-list-excerpt) .post:nth-child(even)']['border-radius'] = 'var(--border-radius, unset)';
         }
 
         // Post thumbnail

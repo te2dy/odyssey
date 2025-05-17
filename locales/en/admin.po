@@ -39,8 +39,8 @@ msgstr "Light color scheme"
 msgid "section-global-colorsdark"
 msgstr "Dark color scheme"
 
-msgid "section-global-links"
-msgstr "Links"
+msgid "section-global-other"
+msgstr "Others"
 
 msgid "section-header"
 msgstr "Header settings"
@@ -269,6 +269,12 @@ msgstr "Underline links"
 
 msgid "settings-global-linksunderline-description"
 msgstr "Underline links to highlight them and make them more accessible."
+
+msgid "settings-global-borderradius-title"
+msgstr "Round the corners of borders"
+
+msgid "settings-global-borderradius-description"
+msgstr "This applies in particular to the corners of form fields and buttons."
 
 msgid "settings-global-colortransition-title"
 msgstr "Enable color transitions"

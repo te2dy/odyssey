@@ -39,8 +39,8 @@ msgstr "Thème clair"
 msgid "section-global-colorsdark"
 msgstr "Thème sombre"
 
-msgid "section-global-links"
-msgstr "Liens"
+msgid "section-global-other"
+msgstr "Autres"
 
 msgid "section-header"
 msgstr "Paramètres de l’en-tête"
@@ -269,6 +269,12 @@ msgstr "Souligner les liens"
 
 msgid "settings-global-linksunderline-description"
 msgstr "Souligne les liens pour les mettre en évidence et les rendre plus accessibles."
+
+msgid "settings-global-borderradius-title"
+msgstr "Arrondir les coins des bordures"
+
+msgid "settings-global-borderradius-description"
+msgstr "Concerne notamment les coins des champs de formulaire et des boutons."
 
 msgid "settings-global-colortransition-title"
 msgstr "Activer les transitions de couleur"
