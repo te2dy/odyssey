@@ -149,10 +149,7 @@ code {
        (-ms-high-contrast: active),
        (-ms-high-contrast: black-on-white) {
   :is(a, details summary) {
-    text-decoration: underline dotted;
-  }
-  :is(a, details summary):is(:active, :focus, :hover) {
-    text-decoration-style: solid;
+    text-decoration: underline;
   }
   :is(a, details summary):is(:active, :focus, :hover) {
     background-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
@@ -397,7 +394,6 @@ details summary {
 }
 #site-header-short #site-title:is(:active, :focus, :hover) {
   color: var(--color-primary-amplified, hsl(226, 95%, 50%));
-  background-color: var(--color-background, #fafafa);
 }
 #site-header-short #site-title:is(:focus-visible) {
   color: var(--color-background, #fafafa);
@@ -405,6 +401,13 @@ details summary {
 }
 #site-header-short h4 {
   display: inline;
+}
+@media (prefers-contrast: more),
+       (-ms-high-contrast: active),
+       (-ms-high-contrast: black-on-white) {
+  #site-header-short #site-title:is(:active, :focus, :hover) {
+    color: var(--color-background, #fafafa);
+  }
 }
 #site-desc {
   color: var(--color-text-secondary, #6c6f78);
@@ -421,17 +424,25 @@ details summary {
 #main-menu li:last-child {
   margin-right: 0;
 }
-#main-menu .active a,
-#main-menu :not(.active) a:is(:active, :focus, :hover) {
+#main-menu a:is(:active, :focus, :hover) {
   text-decoration: underline;
+}
+#main-menu .active a {
+  text-decoration: underline;
+}
+#main-menu a:is(:focus-visible) {
+  text-decoration: none;
 }
 @media (prefers-contrast: more),
        (-ms-high-contrast: active),
        (-ms-high-contrast: black-on-white) {
-  #main-menu li:not(.active) a {
-    text-decoration-style: underline dotted;
+  #main-menu a:is(:active, :focus, :hover) {
+    text-decoration: none;
   }
-  #main-menu li a:is(:active, :focus, :hover) {
+  #main-menu .active a {
+    text-decoration: underline overline;
+  }
+  #main-menu a:is(:active, :focus, :hover) {
     text-decoration: none;
   }
 }
@@ -624,11 +635,22 @@ details summary {
   display: inline-block;
   vertical-align: middle;
 }
+.reactions-button .reactions-button-text {
+  text-decoration: var(--link-text-decoration, none);
+  text-decoration-style: var(--link-text-decoration-style, unset);
+}
+.reactions-button,
 .reactions-button:is(:active, :focus, :hover) {
   text-decoration: none;
 }
 .reactions-button:is(:active, :focus, :hover) .reactions-button-text {
-  text-decoration: underline;
+  text-decoration: var(--link-text-decoration, underline);
+}
+.reactions-button:is(:focus-visible) .reactions-button-text {
+  text-decoration: none;
+}
+.reactions-button:is(:focus-visible) .reactions-button-icon {
+  stroke: var(--color-background, #fafafa);
 }
 @media (prefers-contrast: more),
        (-ms-high-contrast: active),
@@ -637,7 +659,7 @@ details summary {
     text-decoration: none;
   }
   .reactions-button .reactions-button-text {
-    text-decoration: underline dotted;
+    text-decoration: underline;
   }
   .reactions-button:is(:active, :focus, :hover) .reactions-button-icon.social-icon-fi {
     stroke: var(--color-background);
