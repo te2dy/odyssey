@@ -128,8 +128,8 @@ code {
 /* Links */
 :is(a, details summary) {
   color: var(--color-primary, hsl(226, 80%, 45%));
-  text-decoration: none;
-  text-decoration-style: unset;
+  text-decoration: var(--link-text-decoration, none);
+  text-decoration-style: var(--link-text-decoration-style, unset);
   transition: var(--color-transition, unset);
 }
 :is(a, details summary):is(:active, :focus, :hover) {
@@ -420,9 +420,6 @@ details summary {
 }
 #main-menu li:last-child {
   margin-right: 0;
-}
-#main-menu a {
-  text-decoration: none;
 }
 #main-menu .active a,
 #main-menu :not(.active) a:is(:active, :focus, :hover) {

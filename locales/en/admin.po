@@ -39,6 +39,9 @@ msgstr "Light color scheme"
 msgid "section-global-colorsdark"
 msgstr "Dark color scheme"
 
+msgid "section-global-links"
+msgstr "Links"
+
 msgid "section-header"
 msgstr "Header settings"
 
@@ -265,7 +268,7 @@ msgid "settings-global-linksunderline-title"
 msgstr "Underline links"
 
 msgid "settings-global-linksunderline-description"
-msgstr "Underline links to highlight them."
+msgstr "Underline links to highlight them and make them more accessible."
 
 msgid "settings-global-colortransition-title"
 msgstr "Enable color transitions"

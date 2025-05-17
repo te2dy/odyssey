@@ -39,6 +39,9 @@ msgstr ""
 msgid "section-global-colorsdark"
 msgstr ""
 
+msgid "section-global-links"
+msgstr ""
+
 msgid "section-header"
 msgstr ""
 

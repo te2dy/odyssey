@@ -914,6 +914,12 @@ class Config extends Process
             $css_media_motion_array[':root']['--color-transition'] = 'unset';
         }
 
+        // Links underline.
+        if (isset($_POST['global_links_underline']) && $_POST['global_links_underline'] === 'on') {
+            $css_root_array[':root']['--link-text-decoration']       = 'underline';
+            $css_root_array[':root']['--link-text-decoration-style'] = 'dotted';
+        }
+
         // Header alignment
         $header_align_allowed = ['left', 'right'];
 

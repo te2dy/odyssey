@@ -39,6 +39,9 @@ msgstr "Thème clair"
 msgid "section-global-colorsdark"
 msgstr "Thème sombre"
 
+msgid "section-global-links"
+msgstr "Liens"
+
 msgid "section-header"
 msgstr "Paramètres de l’en-tête"
 
@@ -265,7 +268,7 @@ msgid "settings-global-linksunderline-title"
 msgstr "Souligner les liens"
 
 msgid "settings-global-linksunderline-description"
-msgstr "Souligner les liens pour les mettre en évidence."
+msgstr "Souligne les liens pour les mettre en évidence et les rendre plus accessibles."
 
 msgid "settings-global-colortransition-title"
 msgstr "Activer les transitions de couleur"

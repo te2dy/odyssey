@@ -35,7 +35,8 @@ class My extends MyTheme
                     'fonts'        => __('section-global-fonts'),
                     'colors'       => __('section-global-colors'),
                     'colors-light' => __('section-global-colorslight'),
-                    'colors-dark'  => __('section-global-colorsdark')
+                    'colors-dark'  => __('section-global-colorsdark'),
+                    'links'        => __('section-global-links')
                 ]
             ],
             'header' => [
@@ -332,6 +333,14 @@ class My extends MyTheme
             'type'        => 'checkbox',
             'default'     => false,
             'section'     => ['global', 'colors-dark']
+        ];
+
+        $default_settings['global_links_underline'] = [
+            'title'       => __('settings-global-linksunderline-title'),
+            'description' => __('settings-global-linksunderline-description'),
+            'type'        => 'checkbox',
+            'default'     => false,
+            'section'     => ['global', 'links']
         ];
 
         $default_settings['header_align'] = [
