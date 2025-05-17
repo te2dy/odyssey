@@ -704,7 +704,7 @@ class Config extends Process
         $css_media_motion_array            = [];
         $css_media_print_array             = [];
 
-        // Page width.
+        // Page width
         if (isset($_POST['global_unit']) && isset($_POST['global_page_width_value'])) {
             $page_width_data = self::sanitizePageWidth($_POST['global_unit'], $_POST['global_page_width_value']);
 
@@ -713,19 +713,19 @@ class Config extends Process
             }
         }
 
-        // Font family.
+        // Font family
         if (isset($_POST['global_font_family']) && $_POST['global_font_family'] !== 'system') {
             $css_root_array[':root']['--font-family'] = My::fontStack($_POST['global_font_family']);
         }
 
-        // Font size.
+        // Font size
         $font_size_allowed = [80, 90, 110, 120];
 
         if (isset($_POST['global_font_size']) && in_array((int) $_POST['global_font_size'], $font_size_allowed, true)) {
             $css_root_array[':root']['--font-size'] = My::removeZero((int) $_POST['global_font_size'] / 100) . 'em';
         }
 
-        // Font antialiasing.
+        // Font antialiasing
         if (isset($_POST['global_font_antialiasing']) && $_POST['global_font_antialiasing'] === 'on') {
             $css_main_array['body']['-moz-osx-font-smoothing'] = 'grayscale';
             $css_main_array['body']['-webkit-font-smoothing']  = 'antialiased';
@@ -758,7 +758,7 @@ class Config extends Process
                 $css_root_array[':root']['--color-text-main-dark'] = $_POST['global_color_text_dark_custom'];
             }
 
-            // Text secondary color.
+            // Text secondary color
             if (isset($_POST['global_color_text_secondary_custom'])
                 && isset($_POST['global_color_text_secondary_custom-default-value'])
                 && self::isHexColor($_POST['global_color_text_secondary_custom'])
@@ -775,7 +775,7 @@ class Config extends Process
                 $css_root_array[':root']['--color-text-secondary-dark'] = $_POST['global_color_text_secondary_dark_custom'];
             }
 
-            // Input color.
+            // Input color
             if (isset($_POST['global_color_input_custom'])
                 && isset($_POST['global_color_input_custom-default-value'])
                 && self::isHexColor($_POST['global_color_input_custom'])
@@ -792,7 +792,7 @@ class Config extends Process
                 $css_root_array[':root']['--color-input-background-dark'] = $_POST['global_color_input_dark_custom'];
             }
 
-            // Border color.
+            // Border color
             if (isset($_POST['global_color_border_custom'])
                 && isset($_POST['global_color_border_custom-default-value'])
                 && self::isHexColor($_POST['global_color_border_custom'])
@@ -809,7 +809,7 @@ class Config extends Process
                 $css_root_array[':root']['--color-border-dark'] = $_POST['global_color_border_dark_custom'];
             }
 
-            // Background color.
+            // Background color
             if (isset($_POST['global_color_background_custom'])
                 && isset($_POST['global_color_background_custom-default-value'])
                 && self::isHexColor($_POST['global_color_background_custom'])
@@ -827,7 +827,7 @@ class Config extends Process
             }
         }
 
-        // Primary color.
+        // Primary color
         $primary_colors_allowed = ['gray', 'green', 'red'];
 
         $primary_colors = [
@@ -907,14 +907,14 @@ class Config extends Process
             }
         }
 
-        // Transitions.
+        // Transitions
         if (isset($_POST['global_css_transition']) && $_POST['global_css_transition'] === 'on') {
             $css_root_array[':root']['--color-transition'] = 'all .2s ease-in-out';
 
             $css_media_motion_array[':root']['--color-transition'] = 'unset';
         }
 
-        // Links underline.
+        // Links underline
         if (isset($_POST['global_links_underline']) && $_POST['global_links_underline'] === 'on') {
             $css_root_array[':root']['--link-text-decoration']       = 'underline';
             $css_root_array[':root']['--link-text-decoration-style'] = 'dotted';
