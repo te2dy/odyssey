@@ -23,7 +23,7 @@ function setStyle(id, display) {
 
 // An array of social sites supported by the theme.
 function socialSites() {
-  return ['diaspora', 'facebook', 'instagram', 'mastodon', 'phone', 'signal', 'sms', 'youtube', 'whatsapp', 'x', 'other'];
+  return ['bluesky', 'diaspora', 'facebook', 'instagram', 'mastodon', 'phone', 'signal', 'sms', 'youtube', 'whatsapp', 'x', 'other'];
 }
 
 // Toggles footer social settings.
