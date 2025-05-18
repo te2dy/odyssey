@@ -11,11 +11,22 @@ Ce thème n’aurait pu avoir vu le jour sans les ressources mises à dispositio
 Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://blog.jim-nielsen.com/), des travaux réalisés sur les thèmes Ductile et Berlin pour Dotclear, et des billets de Franck Paul (https://open-time.net/).
 
 == Feuille de route ==
-- Ajouter un message de confirmation avant la réinitialisation des paramètres du thème.
-- Amélioration de la désinstallation du thème avec l’utilisation de l’extension Uninstaller.
-  Voir https://dotclear.watch/Billet/Le-plugin-Uninstaller
+- Mettre à jour l’image d’aperçu du thème.
 
 == Notes de version ==
+
+=== 1.9 - 18 mai 2025 ===
+- Ajout : prise en charge de la désinstallation du thème par l’intermédiaire de l’extension Uninstaller.
+- Ajout : message de confirmation avant la réinitialisation des paramètres du thème.
+- Ajout : prise en charge du réseau social Bluesky.
+- Ajout : option pour souligner les liens.
+- Ajout : option pour arrondir les coins des bordures.
+- Ajout : liens d’accessibilité adaptés aux lecteurs d’écran.
+- Amélioration : .post-footer ne se charge que lorsqu’il y a du contenu à afficher.
+- Correction : chaînes de texte et traductions.
+- Correction : les marges de .content-info étaient inégales quand l’affichage complet des billets était activé.
+- Correction : le texte du bouton d’envoi de commentaire était absent lors de la prévisualisation.
+- Correction : couleur des liens en configuration de contrastes élevés.
 
 === 1.8 - 13 mai 2025 ===
 - Ajout : option pour afficher le contenu complet dans la liste des billets.
