@@ -677,3 +677,6 @@ msgstr "Enregistrer les paramètres"
 
 msgid "settings-reset-button-text"
 msgstr "Réinitialiser"
+
+msgid "uninstall-checkbox-label"
+msgstr "Supprimer le sous-dossier « odyssey » situé dans le dossier « public » de Dotclear (contient la feuille de styles personnalisée)"
