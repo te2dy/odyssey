@@ -32,10 +32,10 @@ msgstr "Posts related to the tag %s"
 # Header
 
 msgid "skip-link-content"
-msgstr "Skip to content"
+msgstr "Skip to main content"
 
 msgid "skip-link-menu"
-msgstr "Skip to menu"
+msgstr "Skip to main menu"
 
 msgid "skip-link-footer"
 msgstr "Skip to footer"

@@ -120,6 +120,26 @@ class FrontendValues
     }
 
     /**
+     * Adds links for screen readers on the top of pages.
+     *
+     * @return string The links.
+     */
+    public static function odysseyScreenReaderLinks(): string
+    {
+        $links = '<a id=skip-content class=skip-links href=#site-content>' . __('skip-link-content') . '</a>';
+
+        if (App::plugins()->moduleExists('simpleMenu') && App::blog()->settings->system->simpleMenu_active === true) {
+            $links .= '<a class=skip-links href=#main-menu>' . __('skip-link-menu') . '</a>';
+        }
+
+        if (My::settingValue('footer_enabled') !== false) {
+            $links .= '<a class=skip-links href=#site-footer>' . __('skip-link-footer') . '</a>';
+        }
+
+        return $links;
+    }
+
+    /**
      * Displays an image in the header that has been defined
      * in the theme configuration page.
      *

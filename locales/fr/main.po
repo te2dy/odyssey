@@ -32,10 +32,10 @@ msgstr "Billets relatifs au mot-clé %s"
 # Header
 
 msgid "skip-link-content"
-msgstr "Aller au contenu"
+msgstr "Aller au contenu principal"
 
 msgid "skip-link-menu"
-msgstr "Aller au menu"
+msgstr "Aller au menu principal"
 
 msgid "skip-link-footer"
 msgstr "Aller au pied de page"
