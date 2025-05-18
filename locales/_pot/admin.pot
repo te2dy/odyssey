@@ -679,4 +679,4 @@ msgid "settings-reset-button-text"
 msgstr ""
 
 msgid "uninstall-checkbox-label"
-msgstr "Delete the “odyssey” subfolder located in Dotclear's “public” folder (contains the custom stylesheet)."
+msgstr ""
