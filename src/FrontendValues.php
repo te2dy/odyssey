@@ -279,7 +279,7 @@ class FrontendValues
                 $img = ' . Ctx::class . '::EntryFirstImageHelper("o", false, "entry-list-excerpt-img");
 
                 if ($img) {
-                    $content_width = "' . My::getContentWidth('px')['value'] . '";
+                    $content_width = ' . My::getContentWidth('px')['value'] . ';
 
                     $img_o         = ' . Ctx::class . '::EntryFirstImageHelper("o", false, "", true) ?: "";
                     $img_o_path    = App::blog()->public_path . str_replace(

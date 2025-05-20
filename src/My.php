@@ -20,10 +20,10 @@ class My extends MyTheme
     /**
      * Declares the sections of the theme configuration page.
      *
-     * @param string $section_id The ID of the section (optional).
+     * @param string $section_id The id of the section (optional).
      *
-     * @return array All the sections or only one section data
-     *               if a section ID is set.
+     * @return array All the sections or one section data
+     *               if a section id is set.
      */
     public static function settingsSections(string $section_id = ''): array
     {
@@ -88,8 +88,8 @@ class My extends MyTheme
             ]
         ];
 
-        if ($section_id && isset($sections[$section_id])) {
-            return $sections[$section_id];
+        if ($section_id) {
+            return $sections[$section_id] ?? '';
         }
 
         return $sections;
@@ -101,7 +101,7 @@ class My extends MyTheme
      * @param string $setting_id The id of the setting (optional).
      *
      * @return array All the sections or only on setting data
-     *               if a setting ID is set.
+     *               if a setting id is set.
      */
     public static function settingsDefault(string $setting_id = ''): array
     {
@@ -190,6 +190,7 @@ class My extends MyTheme
 
         ksort($global_color_primary_choices);
 
+        // Adds a custom option at the end of the list.
         $global_color_primary_choices[__('settings-global-primarycolor-custom')] = 'custom';
 
         $default_settings['global_color_primary'] = [
@@ -616,9 +617,11 @@ class My extends MyTheme
             'section'     => ['reactions', 'other']
         ];
 
-        $plugin_signal_url = App::plugins()->moduleExists('signal')
-        ? App::backend()->url()->get('admin.blog.pref') . '#params.signal'
-        : App::backend()->url()->get('admin.plugins', ['m_search' => 'signal']) . '#new';
+        if (App::plugins()->moduleExists('signal')) {
+            $plugin_signal_url = App::backend()->url()->get('admin.blog.pref') . '#params.signal';
+        } else {
+            $plugin_signal_url = App::backend()->url()->get('admin.plugins', ['m_search' => 'signal']) . '#new';
+        }
 
         $default_settings['reactions_other_email'] = [
             'title'       => __('settings-reactions-otheremail-title'),
@@ -702,11 +705,18 @@ class My extends MyTheme
             // Provides a description for some sites only.
             $add_description = ['signal', 'sms', 'whatsapp'];
 
+            $social_description = '';
+
+            if (in_array($site, $add_description, true)) {
+                $social_description =  sprintf(
+                    __('settings-footer-social-' . $site . '-description'),
+                    $base['name']
+                );
+            }
+
             $default_settings['footer_social_' . $site] = [
                 'title'       => sprintf(__('settings-footer-social-' . $site . '-title'), $base['name']),
-                'description' => in_array($site, $add_description, true)
-                    ? sprintf(__('settings-footer-social-' . $site . '-description'), $base['name'])
-                    : '',
+                'description' => $social_description,
                 'type'        => 'checkbox',
                 'default'     => true,
                 'section'     => ['footer', 'social']
@@ -769,7 +779,7 @@ class My extends MyTheme
     /**
      * Returns the value of a saved theme setting.
      *
-     * @param string $setting_id The setting ID (optional).
+     * @param string $setting_id The setting id (optional).
      *
      * @return mixed The value of the setting.
      */
@@ -865,19 +875,20 @@ class My extends MyTheme
     }
 
     /**
-     * Returns the relative path to the theme
+     * Returns the relative path or URI to the theme
      * or to a file located inside the theme folder.
      *
-     * @param string $file_path The path to file inside the theme folder (optional).
+     * @param string $pathway_file The pathway to file inside the theme folder (optional).
+     * @param string $type         The type of pathway (url or path, optional).
      *
      * @return string The path.
      */
     public static function getInThemeFolder(string $pathway_file = '', string $type = 'url'): string
     {
-        if ($type === 'path') {
-            $pathway_base = App::blog()->themesPath();
-        } else {
+        if ($type === 'url') {
             $pathway_base = App::blog()->settings()->system->themes_url;
+        } elseif ($type === 'path') {
+            $pathway_base = App::blog()->themesPath();
         }
 
         $pathway_base .= '/' . App::blog()->settings()->system->theme;
@@ -949,7 +960,7 @@ class My extends MyTheme
     /**
      * Removes 0 before decimal separator of numbers inferior to 1.
      *
-     * @param string|int $number The number.
+     * @param $number The number.
      *
      * @return string The cleaned number.
      */
@@ -965,17 +976,17 @@ class My extends MyTheme
     }
 
     /**
-     * Checks if a file path returns a valid image.
+     * Checks if a file path points to a valid image.
      *
-     * @param array $path The path to the image.
+     * @param string $path The path to the image.
      *
      * @return bool true if the image exists.
      */
     public static function imageExists(string $path): bool
     {
-        $mime_types_supported = files::mimeTypes();
-        $mime_type            = files::getMimeType($path);
-        $file_extension       = strtolower(files::getExtension($path));
+        $mime_types_supported = Files::mimeTypes();
+        $mime_type            = Files::getMimeType($path);
+        $file_extension       = strtolower(Files::getExtension($path));
 
         // Returns true if the file exists and is an allowed type of image.
         if (file_exists($path)
@@ -992,7 +1003,7 @@ class My extends MyTheme
     /**
      * Returns the fonts to be used as styles in CSS
      *
-     * @param string $fontname The name of the font to return the CSS rule.
+     * @param string $fontname The name of the font to return the CSS rule (optional).
      *
      * @return string The font rule.
      */
@@ -1060,7 +1071,7 @@ class My extends MyTheme
      *
      * @param string $site_id The ID of a social site to retrieve the data.
      *
-     * @return mixed A social site information or an array of all the sites.
+     * @return mixed A social site information or an array of all the social sites.
      */
     public static function socialSites(string $site_id = ''): mixed
     {
@@ -1147,7 +1158,7 @@ class My extends MyTheme
     /**
      * Gets SVG info of a social site to display its icon.
      *
-     * @param string $id The social site ID.
+     * @param string $id The social site id.
      *
      * @return array The SVG info.
      *

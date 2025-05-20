@@ -69,8 +69,10 @@ class FrontendBehaviors
                         $desc = Text::cutString($desc, 179) . '…';
                     }
 
-                    if (Ctx::EntryFirstImageHelper('o', true, '', true)) {
-                        $img = My::blogBaseURL() . Ctx::EntryFirstImageHelper('o', true, '', true);
+                    $img_url_rel = Ctx::EntryFirstImageHelper('o', true, '', true);
+
+                    if ($img_url_rel) {
+                        $img = My::blogBaseURL() . $img_url_rel;
                     }
 
                     break;
@@ -78,8 +80,10 @@ class FrontendBehaviors
                 case 'default-page':
                     $title = App::blog()->name;
 
-                    if ((int) Ctx::PaginationPosition() > 1) {
-                        $desc = sprintf(__('meta-social-page-with-number'), Ctx::PaginationPosition());
+                    $page = (int) Ctx::PaginationPosition();
+
+                    if ($page > 1) {
+                        $desc = sprintf(__('meta-social-page-with-number'), $page);
                     }
 
                     if (My::settingValue('advanced_meta_description') || App::blog()->desc) {
@@ -127,13 +131,19 @@ class FrontendBehaviors
                 }
 
                 if ($img) {
-                    echo '<meta name=twitter:card content=summary_large_image>', "\n";
+                    echo '<meta name="twitter:card" content="summary_large_image">', "\n";
+
+                    if (My::settingValue('social_x')) {
+                        echo '<meta property="twitter:creator" content="@',
+                        str_replace('https://x.com/', '', Html::escapeHTML(My::settingValue('social_x'))),
+                        '">', "\n";
+                    }
                 }
 
-                echo '<meta property=og:title content="', $title, '">', "\n";
+                echo '<meta property="og:title" content="', $title, '">', "\n";
 
                 // Quotes seem required for the following meta properties.
-                $desc = Html::escapeHTML($desc);
+                $desc = trim(Html::escapeHTML($desc));
 
                 if ($desc) {
                     echo '<meta property="og:description" content="', $desc, '">', "\n";
@@ -481,7 +491,9 @@ class FrontendBehaviors
     }
 
     /**
-     * Adds new conditions to tpl:EntryIf.
+     * Adds two new conditions to tpl:EntryIf:
+     * - "has_tag" if a post has tags.
+     * - "has_reaction" if the post has comments or trackbacks.
      *
      * @param string                     $tag     The EntryIf tag
      * @param ArrayObject<string, mixed> $attr    The attributes
@@ -494,11 +506,13 @@ class FrontendBehaviors
     {
         if ($tag === 'EntryIf' && isset($attr['has_tag'])) {
             $sign = (bool) $attr['has_tag'] ? '' : '!';
+
             $if->append($sign . 'App::frontend()->context()->posts->post_meta');
         }
 
         if ($tag === 'EntryIf' && isset($attr['has_reaction']) && My::settingValue('content_postlist_reactions') === true) {
             $sign = (bool) $attr['has_reaction'] ? '' : '!';
+
             $if->append($sign . 'App::frontend()->context()->posts->hasComments() || App::frontend()->context()->posts->hasTrackbacks()');
         }
     }

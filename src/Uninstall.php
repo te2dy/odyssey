@@ -49,6 +49,7 @@ class Uninstall extends Process
             )
         ;
 
+        // Removes the odyssey public folder.
         if (isset($_POST['delete_odyssey_public_folder'])) {
             $dir_path = Path::real(App::blog()->publicPath() . '/' . My::id());
 
@@ -84,7 +85,7 @@ class Uninstall extends Process
      * Creates a method to delete odyssey files that have been put
      * in the public folder of Dotclear
      *
-     * @param string The path of the directory
+     * @param string $dir_path The path of the directory.
      *
      * @return void Remove the folder and all its contents.
      */

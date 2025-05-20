@@ -56,7 +56,7 @@ class Install extends Process
             $css_custom_path_file   = $css_custom_path_folder . 'style.min.css';
 
             if (ThemeConfig::canWriteCss(App::blog()->settings()->system->theme, true)
-                && ThemeConfig::canWriteCss($css_custom_path_folder, true) === true
+                && ThemeConfig::canWriteCss($css_custom_path_folder, true)
                 && $styles_default
             ) {
                 ThemeConfig::writeCss(

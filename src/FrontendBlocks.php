@@ -20,9 +20,9 @@ class FrontendBlocks
      * @param array $attr    Unused.
      * @param void  $content The full header.
      *
-     * @return mixed The header.
+     * @return string The header.
      */
-    public static function odysseyHeaderMinimal($attr, $content): mixed
+    public static function odysseyHeaderMinimal($attr, $content): string
     {
         if (My::settingValue('header_post_full') !== true) {
             return $content;
@@ -41,7 +41,9 @@ class FrontendBlocks
      */
     public static function odysseyCommentFormWrapper($attr, $content): string
     {
-        if (My::settingValue('reactions_button') !== false && (isset(App::frontend()->context()->comment_preview['content']) && App::frontend()->context()->comment_preview['content'] === '')) {
+        if (My::settingValue('reactions_button') !== false
+            && (isset(App::frontend()->context()->comment_preview['content']) && App::frontend()->context()->comment_preview['content'] === '')
+        ) {
             return '<details class=reactions-details>
                 <summary class=reactions-button>
                     <svg class="reactions-button-icon social-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>' . My::svgIcons('comment')['path'] . '</svg>
@@ -62,9 +64,9 @@ class FrontendBlocks
      * @param array $attr    Unused.
      * @param void  $content The sidebar.
      *
-     * @return mixed The sidebar.
+     * @return string The sidebar.
      */
-    public static function odysseySidebar($attr, $content): mixed
+    public static function odysseySidebar($attr, $content): string
     {
         if (My::settingValue('widgets_display') !== false) {
             return $content;
@@ -79,9 +81,9 @@ class FrontendBlocks
      * @param array $attr    Unused.
      * @param void  $content The content of the footer.
      *
-     * @return mixed The footer.
+     * @return string The footer.
      */
-    public static function odysseyFooter($attr, $content): mixed
+    public static function odysseyFooter($attr, $content): string
     {
         if (My::settingValue('footer_enabled') !== false) {
             return $content;
