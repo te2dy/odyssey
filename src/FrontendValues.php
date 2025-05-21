@@ -177,7 +177,7 @@ class FrontendValues
         if (isset($attr['position']) && $img_position === $attr['position']) {
             if (App::url()->type === 'default') {
                 // Do not add a link to the home page on home page.
-                return '<div id=site-image><img alt=' . My::escapeAttr($img_description) . ' src=' . My::escapeAttr($image_url) . '' . $srcset . $sizes . '></div>';
+                return '<div id=site-image><img alt=' . My::escapeAttr($img_description) . ' src=' . My::escapeAttr($image_url) . $srcset . $sizes . '></div>';
             }
 
             return '<div id=site-image><a href=' . My::escapeAttr(App::blog()->url) . ' rel=home><img alt=' . My::escapeAttr($img_description) . ' src=' . My::escapeAttr($image_url) . $srcset . $sizes . '></a></div>';
@@ -266,7 +266,7 @@ class FrontendValues
                     if ($img_s && $img_s !== $img_t) {
                         $img_src = "src=\"" . $img_t . "\"";
 
-                        $img_src_srcset = Html::escapeHTML($img_src) . " srcset=\"" . Html::escapeHTML($img_s) . " " . (int) $width_s . "w, " . Html::escapeHTML($img_t) . " " . (int) $width_t . "w\" size=100vw";
+                        $img_src_srcset = Html::escapeURL($img_src) . " srcset=\"" . Html::escapeHTML($img_s) . " " . (int) $width_s . "w, " . Html::escapeHTML($img_t) . " " . (int) $width_t . "w\" size=100vw";
 
                         $img = str_replace($img_src, $img_src_srcset, $img);
                     }
@@ -282,11 +282,8 @@ class FrontendValues
                     $content_width = ' . My::getContentWidth('px')['value'] . ';
 
                     $img_o         = ' . Ctx::class . '::EntryFirstImageHelper("o", false, "", true) ?: "";
-                    $img_o_path    = App::blog()->public_path . str_replace(
-                        App::blog()->settings->system->public_url . "/",
-                        "/",
-                        $img_o
-                    );
+                    $img_o_path    = substr(App::blog()->public_path, 0, -strlen(App::blog()->settings->system->public_url));
+                    $img_o_path   .= !str_ends_with($img_o_path, "/") ? "/" . $img_o : $img_o;
                     list($width_o) = getimagesize($img_o_path);
 
                     $img_m   = ' . Ctx::class . '::EntryFirstImageHelper("m", false, "", true) ?: null;
@@ -312,7 +309,7 @@ class FrontendValues
                             $img_src_srcset .= Html::escapeHTML($img_o) . " " . (int) $width_o . "w";
                         }
 
-                        $img_src_srcset = Html::escapeHTML($img_src) . " srcset=\"" . $img_src_srcset . "\" size=100vw";
+                        $img_src_srcset = Html::escapeURL($img_src) . " srcset=\"" . $img_src_srcset . "\" size=100vw";
 
                         $img = str_replace($img_src, $img_src_srcset, $img);
                     }

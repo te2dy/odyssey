@@ -1477,8 +1477,8 @@ class Config extends Process
 
         $id = str_replace('social_', '', $setting_id);
 
-        $site_base = isset(My::socialSites($id)['base']) ? My::socialSites($id)['base'] : '';
-        $site_type = isset(My::socialSites($id)['type']) ? My::socialSites($id)['type'] : '';
+        $site_base = My::socialSites($id)['base'] ?? '';
+        $site_type = My::socialSites($id)['type'] ?? '';
 
         switch ($site_type) {
             case 'phone-number':
