@@ -126,7 +126,7 @@ class My extends MyTheme
                 'max'  => 80,
                 'step' => 1
             ],
-            'default'     => !My::settingValue('global_unit') ? 30 : 480,
+            'default'     => 30,
             'section'     => ['global', 'layout']
         ];
 
@@ -766,7 +766,7 @@ class My extends MyTheme
         ];
 
         $default_settings['styles'] = [
-            'title' => __('settings-footer-odysseystyles-title'),
+            'title' => __('settings-odysseystyles-title'),
         ];
 
         if ($setting_id) {
@@ -798,9 +798,9 @@ class My extends MyTheme
      *
      * @return string The string.
      */
-    public static function escapeAttr(string $value): string
+    public static function escapeAttr(string $value, bool $escape_html = true): string
     {
-        $value = Html::escapeHTML($value);
+        $value = $escape_html ? Html::escapeHTML($value) : $value;
 
         if (str_contains($value, ' ') === false && str_contains($value, '=') === false) {
             return $value;
@@ -875,6 +875,27 @@ class My extends MyTheme
     }
 
     /**
+     * Gets the odyssey public folder absolute path or relative URL.
+     *
+     * @param string $type        "path" or "url".
+     * @param string $concatenate A string to be added at the end of the path or URL.
+     *
+     * @return string The path or URL.
+     */
+    public static function odysseyPublicFolder(string $type, string $concatenate = ''): string
+    {
+        if ($type === 'url') {
+            return App::blog()->settings()->system->public_url . '/' . self::id() . $concatenate;
+        }
+
+        if ($type === 'path') {
+            return App::blog()->publicPath() . '/' . self::id() . $concatenate;
+        }
+
+        return '';
+    }
+
+    /**
      * Returns the relative path or URI to the theme
      * or to a file located inside the theme folder.
      *
@@ -883,7 +904,7 @@ class My extends MyTheme
      *
      * @return string The path.
      */
-    public static function getInThemeFolder(string $pathway_file = '', string $type = 'url'): string
+    public static function odysseyThemeFolder(string $pathway_file = '', string $type = 'url'): string
     {
         if ($type === 'url') {
             $pathway_base = App::blog()->settings()->system->themes_url;
@@ -893,7 +914,7 @@ class My extends MyTheme
 
         $pathway_base .= '/' . App::blog()->settings()->system->theme;
 
-        if ($pathway_file === '') {
+        if (!$pathway_file) {
             return $pathway_base;
         }
 

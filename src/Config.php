@@ -14,12 +14,14 @@ use Dotclear\Core\Process;
 use Dotclear\Core\Backend\Notices;
 use Dotclear\Core\Backend\Page;
 use Dotclear\Core\Backend\ThemeConfig;
+use Dotclear\Helper\Date;
 use Dotclear\Helper\File\Files;
 use Dotclear\Helper\File\Path;
 use Dotclear\Helper\Html\Html;
 use Dotclear\Helper\Html\Form\Button;
 use Dotclear\Helper\Html\Form\Checkbox;
 use Dotclear\Helper\Html\Form\Color;
+use Dotclear\Helper\Html\Form\File;
 use Dotclear\Helper\Html\Form\Form;
 use Dotclear\Helper\Html\Form\Hidden;
 use Dotclear\Helper\Html\Form\Input;
@@ -47,7 +49,7 @@ class Config extends Process
     }
 
     /**
-     * Processes the requests.
+     * Processes the multiple requests.
      *
      * @return bool
      */
@@ -62,41 +64,36 @@ class Config extends Process
             }
         );
 
+        $default_settings = My::settingsDefault();
+
+        $specific_settings = [
+            'global_page_width_value',
+            'header_image',
+            'header_image2x',
+            'styles'
+        ];
+
         if (!empty($_POST)) {
             try {
                 // If the save button has been clicked.
-                if (isset($_POST['save'])) {
+                if (isset($_POST['save']) || isset($_POST['save-config'])) {
+                    $styles_custom = '';
+
                     /**
                      * This part saves each setting in the database
                      * only if there are different than the default one.
                      */
-                    foreach (My::settingsDefault() as $setting_id => $setting_data) {
-                        $specific_settings = [
-                            'global_unit',
-                            'global_page_width_value',
-                            'header_image',
-                            'header_image2x',
-                            'styles'
-                        ];
-
+                    foreach ($default_settings as $setting_id => $setting_data) {
                         // Now, set the value of the setting and its type.
-                        $setting_data = [];
+                        $setting_data  = [];
+                        $setting_value = $_POST[$setting_id] ?? null;
+                        $setting_type  = $default_settings[$setting_id]['type'] ?? null;
 
                         if (!in_array($setting_id, $specific_settings, true) && !str_starts_with($setting_id, 'social_')) {
                             // Prepares non specific settings to save.
-                            if (isset($_POST[$setting_id]) && $_POST[$setting_id] != My::settingsDefault($setting_id)['default']) {
-                                $setting_data = self::sanitizeSetting(
-                                    My::settingsDefault($setting_id)['type'],
-                                    $setting_id,
-                                    $_POST[$setting_id]
-                                );
-                            } elseif (!isset($_POST[$setting_id]) && My::settingsDefault($setting_id)['type'] === 'checkbox') {
-                                // Prepares empty checkboxes to save.
-                                $setting_data = self::sanitizeSetting(
-                                    'checkbox',
-                                    $setting_id,
-                                    '0'
-                                );
+                            if ($setting_value != $default_settings[$setting_id]['default']) {
+                                // Prepares data if the value if different than the default one.
+                                $setting_data = self::sanitizeSetting($setting_type, $setting_id, $setting_value);
                             } else {
                                 // Otherwise, deletes the value.
                                 App::blog()->settings->odyssey->drop($setting_id);
@@ -105,7 +102,6 @@ class Config extends Process
                             // Prepares value for each specific settings.
                             if (!str_starts_with($setting_id, 'social_')) {
                                 switch ($setting_id) {
-                                    case 'global_unit' :
                                     case 'global_page_width_value' :
                                         $setting_data = self::sanitizePageWidth(
                                             $_POST['global_unit'],
@@ -114,8 +110,8 @@ class Config extends Process
                                         );
 
                                         break;
-                                    case 'header_image':
-                                    case 'header_image2x':
+                                    case 'header_image' :
+                                    case 'header_image2x' :
                                         $setting_data = self::sanitizeHeaderImage(
                                             $setting_id,
                                             $_POST['header_image'],
@@ -126,20 +122,21 @@ class Config extends Process
                                         break;
                                     case 'styles' :
                                         $setting_data  = self::saveStyles();
-                                        $styles_custom = isset($setting_data['value']) ? $setting_data['value'] : '';
+                                        $styles_custom = $setting_data['value'] ?? '';
                                 }
                             } else {
-                                $setting_data = self::sanitizeSocialLink($setting_id, $_POST[$setting_id]);
+                                // The rest should be social links only.
+                                $setting_data = self::sanitizeSocialLink($setting_id, $setting_value);
                             }
                         }
 
-                        // Saves the setting data or drop it if it's empty.
+                        // Saves the setting data or drop it if empty.
                         if (!empty($setting_data)) {
-                            $setting_value = isset($setting_data['value']) ? $setting_data['value'] : '';
-                            $setting_type  = isset($setting_data['type']) ? $setting_data['type'] : '';
-                            $setting_label = Html::clean(Html::escapeHTML(My::settingsDefault($setting_id)['title']));
+                            $setting_value = $setting_data['value'] ?? null;
+                            $setting_type  = $setting_data['type']  ?? null;
+                            $setting_label = Html::clean(Html::escapeHTML($default_settings[$setting_id]['title']));
 
-                            if ($setting_value !== '' && $setting_type !== '') {
+                            if ($setting_type) {
                                 App::blog()->settings->odyssey->put(
                                     $setting_id,
                                     $setting_value,
@@ -155,66 +152,8 @@ class Config extends Process
                         }
                     }
 
-                    $styles_default = '';
-                    $styles_custom  = isset($styles_custom) ? $styles_custom : '';
-
-                    $css_default_path_file  = App::blog()->themesPath() . '/' . App::blog()->settings()->system->theme . '/' . 'style.min.css';
-                    $css_custom_path_folder = App::blog()->settings()->system->theme . '/css/';
-                    $css_custom_path_file   = $css_custom_path_folder . 'style.min.css';
-
-                    if ($styles_custom) {
-                        // Gets default CSS content.
-                        if (file_exists($css_default_path_file) && (string) file_get_contents($css_default_path_file) !== '') {
-                            $styles_default = (string) file_get_contents($css_default_path_file);
-                        }
-
-                        // Creates a custom CSS file in the public folder.
-                        if (ThemeConfig::canWriteCss(App::blog()->settings()->system->theme, true) && ThemeConfig::canWriteCss($css_custom_path_folder, true) === true) {
-                            ThemeConfig::writeCss(
-                                $css_custom_path_folder,
-                                'style.min',
-                                $styles_custom . $styles_default
-                            );
-
-                            // Creates a entry in the database that contains the CSS URL.
-                            App::blog()->settings->odyssey->put(
-                                'styles_url',
-                                App::blog()->settings()->system->public_url . '/' . App::blog()->settings()->system->theme . '/css/style.min.css',
-                                'string',
-                                __('setting-css-custom-url'),
-                                true
-                            );
-                        } else {
-                            if (file_exists($css_custom_path_file)) {
-                                ThemeConfig::dropCss(
-                                    App::blog()->settings()->system->theme . '/css/',
-                                    'style.min'
-                                );
-                            }
-
-                            App::blog()->settings->odyssey->drop('styles_url');
-                        }
-                    } else {
-                        if (file_exists(ThemeConfig::cssPath($css_custom_path_file))) {
-                            ThemeConfig::dropCss(
-                                App::blog()->settings()->system->theme . '/css/',
-                                'style.min'
-                            );
-                        }
-
-                        /**
-                         * Removes the CSS folder if it exists.
-                         *
-                         * Impossible to remove the odyssey folder yet,
-                         * created in the public folder.
-                         */
-                        if (Files::isDeletable(ThemeConfig::cssPath($css_custom_path_folder)) === true) {
-                            Files::deltree(ThemeConfig::cssPath($css_custom_path_folder));
-                        }
-
-                        // Removes the database entry.
-                        App::blog()->settings->odyssey->drop('styles_url');
-                    }
+                    // Creates a CSS file if necessary.
+                    self::stylesCustomFile($styles_custom);
 
                     // Refreshes the blog.
                     App::blog()->triggerBlog();
@@ -223,42 +162,335 @@ class Config extends Process
                     App::cache()->emptyTemplatesCache();
 
                     // Displays a success notice.
-                    Notices::addSuccessNotice(__('settings-notice-saved'));
+                    if (isset($_POST['save'])) {
+                        Notices::addSuccessNotice(__('settings-notice-saved'));
+                    }
 
-                    // Redirects to refresh form values.
-                    App::backend()->url()->redirect('admin.blog.theme', ['conf' => '1']);
+                    // Redirects.
+                    $redirect_params = [
+                        'module' => My::id(),
+                        'conf' => '1'
+                    ];
+
+                    if (isset($_POST['save-config'])) {
+                        $redirect_params['save-config'] = 'create-file';
+                    }
+
+                    App::backend()->url()->redirect('admin.blog.theme', $redirect_params);
                 } elseif (isset($_POST['reset'])) {
+                    // Remove all saved settings from the database.
                     App::blog()->settings->odyssey->dropAll();
 
                     // Removes the custom CSS file if it exists.
-                    $css_custom_path = App::blog()->publicPath() . '/'  . App::blog()->settings()->system->theme . '/css/style.min.css';
+                    $css_custom_path = My::odysseyPublicFolder('path', '/css/style.min.css');
 
                     if (file_exists($css_custom_path)) {
                         ThemeConfig::dropCss(
-                            App::blog()->settings()->system->theme . '/css/',
+                            My::id() . '/css/',
                             'style.min'
                         );
                     }
 
-                    /**
-                     * Removes the CSS folder if if exists.
-                     *
-                     * Impossible to remove the odyssey folder yet,
-                     * created in the public folder.
-                     */
-                    $css_custom_path_folder = App::blog()->settings()->system->theme . '/css/';
+                    // Removes the "css" subfolder in the "public" folder if it exists.
+                    $css_path_rel_folder = My::id() . '/css';
 
-                    if (Files::isDeletable(ThemeConfig::cssPath($css_custom_path_folder)) === true) {
-                        Files::deltree(ThemeConfig::cssPath($css_custom_path_folder));
+                    if (Files::isDeletable(ThemeConfig::cssPath($css_path_rel_folder))) {
+                        Files::deltree(ThemeConfig::cssPath($css_path_rel_folder));
                     }
 
                     App::blog()->triggerBlog();
-
                     App::cache()->emptyTemplatesCache();
-
                     Notices::addSuccessNotice(__('settings-notice-reset'));
+                    App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
+                } elseif (isset($_POST['import-config'])) {
+                    // When a configuration file is uploaded, redirects to the upload page.
+                    App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1', 'config-upload' => '1']);
+                } elseif (isset($_POST['config-upload-submit'])) {
+                    // When a configuration file has been submitted, uploads it.
+                    if (!empty($_FILES['config-upload-file']) && $_FILES['config-upload-file']['error'] === UPLOAD_ERR_OK) {
+                        $file_tmp_path = $_FILES['config-upload-file']['tmp_name'];
+                        $file_type     = $_FILES['config-upload-file']['type'];
 
-                    App::backend()->url()->redirect('admin.blog.theme', ['conf' => '1']);
+                        $json_content   = file_get_contents($file_tmp_path);
+                        $settings_array = [];
+                        $styles_custom  = '';
+
+                        if ($file_type === 'application/json' && $json_content) {
+                            $settings_array = json_decode($json_content, true);
+
+                            if (!empty($settings_array)) {
+                                // Drops all settings.
+                                App::blog()->settings->odyssey->dropAll();
+
+                                // Imports all settings.
+                                foreach ($settings_array as $setting_id => $setting_value) {
+                                    if (array_key_exists($setting_id, $default_settings)
+                                        && !in_array($setting_id, $specific_settings, true)
+                                        && !str_starts_with($setting_id, 'social_')
+                                    ) {
+                                        $setting_type  = $default_settings[$setting_id]['type'] ?? null;
+
+                                        if ($setting_value != $default_settings[$setting_id]['default']) {
+                                            // Prepares data if the value if different than the default one.
+                                            $setting_data = self::sanitizeSetting($setting_type, $setting_id, $setting_value);
+                                        } else {
+                                            // Otherwise, deletes the value.
+                                            App::blog()->settings->odyssey->drop($setting_id);
+                                        }
+                                    } else {
+                                        // Prepares value for each specific settings.
+                                        if (!str_starts_with($setting_id, 'social_')) {
+                                            switch ($setting_id) {
+                                                case 'global_page_width_value' :
+                                                    $setting_data = self::sanitizePageWidth(
+                                                        $settings_array['global_unit'] ?? $default_settings['global_unit']['default'],
+                                                        $settings_array['global_page_width_value'] ?? $default_settings['global_page_width_value']['default'],
+                                                        $setting_id
+                                                    );
+
+                                                    break;
+                                                case 'header_image' :
+                                                case 'header_image2x' :
+                                                    $setting_data = self::sanitizeHeaderImage(
+                                                        $setting_id,
+                                                        $settings_array['header_image'] ?? $default_settings['header_image']['default'],
+                                                        $settings_array['global_unit'] ?? $default_settings['global_unit']['default'],
+                                                        $settings_array['global_page_width_value'] ?? $default_settings['global_page_width_value']['default']
+                                                    );
+
+                                                    break;
+                                                case 'styles' :
+                                                    $styles_custom = $settings_array['styles'] ?? '';
+                                            }
+                                        } else {
+                                            // The rest should be social links only.
+                                            $setting_data = self::sanitizeSocialLink($setting_id, $setting_value);
+                                        }
+                                    }
+
+                                    if (!empty($setting_data)) {
+                                        $setting_value = $setting_data['value'] ?? null;
+                                        $setting_type  = $setting_data['type']  ?? null;
+                                        $setting_label = Html::clean(Html::escapeHTML($default_settings[$setting_id]['title']));
+
+                                        if ($setting_type) {
+                                            App::blog()->settings->odyssey->put(
+                                                $setting_id,
+                                                $setting_value,
+                                                $setting_type,
+                                                $setting_label ?: '',
+                                                true
+                                            );
+                                        } else {
+                                            App::blog()->settings->odyssey->drop($setting_id);
+                                        }
+                                    } else {
+                                        App::blog()->settings->odyssey->drop($setting_id);
+                                    }
+                                }
+
+                                self::stylesCustomFile($styles_custom);
+
+                                App::blog()->triggerBlog();
+                                App::cache()->emptyTemplatesCache();
+                                Notices::addSuccessNotice(__('settings-notice-upload-success'));
+                                App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
+                            } else {
+                                Notices::addErrorNotice(__('settings-notice-upload-file-not-valid'));
+                                App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1', 'config-upload' => '1']);
+                            }
+                        } else {
+                            // If the uploaded file is not a JSON file.
+                            Notices::addErrorNotice(__('settings-notice-upload-file-not-valid'));
+                            App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1', 'config-upload' => '1']);
+                        }
+                    } else {
+                        // If there is no file uploaded.
+                        Notices::addErrorNotice(__('settings-notice-upload-no-file'));
+                        App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1', 'config-upload' => '1']);
+                    }
+                } elseif (isset($_POST['config-upload-cancel'])) {
+                    // Redirects if the cancel upload button is clicked.
+                    App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
+                }
+            } catch (Exception $e) {
+                App::error()->add($e->getMessage());
+            }
+        }
+
+        if (!empty($_GET)) {
+            try {
+                if (isset($_GET['save-config']) && $_GET['save-config'] === 'create-file') {
+                    // Creates a backup file.
+                    $file_name = '';
+
+                    $path = My::odysseyPublicFolder('path', '/backups/');
+
+                    if (!is_dir($path)) {
+                        mkdir($path);
+                    }
+
+                    $time = str_replace(':', '', Date::str('%Y%m%d', time(), App::blog()->settings()->system->blog_timezone) . '-' . Date::str('%T', time(), App::blog()->settings()->system->blog_timezone));
+
+                    $file_name .= Files::tidyFileName($time . '-settings');
+
+                    $path .= $file_name . '.json';
+
+                    $saved_settings = [];
+
+                    foreach (self::settingsSaved() as $setting_id => $setting_value) {
+                        $saved_settings[$setting_id] = $setting_value;
+                    }
+
+                    if (!empty($saved_settings)) {
+                        $file_content = json_encode($saved_settings);
+
+                        file_put_contents($path, $file_content);
+
+                        Notices::addNotice(
+                            'success',
+                            '<p>' . sprintf(
+                                'La configuration du thème a été enregistrée au format JSON dans le dossier <code>/public/%1$s/backups</code> de votre installation Dotclear. Vous pouvez gérer tous les fichiers générés <a href=%2$s>au bas de cette page</a>.</p>',
+                                My::id(),
+                                '#odyssey-backups'
+                            ) . '</p><p>' . sprintf(
+                                '<a class="button submit" href="%s" download>Télécharger le fichier de configuration</a></p>',
+                                My::escapeAttr(Html::escapeURL(My::odysseyPublicFolder('url', '/backups/' . $file_name . '.json')))
+
+                            ) . '</p>',
+                            ['divtag' => true]
+                        );
+                    } else {
+                        // If no custom option has been set.
+                        Notices::addErrorNotice('Le fichier de configuration n’a pas pu être créé, car tous les paramètres du thème sont ceux définis par défaut.');
+                    }
+
+                    App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
+                } elseif (isset($_GET['restore']) && $_GET['restore'] !== 'success') {
+                    // Restores a configuration from a backup file listed from /public.
+                    $restore_file_name    = $_GET['restore'] . '.json';
+                    $restore_file_path    = My::odysseyPublicFolder('path', '/backups/' . $restore_file_name);
+                    $restore_file_content = file_get_contents($restore_file_path);
+
+                    $settings_array = [];
+
+                    if ($restore_file_content && $restore_file_content !== '[]') {
+                        $settings_array = json_decode($restore_file_content, true);
+                        $styles_custom  = '';
+
+                        if (!empty($settings_array)) {
+                            // Drops all settings.
+                            App::blog()->settings->odyssey->dropAll();
+
+                            // Imports all settings.
+                            foreach ($settings_array as $setting_id => $setting_value) {
+                                if (array_key_exists($setting_id, $default_settings)
+                                    && !in_array($setting_id, $specific_settings, true)
+                                    && !str_starts_with($setting_id, 'social_')
+                                ) {
+                                    $setting_type  = $default_settings[$setting_id]['type'] ?? null;
+
+                                    if ($setting_value != $default_settings[$setting_id]['default']) {
+                                        // Prepares data if the value if different than the default one.
+                                        $setting_data = self::sanitizeSetting($setting_type, $setting_id, $setting_value);
+                                    } else {
+                                        // Otherwise, deletes the value.
+                                        App::blog()->settings->odyssey->drop($setting_id);
+                                    }
+                                } else {
+                                    // Prepares value for each specific settings.
+                                    if (!str_starts_with($setting_id, 'social_')) {
+                                        switch ($setting_id) {
+                                            case 'global_page_width_value' :
+                                                $setting_data = self::sanitizePageWidth(
+                                                    $settings_array['global_unit'] ?? $default_settings['global_unit']['default'],
+                                                    $settings_array['global_page_width_value'] ?? $default_settings['global_page_width_value']['default'],
+                                                    $setting_id
+                                                );
+
+                                                break;
+                                            case 'header_image' :
+                                            case 'header_image2x' :
+                                                $setting_data = self::sanitizeHeaderImage(
+                                                    $setting_id,
+                                                    $settings_array['header_image'] ?? $default_settings['header_image']['default'],
+                                                    $settings_array['global_unit'] ?? $default_settings['global_unit']['default'],
+                                                    $settings_array['global_page_width_value'] ?? $default_settings['global_page_width_value']['default']
+                                                );
+
+                                                break;
+                                            case 'styles' :
+                                                $styles_custom = $settings_array['styles'] ?? '';
+                                        }
+                                    } else {
+                                        // The rest should be social links only.
+                                        $setting_data = self::sanitizeSocialLink($setting_id, $setting_value);
+                                    }
+                                }
+
+                                if (!empty($setting_data)) {
+                                    $setting_value = $setting_data['value'] ?? null;
+                                    $setting_type  = $setting_data['type']  ?? null;
+                                    $setting_label = Html::clean(Html::escapeHTML($default_settings[$setting_id]['title']));
+
+                                    if ($setting_type) {
+                                        App::blog()->settings->odyssey->put(
+                                            $setting_id,
+                                            $setting_value,
+                                            $setting_type,
+                                            $setting_label ?: '',
+                                            true
+                                        );
+                                    } else {
+                                        App::blog()->settings->odyssey->drop($setting_id);
+                                    }
+                                } else {
+                                    App::blog()->settings->odyssey->drop($setting_id);
+                                }
+                            }
+
+                            self::stylesCustomFile($styles_custom);
+
+                            App::blog()->triggerBlog();
+                            App::cache()->emptyTemplatesCache();
+                            Notices::addSuccessNotice(__('settings-notice-restore-success'));
+                            App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
+                        }
+                    } else {
+                        // If the file is empty.
+                        Notices::addErrorNotice(__('settings-notice-restore-error'));
+                        App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
+                    }
+                } elseif (isset($_GET['restore_delete_file'])) {
+                    // Deletes a configuration file.
+                    $delete_file_name = $_GET['restore_delete_file'] . '.json';
+                    $delete_file_path = My::odysseyPublicFolder('path', '/backups/' . $delete_file_name);
+
+                    if (is_writable($delete_file_path)) {
+                        // Deletes the file.
+                        unlink($delete_file_path);
+
+                        Notices::addSuccessNotice(__('settings-notice-file-deleted'));
+                        App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
+                    }
+                } elseif (isset($_GET['restore_delete_all'])) {
+                    // Deletes all configuration files.
+                    $backups_folder_path = My::odysseyPublicFolder('path', '/backups');
+
+                    if (is_dir($backups_folder_path)) {
+                        $files = scandir($backups_folder_path);
+
+                        foreach ($files as $file) {
+                            if ($file !== '.' && $file !== '..') {
+                                unlink($backups_folder_path . '/' . $file);
+                            }
+                        }
+
+                        rmdir($backups_folder_path);
+
+                        Notices::addSuccessNotice(__('settings-notice-files-deleted'));
+                        App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
+                    }
                 }
             } catch (Exception $e) {
                 App::error()->add($e->getMessage());
@@ -473,22 +705,18 @@ class Config extends Process
                         'step'  => (int) $default_settings[$setting_id]['range']['step']
                     ];
 
-                    $range_default_output = $range_default['value'];
-
-                    if ($setting_id === 'global_page_width_value') {
-                        if (My::settingValue('global_unit') === 'px') {
-                            $range_default['unit'] = 'px';
-                            $range_default['min']  = 480;
-                            $range_default['max']  = 1280;
-                            $range_default['step'] = 2;
-                        }
-
-                        $range_default_output = sprintf(
-                            __('settings-input-width-range-output'),
-                            '<span id=' . $setting_id . '-output-value>' . $range_default['value'] . '</span>',
-                            '<span id=' . $setting_id . '-output-unit>' . $range_default['unit'] . '</span>',
-                        );
+                    if (My::settingValue('global_unit') === 'px') {
+                        $range_default['unit'] = 'px';
+                        $range_default['min']  = 480;
+                        $range_default['max']  = 1280;
+                        $range_default['step'] = 2;
                     }
+
+                    $range_default_output = sprintf(
+                        __('settings-input-width-range-output'),
+                        '<span id=' . $setting_id . '-output-value>' . $range_default['value'] . '</span>',
+                        '<span id=' . $setting_id . '-output-unit>' . $range_default['unit'] . '</span>'
+                    );
 
                     $the_setting[] = (new Para())
                         ->id($setting_id . '-input')
@@ -496,11 +724,11 @@ class Config extends Process
                             (new Label($default_settings[$setting_id]['title'], 2))
                                 ->for($setting_id),
                             (new Input($setting_id, 'range'))
-                                ->default($range_default['value'])
+                                ->value($range_default['value'])
                                 ->min($range_default['min'])
                                 ->max($range_default['max'])
                                 ->step($range_default['step']),
-                            (new Text(null, ' <output name=' . $setting_id . '-output>' . $range_default_output . '</output>'))
+                            (new Text(null, ' <output id=' . $setting_id . ' name=' . $setting_id . '-output>' . $range_default_output . '</output>'))
                         ]);
 
                     if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
@@ -597,6 +825,40 @@ class Config extends Process
             return;
         }
 
+        // Displays a form to upload a configuration file.
+        if (isset($_GET['config-upload']) && $_GET['config-upload'] === '1') {
+            $upload_fields = [];
+
+            $upload_fields[] = (new Text('h3', __('settings-upload-title')));
+            $upload_fields[] = (new Text('p', __('settings-upload-description')));
+
+            $upload_fields[] = (new Para())
+                ->class('form-buttons')
+                ->items([
+                    (new File('config-upload-file', __('settings-file-import-input-button-text')))
+                        ->name('config-upload-file'),
+                ]);
+
+            $upload_fields[] = (new Para())
+                ->class('form-buttons')
+                ->items([
+                    App::nonce()->formNonce(),
+                    (new Submit(null, __('settings-upload-submit')))
+                        ->name('config-upload-submit'),
+                    (new Submit(null, __('settings-upload-cancel')))
+                        ->class('delete')
+                        ->name('config-upload-cancel')
+                ]);
+
+            echo (new Form('theme-config-upload'))
+                ->action(App::backend()->url()->get('admin.blog.theme', ['module' => My::id(), 'conf' => '1', 'config-upload' => '1']))
+                ->class('fieldset')
+                ->enctype('multipart/form-data')
+                ->method('post')
+                ->fields($upload_fields)
+                ->render();
+        }
+
         // Creates an array to put all the settings in their sections.
         $settings_render = [];
 
@@ -621,27 +883,18 @@ class Config extends Process
         // Adds settings in their section.
         $fields = [];
 
-        $fields[] = (new Para())
-            ->items([
-                (new Text(
-                    null,
-                    __('settings-page-intro')
-                ))
-            ]);
+        $fields[] = (new Text('p', __('settings-page-intro')));
 
-        $fields[] = (new Para())
-            ->items([
-                (new Text(
-                    null,
-                    sprintf(
-                        __('settings-page-forum-link'),
-                        'https://forum.dotclear.org/viewtopic.php?id=51635'
-                    )
-                ))
-            ]);
+        $fields[] = (new Text(
+            'p',
+            sprintf(
+                __('settings-page-forum-link'),
+                'https://forum.dotclear.org/viewtopic.php?id=51635'
+            )
+        ));
 
         foreach ($settings_render as $section_id => $setting_data) {
-            $fields[] = (new Text('', '<h3>' . My::settingsSections($section_id)['name'] . '</h3>'))
+            $fields[] = (new Text('h3', My::settingsSections($section_id)['name']))
                 ->id('section-' . $section_id);
             $fields[] = (new Text('', '<div class=fieldset>'));
 
@@ -665,8 +918,12 @@ class Config extends Process
             $fields[] = (new Text(null, '</div>'));
         }
 
-        $fields[] = (new Hidden('page_width_em_default', '30'));
-        $fields[] = (new Hidden('page_width_px_default', '480'));
+        $fields[] = (new Hidden('page_width_em_min_default', '30'));
+        $fields[] = (new Hidden('page_width_em_max_default', '80'));
+        $fields[] = (new Hidden('page_width_em_step_default', '1'));
+        $fields[] = (new Hidden('page_width_px_min_default', '480'));
+        $fields[] = (new Hidden('page_width_px_max_default', '1080'));
+        $fields[] = (new Hidden('page_width_px_step_default', '2'));
         $fields[] = (new Hidden('reset_warning', __('settings-reset-warning')));
 
         $fields[] = (new Para())
@@ -678,11 +935,145 @@ class Config extends Process
                 (new Submit(null,  __('settings-reset-button-text')))
                     ->class('delete')
                     ->id('odyssey-reset')
-                    ->name('reset')
+                    ->name('reset'),
+                (new Submit(null, __('settings-create-file-button-text')))
+                    ->class('button modal')
+                    ->name('save-config'),
+                (new Submit(null,  __('settings-upload-file-button-text')))
+                    ->class('button modal')
+                    ->name('import-config')
             ]);
 
+        // Displays theme configuration backups.
+        $backups_table = '';
+
+        $backups_dir_path = My::odysseyPublicFolder('path', '/backups/');
+
+        if (is_dir($backups_dir_path)) {
+            $backups_dir_data = Files::getDirList($backups_dir_path);
+
+            if (!empty($backups_dir_data)) {
+                $backups_dir_files = $backups_dir_data['files'];
+
+                if (is_array($backups_dir_files) && !empty($backups_dir_files)) {
+                    $download_url_base = My::odysseyPublicFolder('url', '/backups/');
+
+                    $file_list = [];
+
+                    foreach ($backups_dir_files as $backup_path) {
+                        $file_extension = Files::getExtension($backup_path);
+
+                        if ($file_extension === 'json') {
+                            $file_list[] = $backup_path;
+                        }
+                    }
+
+                    if (!empty($file_list)) {
+                        $backups_table .= '<div id=odyssey-backups>';
+                        $backups_table .= '<h3>' . __('settings-backups-title') . '</h3>';
+
+                        if (count($file_list) > 1) {
+                            $backups_table .= '<p>';
+                            $backups_table .= sprintf(
+                                __('settings-backups-count-multiple'),
+                                count($file_list)
+                            );
+                            $backups_table .= '</p>';
+                        } else {
+                            $backups_table .= '<p>';
+                            $backups_table .= __('settings-backups-count-one');
+                            $backups_table .= '</p>';
+                        }
+
+                        $backups_table .= '<table class="settings rch rch-thead"><tbody>';
+
+                        foreach ($file_list as $file_path) {
+                            $file_name_parts = explode('-', basename($file_path));
+
+                            $file_name_date = $file_name_parts[0] ?? null;
+                            $file_name_date = Date::str(App::blog()->settings()->system->date_format, strtotime($file_name_date));
+                            $file_name_time = $file_name_parts[1] ?? null;
+                            $file_name_time = Date::str(App::blog()->settings()->system->time_format, strtotime($file_name_time));
+                            $file_datetime  = $file_name_date . ' à ' . $file_name_time;
+
+                            $file_name_without_extension = substr(basename($file_path), 0, -5);
+
+                            $restore_url = App::backend()->url()->get(
+                                'admin.blog.theme',
+                                [
+                                    'module'  => My::id(),
+                                    'conf'    => '1',
+                                    'restore' => Html::escapeURL($file_name_without_extension)
+                                ]
+                            );
+
+                            $download_url = My::odysseyPublicFolder('url', '/backups/' . basename($backup_path));
+
+                            $delete_url = App::backend()->url()->get(
+                                'admin.blog.theme',
+                                [
+                                    'module'              => My::id(),
+                                    'conf'                => '1',
+                                    'restore_delete_file' => Html::escapeURL($file_name_without_extension)
+                                ]
+                            );
+
+                            $backups_table .= '<tr class=line>';
+                            $backups_table .= '<td>';
+                            $backups_table .= sprintf(
+                                __('settings-backup-title'),
+                                Html::escapeHTML($file_datetime)
+                            );
+                            $backups_table .= '</td>';
+                            $backups_table .= '<td>';
+                            $backups_table .= '<a href=' . My::escapeAttr($restore_url, false) . '>' . __('settings-backup-restore-link') . '</a>';
+                            $backups_table .= '</td>';
+                            $backups_table .= '<td>';
+                            $backups_table .= '<a href=' . My::escapeAttr(Html::escapeURL($download_url), false) . ' download>' . __('settings-backup-download-link') . '</a>';
+                            $backups_table .= '</td>';
+                            $backups_table .= '<td>';
+                            $backups_table .= '<a href=' . My::escapeAttr($delete_url, false) . '>' . __('settings-backup-delete-link') . '</a>';
+                            $backups_table .= '</td>';
+                            $backups_table .= '</tr>';
+                        }
+
+                        $backups_table .= '</tbody></table></div>';
+
+                        $delete_all_url = App::backend()->url()->get(
+                            'admin.blog.theme',
+                            [
+                                'module'             => My::id(),
+                                'conf'               => '1',
+                                'restore_delete_all' => '1'
+                            ]
+                        );
+                        $backups_table .= '<p>';
+                        $backups_table .= '<a href=' . My::escapeAttr($delete_all_url, false) . '>' . __('settings-backup-delete-all-link') . '</a>';
+                        $backups_table .= '</p>';
+
+                        $backups_table .= '<div class=warning>';
+                        $backups_table .= '<p>';
+                        $backups_table .= sprintf(
+                            __('settings-backup-warning-1'),
+                            My::id()
+                        );
+                        $backups_table .= '</p>';
+                        $backups_table .= '<p>';
+                        $backups_table .= __('settings-backup-warning-2');
+                        $backups_table .= '</p>';
+                        $backups_table .= '<p>';
+                        $backups_table .= __('settings-backup-warning-3');
+                        $backups_table .= '</p>';
+                        $backups_table .= '</div>';
+                    }
+                }
+            }
+        }
+
+        $fields[] = (new Text(null, $backups_table));
+
         echo (new Form('theme-config-form'))
-            ->action(App::backend()->url()->get('admin.blog.theme', ['conf' => '1']))
+            ->action(App::backend()->url()->get('admin.blog.theme', ['module' => My::id(), 'conf' => '1']))
             ->method('post')
             ->fields($fields)
             ->render();
@@ -705,11 +1096,16 @@ class Config extends Process
         $css_media_print_array             = [];
 
         // Page width
-        if (isset($_POST['global_unit']) && isset($_POST['global_page_width_value'])) {
-            $page_width_data = self::sanitizePageWidth($_POST['global_unit'], $_POST['global_page_width_value']);
+        $global_unit = $_POST['global_unit'] ?? null;
+        $page_width  = $_POST['global_page_width_value'] ?? null;
 
-            if (!empty($page_width_data)) {
-                $css_root_array[':root']['--page-width'] = $page_width_data['value'] . $page_width_data['unit'];
+        if ($global_unit) {
+            $page_width_data  = self::sanitizePageWidth($global_unit, $page_width);
+            $page_width_value = $page_width_data['value'] ?? null;
+            $page_width_unit  = $page_width_data['unit']  ?? null;
+
+            if ($page_width_value && $page_width_unit) {
+                $css_root_array[':root']['--page-width'] = $page_width_value . $page_width_unit;
             }
         }
 
@@ -1285,7 +1681,7 @@ class Config extends Process
                 ];
             }
 
-            if ($setting_value === '0' && $default_settings[$setting_id]['default'] !== false) {
+            if ($setting_value === null && $default_settings[$setting_id]['default'] !== false) {
                 return [
                     'value' => '0',
                     'type'  => 'boolean'
@@ -1305,6 +1701,24 @@ class Config extends Process
                 return [
                     'value' => strtolower($setting_value),
                     'type'  => 'string'
+                ];
+            }
+        }
+
+        if ($setting_type === 'range') {
+            $setting_value = (int) $setting_value;
+            $range_min     = $default_settings[$setting_id]['range']['min'];
+            $range_max     = $default_settings[$setting_id]['range']['max'];
+
+            if ($setting_value >= $range_min && $setting_value <= $range_max) {
+                return [
+                    'value' => $setting_value,
+                    'type'  => 'integer'
+                ];
+            } else {
+                return [
+                    'value' => $default_settings[$setting_id]['default'],
+                    'type'  => 'integer'
                 ];
             }
         }
@@ -1567,5 +1981,64 @@ class Config extends Process
         }
 
         return false;
+    }
+
+    public static function stylesCustomFile(string $styles_custom): void
+    {
+        $css_default_path_file = App::blog()->themesPath() . '/' . My::id() . '/' . 'style.min.css';
+        $css_path_folder       = My::id() . '/css/';
+        $css_custom_path_file  = $css_path_folder . 'style.min.css';
+
+        if ($styles_custom) {
+            $styles_default = '';
+
+            // Gets default CSS content.
+            if (file_exists($css_default_path_file)) {
+                $styles_default = (string) file_get_contents($css_default_path_file) ?: '';
+            }
+
+            // Creates a custom CSS file in the public folder.
+            if (ThemeConfig::canWriteCss(My::id(), true) && ThemeConfig::canWriteCss($css_path_folder, true)) {
+                ThemeConfig::writeCss(
+                    $css_path_folder,
+                    'style.min',
+                    $styles_custom . $styles_default
+                );
+
+                // Creates a entry in the database that contains the CSS URL.
+                App::blog()->settings->odyssey->put(
+                    'styles_url',
+                    My::odysseyPublicFolder('url', '/css/style.min.css'),
+                    'string',
+                    __('setting-css-custom-url'),
+                    true
+                );
+            } else {
+                if (file_exists($css_custom_path_file)) {
+                    ThemeConfig::dropCss(
+                        My::id() . '/css/',
+                        'style.min'
+                    );
+                }
+
+                App::blog()->settings->odyssey->drop('styles_url');
+            }
+        } else {
+            // If there is no custom styles, deletes the CSS file if exists.
+            if (file_exists(ThemeConfig::cssPath($css_custom_path_file))) {
+                ThemeConfig::dropCss(
+                    My::id() . '/css/',
+                    'style.min'
+                );
+            }
+
+            // Removes the CSS folder if it exists.
+            if (Files::isDeletable(ThemeConfig::cssPath($css_path_folder))) {
+                Files::deltree(ThemeConfig::cssPath($css_path_folder));
+            }
+
+            // Removes the database entry.
+            App::blog()->settings->odyssey->drop('styles_url');
+        }
     }
 }

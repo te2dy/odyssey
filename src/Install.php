@@ -46,7 +46,7 @@ class Install extends Process
         if ($styles_custom) {
             $styles_default = '';
 
-            $css_default_path_file = My::getInThemeFolder('style.min.css', 'path');
+            $css_default_path_file = My::odysseyThemeFolder('style.min.css', 'path');
 
             if (file_exists($css_default_path_file) && (string) file_get_contents($css_default_path_file) !== '') {
                 $styles_default = (string) file_get_contents($css_default_path_file);

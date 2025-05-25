@@ -161,93 +161,6 @@ function disableInputs() {
   }
 }
 
-/**
- * Updates the page width output from the page width input.
- */
-function pageWidthOutput(pageWidthUnitDefault, pageWidthValueDefault) {
-  let pageWidthUnit  = pageWidthUnitDefault,
-      pageWidthValue = pageWidthValueDefault;
-
-  if (document.getElementById("global_unit").value === "em") {
-    pageWidthUnit = "em";
-  } else if (document.getElementById("global_unit").value === "px") {
-    pageWidthUnit = "px";
-  }
-
-  if (document.getElementById("global_page_width_value").value) {
-    pageWidthValue = document.getElementById("global_page_width_value").value;
-  }
-
-  document.getElementById("global_page_width_value-output-value").innerHTML = pageWidthValue;
-}
-
-/**
- * Updates page width settings depending on its values.
- */
-function updatePageWidthSetting(pageWidthUnitDefault, pageWidthValueDefault) {
-  // Updates the placeholder of the width value.
-  if (document.getElementById("global_unit").value === "em") {
-    document.getElementById("global_page_width_value").placeholder = document.getElementById("page_width_em_default").value;
-  } else if (document.getElementById("global_unit").value === "px") {
-    document.getElementById("global_page_width_value").placeholder = document.getElementById("page_width_px_default").value;
-  }
-
-  // Converts the page width value when the unit is changed.
-  if (document.getElementById("global_page_width_value").value) {
-    var pageWidthUnitNew  = document.getElementById("global_unit").value
-        pageWidthValueNew = null;
-
-    if (pageWidthUnitNew === "px") {
-      pageWidthValueNew = parseInt(document.getElementById("global_page_width_value").value, 10) * 16;
-
-      document.getElementById("global_page_width_value").setAttribute("min", "480");
-      document.getElementById("global_page_width_value").setAttribute("max", "1280");
-      document.getElementById("global_page_width_value").setAttribute("step", "2");
-      document.getElementById("global_page_width_value").value = pageWidthValueNew.toString();
-
-      document.getElementById("global_page_width_value-output-value").innerHTML = pageWidthValueNew.toString();
-      document.getElementById("global_page_width_value-output-unit").innerHTML  = "px";
-    } else if (pageWidthUnitNew === 'em') {
-      pageWidthValueNew = parseInt(Number(document.getElementById("global_page_width_value").value) / 16, 10);
-
-      document.getElementById("global_page_width_value").setAttribute("min", "30");
-      document.getElementById("global_page_width_value").setAttribute("max", "80");
-      document.getElementById("global_page_width_value").setAttribute("step", "1");
-      document.getElementById("global_page_width_value").value = pageWidthValueNew.toString();
-
-      document.getElementById("global_page_width_value-output-value").innerHTML = pageWidthValueNew.toString();
-      document.getElementById("global_page_width_value-output-unit").innerHTML  = "em";
-    }
-  }
-}
-
-/**
- * Displays an error message if a value is incorrect.
- */
-function inputValidation() {
-  // Global page width setting.
-  var getPageWidthValue = document.getElementById("global_page_width_value").value,
-      pageWidth         = Number(getPageWidthValue);
-
-  if (getPageWidthValue) {
-    if (document.getElementById("global_unit").value === "em") {
-      if (isNaN(pageWidth) || pageWidth < 30 || pageWidth > 80) {
-        document.getElementById("global_page_width_value").classList.add("odyssey-value-error");
-      } else {
-        document.getElementById("global_page_width_value").classList.remove("odyssey-value-error")
-      }
-    } else {
-      if (isNaN(pageWidth) || pageWidth < 480 || pageWidth > 1280) {
-        document.getElementById("global_page_width_value").classList.add("odyssey-value-error");
-      } else {
-        document.getElementById("global_page_width_value").classList.remove("odyssey-value-error")
-      }
-    }
-  } else {
-    document.getElementById("global_page_width_value").classList.remove("odyssey-value-error")
-  }
-}
-
 /*
  * Gets the HTTP status code of a file based on its URL.
  *
@@ -420,6 +333,47 @@ function changeColorInput(settingId, context) {
   }
 }
 
+/**
+ * Updates page width input range depending on width unit (em or px).
+ */
+function pageWidthInputDefault() {
+  if (document.getElementById("global_unit").value === 'em') {
+    document.getElementById("global_page_width_value").max  = document.getElementById("page_width_em_max_default").value;
+    document.getElementById("global_page_width_value").min  = document.getElementById("page_width_em_min_default").value;
+    document.getElementById("global_page_width_value").step = document.getElementById("page_width_em_step_default").value;
+  } else if (document.getElementById("global_unit").value === 'px') {
+    document.getElementById("global_page_width_value").max  = document.getElementById("page_width_px_max_default").value;
+    document.getElementById("global_page_width_value").min  = document.getElementById("page_width_px_min_default").value;
+    document.getElementById("global_page_width_value").step = document.getElementById("page_width_px_step_default").value;
+  }
+}
+
+/**
+ * Converts page width input depending on width unit (em or px).
+ */
+function pageWidthUnitChange(pageWidthValueCurrent, pageWidthUnitCurrent) {
+  let pageWidthValueNew,
+      pageWidthUnitNew;
+
+  if (pageWidthUnitCurrent === "em") {
+    pageWidthValueNew = (parseInt(pageWidthValueCurrent) * 16).toString();
+    pageWidthUnitNew  = "px";
+
+    document.getElementById("global_page_width_value").value = pageWidthValueNew;
+
+    document.getElementById("global_page_width_value-output-value").innerHTML = pageWidthValueNew;
+    document.getElementById("global_page_width_value-output-unit").innerHTML  = pageWidthUnitNew;
+  } else if (pageWidthUnitCurrent === "px") {
+    pageWidthValueNew = parseInt((parseInt(pageWidthValueCurrent) / 16)).toString();
+    pageWidthUnitNew  = "em";
+
+    document.getElementById("global_page_width_value").value = pageWidthValueNew;
+
+    document.getElementById("global_page_width_value-output-value").innerHTML = pageWidthValueNew;
+    document.getElementById("global_page_width_value-output-unit").innerHTML  = pageWidthUnitNew;
+  }
+}
+
 window.onload = function() {
   let inputImgURL = "";
 
@@ -434,22 +388,28 @@ window.onload = function() {
     fontsPreview();
   };
 
-  var pageWidthUnitDefault  = document.getElementById("global_unit").value,
-      pageWidthValueDefault = document.getElementById("global_page_width_value").value;
-
-  document.getElementById("global_page_width_value").oninput = function() {
-    pageWidthOutput(pageWidthUnitDefault, pageWidthValueDefault);
-  }
-
-  document.getElementById("global_unit").onchange = function() {
-    updatePageWidthSetting(pageWidthUnitDefault, pageWidthValueDefault);
-    inputValidation();
-  }
-
   window.oninput = function() {
     disableInputs();
-    inputValidation();
   };
+
+
+  // Supports page width option.
+  pageWidthInputDefault()
+
+  document.getElementById("global_page_width_value").oninput = function() {
+    document.getElementById("global_page_width_value-output-value").innerHTML = document.getElementById("global_page_width_value").value;
+  };
+
+  var pageWidthValueCurrent = document.getElementById("global_page_width_value").value,
+      pageWidthUnitCurrent  = document.getElementById("global_unit").value;
+
+  document.getElementById("global_unit").onchange = function() {
+    pageWidthInputDefault();
+    pageWidthUnitChange(pageWidthValueCurrent, pageWidthUnitCurrent);
+
+    pageWidthValueCurrent = document.getElementById("global_page_width_value").value;
+    pageWidthUnitCurrent  = document.getElementById("global_unit").value;
+  }
 
   /**
    * Puts choosen color with HTML5 code picker

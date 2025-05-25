@@ -12,6 +12,27 @@ msgstr "Les paramètres du thème ont été enregistrés."
 msgid "settings-notice-reset"
 msgstr "Les paramètres du thème ont été réinitialisés."
 
+msgid "settings-notice-upload-success"
+msgstr "La configuration du thème a été appliquée avec succès"
+
+msgid "settings-notice-upload-file-not-valid"
+msgstr "Erreur&nbsp;: le fichier n’est pas valide."
+
+msgid "settings-notice-upload-no-file"
+msgstr "Erreur&nbsp;: aucun fichier n’a été téléversé."
+
+msgid "settings-notice-restore-success"
+msgstr "La configuration du thème a été restaurée avec succès."
+
+msgid "settings-notice-restore-error"
+msgstr "La configuration du thème n’a pas été restaurée. Le fichier était peut-être vide ou corrompu."
+
+msgid "settings-notice-file-deleted"
+msgstr "Le fichier de configuration du thème a été supprimé."
+
+msgid "settings-notice-files-deleted"
+msgstr "Tous les fichiers de configuration du thème ont été supprimés."
+
 msgid "setting-css-custom-url"
 msgstr "URL personnalisée de la feuille de styles"
 
@@ -320,6 +341,18 @@ msgstr "Aperçu de l’image"
 
 msgid "header-image-retina-ready"
 msgstr "✅ Image adaptée aux écrans à double densité de pixels."
+
+msgid "settings-upload-title"
+msgstr "Téléverser une configuration (bêta)"
+
+msgid "settings-upload-description"
+msgstr "Pour appliquer une configuration au thème, vous pouvez téléverser un fichier JSON à partir du formulaire ci-dessous&nbsp;:"
+
+msgid "settings-upload-submit"
+msgstr "Téléverser et appliquer la configuration"
+
+msgid "settings-upload-cancel"
+msgstr "Annuler"
 
 msgid "settings-header-imageposition-title"
 msgstr "Position de l’image"
@@ -663,6 +696,9 @@ msgstr "Ajouter des métadonnées au format JSON"
 msgid "settings-advanced-json-description"
 msgstr "Utile pour le référencement sur les moteurs de recherche."
 
+msgid "settings-odysseystyles-title"
+msgstr "Tous les styles"
+
 msgid "settings-page-intro"
 msgstr "C’est ici que vous pouvez personnaliser votre thème pour l’adapter à vos besoins."
 
@@ -677,6 +713,45 @@ msgstr "Enregistrer les paramètres"
 
 msgid "settings-reset-button-text"
 msgstr "Réinitialiser"
+
+msgid "settings-create-file-button-text"
+msgstr "Créer un fichier de la configuration actuelle (bêta)"
+
+msgid "settings-upload-file-button-text"
+msgstr "Téléverser un fichier de configuration (bêta)"
+
+msgid "settings-backups-title"
+msgstr "Gestion des configurations enregistrées (bêta)"
+
+msgid "settings-backups-count-multiple"
+msgstr "%d configurations sont disponibles&nbsp;:"
+
+msgid "settings-backups-count-one"
+msgstr "Une configuration est disponible&nbsp;:"
+
+msgid "settings-backup-title"
+msgstr "Configuration du %s"
+
+msgid "settings-backup-restore-link"
+msgstr "Restaurer"
+
+msgid "settings-backup-download-link"
+msgstr "Télécharger"
+
+msgid "settings-backup-delete-link"
+msgstr "Supprimer"
+
+msgid "settings-backup-delete-all-link"
+msgstr "Supprimer toutes les configurations"
+
+msgid "settings-backup-warning-1"
+msgstr "<strong>Attention</strong>&nbsp;: les fichiers de configuration sont conservés dans le dossier <code>/public/%s/backups</code> de votre installation Dotclear. Cela signifie qu’ils sont potentiellement accessibles à tous."
+
+msgid "settings-backup-warning-2"
+msgstr "Si vous avez renseigné des données personnelles à un endroit ou un autre dans les paramètres de votre thème, ils peuvent théoriquement être consultés et récupérés par des personnes mal intentionnées."
+
+msgid "settings-backup-warning-3"
+msgstr "Il est recommandé de télécharger ces fichiers sensibles pour les conserver en lieu sûr, puis de les supprimer de Dotclear."
 
 msgid "uninstall-checkbox-label"
 msgstr "Supprimer le sous-dossier « odyssey » situé dans le dossier « public » de Dotclear (contient la feuille de styles personnalisée)"

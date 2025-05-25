@@ -12,6 +12,27 @@ msgstr "Theme settings have been saved."
 msgid "settings-notice-reset"
 msgstr "Theme settings have been reset."
 
+msgid "settings-notice-upload-success"
+msgstr "Theme configuration successfully applied"
+
+msgid "settings-notice-upload-file-not-valid"
+msgstr "Error: the file is invalid."
+
+msgid "settings-notice-upload-no-file"
+msgstr "Error: no file has been uploaded."
+
+msgid "settings-notice-restore-success"
+msgstr "The theme configuration has been successfully restored."
+
+msgid "settings-notice-restore-error"
+msgstr "The theme configuration was not restored. The file may be empty or corrupted."
+
+msgid "settings-notice-file-deleted"
+msgstr "The theme configuration file has been deleted."
+
+msgid "settings-notice-files-deleted"
+msgstr "All theme configuration files have been deleted."
+
 msgid "setting-css-custom-url"
 msgstr "Custom CSS URL"
 
@@ -320,6 +341,18 @@ msgstr "Image preview"
 
 msgid "header-image-retina-ready"
 msgstr "✅ Image suitable for dual-pixel-density screens."
+
+msgid "settings-upload-title"
+msgstr "Upload a configuration (beta)"
+
+msgid "settings-upload-description"
+msgstr "To apply a configuration to the theme, you can upload a JSON file using the form below:"
+
+msgid "settings-upload-submit"
+msgstr "Upload and apply configuration"
+
+msgid "settings-upload-cancel"
+msgstr "Cancel"
 
 msgid "settings-header-imageposition-title"
 msgstr "Image position"
@@ -663,6 +696,9 @@ msgstr "Add metadata in JSON format"
 msgid "settings-advanced-json-description"
 msgstr "Useful for search engine optimization."
 
+msgid "settings-odysseystyles-title"
+msgstr "All styles"
+
 msgid "settings-page-intro"
 msgstr "This is where you can customize your theme to suit your needs."
 
@@ -677,6 +713,45 @@ msgstr "Save settings"
 
 msgid "settings-reset-button-text"
 msgstr "Reset"
+
+msgid "settings-create-file-button-text"
+msgstr "Create a file of the current configuration (beta)"
+
+msgid "settings-upload-file-button-text"
+msgstr "Upload a configuration file (beta)"
+
+msgid "settings-backups-title"
+msgstr "Saved configurations manager (beta)"
+
+msgid "settings-backups-count-multiple"
+msgstr "%d configuration files are available:"
+
+msgid "settings-backups-count-one"
+msgstr "On configuration files is available:"
+
+msgid "settings-backup-title"
+msgstr "%s configuration"
+
+msgid "settings-backup-restore-link"
+msgstr "Restore"
+
+msgid "settings-backup-download-link"
+msgstr "Donwload"
+
+msgid "settings-backup-delete-link"
+msgstr "Delete"
+
+msgid "settings-backup-delete-all-link"
+msgstr "Delete all configuration files"
+
+msgid "settings-backup-warning-1"
+msgstr "<strong>Warning</strong>: configuration files are stored in the folder <code>/public/%s/backups</code> of your Dotclear installation. This means they are potentially accessible to all."
+
+msgid "settings-backup-warning-2"
+msgstr "If you've entered personal data anywhere in your theme settings, they can theoretically be accessed and retrieved by the wrong people."
+
+msgid "settings-backup-warning-3"
+msgstr "We recommend that you download these sensitive files for safekeeping, then delete them from Dotclear."
 
 msgid "uninstall-checkbox-label"
 msgstr "Delete the “odyssey” subfolder located in Dotclear's “public” folder (contains the custom stylesheet)."

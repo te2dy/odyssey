@@ -12,6 +12,27 @@ msgstr ""
 msgid "settings-notice-reset"
 msgstr ""
 
+msgid "settings-notice-upload-success"
+msgstr ""
+
+msgid "settings-notice-upload-file-not-valid"
+msgstr ""
+
+msgid "settings-notice-upload-no-file"
+msgstr ""
+
+msgid "settings-notice-restore-success"
+msgstr ""
+
+msgid "settings-notice-restore-error"
+msgstr ""
+
+msgid "settings-notice-file-deleted"
+msgstr ""
+
+msgid "settings-notice-files-deleted"
+msgstr ""
+
 msgid "setting-css-custom-url"
 msgstr ""
 
@@ -319,6 +340,18 @@ msgid "header-image-preview-alt"
 msgstr ""
 
 msgid "header-image-retina-ready"
+msgstr ""
+
+msgid "settings-upload-title"
+msgstr ""
+
+msgid "settings-upload-description"
+msgstr ""
+
+msgid "settings-upload-submit"
+msgstr ""
+
+msgid "settings-upload-cancel"
 msgstr ""
 
 msgid "settings-header-imageposition-title"
@@ -663,6 +696,9 @@ msgstr ""
 msgid "settings-advanced-json-description"
 msgstr ""
 
+msgid "settings-odysseystyles-title"
+msgstr ""
+
 msgid "settings-page-intro"
 msgstr ""
 
@@ -676,6 +712,45 @@ msgid "settings-save-button-text"
 msgstr ""
 
 msgid "settings-reset-button-text"
+msgstr ""
+
+msgid "settings-create-file-button-text"
+msgstr ""
+
+msgid "settings-upload-file-button-text"
+msgstr ""
+
+msgid "settings-backups-title"
+msgstr ""
+
+msgid "settings-backups-count-multiple"
+msgstr ""
+
+msgid "settings-backups-count-one"
+msgstr ""
+
+msgid "settings-backup-title"
+msgstr ""
+
+msgid "settings-backup-restore-link"
+msgstr ""
+
+msgid "settings-backup-download-link"
+msgstr ""
+
+msgid "settings-backup-delete-link"
+msgstr ""
+
+msgid "settings-backup-delete-all-link"
+msgstr ""
+
+msgid "settings-backup-warning-1"
+msgstr ""
+
+msgid "settings-backup-warning-2"
+msgstr ""
+
+msgid "settings-backup-warning-3"
 msgstr ""
 
 msgid "uninstall-checkbox-label"
