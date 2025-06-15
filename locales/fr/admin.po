@@ -328,19 +328,25 @@ msgid "settings-header-postfull-description"
 msgstr "Désactive l’en-tête réduit des billets pour afficher le même en-tête qu’en page d’accueil."
 
 msgid "settings-header-image-title"
-msgstr "Adresse de l’image"
+msgstr "Téléverser une image"
 
 msgid "settings-header-image-description"
-msgstr "Facultatif&nbsp;: pour assurer un rendu optimal de votre image sur les écrans à double densité de pixels (Retina), assurez-vous d’avoir téléversé dans la médiathèque la même image, aux dimensions deux fois plus grandes, avec le suffixe <code>-2x</code>.<br>Exemple&nbsp;: vous souhaitez afficher un logo nommé <code>logo.png</code> (200 px × 200 px) que vous avez téléversé à la racine de votre médiathèque (adresse&nbsp;: <code>/public/logo.png</code>). Téléversez la même image en 400 px × 400 px dans le même dossier en ajoutant <code>-2x</code> à la fin de son nom (adresse&nbsp;: <code>/public/logo-2x.png</code>) ; le thème et le navigateur se chargeront du reste."
-
-msgid "settings-header-image-placeholder"
-msgstr "image.png"
+msgstr "L’image sera téléversée dans le dossier <code>/public/%s/img</code> de votre installation Dotclear."
 
 msgid "header-image-preview-alt"
 msgstr "Aperçu de l’image"
 
-msgid "header-image-retina-ready"
-msgstr "✅ Image adaptée aux écrans à double densité de pixels."
+msgid "header_image-retina-ready"
+msgstr "✅ Image configurée pour les écrans à double densité de pixels"
+
+msgid "header_image-delete-button"
+msgstr "Supprimer"
+
+msgid "settings-header-image2x-title"
+msgstr "Facultatif&nbsp;: téléverser une image deux fois plus grande pour les écrans Retina"
+
+msgid "settings-header-image2x-description"
+msgstr "Facultatif&nbsp;: pour assurer un rendu optimal de votre image sur les écrans à double densité de pixels, en particulier les Retina d’Apple, vous devez téléverser la même image avec une dimension deux fois plus grande. Exemple&nbsp;: si l’image que vous avez téléversée fait 200 px de large, téléversez-en une version de 400 px ici. Attention&nbsp;: cette seconde image doit avoir un nom différent de la première, sinon le téléversement échouera."
 
 msgid "settings-upload-title"
 msgstr "Téléverser une configuration (bêta)"

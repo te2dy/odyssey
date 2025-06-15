@@ -24,6 +24,8 @@ use Dotclear\Helper\Html\Form\Color;
 use Dotclear\Helper\Html\Form\File;
 use Dotclear\Helper\Html\Form\Form;
 use Dotclear\Helper\Html\Form\Hidden;
+use Dotclear\Helper\Html\Form\Image;
+use Dotclear\Helper\Html\Form\Img;
 use Dotclear\Helper\Html\Form\Input;
 use Dotclear\Helper\Html\Form\Label;
 use Dotclear\Helper\Html\Form\Legend;
@@ -73,6 +75,8 @@ class Config extends Process
             'styles'
         ];
 
+        $header_image_name  = null;
+
         if (!empty($_POST)) {
             try {
                 // If the save button has been clicked.
@@ -111,13 +115,89 @@ class Config extends Process
 
                                         break;
                                     case 'header_image' :
+                                        $image_file = $_FILES[$setting_id] ?? [];
+                                        $image_size = $image_file['size'] ?? 0;
+
+                                        if ($image_file && $image_size > 0) {
+                                            $setting_data = self::sanitizeHeaderImage(
+                                                $image_file,
+                                                $setting_id,
+                                                $_POST['global_unit'],
+                                                $_POST['global_page_width_value']
+                                            );
+
+                                            $img_folder_path = My::odysseyPublicFolder('path', '/img/');
+
+                                            if (!is_dir($img_folder_path)) {
+                                                mkdir($img_folder_path);
+                                            } else {
+                                                My::deleteDirectory($img_folder_path, true);
+                                            }
+
+                                            $image_path_tmp = $setting_data['value']['path_tmp'] ?? null;
+                                            $image_name     = $setting_data['value']['name'] ?? null;
+                                            $image_path     = $img_folder_path . $image_name;
+                                            $image_url      = My::odysseyPublicFolder('url', '/img/' . $image_name);
+
+                                            $header_image_name = $image_name;
+
+                                            if ($image_path_tmp && $image_name) {
+                                                if (move_uploaded_file($image_path_tmp, $image_path)) {
+                                                    unset($setting_data['value']['path_tmp']);
+
+                                                    $setting_data['value']['url'] = $image_url;
+                                                } else {
+                                                    $setting_data = [];
+                                                }
+                                            }
+                                        }
+
+                                        if ($_POST['header_image-delete-action'] === "true") {
+                                            App::blog()->settings->odyssey->drop($setting_id);
+
+                                            My::deleteDirectory(My::odysseyPublicFolder('path', '/img/'));
+                                        }
+
+                                        break;
                                     case 'header_image2x' :
-                                        $setting_data = self::sanitizeHeaderImage(
-                                            $setting_id,
-                                            $_POST['header_image'],
-                                            $_POST['global_unit'],
-                                            $_POST['global_page_width_value']
-                                        );
+                                        $image2x_file = $_FILES[$setting_id] ?? [];
+                                        $image2x_size = $image2x_file['size'] ?? 0;
+
+                                        if ($image2x_file && $image2x_size > 0) {
+                                            $setting_data = self::sanitizeHeaderImage(
+                                                $image2x_file,
+                                                $setting_id,
+                                                $_POST['global_unit'],
+                                                $_POST['global_page_width_value']
+                                            );
+
+                                            $img_folder_path = My::odysseyPublicFolder('path', '/img/');
+
+                                            $image2x_path_tmp = $setting_data['value']['path_tmp'] ?? null;
+                                            $image2x_name     = $setting_data['value']['name'] ?? null;
+                                            $image2x_path     = $img_folder_path . $image2x_name;
+                                            $image2x_url      = My::odysseyPublicFolder('url', '/img/' . $image2x_name);
+
+                                            $header_image2x_name = $image2x_name;
+
+                                            if ($image2x_path_tmp && $image2x_name && $header_image2x_name !== $header_image_name) {
+                                                if (move_uploaded_file($image2x_path_tmp, $image2x_path)) {
+                                                    unset($setting_data['value']['path_tmp']);
+
+                                                    $setting_data['value']['url'] = $image2x_url;
+                                                } else {
+                                                    $setting_data = [];
+                                                }
+                                            }
+                                        } else {
+                                            App::blog()->settings->odyssey->drop($setting_id);
+                                        }
+
+                                        if ($_POST['header_image-delete-action'] === "true") {
+                                            App::blog()->settings->odyssey->drop($setting_id);
+
+                                            My::deleteDirectory(My::odysseyPublicFolder('path', '/img/'));
+                                        }
 
                                         break;
                                     case 'styles' :
@@ -147,7 +227,7 @@ class Config extends Process
                             } else {
                                 App::blog()->settings->odyssey->drop($setting_id);
                             }
-                        } else {
+                        } elseif ($setting_id !== 'header_image' && $setting_id !== 'header_image2x') {
                             App::blog()->settings->odyssey->drop($setting_id);
                         }
                     }
@@ -180,6 +260,9 @@ class Config extends Process
                 } elseif (isset($_POST['reset'])) {
                     // Remove all saved settings from the database.
                     App::blog()->settings->odyssey->dropAll();
+
+                    // Removes the header image and its folder.
+                    My::deleteDirectory(My::odysseyPublicFolder('path', '/img/'));
 
                     // Removes the custom CSS file if it exists.
                     $css_custom_path = My::odysseyPublicFolder('path', '/css/style.min.css');
@@ -633,15 +716,11 @@ class Config extends Process
                     $the_setting[] = (new Para())
                         ->id($setting_id . '-input')
                         ->items([
-                            (new Input($setting_id))
+                            (new File($setting_id))
                                 ->label(
                                     (new Label($default_settings[$setting_id]['title'], 2))
                                     ->for($setting_id)
                                 )
-                                ->maxlength(255)
-                                ->placeholder($placeholder)
-                                ->size(30)
-                                ->value(Html::escapeURL($image_src))
                         ]);
 
                     if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
@@ -769,21 +848,31 @@ class Config extends Process
 
         // Header image.
         if ($setting_id === 'header_image') {
-            $image_src = $setting_value['url'] ?? '';
+            if (isset($saved_settings['header_image'])) {
+                $the_setting[] = (new Para())
+                    ->id($setting_id . '-preview')
+                    ->items([
+                        (new Img(Html::escapeURL($image_src ?? ''), 'header_image-src'))
+                            ->alt(__('header_image-preview-alt'))
+                    ]);
 
-            $the_setting[] = (new Text(
-                null,
-                '<img alt="' . __('header-image-preview-alt') . '" id=' . $setting_id . '-src src=' . My::escapeAttr($image_src) . '>'
-            ));
-
-
-            if (isset($saved_settings['header_image2x'])) {
-                $the_setting[] = (new Text('div', __('header-image-retina-ready')))
-                    ->id($setting_id . '-retina');
+                if (isset($saved_settings['header_image2x'])) {
+                    $the_setting[] = (new Text('p', __('header_image-retina-ready')))
+                        ->id('header_image-retina');
+                }
             }
 
-            $the_setting[] = (new Hidden($setting_id . '-url', $image_src));
-            $the_setting[] = (new Hidden($setting_id . '-retina-text', __('header-image-retina-ready')));
+            $the_setting[] = (new Para())
+                ->id('header_image-delete')
+                ->items([
+                    (new Button('header_image-delete-button', __('header_image-delete-button')))
+                        ->class('delete')
+                ]);
+
+            $the_setting[] = (new Hidden('header_image-defined', $setting_value ? "true" : "false"));
+            $the_setting[] = (new Hidden('header_image-delete-action', "false"));
+            $the_setting[] = (new Hidden('header_image-url', $image_src ?? ''));
+            $the_setting[] = (new Hidden('header_image-retina-text', __('header_image-retina-ready')));
         }
 
         return $the_setting;
@@ -867,7 +956,7 @@ class Config extends Process
             $settings_render[$section_id] = [];
         }
 
-        $settings_ignored = ['header_image2x', 'styles'];
+        $settings_ignored = ['styles'];
 
         foreach (My::settingsDefault() as $setting_id => $setting_data) {
             if (!in_array($setting_id, $settings_ignored, true)) {
@@ -1074,6 +1163,7 @@ class Config extends Process
 
         echo (new Form('theme-config-form'))
             ->action(App::backend()->url()->get('admin.blog.theme', ['module' => My::id(), 'conf' => '1']))
+            ->enctype('multipart/form-data')
             ->method('post')
             ->fields($fields)
             ->render();
@@ -1328,11 +1418,16 @@ class Config extends Process
             $css_root_array[':root']['--header-align'] = $_POST['header_align'];
         }
 
-        // Header banner
-        if (isset($_POST['header_image']) && $_POST['header_image'] !== '') {
+        // Header image
+        if ((isset($_FILES['header_image']['name']) && $_FILES['header_image']['name'] !== '')
+            || (isset($_POST['header_image-defined']) && $_POST['header_image-defined'] === 'true')
+        ) {
             $css_main_array['#site-image']['width'] = '100%';
 
-            $css_media_contrast_array['#site-image a']['outline'] = 'inherit';
+            $css_main_array['#site-image a']['display']       = 'block';
+            $css_main_array['#site-image a']['outline-width'] = '.168em';
+
+            $css_main_array['#site-image img']['display'] = 'inline-block';
         }
 
         // Post list type
@@ -1733,97 +1828,69 @@ class Config extends Process
         return [];
     }
 
-    /**
-     * Saves the banner.
-     *
-     * The image is saved as an array which contains:
-     * 'url'        => (string) The URL of the image.
-     * 'max-width'  => (int) The maximum width of the image
-     *                       (inferior or equal to the page width).
-     * 'max-height' => (int) The maximum height of the image.
-     *
-     * @param string $setting_id       The setting id.
-     * @param string $image_url        The image URL.
-     * @param string $page_width_unit  The page width unit (em or px).
-     * @param string $page_width_value The page width value.
-     *
-     * @return array The image in an array.
-     */
     public static function sanitizeHeaderImage(
+        array  $image_file,
         string $setting_id,
-        string $image_url,
         string $page_width_unit,
         string $page_width_value
-    ): array {
-        $default_settings = My::settingsDefault();
-        $image_url        = Html::escapeURL($image_url) ?: '';
-        $page_width_unit  = $page_width_unit ?: '';
-        $page_width_value = $page_width_value ?: null;
+    ): array
+    {
+        if (!empty($image_file)) {
+            if (isset($image_file['error']) && $image_file['error'] === UPLOAD_ERR_OK) {
+                $file_name = isset($image_file['name']) ? Files::tidyFileName($image_file['name']) : null;
+                $file_path = $image_file['tmp_name'] ?? null;
+                $file_type = $image_file['type']     ?? null;
 
-        if ($image_url) {
-            // Gets relative url and path of the public folder.
-            $public_url  = App::blog()->settings->system->public_url;
-            $public_path = App::blog()->public_path;
+                $mime_types_supported = Files::mimeTypes();
 
-            // Converts the absolute URL in a relative one if necessary.
-            $image_url = Html::stripHostURL($image_url);
+                if (file_exists($file_path)
+                    && str_starts_with($file_type, 'image/')
+                    && in_array($file_type, $mime_types_supported, true)
+                ) {
+                    if ($setting_id === 'header_image') {
+                        // Gets the dimensions of the image.
+                        list($header_image_width) = getimagesize($file_path);
 
-            // Retrieves the image path.
-            $image_path = $public_path . str_replace($public_url . '/', '/', $image_url);
+                        /**
+                         * Limits the maximum width value of the image if its superior to the page width,
+                         * and sets its height proportionally.
+                         */
+                        $page_width_data = self::sanitizePageWidth($page_width_unit, (int) $page_width_value);
 
-            if (My::imageExists($image_path)) {
-                // Gets the dimensions of the image.
-                list($header_image_width) = getimagesize($image_path);
+                        if (empty($page_width_data)) {
+                            $page_width_data['unit']  = 'em';
+                            $page_width_data['value'] = 30;
+                        }
 
-                /**
-                 * Limits the maximum width value of the image if its superior to the page width,
-                 * and sets its height proportionally.
-                 */
-                $page_width_data = self::sanitizePageWidth($page_width_unit, (int) $page_width_value);
+                        $page_width = $page_width_data['value'];
 
-                if (empty($page_width_data)) {
-                    $page_width_data['unit']  = 'em';
-                    $page_width_data['value'] = 30;
-                }
+                        if ($page_width_data['unit'] === 'em') {
+                            $page_width = $page_width * 16;
+                        }
 
-                $page_width = $page_width_data['value'];
+                        if ($header_image_width > $page_width) {
+                            $header_image_width = 100;
+                        } else {
+                            $header_image_width = $header_image_width * 100 / $page_width;
+                        }
 
-                if ($page_width_data['unit'] === 'em') {
-                    $page_width = $page_width * 16;
-                }
+                        $image_data = [
+                            'name'     => $file_name,
+                            'path_tmp' => $file_path,
+                            'width'    => (int) $header_image_width
+                        ];
+                    } else {
+                        $image_data = [
+                            'name'     => $file_name,
+                            'path_tmp' => $file_path
+                        ];
+                    }
 
-                if ($header_image_width > $page_width) {
-                    $header_image_width = 100;
-                } else {
-                    $header_image_width = $header_image_width * 100 / $page_width;
-                }
-
-                // Sets the array which contains the image data.
-                $image_data = [
-                    'url'   => filter_var($image_url, FILTER_SANITIZE_URL),
-                    'width' => (int) $header_image_width
-                ];
-
-                if ($setting_id === 'header_image' && !empty($image_data)) {
-                    // Prepares the setting to save in the database as an array.
-                    return [
-                        'value' => $image_data,
-                        'type'  => 'array'
-                    ];
-                }
-
-                // Builds the path to an hypothetical double sized image.
-                $image_info    = Path::info($image_path);
-                $image_path_2x = $image_info['dirname'] . '/' . $image_info['base'] . '-2x.' . $image_info['extension'];
-
-                // If the double sized image exists.
-                if (file_exists($image_path_2x)) {
-                    $image_url_2x = str_replace($public_path, $public_url, $image_path_2x);
-
-                    if (file_exists($image_path_2x) && getimagesize($image_path_2x) !== false) {
+                    if (!empty($image_data)) {
+                        // Prepares the setting to save in the database as an array.
                         return [
-                            'value' => filter_var($image_url_2x, FILTER_SANITIZE_URL),
-                            'type'  => 'string'
+                            'value' => $image_data,
+                            'type'  => 'array'
                         ];
                     }
                 }

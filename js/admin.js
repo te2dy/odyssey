@@ -99,6 +99,26 @@ function disableInputs() {
     );
   }
 
+  if (document.getElementById("header_image-input").value
+    || document.getElementById("header_image-preview")
+  ) {
+    setStyle(["header_image_position", "header_image_position", "header_image_description"], "block");
+    setStyle("header_image", "none");
+
+    document.getElementById("header_image-delete").style.display = "block";
+
+    if (document.getElementById("header_image-retina")) {
+      setStyle("header_image2x", "none");
+    } else {
+      setStyle("header_image2x", "block");
+    }
+  } else {
+    setStyle(["header_image2x", "header_image_position", "header_image_description"], "none");
+    setStyle("header_image", "block");
+
+    document.getElementById("header_image-delete").style.display = "none";
+  }
+
   if (document.getElementById("content_postlist_type").value !== "content") {
     setStyle([
       "content_postlist_altcolor",
@@ -161,112 +181,43 @@ function disableInputs() {
   }
 }
 
-/*
- * Gets the HTTP status code of a file based on its URL.
- *
- * @return bool
- */
-function httpStatus(url) {
-  let http = new XMLHttpRequest();
-
-  http.open('HEAD', url, false);
-  http.send();
-
-  if (http.status === 200) {
-    return true;
-  }
-
-  return false;
-}
-
 /**
- * Checks if an image exists via its URL.
- *
- * @link https://stackoverflow.com/a/14651421
- */
-function imageExists(url) {
-    let imgExist = {
-      src: false,
-      src2x: false
-    };
-
-    imgExist.src = httpStatus(url);
-
-    // Check Retina image then
-    let imgExt       = url.split('.').pop(),
-        imgExtLength = imgExt.length,
-        url2x        = url.substring(0, url.length - (imgExtLength + 1)) + "-2x." + imgExt;
-
-    imgExist.src2x = httpStatus(url2x);
-
-    return imgExist;
-}
-
-/**
- * Displays the image with the URL typed by the user.
+ * Displays the image submitted by the user.
  */
 function changeImage(inputImgURL) {
-  if (inputImgURL !== "") {
-    let imgExist = imageExists(inputImgURL);
+  let img = inputImgURL.files[0];
 
-    if (imgExist.src === true) {
-      setStyle(
-        [
-          "header_image_position",
-          "header_image_description"
-        ],
-        "block"
-      );
+  if (img) {
+    let fileReader = new FileReader();
+    fileReader.readAsDataURL(img);
 
-      document.getElementById("header_image-src").removeAttribute("style");
-      document.getElementById("header_image-src").setAttribute("src", encodeURI(inputImgURL));
+    fileReader.addEventListener("load", function () {
+      if (!document.getElementById("header_image-preview")) {
+        var imgPreviewContainer = document.createElement('p');
+        imgPreviewContainer.setAttribute("id", "header_image-preview");
 
-      if (document.getElementById("header_image_position-retina") && document.getElementById("header_image-url").value !== inputImgURL) {
-        document.getElementById("header_image-retina").style.display = "none";
-      }
+        var imgPreview = document.createElement('img');
+        imgPreview.setAttribute("id", "header_image-src");
+        imgPreview.src = this.result;
 
-      if (imgExist.src2x === true) {
-        if (document.getElementById("header_image-retina")) {
-          document.getElementById("header_image-retina").style.display = "block";
-        } else {
-          var retinaNotice = document.createElement('p');
-          retinaNotice.setAttribute("id", "header_image-retina");
-          retinaNotice.innerText = document.getElementById("header_image-retina-text").value;
+        document.getElementById("header_image-description").after("", imgPreviewContainer);
 
-          var retinaNoticeElementAfter = document.getElementById("header_image-url");
-          retinaNoticeElementAfter.parentNode.insertBefore(retinaNotice, retinaNoticeElementAfter);
+        imgPreviewContainer.appendChild(imgPreview);
+      } else {
+        document.getElementById("header_image-src").src = this.result;
+
+        if (document.getElementById("header_image-preview").style.display === "none") {
+          document.getElementById("header_image-preview").style.display = "block";
         }
       }
-    } else {
-      document.getElementById("header_image-src").style.display = "none";
 
-      setStyle(
-        [
-          "header_image-src",
-          "header_image_position",
-          "header_image_description"
-        ],
-        "none"
-      );
+      document.getElementById("header_image-delete-action").value = "false";
 
-      if (document.getElementById("header_image-retina")) {
-        document.getElementById("header_image-retina").style.display = "none";
-      }
-    }
-  } else {
-    document.getElementById("header_image-src").style.display    = "none";
+      setStyle(["header_image2x", "header_image_position", "header_image_description"], "block");
+      setStyle("header_image", "none");
 
-    setStyle(
-      [
-        "header_image_position",
-        "header_image_description"
-      ],
-      "none"
-    );
-
-    if (document.getElementById("header_image-retina")) {
-      document.getElementById("header_image-retina").style.display = "none";
-    }
+      document.getElementById("header_image-delete").style.display = "block";
+    });
   }
 }
 
@@ -375,12 +326,7 @@ function pageWidthUnitChange(pageWidthValueCurrent, pageWidthUnitCurrent) {
 }
 
 window.onload = function() {
-  let inputImgURL = "";
-
-  inputImgURL = document.getElementById("header_image").value;
-
   disableInputs();
-  changeImage(inputImgURL);
   fontsPreview();
 
   window.onchange = function() {
@@ -391,7 +337,6 @@ window.onload = function() {
   window.oninput = function() {
     disableInputs();
   };
-
 
   // Supports page width option.
   pageWidthInputDefault()
@@ -446,34 +391,31 @@ window.onload = function() {
     }
   });
 
+  // Header image
   document.getElementById("header_image").onchange = function() {
-    inputImgURL = document.getElementById("header_image").value;
-
-    changeImage(inputImgURL);
+    changeImage(this);
+    disableInputs();
   };
 
-  document.getElementById("header_image").oncut = function() {
-    inputImgURL = document.getElementById("header_image").value;
+  if (document.getElementById("header_image-delete")) {
+    document.getElementById("header_image-delete-button").onclick = function() {
+      document.getElementById("header_image-preview").style.display = "none";
+      document.getElementById("header_image-delete").style.display  = "none";
 
-    changeImage(inputImgURL);
-  };
+      if (document.getElementById("header_image-retina")) {
+        document.getElementById("header_image-retina").style.display = "none";
+      }
 
-  document.getElementById("header_image").onpaste = function() {
-    inputImgURL = document.getElementById("header_image").value;
+      setStyle(["header_image2x", "header_image_position", "header_image_description"], "none");
+      setStyle("header_image", "block");
 
-    changeImage(inputImgURL);
-  };
+      document.getElementById("header_image").value               = "";
+      document.getElementById("header_image_description").value   = "";
+      document.getElementById("header_image-defined").value       = "false";
+      document.getElementById("header_image-delete-action").value = "true";
+    };
+  }
 
-  document.getElementById("header_image").oninput = function() {
-    let searchtimer;
-    clearTimeout(searchtimer);
-
-    searchtimer = setTimeout(() => {
-      inputImgURL = document.getElementById("header_image").value;
-
-      changeImage(inputImgURL);
-    }, 1000);
-  };
 
   // Reset button warning
   const buttonReset = document.getElementById("odyssey-reset");

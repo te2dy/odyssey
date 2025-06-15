@@ -164,7 +164,7 @@ class FrontendValues
         $srcset = '';
         $sizes  = '';
 
-        $image2x_url = My::settingValue('header_image2x') ?? null;
+        $image2x_url = My::settingValue('header_image2x')['url'] ?? null;
 
         if ($image2x_url) {
             $srcset  = ' srcset="' . Html::escapeURL($image_url) . ' 1x, ' . Html::escapeURL($image2x_url) . ' 2x"';

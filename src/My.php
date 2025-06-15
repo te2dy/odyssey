@@ -386,17 +386,19 @@ class My extends MyTheme
 
         $default_settings['header_image'] = [
             'title'       => __('settings-header-image-title'),
-            'description' => __('settings-header-image-description'),
+            'description' => sprintf(
+                __('settings-header-image-description'),
+                My::id()
+            ),
             'type'        => 'image',
-            'placeholder' => App::blog()->settings()->system->public_url . '/' . __('settings-header-image-placeholder'),
             'default'     => '',
             'section'     => ['header', 'image']
         ];
 
         $default_settings['header_image2x'] = [
-            'title'       => '',
-            'description' => '',
-            'type'        => 'text',
+            'title'       => __('settings-header-image2x-title'),
+            'description' => __('settings-header-image2x-description'),
+            'type'        => 'image',
             'default'     => '',
             'section'     => ['header', 'image']
         ];
@@ -1011,7 +1013,7 @@ class My extends MyTheme
 
         // Returns true if the file exists and is an allowed type of image.
         if (file_exists($path)
-            && str_contains($mime_type, 'image')
+            && str_starts_with($mime_type, 'image')
             && array_key_exists($file_extension, $mime_types_supported)
             && in_array($mime_type, $mime_types_supported, true)
         ) {
@@ -1292,5 +1294,36 @@ class My extends MyTheme
         json_decode($string);
 
         return json_last_error() === JSON_ERROR_NONE;
+    }
+
+    /**
+     * Creates a method to delete odyssey files that have been put
+     * in the public folder of Dotclear
+     *
+     * @param string $dir_path The path of the directory.
+     *
+     * @return void Remove the folder and all its contents.
+     */
+    public static function deleteDirectory(string $dir_path, bool $delete_content_only = false): void
+    {
+        if (is_dir($dir_path)) {
+            $files = scandir($dir_path);
+
+            foreach ($files as $item) {
+                if ($item !== '.' && $item !== '..') {
+                    $file_path = $dir_path . '/' . $item;
+
+                    if (is_dir($file_path)) {
+                        self::_deleteDirectory($file_path);
+                    } else {
+                        unlink($file_path);
+                    }
+                }
+            }
+
+            if ($delete_content_only === false) {
+                rmdir($dir_path);
+            }
+        }
     }
 }

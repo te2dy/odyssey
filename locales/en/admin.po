@@ -328,19 +328,25 @@ msgid "settings-header-postfull-description"
 msgstr "Disables the reduced header displayed on posts to show the same header as on the home page."
 
 msgid "settings-header-image-title"
-msgstr "URL of the image"
+msgstr "Upload an image"
 
 msgid "settings-header-image-description"
-msgstr "Optional: to ensure optimum rendering of your image on dual-pixel-density screens (Retina), make sure you've uploaded the same image to the media library, twice the size, with the suffix <code>-2x</code>.<br>Example: you want to display a logo named <code>logo.png</code> (200px × 200px) that you have uploaded to the root of your media library (URL&nbsp;: <code>/public/logo.png</code>). Upload the same 400 px × 400 px image to the same folder, adding <code>-2x</code> at the end of the page (URL&nbsp;: <code>/public/logo-2x.png</code>) ; the theme and browser will take care of the rest."
-
-msgid "settings-header-image-placeholder"
-msgstr "image.png"
+msgstr "The image will be uploaded in the <code>/public/%s/img</code> folder of your Dotclear installation."
 
 msgid "header-image-preview-alt"
 msgstr "Image preview"
 
 msgid "header-image-retina-ready"
-msgstr "✅ Image suitable for dual-pixel-density screens."
+msgstr "✅ Image configured for dual-pixel-density screens"
+
+msgid "header_image-delete-button"
+msgstr "Delete"
+
+msgid "settings-header-image2x-title"
+msgstr "Optional: upload an image twice as large for Retina screens"
+
+msgid "settings-header-image2x-description"
+msgstr "Optional: to ensure optimum rendering of your image on dual-pixel-density screens, in particular Apple Retinas, you need to upload the same image at twice the size. Example: if the image you uploaded is 200px wide, upload a 400px version here. Note: this second image must have a different name from the first, otherwise the upload will fail."
 
 msgid "settings-upload-title"
 msgstr "Upload a configuration (beta)"

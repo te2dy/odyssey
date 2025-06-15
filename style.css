@@ -141,7 +141,7 @@ code {
 :is(a, details summary):is(:focus-visible) { /* For navigation with keyboard. */
   background-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
   color: var(--color-background, #fafafa);
-  outline: .168rem solid var(--color-primary-amplified, hsl(226, 95%, 50%));
+  outline: .168em solid var(--color-primary-amplified, hsl(226, 95%, 50%));
   outline-offset: 0;
   text-decoration: none;
 }
@@ -154,7 +154,7 @@ code {
   :is(a, details summary):is(:active, :focus, :hover) {
     background-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
     color: var(--color-background, #fafafa);
-    outline: .168rem solid var(--color-primary-amplified, hsl(226, 95%, 50%));
+    outline: .168em solid var(--color-primary-amplified, hsl(226, 95%, 50%));
     outline-offset: 0;
     text-decoration: none;
   }

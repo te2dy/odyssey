@@ -319,7 +319,7 @@ msgid "settings-header-description-title"
 msgstr ""
 
 msgid "settings-header-description-description"
-msgstr ""%s">paramètres du blog</a>."
+msgstr ""
 
 msgid "settings-header-postfull-title"
 msgstr ""
@@ -333,13 +333,19 @@ msgstr ""
 msgid "settings-header-image-description"
 msgstr ""
 
-msgid "settings-header-image-placeholder"
-msgstr ""
-
 msgid "header-image-preview-alt"
 msgstr ""
 
 msgid "header-image-retina-ready"
+msgstr ""
+
+msgid "header_image-delete-button"
+msgstr ""
+
+msgid "settings-header-image2x-title"
+msgstr ""
+
+msgid "settings-header-image2x-description"
 msgstr ""
 
 msgid "settings-upload-title"
