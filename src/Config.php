@@ -433,14 +433,15 @@ class Config extends Process
                         Notices::addNotice(
                             'success',
                             '<p>' . sprintf(
-                                'La configuration du thème a été enregistrée au format JSON dans le dossier <code>/public/%1$s/backups</code> de votre installation Dotclear. Vous pouvez gérer tous les fichiers générés <a href=%2$s>au bas de cette page</a>.</p>',
+                                'La configuration du thème a été enregistrée au format JSON dans le dossier <code>/public/%1$s/backups</code> de votre installation Dotclear. Vous pouvez gérer tous les fichiers générés <a href=%2$s>au bas de cette page</a>.',
                                 My::id(),
                                 '#odyssey-backups'
-                            ) . '</p><p>' . sprintf(
-                                '<a class="button submit" href="%s" download>Télécharger le fichier de configuration</a></p>',
+                            ) . '</p>' .
+                            sprintf(
+                                '<a class="button submit" href=%s download>Télécharger le fichier de configuration</a>',
                                 My::escapeAttr(Html::escapeURL(My::odysseyPublicFolder('url', '/backups/' . $file_name . '.json')))
 
-                            ) . '</p>',
+                            ),
                             ['divtag' => true]
                         );
                     } else {
