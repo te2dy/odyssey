@@ -3,6 +3,8 @@
 - 🇫🇷 [Français](#odyssée-un-thème-dotclear)
 - 🇬🇧 [English](#odyssey-a-dotclear-theme)
 
+![Aperçu du thème](https://github.com/te2dy/odyssey/blob/main/odyssey.png)
+
 ## Odyssée, un thème Dotclear
 
 ### Présentation
