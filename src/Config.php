@@ -330,7 +330,7 @@ class Config extends Process
                                             case 'header_image2x' :
                                                 $setting_data['value'] = [];
 
-                                                $setting_data['value']['name']  = isset($setting_value['name']) ? Files::tidyFileName($setting_value['name']) : null;
+                                                $setting_data['value']['name'] = isset($setting_value['name']) ? Files::tidyFileName($setting_value['name']) : null;
 
                                                 if ($setting_id !== 'header_image2x') {
                                                     $setting_data['value']['width'] = $setting_value['width'] ?? null;
@@ -340,7 +340,7 @@ class Config extends Process
                                                     }
                                                 }
 
-                                                $setting_data['value']['url'] = $setting_value['url']   ?? null;
+                                                $setting_data['value']['url'] = $setting_value['url'] ?? null;
 
                                                 $img_folder_url = My::odysseyPublicFolder('url', '/img');
 
@@ -503,7 +503,7 @@ class Config extends Process
                                             case 'header_image2x' :
                                                 $setting_data['value'] = [];
 
-                                                $setting_data['value']['name']  = isset($setting_value['name']) ? Files::tidyFileName($setting_value['name']) : null;
+                                                $setting_data['value']['name'] = isset($setting_value['name']) ? Files::tidyFileName($setting_value['name']) : null;
 
                                                 if ($setting_id !== 'header_image2x') {
                                                     $setting_data['value']['width'] = $setting_value['width'] ?? null;
@@ -513,7 +513,7 @@ class Config extends Process
                                                     }
                                                 }
 
-                                                $setting_data['value']['url'] = $setting_value['url']   ?? null;
+                                                $setting_data['value']['url'] = $setting_value['url'] ?? null;
 
                                                 $img_folder_url = My::odysseyPublicFolder('url', '/img');
 

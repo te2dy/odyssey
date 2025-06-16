@@ -730,7 +730,7 @@ msgid "settings-reset-button-text"
 msgstr "Réinitialiser"
 
 msgid "settings-create-file-button-text"
-msgstr "Créer un fichier de la configuration actuelle (bêta)"
+msgstr "Enregistrer la configuration actuelle (bêta)"
 
 msgid "settings-upload-file-button-text"
 msgstr "Téléverser un fichier de configuration (bêta)"
