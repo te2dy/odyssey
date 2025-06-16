@@ -1489,6 +1489,11 @@ class Config extends Process
 
                 $css_main_array['.entry-list-excerpt-img']['display']      = 'block';
                 $css_main_array['.entry-list-excerpt-img']['margin-block'] = '1rem';
+
+                if (isset($_POST['content_postlist_type']) && $_POST['content_postlist_type'] === 'excerpt') {
+                    $css_main_array['.entry-list-excerpt-img']['transition']                          = 'var(--color-transition, unset)';
+                    $css_main_array['.entry-list-excerpt-img:not(:active, :focus, :hover)']['filter'] = 'grayscale(1)';
+                }
             }
         }
 
@@ -1606,8 +1611,15 @@ class Config extends Process
 
         // Grayscale images
         if (isset($_POST['content_images_grayscale']) && $_POST['content_images_grayscale'] === 'on') {
-            $css_main_array['.content-text img']['transition'] = 'var(--color-transition, unset)';
+            $css_main_array['.content-text img']['transition']                          = 'var(--color-transition, unset)';
             $css_main_array['.content-text img:not(:active, :focus, :hover)']['filter'] = 'grayscale(1)';
+
+            if (isset($_POST['content_postlist_thumbnail']) && $_POST['content_postlist_thumbnail'] === 'on') {
+                if (isset($_POST['content_postlist_type']) && $_POST['content_postlist_type'] === 'one-line') {
+                    $css_main_array['.entry-list-img']['transition']                          = 'var(--color-transition, unset)';
+                    $css_main_array['.entry-list-img:not(:active, :focus, :hover)']['filter'] = 'grayscale(1)';
+                }
+            }
         }
 
         // Footer align
