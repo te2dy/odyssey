@@ -76,7 +76,7 @@ msgid "section-header"
 msgstr "Header settings"
 
 msgid "section-header-image"
-msgstr "Logo or banner"
+msgstr "Logo or banner (beta)"
 
 msgid "section-content"
 msgstr "Content settings"
@@ -244,10 +244,10 @@ msgid "settings-global-fontsize-120"
 msgstr "120%"
 
 msgid "settings-global-fontantialiasing-title"
-msgstr "Enable character smoothing"
+msgstr "Enable font smoothing"
 
 msgid "settings-global-fontantialiasing-description"
-msgstr "Prevents aliasing, but can make characters very (too) fine."
+msgstr "Prevents aliasing, but can make font characters very (too) fine."
 
 msgid "settings-global-primarycolor-title"
 msgstr "Main color"
@@ -744,14 +744,17 @@ msgstr "%d configuration files are available:"
 msgid "settings-backups-count-one"
 msgstr "On configuration files is available:"
 
+msgid "settings-backup-datetime"
+msgstr "%1$s at %2$s"
+
 msgid "settings-backup-title"
-msgstr "%s configuration"
+msgstr "%s file configuration"
 
 msgid "settings-backup-restore-link"
 msgstr "Restore"
 
 msgid "settings-backup-download-link"
-msgstr "Donwload"
+msgstr "Download"
 
 msgid "settings-backup-delete-link"
 msgstr "Delete"

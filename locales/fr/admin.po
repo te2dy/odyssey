@@ -76,7 +76,7 @@ msgid "section-header"
 msgstr "Paramètres de l’en-tête"
 
 msgid "section-header-image"
-msgstr "Logo ou bannière"
+msgstr "Logo ou bannière (bêta)"
 
 msgid "section-content"
 msgstr "Paramètres du contenu"
@@ -744,8 +744,11 @@ msgstr "%d configurations sont disponibles&nbsp;:"
 msgid "settings-backups-count-one"
 msgstr "Une configuration est disponible&nbsp;:"
 
+msgid "settings-backup-datetime"
+msgstr "%1$s à %2$s"
+
 msgid "settings-backup-title"
-msgstr "Configuration du %s"
+msgstr "Fichier de configuration du %s"
 
 msgid "settings-backup-restore-link"
 msgstr "Restaurer"

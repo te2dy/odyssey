@@ -1100,6 +1100,7 @@ class Config extends Process
                             $file_name_time = $file_name_parts[1] ?? null;
                             $file_name_time = Date::str(App::blog()->settings()->system->time_format, strtotime($file_name_time));
                             $file_datetime  = $file_name_date . ' à ' . $file_name_time;
+                            $file_datetime  = sprintf(__('settings-backup-datetime'), $file_name_date, $file_name_time);
 
                             $file_name_without_extension = substr(basename($file_path), 0, -5);
 

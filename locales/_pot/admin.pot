@@ -744,6 +744,9 @@ msgstr ""
 msgid "settings-backups-count-one"
 msgstr ""
 
+msgid "settings-backup-datetime"
+msgstr ""
+
 msgid "settings-backup-title"
 msgstr ""
 
