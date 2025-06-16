@@ -13,13 +13,22 @@ msgid "settings-notice-reset"
 msgstr "Les paramètres du thème ont été réinitialisés."
 
 msgid "settings-notice-upload-success"
-msgstr "La configuration du thème a été appliquée avec succès"
+msgstr "La configuration du thème a été appliquée avec succès."
 
 msgid "settings-notice-upload-file-not-valid"
 msgstr "Erreur&nbsp;: le fichier n’est pas valide."
 
 msgid "settings-notice-upload-no-file"
 msgstr "Erreur&nbsp;: aucun fichier n’a été téléversé."
+
+msgid "settings-notice-save-success"
+msgstr "La configuration du thème a été enregistrée au format JSON dans le dossier <code>/public/%1$s/backups</code> de votre installation Dotclear. Vous pouvez gérer tous les fichiers générés <a href=%2$s>au bas de cette page</a>."
+
+msgid "settings-notice-save-success-link"
+msgstr "Télécharger le fichier de configuration"
+
+msgid "settings-notice-save-fail"
+msgstr "Le fichier de configuration n’a pas pu être créé, car tous les paramètres du thème sont ceux définis par défaut."
 
 msgid "settings-notice-restore-success"
 msgstr "La configuration du thème a été restaurée avec succès."

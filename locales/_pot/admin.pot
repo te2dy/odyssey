@@ -21,6 +21,15 @@ msgstr ""
 msgid "settings-notice-upload-no-file"
 msgstr ""
 
+msgid "settings-notice-save-success"
+msgstr ""
+
+msgid "settings-notice-save-success-link"
+msgstr ""
+
+msgid "settings-notice-save-fail"
+msgstr ""
+
 msgid "settings-notice-restore-success"
 msgstr ""
 

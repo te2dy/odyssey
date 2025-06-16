@@ -61,8 +61,8 @@ class Config extends Process
         App::behavior()->addBehavior(
             'adminPageHTMLHead',
             function () {
-                echo My::cssLoad('/css/admin.min.css');
-                echo My::jsLoad('/js/admin.min.js');
+                echo My::cssLoad('/css/admin.min.css'),
+                My::jsLoad('/js/admin.min.js');
             }
         );
 
@@ -75,9 +75,9 @@ class Config extends Process
             'styles'
         ];
 
-        $header_image_name  = null;
+        $header_image_name = null;
 
-        if (!empty($_POST)) {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
             try {
                 // If the save button has been clicked.
                 if (isset($_POST['save']) || isset($_POST['save-config'])) {
@@ -93,7 +93,10 @@ class Config extends Process
                         $setting_value = $_POST[$setting_id] ?? null;
                         $setting_type  = $default_settings[$setting_id]['type'] ?? null;
 
-                        if (!in_array($setting_id, $specific_settings, true) && !str_starts_with($setting_id, 'social_')) {
+                        if (array_key_exists($setting_id, $default_settings)
+                            && !in_array($setting_id, $specific_settings, true)
+                            && !str_starts_with($setting_id, 'social_')
+                        ) {
                             // Prepares non specific settings to save.
                             if ($setting_value != $default_settings[$setting_id]['default']) {
                                 // Prepares data if the value if different than the default one.
@@ -102,112 +105,103 @@ class Config extends Process
                                 // Otherwise, deletes the value.
                                 App::blog()->settings->odyssey->drop($setting_id);
                             }
-                        } else {
+                        } elseif (!str_starts_with($setting_id, 'social_')) {
                             // Prepares value for each specific settings.
-                            if (!str_starts_with($setting_id, 'social_')) {
-                                switch ($setting_id) {
-                                    case 'global_page_width_value' :
-                                        $setting_data = self::sanitizePageWidth(
+                            switch ($setting_id) {
+                                case 'global_page_width_value' :
+                                    $setting_data = self::sanitizePageWidth(
+                                        $_POST['global_unit'],
+                                        $_POST['global_page_width_value'],
+                                        $setting_id
+                                    );
+
+                                    break;
+                                case 'header_image' :
+                                    $image_file = $_FILES[$setting_id] ?? [];
+                                    $image_size = $image_file['size'] ?? 0;
+
+                                    if (!empty($image_file) && $image_size > 0) {
+                                        $setting_data = self::sanitizeHeaderImage(
+                                            $image_file,
+                                            $setting_id,
                                             $_POST['global_unit'],
-                                            $_POST['global_page_width_value'],
-                                            $setting_id
+                                            $_POST['global_page_width_value']
                                         );
 
-                                        break;
-                                    case 'header_image' :
-                                        $image_file = $_FILES[$setting_id] ?? [];
-                                        $image_size = $image_file['size'] ?? 0;
+                                        $img_folder_path = My::odysseyPublicFolder('path', '/img/');
 
-                                        if ($image_file && $image_size > 0) {
-                                            $setting_data = self::sanitizeHeaderImage(
-                                                $image_file,
-                                                $setting_id,
-                                                $_POST['global_unit'],
-                                                $_POST['global_page_width_value']
-                                            );
-
-                                            $img_folder_path = My::odysseyPublicFolder('path', '/img/');
-
-                                            if (!is_dir($img_folder_path)) {
-                                                mkdir($img_folder_path);
-                                            } else {
-                                                My::deleteDirectory($img_folder_path, true);
-                                            }
-
-                                            $image_path_tmp = $setting_data['value']['path_tmp'] ?? null;
-                                            $image_name     = $setting_data['value']['name'] ?? null;
-                                            $image_path     = $img_folder_path . $image_name;
-                                            $image_url      = My::odysseyPublicFolder('url', '/img/' . $image_name);
-
-                                            $header_image_name = $image_name;
-
-                                            if ($image_path_tmp && $image_name) {
-                                                if (move_uploaded_file($image_path_tmp, $image_path)) {
-                                                    unset($setting_data['value']['path_tmp']);
-
-                                                    $setting_data['value']['url'] = $image_url;
-                                                } else {
-                                                    $setting_data = [];
-                                                }
-                                            }
-                                        }
-
-                                        if ($_POST['header_image-delete-action'] === "true") {
-                                            App::blog()->settings->odyssey->drop($setting_id);
-
-                                            My::deleteDirectory(My::odysseyPublicFolder('path', '/img/'));
-                                        }
-
-                                        break;
-                                    case 'header_image2x' :
-                                        $image2x_file = $_FILES[$setting_id] ?? [];
-                                        $image2x_size = $image2x_file['size'] ?? 0;
-
-                                        if ($image2x_file && $image2x_size > 0) {
-                                            $setting_data = self::sanitizeHeaderImage(
-                                                $image2x_file,
-                                                $setting_id,
-                                                $_POST['global_unit'],
-                                                $_POST['global_page_width_value']
-                                            );
-
-                                            $img_folder_path = My::odysseyPublicFolder('path', '/img/');
-
-                                            $image2x_path_tmp = $setting_data['value']['path_tmp'] ?? null;
-                                            $image2x_name     = $setting_data['value']['name'] ?? null;
-                                            $image2x_path     = $img_folder_path . $image2x_name;
-                                            $image2x_url      = My::odysseyPublicFolder('url', '/img/' . $image2x_name);
-
-                                            $header_image2x_name = $image2x_name;
-
-                                            if ($image2x_path_tmp && $image2x_name && $header_image2x_name !== $header_image_name) {
-                                                if (move_uploaded_file($image2x_path_tmp, $image2x_path)) {
-                                                    unset($setting_data['value']['path_tmp']);
-
-                                                    $setting_data['value']['url'] = $image2x_url;
-                                                } else {
-                                                    $setting_data = [];
-                                                }
-                                            }
+                                        if (!is_dir($img_folder_path)) {
+                                            mkdir($img_folder_path);
                                         } else {
-                                            App::blog()->settings->odyssey->drop($setting_id);
+                                            My::deleteDirectory($img_folder_path, true);
                                         }
 
-                                        if ($_POST['header_image-delete-action'] === "true") {
-                                            App::blog()->settings->odyssey->drop($setting_id);
+                                        $image_path_tmp = $setting_data['value']['path_tmp'] ?? null;
+                                        $image_name     = $setting_data['value']['name'] ?? null;
+                                        $image_path     = $img_folder_path . $image_name;
+                                        $image_url      = My::odysseyPublicFolder('url', '/img/' . $image_name);
 
-                                            My::deleteDirectory(My::odysseyPublicFolder('path', '/img/'));
+                                        $header_image_name = $image_name;
+
+                                        if ($image_path_tmp && $image_name) {
+                                            if (move_uploaded_file($image_path_tmp, $image_path)) {
+                                                unset($setting_data['value']['path_tmp']);
+
+                                                $setting_data['value']['url'] = $image_url;
+                                            } else {
+                                                $setting_data = [];
+                                            }
                                         }
+                                    }
 
-                                        break;
-                                    case 'styles' :
-                                        $setting_data  = self::saveStyles();
-                                        $styles_custom = $setting_data['value'] ?? '';
-                                }
-                            } else {
-                                // The rest should be social links only.
-                                $setting_data = self::sanitizeSocialLink($setting_id, $setting_value);
+                                    if ($_POST['header_image-delete-action'] === "true") {
+                                        App::blog()->settings->odyssey->drop($setting_id);
+                                        App::blog()->settings->odyssey->drop('header_image2x');
+
+                                        My::deleteDirectory(My::odysseyPublicFolder('path', '/img/'));
+                                    }
+
+                                    break;
+                                case 'header_image2x' :
+                                    $image2x_file = $_FILES[$setting_id] ?? [];
+                                    $image2x_size = $image2x_file['size'] ?? 0;
+
+                                    if (!empty($image2x_file) && (int) $image2x_size > 0) {
+                                        $setting_data = self::sanitizeHeaderImage(
+                                            $image2x_file,
+                                            $setting_id,
+                                            $_POST['global_unit'],
+                                            $_POST['global_page_width_value']
+                                        );
+
+                                        $img_folder_path = My::odysseyPublicFolder('path', '/img/');
+
+                                        $image2x_path_tmp = $setting_data['value']['path_tmp'] ?? null;
+                                        $image2x_name     = $setting_data['value']['name'] ?? null;
+                                        $image2x_path     = $img_folder_path . $image2x_name;
+                                        $image2x_url      = My::odysseyPublicFolder('url', '/img/' . $image2x_name);
+
+                                        $header_image2x_name = $image2x_name;
+
+                                        if ($image2x_path_tmp && $image2x_name && $header_image2x_name !== $header_image_name) {
+                                            if (move_uploaded_file($image2x_path_tmp, $image2x_path)) {
+                                                unset($setting_data['value']['path_tmp']);
+
+                                                $setting_data['value']['url'] = $image2x_url;
+                                            } else {
+                                                $setting_data = [];
+                                            }
+                                        }
+                                    }
+
+                                    break;
+                                case 'styles' :
+                                    $setting_data  = self::saveStyles();
+                                    $styles_custom = $setting_data['value'] ?? '';
                             }
+                        } else {
+                            // The rest should be social links only.
+                            $setting_data = self::sanitizeSocialLink($setting_id, $setting_value);
                         }
 
                         // Saves the setting data or drop it if empty.
@@ -311,6 +305,7 @@ class Config extends Process
                                         && !in_array($setting_id, $specific_settings, true)
                                         && !str_starts_with($setting_id, 'social_')
                                     ) {
+                                        // Prepares non specific settings to save.
                                         $setting_type  = $default_settings[$setting_id]['type'] ?? null;
 
                                         if ($setting_value != $default_settings[$setting_id]['default']) {
@@ -320,39 +315,58 @@ class Config extends Process
                                             // Otherwise, deletes the value.
                                             App::blog()->settings->odyssey->drop($setting_id);
                                         }
-                                    } else {
+                                    } elseif (!str_starts_with($setting_id, 'social_')) {
                                         // Prepares value for each specific settings.
-                                        if (!str_starts_with($setting_id, 'social_')) {
-                                            switch ($setting_id) {
-                                                case 'global_page_width_value' :
-                                                    $setting_data = self::sanitizePageWidth(
-                                                        $settings_array['global_unit'] ?? $default_settings['global_unit']['default'],
-                                                        $settings_array['global_page_width_value'] ?? $default_settings['global_page_width_value']['default'],
-                                                        $setting_id
-                                                    );
+                                        switch ($setting_id) {
+                                            case 'global_page_width_value' :
+                                                $setting_data = self::sanitizePageWidth(
+                                                    $settings_array['global_unit'] ?? $default_settings['global_unit']['default'],
+                                                    $settings_array['global_page_width_value'] ?? $default_settings['global_page_width_value']['default'],
+                                                    $setting_id
+                                                );
 
-                                                    break;
-                                                case 'header_image' :
-                                                case 'header_image2x' :
-                                                    $setting_data = self::sanitizeHeaderImage(
-                                                        $setting_id,
-                                                        $settings_array['header_image'] ?? $default_settings['header_image']['default'],
-                                                        $settings_array['global_unit'] ?? $default_settings['global_unit']['default'],
-                                                        $settings_array['global_page_width_value'] ?? $default_settings['global_page_width_value']['default']
-                                                    );
+                                                break;
+                                            case 'header_image' :
+                                            case 'header_image2x' :
+                                                $setting_data['value'] = [];
 
-                                                    break;
-                                                case 'styles' :
-                                                    $styles_custom = $settings_array['styles'] ?? '';
-                                            }
-                                        } else {
-                                            // The rest should be social links only.
-                                            $setting_data = self::sanitizeSocialLink($setting_id, $setting_value);
+                                                $setting_data['value']['name']  = isset($setting_value['name']) ? Files::tidyFileName($setting_value['name']) : null;
+
+                                                if ($setting_id !== 'header_image2x') {
+                                                    $setting_data['value']['width'] = $setting_value['width'] ?? null;
+
+                                                    if (isset($setting_data['value']['width']) && ((int) $setting_data['value']['width'] <= 0 || (int) $setting_data['value']['width'] > 100)) {
+                                                        $setting_data['value']['width'] = null;
+                                                    }
+                                                }
+
+                                                $setting_data['value']['url'] = $setting_value['url']   ?? null;
+
+                                                $img_folder_url = My::odysseyPublicFolder('url', '/img');
+
+                                                if (isset($setting_data['value']['url']) && !str_starts_with($setting_data['value']['url'], $img_folder_url)) {
+                                                    $setting_data['value']['url'] = null;
+                                                }
+
+                                                if (!isset($setting_data['value']['name']) || !isset($setting_data['value']['name']) || !isset($setting_data['value']['name'])) {
+                                                    $setting_data = [];
+                                                }
+
+                                                $setting_data['type'] = 'array';
+
+                                                break;
+                                            case 'styles' :
+                                                $setting_data  = self::saveStyles();
+                                                $styles_custom = $settings_array['styles'] ?? '';
                                         }
+                                    } else {
+                                        // The rest should be social links only.
+                                        $setting_data = self::sanitizeSocialLink($setting_id, $setting_value);
                                     }
 
                                     if (!empty($setting_data)) {
                                         $setting_value = $setting_data['value'] ?? null;
+
                                         $setting_type  = $setting_data['type']  ?? null;
                                         $setting_label = Html::clean(Html::escapeHTML($default_settings[$setting_id]['title']));
 
@@ -401,7 +415,7 @@ class Config extends Process
             }
         }
 
-        if (!empty($_GET)) {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET' && !empty($_GET)) {
             try {
                 if (isset($_GET['save-config']) && $_GET['save-config'] === 'create-file') {
                     // Creates a backup file.
@@ -432,21 +446,13 @@ class Config extends Process
 
                         Notices::addNotice(
                             'success',
-                            '<p>' . sprintf(
-                                'La configuration du thème a été enregistrée au format JSON dans le dossier <code>/public/%1$s/backups</code> de votre installation Dotclear. Vous pouvez gérer tous les fichiers générés <a href=%2$s>au bas de cette page</a>.',
-                                My::id(),
-                                '#odyssey-backups'
-                            ) . '</p>' .
-                            sprintf(
-                                '<a class="button submit" href=%s download>Télécharger le fichier de configuration</a>',
-                                My::escapeAttr(Html::escapeURL(My::odysseyPublicFolder('url', '/backups/' . $file_name . '.json')))
-
-                            ),
+                            '<p>' . sprintf(__('settings-notice-save-success'), My::id(), '#odyssey-backups') . '</p>' .
+                            '<a class="button submit" href=' . My::escapeAttr(Html::escapeURL(My::odysseyPublicFolder('url', '/backups/' . $file_name . '.json'))) . ' download>' . __('settings-notice-save-success-link') . '</a>',
                             ['divtag' => true]
                         );
                     } else {
                         // If no custom option has been set.
-                        Notices::addErrorNotice('Le fichier de configuration n’a pas pu être créé, car tous les paramètres du thème sont ceux définis par défaut.');
+                        Notices::addErrorNotice(__('settings-notice-save-fail'));
                     }
 
                     App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
@@ -495,15 +501,35 @@ class Config extends Process
                                                 break;
                                             case 'header_image' :
                                             case 'header_image2x' :
-                                                $setting_data = self::sanitizeHeaderImage(
-                                                    $setting_id,
-                                                    $settings_array['header_image'] ?? $default_settings['header_image']['default'],
-                                                    $settings_array['global_unit'] ?? $default_settings['global_unit']['default'],
-                                                    $settings_array['global_page_width_value'] ?? $default_settings['global_page_width_value']['default']
-                                                );
+                                                $setting_data['value'] = [];
+
+                                                $setting_data['value']['name']  = isset($setting_value['name']) ? Files::tidyFileName($setting_value['name']) : null;
+
+                                                if ($setting_id !== 'header_image2x') {
+                                                    $setting_data['value']['width'] = $setting_value['width'] ?? null;
+
+                                                    if (isset($setting_data['value']['width']) && ((int) $setting_data['value']['width'] <= 0 || (int) $setting_data['value']['width'] > 100)) {
+                                                        $setting_data['value']['width'] = null;
+                                                    }
+                                                }
+
+                                                $setting_data['value']['url'] = $setting_value['url']   ?? null;
+
+                                                $img_folder_url = My::odysseyPublicFolder('url', '/img');
+
+                                                if (isset($setting_data['value']['url']) && !str_starts_with($setting_data['value']['url'], $img_folder_url)) {
+                                                    $setting_data['value']['url'] = null;
+                                                }
+
+                                                if (!isset($setting_data['value']['name']) || !isset($setting_data['value']['name']) || !isset($setting_data['value']['name'])) {
+                                                    $setting_data = [];
+                                                }
+
+                                                $setting_data['type'] = 'array';
 
                                                 break;
                                             case 'styles' :
+                                                $setting_data  = self::saveStyles();
                                                 $styles_custom = $settings_array['styles'] ?? '';
                                         }
                                     } else {
@@ -560,21 +586,10 @@ class Config extends Process
                 } elseif (isset($_GET['restore_delete_all'])) {
                     // Deletes all configuration files.
                     $backups_folder_path = My::odysseyPublicFolder('path', '/backups');
+                    My::deleteDirectory($backups_folder_path);
 
-                    if (is_dir($backups_folder_path)) {
-                        $files = scandir($backups_folder_path);
-
-                        foreach ($files as $file) {
-                            if ($file !== '.' && $file !== '..') {
-                                unlink($backups_folder_path . '/' . $file);
-                            }
-                        }
-
-                        rmdir($backups_folder_path);
-
-                        Notices::addSuccessNotice(__('settings-notice-files-deleted'));
-                        App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
-                    }
+                    Notices::addSuccessNotice(__('settings-notice-files-deleted'));
+                    App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
                 }
             } catch (Exception $e) {
                 App::error()->add($e->getMessage());
@@ -712,8 +727,6 @@ class Config extends Process
 
                     break;
                 case 'image' :
-                    $image_src = $setting_value['url'] ?? '';
-
                     $the_setting[] = (new Para())
                         ->id($setting_id . '-input')
                         ->items([
@@ -849,11 +862,13 @@ class Config extends Process
 
         // Header image.
         if ($setting_id === 'header_image') {
+            $image_src = $setting_value['url'] ?? '';
+
             if (isset($saved_settings['header_image'])) {
                 $the_setting[] = (new Para())
-                    ->id($setting_id . '-preview')
+                    ->id('header_image-preview')
                     ->items([
-                        (new Img(Html::escapeURL($image_src ?? ''), 'header_image-src'))
+                        (new Img(Html::escapeURL($image_src), 'header_image-src'))
                             ->alt(__('header_image-preview-alt'))
                     ]);
 
@@ -872,7 +887,7 @@ class Config extends Process
 
             $the_setting[] = (new Hidden('header_image-defined', $setting_value ? "true" : "false"));
             $the_setting[] = (new Hidden('header_image-delete-action', "false"));
-            $the_setting[] = (new Hidden('header_image-url', $image_src ?? ''));
+            $the_setting[] = (new Hidden('header_image-url', $image_src));
             $the_setting[] = (new Hidden('header_image-retina-text', __('header_image-retina-ready')));
         }
 
