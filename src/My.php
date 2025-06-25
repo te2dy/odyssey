@@ -181,6 +181,19 @@ class My extends MyTheme
             'section'     => ['global', 'fonts']
         ];
 
+        $default_settings['global_color_scheme'] = [
+            'title'       => __('settings-global-colorscheme-title'),
+            'description' => __('settings-global-colorscheme-description'),
+            'type'        => 'select',
+            'choices'     => [
+                __('settings-global-colorscheme-auto-default') => 'auto',
+                __('settings-global-colorscheme-light')        => 'light',
+                __('settings-global-colorscheme-dark')         => 'dark'
+            ],
+            'default'     => 'auto',
+            'section'     => ['global', 'colors']
+        ];
+
         $global_color_primary_choices = [
             __('settings-global-primarycolor-blue-default') => 'blue',
             __('settings-global-primarycolor-gray')         => 'gray',

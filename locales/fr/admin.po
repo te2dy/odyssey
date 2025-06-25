@@ -249,6 +249,21 @@ msgstr "Activer le lissage des caractères"
 msgid "settings-global-fontantialiasing-description"
 msgstr "Prévient l’effet de crénelage, mais peut rendre les caractères très (trop) fins."
 
+msgid "settings-global-colorscheme-title"
+msgstr "Jeu de couleurs"
+
+msgid "settings-global-colorscheme-description"
+msgstr "En mode automatique, le jeu de couleur appliqué est celui du système d’exploitation des visiteurs du blog."
+
+msgid "settings-global-colorscheme-auto-default"
+msgstr "Automatique (par défaut)"
+
+msgid "settings-global-colorscheme-light"
+msgstr "Clair"
+
+msgid "settings-global-colorscheme-dark"
+msgstr "Sombre"
+
 msgid "settings-global-primarycolor-title"
 msgstr "Couleur principale"
 

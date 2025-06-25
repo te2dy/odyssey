@@ -249,6 +249,21 @@ msgstr "Enable font smoothing"
 msgid "settings-global-fontantialiasing-description"
 msgstr "Prevents aliasing, but can make font characters very (too) fine."
 
+msgid "settings-global-colorscheme-title"
+msgstr "Color scheme"
+
+msgid "settings-global-colorscheme-description"
+msgstr "In auto mode, the color scheme applied is the same as that of the blog visitor's operating system."
+
+msgid "settings-global-colorscheme-auto-default"
+msgstr "Auto (default)"
+
+msgid "settings-global-colorscheme-light"
+msgstr "Light"
+
+msgid "settings-global-colorscheme-dark"
+msgstr "Dark"
+
 msgid "settings-global-primarycolor-title"
 msgstr "Main color"
 

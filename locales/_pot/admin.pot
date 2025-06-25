@@ -249,6 +249,21 @@ msgstr ""
 msgid "settings-global-fontantialiasing-description"
 msgstr ""
 
+msgid "settings-global-colorscheme-title"
+msgstr ""
+
+msgid "settings-global-colorscheme-description"
+msgstr ""
+
+msgid "settings-global-colorscheme-auto-default"
+msgstr ""
+
+msgid "settings-global-colorscheme-light"
+msgstr ""
+
+msgid "settings-global-colorscheme-dark"
+msgstr ""
+
 msgid "settings-global-primarycolor-title"
 msgstr ""
 

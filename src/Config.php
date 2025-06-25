@@ -1335,45 +1335,63 @@ class Config extends Process
 
         $primary_colors = [
             'light' => [
-                'gray'  => '0, 0%, 10%',
-                'green' => '120, 75%, 30%',
-                'red'   => '0, 90%, 45%'
+                'blue'  => 'hsl(226, 80%, 45%)',
+                'gray'  => 'hsl(0, 0%, 10%)',
+                'green' => 'hsl(120, 75%, 30%)',
+                'red'   => 'hsl(0, 90%, 45%)'
             ],
             'light-amplified' => [
-                'gray'  => '0, 0%, 28%',
-                'green' => '120, 60%, 40%',
-                'red'   => '0, 100%, 55%'
+                'blue'  => 'hsl(226, 95%, 50%)',
+                'gray'  => 'hsl(0, 0%, 28%)',
+                'green' => 'hsl(120, 60%, 40%)',
+                'red'   => 'hsl(0, 100%, 55%)'
             ],
             'dark' => [
-                'gray'  => '0, 0%, 99%',
-                'green' => '120, 60%, 80%',
-                'red'   => '0, 70%, 85%'
+                'blue'  => 'hsl(226, 80%, 70%)',
+                'gray'  => 'hsl(0, 0%, 99%)',
+                'green' => 'hsl(120, 60%, 80%)',
+                'red'   => 'hsl(0, 70%, 85%)'
             ],
             'dark-amplified' => [
-                'gray'  => '0, 0%, 80%',
-                'green' => '120, 50%, 60%',
-                'red'   => '0, 70%, 70%'
+                'blue'  => 'hsl(226, 95%, 80%)',
+                'gray'  => 'hsl(0, 0%, 80%)',
+                'green' => 'hsl(120, 50%, 60%)',
+                'red'   => 'hsl(0, 70%, 70%)'
             ]
         ];
 
+        // Variables for the custom color scheme option.
+        $color_primary_light           = $primary_colors['light']['blue'];
+        $color_primary_amplified_light = $primary_colors['light-amplified']['blue'];
+        $color_primary_dark            = $primary_colors['dark']['blue'];
+        $color_primary_amplified_dark  = $primary_colors['dark-amplified']['blue'];
+
         if (isset($_POST['global_color_primary'])) {
             if ($_POST['global_color_primary'] !== 'custom' && in_array($_POST['global_color_primary'], $primary_colors_allowed, true)) {
-                // Light.
-                $css_root_array[':root']['--color-primary'] = 'hsl(' . $primary_colors['light'][$_POST['global_color_primary']] . ')';
+                // Light
+                $color_primary_light = $primary_colors['light'][$_POST['global_color_primary']];
 
-                // Light & amplified.
+                $css_root_array[':root']['--color-primary'] = $color_primary_light;
+
+                // Light & amplified
                 if (isset($primary_colors['light-amplified'][$_POST['global_color_primary']])) {
-                    $css_root_array[':root']['--color-primary-amplified'] = 'hsl(' . $primary_colors['light-amplified'][$_POST['global_color_primary']] . ')';
+                    $color_primary_amplified_light = $primary_colors['light-amplified'][$_POST['global_color_primary']];
+
+                    $css_root_array[':root']['--color-primary-amplified'] = $color_primary_amplified_light;
                 }
 
-                // Dark.
+                // Dark
                 if (isset($primary_colors['dark'][$_POST['global_color_primary']])) {
-                    $css_root_array[':root']['--color-primary-dark'] = 'hsl(' . $primary_colors['dark'][$_POST['global_color_primary']] . ')';
+                    $color_primary_dark = $primary_colors['dark'][$_POST['global_color_primary']];
+
+                    $css_root_array[':root']['--color-primary-dark'] = $color_primary_dark;
                 }
 
-                // Dark & amplified.
+                // Dark & amplified
                 if (isset($primary_colors['dark-amplified'][$_POST['global_color_primary']])) {
-                    $css_root_array[':root']['--color-primary-dark-amplified'] = 'hsl(' . $primary_colors['dark-amplified'][$_POST['global_color_primary']] . ')';
+                    $color_primary_amplified_dark = $primary_colors['dark-amplified'][$_POST['global_color_primary']];
+
+                    $css_root_array[':root']['--color-primary-dark-amplified'] = $color_primary_amplified_dark;
                 }
             } elseif ($_POST['global_color_primary'] === 'custom') {
                 if (isset($_POST['global_color_primary_custom'])
@@ -1381,7 +1399,9 @@ class Config extends Process
                     && self::isHexColor($_POST['global_color_primary_custom'])
                     && $_POST['global_color_primary_custom'] !== $_POST['global_color_primary_custom-default-value']
                 ) {
-                    $css_root_array[':root']['--color-primary'] = $_POST['global_color_primary_custom'];
+                    $color_primary_light = $_POST['global_color_primary_custom'];
+
+                    $css_root_array[':root']['--color-primary'] = $color_primary_light;
                 }
 
                 if (isset($_POST['global_color_primary_amplified_custom'])
@@ -1389,7 +1409,9 @@ class Config extends Process
                     && self::isHexColor($_POST['global_color_primary_amplified_custom'])
                     && $_POST['global_color_primary_amplified_custom'] !== $_POST['global_color_primary_amplified_custom-default-value']
                 ) {
-                    $css_root_array[':root']['--color-primary-amplified'] = $_POST['global_color_primary_amplified_custom'];
+                    $color_primary_amplified_light = $_POST['global_color_primary_amplified_custom'];
+
+                    $css_root_array[':root']['--color-primary-amplified'] = $color_primary_amplified_light;
                 }
 
                 if (isset($_POST['global_color_primary_dark_custom'])
@@ -1397,7 +1419,9 @@ class Config extends Process
                     && self::isHexColor($_POST['global_color_primary_dark_custom'])
                     && $_POST['global_color_primary_dark_custom'] !== $_POST['global_color_primary_dark_custom-default-value']
                 ) {
-                    $css_root_dark_array[':root']['--color-primary-dark'] = $_POST['global_color_primary_dark_custom'];
+                    $color_primary_dark = $_POST['global_color_primary_dark_custom'];
+
+                    $css_root_dark_array[':root']['--color-primary-dark'] = $color_primary_dark;
                 }
 
                 if (isset($_POST['global_color_primary_dark_amplified_custom'])
@@ -1405,8 +1429,31 @@ class Config extends Process
                     && self::isHexColor($_POST['global_color_primary_dark_amplified_custom'])
                     && $_POST['global_color_primary_dark_amplified_custom'] !== $_POST['global_color_primary_dark_amplified_custom-default-value']
                 ) {
-                    $css_root_dark_array[':root']['--color-primary-dark-amplified'] = $_POST['global_color_primary_dark_amplified_custom'];
+                    $color_primary_amplified_dark = $_POST['global_color_primary_dark_amplified_custom'];
+
+                    $css_root_dark_array[':root']['--color-primary-dark-amplified'] = $color_primary_amplified_dark;
                 }
+            }
+        }
+
+        // Color scheme
+        if (isset($_POST['global_color_scheme'])) {
+            if ($_POST['global_color_scheme'] === 'light') {
+                $css_root_array[':root']['--color-background-dark']        = '#fafafa';
+                $css_root_array[':root']['--color-text-main-dark']         = '#303030';
+                $css_root_array[':root']['--color-text-secondary-dark']    = '#6c6f78';
+                $css_root_array[':root']['--color-primary-dark']           = $color_primary_light;
+                $css_root_array[':root']['--color-primary-dark-amplified'] = $color_primary_amplified_light;
+                $css_root_array[':root']['--color-input-background-dark']  = '#f2f2f2';
+                $css_root_array[':root']['--color-border-dark']            = '#ccc';
+            } elseif ($_POST['global_color_scheme'] === 'dark') {
+                $css_root_array[':root']['--color-background']        = '#16161d';
+                $css_root_array[':root']['--color-text-main']         = '#ccc';
+                $css_root_array[':root']['--color-text-secondary']    = '#969696';
+                $css_root_array[':root']['--color-primary']           = $color_primary_dark;
+                $css_root_array[':root']['--color-primary-amplified'] = $color_primary_amplified_dark;
+                $css_root_array[':root']['--color-input-background']  = '#2b2a33';
+                $css_root_array[':root']['--color-border']            = '#ccc';
             }
         }
 
