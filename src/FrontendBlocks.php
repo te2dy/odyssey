@@ -32,6 +32,23 @@ class FrontendBlocks
     }
 
     /**
+     * Displays/hides the post pagination.
+     *
+     * @param array $attr    Unused.
+     * @param void  $content The post pagination.
+     *
+     * @return string The post pagination.
+     */
+    public static function odysseyPostPagination($attr, $content): string
+    {
+        if (My::settingValue('content_post_pagination') !== false) {
+            return $content;
+        }
+
+        return '';
+    }
+
+    /**
      * Displays the comment form wrapper to toggle it.
      *
      * @param array $attr    Unused.

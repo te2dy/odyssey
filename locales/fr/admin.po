@@ -93,6 +93,9 @@ msgstr "Mise en forme"
 msgid "section-content-images"
 msgstr "Images"
 
+msgid "section-content-pagination"
+msgstr "Pagination"
+
 msgid "section-reactions"
 msgstr "Paramètres des commentaires et rétroliens"
 
@@ -491,6 +494,12 @@ msgstr "Activer le mode noir et blanc"
 
 msgid "settings-content-imagesgrayscale-description"
 msgstr "Les images contenues dans les billets et les pages s’afficheront en noir et blanc pour réduire la distraction. Les couleurs s’afficheront au survol avec la souris ou au toucher sur mobile."
+
+msgid "settings-content-postpagination-title"
+msgstr "Activer la pagination sous les billets"
+
+msgid "settings-content-postpagination-description"
+msgstr "Affiche un lien vers le billet précédent et le billet suivant sous le contenu des billets."
 
 msgid "settings-reactions-button-title"
 msgstr "Dévoiler le formulaire en cliquant sur un bouton"

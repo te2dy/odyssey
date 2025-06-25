@@ -42,22 +42,24 @@
   </tpl:EntryIf>
 </article>
 
-<div class="post-pagination text-secondary">
-  <tpl:EntryPrevious>
-    <div class=post-pagination-prev>
-      <small class=post-pagination-title>{{tpl:lang post-pagination-previous-label}}</small>
+<tpl:odysseyPostPagination>
+  <div class="post-pagination text-secondary">
+    <tpl:EntryPrevious>
+      <div class=post-pagination-prev>
+        <small class=post-pagination-title>{{tpl:lang post-pagination-previous-label}}</small>
 
-      <a class=post-pagination-link href={{tpl:EntryURL is_attr="1"}} rel=prev>{{tpl:EntryTitle}}</a>
-    </div>
-  </tpl:EntryPrevious>
+        <a class=post-pagination-link href={{tpl:EntryURL is_attr="1"}} rel=prev>{{tpl:EntryTitle}}</a>
+      </div>
+    </tpl:EntryPrevious>
 
-  <tpl:EntryNext>
-    <div class=post-pagination-next>
-      <small class=post-pagination-title>{{tpl:lang post-pagination-next-label}}</small>
+    <tpl:EntryNext>
+      <div class=post-pagination-next>
+        <small class=post-pagination-title>{{tpl:lang post-pagination-next-label}}</small>
 
-      <a class=post-pagination-link href={{tpl:EntryURL is_attr="1"}} rel=next>{{tpl:EntryTitle}}</a>
-    </div>
-  </tpl:EntryNext>
-</div>
+        <a class=post-pagination-link href={{tpl:EntryURL is_attr="1"}} rel=next>{{tpl:EntryTitle}}</a>
+      </div>
+    </tpl:EntryNext>
+  </div>
+</tpl:odysseyPostPagination>
 
 {{tpl:include src="_comments.html"}}

@@ -93,6 +93,9 @@ msgstr ""
 msgid "section-content-images"
 msgstr ""
 
+msgid "section-content-pagination"
+msgstr ""
+
 msgid "section-reactions"
 msgstr ""
 
@@ -490,6 +493,12 @@ msgid "settings-content-imagesgrayscale-title"
 msgstr ""
 
 msgid "settings-content-imagesgrayscale-description"
+msgstr ""
+
+msgid "settings-content-postpagination-title"
+msgstr ""
+
+msgid "settings-content-postpagination-description"
 msgstr ""
 
 msgid "settings-reactions-button-title"

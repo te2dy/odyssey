@@ -52,7 +52,8 @@ class My extends MyTheme
                     'postlist'        => __('section-content-postlist'),
                     'post'            => __('section-content-post'),
                     'text-formatting' => __('section-content-textformatting'),
-                    'images'          => __('section-content-images')
+                    'images'          => __('section-content-images'),
+                    'pagination'      => __('section-content-pagination')
                 ]
             ],
             'reactions' => [
@@ -578,6 +579,14 @@ class My extends MyTheme
             'type'        => 'checkbox',
             'default'     => false,
             'section'     => ['content', 'images']
+        ];
+
+        $default_settings['content_post_pagination'] = [
+            'title'       => __('settings-content-postpagination-title'),
+            'description' => __('settings-content-postpagination-description'),
+            'type'        => 'checkbox',
+            'default'     => true,
+            'section'     => ['content', 'pagination']
         ];
 
         $default_settings['reactions_button'] = [

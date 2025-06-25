@@ -93,6 +93,9 @@ msgstr "Formatting"
 msgid "section-content-images"
 msgstr "Images"
 
+msgid "section-content-pagination"
+msgstr "Pagination"
+
 msgid "section-reactions"
 msgstr "Comment and trackback settings"
 
@@ -491,6 +494,12 @@ msgstr "Enable black and white mode"
 
 msgid "settings-content-imagesgrayscale-description"
 msgstr "Images in posts and pages will be displayed in black and white to reduce distraction. Colors will be displayed on mouseover or touch on mobile."
+
+msgid "settings-content-postpagination-title"
+msgstr "Show pagination below posts"
+
+msgid "settings-content-postpagination-description"
+msgstr "Displays a link to the previous and next post below the post content."
 
 msgid "settings-reactions-button-title"
 msgstr "Unveil the form by clicking a button"
