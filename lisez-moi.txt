@@ -10,10 +10,22 @@ Adresse de la licence : https://www.gnu.org/licenses/gpl-3.0.fr.html
 Ce thème n’aurait pu avoir vu le jour sans les ressources mises à disposition librement par la communauté Dotclear.
 Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://blog.jim-nielsen.com/), des travaux réalisés sur les thèmes Ductile et Berlin pour Dotclear, et des billets de Franck Paul (https://open-time.net/).
 
-== Feuille de route ==
-- Mettre à jour l’image d’aperçu du thème.
+== 🍀 Feuille de route ==
+- Envisager une nouvelle description. Idée : Odyssée, écrivez-la vôtre avec ce thème simple et personnalisable.
+- Sécuriser les entrées dans la base de données et leur affichage.
+- Publier une version 2 après essais du système de récupération de la configuration du thème et du téléversement de l’image d’en-tête.
 
 == Notes de version ==
+
+=== 1.10 - 25 juin 2025 ===
+- Ajout : système de récupération de la configuration du thème (bêta).
+- Ajout : twitter:creator dans les métadonnées sociales.
+- Ajout : option pour choisir entre le jeu de couleurs clair ou somble.
+- Ajout : option pour masquer les liens vers les billets précédents ou suivants sous les billets.
+- Amélioration : refonte de l’option pour ajouter une image d’en-tête, avec une fonction de téléversement (bêta).
+- Modification : personnalisation du code qui gère la largeur des pages.
+- Mise à jour de l’image d’aperçu du thème.
+- Revue de code.
 
 === 1.9 - 18 mai 2025 ===
 - Ajout : prise en charge de la désinstallation du thème par l’intermédiaire de l’extension Uninstaller.
