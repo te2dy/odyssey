@@ -405,6 +405,7 @@ details summary {
 @media (prefers-contrast: more),
        (-ms-high-contrast: active),
        (-ms-high-contrast: black-on-white) {
+  #site-title a:is(:active, :focus, :hover),
   #site-header-short #site-title:is(:active, :focus, :hover) {
     color: var(--color-background, #fafafa);
   }
@@ -440,7 +441,8 @@ details summary {
     text-decoration: none;
   }
   #main-menu .active a {
-    text-decoration: underline overline;
+    text-decoration: underline;
+    text-decoration-thickness: .163rem;
   }
   #main-menu a:is(:active, :focus, :hover) {
     text-decoration: none;
