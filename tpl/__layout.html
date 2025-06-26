@@ -18,6 +18,7 @@
     </tpl:Block>
 
     <tpl:Block name="head-link">
+      <link rel=preload href={{tpl:odysseyStylesheetURL}} as=style>
       <link rel=stylesheet href={{tpl:odysseyStylesheetURL}}>
       <link rel=alternate type=application/atom+xml title={{tpl:odysseyLang id="feed-title" is_attr="1"}} href={{tpl:BlogFeedURL is_attr="1"}}>
     </tpl:Block>
