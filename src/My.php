@@ -915,14 +915,14 @@ class My extends MyTheme
      *
      * @return string The path or URL.
      */
-    public static function odysseyPublicFolder(string $type, string $concatenate = ''): string
+    public static function odysseyPublicFolder(string $type, string $to_concatenate = ''): string
     {
         if ($type === 'url') {
-            return App::blog()->settings()->system->public_url . '/' . self::id() . $concatenate;
+            return App::blog()->settings()->system->public_url . '/' . self::id() . $to_concatenate;
         }
 
         if ($type === 'path') {
-            return App::blog()->publicPath() . '/' . self::id() . $concatenate;
+            return App::blog()->publicPath() . '/' . self::id() . $to_concatenate;
         }
 
         return '';

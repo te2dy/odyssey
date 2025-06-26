@@ -97,7 +97,7 @@ class FrontendValues
 
                     if ($current_uri) {
                         $current_uri = My::blogBaseURL() . $current_uri;
-                        return '<link rel=canonical href="' . $current_uri . '">' . "\n";
+                        return '<link rel=canonical href=' . My::escapeAttr($current_uri) . '>' . "\n";
                     }
 
                     return '';
@@ -154,7 +154,7 @@ class FrontendValues
      */
     public static function odysseyHeaderImage($attr): string
     {
-        $image_url  = My::settingValue('header_image')['url'] ?? null;
+        $image_url  = My::settingValue('header_image')['url']   ?? null;
         $image_size = My::settingValue('header_image')['width'] ?? null;
 
         if (!$image_url || !$image_size) {

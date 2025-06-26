@@ -183,20 +183,18 @@ class FrontendBehaviors
                     // Logo
                     if (isset(My::settingValue('header_image')['url'])) {
                         // Retrieves the image path.
-                        $image_path = App::blog()->public_path . str_replace(
-                            App::blog()->settings->system->public_url . '/',
-                            '/',
-                            My::settingValue('header_image')['url']
-                        );
+                        $image_path = App::config()->dotclearRoot() . My::settingValue('header_image')['url'];
 
-                        list($width, $height) = getimagesize($image_path);
+                        if (file_exists($image_path)) {
+                            list($width, $height) = getimagesize($image_path);
 
-                        $json_ld['publisher']['logo'] = [
-                            '@type'  => 'ImageObject',
-                            'url'    => My::blogBaseURL() . My::settingValue('header_image')['url'],
-                            'width'  => (int) $width,
-                            'height' => (int) $height
-                        ];
+                            $json_ld['publisher']['logo'] = [
+                                '@type'  => 'ImageObject',
+                                'url'    => My::blogBaseURL() . My::settingValue('header_image')['url'],
+                                'width'  => (int) $width,
+                                'height' => (int) $height
+                            ];
+                        }
                     }
 
                     // Social links
@@ -230,20 +228,18 @@ class FrontendBehaviors
 
                     // First image
                     if (Ctx::EntryFirstImageHelper('o', false, '', true)) {
-                        $image_path = App::blog()->public_path . str_replace(
-                            App::blog()->settings->system->public_url . '/',
-                            '/',
-                            Ctx::EntryFirstImageHelper('o', false, '', true)
-                        );
+                        $image_path = App::config()->dotclearRoot() . Ctx::EntryFirstImageHelper('o', false, '', true);
 
-                        list($width, $height) = getimagesize($image_path);
+                        if (file_exists($image_path)) {
+                            list($width, $height) = getimagesize($image_path);
 
-                        $json_ld['image'] = [
-                            '@type'  => 'ImageObject',
-                            'url'    => My::blogBaseURL() . Ctx::EntryFirstImageHelper('o', false, '', true),
-                            'width'  => (int) $width,
-                            'height' => (int) $height
-                        ];
+                            $json_ld['image'] = [
+                                '@type'  => 'ImageObject',
+                                'url'    => My::blogBaseURL() . Ctx::EntryFirstImageHelper('o', false, '', true),
+                                'width'  => (int) $width,
+                                'height' => (int) $height
+                            ];
+                        }
                     }
 
                     // Author
@@ -269,20 +265,18 @@ class FrontendBehaviors
 
                     if (isset(My::settingValue('header_image')['url'])) {
                         // Retrieves the image path.
-                        $image_path = App::blog()->public_path . str_replace(
-                            App::blog()->settings->system->public_url . '/',
-                            '/',
-                            My::settingValue('header_image')['url']
-                        );
+                        $image_path = App::config()->dotclearRoot() . My::settingValue('header_image')['url'];
 
-                        list($width, $height) = getimagesize($image_path);
+                        if (file_exists($image_path)) {
+                            list($width, $height) = getimagesize($image_path);
 
-                        $json_ld['publisher']['logo'] = [
-                            '@type'  => 'ImageObject',
-                            'url'    => My::blogBaseURL() . My::settingValue('header_image')['url'],
-                            'width'  => (int) $width,
-                            'height' => (int) $height
-                        ];
+                            $json_ld['publisher']['logo'] = [
+                                '@type'  => 'ImageObject',
+                                'url'    => My::blogBaseURL() . My::settingValue('header_image')['url'],
+                                'width'  => (int) $width,
+                                'height' => (int) $height
+                            ];
+                        }
                     }
 
                     $json_ld['copyrightHolder'] = App::blog()->settings->system->editor;
