@@ -6,10 +6,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-msgid "odyssey-name"
+msgid "Odyssey"
 msgstr "Odyssée"
 
-msgid "odyssey-description"
+msgid "A simple et customizable theme to write your own odyssey"
 msgstr "Un thème simple et personnalisable pour écrire votre propre odyssée"
 
 # Head
