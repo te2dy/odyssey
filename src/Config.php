@@ -1537,7 +1537,7 @@ class Config extends Process
                 $css_main_array['.entry-list-excerpt-img']['display']      = 'block';
                 $css_main_array['.entry-list-excerpt-img']['margin-block'] = '1rem';
 
-                if (isset($_POST['content_postlist_type']) && $_POST['content_postlist_type'] === 'excerpt') {
+                if (isset($_POST['content_images_grayscale']) && $_POST['content_images_grayscale'] === 'on') {
                     $css_main_array['.entry-list-excerpt-img']['transition']                          = 'var(--color-transition, unset)';
                     $css_main_array['.entry-list-excerpt-img:not(:active, :focus, :hover)']['filter'] = 'grayscale(1)';
                 }
