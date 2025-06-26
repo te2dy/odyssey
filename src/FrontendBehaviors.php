@@ -218,8 +218,8 @@ class FrontendBehaviors
                     break;
                 case 'post':
                     $json_ld = [
-                        '@context'  => 'http://schema.org',
-                        '@type'     => 'BlogPosting'
+                        '@context' => 'http://schema.org',
+                        '@type'    => 'BlogPosting'
                     ];
 
                     $json_ld['headline'] = App::frontend()->context()->posts->post_title;
@@ -451,14 +451,14 @@ class FrontendBehaviors
 
                         $attr .= '" ';
 
-                        $attr .= 'sizes=100vw ';
-
                         // Displays the image wide if its format is landscape or square.
                         if ($img['o']['width'] >= $img['o']['height'] && $img['o']['width'] >= $content_width) {
                             $attr .= 'class=odyssey-img-wide ';
-                            $attr .= 'width=' . $img_width_max . ' ';
-                            $attr .= 'height=' . (int) ($img_width_max * $img['o']['height'] / $img['o']['width']);
                         }
+
+                        $attr .= 'sizes=100vw ';
+                        $attr .= 'width=' . (int) $img_width_max . ' ';
+                        $attr .= 'height=' . (int) ($img_width_max * $img['o']['height'] / $img['o']['width']);
                     }
 
                     return str_replace($src_attr . '"', trim($attr), $matches[0]);
