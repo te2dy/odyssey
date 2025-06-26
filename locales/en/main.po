@@ -9,7 +9,7 @@ msgstr ""
 msgid "Odyssey"
 msgstr "Odyssey"
 
-msgid "A simple et customizable theme to write your own odyssey"
+msgid "A simple and customizable theme to write your own odyssey"
 msgstr "A simple et customizable theme to write your own odyssey"
 
 # Head
