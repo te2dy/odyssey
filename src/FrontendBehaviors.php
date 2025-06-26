@@ -391,8 +391,13 @@ class FrontendBehaviors
                     $content_width = My::getContentWidth('px')['value'];
                     $margin_max    = '120';
 
-                    if (App::url()->type === 'post' || App::url()->type === 'pages') {
-                        $img_width_max = $content_width + ($margin_max * 2);
+                    $img_width_max = $content_width;
+
+                    if (App::url()->type === 'post'
+                        || App::url()->type === 'pages'
+                        || My::settingValue('content_postlist_type') === 'content'
+                    ) {
+                        $img_width_max += $margin_max * 2;
                     }
 
                     // If the image width is lower than the content + margin width.

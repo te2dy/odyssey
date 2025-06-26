@@ -1658,6 +1658,8 @@ class Config extends Process
 
         // Wide images
         if (isset($_POST['content_images_wide']) && $_POST['content_images_wide'] === 'on') {
+            $css_main_array['body']['overflow-x'] = 'hidden';
+
             $css_main_array['.odyssey-img-wide']['display']     = 'block';
             $css_main_array['.odyssey-img-wide']['margin-left'] = '50%';
             $css_main_array['.odyssey-img-wide']['transform']   = 'translateX(-50%)';
