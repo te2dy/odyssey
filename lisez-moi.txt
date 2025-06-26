@@ -1,7 +1,7 @@
 = Odyssée =
 
 Nom du thème : Odyssée
-Description : Un thème simple et personnalisable
+Description : Un thème simple et personnalisable pour écrire votre propre odyssée
 Auteur : Teddy
 Licence : GPLv3 ou ultérieure
 Adresse de la licence : https://www.gnu.org/licenses/gpl-3.0.fr.html
@@ -11,16 +11,22 @@ Ce thème n’aurait pu avoir vu le jour sans les ressources mises à dispositio
 Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://blog.jim-nielsen.com/), des travaux réalisés sur les thèmes Ductile et Berlin pour Dotclear, et des billets de Franck Paul (https://open-time.net/).
 
 == 🍀 Feuille de route ==
-- Envisager une nouvelle description. Idée : Odyssée, écrivez-la vôtre avec ce thème simple et personnalisable.
 - Sécuriser les entrées dans la base de données et leur affichage.
 - Publier une version 2 après essais du système de récupération de la configuration du thème et du téléversement de l’image d’en-tête.
 
 == Notes de version ==
 
+=== 1.11 - 26 juin 2025 ===
+- Ajout : lien vers l’extention Miniatures supplémentaires dans le configurateur.
+- Amélioration : chargement prioritaire de la feuille de styles (rel=preload).
+- Amélioration : prise en charge des tailles d’images additionnelles dans l’affichage des images larges.
+- Correction : le filtre noir et blanc s’appliquait parfois quand l’option était désactivée.
+- Modification : description du thème et traduction.
+
 === 1.10 - 25 juin 2025 ===
 - Ajout : système de récupération de la configuration du thème (bêta).
 - Ajout : twitter:creator dans les métadonnées sociales.
-- Ajout : option pour choisir entre le jeu de couleurs clair ou somble.
+- Ajout : option pour choisir entre le jeu de couleurs clair ou sombre.
 - Ajout : option pour masquer les liens vers les billets précédents ou suivants sous les billets.
 - Amélioration : refonte de l’option pour ajouter une image d’en-tête, avec une fonction de téléversement (bêta).
 - Modification : personnalisation du code qui gère la largeur des pages.
