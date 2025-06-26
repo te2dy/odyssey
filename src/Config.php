@@ -1656,6 +1656,14 @@ class Config extends Process
             $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['margin-right'] = '.25rem';
         }
 
+        // Wide images
+        if (isset($_POST['content_images_wide']) && $_POST['content_images_wide'] === 'on') {
+            $css_main_array['.odyssey-img-wide']['display']     = 'block';
+            $css_main_array['.odyssey-img-wide']['margin-left'] = '50%';
+            $css_main_array['.odyssey-img-wide']['transform']   = 'translateX(-50%)';
+            $css_main_array['.odyssey-img-wide']['max-width']   = '95vw';
+        }
+
         // Grayscale images
         if (isset($_POST['content_images_grayscale']) && $_POST['content_images_grayscale'] === 'on') {
             $css_main_array['.content-text img']['transition']                          = 'var(--color-transition, unset)';

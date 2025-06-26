@@ -363,8 +363,8 @@ class FrontendBehaviors
                 // Gets the image src attribute.
                 preg_match('/src="([^"]*)/', $img, $src_match);
 
-                $src_attr  = $src_match[0] ?? '';
-                $src_value = $src_match[1] ?? '';
+                $src_attr  = $src_match[0] ?? null;
+                $src_value = $src_match[1] ?? null;
 
                 // Transforms absolute URLs in relative ones.
                 if (str_starts_with($src_value, My::blogBaseURL())) {
@@ -381,53 +381,41 @@ class FrontendBehaviors
                 ];
 
                 // If the original image size exists.
-                if (file_exists(App::config()->dotclearRoot() . $src_value) && str_starts_with($src_value, '/')) {
-                    if (App::url()->type === 'post' || App::url()->type === 'pages') {
-                        $option_image_wide = true;
-                    } else {
-                        $option_image_wide = false;
-                    }
-
-                    $img_width_max = My::getContentWidth('px')['value'];
-
-                    if ($option_image_wide === true) {
-                        $img_width_max += 120 * 2;
-                    }
-
+                if ($src_value && file_exists(App::config()->dotclearRoot() . $src_value)) {
                     // Gets original image dimensions.
                     list($width, $height) = getimagesize(App::config()->dotclearRoot() . $src_value);
+                    $img['o']['width']    = (int) $width;
+                    $img['o']['height']   = (int) $height;
 
-                    $img['o']['width']  = (int) $width;
-                    $img['o']['height'] = (int) $height;
+                    // Sets wide image width in px.
+                    $content_width = My::getContentWidth('px')['value'];
+                    $margin_max    = '120';
 
-                    $media_sizes = App::media()->thumb_sizes;
+                    if (App::url()->type === 'post' || App::url()->type === 'pages') {
+                        $img_width_max = $content_width + ($margin_max * 2);
+                    }
+
+                    // If the image width is lower than the content + margin width.
+                    $margin_diff = abs(($img_width_max - $width) / 2);
+
+                    if ($margin_diff < $margin_max) {
+                        $img_width_max = $width;
+                    }
 
                     $info = Path::info($src_value);
 
-                    // The image to set in the src attribute.
-                    $src_image_size = 'o';
+                    foreach (App::media()->getThumbSizes() as $size_id => $size_data) {
+                        $img_width = $size_data[0] ?? null;
+                        $img_crop  = $size_data[1] ?? null;
 
-                    foreach ($media_sizes as $size_id => $size_data) {
-                        if (isset($size_data[1])
-                            && $size_data[1] === 'ratio'
-                            && file_exists(App::config()->dotclearRoot() . $info['dirname'] . '/.' . $info['base'] . '_' . $size_id . '.' . strtolower($info['extension']))
-                        ) {
-                            $img[$size_id]['url']   = $info['dirname'] . '/.' . $info['base'] . '_' . $size_id . '.' . strtolower($info['extension']);
-                            $img[$size_id]['width'] = isset($size_data[0]) ? $size_data[0] : '';
+                        if ($img_width && $img_crop === 'ratio') {
+                            $img_path_rel = $info['dirname'] . '/.' . $info['base'] . '_' . $size_id . '.' . strtolower($info['extension']);
+                            $img_path     = App::config()->dotclearRoot() . $img_path_rel;
 
-                            list($width, $height) = getimagesize(App::config()->dotclearRoot() . $img[$size_id]['url']);
-
-                            if (!$img[$size_id]['width']) {
-                                $img[$size_id]['width']   = (int) $width;
-                                $media_sizes[$size_id][0] = (int) $width;
-                            }
-
-                            $img[$size_id]['height'] = (int) $height;
-
-                            if ($media_sizes[$size_id][0] >= $img_width_max
-                                && $img[$src_image_size]['width'] > $img[$size_id]['width']
-                            ) {
-                                $src_image_size = $size_id;
+                            if (file_exists($img_path)) {
+                                $img[$size_id]['url']    = $img_path_rel;
+                                $img[$size_id]['width']  = (int) $img_width;
+                                $img[$size_id]['height'] = getimagesize($img_path)[1] ? (int) getimagesize($img_path)[1] : null;
                             }
                         }
                     }
@@ -441,27 +429,31 @@ class FrontendBehaviors
                     );
 
                     // Defines image attributes.
-                    $attr  = 'src=' . My::escapeAttr($img[$src_image_size]['url']) . ' ';
-                    $attr .= 'srcset="';
+                    $attr = 'src=' . My::escapeAttr($img['o']['url']) . ' ';
 
-                    // Puts every image size in the srcset attribute.
-                    foreach ($img as $img_id => $img_data) {
-                        $attr .= Html::escapeHtml($img_data['url']) . ' ' . $img_data['width'] . 'w';
+                    // If multiple image sizes exist, displays them.
+                    if (count($img) > 1) {
+                        $attr .= 'srcset="';
 
-                        if ($img_id !== array_key_last($img)) {
-                            $attr .= ', ';
+                        // Puts every image size in the srcset attribute.
+                        foreach ($img as $img_id => $img_data) {
+                            $attr .= Html::escapeURL($img_data['url']) . ' ' . (int) $img_data['width'] . 'w';
+
+                            if ($img_id !== array_key_last($img)) {
+                                $attr .= ', ';
+                            }
                         }
-                    }
 
-                    $attr .= '" sizes=100vw ';
+                        $attr .= '" ';
 
-                    // If it's a landscape format image only, displays it wide.
-                    if ($img[$src_image_size]['width'] > $img[$src_image_size]['height']
-                        && $img[$src_image_size]['width'] >= $img_width_max
-                    ) {
-                        $attr .= 'style=display:block;margin-left:50%;transform:translateX(-50%);max-width:95vw; ';
-                        $attr .= 'width=' . $img_width_max . ' ';
-                        $attr .= 'height=' . (int) ($img_width_max * $img[$src_image_size]['height'] / $img[$src_image_size]['width']);
+                        $attr .= 'sizes=100vw ';
+
+                        // Displays the image wide if its format is landscape or square.
+                        if ($img['o']['width'] >= $img['o']['height'] && $img['o']['width'] >= $content_width) {
+                            $attr .= 'class=odyssey-img-wide ';
+                            $attr .= 'width=' . $img_width_max . ' ';
+                            $attr .= 'height=' . (int) ($img_width_max * $img['o']['height'] / $img['o']['width']);
+                        }
                     }
 
                     return str_replace($src_attr . '"', trim($attr), $matches[0]);
