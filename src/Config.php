@@ -77,7 +77,7 @@ class Config extends Process
 
         $header_image_name = null;
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
             try {
                 // If the save button has been clicked.
                 if (isset($_POST['save']) || isset($_POST['save-config'])) {
@@ -415,7 +415,7 @@ class Config extends Process
             }
         }
 
-        if ($_SERVER['REQUEST_METHOD'] == 'GET' && !empty($_GET)) {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET' && !empty($_GET)) {
             try {
                 if (isset($_GET['save-config']) && $_GET['save-config'] === 'create-file') {
                     // Creates a backup file.

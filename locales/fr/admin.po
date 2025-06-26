@@ -487,7 +487,7 @@ msgid "settings-content-imageswide-title"
 msgstr "Agrandir les images suffisamment larges"
 
 msgid "settings-content-imageswide-description"
-msgstr "Les grandes images dépasseront des bords de la page pour s’afficher en grand."
+msgstr "Les grandes images dépasseront des bords de la page pour s’afficher en grand. Si vous activez cette option, il est conseillé de configurer des tailles de miniatures supplémentaires avec l’extension <a href="%s">Miniatures supplémentaires</a>. En effet, les images déborderont de 120 px de chaque côté de la page. Exemple&nbsp: si la largeur de votre blog est de 600 px, il vous faudra créer une taille de miniature mesurant 740 px (600 + 120 × 2) de large, voire une autre mesurant 1 480 px pour prendre en charge les écrans Retina."
 
 msgid "settings-content-imagesgrayscale-title"
 msgstr "Activer le mode noir et blanc"

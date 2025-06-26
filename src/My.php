@@ -565,9 +565,18 @@ class My extends MyTheme
             'section'     => ['content', 'text-formatting']
         ];
 
+        if (App::plugins()->moduleExists('userThumbSizes')) {
+            $plugin_userthumbsizes_url = App::backend()->url()->get('admin.plugin.userThumbSizes');
+        } else {
+            $plugin_userthumbsizes_url = App::backend()->url()->get('admin.plugins', ['m_search' => 'userThumbSizes']) . '#new';
+        }
+
         $default_settings['content_images_wide'] = [
             'title'       => __('settings-content-imageswide-title'),
-            'description' => __('settings-content-imageswide-description'),
+            'description' => sprintf(
+                __('settings-content-imageswide-description'),
+                $plugin_userthumbsizes_url
+            ),
             'type'        => 'checkbox',
             'default'     => false,
             'section'     => ['content', 'images']

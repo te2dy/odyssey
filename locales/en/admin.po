@@ -487,7 +487,7 @@ msgid "settings-content-imageswide-title"
 msgstr "Enlarge images wide enough"
 
 msgid "settings-content-imageswide-description"
-msgstr "Large images will extend beyond the edges of the page to display large."
+msgstr "Large images will extend beyond the edges of the page to display large. If you activate this option, it is advisable to configure additional thumbnail sizes with the <a href="%s">User defined thumbnails</a> plugin. Images will overflow by 120px on each side of the page. Example: if the width of your blog is 600px, you'll need to create a thumbnail size measuring 740px (600+120×2) wide, or even another measuring 1480px to support Retina screens.
 
 msgid "settings-content-imagesgrayscale-title"
 msgstr "Enable black and white mode"
