@@ -1027,7 +1027,7 @@ class Config extends Process
         $fields[] = (new Hidden('page_width_em_max_default', '80'));
         $fields[] = (new Hidden('page_width_em_step_default', '1'));
         $fields[] = (new Hidden('page_width_px_min_default', '480'));
-        $fields[] = (new Hidden('page_width_px_max_default', '1080'));
+        $fields[] = (new Hidden('page_width_px_max_default', '1280'));
         $fields[] = (new Hidden('page_width_px_step_default', '2'));
         $fields[] = (new Hidden('reset_warning', __('settings-reset-warning')));
 

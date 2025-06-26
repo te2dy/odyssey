@@ -315,7 +315,7 @@ function pageWidthUnitChange(pageWidthValueCurrent, pageWidthUnitCurrent) {
     document.getElementById("global_page_width_value-output-value").innerHTML = pageWidthValueNew;
     document.getElementById("global_page_width_value-output-unit").innerHTML  = pageWidthUnitNew;
   } else if (pageWidthUnitCurrent === "px") {
-    pageWidthValueNew = parseInt((parseInt(pageWidthValueCurrent) / 16)).toString();
+    pageWidthValueNew = parseInt(parseInt(pageWidthValueCurrent) / 16).toString();
     pageWidthUnitNew  = "em";
 
     document.getElementById("global_page_width_value").value = pageWidthValueNew;
@@ -345,11 +345,16 @@ window.onload = function() {
     document.getElementById("global_page_width_value-output-value").innerHTML = document.getElementById("global_page_width_value").value;
   };
 
-  var pageWidthValueCurrent = document.getElementById("global_page_width_value").value,
+  let pageWidthValueCurrent = document.getElementById("global_page_width_value").value,
       pageWidthUnitCurrent  = document.getElementById("global_unit").value;
+
+  document.getElementById("global_page_width_value").onchange = function() {
+    pageWidthValueCurrent = document.getElementById("global_page_width_value").value;
+  }
 
   document.getElementById("global_unit").onchange = function() {
     pageWidthInputDefault();
+
     pageWidthUnitChange(pageWidthValueCurrent, pageWidthUnitCurrent);
 
     pageWidthValueCurrent = document.getElementById("global_page_width_value").value;
