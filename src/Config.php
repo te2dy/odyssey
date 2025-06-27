@@ -641,25 +641,13 @@ class Config extends Process
                     }
 
                     if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
-                        $the_setting[] = (new Para())
+                        $the_setting[] = (new Text('p', $default_settings[$setting_id]['description'] . $checkbox_default))
                             ->id($setting_id . '-description')
-                            ->class('form-note')
-                            ->items([
-                                (new Text(
-                                    null,
-                                    $default_settings[$setting_id]['description'] . $checkbox_default
-                                ))
-                           ]);
+                            ->class('form-note');
                     } elseif ($checkbox_default !== '') {
-                        $the_setting[] = (new Para())
+                        $the_setting[] = (new Text('p', $checkbox_default))
                             ->id($setting_id . '-description')
-                            ->class('form-note')
-                            ->items([
-                                (new Text(
-                                    null,
-                                    $checkbox_default
-                                ))
-                            ]);
+                            ->class('form-note');
                     }
 
                     break;
@@ -696,15 +684,6 @@ class Config extends Process
                                     (new Text(null, ' ' . $preview_string))
                                 ]);
                         } else {
-                            /*
-                            // TO DO. Doesn't work yet.
-                            if ($setting_value === 'same' && isset($saved_settings['global_font_family'])) {
-                                $style = ' style="font-family:' . My::fontStack($saved_settings['global_font_family']) . '";';
-                            } else {
-                                $style = '';
-                            }
-                            */
-
                             $the_setting[] = (new Para())
                                 ->id('odyssey-config-content-font-preview')
                                 ->class('odyssey-font-preview')
@@ -717,12 +696,9 @@ class Config extends Process
                     }
 
                     if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
-                        $the_setting[] = (new Para())
+                        $the_setting[] = (new Text('p', $default_settings[$setting_id]['description']))
                             ->id($setting_id . '-description')
-                            ->class('form-note')
-                            ->items([
-                                (new Text(null, $default_settings[$setting_id]['description']))
-                            ]);
+                            ->class('form-note');
                     }
 
                     break;
@@ -738,12 +714,9 @@ class Config extends Process
                         ]);
 
                     if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
-                        $the_setting[] = (new Para())
+                        $the_setting[] = (new Text('p', $default_settings[$setting_id]['description']))
                             ->id($setting_id . '-description')
-                            ->class('form-note')
-                            ->items([
-                                (new Text(null, $default_settings[$setting_id]['description']))
-                            ]);
+                            ->class('form-note');
                     }
 
                     break;
@@ -780,12 +753,9 @@ class Config extends Process
                         ]);
 
                     if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
-                        $the_setting[] = (new Para())
+                        $the_setting[] = (new Text('p', $default_settings[$setting_id]['description']))
                             ->id($setting_id . '-description')
-                            ->class('form-note')
-                            ->items([
-                                (new Text(null, $default_settings[$setting_id]['description']))
-                            ]);
+                            ->class('form-note');
                     }
 
                     break;
@@ -825,12 +795,9 @@ class Config extends Process
                         ]);
 
                     if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
-                        $the_setting[] = (new Para())
+                        $the_setting[] = (new Text('p', $default_settings[$setting_id]['description']))
                             ->id($setting_id . '-description')
-                            ->class('form-note')
-                            ->items([
-                                (new Text(null, $default_settings[$setting_id]['description']))
-                            ]);
+                            ->class('form-note');
                     }
 
                     break;
@@ -850,12 +817,9 @@ class Config extends Process
                         ]);
 
                     if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
-                        $the_setting[] = (new Para())
+                        $the_setting[] = (new Text('p', $default_settings[$setting_id]['description']))
                             ->id($setting_id . '-description')
-                            ->class('form-note')
-                            ->items([
-                                (new Text(null, $default_settings[$setting_id]['description']))
-                            ]);
+                            ->class('form-note');
                     }
             }
         }
@@ -1819,7 +1783,7 @@ class Config extends Process
 
         if ($css) {
             return [
-                'value' => filter_var($css),
+                'value' => $css,
                 'type'  => 'string'
             ];
         }

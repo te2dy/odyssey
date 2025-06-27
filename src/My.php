@@ -965,46 +965,21 @@ class My extends MyTheme
     {
         $css = '';
 
-        foreach ($rules as $key => $value) {
-            if (!is_int($key)) {
-                if (is_array($value) && !empty($value)) {
-                    $selector   = $key;
-                    $properties = $value;
+        foreach ($rules as $selector => $properties) {
+            $selector = $selector ?? null;
 
-                    $css .= str_replace(', ', ',', $selector) . '{';
+            if ($selector && is_array($properties) && !empty($properties)) {
+                $css .= str_replace(', ', ',', $selector);
+                $css .= '{';
 
-                    if (is_array($properties) && !empty($properties)) {
-                        foreach ($properties as $property => $rule) {
-                            if ($rule !== '') {
-                                $css .= $property . ':';
-                                $css .= str_replace(', ', ',', $rule) . ';';
-                            }
-                        }
-                    }
-
-                    $css .= '}';
-                }
-            } else {
-                // For @font-face.
-                foreach ($value as $key_2 => $value_2) {
-                    if (is_array($value) && !empty($value_2)) {
-                        $selector   = $key_2;
-                        $properties = $value_2;
-
-                        $css .= str_replace(', ', ',', $selector) . '{';
-
-                        if (is_array($properties) && !empty($properties)) {
-                            foreach ($properties as $property => $rule) {
-                                if ($rule !== '') {
-                                    $css .= $property . ':';
-                                    $css .= str_replace(', ', ',', $rule) . ';';
-                                }
-                            }
-                        }
-
-                        $css .= '}';
+                foreach ($properties as $property => $rule) {
+                    if ($rule) {
+                        $css .= $property . ':';
+                        $css .= str_replace(', ', ',', $rule) . ';';
                     }
                 }
+
+                $css .= '}';
             }
         }
 
