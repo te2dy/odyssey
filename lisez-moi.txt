@@ -12,9 +12,17 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == 🍀 Feuille de route ==
 - Sécuriser les entrées dans la base de données et leur affichage.
-- Publier une version 2 après essais du système de récupération de la configuration du thème et du téléversement de l’image d’en-tête.
+- Ajouter la possibilité d’afficher la barre latérale à gauche ou à droite, plutôt qu’en bas.
+- Publier une version 2 après essais du système de récupération de la configuration du thème, du système de téléversement de l’image d’en-tête et de l’éventuelle nouvelle option de mise en page avec le changement de placement de la barre latérale.
 
 == Notes de version ==
+
+=== 1.12 - 27 juin 2025 ===
+- Amélioration : suppression du dossier backups s’il ne contient aucun fichier après suppression d’un fichier de configuration.
+- Correction : lien du titre du blog illisible en mode contrastes élevés.
+- Correction : affichage des images larges en portrait sur les petits écrans.
+- Correction : la conversion des px aux em était parfois erronée.
+- Revue de code.
 
 === 1.11 - 26 juin 2025 ===
 - Ajout : lien vers l’extention Miniatures supplémentaires dans le configurateur.
