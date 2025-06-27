@@ -574,13 +574,17 @@ class Config extends Process
                 } elseif (isset($_GET['restore_delete_file'])) {
                     // Deletes a configuration file.
                     $delete_file_name = $_GET['restore_delete_file'] . '.json';
-                    $delete_file_path = My::odysseyPublicFolder('path', '/backups/' . $delete_file_name);
+                    $backups_folder   = My::odysseyPublicFolder('path', '/backups/');
+                    $delete_file_path = $backups_folder . $delete_file_name;
 
                     if (is_writable($delete_file_path)) {
                         // Deletes the file.
                         unlink($delete_file_path);
 
-
+                        $backups_dir = scandir($backups_folder);
+                        if (count($backups_dir) <= 2) {
+                            My::deleteDirectory($backups_folder);
+                        }
 
                         Notices::addSuccessNotice(__('settings-notice-file-deleted'));
                         App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
