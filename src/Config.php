@@ -227,7 +227,7 @@ class Config extends Process
                     }
 
                     // Creates a CSS file if necessary.
-                    self::stylesCustomFile($styles_custom);
+                    self::_stylesCustomFile($styles_custom);
 
                     // Refreshes the blog.
                     App::blog()->triggerBlog();
@@ -386,7 +386,7 @@ class Config extends Process
                                     }
                                 }
 
-                                self::stylesCustomFile($styles_custom);
+                                self::_stylesCustomFile($styles_custom);
 
                                 App::blog()->triggerBlog();
                                 App::cache()->emptyTemplatesCache();
@@ -559,7 +559,7 @@ class Config extends Process
                                 }
                             }
 
-                            self::stylesCustomFile($styles_custom);
+                            self::_stylesCustomFile($styles_custom);
 
                             App::blog()->triggerBlog();
                             App::cache()->emptyTemplatesCache();
@@ -579,6 +579,8 @@ class Config extends Process
                     if (is_writable($delete_file_path)) {
                         // Deletes the file.
                         unlink($delete_file_path);
+
+
 
                         Notices::addSuccessNotice(__('settings-notice-file-deleted'));
                         App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
@@ -1718,11 +1720,10 @@ class Config extends Process
         }
 
         if ($footer_social_links === true) {
-            $css_main_array['.footer-social-links']['margin-bottom'] = '1rem';
-
             $css_main_array['.footer-social-links']['list-style']                 = 'none';
-            $css_main_array['.footer-social-links']['margin']                     = '0';
+            $css_main_array['.footer-social-links']['margin']                     = '0 0 1rem';
             $css_main_array['.footer-social-links']['padding-left']               = '0';
+
             $css_main_array['.footer-social-links li']['display']                 = 'inline-block';
             $css_main_array['.footer-social-links li']['margin']                  = '.25em';
             $css_main_array['.footer-social-links li:first-child']['margin-left'] = '0';
@@ -1870,7 +1871,7 @@ class Config extends Process
 
         if ($setting_value != $default_settings[$setting_id]['default']) {
             return [
-                'value' => filter_var($setting_value),
+                'value' => filter_var($setting_value, FILTER_SANITIZE_SPECIAL_CHARS),
                 'type'  => 'string'
             ];
         }
@@ -2093,14 +2094,14 @@ class Config extends Process
      */
     public static function isHexColor(string $color): bool
     {
-        if (preg_match('/#[A-Fa-f0-9]{6}/', $color) !== false) {
+        if (preg_match('/#[A-Fa-f0-9]{6}/', $color)) {
             return true;
         }
 
         return false;
     }
 
-    public static function stylesCustomFile(string $styles_custom): void
+    private static function _stylesCustomFile(string $styles_custom): void
     {
         $css_default_path_file = App::blog()->themesPath() . '/' . My::id() . '/' . 'style.min.css';
         $css_path_folder       = My::id() . '/css/';

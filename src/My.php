@@ -835,7 +835,11 @@ class My extends MyTheme
     {
         $value = $escape_html ? Html::escapeHTML($value) : $value;
 
-        if (str_contains($value, ' ') === false && str_contains($value, '=') === false) {
+        if (str_contains($value, ' ') === false
+            && str_contains($value, '=') === false
+            && str_contains($value, '"') === false
+            && str_contains($value, '&quot;') === false
+        ) {
             return $value;
         }
 
@@ -973,7 +977,7 @@ class My extends MyTheme
                 $css .= '{';
 
                 foreach ($properties as $property => $rule) {
-                    if ($rule) {
+                    if ($rule !== '') {
                         $css .= $property . ':';
                         $css .= str_replace(', ', ',', $rule) . ';';
                     }
@@ -1320,7 +1324,7 @@ class My extends MyTheme
                     $file_path = $dir_path . '/' . $item;
 
                     if (is_dir($file_path)) {
-                        self::_deleteDirectory($file_path);
+                        self::deleteDirectory($file_path);
                     } else {
                         unlink($file_path);
                     }
