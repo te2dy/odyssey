@@ -747,6 +747,9 @@ msgstr ""
 msgid "settings-reset-warning"
 msgstr ""
 
+msgid "settings-social-notice"
+msgstr ""
+
 msgid "settings-save-button-text"
 msgstr ""
 

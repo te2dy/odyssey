@@ -971,13 +971,24 @@ class Config extends Process
         foreach ($settings_render as $section_id => $setting_data) {
             $fields[] = (new Text('h3', My::settingsSections($section_id)['name']))
                 ->id('section-' . $section_id);
-            $fields[] = (new Text('', '<div class=fieldset>'));
+            $fields[] = (new Text(null, '<div class=fieldset>'));
 
             foreach ($setting_data as $sub_section_id => $setting_id) {
                 // Displays the name of the sub-section unless its ID is "no-title".
                 if ($sub_section_id !== 'no-title') {
                     $fields[] = (new Text('h4', My::settingsSections($section_id)['sub_sections'][$sub_section_id]))
                         ->id('section-' . $section_id . '-' . $sub_section_id);
+                }
+
+                if ($setting_id[0] === 'social_bluesky') {
+                    $fields[] = (new Text(
+                        'p',
+                        sprintf(
+                            __('settings-social-notice'),
+                            __('section-footer'),
+                            __('section-reactions')
+                        )
+                    ));
                 }
 
                 // Displays the parameter.
