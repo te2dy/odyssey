@@ -1176,6 +1176,7 @@ class Config extends Process
     {
         $css_root_array                    = [];
         $css_root_dark_array               = [];
+        $css_media_layout                  = [];
         $css_main_array                    = [];
         $css_supports_initial_letter_array = [];
         $css_media_array                   = [];
@@ -1187,14 +1188,49 @@ class Config extends Process
         $global_unit = $_POST['global_unit'] ?? null;
         $page_width  = $_POST['global_page_width_value'] ?? null;
 
-        if ($global_unit) {
-            $page_width_data  = self::sanitizePageWidth($global_unit, $page_width);
-            $page_width_value = $page_width_data['value'] ?? null;
-            $page_width_unit  = $page_width_data['unit']  ?? null;
+        $page_width_data  = self::sanitizePageWidth($global_unit, $page_width);
 
-            if ($page_width_value && $page_width_unit) {
-                $css_root_array[':root']['--page-width'] = $page_width_value . $page_width_unit;
+        $page_width_value = $page_width_data['value'] ?? null;
+        $page_width_unit  = $page_width_data['unit']  ?? null;
+
+        if ($page_width_value && $page_width_unit) {
+            $css_root_array[':root']['--page-width'] = $page_width_value . $page_width_unit;
+        }
+
+        // Layout
+        if (isset($_POST['global_layout']) && $_POST['global_layout'] === 'two-columns') {
+            $page_width_value = $page_width_value ?? 30;
+            $page_width_unit  = $page_width_unit  ?? 'em';
+
+            if ($page_width_unit !== 'px') {
+                $sidebar_width_value = '15';
+            } else {
+                $sidebar_width_value = '240';
             }
+
+            $site_width = (int) $page_width_value + (int) $sidebar_width_value . $page_width_unit;
+
+            $css_media_layout[':root']['--site-width']          = $site_width;
+            $css_media_layout[':root']['--site-display']        = 'grid';
+            $css_media_layout[':root']['--site-flex-direction'] = 'unset';
+
+            $css_media_layout['#site']['grid-template']         = '
+                "header header"
+                "nav main"
+                "extra main"
+                "footer footer"
+            ';
+            $css_media_layout['#site']['grid-template-columns'] = 'auto ' . $page_width_value . $page_width_unit;
+            $css_media_layout['#site']['column-gap']            = '2rem';
+            $css_media_layout['#site']['justify-content']       = 'center';
+
+            $css_media_layout['#site-header']['grid-area']  = 'header';
+            $css_media_layout['#site-content']['grid-area'] = 'main';
+            $css_media_layout['#blognav']['grid-area']      = 'nav';
+            $css_media_layout['#blogextra']['grid-area']    = 'extra';
+            $css_media_layout['#site-footer']['grid-area']  = 'footer';
+
+            $css_media_layout['.entry-list .post:first-child']['margin-top']  = '-1rem';
         }
 
         // Font family
@@ -1790,6 +1826,7 @@ class Config extends Process
 
         $css  = !empty($css_root_array) ? My::stylesArrToStr($css_root_array) : '';
         $css .= !empty($css_root_dark_array) ? '@media (prefers-color-scheme:dark){' . My::stylesArrToStr($css_root_dark_array) . '}' : '';
+        $css .= !empty($css_media_layout) ? '@media (min-width:50em){' . My::stylesArrToStr($css_media_layout) . '}' : '';
         $css .= !empty($css_main_array) ? My::stylesArrToStr($css_main_array) : '';
         $css .= !empty($css_supports_initial_letter_array) ? '@supports (initial-letter:2) or (-webkit-initial-letter:2) or (-moz-initial-letter:2){' . My::stylesArrToStr($css_supports_initial_letter_array) . '}' : '';
         $css .= !empty($css_media_array) ? '@media (max-width:34em){' . My::stylesArrToStr($css_media_array) . '}' : '';

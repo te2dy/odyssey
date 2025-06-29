@@ -106,6 +106,18 @@ class My extends MyTheme
      */
     public static function settingsDefault(string $setting_id = ''): array
     {
+        $default_settings['global_layout'] = [
+            'title'       => __('settings-global-layout-title'),
+            'description' => __('settings-global-layout-description'),
+            'type'        => 'select',
+            'choices'     => [
+                __('Une colonne')   => 'one-column',
+                __('Deux colonnes') => 'two-columns',
+            ],
+            'default'     => 'one-column',
+            'section'     => ['global', 'layout']
+        ];
+
         $default_settings['global_unit'] = [
             'title'       => __('settings-global-unit-title'),
             'description' => __('settings-global-unit-description'),
@@ -128,6 +140,19 @@ class My extends MyTheme
                 'step' => 1
             ],
             'default'     => 30,
+            'section'     => ['global', 'layout']
+        ];
+
+        $default_settings['global_sidebar_width_value'] = [
+            'title'       => __('settings-global-sidebarwidthvalue-title'),
+            'description' => __('settings-global-sidebarwidthvalue-description'),
+            'type'        => 'range',
+            'range'       => [
+                'min'  => 10,
+                'max'  => 30,
+                'step' => 1
+            ],
+            'default'     => 15,
             'section'     => ['global', 'layout']
         ];
 
