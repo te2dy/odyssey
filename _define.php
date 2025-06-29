@@ -20,6 +20,9 @@ $this->registerModule(
 
         'type' => 'theme',
 
+        // Allows theme files edit.
+        'overload' => true,
+
         // Allows a full control for the theme configurator.
         'standalone_config' => true,
 
