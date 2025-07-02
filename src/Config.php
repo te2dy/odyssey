@@ -21,6 +21,8 @@ use Dotclear\Helper\Html\Html;
 use Dotclear\Helper\Html\Form\Button;
 use Dotclear\Helper\Html\Form\Checkbox;
 use Dotclear\Helper\Html\Form\Color;
+use Dotclear\Helper\Html\Form\Div;
+use Dotclear\Helper\Html\Form\Fieldset;
 use Dotclear\Helper\Html\Form\File;
 use Dotclear\Helper\Html\Form\Form;
 use Dotclear\Helper\Html\Form\Hidden;
@@ -29,10 +31,15 @@ use Dotclear\Helper\Html\Form\Img;
 use Dotclear\Helper\Html\Form\Input;
 use Dotclear\Helper\Html\Form\Label;
 use Dotclear\Helper\Html\Form\Legend;
+use Dotclear\Helper\Html\Form\Link;
 use Dotclear\Helper\Html\Form\Option;
 use Dotclear\Helper\Html\Form\Para;
 use Dotclear\Helper\Html\Form\Select;
 use Dotclear\Helper\Html\Form\Submit;
+use Dotclear\Helper\Html\Form\Table;
+use Dotclear\Helper\Html\Form\Tbody;
+use Dotclear\Helper\Html\Form\Td;
+use Dotclear\Helper\Html\Form\Tr;
 use Dotclear\Helper\Html\Form\Text;
 use Dotclear\Helper\Html\Form\Textarea;
 use Dotclear\Helper\Network\Http;
@@ -57,15 +64,6 @@ class Config extends Process
      */
     public static function process(): bool
     {
-        // Loads custom styles and scripts for the configurator page.
-        App::behavior()->addBehavior(
-            'adminPageHTMLHead',
-            function () {
-                echo My::cssLoad('/css/admin.min.css'),
-                My::jsLoad('/js/admin.min.js');
-            }
-        );
-
         $default_settings = My::settingsDefault();
 
         $specific_settings = [
@@ -578,10 +576,11 @@ class Config extends Process
                     $delete_file_path = $backups_folder . $delete_file_name;
 
                     if (is_writable($delete_file_path)) {
-                        // Deletes the file.
+                        // Deletes the file and directory if empty.
                         unlink($delete_file_path);
 
                         $backups_dir = scandir($backups_folder);
+
                         if (count($backups_dir) <= 2) {
                             My::deleteDirectory($backups_folder);
                         }
@@ -900,21 +899,28 @@ class Config extends Process
             return;
         }
 
-        // Displays a form to upload a configuration file.
+        Page::openModule(
+            My::name(),
+            My::cssLoad('/css/admin.min.css') . My::jsLoad('/js/admin.min.js')
+        );
+
+        echo Notices::getNotices();
+
+        // Add a form before the main form to upload a configuration file.
         if (isset($_GET['config-upload']) && $_GET['config-upload'] === '1') {
-            $upload_fields = [];
+            $upload_form_fields = [];
 
-            $upload_fields[] = (new Text('h3', __('settings-upload-title')));
-            $upload_fields[] = (new Text('p', __('settings-upload-description')));
+            $upload_form_fields[] = (new Text('h3', __('settings-upload-title')));
+            $upload_form_fields[] = (new Text('p', __('settings-upload-description')));
 
-            $upload_fields[] = (new Para())
+            $upload_form_fields[] = (new Para())
                 ->class('form-buttons')
                 ->items([
                     (new File('config-upload-file', __('settings-file-import-input-button-text')))
                         ->name('config-upload-file'),
                 ]);
 
-            $upload_fields[] = (new Para())
+            $upload_form_fields[] = (new Para())
                 ->class('form-buttons')
                 ->items([
                     App::nonce()->formNonce(),
@@ -930,11 +936,15 @@ class Config extends Process
                 ->class('fieldset')
                 ->enctype('multipart/form-data')
                 ->method('post')
-                ->fields($upload_fields)
+                ->fields($upload_form_fields)
                 ->render();
         }
 
-        // Creates an array to put all the settings in their sections.
+        /**
+         * Starting to create the main form.
+         *
+         * Creates an array to put all the settings in their sections.
+         */
         $settings_render = [];
 
         // Adds sections.
@@ -959,7 +969,6 @@ class Config extends Process
         $fields = [];
 
         $fields[] = (new Text('p', __('settings-page-intro')));
-
         $fields[] = (new Text(
             'p',
             sprintf(
@@ -969,19 +978,17 @@ class Config extends Process
         ));
 
         foreach ($settings_render as $section_id => $setting_data) {
-            $fields[] = (new Text('h3', My::settingsSections($section_id)['name']))
-                ->id('section-' . $section_id);
-            $fields[] = (new Text(null, '<div class=fieldset>'));
+            $settings_fields = [];
 
             foreach ($setting_data as $sub_section_id => $setting_id) {
                 // Displays the name of the sub-section unless its ID is "no-title".
                 if ($sub_section_id !== 'no-title') {
-                    $fields[] = (new Text('h4', My::settingsSections($section_id)['sub_sections'][$sub_section_id]))
+                    $settings_fields[] = (new Text('h4', My::settingsSections($section_id)['sub_sections'][$sub_section_id]))
                         ->id('section-' . $section_id . '-' . $sub_section_id);
                 }
 
-                if ($setting_id[0] === 'social_bluesky') {
-                    $fields[] = (new Text(
+                if (isset($setting_id[0]) && $setting_id[0] === 'social_bluesky') {
+                    $settings_fields[] = (new Text(
                         'p',
                         sprintf(
                             __('settings-social-notice'),
@@ -995,13 +1002,16 @@ class Config extends Process
                 foreach ($setting_id as $setting_id_value) {
                     if (is_array(self::settingRender($setting_id_value))) {
                         foreach (self::settingRender($setting_id_value) as $item) {
-                            $fields[] = $item;
+                            $settings_fields[] = $item;
                         }
                     }
                 }
             }
 
-            $fields[] = (new Text(null, '</div>'));
+            $fields[] = (new Text('h3', My::settingsSections($section_id)['name']))
+                ->id('section-' . $section_id);
+            $fields[] = (new Fieldset())
+                ->items($settings_fields);
         }
 
         $fields[] = (new Hidden('page_width_em_min_default', '30'));
@@ -1031,17 +1041,15 @@ class Config extends Process
             ]);
 
         // Displays theme configuration backups.
-        $backups_table = '';
-
         $backups_dir_path = My::odysseyPublicFolder('path', '/backups/');
 
         if (is_dir($backups_dir_path)) {
             $backups_dir_data = Files::getDirList($backups_dir_path);
 
             if (!empty($backups_dir_data)) {
-                $backups_dir_files = $backups_dir_data['files'];
+                $backups_dir_files = $backups_dir_data['files'] ?? [];
 
-                if (is_array($backups_dir_files) && !empty($backups_dir_files)) {
+                if (!empty($backups_dir_files)) {
                     $download_url_base = My::odysseyPublicFolder('url', '/backups/');
 
                     $file_list = [];
@@ -1055,23 +1063,7 @@ class Config extends Process
                     }
 
                     if (!empty($file_list)) {
-                        $backups_table .= '<div id=odyssey-backups>';
-                        $backups_table .= '<h3>' . __('settings-backups-title') . '</h3>';
-
-                        if (count($file_list) > 1) {
-                            $backups_table .= '<p>';
-                            $backups_table .= sprintf(
-                                __('settings-backups-count-multiple'),
-                                count($file_list)
-                            );
-                            $backups_table .= '</p>';
-                        } else {
-                            $backups_table .= '<p>';
-                            $backups_table .= __('settings-backups-count-one');
-                            $backups_table .= '</p>';
-                        }
-
-                        $backups_table .= '<table class="settings rch rch-thead"><tbody>';
+                        $table_fields = [];
 
                         foreach ($file_list as $file_path) {
                             $file_name_parts = explode('-', basename($file_path));
@@ -1105,26 +1097,40 @@ class Config extends Process
                                 ]
                             );
 
-                            $backups_table .= '<tr class=line>';
-                            $backups_table .= '<td>';
-                            $backups_table .= sprintf(
-                                __('settings-backup-title'),
-                                Html::escapeHTML($file_datetime)
-                            );
-                            $backups_table .= '</td>';
-                            $backups_table .= '<td>';
-                            $backups_table .= '<a href=' . My::escapeAttr($restore_url, false) . '>' . __('settings-backup-restore-link') . '</a>';
-                            $backups_table .= '</td>';
-                            $backups_table .= '<td>';
-                            $backups_table .= '<a href=' . My::escapeAttr(Html::escapeURL($download_url), false) . ' download>' . __('settings-backup-download-link') . '</a>';
-                            $backups_table .= '</td>';
-                            $backups_table .= '<td>';
-                            $backups_table .= '<a href=' . My::escapeAttr($delete_url, false) . '>' . __('settings-backup-delete-link') . '</a>';
-                            $backups_table .= '</td>';
-                            $backups_table .= '</tr>';
+                            $table_fields[] = (new Tr())
+                                ->class('line')
+                                ->items([
+                                    (new Td())
+                                        ->text(sprintf(__('settings-backup-title'), Html::escapeHTML($file_datetime))),
+                                    (new Td())
+                                        ->items([
+                                            (new Link())
+                                                ->href($restore_url, false)
+                                                ->text(__('settings-backup-restore-link')),
+                                        ]),
+                                    (new Td())
+                                        ->items([
+                                            (new Link())
+                                                ->href(Html::escapeURL($download_url))
+                                                ->text(__('settings-backup-download-link'))
+                                        ]),
+                                    (new Td())
+                                        ->items([
+                                            (new Link())
+                                                ->href($delete_url)
+                                                ->text(__('settings-backup-delete-link'))
+                                        ])
+                                ]);
                         }
 
-                        $backups_table .= '</tbody></table></div>';
+                        if (count($file_list) > 1) {
+                            $backups_table_intro = sprintf(
+                                __('settings-backups-count-multiple'),
+                                count($file_list)
+                            );
+                        } else {
+                            $backups_table_intro = __('settings-backups-count-one');
+                        }
 
                         $delete_all_url = App::backend()->url()->get(
                             'admin.blog.theme',
@@ -1134,30 +1140,35 @@ class Config extends Process
                                 'restore_delete_all' => '1'
                             ]
                         );
-                        $backups_table .= '<p>';
-                        $backups_table .= '<a href=' . My::escapeAttr($delete_all_url, false) . '>' . __('settings-backup-delete-all-link') . '</a>';
-                        $backups_table .= '</p>';
 
-                        $backups_table .= '<div class=warning>';
-                        $backups_table .= '<p>';
-                        $backups_table .= sprintf(
-                            __('settings-backup-warning-1'),
-                            My::id()
-                        );
-                        $backups_table .= '</p>';
-                        $backups_table .= '<p>';
-                        $backups_table .= __('settings-backup-warning-2');
-                        $backups_table .= '</p>';
-                        $backups_table .= '<p>';
-                        $backups_table .= __('settings-backup-warning-3');
-                        $backups_table .= '</p>';
-                        $backups_table .= '</div>';
+                        $fields[] = (new Div('odyssey-backups'))
+                            ->items([
+                                (new Text('h3', __('settings-backups-title'))),
+                                (new Text('p', $backups_table_intro)),
+                                (new Table())
+                                    ->class('settings rch rch-thead')
+                                    ->items([
+                                        (new Tbody())
+                                            ->items($table_fields)
+                                    ]),
+                                (new Para())
+                                    ->items([
+                                            (new Link())
+                                                ->href($delete_all_url)
+                                                ->text(__('settings-backup-delete-all-link'))
+                                        ]),
+                                (new Div())
+                                    ->class('warning')
+                                    ->items([
+                                        (new Text('p', sprintf(__('settings-backup-warning-1'), My::id()))),
+                                        (new Text('p', __('settings-backup-warning-2'))),
+                                        (new Text('p', __('settings-backup-warning-3')))
+                                    ])
+                            ]);
                     }
                 }
             }
         }
-
-        $fields[] = (new Text(null, $backups_table));
 
         echo (new Form('theme-config-form'))
             ->action(App::backend()->url()->get('admin.blog.theme', ['module' => My::id(), 'conf' => '1']))
@@ -1165,6 +1176,8 @@ class Config extends Process
             ->method('post')
             ->fields($fields)
             ->render();
+
+        Page::closeModule();
     }
 
     /**
