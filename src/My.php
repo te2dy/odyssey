@@ -1326,35 +1326,4 @@ class My extends MyTheme
 
         return json_last_error() === JSON_ERROR_NONE;
     }
-
-    /**
-     * Creates a method to delete odyssey files that have been put
-     * in the public folder of Dotclear
-     *
-     * @param string $dir_path The path of the directory.
-     *
-     * @return void Remove the folder and all its contents.
-     */
-    public static function deleteDirectory(string $dir_path, bool $delete_content_only = false): void
-    {
-        if (is_dir($dir_path)) {
-            $files = scandir($dir_path);
-
-            foreach ($files as $item) {
-                if ($item !== '.' && $item !== '..') {
-                    $file_path = $dir_path . '/' . $item;
-
-                    if (is_dir($file_path)) {
-                        self::deleteDirectory($file_path);
-                    } else {
-                        unlink($file_path);
-                    }
-                }
-            }
-
-            if ($delete_content_only === false) {
-                rmdir($dir_path);
-            }
-        }
-    }
 }

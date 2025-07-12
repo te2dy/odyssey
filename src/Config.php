@@ -115,9 +115,9 @@ class Config extends Process
                                     break;
                                 case 'header_image' :
                                     $image_file = $_FILES[$setting_id] ?? [];
-                                    $image_size = $image_file['size'] ?? 0;
+                                    $image_size = $image_file['size']  ?? 0;
 
-                                    if (!empty($image_file) && $image_size > 0) {
+                                    if (!empty($image_file) && (int) $image_size > 0) {
                                         $setting_data = self::sanitizeHeaderImage(
                                             $image_file,
                                             $setting_id,
@@ -127,14 +127,19 @@ class Config extends Process
 
                                         $img_folder_path = My::odysseyPublicFolder('path', '/img/');
 
-                                        if (!is_dir($img_folder_path)) {
-                                            mkdir($img_folder_path);
-                                        } else {
-                                            My::deleteDirectory($img_folder_path, true);
+                                        /**
+                                         * If an image file alrealdy exists, removes it
+                                         * and its folder; then, created the folder again
+                                         * to store the image later.
+                                         */
+                                        if (is_dir($img_folder_path)) {
+                                            Files::deltree($img_folder_path);
                                         }
 
+                                        Files::makeDir($img_folder_path, true);
+
                                         $image_path_tmp = $setting_data['value']['path_tmp'] ?? null;
-                                        $image_name     = $setting_data['value']['name'] ?? null;
+                                        $image_name     = $setting_data['value']['name']     ?? null;
                                         $image_path     = $img_folder_path . $image_name;
                                         $image_url      = My::odysseyPublicFolder('url', '/img/' . $image_name);
 
@@ -155,7 +160,7 @@ class Config extends Process
                                         App::blog()->settings->odyssey->drop($setting_id);
                                         App::blog()->settings->odyssey->drop('header_image2x');
 
-                                        My::deleteDirectory(My::odysseyPublicFolder('path', '/img/'));
+                                        Files::deltree(My::odysseyPublicFolder('path', '/img/'));
                                     }
 
                                     break;
@@ -172,11 +177,12 @@ class Config extends Process
                                         );
 
                                         $img_folder_path = My::odysseyPublicFolder('path', '/img/');
+                                        $img_folder_url  = My::odysseyPublicFolder('url', '/img/');
 
                                         $image2x_path_tmp = $setting_data['value']['path_tmp'] ?? null;
-                                        $image2x_name     = $setting_data['value']['name'] ?? null;
+                                        $image2x_name     = $setting_data['value']['name']     ?? null;
                                         $image2x_path     = $img_folder_path . $image2x_name;
-                                        $image2x_url      = My::odysseyPublicFolder('url', '/img/' . $image2x_name);
+                                        $image2x_url      = $img_folder_url  . $image2x_name;
 
                                         $header_image2x_name = $image2x_name;
 

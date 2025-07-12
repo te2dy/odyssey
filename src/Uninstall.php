@@ -13,6 +13,7 @@ namespace Dotclear\Theme\odyssey;
 
 use Dotclear\App;
 use Dotclear\Core\Process;
+use Dotclear\Helper\File\Files;
 use Dotclear\Helper\File\Path;
 use Dotclear\Helper\Html\Form\Checkbox;
 use Dotclear\Helper\Html\Form\Label;
@@ -51,9 +52,11 @@ class Uninstall extends Process
 
         // Removes the odyssey public folder.
         if (isset($_POST['delete_odyssey_public_folder'])) {
-            $dir_path = Path::real(App::blog()->publicPath() . '/' . My::id());
+            $dir_path = Path::real(My::odysseyPublicFolder('path'));
 
-            My::deleteDirectory($dir_path);
+            if ($dir_path) {
+                Files::deltree($dir_path);
+            }
         }
 
         return true;
