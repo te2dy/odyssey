@@ -22,7 +22,7 @@ msgid "settings-notice-upload-no-file"
 msgstr "Erreur&nbsp;: aucun fichier n’a été téléversé."
 
 msgid "settings-notice-save-success"
-msgstr "La configuration du thème a été enregistrée au format JSON dans le dossier <code>/public/%1$s/backups</code> de votre installation Dotclear. Vous pouvez gérer tous les fichiers générés <a href=%2$s>au bas de cette page</a>."
+msgstr "La configuration du thème a été enregistrée au format JSON dans le dossier <code>/var/%1$s/backups</code> de votre installation Dotclear. Vous pouvez gérer tous les fichiers générés <a href=%2$s>au bas de cette page</a>."
 
 msgid "settings-notice-save-success-link"
 msgstr "Télécharger le fichier de configuration"
@@ -788,15 +788,6 @@ msgstr "Supprimer"
 
 msgid "settings-backup-delete-all-link"
 msgstr "Supprimer toutes les configurations"
-
-msgid "settings-backup-warning-1"
-msgstr "<strong>Attention</strong>&nbsp;: les fichiers de configuration sont conservés dans le dossier <code>/public/%s/backups</code> de votre installation Dotclear. Cela signifie qu’ils sont potentiellement accessibles à tous."
-
-msgid "settings-backup-warning-2"
-msgstr "Si vous avez renseigné des données personnelles à un endroit ou un autre dans les paramètres de votre thème, ils peuvent théoriquement être consultés et récupérés par des personnes mal intentionnées."
-
-msgid "settings-backup-warning-3"
-msgstr "Il est recommandé de télécharger ces fichiers sensibles pour les conserver en lieu sûr, puis de les supprimer de Dotclear."
 
 msgid "uninstall-checkbox-label"
 msgstr "Supprimer le sous-dossier « odyssey » situé dans le dossier « public » de Dotclear (contient la feuille de styles personnalisée)"

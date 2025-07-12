@@ -22,7 +22,7 @@ msgid "settings-notice-upload-no-file"
 msgstr "Error: no file has been uploaded."
 
 msgid "settings-notice-save-success"
-msgstr "The theme configuration has been saved in JSON format in the folder <code>/public/%1$s/backups</code> of your Dotclear installation. You can manage all generated files <a href=%2$s>at the bottom of this page</a>."
+msgstr "The theme configuration has been saved in JSON format in the folder <code>/var/%1$s/backups</code> of your Dotclear installation. You can manage all generated files <a href=%2$s>at the bottom of this page</a>."
 
 msgid "settings-notice-save-success-link"
 msgstr "Download configuration file"
@@ -682,7 +682,7 @@ msgid "settings-footer-social-other-title"
 msgstr "Display a link to your custom link"
 
 msgid "settings-footer-social-sms-description"
-msgstr "Attention&nbsp;: votre numéro de téléphone sera rendu public et pourrait tomber entre des mains malveillantes."
+msgstr "Warning: your phone number will be made public and could fall into the wrong hands."
 
 msgid "settings-footer-social-signal-description"
 msgstr "Warning: if you have entered a phone number or user name, it will be made public and could fall into the wrong hands."
@@ -788,15 +788,6 @@ msgstr "Delete"
 
 msgid "settings-backup-delete-all-link"
 msgstr "Delete all configuration files"
-
-msgid "settings-backup-warning-1"
-msgstr "<strong>Warning</strong>: configuration files are stored in the folder <code>/public/%s/backups</code> of your Dotclear installation. This means they are potentially accessible to all."
-
-msgid "settings-backup-warning-2"
-msgstr "If you've entered personal data anywhere in your theme settings, they can theoretically be accessed and retrieved by the wrong people."
-
-msgid "settings-backup-warning-3"
-msgstr "We recommend that you download these sensitive files for safekeeping, then delete them from Dotclear."
 
 msgid "uninstall-checkbox-label"
 msgstr "Delete the “odyssey” subfolder located in Dotclear's “public” folder (contains the custom stylesheet)."

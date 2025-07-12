@@ -8,7 +8,6 @@
  */
 
 namespace Dotclear\Theme\odyssey;
-
 use Dotclear\App;
 use Dotclear\Core\Process;
 use Dotclear\Core\Backend\Notices;
@@ -254,7 +253,7 @@ class Config extends Process
                     App::blog()->settings->odyssey->dropAll();
 
                     // Removes the header image and its folder.
-                    My::deleteDirectory(My::odysseyPublicFolder('path', '/img/'));
+                    Files::deltree(My::odysseyPublicFolder('path', '/img/'));
 
                     // Removes the custom CSS file if it exists.
                     $css_custom_path = My::odysseyPublicFolder('path', '/css/style.min.css');
@@ -417,20 +416,21 @@ class Config extends Process
             try {
                 if (isset($_GET['save-config']) && $_GET['save-config'] === 'create-file') {
                     // Creates a backup file.
-                    $file_name = '';
+                    $path = My::odysseyVarFolder('path', '/backups/');
 
-                    $path = My::odysseyPublicFolder('path', '/backups/');
-
-                    if (!is_dir($path)) {
-                        mkdir($path);
+                    // Creates the var/odyssey/backups folder if it doesn't exist.
+                    if (Path::real($path) === false) {
+                        Files::makeDir($path, true);
                     }
 
+                    // Sets the name of the backup file.
                     $time = str_replace(':', '', Date::str('%Y%m%d', time(), App::blog()->settings()->system->blog_timezone) . '-' . Date::str('%T', time(), App::blog()->settings()->system->blog_timezone));
 
-                    $file_name .= Files::tidyFileName($time . '-settings');
+                    $file_name = Files::tidyFileName($time . '-settings');
 
                     $path .= $file_name . '.json';
 
+                    // Puts all the settings in an array.
                     $saved_settings = [];
 
                     foreach (self::settingsSaved() as $setting_id => $setting_value) {
@@ -438,14 +438,12 @@ class Config extends Process
                     }
 
                     if (!empty($saved_settings)) {
-                        $file_content = json_encode($saved_settings);
-
-                        file_put_contents($path, $file_content);
+                        Files::putContent($path, json_encode($saved_settings));
 
                         Notices::addNotice(
                             'success',
                             '<p>' . sprintf(__('settings-notice-save-success'), My::id(), '#odyssey-backups') . '</p>' .
-                            '<a class="button submit" href=' . My::escapeAttr(Html::escapeURL(My::odysseyPublicFolder('url', '/backups/' . $file_name . '.json'))) . ' download>' . __('settings-notice-save-success-link') . '</a>',
+                            '<a class="button submit" href=' . My::escapeAttr(Html::escapeURL(urldecode(Page::getVF(My::odysseyVarFolder('vf', '/backups/' . $file_name . '.json'))))) . ' download>' . __('settings-notice-save-success-link') . '</a>',
                             ['divtag' => true]
                         );
                     } else {
@@ -455,9 +453,9 @@ class Config extends Process
 
                     App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
                 } elseif (isset($_GET['restore']) && $_GET['restore'] !== 'success') {
-                    // Restores a configuration from a backup file listed from /public.
+                    // Restores a configuration from a backup file listed from /var/odyssey/backups.
                     $restore_file_name    = $_GET['restore'] . '.json';
-                    $restore_file_path    = My::odysseyPublicFolder('path', '/backups/' . $restore_file_name);
+                    $restore_file_path    = My::odysseyVarFolder('path', '/backups/' . $restore_file_name);
                     $restore_file_content = file_get_contents($restore_file_path);
 
                     $settings_array = [];
@@ -571,18 +569,21 @@ class Config extends Process
                     }
                 } elseif (isset($_GET['restore_delete_file'])) {
                     // Deletes a configuration file.
-                    $delete_file_name = $_GET['restore_delete_file'] . '.json';
-                    $backups_folder   = My::odysseyPublicFolder('path', '/backups/');
-                    $delete_file_path = $backups_folder . $delete_file_name;
 
-                    if (is_writable($delete_file_path)) {
-                        // Deletes the file and directory if empty.
+                    $delete_file_name = $_GET['restore_delete_file'] . '.json';
+                    $odyssey_folder   = My::odysseyVarFolder('path');
+                    $backups_folder   = My::odysseyVarFolder('path', '/backups/');
+                    $delete_file_path = Path::real($backups_folder . $delete_file_name);
+
+                    if ($delete_file_path) {
+                        // Deletes the file and directories if empty.
                         unlink($delete_file_path);
 
-                        $backups_dir = scandir($backups_folder);
-
-                        if (count($backups_dir) <= 2) {
-                            My::deleteDirectory($backups_folder);
+                        if (Path::real($odyssey_folder)
+                            && Path::real($backups_folder)
+                            && empty(Files::getDirList($backups_folder)['files'])
+                        ) {
+                            Files::deltree($odyssey_folder);
                         }
 
                         Notices::addSuccessNotice(__('settings-notice-file-deleted'));
@@ -590,8 +591,11 @@ class Config extends Process
                     }
                 } elseif (isset($_GET['restore_delete_all'])) {
                     // Deletes all configuration files.
-                    $backups_folder_path = My::odysseyPublicFolder('path', '/backups');
-                    My::deleteDirectory($backups_folder_path);
+                    $odyssey_folder = Path::real(My::odysseyVarFolder('path'));
+
+                    if ($odyssey_folder) {
+                        Files::deltree($odyssey_folder);
+                    }
 
                     Notices::addSuccessNotice(__('settings-notice-files-deleted'));
                     App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
@@ -1041,7 +1045,7 @@ class Config extends Process
             ]);
 
         // Displays theme configuration backups.
-        $backups_dir_path = My::odysseyPublicFolder('path', '/backups/');
+        $backups_dir_path = My::odysseyVarFolder('path', '/backups/');
 
         if (is_dir($backups_dir_path)) {
             $backups_dir_data = Files::getDirList($backups_dir_path);
@@ -1050,8 +1054,6 @@ class Config extends Process
                 $backups_dir_files = $backups_dir_data['files'] ?? [];
 
                 if (!empty($backups_dir_files)) {
-                    $download_url_base = My::odysseyPublicFolder('url', '/backups/');
-
                     $file_list = [];
 
                     foreach ($backups_dir_files as $backup_path) {
@@ -1086,7 +1088,7 @@ class Config extends Process
                                 ]
                             );
 
-                            $download_url = My::odysseyPublicFolder('url', '/backups/' . basename($backup_path));
+                            $download_url = Page::getVF(My::odysseyVarFolder('vf', '/backups/' . basename($backup_path)));
 
                             $delete_url = App::backend()->url()->get(
                                 'admin.blog.theme',
@@ -1112,6 +1114,7 @@ class Config extends Process
                                         ->items([
                                             (new Link())
                                                 ->href(Html::escapeURL($download_url))
+                                                ->extra('download')
                                                 ->text(__('settings-backup-download-link'))
                                         ]),
                                     (new Td())
@@ -1156,14 +1159,7 @@ class Config extends Process
                                             (new Link())
                                                 ->href($delete_all_url)
                                                 ->text(__('settings-backup-delete-all-link'))
-                                        ]),
-                                (new Div())
-                                    ->class('warning')
-                                    ->items([
-                                        (new Text('p', sprintf(__('settings-backup-warning-1'), My::id()))),
-                                        (new Text('p', __('settings-backup-warning-2'))),
-                                        (new Text('p', __('settings-backup-warning-3')))
-                                    ])
+                                        ])
                             ]);
                     }
                 }
@@ -1197,7 +1193,7 @@ class Config extends Process
         $css_media_print_array             = [];
 
         // Page width
-        $global_unit = $_POST['global_unit'] ?? null;
+        $global_unit = $_POST['global_unit']             ?? null;
         $page_width  = $_POST['global_page_width_value'] ?? null;
 
         if ($global_unit) {

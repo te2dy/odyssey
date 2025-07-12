@@ -789,14 +789,5 @@ msgstr ""
 msgid "settings-backup-delete-all-link"
 msgstr ""
 
-msgid "settings-backup-warning-1"
-msgstr ""
-
-msgid "settings-backup-warning-2"
-msgstr ""
-
-msgid "settings-backup-warning-3"
-msgstr ""
-
 msgid "uninstall-checkbox-label"
 msgstr ""

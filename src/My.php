@@ -933,6 +933,27 @@ class My extends MyTheme
     }
 
     /**
+     * Gets the var folder absolute path or relative URL.
+     *
+     * @param string $type        "path" or "url".
+     * @param string $concatenate A string to be added at the end of the path or URL.
+     *
+     * @return string The path or URL.
+     */
+    public static function odysseyVarFolder(string $type, string $to_concatenate = ''): string
+    {
+        if ($type === 'vf') {
+            return self::id() . $to_concatenate;
+        }
+
+        if ($type === 'path') {
+            return App::config()->varRoot() . '/' . self::id() . $to_concatenate;
+        }
+
+        return '';
+    }
+
+    /**
      * Returns the relative path or URI to the theme
      * or to a file located inside the theme folder.
      *
