@@ -8,6 +8,7 @@
  */
 
 namespace Dotclear\Theme\odyssey;
+
 use Dotclear\App;
 use Dotclear\Core\Process;
 use Dotclear\Core\Backend\Notices;
@@ -637,7 +638,6 @@ class Config extends Process
                         ->id($setting_id . '-input')
                         ->items([
                             (new Checkbox($setting_id, (bool) $setting_value))
-                                ->checked((bool) $setting_value)
                                 ->label(
                                     (new Label($default_settings[$setting_id]['title'], 3))
                                     ->class('classic')
@@ -1243,7 +1243,7 @@ class Config extends Process
             // Main text color.
             if (isset($_POST['global_color_text_custom'])
                 && isset($_POST['global_color_text_custom-default-value'])
-                && self::isHexColor($_POST['global_color_text_custom'])
+                && My::isHexColor($_POST['global_color_text_custom'])
                 && $_POST['global_color_text_custom'] !== $_POST['global_color_text_custom-default-value']
             ) {
                 $css_root_array[':root']['--color-text-main'] = $_POST['global_color_text_custom'];
@@ -1251,7 +1251,7 @@ class Config extends Process
 
             if (isset($_POST['global_color_text_dark_custom'])
                 && isset($_POST['global_color_text_dark_custom-default-value'])
-                && self::isHexColor($_POST['global_color_text_dark_custom'])
+                && My::isHexColor($_POST['global_color_text_dark_custom'])
                 && $_POST['global_color_text_dark_custom'] !== $_POST['global_color_text_dark_custom-default-value']
             ) {
                 $css_root_array[':root']['--color-text-main-dark'] = $_POST['global_color_text_dark_custom'];
@@ -1260,7 +1260,7 @@ class Config extends Process
             // Text secondary color
             if (isset($_POST['global_color_text_secondary_custom'])
                 && isset($_POST['global_color_text_secondary_custom-default-value'])
-                && self::isHexColor($_POST['global_color_text_secondary_custom'])
+                && My::isHexColor($_POST['global_color_text_secondary_custom'])
                 && $_POST['global_color_text_secondary_custom'] !== $_POST['global_color_text_secondary_custom-default-value']
             ) {
                 $css_root_array[':root']['--color-text-secondary'] = $_POST['global_color_text_secondary_custom'];
@@ -1268,7 +1268,7 @@ class Config extends Process
 
             if (isset($_POST['global_color_text_secondary_dark_custom'])
                 && isset($_POST['global_color_text_secondary_dark_custom-default-value'])
-                && self::isHexColor($_POST['global_color_text_secondary_dark_custom'])
+                && My::isHexColor($_POST['global_color_text_secondary_dark_custom'])
                 && $_POST['global_color_text_secondary_dark_custom'] !== $_POST['global_color_text_secondary_dark_custom-default-value']
             ) {
                 $css_root_array[':root']['--color-text-secondary-dark'] = $_POST['global_color_text_secondary_dark_custom'];
@@ -1277,7 +1277,7 @@ class Config extends Process
             // Input color
             if (isset($_POST['global_color_input_custom'])
                 && isset($_POST['global_color_input_custom-default-value'])
-                && self::isHexColor($_POST['global_color_input_custom'])
+                && My::isHexColor($_POST['global_color_input_custom'])
                 && $_POST['global_color_input_custom'] !== $_POST['global_color_input_custom-default-value']
             ) {
                 $css_root_array[':root']['--color-input-background'] = $_POST['global_color_input_custom'];
@@ -1285,7 +1285,7 @@ class Config extends Process
 
             if (isset($_POST['global_color_input_dark_custom'])
                 && isset($_POST['global_color_input_dark_custom-default-value'])
-                && self::isHexColor($_POST['global_color_input_dark_custom'])
+                && My::isHexColor($_POST['global_color_input_dark_custom'])
                 && $_POST['global_color_input_dark_custom'] !== $_POST['global_color_input_dark_custom-default-value']
             ) {
                 $css_root_array[':root']['--color-input-background-dark'] = $_POST['global_color_input_dark_custom'];
@@ -1294,7 +1294,7 @@ class Config extends Process
             // Border color
             if (isset($_POST['global_color_border_custom'])
                 && isset($_POST['global_color_border_custom-default-value'])
-                && self::isHexColor($_POST['global_color_border_custom'])
+                && My::isHexColor($_POST['global_color_border_custom'])
                 && $_POST['global_color_border_custom'] !== $_POST['global_color_border_custom-default-value']
             ) {
                 $css_root_array[':root']['--color-border'] = $_POST['global_color_border_custom'];
@@ -1302,7 +1302,7 @@ class Config extends Process
 
             if (isset($_POST['global_color_border_dark_custom'])
                 && isset($_POST['global_color_border_dark_custom-default-value'])
-                && self::isHexColor($_POST['global_color_border_dark_custom'])
+                && My::isHexColor($_POST['global_color_border_dark_custom'])
                 && $_POST['global_color_border_dark_custom'] !== $_POST['global_color_border_dark_custom-default-value']
             ) {
                 $css_root_array[':root']['--color-border-dark'] = $_POST['global_color_border_dark_custom'];
@@ -1311,7 +1311,7 @@ class Config extends Process
             // Background color
             if (isset($_POST['global_color_background_custom'])
                 && isset($_POST['global_color_background_custom-default-value'])
-                && self::isHexColor($_POST['global_color_background_custom'])
+                && My::isHexColor($_POST['global_color_background_custom'])
                 && $_POST['global_color_background_custom'] !== $_POST['global_color_background_custom-default-value']
             ) {
                 $css_root_array[':root']['--color-background'] = $_POST['global_color_background_custom'];
@@ -1319,7 +1319,7 @@ class Config extends Process
 
             if (isset($_POST['global_color_background_dark_custom'])
                 && isset($_POST['global_color_background_custom-default-value'])
-                && self::isHexColor($_POST['global_color_background_dark_custom'])
+                && My::isHexColor($_POST['global_color_background_dark_custom'])
                 && $_POST['global_color_background_dark_custom'] !== $_POST['global_color_background_dark_custom-default-value']
             ) {
                 $css_root_array[':root']['--color-background-dark'] = $_POST['global_color_background_dark_custom'];
@@ -1392,7 +1392,7 @@ class Config extends Process
             } elseif ($_POST['global_color_primary'] === 'custom') {
                 if (isset($_POST['global_color_primary_custom'])
                     && isset($_POST['global_color_primary_custom-default-value'])
-                    && self::isHexColor($_POST['global_color_primary_custom'])
+                    && My::isHexColor($_POST['global_color_primary_custom'])
                     && $_POST['global_color_primary_custom'] !== $_POST['global_color_primary_custom-default-value']
                 ) {
                     $color_primary_light = $_POST['global_color_primary_custom'];
@@ -1402,7 +1402,7 @@ class Config extends Process
 
                 if (isset($_POST['global_color_primary_amplified_custom'])
                     && isset($_POST['global_color_primary_amplified_custom-default-value'])
-                    && self::isHexColor($_POST['global_color_primary_amplified_custom'])
+                    && My::isHexColor($_POST['global_color_primary_amplified_custom'])
                     && $_POST['global_color_primary_amplified_custom'] !== $_POST['global_color_primary_amplified_custom-default-value']
                 ) {
                     $color_primary_amplified_light = $_POST['global_color_primary_amplified_custom'];
@@ -1412,7 +1412,7 @@ class Config extends Process
 
                 if (isset($_POST['global_color_primary_dark_custom'])
                     && isset($_POST['global_color_primary_dark_custom-default-value'])
-                    && self::isHexColor($_POST['global_color_primary_dark_custom'])
+                    && My::isHexColor($_POST['global_color_primary_dark_custom'])
                     && $_POST['global_color_primary_dark_custom'] !== $_POST['global_color_primary_dark_custom-default-value']
                 ) {
                     $color_primary_dark = $_POST['global_color_primary_dark_custom'];
@@ -1422,7 +1422,7 @@ class Config extends Process
 
                 if (isset($_POST['global_color_primary_dark_amplified_custom'])
                     && isset($_POST['global_color_primary_dark_amplified_custom-default-value'])
-                    && self::isHexColor($_POST['global_color_primary_dark_amplified_custom'])
+                    && My::isHexColor($_POST['global_color_primary_dark_amplified_custom'])
                     && $_POST['global_color_primary_dark_amplified_custom'] !== $_POST['global_color_primary_dark_amplified_custom-default-value']
                 ) {
                     $color_primary_amplified_dark = $_POST['global_color_primary_dark_amplified_custom'];
@@ -1873,7 +1873,7 @@ class Config extends Process
         }
 
         if ($setting_type === 'color') {
-            if (self::isHexColor($setting_value) === true) {
+            if (My::isHexColor($setting_value) === true) {
                 return [
                     'value' => strtolower($setting_value),
                     'type'  => 'string'
@@ -2113,22 +2113,6 @@ class Config extends Process
         }
 
         return [];
-    }
-
-    /**
-     * Checks if the input is an Hex color code.
-     *
-     * @param string $color The Hex color code.
-     *
-     * @return bool
-     */
-    public static function isHexColor(string $color): bool
-    {
-        if (preg_match('/#[A-Fa-f0-9]{6}/', $color)) {
-            return true;
-        }
-
-        return false;
     }
 
     private static function _stylesCustomFile(string $styles_custom): void

@@ -1046,6 +1046,22 @@ class My extends MyTheme
     }
 
     /**
+     * Checks if the input is an Hex color code.
+     *
+     * @param string $color The Hex color code.
+     *
+     * @return bool
+     */
+    public static function isHexColor(string $color): bool
+    {
+        if (preg_match('/#[A-Fa-f0-9]{6}/', $color)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Returns the fonts to be used as styles in CSS
      *
      * @param string $fontname The name of the font to return the CSS rule (optional).
