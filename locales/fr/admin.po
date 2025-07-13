@@ -790,4 +790,4 @@ msgid "settings-backup-delete-all-link"
 msgstr "Supprimer toutes les configurations"
 
 msgid "uninstall-checkbox-label"
-msgstr "Supprimer le sous-dossier « odyssey » situé dans le dossier « public » de Dotclear (contient la feuille de styles personnalisée)"
+msgstr "Supprimer les données éventuellement enregistrées par %s dans les dossiers « public » et « var » de Dotclear."

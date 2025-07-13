@@ -47,15 +47,20 @@ class Uninstall extends Process
                 'delete',
                 My::id(),
                 true
-            )
-        ;
+            );
 
-        // Removes the odyssey public folder.
+        // Removes the odyssey public and var folders.
         if (isset($_POST['delete_odyssey_public_folder'])) {
-            $dir_path = Path::real(My::odysseyPublicFolder('path'));
+            $odyssey_public_path = Path::real(My::odysseyPublicFolder('path'));
 
-            if ($dir_path) {
-                Files::deltree($dir_path);
+            if ($odyssey_public_path) {
+                Files::deltree($odyssey_public_path);
+            }
+
+            $odyssey_var_path = Path::real(My::odysseyVarFolder('path'));
+
+            if ($odyssey_var_path) {
+                Files::deltree($odyssey_var_path);
             }
         }
 
@@ -75,11 +80,10 @@ class Uninstall extends Process
 
         echo (new Para())
             ->items([
-                (new Checkbox('delete_odyssey_public_folder', true))
-                    ->value(1),
-                (new Label(__('uninstall-checkbox-label'), Label::OUTSIDE_LABEL_AFTER))
+                (new Checkbox('delete_odyssey_public_folder', true)),
+                (new Label(sprintf(__('uninstall-checkbox-label'), My::name())))
                     ->for('delete_odyssey_public_folder')
-                    ->class('classic'),
+                    ->class('classic')
             ])
             ->render();
     }

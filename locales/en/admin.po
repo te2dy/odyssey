@@ -790,4 +790,4 @@ msgid "settings-backup-delete-all-link"
 msgstr "Delete all configuration files"
 
 msgid "uninstall-checkbox-label"
-msgstr "Delete the “odyssey” subfolder located in Dotclear's “public” folder (contains the custom stylesheet)."
+msgstr "Delete any data saved by %s in Dotclear's “public” and “var” folders."
