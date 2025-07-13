@@ -421,13 +421,34 @@ window.onload = function() {
     };
   }
 
-
   // Reset button warning
   const buttonReset = document.getElementById("odyssey-reset");
 
   if (buttonReset) {
     buttonReset.addEventListener("click", function(event) {
       if (!confirm(document.getElementById("reset_warning").value)) {
+        event.preventDefault();
+      }
+    });
+  }
+
+  // Remove config files warning
+  const buttonConfigRemoveAll = document.getElementById("odyssey-backups-remove-all");
+
+  if (buttonConfigRemoveAll) {
+    buttonConfigRemoveAll.addEventListener("click", function(event) {
+      if (!confirm(document.getElementById("config_remove_all_warning").value)) {
+        event.preventDefault();
+      }
+    });
+  }
+
+  var configFiles = document.getElementsByClassName("odyssey-backups-remove");
+
+  for (var i = 0; i < configFiles.length; i++) {
+      configFiles[i].addEventListener("click", function(event) {
+
+      if (!confirm(document.getElementById("config_remove_warning").value)) {
         event.preventDefault();
       }
     });

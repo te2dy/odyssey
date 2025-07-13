@@ -1031,6 +1031,8 @@ class Config extends Process
         $fields[] = (new Hidden('page_width_px_max_default', '1280'));
         $fields[] = (new Hidden('page_width_px_step_default', '2'));
         $fields[] = (new Hidden('reset_warning', __('settings-reset-warning')));
+        $fields[] = (new Hidden('config_remove_warning', __('settings-config-remove-warning')));
+        $fields[] = (new Hidden('config_remove_all_warning', __('settings-config-remove-all-warning')));
 
         $fields[] = (new Para())
             ->class('form-buttons')
@@ -1126,6 +1128,7 @@ class Config extends Process
                                     (new Td())
                                         ->items([
                                             (new Link())
+                                                ->class('odyssey-backups-remove')
                                                 ->href($delete_url)
                                                 ->text(__('settings-backup-delete-link'))
                                         ])
@@ -1163,6 +1166,7 @@ class Config extends Process
                                 (new Para())
                                     ->items([
                                             (new Link())
+                                                ->id('odyssey-backups-remove-all')
                                                 ->href($delete_all_url)
                                                 ->text(__('settings-backup-delete-all-link'))
                                         ])

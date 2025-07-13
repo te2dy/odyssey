@@ -747,6 +747,12 @@ msgstr "If you have any questions, suggestions, requests or feedback, please go 
 msgid "settings-reset-warning"
 msgstr "Warning: you are about to reset your theme settings. This action is irreversible."
 
+msgid "settings-config-remove-warning"
+msgstr "Warning: this configuration file will be permanently deleted."
+
+msgid "settings-config-remove-all-warning"
+msgstr "Warning: all configuration files will be permanently deleted."
+
 msgid "settings-social-notice"
 msgstr "After entering a social network account below, you can choose to display a link to it in the footer. (see <a href=#section-footer>%1$s</a>) or, depending on the case, to make it available as an alternative means of reacting to your posts (see <a href=#section-reactions>%2$s</a>)."
 

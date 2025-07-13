@@ -747,6 +747,12 @@ msgstr ""
 msgid "settings-reset-warning"
 msgstr ""
 
+msgid "settings-config-remove-warning"
+msgstr ""
+
+msgid "settings-config-remove-all-warning"
+msgstr ""
+
 msgid "settings-social-notice"
 msgstr ""
 
