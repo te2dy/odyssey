@@ -818,7 +818,7 @@ class My extends MyTheme
      */
     public static function settingValue(string $setting_id = ''): mixed
     {
-        return $setting_id ? App::blog()->settings->odyssey->$setting_id : '';
+        return $setting_id ? App::blog()->settings->odyssey->$setting_id : null;
     }
 
     /**
@@ -856,12 +856,7 @@ class My extends MyTheme
      */
     public static function cleanStr(string $string, array $tags_allowed = []): string
     {
-        if (empty($tags_allowed)) {
-            $string = strip_tags($string);
-        } else {
-            $string = strip_tags($string, $tags_allowed);
-        }
-
+        $string = empty($tags_allowed) ? strip_tags($string) : strip_tags($string, $tags_allowed);
         $string = Html::decodeEntities($string);
 
         return preg_replace('/\s+/mu', ' ', $string);
@@ -935,7 +930,7 @@ class My extends MyTheme
     /**
      * Gets the var folder absolute path or relative URL.
      *
-     * @param string $type        "path" or "url".
+     * @param string $type        "path" or "vf".
      * @param string $concatenate A string to be added at the end of the path or URL.
      *
      * @return string The path or URL.
@@ -957,26 +952,22 @@ class My extends MyTheme
      * Returns the relative path or URI to the theme
      * or to a file located inside the theme folder.
      *
-     * @param string $pathway_file The pathway to file inside the theme folder (optional).
-     * @param string $type         The type of pathway (url or path, optional).
+     * @param string $type           The type of pathway (url or path).
+     * @param string $to_concatenate The pathway to file inside the theme folder (optional).
      *
      * @return string The path.
      */
-    public static function odysseyThemeFolder(string $pathway_file = '', string $type = 'url'): string
+    public static function odysseyThemeFolder(string $type = 'url', string $to_concatenate = ''): string
     {
         if ($type === 'url') {
-            $pathway_base = App::blog()->settings()->system->themes_url;
-        } elseif ($type === 'path') {
-            $pathway_base = App::blog()->themesPath();
+            return App::blog()->settings()->system->themes_url . '/' . My::id() . $to_concatenate;
         }
 
-        $pathway_base .= '/' . App::blog()->settings()->system->theme;
-
-        if (!$pathway_file) {
-            return $pathway_base;
+        if ($type === 'path') {
+            return App::blog()->themesPath() . '/' . My::id() . $to_concatenate;
         }
 
-        return $pathway_base . '/' . $pathway_file;
+        return '';
     }
 
     /**

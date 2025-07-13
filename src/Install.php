@@ -46,14 +46,14 @@ class Install extends Process
         if ($styles_custom) {
             $styles_default = '';
 
-            $css_default_path_file = My::odysseyThemeFolder('style.min.css', 'path');
+            $css_default_path_file = My::odysseyThemeFolder('path', '/style.min.css');
 
             if (file_exists($css_default_path_file) && (string) file_get_contents($css_default_path_file) !== '') {
                 $styles_default = (string) file_get_contents($css_default_path_file);
             }
 
-            $css_custom_path_folder = App::blog()->settings()->system->theme . '/css/';
-            $css_custom_path_file   = $css_custom_path_folder . 'style.min.css';
+            $css_custom_path_folder = My::odysseyPublicFolder('path', '/css');
+            $css_custom_path_file   = $css_custom_path_folder . '/style.min.css';
 
             if (ThemeConfig::canWriteCss(App::blog()->settings()->system->theme, true)
                 && ThemeConfig::canWriteCss($css_custom_path_folder, true)
