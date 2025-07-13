@@ -447,10 +447,9 @@ window.onload = function() {
 
   for (var i = 0; i < configFiles.length; i++) {
       configFiles[i].addEventListener("click", function(event) {
-
-      if (!confirm(document.getElementById("config_remove_warning").value)) {
-        event.preventDefault();
-      }
+        if (!confirm(document.getElementById("config_remove_warning").value)) {
+          event.preventDefault();
+        }
     });
   }
 };
