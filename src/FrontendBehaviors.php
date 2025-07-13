@@ -91,7 +91,7 @@ class FrontendBehaviors
                             $desc .= ' – ';
                         }
 
-                        $desc .= My::settingValue('advanced_meta_description') ?? App::blog()->desc ?? '';
+                        $desc .= My::settingValue('advanced_meta_description') ?: App::blog()->desc ?: '';
 
                         $desc = My::cleanStr($desc);
 

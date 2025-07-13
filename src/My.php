@@ -991,7 +991,7 @@ class My extends MyTheme
         $css = '';
 
         foreach ($rules as $selector => $properties) {
-            $selector = $selector ?? null;
+            $selector = $selector ?: null;
 
             if ($selector && is_array($properties) && !empty($properties)) {
                 $css .= str_replace(', ', ',', $selector);

@@ -56,7 +56,7 @@ class FrontendValues
      */
     public static function odysseyMetaDescriptionHome(): string
     {
-        $description = My::settingValue('advanced_meta_description') ?? App::blog()->desc ?? null;
+        $description = My::settingValue('advanced_meta_description') ?: App::blog()->desc ?: null;
 
         if ($description) {
             $description = My::cleanStr(Ctx::remove_html($description));
