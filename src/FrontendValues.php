@@ -9,6 +9,7 @@
 
 namespace Dotclear\Theme\odyssey;
 
+use ArrayObject;
 use Dotclear\App;
 use Dotclear\Core\Frontend\Ctx;
 use Dotclear\Helper\Html\Html;
@@ -34,7 +35,7 @@ class FrontendValues
      *
      * @return string The translated string.
      */
-    public static function odysseyLang($attr): string
+    public static function odysseyLang(ArrayObject $attr): string
     {
         if (isset($attr['id'])) {
             $filters = App::frontend()->template()->getFilters($attr);
@@ -99,8 +100,6 @@ class FrontendValues
                         $current_uri = My::blogBaseURL() . $current_uri;
                         return '<link rel=canonical href=' . My::escapeAttr($current_uri) . '>' . "\n";
                     }
-
-                    return '';
             }
         }
 
@@ -143,16 +142,16 @@ class FrontendValues
      * Displays an image in the header that has been defined
      * in the theme configuration page.
      *
-     * @param array $attr Attributes to customize the value.
-     *                    Attribute allowed: "position", to define the place
-     *                    of the image in the header.
-     *                    Values allowed:
-     *                    - (string) top
-     *                    - (string) bottom
+     * @param ArrayObject $attr Attributes to customize the value.
+     *                          Attribute allowed: "position", to define the place
+     *                          of the image in the header.
+     *                          Values allowed:
+     *                          - (string) top
+     *                          - (string) bottom
      *
      * @return string The header image.
      */
-    public static function odysseyHeaderImage($attr): string
+    public static function odysseyHeaderImage(ArrayObject $attr): string
     {
         $image_url  = My::settingValue('header_image')['url']   ?? null;
         $image_size = My::settingValue('header_image')['width'] ?? null;
@@ -239,11 +238,11 @@ class FrontendValues
      * that should have been put in the template in order to support
      * responsive images with the srcset attribute.
      *
-     * @param array $attr Attributes to customize the value.
+     * @param ArrayObject $attr Attributes to customize the value.
      *
      * @return string The image.
      */
-    public static function odysseyEntryListImage($attr): string
+    public static function odysseyEntryListImage(ArrayObject $attr): string
     {
         if (My::settingValue('content_postlist_thumbnail') === false) {
             return '';
@@ -325,11 +324,11 @@ class FrontendValues
      * Gets the excerpt defined by the author or, if it does not exists,
      * an excerpt from the content.
      *
-     * @param array $attr Modifying attributes.
+     * @param ArrayObject $attr Modifying attributes.
      *
      * @return string The entry excerpt.
      */
-    public static function odysseyEntryExcerpt($attr): string
+    public static function odysseyEntryExcerpt(ArrayObject $attr): string
     {
         return '<?php
         $excerpt = "";
