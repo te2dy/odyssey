@@ -376,6 +376,7 @@ class FrontendBehaviors
 
                 // If the original image size exists.
                 if ($src_value && file_exists(App::config()->dotclearRoot() . $src_value)) {
+
                     // Gets original image dimensions.
                     list($width, $height) = getimagesize(App::config()->dotclearRoot() . $src_value);
                     $img['o']['width']    = (int) $width;
@@ -408,7 +409,12 @@ class FrontendBehaviors
                         $img_crop  = $size_data[1] ?? null;
 
                         if ($img_width && $img_crop === 'ratio') {
-                            $img_path_rel = $info['dirname'] . '/.' . $info['base'] . '_' . $size_id . '.' . strtolower($info['extension']);
+                            // Source: \src\Code\Media.php
+                            $thumb_tp   = App::media()->getThumbnailFilePattern($info['extension']);
+                            $thumb      = sprintf($thumb_tp, $path_info['dirname'], $info['base'], '%s');
+                            $thumb_file = sprintf($thumb, $size_id);
+
+                            $img_path_rel = $info['dirname'] . '/' . $thumb_file;
                             $img_path     = App::config()->dotclearRoot() . $img_path_rel;
 
                             if (file_exists($img_path)) {
