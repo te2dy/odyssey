@@ -404,17 +404,15 @@ class FrontendBehaviors
 
                     $info = Path::info($src_value);
 
+                    $dc_img_pattern = App::media()->getThumbnailFilePattern($info['extension']);
+
                     foreach (App::media()->getThumbSizes() as $size_id => $size_data) {
                         $img_width = $size_data[0] ?? null;
                         $img_crop  = $size_data[1] ?? null;
 
                         if ($img_width && $img_crop === 'ratio') {
-                            // Source: \src\Code\Media.php
-                            $thumb_tp   = App::media()->getThumbnailFilePattern($info['extension']);
-                            $thumb      = sprintf($thumb_tp, $path_info['dirname'], $info['base'], '%s');
-                            $thumb_file = sprintf($thumb, $size_id);
-
-                            $img_path_rel = $info['dirname'] . '/' . $thumb_file;
+                            $img_pattern  = sprintf($dc_img_pattern, $info['dirname'], $info['base'], '%s');
+                            $img_path_rel = sprintf($img_pattern, $size_id);
                             $img_path     = App::config()->dotclearRoot() . $img_path_rel;
 
                             if (file_exists($img_path)) {
