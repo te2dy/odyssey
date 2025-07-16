@@ -1488,7 +1488,7 @@ class Config extends Process
         ) {
             $css_main_array['#site-image']['width'] = '100%';
 
-            $css_main_array['#site-image a']['display']       = 'block';
+            $css_main_array['#site-image a']['display']       = 'inline-block';
             $css_main_array['#site-image a']['outline-width'] = '.168em';
 
             $css_main_array['#site-image img']['display'] = 'inline-block';
