@@ -12,16 +12,28 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == 🍀 Feuille de route ==
 - Sécuriser les entrées dans la base de données et leur affichage.
-- Ajouter la possibilité d’afficher la barre latérale à gauche ou à droite, plutôt qu’en bas.
-- Publier une version 2 après essais du système de récupération de la configuration du thème, du système de téléversement de l’image d’en-tête et de l’éventuelle nouvelle option de mise en page avec le changement de placement de la barre latérale.
+- Publier une version 2 après essais du système de récupération de la configuration du thème et du système de téléversement de l’image d’en-tête.
+- Ajouter la possibilité d’afficher la barre latérale à gauche ou à droite, plutôt qu’en bas ?
 
 == Notes de version ==
 
+=== 1.13 - 16 juillet 2025 ===
+- Ajout : avertissement avant la suppression des fichiers de configuration.
+- Ajout : modèles de flux général Atom et RSS.
+- Amélioration : utilisation des Helper/Form dans le Config.php pour tout le rendu de la page.
+- Correction : l’option d’agrandissement des images ne fonctionnait pas toujours.
+- Correction : la zone de clic de image d’en-tête était trop large.
+- Modification : les fichiers de configuration du thème sont désormais enregistrés dans le dossier "var" de Dotclear.
+- Modification : pagination des billets.
+- Modification : fonctions d’échappement.
+- Revue de code.
+
 === 1.12 - 27 juin 2025 ===
+- Ajout : message expliquant le fonctionnement des paramètres sociaux dans le configurateur.
 - Amélioration : suppression du dossier backups s’il ne contient aucun fichier après suppression d’un fichier de configuration.
 - Correction : lien du titre du blog illisible en mode contrastes élevés.
 - Correction : affichage des images larges en portrait sur les petits écrans.
-- Correction : la conversion des px aux em était parfois erronée.
+- Correction : la conversion des px en em était parfois erronée.
 - Revue de code.
 
 === 1.11 - 26 juin 2025 ===
