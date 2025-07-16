@@ -827,13 +827,18 @@ class My extends MyTheme
      *
      * Avoids unnecessarily quotation marks wrapping attributes.
      *
-     * @param string $value The value.
+     * @param string $value      The value.
+     * @param string $input_type The input type ('html' or 'url').
      *
      * @return string The string.
      */
-    public static function escapeAttr(string $value, bool $escape_html = true): string
+    public static function escapeAttr(string $value, string $input_type = ''): string
     {
-        $value = $escape_html ? Html::escapeHTML($value) : $value;
+        if ($input_type === 'html') {
+            $value = Html::escapeHTML($value);
+        } elseif ($input_type === 'url') {
+            $value = self::escapeURL($value);
+        }
 
         if (str_contains($value, ' ') === false
             && str_contains($value, '=') === false
@@ -844,6 +849,22 @@ class My extends MyTheme
         }
 
         return '"' . $value . '"';
+    }
+
+    /**
+     * Escapes URLs.
+     *
+     * @param string $url  The URL to escape.
+     * @param bool   $attr true if the escaped URL should be displayed
+     *                     in an HTML attribute.
+     *
+     * @return string The escaped URL.
+     */
+    public static function escapeURL(string $url, bool $attr = false): string
+    {
+        $url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
+
+        return $attr ? self::escapeAttr($url) : $url;
     }
 
     /**

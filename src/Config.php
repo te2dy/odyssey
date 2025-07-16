@@ -450,7 +450,7 @@ class Config extends Process
                         Notices::addNotice(
                             'success',
                             '<p>' . sprintf(__('settings-notice-save-success'), My::id(), '#odyssey-backups') . '</p>' .
-                            '<a class="button submit" href=' . My::escapeAttr(Html::escapeURL(urldecode(Page::getVF(My::odysseyVarFolder('vf', '/backups/' . $file_name . '.json'))))) . ' download>' . __('settings-notice-save-success-link') . '</a>',
+                            '<a class="button submit" href=' . My::escapeAttr(urldecode(Page::getVF(My::odysseyVarFolder('vf', '/backups/' . $file_name . '.json'))), 'url') . ' download>' . __('settings-notice-save-success-link') . '</a>',
                             ['divtag' => true]
                         );
                     } else {
@@ -847,7 +847,7 @@ class Config extends Process
                 $the_setting[] = (new Para())
                     ->id('header_image-preview')
                     ->items([
-                        (new Img(Html::escapeURL($image_src), 'header_image-src'))
+                        (new Img(My::escapeURL($image_src), 'header_image-src'))
                             ->alt(__('header_image-preview-alt'))
                     ]);
 
@@ -1092,7 +1092,7 @@ class Config extends Process
                                 [
                                     'module'  => My::id(),
                                     'conf'    => '1',
-                                    'restore' => Html::escapeURL($file_name_without_extension)
+                                    'restore' => My::escapeURL($file_name_without_extension)
                                 ]
                             );
 
@@ -1103,7 +1103,7 @@ class Config extends Process
                                 [
                                     'module'              => My::id(),
                                     'conf'                => '1',
-                                    'restore_delete_file' => Html::escapeURL($file_name_without_extension)
+                                    'restore_delete_file' => My::escapeURL($file_name_without_extension)
                                 ]
                             );
 
@@ -1121,8 +1121,8 @@ class Config extends Process
                                     (new Td())
                                         ->items([
                                             (new Link())
-                                                ->href(Html::escapeURL($download_url))
                                                 ->extra('download')
+                                                ->href(My::escapeURL($download_url))
                                                 ->text(__('settings-backup-download-link'))
                                         ]),
                                     (new Td())
@@ -2073,7 +2073,7 @@ class Config extends Process
             case 'signal':
                 if (str_starts_with($value, '+') && preg_match('/\+[0-9]+/', $value)) {
                     return [
-                        'value' => 'https://signal.me/#p/' . Html::escapeURL($value),
+                        'value' => My::escapeURL('https://signal.me/#p/' . $value),
                         'type'  => 'string',
                     ];
                 } elseif (str_starts_with($value, 'https://signal.me/')

@@ -418,7 +418,7 @@ class FrontendBehaviors
                             if (file_exists($img_path)) {
                                 $img[$size_id]['url']    = $img_path_rel;
                                 $img[$size_id]['width']  = (int) $img_width;
-                                $img[$size_id]['height'] = getimagesize($img_path)[1] ? (int) getimagesize($img_path)[1] : null;
+                                $img[$size_id]['height'] = isset(getimagesize($img_path)[1]) ? (int) getimagesize($img_path)[1] : null;
                             }
                         }
                     }
@@ -432,7 +432,7 @@ class FrontendBehaviors
                     );
 
                     // Defines image attributes.
-                    $attr = 'src=' . My::escapeAttr($img['o']['url']) . ' ';
+                    $attr = 'src=' . My::escapeAttr($img['o']['url'], 'url') . ' ';
 
                     // If multiple image sizes exist, displays them.
                     if (count($img) > 1) {
@@ -440,7 +440,7 @@ class FrontendBehaviors
 
                         // Puts every image size in the srcset attribute.
                         foreach ($img as $img_id => $img_data) {
-                            $attr .= Html::escapeURL($img_data['url']) . ' ' . (int) $img_data['width'] . 'w';
+                            $attr .= My::escapeURL($img_data['url']) . ' ' . (int) $img_data['width'] . 'w';
 
                             if ($img_id !== array_key_last($img)) {
                                 $attr .= ', ';

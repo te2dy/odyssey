@@ -61,7 +61,7 @@ class FrontendValues
         if ($description) {
             $description = My::cleanStr(Ctx::remove_html($description));
 
-            return '<meta name=description content=' . My::escapeAttr($description) . '>';
+            return '<meta name=description content=' . My::escapeAttr($description, 'html') . '>';
         }
 
         return '';
@@ -74,7 +74,9 @@ class FrontendValues
      */
     public static function odysseyMetaRobots(): string
     {
-        return My::escapeAttr(strtolower(App::blog()->settings()->system->robots_policy));
+        $robots = strtolower(App::blog()->settings()->system->robots_policy);
+
+        return My::escapeAttr($robots, 'html');
     }
 
     /**
@@ -91,14 +93,15 @@ class FrontendValues
                     return '<link rel=canonical href="<?= App::frontend()->context()->posts->getURL() ?>">' . "\n";
                     break;
                 case 'default':
-                    return '<link rel=canonical href=' . My::escapeAttr(App::blog()->url) . '>' . "\n";
+                    return '<link rel=canonical href=' . My::escapeAttr(App::blog()->url, 'url') . '>' . "\n";
                     break;
                 default:
                     $current_uri = self::odysseyGetURI();
 
                     if ($current_uri) {
                         $current_uri = My::blogBaseURL() . $current_uri;
-                        return '<link rel=canonical href=' . My::escapeAttr($current_uri) . '>' . "\n";
+
+                        return '<link rel=canonical href=' . My::escapeAttr($current_uri, 'url') . '>' . "\n";
                     }
             }
         }
@@ -115,7 +118,7 @@ class FrontendValues
     {
         $css_url = My::settingValue('styles_url') ?: My::odysseyThemeFolder('url', '/style.min.css');
 
-        return My::escapeAttr(Html::escapeURL($css_url));
+        return My::escapeAttr($css_url, 'url');
     }
 
     /**
@@ -166,7 +169,7 @@ class FrontendValues
         $image2x_url = My::settingValue('header_image2x')['url'] ?? null;
 
         if ($image2x_url) {
-            $srcset  = ' srcset="' . Html::escapeURL($image_url) . ' 1x, ' . Html::escapeURL($image2x_url) . ' 2x"';
+            $srcset  = ' srcset="' . My::escapeURL($image_url) . ' 1x, ' . My::escapeURL($image2x_url) . ' 2x"';
             $sizes   = ' sizes=' . Html::escapeHTML($image_size) . 'vw';
         }
 
@@ -176,10 +179,10 @@ class FrontendValues
         if (isset($attr['position']) && $img_position === $attr['position']) {
             if (App::url()->type === 'default') {
                 // Do not add a link to the home page on home page.
-                return '<div id=site-image><img alt=' . My::escapeAttr($img_description) . ' src=' . My::escapeAttr($image_url) . $srcset . $sizes . '></div>';
+                return '<div id=site-image><img alt=' . My::escapeAttr($img_description, 'html') . ' src=' . My::escapeAttr($image_url, 'url') . $srcset . $sizes . '></div>';
             }
 
-            return '<div id=site-image><a href=' . My::escapeAttr(App::blog()->url) . ' rel=home><img alt=' . My::escapeAttr($img_description) . ' src=' . My::escapeAttr($image_url) . $srcset . $sizes . '></a></div>';
+            return '<div id=site-image><a href=' . My::escapeAttr(App::blog()->url, 'url') . ' rel=home><img alt=' . My::escapeAttr($img_description, 'html') . ' src=' . My::escapeAttr($image_url, 'url') . $srcset . $sizes . '></a></div>';
         }
 
         return '';
@@ -769,7 +772,7 @@ class FrontendValues
                 }
 
                 $output .= '<li>';
-                $output .= '<a href=' . My::escapeAttr($url) . '>';
+                $output .= '<a href=' . My::escapeAttr($url, 'url') . '>';
                 $output .= '<span class=footer-social-links-icon-container>';
                 $output .= '<svg class="' . $class . '" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>';
                 $output .= '<title>' . Html::escapeHTML($data['name']) . '</title>';
@@ -792,7 +795,7 @@ class FrontendValues
             $feed_link = App::blog()->url() . App::url()->getURLFor("feed", My::settingValue('footer_feed'));
 
             $output .= '<li>';
-            $output .= '<a href=' . My::escapeAttr($feed_link) . '>';
+            $output .= '<a href=' . My::escapeAttr($feed_link, 'url') . '>';
             $output .= '<span class=footer-social-links-icon-container>';
             $output .= '<svg class="social-icon-fi footer-social-links-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>';
             $output .= '<title>' . Html::escapeHTML(__('footer-social-links-feed-title')) . '</title>';
