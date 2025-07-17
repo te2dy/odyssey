@@ -31,7 +31,7 @@
       <tpl:EntryTags>
         <dc:subject>{{tpl:TagID}}</dc:subject>
       </tpl:EntryTags>
-      <content type="html">{{tpl:EntryContent absolute_urls="1" encode_xml="1"}}></content>
+      <content type="html">{{tpl:EntryContent absolute_urls="1" encode_xml="1"}}</content>
       <tpl:Attachments>
         <link rel="enclosure" href="{{tpl:AttachmentURL}}" length="{{tpl:AttachmentSize full="1"}}" type="{{tpl:AttachmentMimeType}}" />
       </tpl:Attachments>
