@@ -11,7 +11,7 @@ $this->registerModule(
     'Odyssey',
     'A simple and customizable theme to write your own odyssey',
     'Teddy',
-    '1.13',
+    '1.14',
     [
         'requires' => [
             ['core', '2.30'],
@@ -19,6 +19,10 @@ $this->registerModule(
         ],
 
         'type' => 'theme',
+
+        'support'    => 'https://forum.dotclear.org/viewtopic.php?id=51635',
+        'details'    => 'https://themes.dotaddict.org/galerie-dc2/details/odyssey',
+        'repository' => 'https://raw.githubusercontent.com/te2dy/odyssey/main/dcstore.xml',
 
         // Allows theme files edit.
         'overload' => true,
