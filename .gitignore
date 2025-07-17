@@ -7,9 +7,6 @@ _disabled
 # Ignore "code" folder
 /prive
 
-# Ignore dcstore.xml
-dcstore.xml
-
 # Custom
 tpl/_entry-post-photo.html
 tpl/_entry-list-photo.html
