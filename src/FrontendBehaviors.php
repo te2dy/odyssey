@@ -72,7 +72,7 @@ class FrontendBehaviors
                     $img_url_rel = Ctx::EntryFirstImageHelper('o', true, '', true);
 
                     if ($img_url_rel) {
-                        $img = My::blogBaseURL() . $img_url_rel;
+                        $img = App::blog()->url() . $img_url_rel;
                     }
 
                     break;
@@ -126,7 +126,7 @@ class FrontendBehaviors
 
             if ($title) {
                 if (!$img && isset(My::settingValue('header_image')['url'])) {
-                    $img = My::escapeURL(My::blogBaseURL() . My::settingValue('header_image')['url']);
+                    $img = My::escapeURL(App::blog()->url() . My::settingValue('header_image')['url']);
                 }
 
                 if ($img) {
@@ -189,7 +189,7 @@ class FrontendBehaviors
 
                             $json_ld['publisher']['logo'] = [
                                 '@type'  => 'ImageObject',
-                                'url'    => My::blogBaseURL() . My::settingValue('header_image')['url'],
+                                'url'    => App::blog()->url() . My::settingValue('header_image')['url'],
                                 'width'  => (int) $width,
                                 'height' => (int) $height
                             ];
@@ -234,7 +234,7 @@ class FrontendBehaviors
 
                             $json_ld['image'] = [
                                 '@type'  => 'ImageObject',
-                                'url'    => My::blogBaseURL() . Ctx::EntryFirstImageHelper('o', false, '', true),
+                                'url'    => App::blog()->url() . Ctx::EntryFirstImageHelper('o', false, '', true),
                                 'width'  => (int) $width,
                                 'height' => (int) $height
                             ];
@@ -271,7 +271,7 @@ class FrontendBehaviors
 
                             $json_ld['publisher']['logo'] = [
                                 '@type'  => 'ImageObject',
-                                'url'    => My::blogBaseURL() . My::settingValue('header_image')['url'],
+                                'url'    => App::blog()->url() . My::settingValue('header_image')['url'],
                                 'width'  => (int) $width,
                                 'height' => (int) $height
                             ];
@@ -297,7 +297,7 @@ class FrontendBehaviors
                         }
                     }
 
-                    $json_ld['url'] = My::blogBaseURL() . '/' . App::frontend()->context()->posts->post_url;
+                    $json_ld['url'] = App::frontend()->context()->posts->getURL();
 
                     $json_ld['datePublished'] = Date::iso8601(strtotime(App::frontend()->context()->posts->post_dt), App::frontend()->context()->posts->post_tz);
 
@@ -360,8 +360,8 @@ class FrontendBehaviors
                 $src_value = $src_match[1] ?? null;
 
                 // Transforms absolute URLs in relative ones.
-                if (str_starts_with($src_value, My::blogBaseURL())) {
-                    $src_value = str_replace(My::blogBaseURL(), '', $src_value);
+                if (str_starts_with($src_value, App::blog()->url())) {
+                    $src_value = str_replace(App::blog()->url(), '', $src_value);
                 }
 
                 // Builds an array that will contain all image sizes.

@@ -99,7 +99,7 @@ class FrontendValues
                     $current_uri = self::odysseyGetURI();
 
                     if ($current_uri) {
-                        $current_uri = My::blogBaseURL() . $current_uri;
+                        $current_uri = App::blog()->url() . $current_uri;
 
                         return '<link rel=canonical href=' . My::escapeAttr($current_uri, 'url') . '>' . "\n";
                     }
