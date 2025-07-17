@@ -31,14 +31,14 @@ class FrontendBehaviors
         // Adds the name of the editor.
         if (App::blog()->settings->system->editor) {
             echo '<meta name=author content=',
-            My::escapeAttr(App::blog()->settings->system->editor),
+            My::escapeAttr(App::blog()->settings->system->editor, 'html'),
             '>', "\n";
         }
 
         // Adds the content of the copyright notice.
         if (App::blog()->settings->system->copyright_notice) {
             echo '<meta name=copyright content=',
-            My::escapeAttr(App::blog()->settings->system->copyright_notice),
+            My::escapeAttr(App::blog()->settings->system->copyright_notice, 'html'),
             '>', "\n";
         }
     }
@@ -122,12 +122,11 @@ class FrontendBehaviors
             }
 
             $title = Html::escapeHTML($title);
+            $img   = My::escapeURL($img);
 
             if ($title) {
-                $img = Html::escapeHTML($img);
-
                 if (!$img && isset(My::settingValue('header_image')['url'])) {
-                    $img = My::blogBaseURL() . My::settingValue('header_image')['url'];
+                    $img = My::escapeURL(My::blogBaseURL() . My::settingValue('header_image')['url']);
                 }
 
                 if ($img) {
@@ -140,9 +139,9 @@ class FrontendBehaviors
                     }
                 }
 
+                // Quotes seem required for the following meta properties.
                 echo '<meta property="og:title" content="', $title, '">', "\n";
 
-                // Quotes seem required for the following meta properties.
                 $desc = trim(Html::escapeHTML($desc));
 
                 if ($desc) {
@@ -404,16 +403,15 @@ class FrontendBehaviors
 
                     $info = Path::info($src_value);
 
-                    $dc_img_pattern = App::media()->getThumbnailFilePattern($info['extension']);
-
                     foreach (App::media()->getThumbSizes() as $size_id => $size_data) {
                         $img_width = $size_data[0] ?? null;
                         $img_crop  = $size_data[1] ?? null;
 
                         if ($img_width && $img_crop === 'ratio') {
-                            $img_pattern  = sprintf($dc_img_pattern, $info['dirname'], $info['base'], '%s');
-                            $img_path_rel = sprintf($img_pattern, $size_id);
-                            $img_path     = App::config()->dotclearRoot() . $img_path_rel;
+                            $dc_img_pattern = App::media()->getThumbnailFilePattern($info['extension']);
+                            $img_pattern    = sprintf($dc_img_pattern, $info['dirname'], $info['base'], '%s');
+                            $img_path_rel   = sprintf($img_pattern, $size_id);
+                            $img_path       = App::config()->dotclearRoot() . $img_path_rel;
 
                             if (file_exists($img_path)) {
                                 $img[$size_id]['url']    = $img_path_rel;
