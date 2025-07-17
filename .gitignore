@@ -1,11 +1,14 @@
-# Ignore Mac DS_Store files.
+# Ignore Mac DS_Store files
 .DS_Store
 
-# Ignore the file _disabled created by Dotclear when the theme/plugin has been unactivated.
+# Ignore the file _disabled created by Dotclear when the theme/plugin has been unactivated
 _disabled
 
-# Ignore "code" folder.
+# Ignore "code" folder
 /prive
+
+# Ignore dcstore.xml
+dcstore.xml
 
 # Custom
 tpl/_entry-post-photo.html
