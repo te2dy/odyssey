@@ -24,7 +24,7 @@
         <tpl:EntryTags>
           <category>{{tpl:TagID}}</category>
         </tpl:EntryTags>
-        <description><![CDATA[{{tpl:EntryContent absolute_urls="1" encode_xml="1"}}]]></description>
+        <description>{{tpl:EntryContent absolute_urls="1" encode_xml="1"}}></description>
         <tpl:Attachments>
           <enclosure url="{{tpl:AttachmentURL}}" length="{{tpl:AttachmentSize full="1"}}" type="{{tpl:AttachmentMimeType}}" />
         </tpl:Attachments>
