@@ -42,9 +42,6 @@ msgstr "Le fichier de configuration du thème a été supprimé."
 msgid "settings-notice-files-deleted"
 msgstr "Tous les fichiers de configuration du thème ont été supprimés."
 
-msgid "setting-css-custom-url"
-msgstr "URL personnalisée de la feuille de styles"
-
 msgid "settings-default-checked"
 msgstr "Par défaut&nbsp;: coché."
 

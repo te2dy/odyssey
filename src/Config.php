@@ -66,12 +66,15 @@ class Config extends Process
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
             try {
-                // If the save button has been clicked.
                 if (isset($_POST['save'])) {
+                    // If the save button has been clicked.
                     self::_saveSettings($_POST, $_FILES, __('settings-notice-saved'));
                 } elseif (isset($_POST['save-config'])) {
+                    // If the save configuration file button has been clicked.
                     self::_saveSettings($_POST, $_FILES, '', ['save-config' => 'create-file']);
                 } elseif (isset($_POST['reset'])) {
+                    // If the reset button has been clicked.
+
                     // Remove all saved settings from the database.
                     App::blog()->settings->odyssey->dropAll();
 
@@ -89,7 +92,7 @@ class Config extends Process
                         ['module' => My::id(), 'conf' => '1']
                     );
                 } elseif (isset($_POST['import-config'])) {
-                    // When a configuration file is uploaded, redirects to the upload page.
+                    // When the upload configuration file link is clicked, redirects to the upload page.
                     App::backend()->url()->redirect(
                         'admin.blog.theme',
                         ['module' => My::id(), 'conf' => '1', 'config-upload' => '1']
@@ -97,23 +100,25 @@ class Config extends Process
                 } elseif (isset($_POST['config-upload-submit'])) {
                     // When a configuration file has been submitted, uploads it.
                     if (!empty($_FILES['config-upload-file'])
+                        && isset($_FILES['config-upload-file']['tmp_name'])
+                        && isset($_FILES['config-upload-file']['type'])
                         && $_FILES['config-upload-file']['error'] === UPLOAD_ERR_OK
                     ) {
-                        $file_tmp_path = $_FILES['config-upload-file']['tmp_name'];
-                        $file_type     = $_FILES['config-upload-file']['type'];
-
+                        $file_tmp_path  = $_FILES['config-upload-file']['tmp_name'];
+                        $file_type      = $_FILES['config-upload-file']['type'];
                         $json_content   = file_get_contents($file_tmp_path);
                         $settings_array = [];
                         $styles_custom  = '';
 
                         if ($file_type === 'application/json' && $json_content) {
+                            // Puts all configuration file settings in an array.
                             $settings_array = json_decode($json_content, true);
 
                             if (!empty($settings_array)) {
-                                // Drops all settings.
+                                // Firts, drops all settings to clean the database.
                                 App::blog()->settings->odyssey->dropAll();
 
-                                // Imports all settings.
+                                // Then, imports all settings.
                                 self::_saveSettings($settings_array, [], __('settings-notice-upload-success'));
                             } else {
                                 Notices::addErrorNotice(__('settings-notice-upload-file-not-valid'));
@@ -142,7 +147,7 @@ class Config extends Process
                         );
                     }
                 } elseif (isset($_POST['config-upload-cancel'])) {
-                    // Redirects if the cancel upload button is clicked.
+                    // Redirects if the cancel upload button has been clicked.
                     App::backend()->url()->redirect(
                         'admin.blog.theme',
                         ['module' => My::id(), 'conf' => '1']
@@ -156,22 +161,26 @@ class Config extends Process
         if ($_SERVER['REQUEST_METHOD'] === 'GET' && !empty($_GET)) {
             try {
                 if (isset($_GET['save-config']) && $_GET['save-config'] === 'create-file') {
-                    // Creates a backup file.
-                    $path = My::odysseyVarFolder('path', '/backups');
+                    /**
+                     * Creates a JSON backup file.
+                     *
+                     * The file will be uploaded in /var/odyssey/backups
+                     */
+                    $backups_path = My::odysseyVarFolder('path', '/backups');
 
                     // Creates the var/odyssey/backups folder if it doesn't exist.
-                    if (Path::real($path) === false) {
-                        Files::makeDir($path, true);
+                    if (Path::real($backups_path) === false) {
+                        Files::makeDir($backups_path, true);
                     }
 
-                    // Sets the name of the backup file.
+                    // Sets the name of the backup file with date and time.
                     $time = str_replace(':', '', Date::str('%Y%m%d', time(), App::blog()->settings()->system->blog_timezone) . '-' . Date::str('%T', time(), App::blog()->settings()->system->blog_timezone));
 
                     $file_name = Files::tidyFileName($time . '-settings');
 
-                    $path .= '/' . $file_name . '.json';
+                    $backups_path .= '/' . $file_name . '.json';
 
-                    // Puts all the settings in an array.
+                    // Puts all theme settings in an array.
                     $saved_settings = [];
 
                     foreach (self::settingsSaved() as $setting_id => $setting_value) {
@@ -179,7 +188,8 @@ class Config extends Process
                     }
 
                     if (!empty($saved_settings)) {
-                        Files::putContent($path, json_encode($saved_settings));
+                        // Creates the JSON file.
+                        Files::putContent($backups_path, json_encode($saved_settings));
 
                         Notices::addNotice(
                             'success',
@@ -188,13 +198,16 @@ class Config extends Process
                             ['divtag' => true]
                         );
                     } else {
-                        // If no custom option has been set.
+                        // If no custom setting has been set.
                         Notices::addErrorNotice(__('settings-notice-save-fail'));
                     }
 
                     App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
                 } elseif (isset($_GET['restore']) && $_GET['restore'] !== 'success') {
-                    // Restores a configuration from a backup file listed from /var/odyssey/backups.
+                    /**
+                     * Restores a configuration from a backup file
+                     * listed from /var/odyssey/backups.
+                     */
                     $restore_file_name    = $_GET['restore'] . '.json';
                     $restore_file_path    = My::odysseyVarFolder('path', '/backups/' . $restore_file_name);
                     $restore_file_content = file_get_contents($restore_file_path);
@@ -222,8 +235,9 @@ class Config extends Process
                         );
                     }
                 } elseif (isset($_GET['restore_delete_file'])) {
-                    // Deletes a configuration file.
-
+                    /**
+                     * Deletes a configuration file.
+                     */
                     $delete_file_name = $_GET['restore_delete_file'] . '.json';
                     $odyssey_folder   = My::odysseyVarFolder('path');
                     $backups_folder   = My::odysseyVarFolder('path', '/backups/');
@@ -242,14 +256,19 @@ class Config extends Process
 
                         Notices::addSuccessNotice(__('settings-notice-file-deleted'));
 
-                        App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
+                        App::backend()->url()->redirect(
+                            'admin.blog.theme',
+                            ['module' => My::id(), 'conf' => '1']
+                        );
                     }
                 } elseif (isset($_GET['restore_delete_all'])) {
-                    // Deletes all configuration files.
-                    $odyssey_folder = Path::real(My::odysseyVarFolder('path'));
+                    /**
+                     * Deletes all configuration files.
+                     */
+                    $odyssey_var_folder = Path::real(My::odysseyVarFolder('path'));
 
-                    if ($odyssey_folder) {
-                        Files::deltree($odyssey_folder);
+                    if ($odyssey_var_folder) {
+                        Files::deltree($odyssey_var_folder);
                     }
 
                     Notices::addSuccessNotice(__('settings-notice-files-deleted'));
@@ -320,8 +339,7 @@ class Config extends Process
                 App::blog()->settings->odyssey->put(
                     $setting['id'],
                     $setting['value'],
-                    $setting['type'],
-                    $setting['title']
+                    $setting['type']
                 );
             } else {
                 App::blog()->settings->odyssey->drop($setting_id);
@@ -390,8 +408,7 @@ class Config extends Process
         $setting = [
             'id'    => $setting_id,
             'value' => null,
-            'type'  => null,
-            'title' => isset($setting_data['title']) ? Html::escapeHTML(My::cleanStr($setting_data['title'])) : null
+            'type'  => null
         ];
 
         if (isset($setting_data['type']) && !isset($setting_data['sanitizer'])) {
@@ -417,11 +434,6 @@ class Config extends Process
                         $setting_value = false;
                     }
 
-                    if ($setting_id === 'footer_social_x') {
-                        var_dump($setting_value);
-                        var_dump($setting_data['default']);
-                    }
-
                     if ($setting_value === true && $setting_data['default'] !== true) {
                         $setting['value'] = '1';
                         $setting['type']  = 'boolean';
@@ -441,7 +453,6 @@ class Config extends Process
             if (isset($setting['id'])
                 && isset($setting['value'])
                 && isset($setting['type'])
-                && isset($setting['title'])
             ) {
                 return $setting;
             }
@@ -519,7 +530,6 @@ class Config extends Process
             if (isset($setting['id'])
                 && isset($setting['value'])
                 && isset($setting['type'])
-                && isset($setting['title'])
             ) {
                 return $setting;
             }
@@ -2063,9 +2073,7 @@ class Config extends Process
                 App::blog()->settings->odyssey->put(
                     'styles_url',
                     My::odysseyPublicFolder('url', '/css/style.min.css'),
-                    'string',
-                    __('setting-css-custom-url'),
-                    true
+                    'string'
                 );
             } else {
                 if (file_exists($css_custom_path_file)) {

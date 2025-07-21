@@ -42,9 +42,6 @@ msgstr "The theme configuration file has been deleted."
 msgid "settings-notice-files-deleted"
 msgstr "All theme configuration files have been deleted."
 
-msgid "setting-css-custom-url"
-msgstr "Custom CSS URL"
-
 msgid "settings-default-checked"
 msgstr "Default: checked."
 

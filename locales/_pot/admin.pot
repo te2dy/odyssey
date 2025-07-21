@@ -42,9 +42,6 @@ msgstr ""
 msgid "settings-notice-files-deleted"
 msgstr ""
 
-msgid "setting-css-custom-url"
-msgstr ""
-
 msgid "settings-default-checked"
 msgstr ""
 
