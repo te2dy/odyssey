@@ -122,6 +122,7 @@ class My extends MyTheme
             'title'       => __('settings-global-pagewidthvalue-title'),
             'description' => __('settings-global-pagewidthvalue-description'),
             'type'        => 'range',
+            'sanitizer'   => 'sanitizePageWidth',
             'range'       => [
                 'min'  => 30,
                 'max'  => 80,
@@ -406,7 +407,8 @@ class My extends MyTheme
             ),
             'type'        => 'image',
             'default'     => '',
-            'section'     => ['header', 'image']
+            'section'     => ['header', 'image'],
+            'sanitizer'   => 'sanitizeHeaderImage'
         ];
 
         $default_settings['header_image2x'] = [
@@ -414,7 +416,8 @@ class My extends MyTheme
             'description' => __('settings-header-image2x-description'),
             'type'        => 'image',
             'default'     => '',
-            'section'     => ['header', 'image']
+            'section'     => ['header', 'image'],
+            'sanitizer'   => 'sanitizeHeaderImage'
         ];
 
         $default_settings['header_image_position'] = [
@@ -762,7 +765,8 @@ class My extends MyTheme
                 'description' => sprintf(__('settings-social-' . $site . '-description'), $base['name']),
                 'type'        => 'text',
                 'default'     => '',
-                'section'     => ['social', 'no-title']
+                'section'     => ['social', 'no-title'],
+                'sanitizer'   => 'sanitizeSocial'
             ];
         }
 
@@ -799,7 +803,8 @@ class My extends MyTheme
         ];
 
         $default_settings['styles'] = [
-            'title' => __('settings-odysseystyles-title'),
+            'title'     => __('settings-odysseystyles-title'),
+            'sanitizer' => 'sanitizeStyles'
         ];
 
         if ($setting_id) {

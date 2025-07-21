@@ -218,13 +218,13 @@ msgstr ""
 msgid "reactions-other-title"
 msgstr ""
 
-msgid "reactions-other-email-body-post-url"
-msgstr ""
-
 msgid "reactions-other-email-button-text"
 msgstr ""
 
-msgid "reactions-other-email-prefix"
+msgid "reactions-other-email-title"
+msgstr ""
+
+msgid "reactions-other-email-body"
 msgstr ""
 
 msgid "reactions-other-bluesky-button"

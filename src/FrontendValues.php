@@ -492,8 +492,8 @@ class FrontendValues
             if (isset(App::frontend()->context()->posts->user_email) && App::frontend()->context()->posts->user_email && (App::blog()->settings->odyssey->reactions_other === "always" || (App::blog()->settings->odyssey->reactions_other === "comments_open" && App::frontend()->context()->posts->post_open_comment === "1"))
             ) {
                 $mailto  = Html::escapeHTML(App::frontend()->context()->posts->user_email);
-                $subject = "' . __('reactions-other-email-prefix') . '" . App::frontend()->context()->posts->post_title;
-                $body    = "' . __('reactions-other-email-body-post-url') . ' " . App::frontend()->context()->posts->getURL();
+                $subject = sprintf(__("reactions-other-email-title"), App::frontend()->context()->posts->post_title);
+                $body    = sprintf(__("reactions-other-email-body"), App::frontend()->context()->posts->getURL());
                 $href    = "mailto:" . $mailto . "?subject=" . rawurlencode($subject) . "&body=" . rawurlencode($body);
 
                 $reactions_other .= "<p><a class=reactions-button href=\"" . $href . "\"><svg class=\"reactions-button-icon social-icon-fi\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('email')['path']) . '</svg> <span class=reactions-button-text>' . __('reactions-other-email-button-text') . '</span></a></p>";

@@ -218,14 +218,14 @@ msgstr "Send"
 msgid "reactions-other-title"
 msgstr "You can also…"
 
-msgid "reactions-other-email-body-post-url"
-msgstr "URL of the post:"
-
 msgid "reactions-other-email-button-text"
 msgstr "Reply by email"
 
-msgid "reactions-other-email-prefix"
-msgstr "Re:"
+msgid "reactions-other-email-title"
+msgstr "Re: %s"
+
+msgid "reactions-other-email-body"
+msgstr "URL of the post: %s"
 
 msgid "reactions-other-bluesky-button"
 msgstr "Share on %s"
