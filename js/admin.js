@@ -416,7 +416,6 @@ window.onload = function() {
 
       document.getElementById("header_image").value               = "";
       document.getElementById("header_image_description").value   = "";
-      document.getElementById("header_image-defined").value       = "false";
       document.getElementById("header_image-delete-action").value = "true";
     };
   }
