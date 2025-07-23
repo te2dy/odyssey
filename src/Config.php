@@ -287,20 +287,20 @@ class Config extends Process
     }
 
     /**
-     * Saves all settings in the database.
+     * Saves all the settings in the database.
      *
-     * @param array  $http_post       All parameters sent with the theme configurator form.
-     * @param array  $http_files      All files uploaded from the theme configurator form.
-     * @param string $notice_success  A text displayed after successful parameter saving.
-     * @param array  $redirect_params Parameters to add to the redirection after saving.
+     * @param array   $http_post       All parameters sent with the theme configurator form.
+     * @param array   $http_files      All files uploaded from the theme configurator form.
+     * @param ?string $notice_success  A text displayed after successful parameter saving.
+     * @param ?array  $redirect_params Parameters to add to the redirection after saving.
      *
      * @return void
      */
     private static function _saveSettings(
-        array  $http_post,
-        array  $http_files,
-        string $notice_success = '',
-        array  $redirect_params = []
+        array   $http_post,
+        array   $http_files,
+        ?string $notice_success,
+        array   $redirect_params = []
     ): void
     {
         if (empty($http_post)) {
@@ -377,8 +377,10 @@ class Config extends Process
             }
 
             // Updates $new_settings array for other actions.
-            if (isset($setting['value'])) {
+            if (isset($setting['value']) && $setting['value'] !== '') {
                 $new_settings[$setting_id] = $setting['value'];
+            } else {
+                unset($new_settings[$setting_id]);
             }
 
             // Other actions:
@@ -408,8 +410,8 @@ class Config extends Process
                 }
             }
 
-            if ($setting_id === 'styles' && isset($setting['value'])) {
-                self::_stylesCustomFile($setting['value']);
+            if ($setting_id === 'styles') {
+                self::_stylesCustomFile($setting['value'] ?? null);
             }
 
             if (!is_dir(My::odysseyPublicFolder('path', '/css'))
@@ -489,10 +491,10 @@ class Config extends Process
                         $setting_value = false;
                     }
 
-                    if ($setting_value === true && $setting_data['default'] !== true) {
+                    if ($setting_value === true && $setting_data['default'] === false) {
                         $setting['value'] = '1';
                         $setting['type']  = 'boolean';
-                    } elseif ($setting_value === false && $setting_data['default'] !== false) {
+                    } elseif ($setting_value === false && $setting_data['default'] === true) {
                         $setting['value'] = '0';
                         $setting['type']  = 'boolean';
                     }
@@ -519,7 +521,7 @@ class Config extends Process
             switch ($setting_id) {
                 case 'global_page_width_value':
                     $params = [
-                        $new_settings['global_unit'],
+                        $new_settings['global_unit'] ?? 'em',
                         $setting_value,
                         $setting_id
                     ];
@@ -764,8 +766,8 @@ class Config extends Process
 
         // Page width
         $page_width_data  = self::_sanitizePageWidth(
-            $new_settings['global_unit'],
-            $new_settings['global_page_width_value']
+            $new_settings['global_unit'] ?? 'em',
+            $new_settings['global_page_width_value'] ?? 30
         );
 
         $page_width_value = $page_width_data['value'] ?? null;
@@ -1265,10 +1267,10 @@ class Config extends Process
 
         // Checks if a link has been set.
         foreach (My::socialSites() as $id => $data) {
-            if ($new_settings['social_' . $id]) {
-                if ($new_settings['reactions_other'] !== 'disabled'
-                    && (isset($new_settings['reactions_other_' . $id]) && $new_settings['reactions_other_' . $id] !== '0')
-                    || (isset($new_settings['footer_social_' . $id]) && $new_settings['footer_social_' . $id] !== '0')
+            if (isset($new_settings['social_' . $id])) {
+                if (isset($new_settings['reactions_other'])
+                    && $new_settings['reactions_other'] !== 'disabled'
+                    && isset($new_settings['reactions_other_' . $id])
                 ) {
                     if (!empty(self::_sanitizeSocial('social_' . $id, $new_settings['social_' . $id]))) {
                         if (My::svgIcons($id)['author'] === 'simpleicons') {
@@ -1279,18 +1281,6 @@ class Config extends Process
             }
         }
 
-        if ($simpleicons_styles === true) {
-            $css_main_array['.social-icon-si']['border']          = '0';
-            $css_main_array['.social-icon-si']['stroke']          = 'none';
-            $css_main_array['.social-icon-si']['stroke-linecap']  = 'round';
-            $css_main_array['.social-icon-si']['stroke-linejoin'] = 'round';
-            $css_main_array['.social-icon-si']['stroke-width']    = '0';
-            $css_main_array['.social-icon-si']['width']           = '1rem';
-            $css_main_array['.social-icon-si']['transition']      = 'var(--color-transition, unset)';
-
-            $css_media_contrast_array['.reactions-button:is(:active, :focus, :hover) .reactions-button-icon.social-icon-si']['fill'] = 'var(--color-background)';
-        }
-
         // Other reactions
         if (isset($new_settings['reactions_other']) && $new_settings['reactions_other'] !== 'disabled') {
             $css_main_array['.reactions-button .social-icon-si']['fill'] = 'var(--color-primary, hsl(226, 80%, 45%))';
@@ -1298,7 +1288,6 @@ class Config extends Process
 
         // Footer links
         $footer_social_links = false;
-        $simpleicons_styles  = false;
         $feathericons_styles = false;
 
         if (isset($new_settings['footer_feed']) && $new_settings['footer_feed'] !== 'disabled') {
@@ -1307,8 +1296,8 @@ class Config extends Process
         }
 
         foreach (My::socialSites() as $id => $data) {
-            if ($new_settings['social_' . $id]) {
-                if (isset($new_settings['footer_social_' . $id]) && $new_settings['footer_social_' . $id] !== '0') {
+            if (isset($new_settings['social_' . $id])) {
+                if (!isset($new_settings['footer_social_' . $id])) {
                     if (!empty(self::_sanitizeSocial('social_' . $id, $new_settings['social_' . $id]))) {
                         $footer_social_links = true;
 
@@ -1324,6 +1313,18 @@ class Config extends Process
             if ($footer_social_links === true && $simpleicons_styles === true && $feathericons_styles === true) {
                 break;
             }
+        }
+
+        if ($simpleicons_styles === true) {
+            $css_main_array['.social-icon-si']['border']          = '0';
+            $css_main_array['.social-icon-si']['stroke']          = 'none';
+            $css_main_array['.social-icon-si']['stroke-linecap']  = 'round';
+            $css_main_array['.social-icon-si']['stroke-linejoin'] = 'round';
+            $css_main_array['.social-icon-si']['stroke-width']    = '0';
+            $css_main_array['.social-icon-si']['width']           = '1rem';
+            $css_main_array['.social-icon-si']['transition']      = 'var(--color-transition, unset)';
+
+            $css_media_contrast_array['.reactions-button:is(:active, :focus, :hover) .reactions-button-icon.social-icon-si']['fill'] = 'var(--color-background)';
         }
 
         if ($footer_social_links === true) {
@@ -1350,7 +1351,6 @@ class Config extends Process
 
             if ($simpleicons_styles === true) {
                 $css_main_array['.footer-social-links-icon-container .footer-social-links-icon-si']['fill'] = 'var(--color-text-main, #303030)';
-
             }
 
             if ($feathericons_styles === true) {
@@ -2038,7 +2038,11 @@ class Config extends Process
      *
      * @return array The page width and its unit.
      */
-    public static function _sanitizePageWidth(string $unit, string $value, $setting_id = null): array
+    public static function _sanitizePageWidth(
+        string     $unit  = 'em',
+        string|int $value = '30',
+        string     $setting_id = null
+    ): array
     {
         $units_allowed = ['em', 'px'];
 
