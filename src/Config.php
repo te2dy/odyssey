@@ -66,10 +66,10 @@ class Config extends Process
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
             try {
-                if (isset($_POST['save']) && !empty($_FILES)) {
+                if (isset($_POST['save'])) {
                     // If the save button has been clicked.
                     self::_saveSettings($_POST, $_FILES, __('settings-notice-saved'));
-                } elseif (isset($_POST['save-config']) && !empty($_FILES)) {
+                } elseif (isset($_POST['save-config'])) {
                     // If the save configuration file button has been clicked.
                     self::_saveSettings($_POST, $_FILES, '', ['save-config' => 'create-file']);
                 } elseif (isset($_POST['reset'])) {
@@ -289,29 +289,33 @@ class Config extends Process
     /**
      * Saves all settings in the database.
      *
-     * @param array  $settings_to_save All parameters sent with the theme configurator form.
-     * @param array  $files_to_save    All files uploaded from the theme configurator form.
-     * @param string $notice_success   A text displayed after successful parameter saving.
-     * @param array  $redirect_params  Parameters to add to the redirection after saving.
+     * @param array  $http_post       All parameters sent with the theme configurator form.
+     * @param array  $http_files      All files uploaded from the theme configurator form.
+     * @param string $notice_success  A text displayed after successful parameter saving.
+     * @param array  $redirect_params Parameters to add to the redirection after saving.
      *
      * @return void
      */
     private static function _saveSettings(
-        array  $settings_to_save,
-        array  $files_to_save,
+        array  $http_post,
+        array  $http_files,
         string $notice_success = '',
         array  $redirect_params = []
     ): void
     {
-        $default_settings = My::settingsDefault();
-        $saved_settings   = self::settingsSaved();
-        $new_settings     = [];
-
-        if (empty($settings_to_save)) {
+        if (empty($http_post)) {
             return;
         }
 
-        foreach ($settings_to_save as $setting_id => $setting_value) {
+        $default_settings = My::settingsDefault();
+        $saved_settings   = self::settingsSaved();
+
+        // Puts all $_POST et $_FILES variables in a new array to manipulate them.
+        $new_settings = [];
+
+        $http_post = array_merge($http_post, $http_files);
+
+        foreach ($http_post as $setting_id => $setting_value) {
             $new_settings[$setting_id] = $setting_value;
         }
 
@@ -319,23 +323,27 @@ class Config extends Process
             $setting_value = $new_settings[$setting_id] ?? null;
 
             if ($setting_id === 'header_image' || $setting_id === 'header_image2x') {
-                if (!empty($files_to_save[$setting_id]['name'])
-                    && !empty($files_to_save[$setting_id]['tmp_name'])
+                if (!empty($http_post[$setting_id]['name'])
+                    && !empty($http_post[$setting_id]['tmp_name'])
                 ) {
-                    $setting_value = $files_to_save[$setting_id] ?? [];
+                    // If a file has been submitted.
+                    $setting_value = $http_post[$setting_id] ?? [];
                 }  elseif (isset($new_settings['header_image-delete-action'])
                     && $new_settings['header_image-delete-action'] === 'true'
                 ) {
+                    // If the delete button has been clicked.
                     $setting_value = null;
                 } elseif (isset($saved_settings[$setting_id])
                     && !empty($saved_settings[$setting_id])
                 ) {
-                    $setting_value = $saved_settings[$setting_id] ?? [];
+                    // If an image has already been set.
+                    $setting_value = $saved_settings[$setting_id];
                 }
             }
 
             if ($setting_id === 'header_image2x') {
                 if (!isset($new_settings['header_image'])) {
+                    // If a Retina image is set unlike main image.
                     $setting_value = null;
                 }
 
@@ -344,10 +352,12 @@ class Config extends Process
                     && isset($setting_value['img1x'])
                     && $new_settings['header_image']['name'] !== $setting_value['img1x']
                 ) {
+                    // If the main image does not correspond to the Retina image.
                     $setting_value = null;
                 }
             }
 
+            // Sanitizes the setting.
             $setting = self::_sanitizeSetting(
                 $setting_id,
                 $setting_data,
@@ -355,11 +365,7 @@ class Config extends Process
                 $new_settings
             );
 
-            if (isset($setting['value'])) {
-                $new_settings[$setting_id] = $setting['value'];
-            }
-
-            // Saves the setting in the database.
+            // Saves the setting in the database or drop it.
             if (!empty($setting)) {
                 App::blog()->settings->odyssey->put(
                     $setting['id'],
@@ -370,37 +376,40 @@ class Config extends Process
                 App::blog()->settings->odyssey->drop($setting_id);
             }
 
+            // Updates $new_settings array for other actions.
+            if (isset($setting['value'])) {
+                $new_settings[$setting_id] = $setting['value'];
+            }
+
             // Other actions:
-            if ($setting_id === 'header_image' || $setting_id === 'header_image2x') {
-                if ($setting_id === 'header_image'
-                    && isset($new_settings['header_image-delete-action'])
+            if ($setting_id === 'header_image') {
+                if (isset($new_settings['header_image-delete-action'])
                     && $new_settings['header_image-delete-action'] === 'true'
                 ) {
-                    // If delete is clicked.
+                    // If the delete button has been clicked.
                     self::_deleteHeaderImage();
-                }
-
-                if ($setting_id === 'header_image' && isset($setting['value'])) {
-                    // If a image file has been submitted.
-                    if (isset($setting_value['tmp_name']) && $setting_value['tmp_name']) {
-                        self::_saveHeaderImage($setting_id, $setting, $setting_value['tmp_name']);
-                    }
-                }
-
-                if ($setting_id === 'header_image2x'
-                    && isset($new_settings['header_image'])
-                    && isset($setting['value'])
+                } elseif (isset($setting['value'])
+                    && isset($setting_value['tmp_name'])
+                    && $setting_value['tmp_name']
                 ) {
-                    if (isset($setting_value['tmp_name']) && $setting_value['tmp_name']) {
-                        self::_saveHeaderImage($setting_id, $setting, $setting_value['tmp_name']);
-                    }
+                    // If an image file has been submitted and the file exists, saves the image.
+                    self::_saveHeaderImage($setting_id, $setting, $setting_value['tmp_name']);
                 }
             }
 
-            if ($setting_id === 'styles') {
-                $custom_css = $setting['value'] ?? null;
+            if ($setting_id === 'header_image2x') {
+                if (isset($new_settings['header_image'])
+                    && isset($setting['value'])
+                    && isset($setting_value['tmp_name'])
+                    && $setting_value['tmp_name']
+                ) {
+                    // If a Retina image file has been submitted and the file exists, saves the image.
+                    self::_saveHeaderImage($setting_id, $setting, $setting_value['tmp_name']);
+                }
+            }
 
-                self::_stylesCustomFile($custom_css);
+            if ($setting_id === 'styles' && isset($setting['value'])) {
+                self::_stylesCustomFile($setting['value']);
             }
 
             if (!is_dir(My::odysseyPublicFolder('path', '/css'))
@@ -456,7 +465,8 @@ class Config extends Process
             'type'  => null
         ];
 
-        if (isset($setting_data['type']) && !isset($setting_data['sanitizer'])) {
+        if (!isset($setting_data['sanitizer'])) {
+            // Generic sanitization.
             switch ($setting_data['type']) {
                 case 'select':
                 case 'select_int':
@@ -490,23 +500,21 @@ class Config extends Process
                     break;
                 default:
                     if ($setting_value && $setting_value !== $setting_data['default']) {
-                        $setting['value'] = filter_var($setting_value, FILTER_SANITIZE_SPECIAL_CHARS);
-                        $setting['type']  = 'string';
+                        $setting['value'] = filter_var(
+                            $setting_value,
+                            FILTER_SANITIZE_SPECIAL_CHARS
+                        );
+
+                        $setting['type'] = 'string';
                     }
             }
 
-            if (isset($setting['id'])
-                && isset($setting['value'])
-                && isset($setting['type'])
-            ) {
+            if (isset($setting['id']) && isset($setting['value']) && isset($setting['type'])) {
                 return $setting;
             }
-        }
-
-        if (isset($setting_data['sanitizer'])) {
+        } else {
+            // If a sanitizer function is defined.
             $params = [];
-
-            $saved_settings = self::settingsSaved();
 
             switch ($setting_id) {
                 case 'global_page_width_value':
@@ -521,38 +529,39 @@ class Config extends Process
                     if (isset($new_settings['header_image-delete-action'])
                         && $new_settings['header_image-delete-action'] === 'true'
                     ) {
+                        // If the delete button has been clicked.
                         $params = [$setting_id, []];
-                    }
-
-                    if (isset($setting_value['tmp_name']) && $setting_value['tmp_name']
-                        && isset($setting_value['name']) && $setting_value['name']
+                    } elseif (isset($setting_value['tmp_name'])
+                        && $setting_value['tmp_name']
+                        && isset($setting_value['name'])
+                        && $setting_value['name']
                     ) {
+                        // If an image file has been submitted.
                         $params = [
                             $setting_id,
                             $setting_value,
                             $new_settings
                         ];
-                    }
-
-                    if (!isset($setting_value['tmp_name'])) {
+                    } elseif (!isset($setting_value['tmp_name']) && $setting_value) {
+                        // No image is submitted and an image already exists in the database.
                         $params = [
                             $setting_id,
                             $setting_value,
                             $new_settings
                         ];
-                    }
-
-                    if (!$setting_value) {
+                    } else {
+                        // No image at all.
                         $params = [$setting_id, []];
                     }
 
                     break;
                 case 'header_image2x':
-                    if (isset($new_settings['header_image-delete-action']) && $new_settings['header_image-delete-action'] === 'true') {
+                    if (isset($new_settings['header_image-delete-action'])
+                        && $new_settings['header_image-delete-action'] === 'true'
+                    ) {
+                        // If the delete button has been clicked.
                         $params = [$setting_id, []];
-                    }
-
-                    if (isset($new_settings['header_image'])
+                    } elseif (isset($new_settings['header_image'])
                         && isset($setting_value)
                     ) {
                         $params = [
@@ -578,11 +587,14 @@ class Config extends Process
                 );
             }
 
+            $saved_settings = self::settingsSaved();
+
             if (empty($setting_call)
                 && $setting_id === 'header_image'
                 && isset($saved_settings['header_image'])
                 && $new_settings['header_image-delete-action'] === 'false'
             ) {
+                // If the header image value passed is null but an image already exists.
                 $setting_call['value'] = [
                     'name'  => $saved_settings['header_image']['name'],
                     'url'   => $saved_settings['header_image']['url'],
@@ -600,6 +612,10 @@ class Config extends Process
                 && isset($setting_value['img1x'])
                 && $new_settings['header_image']['name'] === $setting_value['img1x']
             ) {
+                /**
+                 * If the Retina image value passed is null but an image already exists
+                 * and corresponds to the main image.
+                 */
                 $setting_call['value'] = [
                     'name'  => $saved_settings['header_image2x']['name'],
                     'url'   => $saved_settings['header_image2x']['url'],
@@ -635,7 +651,7 @@ class Config extends Process
      */
     public static function _sanitizeHeaderImage(
         string $setting_id,
-        array  $image_file = [],
+        array  $image_file   = [],
         array  $new_settings = []
     ): array
     {
@@ -650,16 +666,18 @@ class Config extends Process
                 && isset($image_file['error'])
                 && $image_file['error'] === UPLOAD_ERR_OK
             ) {
-                $file_name  = Files::tidyFileName($image_file['name']);
+                $file_name  = Files::tidyFileName($image_file['name']) ?: '';
                 $file_path  = $image_file['tmp_name'];
                 $file_type  = $image_file['type'];
-                $file_url   = $file_name ? My::odysseyPublicFolder('url', '/img/' . $file_name) : null;
+                $file_url   = My::odysseyPublicFolder('url', '/img/' . $file_name);
                 $image_data = [];
 
                 $mime_types_supported = Files::mimeTypes();
 
-                if ($file_path
+                if ($file_name
+                    && $file_path
                     && $file_type
+                    && $file_url
                     && file_exists($file_path)
                     && str_starts_with($file_type, 'image/')
                     && in_array($file_type, $mime_types_supported, true)
@@ -670,17 +688,13 @@ class Config extends Process
                             list($header_image_width) = getimagesize($file_path);
 
                             /**
-                             * Limits the maximum width value of the image if its superior to the page width,
+                             * Limits the maximum width value of the image
+                             * if its superior to the page width,
                              * and sets its height proportionally.
                              */
-                            $page_width_data = [
-                                'unit' => $new_settings['page_width_unit'] ?? 'em',
-                                'value' => isset($new_settings['global_page_width_value']) ? (int) $new_settings['global_page_width_value'] : 30
-                            ];
+                            $page_width = (int) $new_settings['global_page_width_value'];
 
-                            $page_width = $page_width_data['value'];
-
-                            if ($page_width_data['unit'] === 'em') {
+                            if ($new_settings['global_unit'] === 'em') {
                                 $page_width = $page_width * 16;
                             }
 
@@ -749,17 +763,16 @@ class Config extends Process
         $default_settings = My::settingsDefault();
 
         // Page width
-        $global_unit = $new_settings['global_unit']             ?? null;
-        $page_width  = $new_settings['global_page_width_value'] ?? null;
+        $page_width_data  = self::_sanitizePageWidth(
+            $new_settings['global_unit'],
+            $new_settings['global_page_width_value']
+        );
 
-        if ($global_unit) {
-            $page_width_data  = self::_sanitizePageWidth($global_unit, $page_width);
-            $page_width_value = $page_width_data['value'] ?? null;
-            $page_width_unit  = $page_width_data['unit']  ?? null;
+        $page_width_value = $page_width_data['value'] ?? null;
+        $page_width_unit  = $page_width_data['unit']  ?? null;
 
-            if ($page_width_value && $page_width_unit) {
-                $css_root_array[':root']['--page-width'] = $page_width_value . $page_width_unit;
-            }
+        if ($page_width_value && $page_width_unit) {
+            $css_root_array[':root']['--page-width'] = $page_width_value . $page_width_unit;
         }
 
         // Font family
@@ -1226,7 +1239,7 @@ class Config extends Process
         }
 
         // Grayscale images
-        if (isset($new_settings['content_images_wide']) && $new_settings['content_images_wide'] === '1') {
+        if (isset($new_settings['content_images_grayscale']) && $new_settings['content_images_grayscale'] === '1') {
             $css_main_array['.content-text img']['transition']                          = 'var(--color-transition, unset)';
             $css_main_array['.content-text img:not(:active, :focus, :hover)']['filter'] = 'grayscale(1)';
 
@@ -1252,13 +1265,12 @@ class Config extends Process
 
         // Checks if a link has been set.
         foreach (My::socialSites() as $id => $data) {
-            if (isset($_POST['social_' . $id]) && $_POST['social_' . $id] !== '') {
-                if (isset($new_settings['reactions_other'])
-                    && $new_settings['reactions_other'] !== 'disabled'
-                    && (isset($_POST['reactions_other_' . $id]) && $_POST['reactions_other_' . $id] !== '')
-                    || (isset($_POST['footer_social_' . $id]) && $_POST['footer_social_' . $id] !== '')
+            if ($new_settings['social_' . $id]) {
+                if ($new_settings['reactions_other'] !== 'disabled'
+                    && (isset($new_settings['reactions_other_' . $id]) && $new_settings['reactions_other_' . $id] !== '0')
+                    || (isset($new_settings['footer_social_' . $id]) && $new_settings['footer_social_' . $id] !== '0')
                 ) {
-                    if (!empty(self::_sanitizeSocial('social_' . $id, $_POST['social_' . $id]))) {
+                    if (!empty(self::_sanitizeSocial('social_' . $id, $new_settings['social_' . $id]))) {
                         if (My::svgIcons($id)['author'] === 'simpleicons') {
                             $simpleicons_styles  = true;
                         }
@@ -1295,9 +1307,9 @@ class Config extends Process
         }
 
         foreach (My::socialSites() as $id => $data) {
-            if (isset($_POST['social_' . $id]) && $_POST['social_' . $id] !== '') {
-                if (isset($_POST['footer_social_' . $id]) && $_POST['footer_social_' . $id] !== '') {
-                    if (!empty(self::_sanitizeSocial('social_' . $id, $_POST['social_' . $id]))) {
+            if ($new_settings['social_' . $id]) {
+                if (isset($new_settings['footer_social_' . $id]) && $new_settings['footer_social_' . $id] !== '0') {
+                    if (!empty(self::_sanitizeSocial('social_' . $id, $new_settings['social_' . $id]))) {
                         $footer_social_links = true;
 
                         if (My::svgIcons($id)['author'] === 'simpleicons') {
@@ -1698,7 +1710,6 @@ class Config extends Process
                 ]);
 
             $the_setting[] = (new Hidden('header_image-delete-action', "false"));
-            $the_setting[] = (new Hidden('header_image-url', $image_src));
             $the_setting[] = (new Hidden('header_image-retina-text', __('header_image-retina-ready')));
         }
 
@@ -2152,7 +2163,7 @@ class Config extends Process
         return [];
     }
 
-    private static function _stylesCustomFile(string|null $styles_custom): void
+    private static function _stylesCustomFile(?string $styles_custom): void
     {
         $css_default_path_file = My::odysseyThemeFolder('path', '/style.min.css');
         $css_path_folder       = My::id() . '/css';
