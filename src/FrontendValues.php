@@ -61,7 +61,7 @@ class FrontendValues
         if ($description) {
             $description = My::cleanStr(Ctx::remove_html($description));
 
-            return '<meta name=description content=' . My::escapeAttr($description, 'html') . '>';
+            return '<meta name=description content=' . My::displayAttr($description, 'html') . '>';
         }
 
         return '';
@@ -76,7 +76,7 @@ class FrontendValues
     {
         $robots = strtolower(App::blog()->settings()->system->robots_policy);
 
-        return My::escapeAttr($robots, 'html');
+        return My::displayAttr($robots, 'html');
     }
 
     /**
@@ -93,7 +93,7 @@ class FrontendValues
                     return '<link rel=canonical href="<?= App::frontend()->context()->posts->getURL() ?>">' . "\n";
                     break;
                 case 'default':
-                    return '<link rel=canonical href=' . My::escapeAttr(App::blog()->url, 'url') . '>' . "\n";
+                    return '<link rel=canonical href=' . My::displayAttr(App::blog()->url, 'url') . '>' . "\n";
                     break;
                 default:
                     $current_uri = self::odysseyGetURI();
@@ -101,7 +101,7 @@ class FrontendValues
                     if ($current_uri) {
                         $current_uri = App::blog()->url() . $current_uri;
 
-                        return '<link rel=canonical href=' . My::escapeAttr($current_uri, 'url') . '>' . "\n";
+                        return '<link rel=canonical href=' . My::displayAttr($current_uri, 'url') . '>' . "\n";
                     }
             }
         }
@@ -118,7 +118,7 @@ class FrontendValues
     {
         $css_url = My::settingValue('styles_url') ?: My::odysseyThemeFolder('url', '/style.min.css');
 
-        return My::escapeAttr($css_url, 'url');
+        return My::displayAttr($css_url, 'url');
     }
 
     /**
@@ -179,10 +179,10 @@ class FrontendValues
         if (isset($attr['position']) && $img_position === $attr['position']) {
             if (App::url()->type === 'default') {
                 // Do not add a link to the home page on home page.
-                return '<div id=site-image><img alt=' . My::escapeAttr($img_description, 'html') . ' src=' . My::escapeAttr($image_url, 'url') . $srcset . $sizes . '></div>';
+                return '<div id=site-image><img alt=' . My::displayAttr($img_description, 'html') . ' src=' . My::displayAttr($image_url, 'url') . $srcset . $sizes . '></div>';
             }
 
-            return '<div id=site-image><a href=' . My::escapeAttr(App::blog()->url, 'url') . ' rel=home><img alt=' . My::escapeAttr($img_description, 'html') . ' src=' . My::escapeAttr($image_url, 'url') . $srcset . $sizes . '></a></div>';
+            return '<div id=site-image><a href=' . My::displayAttr(App::blog()->url, 'url') . ' rel=home><img alt=' . My::displayAttr($img_description, 'html') . ' src=' . My::displayAttr($image_url, 'url') . $srcset . $sizes . '></a></div>';
         }
 
         return '';
@@ -397,12 +397,12 @@ class FrontendValues
             $reaction_url = App::frontend()->context()->posts->getURL() . "#' . __('reactions-id') . '";
 
             if ($nb_reactions > 1) {
-                $reaction_text = (string) sprintf("' . __("reactions-reactions-title-count-multiple") . '", $nb_reactions);
+                $reaction_text = sprintf(__("reactions-reactions-title-count-multiple"), $nb_reactions);
             } else {
-                $reaction_text = "' . __("reactions-reactions-title-count-one") . '";
+                $reaction_text = __("reactions-reactions-title-count-one");
             }
 
-            echo "' . $separator . $tag_open . '<a href=\"" . Html::escapeHTML($reaction_url) . "\">" . Html::escapeHTML($reaction_text) . "</a>' . $tag_close . '";
+            echo "' . $separator . $tag_open . '<a href=\"" . Html::escapeURL($reaction_url) . "\">" . Html::escapeHTML($reaction_text) . "</a>' . $tag_close . '";
         }
         ?>';
     }
@@ -492,8 +492,8 @@ class FrontendValues
             if (isset(App::frontend()->context()->posts->user_email) && App::frontend()->context()->posts->user_email && (App::blog()->settings->odyssey->reactions_other === "always" || (App::blog()->settings->odyssey->reactions_other === "comments_open" && App::frontend()->context()->posts->post_open_comment === "1"))
             ) {
                 $mailto  = Html::escapeHTML(App::frontend()->context()->posts->user_email);
-                $subject = "' . __('reactions-other-email-prefix') . '" . App::frontend()->context()->posts->post_title;
-                $body    = "' . __('reactions-other-email-body-post-url') . ' " . App::frontend()->context()->posts->getURL();
+                $subject = sprintf(__("reactions-other-email-title"), App::frontend()->context()->posts->post_title);
+                $body    = sprintf(__("reactions-other-email-body"), App::frontend()->context()->posts->getURL());
                 $href    = "mailto:" . $mailto . "?subject=" . rawurlencode($subject) . "&body=" . rawurlencode($body);
 
                 $reactions_other .= "<p><a class=reactions-button href=\"" . $href . "\"><svg class=\"reactions-button-icon social-icon-fi\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('email')['path']) . '</svg> <span class=reactions-button-text>' . __('reactions-other-email-button-text') . '</span></a></p>";
@@ -566,7 +566,7 @@ class FrontendValues
                 $sms_href = "sms:' . My::settingValue('social_sms') . '";
 
                 if (App::frontend()->context()->posts->post_title) {
-                    $sms_href .= "?body=' . __('reactions-other-email-prefix') . ' " . App::frontend()->context()->posts->post_title;
+                    $sms_href .= "?body=" . sprintf(__("reactions-other-sms-text"), App::frontend()->context()->posts->post_title);
                 }
 
                 $reactions_other .= "<p><a class=reactions-button href=\"" . $sms_href . "\"><svg class=\"reactions-button-icon social-icon-fi\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('sms')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-sms-button'), My::socialSites('sms')['name']) . '</span></a></p>";
@@ -587,7 +587,7 @@ class FrontendValues
         if (My::settingValue('social_whatsapp') && My::settingValue('reactions_other_whatsapp') === true) {
             $output .= '<?php
             $whatsapp_text = App::frontend()->context()->posts->post_title
-            ? "?text=' . __('reactions-other-email-prefix') . ' " . App::frontend()->context()->posts->post_title
+            ? "?text=" . sprintf(__("reactions-other-whatsapp-text"), App::frontend()->context()->posts->post_title)
             : "";
             $whatsapp_url  = "' . My::settingValue('social_whatsapp') . '" . $whatsapp_text;
 
@@ -679,15 +679,15 @@ class FrontendValues
 
         if ($size > 0) {
             if ($size < $kb) {
-                printf("' . __('attachment-size-b') . '", $size);
+                printf(__("attachment-size-b"), $size);
             } elseif ($size < $mb) {
-                printf("' . __('attachment-size-kb') . '", number_format($size / $kb, 1, $locale_decimal));
+                printf(__("attachment-size-kb"), number_format($size / $kb, 1, $locale_decimal));
             } elseif ($size < $gb) {
-                printf("' . __('attachment-size-mb') . '", number_format($size / $mb, 1, $locale_decimal));
+                printf(__("attachment-size-mb"), number_format($size / $mb, 1, $locale_decimal));
             } elseif ($size < $tb) {
-                printf("' . __('attachment-size-gb') . '", number_format($size / $gb, 1, $locale_decimal));
+                printf(__("attachment-size-gb"), number_format($size / $gb, 1, $locale_decimal));
             } else {
-                printf("' . __('attachment-size-tb') . '", number_format($size / $tb, 1, $locale_decimal));
+                printf(__("attachment-size-tb"), number_format($size / $tb, 1, $locale_decimal));
             }
         }
         ?>';
@@ -706,9 +706,9 @@ class FrontendValues
 
             if (is_array($post_meta) && isset($post_meta["tag"])) {
                 if (count($post_meta["tag"]) > 1) {
-                    echo "' . __('post-tags-prefix-multiple') . '";
+                    echo __("post-tags-prefix-multiple");
                 } else {
-                    echo "' . __('post-tags-prefix-one') . '";
+                    echo __("post-tags-prefix-one");
                 }
             }
         }
@@ -772,7 +772,7 @@ class FrontendValues
                 }
 
                 $output .= '<li>';
-                $output .= '<a href=' . My::escapeAttr($url, 'url') . '>';
+                $output .= '<a href=' . My::displayAttr($url, 'url') . '>';
                 $output .= '<span class=footer-social-links-icon-container>';
                 $output .= '<svg class="' . $class . '" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>';
                 $output .= '<title>' . Html::escapeHTML($data['name']) . '</title>';
@@ -795,7 +795,7 @@ class FrontendValues
             $feed_link = App::blog()->url() . App::url()->getURLFor("feed", My::settingValue('footer_feed'));
 
             $output .= '<li>';
-            $output .= '<a href=' . My::escapeAttr($feed_link, 'url') . '>';
+            $output .= '<a href=' . My::displayAttr($feed_link, 'url') . '>';
             $output .= '<span class=footer-social-links-icon-container>';
             $output .= '<svg class="social-icon-fi footer-social-links-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>';
             $output .= '<title>' . Html::escapeHTML(__('footer-social-links-feed-title')) . '</title>';

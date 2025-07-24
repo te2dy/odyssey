@@ -11,11 +11,15 @@ Ce thème n’aurait pu avoir vu le jour sans les ressources mises à dispositio
 Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://blog.jim-nielsen.com/), des travaux réalisés sur les thèmes Ductile et Berlin pour Dotclear, et des billets de Franck Paul (https://open-time.net/).
 
 == 🍀 Feuille de route ==
-- Sécuriser les entrées dans la base de données et leur affichage.
-- Publier une version 2 après essais du système de récupération de la configuration du thème et du système de téléversement de l’image d’en-tête.
-- Ajouter la possibilité d’afficher la barre latérale à gauche ou à droite, plutôt qu’en bas ?
+- Ajouter la possibilité d’afficher la barre latérale à gauche ou à droite, plutôt qu’en bas ? Version 3 ?
 
 == Notes de version ==
+
+=== 2 - 24 juillet 2025 ===
+- Refonte du code du configurateur et suppression du caractère bêta de certaines fonctionnalités.
+- Correction : suppression de CDATA dans les modèles de fils de syndication, qui cassait l’affichage dans les agrégateurs.
+- Mise à jour des traductions.
+- Revue de code.
 
 === 1.14 - 17 juillet 2025 ===
 - Ajout : dépot alternatif par l’intermédiaire du fichier dcstore.xml.

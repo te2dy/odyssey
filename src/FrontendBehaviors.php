@@ -31,14 +31,14 @@ class FrontendBehaviors
         // Adds the name of the editor.
         if (App::blog()->settings->system->editor) {
             echo '<meta name=author content=',
-            My::escapeAttr(App::blog()->settings->system->editor, 'html'),
+            My::displayAttr(App::blog()->settings->system->editor, 'html'),
             '>', "\n";
         }
 
         // Adds the content of the copyright notice.
         if (App::blog()->settings->system->copyright_notice) {
             echo '<meta name=copyright content=',
-            My::escapeAttr(App::blog()->settings->system->copyright_notice, 'html'),
+            My::displayAttr(App::blog()->settings->system->copyright_notice, 'html'),
             '>', "\n";
         }
     }
@@ -314,7 +314,7 @@ class FrontendBehaviors
             $json_ld = array_filter($json_ld);
 
             if (!empty($json_ld)) {
-                $json_ld = json_encode($json_ld);
+                $json_ld = json_encode($json_ld, JSON_HEX_QUOT|JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS);
 
                 /**
                  * To be replaced by json_validate() function
@@ -430,7 +430,7 @@ class FrontendBehaviors
                     );
 
                     // Defines image attributes.
-                    $attr = 'src=' . My::escapeAttr($img['o']['url'], 'url') . ' ';
+                    $attr = 'src=' . My::displayAttr($img['o']['url'], 'url') . ' ';
 
                     // If multiple image sizes exist, displays them.
                     if (count($img) > 1) {
@@ -477,7 +477,7 @@ class FrontendBehaviors
     public static function addAttrFilter($tag, $args): string
     {
         if (isset($args['is_attr']) && $args['is_attr'] === '1') {
-            $args[0] = My::escapeAttr($args[0]);
+            $args[0] = My::displayAttr($args[0]);
         }
 
         return $args[0];

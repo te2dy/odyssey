@@ -42,9 +42,6 @@ msgstr "Le fichier de configuration du thème a été supprimé."
 msgid "settings-notice-files-deleted"
 msgstr "Tous les fichiers de configuration du thème ont été supprimés."
 
-msgid "setting-css-custom-url"
-msgstr "URL personnalisée de la feuille de styles"
-
 msgid "settings-default-checked"
 msgstr "Par défaut&nbsp;: coché."
 
@@ -76,7 +73,7 @@ msgid "section-header"
 msgstr "Paramètres de l’en-tête"
 
 msgid "section-header-image"
-msgstr "Logo ou bannière (bêta)"
+msgstr "Logo ou bannière"
 
 msgid "section-content"
 msgstr "Paramètres du contenu"
@@ -376,7 +373,7 @@ msgid "settings-header-image2x-description"
 msgstr "Facultatif&nbsp;: pour assurer un rendu optimal de votre image sur les écrans à double densité de pixels, en particulier les Retina d’Apple, vous devez téléverser la même image avec une dimension deux fois plus grande. Exemple&nbsp;: si l’image que vous avez téléversée fait 200 px de large, téléversez-en une version de 400 px ici. Attention&nbsp;: cette seconde image doit avoir un nom différent de la première, sinon le téléversement échouera."
 
 msgid "settings-upload-title"
-msgstr "Téléverser une configuration (bêta)"
+msgstr "Téléverser une configuration"
 
 msgid "settings-upload-description"
 msgstr "Pour appliquer une configuration au thème, vous pouvez téléverser un fichier JSON à partir du formulaire ci-dessous&nbsp;:"
@@ -739,7 +736,7 @@ msgid "settings-odysseystyles-title"
 msgstr "Tous les styles"
 
 msgid "settings-page-intro"
-msgstr "C’est ici que vous pouvez personnaliser votre thème pour l’adapter à vos besoins."
+msgstr "C’est ici que vous pouvez personnaliser votre thème %s pour l’adapter à vos besoins."
 
 msgid "settings-page-forum-link"
 msgstr "Pour toute question, suggestion, demande, retour d’expérience ou autre, rendez-vous sur <a href="%s">le fil de discussion dédié à Odyssée sur le forum officiel de Dotclear</a>."
@@ -763,13 +760,13 @@ msgid "settings-reset-button-text"
 msgstr "Réinitialiser"
 
 msgid "settings-create-file-button-text"
-msgstr "Enregistrer la configuration actuelle (bêta)"
+msgstr "Enregistrer la configuration actuelle"
 
 msgid "settings-upload-file-button-text"
-msgstr "Téléverser un fichier de configuration (bêta)"
+msgstr "Téléverser un fichier de configuration"
 
 msgid "settings-backups-title"
-msgstr "Gestion des configurations enregistrées (bêta)"
+msgstr "Gestion des configurations enregistrées"
 
 msgid "settings-backups-count-multiple"
 msgstr "%d configurations sont disponibles&nbsp;:"

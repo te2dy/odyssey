@@ -42,9 +42,6 @@ msgstr "The theme configuration file has been deleted."
 msgid "settings-notice-files-deleted"
 msgstr "All theme configuration files have been deleted."
 
-msgid "setting-css-custom-url"
-msgstr "Custom CSS URL"
-
 msgid "settings-default-checked"
 msgstr "Default: checked."
 
@@ -76,7 +73,7 @@ msgid "section-header"
 msgstr "Header settings"
 
 msgid "section-header-image"
-msgstr "Logo or banner (beta)"
+msgstr "Logo or banner"
 
 msgid "section-content"
 msgstr "Content settings"
@@ -376,7 +373,7 @@ msgid "settings-header-image2x-description"
 msgstr "Optional: to ensure optimum rendering of your image on dual-pixel-density screens, in particular Apple Retinas, you need to upload the same image at twice the size. Example: if the image you uploaded is 200px wide, upload a 400px version here. Note: this second image must have a different name from the first, otherwise the upload will fail."
 
 msgid "settings-upload-title"
-msgstr "Upload a configuration (beta)"
+msgstr "Upload a configuration"
 
 msgid "settings-upload-description"
 msgstr "To apply a configuration to the theme, you can upload a JSON file using the form below:"
@@ -739,7 +736,7 @@ msgid "settings-odysseystyles-title"
 msgstr "All styles"
 
 msgid "settings-page-intro"
-msgstr "This is where you can customize your theme to suit your needs."
+msgstr "This is where you can customize your %s theme to suit your needs."
 
 msgid "settings-page-forum-link"
 msgstr "If you have any questions, suggestions, requests or feedback, please go to <a href="%s">the thread dedicated to Odyssey on the official Dotclear forum</a>."
@@ -763,13 +760,13 @@ msgid "settings-reset-button-text"
 msgstr "Reset"
 
 msgid "settings-create-file-button-text"
-msgstr "Save the current configuration (beta)"
+msgstr "Save the current configuration"
 
 msgid "settings-upload-file-button-text"
-msgstr "Upload a configuration file (beta)"
+msgstr "Upload a configuration file"
 
 msgid "settings-backups-title"
-msgstr "Saved configurations manager (beta)"
+msgstr "Saved configurations manager"
 
 msgid "settings-backups-count-multiple"
 msgstr "%d configuration files are available:"

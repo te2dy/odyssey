@@ -218,14 +218,14 @@ msgstr "Envoyer"
 msgid "reactions-other-title"
 msgstr "Vous pouvez aussi…"
 
-msgid "reactions-other-email-body-post-url"
-msgstr "Adresse du billet :"
-
 msgid "reactions-other-email-button-text"
 msgstr "Répondre par courriel"
 
-msgid "reactions-other-email-prefix"
-msgstr "Re:"
+msgid "reactions-other-email-title"
+msgstr "Re: %s"
+
+msgid "reactions-other-email-body"
+msgstr "Adresse du billet : %s"
 
 msgid "reactions-other-bluesky-button"
 msgstr "Publier sur %s"
@@ -239,8 +239,14 @@ msgstr "Publier sur %s"
 msgid "reactions-other-signal-button"
 msgstr "Répondre sur %s"
 
+msgid "reactions-other-sms-text"
+msgstr "Re: %s"
+
 msgid "reactions-other-sms-button"
 msgstr "Répondre par %s"
+
+msgid "reactions-other-whatsapp-text"
+msgstr "Re: %s"
 
 msgid "reactions-other-whatsapp-button"
 msgstr "Répondre sur %s"

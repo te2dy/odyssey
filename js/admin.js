@@ -107,7 +107,9 @@ function disableInputs() {
 
     document.getElementById("header_image-delete").style.display = "block";
 
-    if (document.getElementById("header_image-retina")) {
+    if (document.getElementById("header_image-retina")
+      && document.getElementById("header_image-retina").style.display !== "none"
+    ) {
       setStyle("header_image2x", "none");
     } else {
       setStyle("header_image2x", "block");
@@ -416,7 +418,6 @@ window.onload = function() {
 
       document.getElementById("header_image").value               = "";
       document.getElementById("header_image_description").value   = "";
-      document.getElementById("header_image-defined").value       = "false";
       document.getElementById("header_image-delete-action").value = "true";
     };
   }

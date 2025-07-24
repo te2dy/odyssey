@@ -122,6 +122,7 @@ class My extends MyTheme
             'title'       => __('settings-global-pagewidthvalue-title'),
             'description' => __('settings-global-pagewidthvalue-description'),
             'type'        => 'range',
+            'sanitizer'   => 'sanitizePageWidth',
             'range'       => [
                 'min'  => 30,
                 'max'  => 80,
@@ -406,7 +407,8 @@ class My extends MyTheme
             ),
             'type'        => 'image',
             'default'     => '',
-            'section'     => ['header', 'image']
+            'section'     => ['header', 'image'],
+            'sanitizer'   => 'sanitizeHeaderImage'
         ];
 
         $default_settings['header_image2x'] = [
@@ -414,7 +416,8 @@ class My extends MyTheme
             'description' => __('settings-header-image2x-description'),
             'type'        => 'image',
             'default'     => '',
-            'section'     => ['header', 'image']
+            'section'     => ['header', 'image'],
+            'sanitizer'   => 'sanitizeHeaderImage'
         ];
 
         $default_settings['header_image_position'] = [
@@ -762,7 +765,8 @@ class My extends MyTheme
                 'description' => sprintf(__('settings-social-' . $site . '-description'), $base['name']),
                 'type'        => 'text',
                 'default'     => '',
-                'section'     => ['social', 'no-title']
+                'section'     => ['social', 'no-title'],
+                'sanitizer'   => 'sanitizeSocial'
             ];
         }
 
@@ -799,7 +803,8 @@ class My extends MyTheme
         ];
 
         $default_settings['styles'] = [
-            'title' => __('settings-odysseystyles-title'),
+            'title'     => __('settings-odysseystyles-title'),
+            'sanitizer' => 'sanitizeStyles'
         ];
 
         if ($setting_id) {
@@ -832,7 +837,7 @@ class My extends MyTheme
      *
      * @return string The string.
      */
-    public static function escapeAttr(string $value, string $input_type = ''): string
+    public static function displayAttr(string $value, string $input_type = ''): string
     {
         if ($input_type === 'html') {
             $value = Html::escapeHTML($value);
@@ -864,7 +869,7 @@ class My extends MyTheme
     {
         $url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
 
-        return $attr ? self::escapeAttr($url) : $url;
+        return $attr ? self::displayAttr($url) : $url;
     }
 
     /**
@@ -921,12 +926,11 @@ class My extends MyTheme
      */
     public static function odysseyPublicFolder(string $type, string $to_concatenate = ''): string
     {
-        if ($type === 'url') {
-            return App::blog()->settings()->system->public_url . '/' . self::id() . $to_concatenate;
-        }
-
-        if ($type === 'path') {
-            return App::blog()->publicPath() . '/' . self::id() . $to_concatenate;
+        switch ($type) {
+            case 'url':
+                return App::blog()->settings()->system->public_url . '/' . self::id() . $to_concatenate;
+            case 'path':
+                return App::blog()->publicPath() . '/' . self::id() . $to_concatenate;
         }
 
         return '';
@@ -942,12 +946,11 @@ class My extends MyTheme
      */
     public static function odysseyVarFolder(string $type, string $to_concatenate = ''): string
     {
-        if ($type === 'vf') {
-            return self::id() . $to_concatenate;
-        }
-
-        if ($type === 'path') {
-            return App::config()->varRoot() . '/' . self::id() . $to_concatenate;
+        switch ($type) {
+            case 'vf':
+                return self::id() . $to_concatenate;
+            case 'path':
+                return App::config()->varRoot() . '/' . self::id() . $to_concatenate;
         }
 
         return '';
@@ -964,12 +967,11 @@ class My extends MyTheme
      */
     public static function odysseyThemeFolder(string $type = 'url', string $to_concatenate = ''): string
     {
-        if ($type === 'url') {
-            return App::blog()->settings()->system->themes_url . '/' . My::id() . $to_concatenate;
-        }
-
-        if ($type === 'path') {
-            return App::blog()->themesPath() . '/' . My::id() . $to_concatenate;
+        switch ($type) {
+            case 'url':
+                return App::blog()->settings()->system->themes_url . '/' . My::id() . $to_concatenate;
+            case 'path':
+                return App::blog()->themesPath() . '/' . My::id() . $to_concatenate;
         }
 
         return '';
