@@ -1631,15 +1631,15 @@ class Config extends Process
      */
     private static function _createBackupFile(BlogWorkspace $settings): void
     {
-        $custom_settings_count = 0;
+        $custom_settings       = [];
 
         foreach (My::settingsDefault() as $setting_id => $setting_data) {
             if (My::settings()->$setting_id) {
-                $custom_settings_count++;
+                $custom_settings[$setting_id] = My::settings()->$setting_id;
             }
         }
 
-        if ($custom_settings_count === 0) {
+        if (count($custom_settings) === 0) {
             // If no custom setting has been set.
             Notices::addErrorNotice(__('settings-notice-save-fail'));
         } else {
@@ -1658,7 +1658,7 @@ class Config extends Process
             $backups_path .= '/' . $file_name . '.json';
 
             // Creates the JSON file.
-            Files::putContent($backups_path, json_encode($settings));
+            Files::putContent($backups_path, json_encode($custom_settings));
 
             Notices::addNotice(
                 'success',
