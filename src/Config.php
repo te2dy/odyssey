@@ -2025,7 +2025,10 @@ class Config extends Process
         // Adds settings in their section.
         $fields = [];
 
-        $fields[] = (new Text('p', __('settings-page-intro')));
+        $fields[] = (new Text('p', sprintf(
+            __('settings-page-intro'),
+            My::name()
+        )));
         $fields[] = (new Text(
             'p',
             sprintf(
