@@ -837,7 +837,7 @@ class My extends MyTheme
      *
      * @return string The string.
      */
-    public static function escapeAttr(string $value, string $input_type = ''): string
+    public static function displayAttr(string $value, string $input_type = ''): string
     {
         if ($input_type === 'html') {
             $value = Html::escapeHTML($value);
@@ -869,7 +869,7 @@ class My extends MyTheme
     {
         $url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
 
-        return $attr ? self::escapeAttr($url) : $url;
+        return $attr ? self::displayAttr($url) : $url;
     }
 
     /**

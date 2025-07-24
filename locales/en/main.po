@@ -239,8 +239,14 @@ msgstr "Share on %s"
 msgid "reactions-other-signal-button"
 msgstr "Reply on %s"
 
+msgid "reactions-other-sms-text"
+msgstr "Re: %s"
+
 msgid "reactions-other-sms-button"
 msgstr "Reply by %s"
+
+msgid "reactions-other-whatsapp-text"
+msgstr "Re: %s"
 
 msgid "reactions-other-whatsapp-button"
 msgstr "Reply on %s"

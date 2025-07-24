@@ -2225,7 +2225,7 @@ class Config extends Process
             Notices::addNotice(
                 'success',
                 '<p>' . sprintf(__('settings-notice-save-success'), My::id(), '#odyssey-backups') . '</p>' .
-                '<a class="button submit" href=' . My::escapeAttr(urldecode(Page::getVF(My::odysseyVarFolder('vf', '/backups/' . $file_name . '.json'))), 'url') . ' download>' . __('settings-notice-save-success-link') . '</a>',
+                '<a class="button submit" href=' . My::displayAttr(urldecode(Page::getVF(My::odysseyVarFolder('vf', '/backups/' . $file_name . '.json'))), 'url') . ' download>' . __('settings-notice-save-success-link') . '</a>',
                 ['divtag' => true]
             );
 

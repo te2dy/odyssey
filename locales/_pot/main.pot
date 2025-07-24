@@ -239,7 +239,13 @@ msgstr ""
 msgid "reactions-other-signal-button"
 msgstr ""
 
+msgid "reactions-other-sms-text"
+msgstr ""
+
 msgid "reactions-other-sms-button"
+msgstr ""
+
+msgid "reactions-other-whatsapp-text"
 msgstr ""
 
 msgid "reactions-other-whatsapp-button"
