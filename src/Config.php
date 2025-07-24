@@ -1324,264 +1324,6 @@ class Config extends Process
     }
 
     /**
-     * Renders the setting in the configurator page.
-     *
-     * @param string $setting_id The id of the setting to display.
-     *
-     * @return array The setting.
-     */
-    public static function settingRender(string $setting_id): array
-    {
-        $default_settings = My::settingsDefault();
-        $saved_settings   = self::settingsSaved();
-        $setting_value    = $saved_settings[$setting_id] ?? $default_settings[$setting_id]['default'];
-        $placeholder      = $default_settings[$setting_id]['placeholder'] ?? '';
-        $the_setting      = [];
-
-        // If the setting does not exist.
-        if (!empty(My::settingsDefault($setting_id))) {
-            switch ($default_settings[$setting_id]['type']) {
-                case 'checkbox' :
-                    $the_setting[] = (new Para())
-                        ->id($setting_id . '-input')
-                        ->items([
-                            (new Checkbox($setting_id, (bool) $setting_value))
-                                ->label(
-                                    (new Label($default_settings[$setting_id]['title'], 3))
-                                    ->class('classic')
-                                )
-                            ]
-                        );
-
-                    $checkbox_default = '';
-
-                    if ($default_settings[$setting_id]['type'] === 'checkbox') {
-                        if ($default_settings[$setting_id]['default'] === true) {
-                            $checkbox_default = ' ' . __('settings-default-checked');
-                        } else {
-                            $checkbox_default = ' ' . __('settings-default-unchecked');
-                        }
-                    }
-
-                    if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
-                        $the_setting[] = (new Text('p', $default_settings[$setting_id]['description'] . $checkbox_default))
-                            ->id($setting_id . '-description')
-                            ->class('form-note');
-                    } elseif ($checkbox_default !== '') {
-                        $the_setting[] = (new Text('p', $checkbox_default))
-                            ->id($setting_id . '-description')
-                            ->class('form-note');
-                    }
-
-                    break;
-                case 'select' :
-                case 'select_int' :
-                    $combo = [];
-
-                    foreach ($default_settings[$setting_id]['choices'] as $name => $value) {
-                        $combo[] = new Option($name, $value);
-                    }
-
-                    $the_setting[] = (new Para())
-                        ->id($setting_id . '-input')
-                        ->items([
-                            (new Select($setting_id))
-                                ->default((string) $setting_value)
-                                ->items($combo)
-                                ->label(
-                                    new Label($default_settings[$setting_id]['title'], 2)
-                                )
-                            ]
-                        );
-
-                    // Displays a preview for font changes.
-                    if ($setting_id === 'global_font_family' || $setting_id === 'content_text_font') {
-                        $preview_string = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean iaculis egestas sapien, at pretium erat interdum ullamcorper. Aliquam facilisis dolor sit amet nibh imperdiet vestibulum. Aenean et elementum magna, eget blandit arcu. Morbi tellus tortor, gravida vitae rhoncus nec, scelerisque vitae odio. In nulla mi, efficitur interdum scelerisque ac, ultrices non tortor.';
-
-                        if ($setting_id === 'global_font_family') {
-                            $the_setting[] = (new Para())
-                                ->id('odyssey-config-global-font-preview')
-                                ->class('odyssey-font-preview')
-                                ->items([
-                                    (new Text('strong', __('config-preview-font'))),
-                                    (new Text(null, ' ' . $preview_string))
-                                ]);
-                        } else {
-                            $the_setting[] = (new Para())
-                                ->id('odyssey-config-content-font-preview')
-                                ->class('odyssey-font-preview')
-                                // ->extra($style)
-                                ->items([
-                                    (new Text('strong', __('config-preview-font'))),
-                                    (new Text(null, ' ' . $preview_string))
-                                ]);
-                        }
-                    }
-
-                    if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
-                        $the_setting[] = (new Text('p', $default_settings[$setting_id]['description']))
-                            ->id($setting_id . '-description')
-                            ->class('form-note');
-                    }
-
-                    break;
-                case 'image' :
-                    $the_setting[] = (new Para())
-                        ->id($setting_id . '-input')
-                        ->items([
-                            (new File($setting_id))
-                                ->label(
-                                    (new Label($default_settings[$setting_id]['title'], 2))
-                                    ->for($setting_id)
-                                )
-                        ]);
-
-                    if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
-                        $the_setting[] = (new Text('p', $default_settings[$setting_id]['description']))
-                            ->id($setting_id . '-description')
-                            ->class('form-note');
-                    }
-
-                    break;
-                case 'color' :
-                    $setting_value_input = $setting_value !== $default_settings[$setting_id]['default']
-                    ? $setting_value
-                    : '';
-
-                    $the_setting[] = (new Para())
-                        ->id($setting_id . '-input')
-                        ->class('odyssey-color-setting')
-                        ->items([
-                            (new Label($default_settings[$setting_id]['title'], 0))
-                                ->extra('for=' . $setting_id . '-text'),
-                            (new Color($setting_id, $setting_value)),
-                            (new Input($setting_id . '-text', $setting_value))
-                                ->placeholder($placeholder)
-                                ->value($setting_value_input),
-                            (new Button($setting_id . '-default-button', __('settings-colors-reset'))),
-                            (new Hidden($setting_id . '-default-value', $default_settings[$setting_id]['default']))
-                        ]);
-
-                    break;
-                case 'textarea' :
-                    $the_setting[] = (new Para())
-                        ->id($setting_id . '-input')
-                        ->items([
-                            (new Label($default_settings[$setting_id]['title'], 2))
-                                ->for($setting_id),
-                            (new Textarea($setting_id, $setting_value))
-                                ->placeholder($placeholder)
-                                ->cols(60)
-                                ->rows(3)
-                        ]);
-
-                    if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
-                        $the_setting[] = (new Text('p', $default_settings[$setting_id]['description']))
-                            ->id($setting_id . '-description')
-                            ->class('form-note');
-                    }
-
-                    break;
-                case 'range' :
-                    $range_default = [
-                        'unit'  => 'em',
-                        'value' => (int) My::settingValue($setting_id) ?: (int) $default_settings[$setting_id]['default'],
-                        'min'   => (int) $default_settings[$setting_id]['range']['min'],
-                        'max'   => (int) $default_settings[$setting_id]['range']['max'],
-                        'step'  => (int) $default_settings[$setting_id]['range']['step']
-                    ];
-
-                    if (My::settingValue('global_unit') === 'px') {
-                        $range_default['unit'] = 'px';
-                        $range_default['min']  = 480;
-                        $range_default['max']  = 1280;
-                        $range_default['step'] = 2;
-                    }
-
-                    $range_default_output = sprintf(
-                        __('settings-input-width-range-output'),
-                        '<span id=' . $setting_id . '-output-value>' . $range_default['value'] . '</span>',
-                        '<span id=' . $setting_id . '-output-unit>' . $range_default['unit'] . '</span>'
-                    );
-
-                    $the_setting[] = (new Para())
-                        ->id($setting_id . '-input')
-                        ->items([
-                            (new Label($default_settings[$setting_id]['title'], 2))
-                                ->for($setting_id),
-                            (new Input($setting_id, 'range'))
-                                ->value($range_default['value'])
-                                ->min($range_default['min'])
-                                ->max($range_default['max'])
-                                ->step($range_default['step']),
-                            (new Text(null, ' <output id=' . $setting_id . ' name=' . $setting_id . '-output>' . $range_default_output . '</output>'))
-                        ]);
-
-                    if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
-                        $the_setting[] = (new Text('p', $default_settings[$setting_id]['description']))
-                            ->id($setting_id . '-description')
-                            ->class('form-note');
-                    }
-
-                    break;
-                default :
-                    $the_setting[] = (new Para())
-                        ->id($setting_id . '-input')
-                        ->items([
-                            (new Input($setting_id))
-                                ->label(
-                                    (new Label($default_settings[$setting_id]['title'], 2))
-                                        ->for($setting_id)
-                                )
-                                ->maxlength(255)
-                                ->placeholder($placeholder)
-                                ->size(30)
-                                ->value($setting_value)
-                        ]);
-
-                    if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
-                        $the_setting[] = (new Text('p', $default_settings[$setting_id]['description']))
-                            ->id($setting_id . '-description')
-                            ->class('form-note');
-                    }
-            }
-        }
-
-        // Header image.
-        if ($setting_id === 'header_image') {
-            $image_src = $setting_value['url'] ?? '';
-
-            if (isset($saved_settings['header_image'])) {
-                $the_setting[] = (new Para())
-                    ->id('header_image-preview')
-                    ->items([
-                        (new Img(My::escapeURL($image_src), 'header_image-src'))
-                            ->alt(__('header_image-preview-alt'))
-                    ]);
-
-                if (isset($saved_settings['header_image2x'])) {
-                    $the_setting[] = (new Text('p', __('header_image-retina-ready')))
-                        ->id('header_image-retina');
-                }
-            }
-
-            $the_setting[] = (new Para())
-                ->id('header_image-delete')
-                ->items([
-                    (new Button('header_image-delete-button', __('header_image-delete-button')))
-                        ->class('delete')
-                ]);
-
-            $header_image_file_name = $saved_settings['header_image']['name'] ?? '';
-
-            $the_setting[] = (new Hidden('header_image-delete-action', "false"));
-            $the_setting[] = (new Hidden('header_image-retina-text', __('header_image-retina-ready')));
-        }
-
-        return $the_setting;
-    }
-
-    /**
      * Retrieves all theme settings stored in the database.
      *
      * @return array The id of the saved parameters associated with their values.
@@ -1604,294 +1346,6 @@ class Config extends Process
         }
 
         return $saved_settings;
-    }
-
-    /**
-     * Renders the page.
-     *
-     * @return void The page.
-     */
-    public static function render(): void
-    {
-        if (!self::status()) {
-            return;
-        }
-
-        Page::openModule(
-            My::name(),
-            My::cssLoad('/css/admin.min.css') . My::jsLoad('/js/admin.min.js')
-        );
-
-        echo Notices::getNotices();
-
-        // Add a form before the main form to upload a configuration file.
-        if (isset($_GET['config-upload']) && $_GET['config-upload'] === '1') {
-            $upload_form_fields = [];
-
-            $upload_form_fields[] = (new Text('h3', __('settings-upload-title')));
-            $upload_form_fields[] = (new Text('p', __('settings-upload-description')));
-
-            $upload_form_fields[] = (new Para())
-                ->class('form-buttons')
-                ->items([
-                    (new File('config-upload-file', __('settings-file-import-input-button-text')))
-                        ->name('config-upload-file'),
-                ]);
-
-            $upload_form_fields[] = (new Para())
-                ->class('form-buttons')
-                ->items([
-                    App::nonce()->formNonce(),
-                    (new Submit(null, __('settings-upload-submit')))
-                        ->name('config-upload-submit'),
-                    (new Submit(null, __('settings-upload-cancel')))
-                        ->class('delete')
-                        ->name('config-upload-cancel')
-                ]);
-
-            echo (new Form('theme-config-upload'))
-                ->action(App::backend()->url()->get('admin.blog.theme', ['module' => My::id(), 'conf' => '1', 'config-upload' => '1']))
-                ->class('fieldset')
-                ->enctype('multipart/form-data')
-                ->method('post')
-                ->fields($upload_form_fields)
-                ->render();
-        }
-
-        /**
-         * Starting to create the main form.
-         *
-         * Creates an array to put all the settings in their sections.
-         */
-        $settings_render = [];
-
-        // Adds sections.
-        foreach (My::settingsSections() as $section_id => $section_data) {
-            $settings_render[$section_id] = [];
-        }
-
-        $settings_ignored = ['styles'];
-
-        foreach (My::settingsDefault() as $setting_id => $setting_data) {
-            if (!in_array($setting_id, $settings_ignored, true)) {
-                // If a sub-section has been set.
-                if (isset($setting_data['section'][1])) {
-                    $settings_render[$setting_data['section'][0]][$setting_data['section'][1]][] = $setting_id;
-                } else {
-                    $settings_render[$setting_data['section'][0]][] = $setting_id;
-                }
-            }
-        }
-
-        // Adds settings in their section.
-        $fields = [];
-
-        $fields[] = (new Text('p', __('settings-page-intro')));
-        $fields[] = (new Text(
-            'p',
-            sprintf(
-                __('settings-page-forum-link'),
-                'https://forum.dotclear.org/viewtopic.php?id=51635'
-            )
-        ));
-
-        foreach ($settings_render as $section_id => $setting_data) {
-            $settings_fields = [];
-
-            foreach ($setting_data as $sub_section_id => $setting_id) {
-                // Displays the name of the sub-section unless its ID is "no-title".
-                if ($sub_section_id !== 'no-title') {
-                    $settings_fields[] = (new Text('h4', My::settingsSections($section_id)['sub_sections'][$sub_section_id]))
-                        ->id('section-' . $section_id . '-' . $sub_section_id);
-                }
-
-                if (isset($setting_id[0]) && $setting_id[0] === 'social_bluesky') {
-                    $settings_fields[] = (new Text(
-                        'p',
-                        sprintf(
-                            __('settings-social-notice'),
-                            __('section-footer'),
-                            __('section-reactions')
-                        )
-                    ));
-                }
-
-                // Displays the parameter.
-                foreach ($setting_id as $setting_id_value) {
-                    if (is_array(self::settingRender($setting_id_value))) {
-                        foreach (self::settingRender($setting_id_value) as $item) {
-                            $settings_fields[] = $item;
-                        }
-                    }
-                }
-            }
-
-            $fields[] = (new Text('h3', My::settingsSections($section_id)['name']))
-                ->id('section-' . $section_id);
-            $fields[] = (new Fieldset())
-                ->items($settings_fields);
-        }
-
-        $fields[] = (new Hidden('page_width_em_min_default', '30'));
-        $fields[] = (new Hidden('page_width_em_max_default', '80'));
-        $fields[] = (new Hidden('page_width_em_step_default', '1'));
-        $fields[] = (new Hidden('page_width_px_min_default', '480'));
-        $fields[] = (new Hidden('page_width_px_max_default', '1280'));
-        $fields[] = (new Hidden('page_width_px_step_default', '2'));
-        $fields[] = (new Hidden('reset_warning', __('settings-reset-warning')));
-        $fields[] = (new Hidden('config_remove_warning', __('settings-config-remove-warning')));
-        $fields[] = (new Hidden('config_remove_all_warning', __('settings-config-remove-all-warning')));
-
-        $fields[] = (new Para())
-            ->class('form-buttons')
-            ->items([
-                App::nonce()->formNonce(),
-                (new Submit(null, __('settings-save-button-text')))
-                    ->name('save'),
-                (new Submit(null,  __('settings-reset-button-text')))
-                    ->class('delete')
-                    ->id('odyssey-reset')
-                    ->name('reset'),
-                (new Submit(null, __('settings-create-file-button-text')))
-                    ->class('button modal')
-                    ->name('save-config'),
-                (new Submit(null,  __('settings-upload-file-button-text')))
-                    ->class('button modal')
-                    ->name('import-config')
-            ]);
-
-        // Displays theme configuration backups.
-        $backups_dir_path = My::odysseyVarFolder('path', '/backups/');
-
-        if (is_dir($backups_dir_path)) {
-            $backups_dir_data = Files::getDirList($backups_dir_path);
-
-            if (!empty($backups_dir_data)) {
-                $backups_dir_files = $backups_dir_data['files'] ?? [];
-
-                if (!empty($backups_dir_files)) {
-                    $file_list = [];
-
-                    foreach ($backups_dir_files as $backup_path) {
-                        $file_extension = Files::getExtension($backup_path);
-
-                        if ($file_extension === 'json') {
-                            $file_list[] = $backup_path;
-                        }
-                    }
-
-                    if (!empty($file_list)) {
-                        $table_fields = [];
-
-                        foreach ($file_list as $file_path) {
-                            $file_name_parts = explode('-', basename($file_path));
-
-                            $file_name_date = $file_name_parts[0] ?? null;
-                            $file_name_date = Date::str(App::blog()->settings()->system->date_format, strtotime($file_name_date));
-                            $file_name_time = $file_name_parts[1] ?? null;
-                            $file_name_time = Date::str(App::blog()->settings()->system->time_format, strtotime($file_name_time));
-                            $file_datetime  = $file_name_date . ' à ' . $file_name_time;
-                            $file_datetime  = sprintf(__('settings-backup-datetime'), $file_name_date, $file_name_time);
-
-                            $file_name_without_extension = substr(basename($file_path), 0, -5);
-
-                            $restore_url = App::backend()->url()->get(
-                                'admin.blog.theme',
-                                [
-                                    'module'  => My::id(),
-                                    'conf'    => '1',
-                                    'restore' => My::escapeURL($file_name_without_extension)
-                                ]
-                            );
-
-                            $download_url = Page::getVF(My::odysseyVarFolder('vf', '/backups/' . basename($backup_path)));
-
-                            $delete_url = App::backend()->url()->get(
-                                'admin.blog.theme',
-                                [
-                                    'module'              => My::id(),
-                                    'conf'                => '1',
-                                    'restore_delete_file' => My::escapeURL($file_name_without_extension)
-                                ]
-                            );
-
-                            $table_fields[] = (new Tr())
-                                ->class('line')
-                                ->items([
-                                    (new Td())
-                                        ->text(sprintf(__('settings-backup-title'), Html::escapeHTML($file_datetime))),
-                                    (new Td())
-                                        ->items([
-                                            (new Link())
-                                                ->href($restore_url, false)
-                                                ->text(__('settings-backup-restore-link')),
-                                        ]),
-                                    (new Td())
-                                        ->items([
-                                            (new Link())
-                                                ->extra('download')
-                                                ->href(My::escapeURL($download_url))
-                                                ->text(__('settings-backup-download-link'))
-                                        ]),
-                                    (new Td())
-                                        ->items([
-                                            (new Link())
-                                                ->class('odyssey-backups-remove')
-                                                ->href($delete_url)
-                                                ->text(__('settings-backup-delete-link'))
-                                        ])
-                                ]);
-                        }
-
-                        if (count($file_list) > 1) {
-                            $backups_table_intro = sprintf(
-                                __('settings-backups-count-multiple'),
-                                count($file_list)
-                            );
-                        } else {
-                            $backups_table_intro = __('settings-backups-count-one');
-                        }
-
-                        $delete_all_url = App::backend()->url()->get(
-                            'admin.blog.theme',
-                            [
-                                'module'             => My::id(),
-                                'conf'               => '1',
-                                'restore_delete_all' => '1'
-                            ]
-                        );
-
-                        $fields[] = (new Div('odyssey-backups'))
-                            ->items([
-                                (new Text('h3', __('settings-backups-title'))),
-                                (new Text('p', $backups_table_intro)),
-                                (new Table())
-                                    ->class('settings rch rch-thead')
-                                    ->items([
-                                        (new Tbody())
-                                            ->items($table_fields)
-                                    ]),
-                                (new Para())
-                                    ->items([
-                                            (new Link())
-                                                ->id('odyssey-backups-remove-all')
-                                                ->href($delete_all_url)
-                                                ->text(__('settings-backup-delete-all-link'))
-                                        ])
-                            ]);
-                    }
-                }
-            }
-        }
-
-        echo (new Form('theme-config-form'))
-            ->action(App::backend()->url()->get('admin.blog.theme', ['module' => My::id(), 'conf' => '1']))
-            ->enctype('multipart/form-data')
-            ->method('post')
-            ->fields($fields)
-            ->render();
-
-        Page::closeModule();
     }
 
     /**
@@ -2231,5 +1685,551 @@ class Config extends Process
 
             App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
         }
+    }
+
+    /**
+     * Renders the setting in the configurator page.
+     *
+     * @param string $setting_id The id of the setting to display.
+     *
+     * @return array The setting.
+     */
+    public static function settingRender(string $setting_id): array
+    {
+        $default_settings = My::settingsDefault();
+        $saved_settings   = self::settingsSaved();
+        $setting_value    = $saved_settings[$setting_id] ?? $default_settings[$setting_id]['default'];
+        $placeholder      = $default_settings[$setting_id]['placeholder'] ?? '';
+        $the_setting      = [];
+
+        // If the setting does not exist.
+        if (!empty(My::settingsDefault($setting_id))) {
+            switch ($default_settings[$setting_id]['type']) {
+                case 'checkbox' :
+                    $the_setting[] = (new Para())
+                        ->id($setting_id . '-input')
+                        ->items([
+                            (new Checkbox($setting_id, (bool) $setting_value))
+                                ->label(
+                                    (new Label($default_settings[$setting_id]['title'], 3))
+                                    ->class('classic')
+                                )
+                            ]
+                        );
+
+                    $checkbox_default = '';
+
+                    if ($default_settings[$setting_id]['type'] === 'checkbox') {
+                        if ($default_settings[$setting_id]['default'] === true) {
+                            $checkbox_default = ' ' . __('settings-default-checked');
+                        } else {
+                            $checkbox_default = ' ' . __('settings-default-unchecked');
+                        }
+                    }
+
+                    if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
+                        $the_setting[] = (new Text('p', $default_settings[$setting_id]['description'] . $checkbox_default))
+                            ->id($setting_id . '-description')
+                            ->class('form-note');
+                    } elseif ($checkbox_default !== '') {
+                        $the_setting[] = (new Text('p', $checkbox_default))
+                            ->id($setting_id . '-description')
+                            ->class('form-note');
+                    }
+
+                    break;
+                case 'select' :
+                case 'select_int' :
+                    $combo = [];
+
+                    foreach ($default_settings[$setting_id]['choices'] as $name => $value) {
+                        $combo[] = new Option($name, $value);
+                    }
+
+                    $the_setting[] = (new Para())
+                        ->id($setting_id . '-input')
+                        ->items([
+                            (new Select($setting_id))
+                                ->default((string) $setting_value)
+                                ->items($combo)
+                                ->label(
+                                    new Label($default_settings[$setting_id]['title'], 2)
+                                )
+                            ]
+                        );
+
+                    // Displays a preview for font changes.
+                    if ($setting_id === 'global_font_family' || $setting_id === 'content_text_font') {
+                        $preview_string = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean iaculis egestas sapien, at pretium erat interdum ullamcorper. Aliquam facilisis dolor sit amet nibh imperdiet vestibulum. Aenean et elementum magna, eget blandit arcu. Morbi tellus tortor, gravida vitae rhoncus nec, scelerisque vitae odio. In nulla mi, efficitur interdum scelerisque ac, ultrices non tortor.';
+
+                        if ($setting_id === 'global_font_family') {
+                            $the_setting[] = (new Para())
+                                ->id('odyssey-config-global-font-preview')
+                                ->class('odyssey-font-preview')
+                                ->items([
+                                    (new Text('strong', __('config-preview-font'))),
+                                    (new Text(null, ' ' . $preview_string))
+                                ]);
+                        } else {
+                            $the_setting[] = (new Para())
+                                ->id('odyssey-config-content-font-preview')
+                                ->class('odyssey-font-preview')
+                                // ->extra($style)
+                                ->items([
+                                    (new Text('strong', __('config-preview-font'))),
+                                    (new Text(null, ' ' . $preview_string))
+                                ]);
+                        }
+                    }
+
+                    if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
+                        $the_setting[] = (new Text('p', $default_settings[$setting_id]['description']))
+                            ->id($setting_id . '-description')
+                            ->class('form-note');
+                    }
+
+                    break;
+                case 'image' :
+                    $the_setting[] = (new Para())
+                        ->id($setting_id . '-input')
+                        ->items([
+                            (new File($setting_id))
+                                ->label(
+                                    (new Label($default_settings[$setting_id]['title'], 2))
+                                    ->for($setting_id)
+                                )
+                        ]);
+
+                    if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
+                        $the_setting[] = (new Text('p', $default_settings[$setting_id]['description']))
+                            ->id($setting_id . '-description')
+                            ->class('form-note');
+                    }
+
+                    break;
+                case 'color' :
+                    $setting_value_input = $setting_value !== $default_settings[$setting_id]['default']
+                    ? $setting_value
+                    : '';
+
+                    $the_setting[] = (new Para())
+                        ->id($setting_id . '-input')
+                        ->class('odyssey-color-setting')
+                        ->items([
+                            (new Label($default_settings[$setting_id]['title'], 0))
+                                ->extra('for=' . $setting_id . '-text'),
+                            (new Color($setting_id, $setting_value)),
+                            (new Input($setting_id . '-text', $setting_value))
+                                ->placeholder($placeholder)
+                                ->value($setting_value_input),
+                            (new Button($setting_id . '-default-button', __('settings-colors-reset'))),
+                            (new Hidden($setting_id . '-default-value', $default_settings[$setting_id]['default']))
+                        ]);
+
+                    break;
+                case 'textarea' :
+                    $the_setting[] = (new Para())
+                        ->id($setting_id . '-input')
+                        ->items([
+                            (new Label($default_settings[$setting_id]['title'], 2))
+                                ->for($setting_id),
+                            (new Textarea($setting_id, $setting_value))
+                                ->placeholder($placeholder)
+                                ->cols(60)
+                                ->rows(3)
+                        ]);
+
+                    if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
+                        $the_setting[] = (new Text('p', $default_settings[$setting_id]['description']))
+                            ->id($setting_id . '-description')
+                            ->class('form-note');
+                    }
+
+                    break;
+                case 'range' :
+                    $range_default = [
+                        'unit'  => 'em',
+                        'value' => (int) My::settingValue($setting_id) ?: (int) $default_settings[$setting_id]['default'],
+                        'min'   => (int) $default_settings[$setting_id]['range']['min'],
+                        'max'   => (int) $default_settings[$setting_id]['range']['max'],
+                        'step'  => (int) $default_settings[$setting_id]['range']['step']
+                    ];
+
+                    if (My::settingValue('global_unit') === 'px') {
+                        $range_default['unit'] = 'px';
+                        $range_default['min']  = 480;
+                        $range_default['max']  = 1280;
+                        $range_default['step'] = 2;
+                    }
+
+                    $range_default_output = sprintf(
+                        __('settings-input-width-range-output'),
+                        '<span id=' . $setting_id . '-output-value>' . $range_default['value'] . '</span>',
+                        '<span id=' . $setting_id . '-output-unit>' . $range_default['unit'] . '</span>'
+                    );
+
+                    $the_setting[] = (new Para())
+                        ->id($setting_id . '-input')
+                        ->items([
+                            (new Label($default_settings[$setting_id]['title'], 2))
+                                ->for($setting_id),
+                            (new Input($setting_id, 'range'))
+                                ->value($range_default['value'])
+                                ->min($range_default['min'])
+                                ->max($range_default['max'])
+                                ->step($range_default['step']),
+                            (new Text(null, ' <output id=' . $setting_id . ' name=' . $setting_id . '-output>' . $range_default_output . '</output>'))
+                        ]);
+
+                    if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
+                        $the_setting[] = (new Text('p', $default_settings[$setting_id]['description']))
+                            ->id($setting_id . '-description')
+                            ->class('form-note');
+                    }
+
+                    break;
+                default :
+                    $the_setting[] = (new Para())
+                        ->id($setting_id . '-input')
+                        ->items([
+                            (new Input($setting_id))
+                                ->label(
+                                    (new Label($default_settings[$setting_id]['title'], 2))
+                                        ->for($setting_id)
+                                )
+                                ->maxlength(255)
+                                ->placeholder($placeholder)
+                                ->size(30)
+                                ->value($setting_value)
+                        ]);
+
+                    if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
+                        $the_setting[] = (new Text('p', $default_settings[$setting_id]['description']))
+                            ->id($setting_id . '-description')
+                            ->class('form-note');
+                    }
+            }
+        }
+
+        // Header image.
+        if ($setting_id === 'header_image') {
+            $image_src = $setting_value['url'] ?? '';
+
+            if (isset($saved_settings['header_image'])) {
+                $the_setting[] = (new Para())
+                    ->id('header_image-preview')
+                    ->items([
+                        (new Img(My::escapeURL($image_src), 'header_image-src'))
+                            ->alt(__('header_image-preview-alt'))
+                    ]);
+
+                if (isset($saved_settings['header_image2x'])) {
+                    $the_setting[] = (new Text('p', __('header_image-retina-ready')))
+                        ->id('header_image-retina');
+                }
+            }
+
+            $the_setting[] = (new Para())
+                ->id('header_image-delete')
+                ->items([
+                    (new Button('header_image-delete-button', __('header_image-delete-button')))
+                        ->class('delete')
+                ]);
+
+            $header_image_file_name = $saved_settings['header_image']['name'] ?? '';
+
+            $the_setting[] = (new Hidden('header_image-delete-action', "false"));
+            $the_setting[] = (new Hidden('header_image-retina-text', __('header_image-retina-ready')));
+        }
+
+        return $the_setting;
+    }
+
+    /**
+     * Renders the page.
+     *
+     * @return void The page.
+     */
+    public static function render(): void
+    {
+        if (!self::status()) {
+            return;
+        }
+
+        Page::openModule(
+            My::name(),
+            My::cssLoad('/css/admin.min.css') . My::jsLoad('/js/admin.min.js')
+        );
+
+        echo Notices::getNotices();
+
+        // Add a form before the main form to upload a configuration file.
+        if (isset($_GET['config-upload']) && $_GET['config-upload'] === '1') {
+            $upload_form_fields = [];
+
+            $upload_form_fields[] = (new Text('h3', __('settings-upload-title')));
+            $upload_form_fields[] = (new Text('p', __('settings-upload-description')));
+
+            $upload_form_fields[] = (new Para())
+                ->class('form-buttons')
+                ->items([
+                    (new File('config-upload-file', __('settings-file-import-input-button-text')))
+                        ->name('config-upload-file'),
+                ]);
+
+            $upload_form_fields[] = (new Para())
+                ->class('form-buttons')
+                ->items([
+                    App::nonce()->formNonce(),
+                    (new Submit(null, __('settings-upload-submit')))
+                        ->name('config-upload-submit'),
+                    (new Submit(null, __('settings-upload-cancel')))
+                        ->class('delete')
+                        ->name('config-upload-cancel')
+                ]);
+
+            echo (new Form('theme-config-upload'))
+                ->action(App::backend()->url()->get('admin.blog.theme', ['module' => My::id(), 'conf' => '1', 'config-upload' => '1']))
+                ->class('fieldset')
+                ->enctype('multipart/form-data')
+                ->method('post')
+                ->fields($upload_form_fields)
+                ->render();
+        }
+
+        /**
+         * Starting to create the main form.
+         *
+         * Creates an array to put all the settings in their sections.
+         */
+        $settings_render = [];
+
+        // Adds sections.
+        foreach (My::settingsSections() as $section_id => $section_data) {
+            $settings_render[$section_id] = [];
+        }
+
+        $settings_ignored = ['styles'];
+
+        foreach (My::settingsDefault() as $setting_id => $setting_data) {
+            if (!in_array($setting_id, $settings_ignored, true)) {
+                // If a sub-section has been set.
+                if (isset($setting_data['section'][1])) {
+                    $settings_render[$setting_data['section'][0]][$setting_data['section'][1]][] = $setting_id;
+                } else {
+                    $settings_render[$setting_data['section'][0]][] = $setting_id;
+                }
+            }
+        }
+
+        // Adds settings in their section.
+        $fields = [];
+
+        $fields[] = (new Text('p', __('settings-page-intro')));
+        $fields[] = (new Text(
+            'p',
+            sprintf(
+                __('settings-page-forum-link'),
+                'https://forum.dotclear.org/viewtopic.php?id=51635'
+            )
+        ));
+
+        foreach ($settings_render as $section_id => $setting_data) {
+            $settings_fields = [];
+
+            foreach ($setting_data as $sub_section_id => $setting_id) {
+                // Displays the name of the sub-section unless its ID is "no-title".
+                if ($sub_section_id !== 'no-title') {
+                    $settings_fields[] = (new Text('h4', My::settingsSections($section_id)['sub_sections'][$sub_section_id]))
+                        ->id('section-' . $section_id . '-' . $sub_section_id);
+                }
+
+                if (isset($setting_id[0]) && $setting_id[0] === 'social_bluesky') {
+                    $settings_fields[] = (new Text(
+                        'p',
+                        sprintf(
+                            __('settings-social-notice'),
+                            __('section-footer'),
+                            __('section-reactions')
+                        )
+                    ));
+                }
+
+                // Displays the parameter.
+                foreach ($setting_id as $setting_id_value) {
+                    if (is_array(self::settingRender($setting_id_value))) {
+                        foreach (self::settingRender($setting_id_value) as $item) {
+                            $settings_fields[] = $item;
+                        }
+                    }
+                }
+            }
+
+            $fields[] = (new Text('h3', My::settingsSections($section_id)['name']))
+                ->id('section-' . $section_id);
+            $fields[] = (new Fieldset())
+                ->items($settings_fields);
+        }
+
+        $fields[] = (new Hidden('page_width_em_min_default', '30'));
+        $fields[] = (new Hidden('page_width_em_max_default', '80'));
+        $fields[] = (new Hidden('page_width_em_step_default', '1'));
+        $fields[] = (new Hidden('page_width_px_min_default', '480'));
+        $fields[] = (new Hidden('page_width_px_max_default', '1280'));
+        $fields[] = (new Hidden('page_width_px_step_default', '2'));
+        $fields[] = (new Hidden('reset_warning', __('settings-reset-warning')));
+        $fields[] = (new Hidden('config_remove_warning', __('settings-config-remove-warning')));
+        $fields[] = (new Hidden('config_remove_all_warning', __('settings-config-remove-all-warning')));
+
+        $fields[] = (new Para())
+            ->class('form-buttons')
+            ->items([
+                App::nonce()->formNonce(),
+                (new Submit(null, __('settings-save-button-text')))
+                    ->name('save'),
+                (new Submit(null,  __('settings-reset-button-text')))
+                    ->class('delete')
+                    ->id('odyssey-reset')
+                    ->name('reset'),
+                (new Submit(null, __('settings-create-file-button-text')))
+                    ->class('button modal')
+                    ->name('save-config'),
+                (new Submit(null,  __('settings-upload-file-button-text')))
+                    ->class('button modal')
+                    ->name('import-config')
+            ]);
+
+        // Displays theme configuration backups.
+        $backups_dir_path = My::odysseyVarFolder('path', '/backups/');
+
+        if (is_dir($backups_dir_path)) {
+            $backups_dir_data = Files::getDirList($backups_dir_path);
+
+            if (!empty($backups_dir_data)) {
+                $backups_dir_files = $backups_dir_data['files'] ?? [];
+
+                if (!empty($backups_dir_files)) {
+                    $file_list = [];
+
+                    foreach ($backups_dir_files as $backup_path) {
+                        $file_extension = Files::getExtension($backup_path);
+
+                        if ($file_extension === 'json') {
+                            $file_list[] = $backup_path;
+                        }
+                    }
+
+                    if (!empty($file_list)) {
+                        $table_fields = [];
+
+                        foreach ($file_list as $file_path) {
+                            $file_name_parts = explode('-', basename($file_path));
+
+                            $file_name_date = $file_name_parts[0] ?? null;
+                            $file_name_date = Date::str(App::blog()->settings()->system->date_format, strtotime($file_name_date));
+                            $file_name_time = $file_name_parts[1] ?? null;
+                            $file_name_time = Date::str(App::blog()->settings()->system->time_format, strtotime($file_name_time));
+                            $file_datetime  = $file_name_date . ' à ' . $file_name_time;
+                            $file_datetime  = sprintf(__('settings-backup-datetime'), $file_name_date, $file_name_time);
+
+                            $file_name_without_extension = substr(basename($file_path), 0, -5);
+
+                            $restore_url = App::backend()->url()->get(
+                                'admin.blog.theme',
+                                [
+                                    'module'  => My::id(),
+                                    'conf'    => '1',
+                                    'restore' => My::escapeURL($file_name_without_extension)
+                                ]
+                            );
+
+                            $download_url = Page::getVF(My::odysseyVarFolder('vf', '/backups/' . basename($backup_path)));
+
+                            $delete_url = App::backend()->url()->get(
+                                'admin.blog.theme',
+                                [
+                                    'module'              => My::id(),
+                                    'conf'                => '1',
+                                    'restore_delete_file' => My::escapeURL($file_name_without_extension)
+                                ]
+                            );
+
+                            $table_fields[] = (new Tr())
+                                ->class('line')
+                                ->items([
+                                    (new Td())
+                                        ->text(sprintf(__('settings-backup-title'), Html::escapeHTML($file_datetime))),
+                                    (new Td())
+                                        ->items([
+                                            (new Link())
+                                                ->href($restore_url, false)
+                                                ->text(__('settings-backup-restore-link')),
+                                        ]),
+                                    (new Td())
+                                        ->items([
+                                            (new Link())
+                                                ->extra('download')
+                                                ->href(My::escapeURL($download_url))
+                                                ->text(__('settings-backup-download-link'))
+                                        ]),
+                                    (new Td())
+                                        ->items([
+                                            (new Link())
+                                                ->class('odyssey-backups-remove')
+                                                ->href($delete_url)
+                                                ->text(__('settings-backup-delete-link'))
+                                        ])
+                                ]);
+                        }
+
+                        if (count($file_list) > 1) {
+                            $backups_table_intro = sprintf(
+                                __('settings-backups-count-multiple'),
+                                count($file_list)
+                            );
+                        } else {
+                            $backups_table_intro = __('settings-backups-count-one');
+                        }
+
+                        $delete_all_url = App::backend()->url()->get(
+                            'admin.blog.theme',
+                            [
+                                'module'             => My::id(),
+                                'conf'               => '1',
+                                'restore_delete_all' => '1'
+                            ]
+                        );
+
+                        $fields[] = (new Div('odyssey-backups'))
+                            ->items([
+                                (new Text('h3', __('settings-backups-title'))),
+                                (new Text('p', $backups_table_intro)),
+                                (new Table())
+                                    ->class('settings rch rch-thead')
+                                    ->items([
+                                        (new Tbody())
+                                            ->items($table_fields)
+                                    ]),
+                                (new Para())
+                                    ->items([
+                                            (new Link())
+                                                ->id('odyssey-backups-remove-all')
+                                                ->href($delete_all_url)
+                                                ->text(__('settings-backup-delete-all-link'))
+                                        ])
+                            ]);
+                    }
+                }
+            }
+        }
+
+        echo (new Form('theme-config-form'))
+            ->action(App::backend()->url()->get('admin.blog.theme', ['module' => My::id(), 'conf' => '1']))
+            ->enctype('multipart/form-data')
+            ->method('post')
+            ->fields($fields)
+            ->render();
+
+        Page::closeModule();
     }
 }
