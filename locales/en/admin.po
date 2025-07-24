@@ -736,7 +736,7 @@ msgid "settings-odysseystyles-title"
 msgstr "All styles"
 
 msgid "settings-page-intro"
-msgstr "This is where you can customize your theme to suit your needs."
+msgstr "This is where you can customize your %s theme to suit your needs."
 
 msgid "settings-page-forum-link"
 msgstr "If you have any questions, suggestions, requests or feedback, please go to <a href="%s">the thread dedicated to Odyssey on the official Dotclear forum</a>."
