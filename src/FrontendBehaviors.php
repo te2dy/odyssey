@@ -52,7 +52,7 @@ class FrontendBehaviors
      */
     public static function odysseySocialMarkups(): void
     {
-        if (My::settingValue('advanced_meta_social') === true) {
+        if (My::settings()->advanced_meta_social === true) {
             $title = '';
             $desc  = '';
             $img   = '';
@@ -86,12 +86,12 @@ class FrontendBehaviors
                         $desc = sprintf(__('meta-social-page-with-number'), $page);
                     }
 
-                    if (My::settingValue('advanced_meta_description') || App::blog()->desc) {
+                    if (My::settings()->advanced_meta_description || App::blog()->desc) {
                         if ($desc) {
                             $desc .= ' – ';
                         }
 
-                        $desc .= My::settingValue('advanced_meta_description') ?: App::blog()->desc ?: '';
+                        $desc .= My::settings()->advanced_meta_description ?: App::blog()->desc ?: '';
 
                         $desc = My::cleanStr($desc);
 
@@ -125,16 +125,16 @@ class FrontendBehaviors
             $img   = My::escapeURL($img);
 
             if ($title) {
-                if (!$img && isset(My::settingValue('header_image')['url'])) {
-                    $img = My::escapeURL(App::blog()->url() . My::settingValue('header_image')['url']);
+                if (!$img && isset(My::settings()->header_image['url'])) {
+                    $img = My::escapeURL(App::blog()->url() . My::settings()->header_image['url']);
                 }
 
                 if ($img) {
                     echo '<meta name="twitter:card" content="summary_large_image">', "\n";
 
-                    if (My::settingValue('social_x')) {
+                    if (My::settings()->social_x) {
                         echo '<meta property="twitter:creator" content="@',
-                        str_replace('https://x.com/', '', Html::escapeHTML(My::settingValue('social_x'))),
+                        str_replace('https://x.com/', '', Html::escapeHTML(My::settings()->social_x)),
                         '">', "\n";
                     }
                 }
@@ -162,7 +162,7 @@ class FrontendBehaviors
      */
     public static function odysseyJsonLd(): void
     {
-        if (My::settingValue('advanced_json') === true) {
+        if (My::settings()->advanced_json === true) {
             $json_ld = [];
 
             switch (App::url()->type) {
@@ -175,21 +175,21 @@ class FrontendBehaviors
                             'name'  => App::blog()->name
                         ],
                         'name'        => App::blog()->name,
-                        'description' => My::settingValue('advanced_meta_description') ?: App::blog()->desc,
+                        'description' => My::settings()->advanced_meta_description ?: App::blog()->desc,
                         'url'         => App::blog()->url
                     ];
 
                     // Logo
-                    if (isset(My::settingValue('header_image')['url'])) {
+                    if (isset(My::settings()->header_image['url'])) {
                         // Retrieves the image path.
-                        $image_path = App::config()->dotclearRoot() . My::settingValue('header_image')['url'];
+                        $image_path = App::config()->dotclearRoot() . My::settings()->header_image['url'];
 
                         if (file_exists($image_path)) {
                             list($width, $height) = getimagesize($image_path);
 
                             $json_ld['publisher']['logo'] = [
                                 '@type'  => 'ImageObject',
-                                'url'    => App::blog()->url() . My::settingValue('header_image')['url'],
+                                'url'    => App::blog()->url() . My::settings()->header_image['url'],
                                 'width'  => (int) $width,
                                 'height' => (int) $height
                             ];
@@ -202,8 +202,10 @@ class FrontendBehaviors
                     $social_exclude = ['phone', 'signal', 'sms', 'whatsapp'];
 
                     foreach ($social_sites as $id => $data) {
-                        if (My::settingValue('footer_social_' . $id) !== null && !in_array($id, $social_exclude, true)) {
-                            $json_ld['sameAs'][] = My::settingValue('footer_social_' . $id);
+                        $footer_social_id = 'footer_social_' . $id;
+
+                        if (My::settings()->$footer_social_id !== null && !in_array($id, $social_exclude, true)) {
+                            $json_ld['sameAs'][] = My::settings()->$footer_social_id;
                         }
                     }
 
@@ -262,16 +264,16 @@ class FrontendBehaviors
                         'url'   => App::blog()->url
                     ];
 
-                    if (isset(My::settingValue('header_image')['url'])) {
+                    if (isset(My::settings()->header_image['url'])) {
                         // Retrieves the image path.
-                        $image_path = App::config()->dotclearRoot() . My::settingValue('header_image')['url'];
+                        $image_path = App::config()->dotclearRoot() . My::settings()->header_image['url'];
 
                         if (file_exists($image_path)) {
                             list($width, $height) = getimagesize($image_path);
 
                             $json_ld['publisher']['logo'] = [
                                 '@type'  => 'ImageObject',
-                                'url'    => App::blog()->url() . My::settingValue('header_image')['url'],
+                                'url'    => App::blog()->url() . My::settings()->header_image['url'],
                                 'width'  => (int) $width,
                                 'height' => (int) $height
                             ];
@@ -342,7 +344,7 @@ class FrontendBehaviors
             return;
         }
 
-        if (!My::settingValue('content_images_wide')) {
+        if (!My::settings()->content_images_wide) {
             return;
         }
 
@@ -389,7 +391,7 @@ class FrontendBehaviors
 
                     if (App::url()->type === 'post'
                         || App::url()->type === 'pages'
-                        || My::settingValue('content_postlist_type') === 'content'
+                        || My::settings()->content_postlist_type === 'content'
                     ) {
                         $img_width_max += $margin_max * 2;
                     }
@@ -503,7 +505,7 @@ class FrontendBehaviors
             $if->append($sign . 'App::frontend()->context()->posts->post_meta');
         }
 
-        if ($tag === 'EntryIf' && isset($attr['has_reaction']) && My::settingValue('content_postlist_reactions') === true) {
+        if ($tag === 'EntryIf' && isset($attr['has_reaction']) && My::settings()->content_postlist_reactions === true) {
             $sign = (bool) $attr['has_reaction'] ? '' : '!';
 
             $if->append($sign . 'App::frontend()->context()->posts->hasComments() || App::frontend()->context()->posts->hasTrackbacks()');

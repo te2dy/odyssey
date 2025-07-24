@@ -1851,13 +1851,13 @@ class Config extends Process
                 case 'range' :
                     $range_default = [
                         'unit'  => 'em',
-                        'value' => (int) My::settingValue($setting_id) ?: (int) $default_settings[$setting_id]['default'],
+                        'value' => (int) My::settings()->$setting_id ?: (int) $default_settings[$setting_id]['default'],
                         'min'   => (int) $default_settings[$setting_id]['range']['min'],
                         'max'   => (int) $default_settings[$setting_id]['range']['max'],
                         'step'  => (int) $default_settings[$setting_id]['range']['step']
                     ];
 
-                    if (My::settingValue('global_unit') === 'px') {
+                    if (My::settings()->global_unit === 'px') {
                         $range_default['unit'] = 'px';
                         $range_default['min']  = 480;
                         $range_default['max']  = 1280;

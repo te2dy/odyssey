@@ -24,7 +24,7 @@ class FrontendBlocks
      */
     public static function odysseyHeaderMinimal($attr, $content): string
     {
-        if (My::settingValue('header_post_full') !== true) {
+        if (My::settings()->header_post_full !== true) {
             return $content;
         }
 
@@ -41,7 +41,7 @@ class FrontendBlocks
      */
     public static function odysseyPostPagination($attr, $content): string
     {
-        if (My::settingValue('content_post_pagination') !== false) {
+        if (My::settings()->content_post_pagination !== false) {
             return $content;
         }
 
@@ -58,7 +58,7 @@ class FrontendBlocks
      */
     public static function odysseyCommentFormWrapper($attr, $content): string
     {
-        if (My::settingValue('reactions_button') !== false
+        if (My::settings()->reactions_button !== false
             && (isset(App::frontend()->context()->comment_preview['content']) && App::frontend()->context()->comment_preview['content'] === '')
         ) {
             return '<details class=reactions-details>
@@ -85,7 +85,7 @@ class FrontendBlocks
      */
     public static function odysseySidebar($attr, $content): string
     {
-        if (My::settingValue('widgets_display') !== false) {
+        if (My::settings()->widgets_display !== false) {
             return $content;
         }
 
@@ -102,7 +102,7 @@ class FrontendBlocks
      */
     public static function odysseyFooter($attr, $content): string
     {
-        if (My::settingValue('footer_enabled') !== false) {
+        if (My::settings()->footer_enabled !== false) {
             return $content;
         }
 

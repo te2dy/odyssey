@@ -41,7 +41,7 @@ class Install extends Process
      */
     private static function _odysseyUpdateStyles(): void
     {
-        $styles_custom = My::settingValue('styles');
+        $styles_custom = My::settings()->styles;
 
         if ($styles_custom) {
             $styles_default = '';

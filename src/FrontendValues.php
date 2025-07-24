@@ -56,7 +56,7 @@ class FrontendValues
      */
     public static function odysseyMetaDescriptionHome(): string
     {
-        $description = My::settingValue('advanced_meta_description') ?: App::blog()->desc ?: null;
+        $description = My::settings()->advanced_meta_description ?: App::blog()->desc ?: null;
 
         if ($description) {
             $description = My::cleanStr(Ctx::remove_html($description));
@@ -86,7 +86,7 @@ class FrontendValues
      */
     public static function odysseyMetaCanonical(): string
     {
-        if (My::settingValue('advanced_canonical') === true) {
+        if (My::settings()->advanced_canonical === true) {
             switch (App::url()->type) {
                 case 'post':
                 case 'pages':
@@ -116,7 +116,7 @@ class FrontendValues
      */
     public static function odysseyStylesheetURL(): string
     {
-        $css_url = My::settingValue('styles_url') ?: My::odysseyThemeFolder('url', '/style.min.css');
+        $css_url = My::settings()->styles_url ?: My::odysseyThemeFolder('url', '/style.min.css');
 
         return My::displayAttr($css_url, 'url');
     }
@@ -134,7 +134,7 @@ class FrontendValues
             $links .= '<a class=skip-links href=#main-menu>' . __('skip-link-menu') . '</a>';
         }
 
-        if (My::settingValue('footer_enabled') !== false) {
+        if (My::settings()->footer_enabled !== false) {
             $links .= '<a class=skip-links href=#site-footer>' . __('skip-link-footer') . '</a>';
         }
 
@@ -156,8 +156,8 @@ class FrontendValues
      */
     public static function odysseyHeaderImage(ArrayObject $attr): string
     {
-        $image_url  = My::settingValue('header_image')['url']   ?? null;
-        $image_size = My::settingValue('header_image')['width'] ?? null;
+        $image_url  = My::settings()->header_image['url']   ?? null;
+        $image_size = My::settings()->header_image['width'] ?? null;
 
         if (!$image_url || !$image_size) {
             return '';
@@ -166,15 +166,15 @@ class FrontendValues
         $srcset = '';
         $sizes  = '';
 
-        $image2x_url = My::settingValue('header_image2x')['url'] ?? null;
+        $image2x_url = My::settings()->header_imageheader_image2x['url'] ?? null;
 
         if ($image2x_url) {
             $srcset  = ' srcset="' . My::escapeURL($image_url) . ' 1x, ' . My::escapeURL($image2x_url) . ' 2x"';
             $sizes   = ' sizes=' . Html::escapeHTML($image_size) . 'vw';
         }
 
-        $img_description = My::settingValue('header_image_description') ?: __('header-image-alt');
-        $img_position    = !My::settingValue('header_image_position') ? 'top' : 'bottom';
+        $img_description = My::settings()->header_image_description ?: __('header-image-alt');
+        $img_position    = !My::settings()->header_image_position ? 'top' : 'bottom';
 
         if (isset($attr['position']) && $img_position === $attr['position']) {
             if (App::url()->type === 'default') {
@@ -195,7 +195,7 @@ class FrontendValues
      */
     public static function odysseyBlogDescription(): string
     {
-        if (My::settingValue('header_description') === false) {
+        if (My::settings()->header_description === false) {
             return '';
         }
 
@@ -219,15 +219,15 @@ class FrontendValues
      */
     public static function odysseyPostListType(): string
     {
-        if (!My::settingValue('content_postlist_type')) {
+        if (!My::settings()->content_postlist_type) {
             return App::frontend()->template()->includeFile(['src' => '_entry-list.html']);
         }
 
-        if (My::settingValue('content_postlist_type') === 'excerpt') {
+        if (My::settings()->content_postlist_type === 'excerpt') {
             return App::frontend()->template()->includeFile(['src' => '_entry-list-excerpt.html']);
         }
 
-        if (My::settingValue('content_postlist_type') === 'content') {
+        if (My::settings()->content_postlist_type === 'content') {
             return App::frontend()->template()->includeFile(['src' => '_entry-list-content.html']);
         }
 
@@ -247,7 +247,7 @@ class FrontendValues
      */
     public static function odysseyEntryListImage(ArrayObject $attr): string
     {
-        if (My::settingValue('content_postlist_thumbnail') === false) {
+        if (My::settings()->content_postlist_thumbnail === false) {
             return '';
         }
 
@@ -372,7 +372,7 @@ class FrontendValues
      */
     public static function odysseyPostListReactions(): string
     {
-        if (My::settingValue('content_postlist_reactions') !== true) {
+        if (My::settings()->content_postlist_reactions !== true) {
             return '';
         }
 
@@ -380,11 +380,11 @@ class FrontendValues
         $tag_open  = '<div class=post-list-reaction-link><small>';
         $tag_close = '</small></div>';
 
-        if (My::settingValue('content_postlist_type') === 'excerpt') {
+        if (My::settings()->content_postlist_type === 'excerpt') {
             $separator = '| ';
             $tag_open  = '';
             $tag_close = '';
-        } elseif (My::settingValue('content_postlist_type') === 'content') {
+        } elseif (My::settings()->content_postlist_type === 'content') {
             $separator = '';
             $tag_open  = '<div class=\"post-meta text-secondary\">';
             $tag_close = '</div>';
@@ -414,7 +414,7 @@ class FrontendValues
      */
     public static function odysseyTrackbackLink(): string
     {
-        if (My::settingValue('reactions_other_trackbacks') !== true) {
+        if (My::settings()->reactions_other_trackbacks !== true) {
             return '';
         }
 
@@ -437,11 +437,11 @@ class FrontendValues
      */
     public static function odysseyFeedLink(): string
     {
-        if (!My::settingValue('reactions_feed_link')) {
+        if (!My::settings()->reactions_feed_link) {
             return '';
         }
 
-        $feed_type = My::settingValue('reactions_feed_link');
+        $feed_type = My::settings()->reactions_feed_link;
 
         return '<?php
             if (App::frontend()->context()->posts->commentsActive() === true
@@ -469,25 +469,25 @@ class FrontendValues
      */
     public static function odysseyPrivateCommentLink(): string
     {
-        if (!My::settingValue('reactions_other')) {
+        if (!My::settings()->reactions_other) {
             return '';
         }
 
-        if (My::settingValue('reactions_other_email') !== true
-            && My::settingValue('reactions_other_bluesky') !== true
-            && My::settingValue('reactions_other_facebook') !== true
-            && My::settingValue('reactions_other_mastodon') !== true
-            && My::settingValue('reactions_other_sms') !== true
-            && My::settingValue('reactions_other_signal') !== true
-            && My::settingValue('reactions_other_whatsapp') !== true
-            && My::settingValue('reactions_other_x') !== true
+        if (My::settings()->reactions_other_email !== true
+            && My::settings()->reactions_other_bluesky !== true
+            && My::settings()->reactions_other_facebook !== true
+            && My::settings()->reactions_other_mastodon !== true
+            && My::settings()->reactions_other_sms !== true
+            && My::settings()->reactions_other_signal !== true
+            && My::settings()->reactions_other_whatsapp !== true
+            && My::settings()->reactions_other_x !== true
         ) {
             return '';
         }
 
         $output = '<?php $reactions_other = ""; ?>';
 
-        if (My::settingValue('reactions_other_email') === true) {
+        if (My::settings()->reactions_other_email === true) {
             $output .= '<?php
             if (isset(App::frontend()->context()->posts->user_email) && App::frontend()->context()->posts->user_email && (App::blog()->settings->odyssey->reactions_other === "always" || (App::blog()->settings->odyssey->reactions_other === "comments_open" && App::frontend()->context()->posts->post_open_comment === "1"))
             ) {
@@ -502,7 +502,7 @@ class FrontendValues
             ?>';
         }
 
-        if (My::settingValue('social_bluesky') && My::settingValue('reactions_other_bluesky') === true) {
+        if (My::settings()->social_bluesky && My::settings()->reactions_other_bluesky === true) {
             $output .= '<?php
             $bluesky_url = "";
 
@@ -522,7 +522,7 @@ class FrontendValues
             ?>';
         }
 
-        if (My::settingValue('social_facebook') && My::settingValue('reactions_other_facebook') === true) {
+        if (My::settings()->social_facebook && My::settings()->reactions_other_facebook === true) {
             $output .= '<?php
             $facebook_url = "";
 
@@ -540,7 +540,7 @@ class FrontendValues
             ?>';
         }
 
-        if (My::settingValue('social_mastodon') && My::settingValue('reactions_other_mastodon') === true) {
+        if (My::settings()->social_mastodon && My::settings()->reactions_other_mastodon === true) {
             $output .= '<?php
             $mastodon_url = "";
 
@@ -558,12 +558,12 @@ class FrontendValues
             ?>';
         }
 
-        if (My::settingValue('social_sms') && My::settingValue('reactions_other_sms') === true) {
+        if (My::settings()->social_sms && My::settings()->reactions_other_sms === true) {
             $output .= '<?php
-            $phone_number = "' . My::settingValue('social_sms') . '";
+            $phone_number = "' . My::settings()->social_sms . '";
 
             if ($phone_number !== "") {
-                $sms_href = "sms:' . My::settingValue('social_sms') . '";
+                $sms_href = "sms:' . My::settings()->social_sms . '";
 
                 if (App::frontend()->context()->posts->post_title) {
                     $sms_href .= "?body=" . sprintf(__("reactions-other-sms-text"), App::frontend()->context()->posts->post_title);
@@ -574,22 +574,22 @@ class FrontendValues
             ?>';
         }
 
-        if (My::settingValue('social_signal') && My::settingValue('reactions_other_signal') === true) {
+        if (My::settings()->social_signal && My::settings()->reactions_other_signal === true) {
             $output .= '<?php
-            $signal_url = "' . My::settingValue('social_signal') . '";
+            $signal_url = "' . My::settings()->social_signal . '";
 
             if ($signal_url !== "") {
-                $reactions_other .= "<p><a class=reactions-button href=\"' . My::settingValue('social_signal') . '\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('signal')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-signal-button'), My::socialSites('signal')['name']) . '</span></a></p>";
+                $reactions_other .= "<p><a class=reactions-button href=\"" . $signal_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('signal')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-signal-button'), My::socialSites('signal')['name']) . '</span></a></p>";
             }
             ?>';
         }
 
-        if (My::settingValue('social_whatsapp') && My::settingValue('reactions_other_whatsapp') === true) {
+        if (My::settings()->social_whatsapp && My::settings()->reactions_other_whatsapp === true) {
             $output .= '<?php
             $whatsapp_text = App::frontend()->context()->posts->post_title
             ? "?text=" . sprintf(__("reactions-other-whatsapp-text"), App::frontend()->context()->posts->post_title)
             : "";
-            $whatsapp_url  = "' . My::settingValue('social_whatsapp') . '" . $whatsapp_text;
+            $whatsapp_url  = "' . My::settings()->social_whatsapp . '" . $whatsapp_text;
 
             if ($whatsapp_url !== "") {
                 $reactions_other .= "<p><a class=reactions-button href=\"" . $whatsapp_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('whatsapp')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-whatsapp-button'), My::socialSites('whatsapp')['name']) . '</span></a></p>";
@@ -597,9 +597,9 @@ class FrontendValues
             ?>';
         }
 
-        if (My::settingValue('social_x') && My::settingValue('reactions_other_x') === true) {
+        if (My::settings()->social_x && My::settings()->reactions_other_x === true) {
             $output .= '<?php
-            $x_url = "' . My::settingValue('social_x') . '";
+            $x_url = "' . My::settings()->social_x . '";
 
             if ($x_url !== "") {
                 $x_url_parameters = [];
@@ -723,7 +723,7 @@ class FrontendValues
      */
     public static function odysseyMarkdownSupportInfo(): string
     {
-        if (My::settingValue('reactions_markdown_notice') === true
+        if (My::settings()->reactions_markdown_notice === true
             && App::plugins()->moduleExists('legacyMarkdown')
             && App::blog()->settings()->system->markdown_comments === true
         ) {
@@ -749,7 +749,10 @@ class FrontendValues
         $count  = 0;
 
         foreach (My::socialSites() as $id => $data) {
-            if (My::settingValue('social_' . $id) !== null && My::settingValue('footer_social_' . $id) !== false) {
+            $social_id        = 'social_' . $id;
+            $footer_social_id = 'footer_social_' . $id;
+
+            if (My::settings()->$social_id !== null && My::settings()->$footer_social_id !== false) {
                 $count++;
 
                 if ($count === 1) {
@@ -763,7 +766,7 @@ class FrontendValues
                     $class = 'social-icon-fi footer-social-links-icon-fi';
                 }
 
-                $url = My::settingValue('social_' . $id);
+                $url = My::settings()->$social_id;
 
                 if ($id === 'phone') {
                     $url = 'tel:' . $url;
@@ -784,7 +787,7 @@ class FrontendValues
             }
         }
 
-        if (My::settingValue('footer_feed') !== null) {
+        if (My::settings()->footer_feed !== null) {
             if ($count === 0) {
                 $count++;
 
@@ -792,7 +795,7 @@ class FrontendValues
                 $output .= '<ul class=footer-social-links>';
             }
 
-            $feed_link = App::blog()->url() . App::url()->getURLFor("feed", My::settingValue('footer_feed'));
+            $feed_link = App::blog()->url() . App::url()->getURLFor("feed", My::settings()->footer_feed);
 
             $output .= '<li>';
             $output .= '<a href=' . My::displayAttr($feed_link, 'url') . '>';
@@ -821,7 +824,7 @@ class FrontendValues
      */
     public static function odysseyFooterCredits(): string
     {
-        if (My::settingValue('footer_credits') === false) {
+        if (My::settings()->footer_credits === false) {
             return '';
         }
 

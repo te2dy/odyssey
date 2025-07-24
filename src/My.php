@@ -815,18 +815,6 @@ class My extends MyTheme
     }
 
     /**
-     * Returns the value of a saved theme setting.
-     *
-     * @param string $setting_id The setting id (optional).
-     *
-     * @return mixed The value of the setting.
-     */
-    public static function settingValue(string $setting_id = ''): mixed
-    {
-        return $setting_id ? App::blog()->settings->odyssey->$setting_id : null;
-    }
-
-    /**
      * Wraps a string in quotes if it contains a least one space,
      * and escapes HTML inside it.
      *
@@ -897,8 +885,8 @@ class My extends MyTheme
      */
     public static function getContentWidth($unit = 'em'): array
     {
-        $page_width_unit  = self::settingValue('global_unit') ?: 'em' ;
-        $page_width_value = (int) self::settingValue('global_page_width_value') ?: 30;
+        $page_width_unit  = My::settings()->global_unit ?: 'em' ;
+        $page_width_value = (int) My::settings()->global_page_width_value ?: 30;
 
         if ($page_width_unit !== $unit) {
             if ($unit === 'px') {
