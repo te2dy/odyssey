@@ -123,9 +123,9 @@ class Config extends Process
                     $delete_file_name = $_GET['restore_delete_file'] . '.json';
                     $odyssey_folder   = My::odysseyVarFolder('path');
                     $backups_folder   = My::odysseyVarFolder('path', '/backups/');
-                    $delete_file_path = Path::real($backups_folder . $delete_file_name);
+                    $delete_file_path = $backups_folder . $delete_file_name;
 
-                    if ($delete_file_path) {
+                    if (Path::real($delete_file_path)) {
                         // Deletes the file and directories if empty.
                         unlink($delete_file_path);
 
@@ -145,9 +145,9 @@ class Config extends Process
                     }
                 } elseif (isset($_GET['restore_delete_all'])) {
                     // Deletes all configuration files.
-                    $odyssey_var_folder = Path::real(My::odysseyVarFolder('path'));
+                    $odyssey_var_folder = My::odysseyVarFolder('path');
 
-                    if ($odyssey_var_folder) {
+                    if (Path::real($odyssey_var_folder)) {
                         Files::deltree($odyssey_var_folder);
                     }
 
@@ -183,16 +183,15 @@ class Config extends Process
         array  $redirect_params = []
     ): void
     {
-        if (empty($http_post)) {
+        if (empty($http_post) || empty($http_files)) {
             return;
         }
 
         // Puts all $_POST et $_FILES variables in a new array to manipulate them.
-        $new_settings = [];
+        $new_settings  = [];
+        $http_requests = array_merge($http_post, $http_files);
 
-        $http_post = array_merge($http_post, $http_files);
-
-        foreach ($http_post as $setting_id => $setting_value) {
+        foreach ($http_requests as $setting_id => $setting_value) {
             $new_settings[$setting_id] = $setting_value;
         }
 
@@ -212,27 +211,27 @@ class Config extends Process
                     $setting_value,
                     $new_settings
                 );
-            }
 
-            // Saves the setting in the database or drop it.
-            if (!empty($setting)) {
-                App::blog()->settings->odyssey->put(
-                    $setting['id'],
-                    $setting['value'],
-                    $setting['type']
-                );
+                // Saves the setting in the database or drop it.
+                if (!empty($setting)) {
+                    App::blog()->settings->odyssey->put(
+                        $setting['id'],
+                        $setting['value'],
+                        $setting['type']
+                    );
 
-                // Saves the sanitized setting to save styles later.
-                $sanitizedSettings[$setting_id] = $setting['value'];
-            } else {
-                App::blog()->settings->odyssey->drop($setting_id);
-            }
+                    // Saves the sanitized setting to save styles later.
+                    $sanitizedSettings[$setting_id] = $setting['value'];
+                } else {
+                    App::blog()->settings->odyssey->drop($setting_id);
+                }
 
-            // Updates $new_settings array for other actions.
-            if (isset($setting['value']) && $setting['value'] !== '') {
-                $new_settings[$setting_id] = $setting['value'];
-            } else {
-                unset($new_settings[$setting_id]);
+                // Updates $new_settings array for other actions.
+                if (isset($setting['value']) && $setting['value'] !== '') {
+                    $new_settings[$setting_id] = $setting['value'];
+                } else {
+                    unset($new_settings[$setting_id]);
+                }
             }
 
             // Other actions:
@@ -262,8 +261,7 @@ class Config extends Process
                 }
             } elseif ($setting_id === 'styles') {
                 // Saves styles.
-                $sanitized_styles = self::_sanitizeStyles($sanitizedSettings);
-
+                $sanitized_styles       = self::_sanitizeStyles($sanitizedSettings);
                 $sanitized_styles_value = $sanitized_styles['value'] ?? null;
                 $sanitized_styles_type  = $sanitized_styles['type']  ?? null;
 
@@ -280,6 +278,7 @@ class Config extends Process
                 }
             }
 
+            // If the /public/odyssey folder has empty subfolders, deletes it.
             if (!is_dir(My::odysseyPublicFolder('path', '/css'))
                 && !is_dir(My::odysseyPublicFolder('path', '/img'))
             ) {
