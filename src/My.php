@@ -926,12 +926,11 @@ class My extends MyTheme
      */
     public static function odysseyPublicFolder(string $type, string $to_concatenate = ''): string
     {
-        if ($type === 'url') {
-            return App::blog()->settings()->system->public_url . '/' . self::id() . $to_concatenate;
-        }
-
-        if ($type === 'path') {
-            return App::blog()->publicPath() . '/' . self::id() . $to_concatenate;
+        switch ($type) {
+            case 'url':
+                return App::blog()->settings()->system->public_url . '/' . self::id() . $to_concatenate;
+            case 'path':
+                return App::blog()->publicPath() . '/' . self::id() . $to_concatenate;
         }
 
         return '';
@@ -947,12 +946,11 @@ class My extends MyTheme
      */
     public static function odysseyVarFolder(string $type, string $to_concatenate = ''): string
     {
-        if ($type === 'vf') {
-            return self::id() . $to_concatenate;
-        }
-
-        if ($type === 'path') {
-            return App::config()->varRoot() . '/' . self::id() . $to_concatenate;
+        switch ($type) {
+            case 'vf':
+                return self::id() . $to_concatenate;
+            case 'path':
+                return App::config()->varRoot() . '/' . self::id() . $to_concatenate;
         }
 
         return '';
@@ -969,12 +967,11 @@ class My extends MyTheme
      */
     public static function odysseyThemeFolder(string $type = 'url', string $to_concatenate = ''): string
     {
-        if ($type === 'url') {
-            return App::blog()->settings()->system->themes_url . '/' . My::id() . $to_concatenate;
-        }
-
-        if ($type === 'path') {
-            return App::blog()->themesPath() . '/' . My::id() . $to_concatenate;
+        switch ($type) {
+            case 'url':
+                return App::blog()->settings()->system->themes_url . '/' . My::id() . $to_concatenate;
+            case 'path':
+                return App::blog()->themesPath() . '/' . My::id() . $to_concatenate;
         }
 
         return '';
