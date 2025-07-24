@@ -10,6 +10,7 @@
 namespace Dotclear\Theme\odyssey;
 
 use Dotclear\App;
+use Dotclear\Core\BlogWorkspace;
 use Dotclear\Core\Process;
 use Dotclear\Core\Backend\Notices;
 use Dotclear\Core\Backend\Page;
@@ -114,7 +115,7 @@ class Config extends Process
             try {
                 if (isset($_GET['save-config']) && $_GET['save-config'] === 'create-file') {
                     // Creates a backup file.
-                    self::_createBackupFile(self::settingsSaved());
+                    self::_createBackupFile(My::settings());
                 } elseif (isset($_GET['restore']) && $_GET['restore'] !== 'success') {
                     // Restores a configuration from a backup file listed from /var/odyssey/backups.
                     self::_restoreBackup($_GET['restore'] . '.json');
@@ -1628,9 +1629,17 @@ class Config extends Process
      *
      * @return void
      */
-    private static function _createBackupFile(array $settings = []): void
+    private static function _createBackupFile(BlogWorkspace $settings): void
     {
-        if (empty($settings)) {
+        $custom_settings_count = 0;
+
+        foreach (My::settingsDefault() as $setting_id => $setting_data) {
+            if (My::settings()->$setting_id) {
+                $custom_settings_count++;
+            }
+        }
+
+        if ($custom_settings_count === 0) {
             // If no custom setting has been set.
             Notices::addErrorNotice(__('settings-notice-save-fail'));
         } else {
