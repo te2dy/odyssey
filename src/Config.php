@@ -71,10 +71,9 @@ class Config extends Process
                     self::_saveSettings($_POST, $_FILES, __('settings-notice-saved'));
                 } elseif (isset($_POST['save-config'])) {
                     // If the save configuration file button has been clicked.
-                    self::_saveSettings($_POST, $_FILES, null, ['save-config' => 'create-file']);
+                    self::_saveSettings($_POST, $_FILES, '', ['save-config' => 'create-file']);
                 } elseif (isset($_POST['reset'])) {
-                    // If the reset button has been clicked.
-                    // Remove all saved settings from the database.
+                    // If the reset button has been clicked, removes all saved settings from the database.
                     App::blog()->settings->odyssey->dropAll();
 
                     // Removes the header image, custom CSS file and their folders.
@@ -98,52 +97,7 @@ class Config extends Process
                     );
                 } elseif (isset($_POST['config-upload-submit'])) {
                     // When a configuration file has been submitted, uploads it.
-                    if (isset($_FILES['config-upload-file']['tmp_name'])
-                        && isset($_FILES['config-upload-file']['type'])
-                        && isset($_FILES['config-upload-file']['error'])
-                        && $_FILES['config-upload-file']['error'] === UPLOAD_ERR_OK
-                    ) {
-                        $file_tmp_path  = $_FILES['config-upload-file']['tmp_name'];
-                        $file_type      = $_FILES['config-upload-file']['type'];
-                        $json_content   = file_get_contents($file_tmp_path);
-                        $settings_array = [];
-
-                        if ($file_type === 'application/json' && $json_content) {
-                            // Puts all configuration file settings in an array.
-                            $settings_array = json_decode($json_content, true);
-
-                            if (!empty($settings_array)) {
-                                // First, drops all settings to clean the database.
-                                App::blog()->settings->odyssey->dropAll();
-
-                                // Then, imports all settings.
-                                self::_saveSettings($settings_array, [], __('settings-notice-upload-success'));
-                            } else {
-                                Notices::addErrorNotice(__('settings-notice-upload-file-not-valid'));
-
-                                App::backend()->url()->redirect(
-                                    'admin.blog.theme',
-                                    ['module' => My::id(), 'conf' => '1', 'config-upload' => '1']
-                                );
-                            }
-                        } else {
-                            // If the uploaded file is not a JSON file.
-                            Notices::addErrorNotice(__('settings-notice-upload-file-not-valid'));
-
-                            App::backend()->url()->redirect(
-                                'admin.blog.theme',
-                                ['module' => My::id(), 'conf' => '1', 'config-upload' => '1']
-                            );
-                        }
-                    } else {
-                        // If there is no file uploaded.
-                        Notices::addErrorNotice(__('settings-notice-upload-no-file'));
-
-                        App::backend()->url()->redirect(
-                            'admin.blog.theme',
-                            ['module' => My::id(), 'conf' => '1', 'config-upload' => '1']
-                        );
-                    }
+                    self::_uploadConfigFile($_FILES);
                 } elseif (isset($_POST['config-upload-cancel'])) {
                     // Redirects if the cancel upload button has been clicked.
                     App::backend()->url()->redirect(
@@ -159,82 +113,13 @@ class Config extends Process
         if ($_SERVER['REQUEST_METHOD'] === 'GET' && !empty($_GET)) {
             try {
                 if (isset($_GET['save-config']) && $_GET['save-config'] === 'create-file') {
-                    /**
-                     * Creates a JSON backup file.
-                     *
-                     * The file will be uploaded in /var/odyssey/backups
-                     */
-                    $backups_path = My::odysseyVarFolder('path', '/backups');
-
-                    // Creates the var/odyssey/backups folder if it doesn't exist.
-                    if (Path::real($backups_path) === false) {
-                        Files::makeDir($backups_path, true);
-                    }
-
-                    // Sets the name of the backup file with date and time.
-                    $time = str_replace(':', '', Date::str('%Y%m%d', time(), App::blog()->settings()->system->blog_timezone) . '-' . Date::str('%T', time(), App::blog()->settings()->system->blog_timezone));
-
-                    $file_name = Files::tidyFileName($time . '-settings');
-
-                    $backups_path .= '/' . $file_name . '.json';
-
-                    // Puts all theme settings in an array.
-                    $saved_settings = [];
-
-                    foreach (self::settingsSaved() as $setting_id => $setting_value) {
-                        $saved_settings[$setting_id] = $setting_value;
-                    }
-
-                    if (!empty($saved_settings)) {
-                        // Creates the JSON file.
-                        Files::putContent($backups_path, json_encode($saved_settings));
-
-                        Notices::addNotice(
-                            'success',
-                            '<p>' . sprintf(__('settings-notice-save-success'), My::id(), '#odyssey-backups') . '</p>' .
-                            '<a class="button submit" href=' . My::escapeAttr(urldecode(Page::getVF(My::odysseyVarFolder('vf', '/backups/' . $file_name . '.json'))), 'url') . ' download>' . __('settings-notice-save-success-link') . '</a>',
-                            ['divtag' => true]
-                        );
-                    } else {
-                        // If no custom setting has been set.
-                        Notices::addErrorNotice(__('settings-notice-save-fail'));
-                    }
-
-                    App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
+                    // Creates a backup file.
+                    self::_createBackupFile(self::settingsSaved());
                 } elseif (isset($_GET['restore']) && $_GET['restore'] !== 'success') {
-                    /**
-                     * Restores a configuration from a backup file
-                     * listed from /var/odyssey/backups.
-                     */
-                    $restore_file_name    = $_GET['restore'] . '.json';
-                    $restore_file_path    = My::odysseyVarFolder('path', '/backups/' . $restore_file_name);
-                    $restore_file_content = file_get_contents($restore_file_path);
-
-                    $settings_array = [];
-
-                    if ($restore_file_content && $restore_file_content !== '[]') {
-                        $settings_array = json_decode($restore_file_content, true);
-
-                        if (!empty($settings_array)) {
-                            // Drops all settings.
-                            App::blog()->settings->odyssey->dropAll();
-
-                            // Imports all settings.
-                            self::_saveSettings($settings_array, [], __('settings-notice-restore-success'));
-                        }
-                    } else {
-                        // If the file is empty.
-                        Notices::addErrorNotice(__('settings-notice-restore-error'));
-
-                        App::backend()->url()->redirect(
-                            'admin.blog.theme',
-                            ['module' => My::id(), 'conf' => '1']
-                        );
-                    }
+                    // Restores a configuration from a backup file listed from /var/odyssey/backups.
+                    self::_restoreBackup($_GET['restore'] . '.json');
                 } elseif (isset($_GET['restore_delete_file'])) {
-                    /**
-                     * Deletes a configuration file.
-                     */
+                    // Deletes a configuration file.
                     $delete_file_name = $_GET['restore_delete_file'] . '.json';
                     $odyssey_folder   = My::odysseyVarFolder('path');
                     $backups_folder   = My::odysseyVarFolder('path', '/backups/');
@@ -284,26 +169,23 @@ class Config extends Process
     /**
      * Saves all the settings in the database.
      *
-     * @param array   $http_post       All parameters sent with the theme configurator form.
-     * @param array   $http_files      All files uploaded from the theme configurator form.
-     * @param ?string $notice_success  A text displayed after successful parameter saving.
-     * @param array   $redirect_params Parameters to add to the redirection after saving.
+     * @param array  $http_post       All parameters sent with the theme configurator form.
+     * @param array  $http_files      All files uploaded from the theme configurator form.
+     * @param string $notice_success  A text displayed after successful parameter saving.
+     * @param array  $redirect_params Parameters to add to the redirection after saving.
      *
      * @return void
      */
     private static function _saveSettings(
-        array   $http_post,
-        array   $http_files,
-        ?string $notice_success,
-        array   $redirect_params = []
+        array  $http_post,
+        array  $http_files,
+        string $notice_success = '',
+        array  $redirect_params = []
     ): void
     {
         if (empty($http_post)) {
             return;
         }
-
-        $default_settings = My::settingsDefault();
-        $saved_settings   = self::settingsSaved();
 
         // Puts all $_POST et $_FILES variables in a new array to manipulate them.
         $new_settings = [];
@@ -314,16 +196,23 @@ class Config extends Process
             $new_settings[$setting_id] = $setting_value;
         }
 
+        // To put all sanitized settings later.
+        $sanitizedSettings = [];
+
+        $default_settings = My::settingsDefault();
+
         foreach ($default_settings as $setting_id => $setting_data) {
             $setting_value = $new_settings[$setting_id] ?? null;
 
             // Sanitizes the setting.
-            $setting = self::_sanitizeSetting(
-                $setting_id,
-                $setting_data,
-                $setting_value,
-                $new_settings
-            );
+            if ($setting_id !== 'styles') {
+                $setting = self::_sanitizeSetting(
+                    $setting_id,
+                    $setting_data,
+                    $setting_value,
+                    $new_settings
+                );
+            }
 
             // Saves the setting in the database or drop it.
             if (!empty($setting)) {
@@ -332,6 +221,9 @@ class Config extends Process
                     $setting['value'],
                     $setting['type']
                 );
+
+                // Saves the sanitized setting to save styles later.
+                $sanitizedSettings[$setting_id] = $setting['value'];
             } else {
                 App::blog()->settings->odyssey->drop($setting_id);
             }
@@ -345,6 +237,7 @@ class Config extends Process
 
             // Other actions:
             if ($setting_id === 'header_image') {
+                // Saves header image.
                 if (isset($new_settings['header_image-delete-action'])
                     && $new_settings['header_image-delete-action'] === 'true'
                 ) {
@@ -357,9 +250,8 @@ class Config extends Process
                     // If an image file has been submitted and the file exists, saves the image.
                     self::_saveHeaderImage($setting_id, $setting, $setting_value['tmp_name']);
                 }
-            }
-
-            if ($setting_id === 'header_image2x') {
+            } elseif ($setting_id === 'header_image2x') {
+                // Saves header image for Retina displays.
                 if (isset($new_settings['header_image'])
                     && isset($setting['value'])
                     && isset($setting_value['tmp_name'])
@@ -368,10 +260,24 @@ class Config extends Process
                     // If a Retina image file has been submitted and the file exists, saves the image.
                     self::_saveHeaderImage($setting_id, $setting, $setting_value['tmp_name']);
                 }
-            }
+            } elseif ($setting_id === 'styles') {
+                // Saves styles.
+                $sanitized_styles = self::_sanitizeStyles($sanitizedSettings);
 
-            if ($setting_id === 'styles') {
-                self::_stylesCustomFile($setting['value'] ?? null);
+                $sanitized_styles_value = $sanitized_styles['value'] ?? null;
+                $sanitized_styles_type  = $sanitized_styles['type']  ?? null;
+
+                if ($sanitized_styles_value && $sanitized_styles_type) {
+                    App::blog()->settings->odyssey->put(
+                        'styles',
+                        $sanitized_styles_value,
+                        $sanitized_styles_type
+                    );
+
+                    self::_stylesCustomFile($sanitized_styles_value);
+                } else {
+                    App::blog()->settings->odyssey->drop('styles');
+                }
             }
 
             if (!is_dir(My::odysseyPublicFolder('path', '/css'))
@@ -445,11 +351,7 @@ class Config extends Process
 
                     break;
                 case 'checkbox':
-                    if ($setting_value) {
-                        $setting_value = true;
-                    } else {
-                        $setting_value = false;
-                    }
+                    $setting_value = $setting_value ? true : false;
 
                     if ($setting_value === true && $setting_data['default'] === false) {
                         $setting['value'] = '1';
@@ -461,7 +363,7 @@ class Config extends Process
 
                     break;
                 default:
-                    if ($setting_value && $setting_value !== $setting_data['default']) {
+                    if ($setting_value && $setting_value != $setting_data['default']) {
                         $setting['value'] = filter_var(
                             $setting_value,
                             FILTER_SANITIZE_SPECIAL_CHARS
@@ -480,6 +382,15 @@ class Config extends Process
 
             $saved_settings = self::settingsSaved();
 
+            $action_delete = false;
+
+            if (isset($new_settings['header_image-delete-action']) && $new_settings['header_image-delete-action'] === 'true') {
+                $action_delete = true;
+            }
+
+            $header_image_name    = $new_settings['header_image']['name'] ?? $saved_settings['header_image']['name'] ?? '';
+            $header_image2x_img1x = $saved_settings['header_image2x']['img1x'] ?? null;
+
             switch ($setting_id) {
                 case 'global_page_width_value':
                     $params = [
@@ -490,22 +401,13 @@ class Config extends Process
 
                     break;
                 case 'header_image':
-                    $action_delete = $new_settings['header_image-delete-action'] === 'true' ? true : false;
+                    $header_image_file_data = [];
 
-                    $header_image_name = $new_settings['header_image']['name'] ?? $saved_settings['header_image']['name'] ?? '';
-
-                    if (isset($new_settings[$setting_id]['tmp_name'])
-                        && $new_settings[$setting_id]['tmp_name']
-                    ) {
+                    if (isset($new_settings[$setting_id]['tmp_name']) && $new_settings[$setting_id]['tmp_name']) {
                         $header_image_file_data = $new_settings[$setting_id];
-                    } else {
-                        $header_image_file_data = [];
                     }
 
-                    if ($action_delete === true) {
-                        // If the delete button has been clicked.
-                        $params = [$setting_id, []];
-                    } elseif (!empty($header_image_file_data)) {
+                    if (!empty($header_image_file_data)) {
                         // If an image file has been submitted.
                         $params = [
                             $setting_id,
@@ -519,39 +421,17 @@ class Config extends Process
                             $setting_value,
                             $new_settings
                         ];
-                    } else {
-                        // No image at all.
-                        $params = [$setting_id, []];
                     }
 
                     break;
                 case 'header_image2x':
-                    $action_delete = $new_settings['header_image-delete-action'] === 'true' ? true : false;
-
-                    $header_image_name = $new_settings['header_image']['name'] ?? $saved_settings['header_image']['name'] ?? '';
-
-                    $header_image2x_img1x = $saved_settings[$setting_id]['img1x'] ?? null;
-
-                    $header_image_2x_tmp = $new_settings[$setting_id]['tmp_name'] ?? null;
-
-                    if (isset($new_settings[$setting_id]['tmp_name'])
-                        && $new_settings[$setting_id]['tmp_name']
-                    ) {
+                    if (isset($new_settings[$setting_id]['tmp_name']) && $new_settings[$setting_id]['tmp_name']) {
                         $header_image2x_file_data = $new_settings[$setting_id];
                     } else {
                         $header_image2x_file_data = [];
                     }
 
-                    if ($action_delete === true) {
-                        // If the delete button has been clicked.
-                        break;
-                    } elseif (!$header_image_name) {
-                        // If a Retina image is set unlike main image.
-                        break;
-                    } elseif (empty($header_image_2x_tmp) && $header_image_name !== $header_image2x_img1x) {
-                        // If the main image does not correspond to the Retina image.
-                        break;
-                    } elseif (!empty($header_image2x_file_data)) {
+                    if (!empty($header_image2x_file_data)) {
                         // If an image is submitted within the form.
                         $params = [
                             $setting_id,
@@ -559,49 +439,36 @@ class Config extends Process
                             $new_settings
                         ];
                     }
-
-                    break;
-                case 'styles':
-                    $params = [$new_settings];
             }
 
             if (str_starts_with($setting_id, 'social_')) {
                 $params = [$setting_id, $setting_value];
             }
 
-            $setting_call = [];
+            $setting_callback = [];
 
             if (!empty($params)) {
-                $setting_call = call_user_func_array(
+                $setting_callback = call_user_func_array(
                     [self::class, '_' . $setting_data['sanitizer']],
                     $params
                 );
             }
 
-            $saved_settings = self::settingsSaved();
-
-            $action_delete = $new_settings['header_image-delete-action'] === 'true' ? true : false;
-
-            $header_image_name = $new_settings['header_image']['name'] ?? $saved_settings['header_image']['name'] ?? '';
-
-            $header_image2x_img1x = $saved_settings[$setting_id]['img1x'] ?? null;
-
-            $header_image_db_data   = $saved_settings['header_image'] ?? [];
+            $header_image_db_data   = $saved_settings['header_image']   ?? [];
             $header_image2x_db_data = $saved_settings['header_image2x'] ?? [];
 
-            if (empty($setting_call)
+            if (empty($setting_callback)
                 && $setting_id === 'header_image'
                 && !empty($header_image_db_data)
-                && $new_settings['header_image-delete-action'] === 'false'
+                && $action_delete === false
             ) {
                 // If the header image value passed is null but an image already exists.
-                $setting_call['value'] = $header_image_db_data;
-                $setting_call['type']  = 'array';
+                $setting_callback['value'] = $header_image_db_data;
+                $setting_callback['type']  = 'array';
             }
 
-            if (empty($setting_call)
+            if (empty($setting_callback)
                 && $setting_id === 'header_image2x'
-                && empty($header_image_db_data)
                 && !empty($header_image2x_db_data)
                 && $action_delete === false
                 && $header_image2x_img1x === $header_image_name
@@ -610,16 +477,12 @@ class Config extends Process
                  * If the Retina image value passed is null but an image already exists
                  * and corresponds to the main image.
                  */
-                $setting_call['value'] = $header_image2x_db_data;
-                $setting_call['type']  = 'array';
+                $setting_callback['value'] = $header_image2x_db_data;
+                $setting_callback['type']  = 'array';
             }
 
-            if ($setting_id === 'header_image') {
-                var_dump($action_delete);
-            }
-
-            $setting['value'] = $setting_call['value'] ?? null;
-            $setting['type']  = $setting_call['type']  ?? null;
+            $setting['value'] = $setting_callback['value'] ?? null;
+            $setting['type']  = $setting_callback['type']  ?? null;
 
             if (isset($setting['id'])
                 && isset($setting['value'])
@@ -635,10 +498,9 @@ class Config extends Process
     /**
      * Sanitizes header image.
      *
-     * @param string $setting_id       The id of the current setting.
-     * @param array  $image_file       The image file data.
-     * @param string $page_width_unit  The page width unit.
-     * @param string $page_width_value The page width value.
+     * @param string $setting_id   The id of the current setting.
+     * @param array  $image_file   The image file data.
+     * @param array  $new_settings All new settings passed through the configurator form.
      *
      * @return array The sanitized header image parameters.
      */
@@ -744,11 +606,11 @@ class Config extends Process
     /**
      * Adds custom styles to the theme to apply the settings.
      *
-     * @param array $new_settings All new settings passed through the configurator form.
+     * @param array $settings All sanitized settings after being passed through the configurator form.
      *
      * @return array The styles.
      */
-    public static function _sanitizeStyles(array $new_settings): array
+    public static function _sanitizeStyles(array $settings): array
     {
         $css_root_array                    = [];
         $css_root_dark_array               = [];
@@ -763,8 +625,8 @@ class Config extends Process
 
         // Page width
         $page_width_data  = self::_sanitizePageWidth(
-            $new_settings['global_unit'] ?? 'em',
-            $new_settings['global_page_width_value'] ?? 30
+            $settings['global_unit'] ?? 'em',
+            isset($settings['global_page_width_value']) ? (int) $settings['global_page_width_value'] : 30
         );
 
         $page_width_value = $page_width_data['value'] ?? null;
@@ -775,21 +637,21 @@ class Config extends Process
         }
 
         // Font family
-        if (isset($new_settings['global_font_family']) && $new_settings['global_font_family'] !== 'system') {
-            $css_root_array[':root']['--font-family'] = My::fontStack($new_settings['global_font_family']);
+        if (isset($settings['global_font_family']) && $settings['global_font_family'] !== 'system') {
+            $css_root_array[':root']['--font-family'] = My::fontStack($settings['global_font_family']);
         }
 
         // Font size
         $font_size_allowed = [80, 90, 110, 120];
 
-        if (isset($new_settings['global_font_size'])
-            && in_array((int) $new_settings['global_font_size'], $font_size_allowed, true)
+        if (isset($settings['global_font_size'])
+            && in_array((int) $settings['global_font_size'], $font_size_allowed, true)
         ) {
-            $css_root_array[':root']['--font-size'] = My::removeZero((int) $new_settings['global_font_size'] / 100) . 'em';
+            $css_root_array[':root']['--font-size'] = My::removeZero((int) $settings['global_font_size'] / 100) . 'em';
         }
 
         // Font antialiasing
-        if (isset($new_settings['global_font_antialiasing']) && $new_settings['global_font_antialiasing'] === '1') {
+        if (isset($settings['global_font_antialiasing']) && $settings['global_font_antialiasing'] === '1') {
             $css_main_array['body']['-moz-osx-font-smoothing'] = 'grayscale';
             $css_main_array['body']['-webkit-font-smoothing']  = 'antialiased';
             $css_main_array['body']['font-smooth']             = 'always';
@@ -803,90 +665,90 @@ class Config extends Process
             $css_media_print_array['body']['font-smooth']             = 'unset';
         }
 
-        if (isset($new_settings['global_color_primary']) && $new_settings['global_color_primary'] === 'custom') {
+        if (isset($settings['global_color_primary']) && $settings['global_color_primary'] === 'custom') {
             // Main text color.
-            if (isset($new_settings['global_color_text_custom'])
+            if (isset($settings['global_color_text_custom'])
                 && isset($default_settings['global_color_primary']['default'])
-                && My::isHexColor($new_settings['global_color_text_custom'])
-                && $new_settings['global_color_text_custom'] !== $default_settings['global_color_primary']['default']
+                && My::isHexColor($settings['global_color_text_custom'])
+                && $settings['global_color_text_custom'] !== $default_settings['global_color_primary']['default']
             ) {
-                $css_root_array[':root']['--color-text-main'] = $new_settings['global_color_text_custom'];
+                $css_root_array[':root']['--color-text-main'] = $settings['global_color_text_custom'];
             }
 
-            if (isset($new_settings['global_color_text_dark_custom'])
+            if (isset($settings['global_color_text_dark_custom'])
                 && isset($default_settings['global_color_text_dark_custom']['default'])
-                && My::isHexColor($new_settings['global_color_text_dark_custom'])
-                && $new_settings['global_color_text_dark_custom'] !== $default_settings['global_color_text_dark_custom']['default']
+                && My::isHexColor($settings['global_color_text_dark_custom'])
+                && $settings['global_color_text_dark_custom'] !== $default_settings['global_color_text_dark_custom']['default']
             ) {
-                $css_root_array[':root']['--color-text-main-dark'] = $new_settings['global_color_text_dark_custom'];
+                $css_root_array[':root']['--color-text-main-dark'] = $settings['global_color_text_dark_custom'];
             }
 
             // Text secondary color
-            if (isset($new_settings['global_color_text_secondary_custom'])
+            if (isset($settings['global_color_text_secondary_custom'])
                 && isset($default_settings['global_color_text_secondary_custom']['default'])
-                && My::isHexColor($new_settings['global_color_text_secondary_custom'])
-                && $new_settings['global_color_text_secondary_custom'] !== $default_settings['global_color_text_secondary_custom']['default']
+                && My::isHexColor($settings['global_color_text_secondary_custom'])
+                && $settings['global_color_text_secondary_custom'] !== $default_settings['global_color_text_secondary_custom']['default']
             ) {
-                $css_root_array[':root']['--color-text-secondary'] = $new_settings['global_color_text_secondary_custom'];
+                $css_root_array[':root']['--color-text-secondary'] = $settings['global_color_text_secondary_custom'];
             }
 
-            if (isset($new_settings['global_color_text_secondary_dark_custom'])
+            if (isset($settings['global_color_text_secondary_dark_custom'])
                 && isset($default_settings['global_color_text_secondary_dark_custom']['default'])
-                && My::isHexColor($new_settings['global_color_text_secondary_dark_custom'])
-                && $new_settings['global_color_text_secondary_dark_custom'] !== $default_settings['global_color_text_secondary_dark_custom']['default']
+                && My::isHexColor($settings['global_color_text_secondary_dark_custom'])
+                && $settings['global_color_text_secondary_dark_custom'] !== $default_settings['global_color_text_secondary_dark_custom']['default']
             ) {
-                $css_root_array[':root']['--color-text-secondary-dark'] = $new_settings['global_color_text_secondary_dark_custom'];
+                $css_root_array[':root']['--color-text-secondary-dark'] = $settings['global_color_text_secondary_dark_custom'];
             }
 
             // Input color
-            if (isset($new_settings['global_color_input_custom'])
+            if (isset($settings['global_color_input_custom'])
                 && isset($default_settings['global_color_input_custom']['default'])
-                && My::isHexColor($new_settings['global_color_input_custom'])
-                && $new_settings['global_color_input_custom'] !== $default_settings['global_color_input_custom']['default']
+                && My::isHexColor($settings['global_color_input_custom'])
+                && $settings['global_color_input_custom'] !== $default_settings['global_color_input_custom']['default']
             ) {
-                $css_root_array[':root']['--color-input-background'] = $new_settings['global_color_input_custom'];
+                $css_root_array[':root']['--color-input-background'] = $settings['global_color_input_custom'];
             }
 
-            if (isset($new_settings['global_color_input_dark_custom'])
+            if (isset($settings['global_color_input_dark_custom'])
                 && isset($default_settings['global_color_input_dark_custom']['default'])
-                && My::isHexColor($new_settings['global_color_input_dark_custom'])
-                && $new_settings['global_color_input_dark_custom'] !== $default_settings['global_color_input_dark_custom']['default']
+                && My::isHexColor($settings['global_color_input_dark_custom'])
+                && $settings['global_color_input_dark_custom'] !== $default_settings['global_color_input_dark_custom']['default']
             ) {
-                $css_root_array[':root']['--color-input-background-dark'] = $new_settings['global_color_input_dark_custom'];
+                $css_root_array[':root']['--color-input-background-dark'] = $settings['global_color_input_dark_custom'];
             }
 
             // Border color
-            if (isset($new_settings['global_color_border_custom'])
+            if (isset($settings['global_color_border_custom'])
                 && isset($default_settings['global_color_border_custom']['default'])
-                && My::isHexColor($new_settings['global_color_border_custom'])
-                && $new_settings['global_color_border_custom'] !== $default_settings['global_color_border_custom']['default']
+                && My::isHexColor($settings['global_color_border_custom'])
+                && $settings['global_color_border_custom'] !== $default_settings['global_color_border_custom']['default']
             ) {
-                $css_root_array[':root']['--color-border'] = $new_settings['global_color_border_custom'];
+                $css_root_array[':root']['--color-border'] = $settings['global_color_border_custom'];
             }
 
-            if (isset($new_settings['global_color_border_dark_custom'])
+            if (isset($settings['global_color_border_dark_custom'])
                 && isset($default_settings['global_color_border_dark_custom']['default'])
-                && My::isHexColor($new_settings['global_color_border_dark_custom'])
-                && $new_settings['global_color_border_dark_custom'] !== $default_settings['global_color_border_dark_custom']['default']
+                && My::isHexColor($settings['global_color_border_dark_custom'])
+                && $settings['global_color_border_dark_custom'] !== $default_settings['global_color_border_dark_custom']['default']
             ) {
-                $css_root_array[':root']['--color-border-dark'] = $new_settings['global_color_border_dark_custom'];
+                $css_root_array[':root']['--color-border-dark'] = $settings['global_color_border_dark_custom'];
             }
 
             // Background color
-            if (isset($new_settings['global_color_background_custom'])
+            if (isset($settings['global_color_background_custom'])
                 && isset($default_settings['global_color_background_custom']['default'])
-                && My::isHexColor($new_settings['global_color_background_custom'])
-                && $new_settings['global_color_background_custom'] !== $default_settings['global_color_background_custom']['default']
+                && My::isHexColor($settings['global_color_background_custom'])
+                && $settings['global_color_background_custom'] !== $default_settings['global_color_background_custom']['default']
             ) {
-                $css_root_array[':root']['--color-background'] = $new_settings['global_color_background_custom'];
+                $css_root_array[':root']['--color-background'] = $settings['global_color_background_custom'];
             }
 
-            if (isset($new_settings['global_color_background_dark_custom'])
+            if (isset($settings['global_color_background_dark_custom'])
                 && isset($default_settings['global_color_background_dark_custom']['default'])
-                && My::isHexColor($new_settings['global_color_background_dark_custom'])
-                && $new_settings['global_color_background_dark_custom'] !== $default_settings['global_color_background_dark_custom']['default']
+                && My::isHexColor($settings['global_color_background_dark_custom'])
+                && $settings['global_color_background_dark_custom'] !== $default_settings['global_color_background_dark_custom']['default']
             ) {
-                $css_root_array[':root']['--color-background-dark'] = $new_settings['global_color_background_dark_custom'];
+                $css_root_array[':root']['--color-background-dark'] = $settings['global_color_background_dark_custom'];
             }
         }
 
@@ -926,72 +788,72 @@ class Config extends Process
         $color_primary_dark            = $primary_colors['dark']['blue'];
         $color_primary_amplified_dark  = $primary_colors['dark-amplified']['blue'];
 
-        if (isset($new_settings['global_color_primary'])) {
-            if ($new_settings['global_color_primary'] !== 'custom'
-                && in_array($new_settings['global_color_primary'], $primary_colors_allowed, true)
+        if (isset($settings['global_color_primary'])) {
+            if ($settings['global_color_primary'] !== 'custom'
+                && in_array($settings['global_color_primary'], $primary_colors_allowed, true)
             ) {
                 // Light
-                $color_primary_light = $primary_colors['light'][$new_settings['global_color_primary']];
+                $color_primary_light = $primary_colors['light'][$settings['global_color_primary']];
 
                 $css_root_array[':root']['--color-primary'] = $color_primary_light;
 
                 // Light & amplified
-                if (isset($primary_colors['light-amplified'][$new_settings['global_color_primary']])) {
-                    $color_primary_amplified_light = $primary_colors['light-amplified'][$new_settings['global_color_primary']];
+                if (isset($primary_colors['light-amplified'][$settings['global_color_primary']])) {
+                    $color_primary_amplified_light = $primary_colors['light-amplified'][$settings['global_color_primary']];
 
                     $css_root_array[':root']['--color-primary-amplified'] = $color_primary_amplified_light;
                 }
 
                 // Dark
-                if (isset($primary_colors['dark'][$new_settings['global_color_primary']])) {
-                    $color_primary_dark = $primary_colors['dark'][$new_settings['global_color_primary']];
+                if (isset($primary_colors['dark'][$settings['global_color_primary']])) {
+                    $color_primary_dark = $primary_colors['dark'][$settings['global_color_primary']];
 
                     $css_root_array[':root']['--color-primary-dark'] = $color_primary_dark;
                 }
 
                 // Dark & amplified
-                if (isset($primary_colors['dark-amplified'][$new_settings['global_color_primary']])) {
-                    $color_primary_amplified_dark = $primary_colors['dark-amplified'][$new_settings['global_color_primary']];
+                if (isset($primary_colors['dark-amplified'][$settings['global_color_primary']])) {
+                    $color_primary_amplified_dark = $primary_colors['dark-amplified'][$settings['global_color_primary']];
 
                     $css_root_array[':root']['--color-primary-dark-amplified'] = $color_primary_amplified_dark;
                 }
-            } elseif ($new_settings['global_color_primary'] === 'custom') {
-                if (isset($new_settings['global_color_primary_custom'])
+            } elseif ($settings['global_color_primary'] === 'custom') {
+                if (isset($settings['global_color_primary_custom'])
                     && isset($default_settings['global_color_primary_custom']['default'])
-                    && My::isHexColor($new_settings['global_color_primary_custom'])
-                    && $new_settings['global_color_primary_custom'] !== $default_settings['global_color_primary_custom']['default']
+                    && My::isHexColor($settings['global_color_primary_custom'])
+                    && $settings['global_color_primary_custom'] !== $default_settings['global_color_primary_custom']['default']
                 ) {
-                    $color_primary_light = $new_settings['global_color_primary_custom'];
+                    $color_primary_light = $settings['global_color_primary_custom'];
 
                     $css_root_array[':root']['--color-primary'] = $color_primary_light;
                 }
 
-                if (isset($new_settings['global_color_primary_amplified_custom'])
+                if (isset($settings['global_color_primary_amplified_custom'])
                     && isset($default_settings['global_color_primary_amplified_custom']['default'])
-                    && My::isHexColor($new_settings['global_color_primary_amplified_custom'])
-                    && $new_settings['global_color_primary_amplified_custom'] !== $default_settings['global_color_primary_amplified_custom']['default']
+                    && My::isHexColor($settings['global_color_primary_amplified_custom'])
+                    && $settings['global_color_primary_amplified_custom'] !== $default_settings['global_color_primary_amplified_custom']['default']
                 ) {
-                    $color_primary_amplified_light = $new_settings['global_color_primary_amplified_custom'];
+                    $color_primary_amplified_light = $settings['global_color_primary_amplified_custom'];
 
                     $css_root_array[':root']['--color-primary-amplified'] = $color_primary_amplified_light;
                 }
 
-                if (isset($new_settings['global_color_primary_dark_custom'])
+                if (isset($settings['global_color_primary_dark_custom'])
                     && isset($default_settings['global_color_primary_dark_custom']['default'])
-                    && My::isHexColor($new_settings['global_color_primary_dark_custom'])
-                    && $new_settings['global_color_primary_dark_custom'] !== $default_settings['global_color_primary_dark_custom']['default']
+                    && My::isHexColor($settings['global_color_primary_dark_custom'])
+                    && $settings['global_color_primary_dark_custom'] !== $default_settings['global_color_primary_dark_custom']['default']
                 ) {
-                    $color_primary_dark = $new_settings['global_color_primary_dark_custom'];
+                    $color_primary_dark = $settings['global_color_primary_dark_custom'];
 
                     $css_root_dark_array[':root']['--color-primary-dark'] = $color_primary_dark;
                 }
 
-                if (isset($new_settings['global_color_primary_dark_amplified_custom'])
+                if (isset($settings['global_color_primary_dark_amplified_custom'])
                     && isset($default_settings['global_color_primary_dark_amplified_custom']['default'])
-                    && My::isHexColor($new_settings['global_color_primary_dark_amplified_custom'])
-                    && $new_settings['global_color_primary_dark_amplified_custom'] !== $default_settings['global_color_primary_dark_amplified_custom']['default']
+                    && My::isHexColor($settings['global_color_primary_dark_amplified_custom'])
+                    && $settings['global_color_primary_dark_amplified_custom'] !== $default_settings['global_color_primary_dark_amplified_custom']['default']
                 ) {
-                    $color_primary_amplified_dark = $new_settings['global_color_primary_dark_amplified_custom'];
+                    $color_primary_amplified_dark = $settings['global_color_primary_dark_amplified_custom'];
 
                     $css_root_dark_array[':root']['--color-primary-dark-amplified'] = $color_primary_amplified_dark;
                 }
@@ -999,8 +861,8 @@ class Config extends Process
         }
 
         // Color scheme
-        if (isset($new_settings['global_color_scheme'])) {
-            if ($new_settings['global_color_scheme'] === 'light') {
+        if (isset($settings['global_color_scheme'])) {
+            if ($settings['global_color_scheme'] === 'light') {
                 $css_root_array[':root']['--color-background-dark']        = '#fafafa';
                 $css_root_array[':root']['--color-text-main-dark']         = '#303030';
                 $css_root_array[':root']['--color-text-secondary-dark']    = '#6c6f78';
@@ -1008,7 +870,7 @@ class Config extends Process
                 $css_root_array[':root']['--color-primary-dark-amplified'] = $color_primary_amplified_light;
                 $css_root_array[':root']['--color-input-background-dark']  = '#f2f2f2';
                 $css_root_array[':root']['--color-border-dark']            = '#ccc';
-            } elseif ($new_settings['global_color_scheme'] === 'dark') {
+            } elseif ($settings['global_color_scheme'] === 'dark') {
                 $css_root_array[':root']['--color-background']        = '#16161d';
                 $css_root_array[':root']['--color-text-main']         = '#ccc';
                 $css_root_array[':root']['--color-text-secondary']    = '#969696';
@@ -1020,34 +882,34 @@ class Config extends Process
         }
 
         // Transitions
-        if (isset($new_settings['global_css_transition']) && $new_settings['global_css_transition'] === '1') {
+        if (isset($settings['global_css_transition']) && $settings['global_css_transition'] === '1') {
             $css_root_array[':root']['--color-transition'] = 'all .2s ease-in-out';
 
             $css_media_motion_array[':root']['--color-transition'] = 'unset';
         }
 
         // Links underline
-        if (isset($new_settings['global_links_underline']) && $new_settings['global_links_underline'] === '1') {
+        if (isset($settings['global_links_underline']) && $settings['global_links_underline'] === '1') {
             $css_root_array[':root']['--link-text-decoration']       = 'underline';
             $css_root_array[':root']['--link-text-decoration-style'] = 'dotted';
         }
 
         // Border radius
-        if (isset($new_settings['global_border_radius']) && $new_settings['global_border_radius'] === '1') {
+        if (isset($settings['global_border_radius']) && $settings['global_border_radius'] === '1') {
             $css_root_array[':root']['--border-radius'] = '.168em';
         }
 
         // Header alignment
         $header_align_allowed = ['left', 'right'];
 
-        if (isset($new_settings['header_align'])
-            && in_array($new_settings['header_align'], $header_align_allowed, true)
+        if (isset($settings['header_align'])
+            && in_array($settings['header_align'], $header_align_allowed, true)
         ) {
-            $css_root_array[':root']['--header-align'] = $new_settings['header_align'];
+            $css_root_array[':root']['--header-align'] = $settings['header_align'];
         }
 
         // Header image
-        if (isset($new_settings['header_image']) && !empty($new_settings['header_image'])) {
+        if (isset($settings['header_image']) && !empty($settings['header_image'])) {
             $css_main_array['#site-image']['width'] = '100%';
 
             $css_main_array['#site-image a']['display']       = 'inline-block';
@@ -1057,8 +919,8 @@ class Config extends Process
         }
 
         // Post list type
-        if (isset($new_settings['content_postlist_type'])) {
-            if ($new_settings['content_postlist_type'] === 'excerpt') {
+        if (isset($settings['content_postlist_type'])) {
+            if ($settings['content_postlist_type'] === 'excerpt') {
                 $css_main_array['.entry-list-excerpt .post']['margin']  = '1em -1rem';
                 $css_main_array['.entry-list-excerpt .post']['padding'] = '1rem';
 
@@ -1069,7 +931,7 @@ class Config extends Process
                 $css_main_array['.entry-list-excerpt .entry-title']['margin-block'] = '.5rem';
 
                 $css_main_array['.entry-list-excerpt .post-excerpt']['margin-block'] = '.5rem';
-            } elseif ($new_settings['content_postlist_type'] === 'content') {
+            } elseif ($settings['content_postlist_type'] === 'content') {
                 $css_main_array['.entry-list-content .post']['border-bottom'] = '.063em solid var(--color-border, #ccc)';
                 $css_main_array['.entry-list-content .post']['margin-bottom'] = '4em';
 
@@ -1088,20 +950,20 @@ class Config extends Process
         }
 
         // Alternate post color
-        if (isset($new_settings['content_postlist_altcolor']) && $new_settings['content_postlist_altcolor'] === '1') {
+        if (isset($settings['content_postlist_altcolor']) && $settings['content_postlist_altcolor'] === '1') {
             $css_main_array[':is(.entry-list, .entry-list-excerpt) .post:nth-child(even)']['background-color'] = 'var(--color-input-background, #f2f2f2)';
             $css_main_array[':is(.entry-list, .entry-list-excerpt) .post:nth-child(even)']['border-radius'] = 'var(--border-radius, unset)';
         }
 
         // Post thumbnail
-        if (isset($new_settings['content_postlist_thumbnail']) && $new_settings['content_postlist_thumbnail'] === '1') {
-            if (isset($new_settings['content_postlist_type']) && $new_settings['content_postlist_type'] === 'excerpt') {
+        if (isset($settings['content_postlist_thumbnail']) && $settings['content_postlist_thumbnail'] === '1') {
+            if (isset($settings['content_postlist_type']) && $settings['content_postlist_type'] === 'excerpt') {
                 $css_main_array['.post-list-excerpt']['display'] = 'block';
 
                 $css_main_array['.entry-list-excerpt-img']['display']      = 'block';
                 $css_main_array['.entry-list-excerpt-img']['margin-block'] = '1rem';
 
-                if (isset($new_settings['content_images_grayscale']) && $new_settings['content_images_grayscale'] === '1') {
+                if (isset($settings['content_images_grayscale']) && $settings['content_images_grayscale'] === '1') {
                     $css_main_array['.entry-list-excerpt-img']['transition']                          = 'var(--color-transition, unset)';
                     $css_main_array['.entry-list-excerpt-img:not(:active, :focus, :hover)']['filter'] = 'grayscale(1)';
                 }
@@ -1109,30 +971,30 @@ class Config extends Process
         }
 
         // Link to reactions
-        if (isset($new_settings['content_postlist_reactions']) && $new_settings['content_postlist_reactions'] === '1') {
+        if (isset($settings['content_postlist_reactions']) && $settings['content_postlist_reactions'] === '1') {
             $css_main_array['.post-list-reaction-link']['margin-top'] = '.25rem';
         }
 
         // Content font family
-        if (isset($new_settings['content_text_font'])
-            && $new_settings['content_text_font'] !== 'same'
-            && $new_settings['global_font_family'] !== $new_settings['content_text_font']
+        if (isset($settings['content_text_font'])
+            && $settings['content_text_font'] !== 'same'
+            && $settings['global_font_family'] !== $settings['content_text_font']
         ) {
-            $css_root_array[':root']['--font-family-content'] = My::fontStack($new_settings['content_text_font']);
+            $css_root_array[':root']['--font-family-content'] = My::fontStack($settings['content_text_font']);
         }
 
         // Content font size
         $font_size_allowed = [80, 90, 110, 120];
 
-        if (isset($new_settings['content_font_size'])
-            && in_array((int) $new_settings['content_font_size'], $font_size_allowed, true)
+        if (isset($settings['content_font_size'])
+            && in_array((int) $settings['content_font_size'], $font_size_allowed, true)
         ) {
-            $css_root_array[':root']['--content-font-size'] = My::removeZero((int) $new_settings['content_font_size'] / 100) . 'em';
+            $css_root_array[':root']['--content-font-size'] = My::removeZero((int) $settings['content_font_size'] / 100) . 'em';
         }
 
         // Text align
-        if (isset($new_settings['content_text_align'])) {
-            switch ($new_settings['content_text_align']) {
+        if (isset($settings['content_text_align'])) {
+            switch ($settings['content_text_align']) {
                 case 'justify' :
                     $css_root_array[':root']['--text-align'] = 'justify';
 
@@ -1151,14 +1013,14 @@ class Config extends Process
         // Line Height
         $line_height_allowed = [125, 175];
 
-        if (isset($new_settings['content_line_height'])
-            && in_array((int) $new_settings['content_line_height'], $line_height_allowed, true)
+        if (isset($settings['content_line_height'])
+            && in_array((int) $settings['content_line_height'], $line_height_allowed, true)
         ) {
-            $css_root_array[':root']['--text-line-height'] = (int) $new_settings['content_line_height'] / 100;
+            $css_root_array[':root']['--text-line-height'] = (int) $settings['content_line_height'] / 100;
         }
 
         // Hyphenation.
-        if (isset($new_settings['content_hyphens']) && $new_settings['content_hyphens'] !== 'disabled') {
+        if (isset($settings['content_hyphens']) && $settings['content_hyphens'] !== 'disabled') {
             $css_main_array['.content-text']['-webkit-hyphens'] = 'auto';
             $css_main_array['.content-text']['-ms-hyphens']     = 'auto';
             $css_main_array['.content-text']['hyphens']         = 'auto';
@@ -1197,7 +1059,7 @@ class Config extends Process
             $css_media_contrast_array['.content-text']['-ms-hyphenate-limit-last']     = 'unset';
             $css_media_contrast_array['.content-text']['hyphenate-limit-last']         = 'unset';
 
-            if ($new_settings['content_hyphens'] === 'enabled-not-mobile') {
+            if ($settings['content_hyphens'] === 'enabled-not-mobile') {
                 $css_media_array['.content-text']['-webkit-hyphens'] = 'unset';
                 $css_media_array['.content-text']['-ms-hyphens']     = 'unset';
                 $css_media_array['.content-text']['hyphens']         = 'unset';
@@ -1220,7 +1082,7 @@ class Config extends Process
         }
 
         // Initial letter
-        if (isset($new_settings['content_initial_letter']) && $new_settings['content_initial_letter'] === '1') {
+        if (isset($settings['content_initial_letter']) && $settings['content_initial_letter'] === '1') {
             $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['-moz-initial-letter'] = '2';
             $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['-webkit-initial-letter'] = '2';
             $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['initial-letter'] = '2';
@@ -1228,7 +1090,7 @@ class Config extends Process
         }
 
         // Wide images
-        if (isset($new_settings['content_images_wide']) && $new_settings['content_images_wide'] === '1') {
+        if (isset($settings['content_images_wide']) && $settings['content_images_wide'] === '1') {
             $css_main_array['body']['overflow-x'] = 'hidden';
 
             $css_main_array['.odyssey-img-wide']['display']     = 'block';
@@ -1238,12 +1100,12 @@ class Config extends Process
         }
 
         // Grayscale images
-        if (isset($new_settings['content_images_grayscale']) && $new_settings['content_images_grayscale'] === '1') {
+        if (isset($settings['content_images_grayscale']) && $settings['content_images_grayscale'] === '1') {
             $css_main_array['.content-text img']['transition']                          = 'var(--color-transition, unset)';
             $css_main_array['.content-text img:not(:active, :focus, :hover)']['filter'] = 'grayscale(1)';
 
-            if (isset($new_settings['content_postlist_thumbnail']) && $new_settings['content_postlist_thumbnail'] === '1') {
-                if (isset($new_settings['content_postlist_type']) && $new_settings['content_postlist_type'] === 'one-line') {
+            if (isset($settings['content_postlist_thumbnail']) && $settings['content_postlist_thumbnail'] === '1') {
+                if (isset($settings['content_postlist_type']) && $settings['content_postlist_type'] === 'one-line') {
                     $css_main_array['.entry-list-img']['transition']                          = 'var(--color-transition, unset)';
                     $css_main_array['.entry-list-img:not(:active, :focus, :hover)']['filter'] = 'grayscale(1)';
                 }
@@ -1253,9 +1115,9 @@ class Config extends Process
         // Footer align
         $footer_align_allowed = ['center', 'right'];
 
-        if (isset($new_settings['footer_enabled']) && $new_settings['footer_enabled'] === '1') {
-            if (isset($new_settings['footer_align']) && in_array($new_settings['footer_align'], $footer_align_allowed, true)) {
-                $css_root_array[':root']['--footer-align'] = $new_settings['footer_align'];
+        if (isset($settings['footer_enabled']) && $settings['footer_enabled'] === '1') {
+            if (isset($settings['footer_align']) && in_array($settings['footer_align'], $footer_align_allowed, true)) {
+                $css_root_array[':root']['--footer-align'] = $settings['footer_align'];
             }
         }
 
@@ -1264,12 +1126,12 @@ class Config extends Process
 
         // Checks if a link has been set.
         foreach (My::socialSites() as $id => $data) {
-            if (isset($new_settings['social_' . $id])) {
-                if (isset($new_settings['reactions_other'])
-                    && $new_settings['reactions_other'] !== 'disabled'
-                    && isset($new_settings['reactions_other_' . $id])
+            if (isset($settings['social_' . $id])) {
+                if (isset($settings['reactions_other'])
+                    && $settings['reactions_other'] !== 'disabled'
+                    && isset($settings['reactions_other_' . $id])
                 ) {
-                    if (!empty(self::_sanitizeSocial('social_' . $id, $new_settings['social_' . $id]))) {
+                    if (!empty(self::_sanitizeSocial('social_' . $id, $settings['social_' . $id]))) {
                         if (My::svgIcons($id)['author'] === 'simpleicons') {
                             $simpleicons_styles  = true;
                         }
@@ -1279,7 +1141,7 @@ class Config extends Process
         }
 
         // Other reactions
-        if (isset($new_settings['reactions_other']) && $new_settings['reactions_other'] !== 'disabled') {
+        if (isset($settings['reactions_other']) && $settings['reactions_other'] !== 'disabled') {
             $css_main_array['.reactions-button .social-icon-si']['fill'] = 'var(--color-primary, hsl(226, 80%, 45%))';
         }
 
@@ -1287,15 +1149,15 @@ class Config extends Process
         $footer_social_links = false;
         $feathericons_styles = false;
 
-        if (isset($new_settings['footer_feed']) && $new_settings['footer_feed'] !== 'disabled') {
+        if (isset($settings['footer_feed']) && $settings['footer_feed'] !== 'disabled') {
             $footer_social_links = true;
             $feathericons_styles = true;
         }
 
         foreach (My::socialSites() as $id => $data) {
-            if (isset($new_settings['social_' . $id])) {
-                if (!isset($new_settings['footer_social_' . $id])) {
-                    if (!empty(self::_sanitizeSocial('social_' . $id, $new_settings['social_' . $id]))) {
+            if (isset($settings['social_' . $id])) {
+                if (!isset($settings['footer_social_' . $id])) {
+                    if (!empty(self::_sanitizeSocial('social_' . $id, $settings['social_' . $id]))) {
                         $footer_social_links = true;
 
                         if (My::svgIcons($id)['author'] === 'simpleicons') {
@@ -1452,6 +1314,11 @@ class Config extends Process
         }
     }
 
+    /**
+     * Deletes the /img folder in /public/odyssey.
+     *
+     * @return void
+     */
     private static function _deleteHeaderImage(): void
     {
         Files::deltree(My::odysseyPublicFolder('path', '/img'));
@@ -2031,22 +1898,22 @@ class Config extends Process
     /**
      * Prepares to save the page width option.
      *
-     * @param string     $unit       The unit used to define the width (px or em)
-     * @param string|int $value      The value of the page width.
-     * @param string     $setting_id The setting id.
+     * @param ?string $unit       The unit used to define the width (px or em)
+     * @param ?int    $value      The value of the page width.
+     * @param ?string $setting_id The setting id.
      *
      * @return array The page width and its unit.
      */
     public static function _sanitizePageWidth(
-        string     $unit  = 'em',
-        string|int $value = '30',
-        string     $setting_id = null
+        ?string $unit,
+        ?int    $value,
+        ?string $setting_id = null
     ): array
     {
         $units_allowed = ['em', 'px'];
 
         $unit  = in_array($unit, $units_allowed, true) ? $unit : 'em';
-        $value = (int) $value ?: 30;
+        $value = $value ?: 30;
 
         if (($unit === 'em' && ($value > 30 && $value <= 80))
             || ($unit === 'px' && ($value >= 480 && $value <= 1280))
@@ -2077,12 +1944,12 @@ class Config extends Process
     /**
      * Prepares to save social links.
      *
-     * @param string $setting_id The social setting id.
-     * @param string $value      The value of the social setting.
+     * @param ?string $setting_id The social setting id.
+     * @param ?string $value      The value of the social setting.
      *
      * @return array The value of the setting and its type.
      */
-    public static function _sanitizeSocial(string $setting_id, string $value): array
+    public static function _sanitizeSocial(?string $setting_id, ?string $value): array
     {
         if (!$setting_id || !$value) {
             return [];
@@ -2231,6 +2098,139 @@ class Config extends Process
 
             // Removes the database entry.
             App::blog()->settings->odyssey->drop('styles_url');
+        }
+    }
+
+    /**
+     * Uploads a configuration from a JSON file.
+     *
+     * @param array $file_data The JSON file data from $_FILES.
+     *
+     * @return void
+     */
+    private static function _uploadConfigFile(array $file_data = []): void
+    {
+        if (isset($file_data['config-upload-file']['tmp_name'])
+            && isset($file_data['config-upload-file']['type'])
+            && isset($file_data['config-upload-file']['error'])
+            && $file_data['config-upload-file']['error'] === UPLOAD_ERR_OK
+        ) {
+            $file_tmp_path  = $file_data['config-upload-file']['tmp_name'];
+            $file_type      = $file_data['config-upload-file']['type'];
+            $json_content   = file_get_contents($file_tmp_path);
+            $settings_array = [];
+
+            if ($file_type === 'application/json' && $json_content) {
+                // Puts all configuration file settings in an array.
+                $settings_array = json_decode($json_content, true);
+
+                if (!empty($settings_array)) {
+                    // First, drops all settings to clean the database.
+                    App::blog()->settings->odyssey->dropAll();
+
+                    // Then, imports all settings.
+                    self::_saveSettings($settings_array, [], __('settings-notice-upload-success'));
+                } else {
+                    Notices::addErrorNotice(__('settings-notice-upload-file-not-valid'));
+
+                    App::backend()->url()->redirect(
+                        'admin.blog.theme',
+                        ['module' => My::id(), 'conf' => '1', 'config-upload' => '1']
+                    );
+                }
+            } else {
+                // If the uploaded file is not a JSON file.
+                Notices::addErrorNotice(__('settings-notice-upload-file-not-valid'));
+
+                App::backend()->url()->redirect(
+                    'admin.blog.theme',
+                    ['module' => My::id(), 'conf' => '1', 'config-upload' => '1']
+                );
+            }
+        } else {
+            // If there is no file uploaded.
+            Notices::addErrorNotice(__('settings-notice-upload-no-file'));
+
+            App::backend()->url()->redirect(
+                'admin.blog.theme',
+                ['module' => My::id(), 'conf' => '1', 'config-upload' => '1']
+            );
+        }
+    }
+
+    /**
+     * Restores a configuration from a backup file.
+     *
+     * @param string $file_name The name of the backup file.
+     *
+     * @return void
+     */
+    private static function _restoreBackup(string $file_name): void
+    {
+        $restore_file_path    = Path::real(My::odysseyVarFolder('path', '/backups/' . $file_name));
+        $restore_file_content = file_get_contents($restore_file_path);
+
+        if ($restore_file_path && $restore_file_content && $restore_file_content !== '[]') {
+            $settings_array = json_decode($restore_file_content, true);
+
+            if (!empty($settings_array)) {
+                // Drops all settings.
+                App::blog()->settings->odyssey->dropAll();
+
+                // Imports all settings.
+                self::_saveSettings($settings_array, [], __('settings-notice-restore-success'));
+            }
+        } else {
+            // If the file is empty.
+            Notices::addErrorNotice(__('settings-notice-restore-error'));
+
+            App::backend()->url()->redirect(
+                'admin.blog.theme',
+                ['module' => My::id(), 'conf' => '1']
+            );
+        }
+    }
+
+    /**
+     * Creates a JSON backup file.
+     *
+     * The file will be uploaded in /var/odyssey/backups
+     *
+     * @param array $settings The name of the backup file.
+     *
+     * @return void
+     */
+    private static function _createBackupFile(array $settings = []): void
+    {
+        if (empty($settings)) {
+            // If no custom setting has been set.
+            Notices::addErrorNotice(__('settings-notice-save-fail'));
+        } else {
+            $backups_path = My::odysseyVarFolder('path', '/backups');
+
+            // Creates the var/odyssey/backups folder if it doesn't exist.
+            if (Path::real($backups_path) === false) {
+                Files::makeDir($backups_path, true);
+            }
+
+            // Sets the name of the backup file with date and time.
+            $time = str_replace(':', '', Date::str('%Y%m%d', time(), App::blog()->settings()->system->blog_timezone) . '-' . Date::str('%T', time(), App::blog()->settings()->system->blog_timezone));
+
+            $file_name = Files::tidyFileName($time . '-settings');
+
+            $backups_path .= '/' . $file_name . '.json';
+
+            // Creates the JSON file.
+            Files::putContent($backups_path, json_encode($settings));
+
+            Notices::addNotice(
+                'success',
+                '<p>' . sprintf(__('settings-notice-save-success'), My::id(), '#odyssey-backups') . '</p>' .
+                '<a class="button submit" href=' . My::escapeAttr(urldecode(Page::getVF(My::odysseyVarFolder('vf', '/backups/' . $file_name . '.json'))), 'url') . ' download>' . __('settings-notice-save-success-link') . '</a>',
+                ['divtag' => true]
+            );
+
+            App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
         }
     }
 }
