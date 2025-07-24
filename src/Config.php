@@ -379,16 +379,14 @@ class Config extends Process
             // If a sanitizer function is defined.
             $params = [];
 
-            $saved_settings = self::settingsSaved();
-
             $action_delete = false;
 
             if (isset($new_settings['header_image-delete-action']) && $new_settings['header_image-delete-action'] === 'true') {
                 $action_delete = true;
             }
 
-            $header_image_name    = $new_settings['header_image']['name'] ?? $saved_settings['header_image']['name'] ?? '';
-            $header_image2x_img1x = $saved_settings['header_image2x']['img1x'] ?? null;
+            $header_image_name    = $new_settings['header_image']['name'] ?? My::settings()->header_image['name'] ?? '';
+            $header_image2x_img1x = My::settings()->header_image2x['img1x'] ?? null;
 
             switch ($setting_id) {
                 case 'global_page_width_value':
@@ -453,8 +451,8 @@ class Config extends Process
                 );
             }
 
-            $header_image_db_data   = $saved_settings['header_image']   ?? [];
-            $header_image2x_db_data = $saved_settings['header_image2x'] ?? [];
+            $header_image_db_data   = My::settings()->header_image   ?? [];
+            $header_image2x_db_data = My::settings()->header_image2x ?? [];
 
             if (empty($setting_callback)
                 && $setting_id === 'header_image'
@@ -1326,31 +1324,6 @@ class Config extends Process
     }
 
     /**
-     * Retrieves all theme settings stored in the database.
-     *
-     * @return array The id of the saved parameters associated with their values.
-     */
-    public static function settingsSaved(): array
-    {
-        $saved_settings   = [];
-        $default_settings = My::settingsDefault();
-
-        foreach ($default_settings as $setting_id => $setting_data) {
-            if (App::blog()->settings->odyssey->$setting_id !== null) {
-                if (isset($setting_data['type']) && $setting_data['type'] === 'checkbox') {
-                    $saved_settings[$setting_id] = (bool) App::blog()->settings->odyssey->$setting_id;
-                } elseif (isset($setting_data['type']) && $setting_data['type'] === 'select_int') {
-                    $saved_settings[$setting_id] = (int) App::blog()->settings->odyssey->$setting_id;
-                } else {
-                    $saved_settings[$setting_id] = App::blog()->settings->odyssey->$setting_id;
-                }
-            }
-        }
-
-        return $saved_settings;
-    }
-
-    /**
      * Prepares to save the page width option.
      *
      * @param ?string $unit       The unit used to define the width (px or em)
@@ -1699,8 +1672,7 @@ class Config extends Process
     public static function settingRender(string $setting_id): array
     {
         $default_settings = My::settingsDefault();
-        $saved_settings   = self::settingsSaved();
-        $setting_value    = $saved_settings[$setting_id] ?? $default_settings[$setting_id]['default'];
+        $setting_value    = My::settings()->$setting_id ?? $default_settings[$setting_id]['default'];
         $placeholder      = $default_settings[$setting_id]['placeholder'] ?? '';
         $the_setting      = [];
 
@@ -1917,7 +1889,7 @@ class Config extends Process
         if ($setting_id === 'header_image') {
             $image_src = $setting_value['url'] ?? '';
 
-            if (isset($saved_settings['header_image'])) {
+            if (My::settings()->header_image) {
                 $the_setting[] = (new Para())
                     ->id('header_image-preview')
                     ->items([
@@ -1925,7 +1897,7 @@ class Config extends Process
                             ->alt(__('header_image-preview-alt'))
                     ]);
 
-                if (isset($saved_settings['header_image2x'])) {
+                if (My::settings()->header_image2x) {
                     $the_setting[] = (new Text('p', __('header_image-retina-ready')))
                         ->id('header_image-retina');
                 }
@@ -1938,7 +1910,7 @@ class Config extends Process
                         ->class('delete')
                 ]);
 
-            $header_image_file_name = $saved_settings['header_image']['name'] ?? '';
+            $header_image_file_name = My::settings()->header_image['name'] ?? '';
 
             $the_setting[] = (new Hidden('header_image-delete-action', "false"));
             $the_setting[] = (new Hidden('header_image-retina-text', __('header_image-retina-ready')));
