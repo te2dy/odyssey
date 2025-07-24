@@ -971,7 +971,9 @@ class Config extends Process
 
         // Link to reactions
         if (isset($settings['content_postlist_reactions']) && $settings['content_postlist_reactions'] === '1') {
-            $css_main_array['.post-list-reaction-link']['margin-top'] = '.5rem';
+            if (!isset($settings['content_postlist_type'])) {
+                $css_main_array['.post-list-reaction-link']['margin-top'] = '.5rem';
+            }
         }
 
         // Content font family
