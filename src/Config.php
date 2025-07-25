@@ -218,7 +218,8 @@ class Config extends Process
                     App::blog()->settings->odyssey->put(
                         $setting['id'],
                         $setting['value'],
-                        $setting['type']
+                        $setting['type'],
+                        $setting['label']
                     );
 
                     // Saves the sanitized setting to save styles later.
@@ -270,7 +271,8 @@ class Config extends Process
                     App::blog()->settings->odyssey->put(
                         'styles',
                         $sanitized_styles_value,
-                        $sanitized_styles_type
+                        $sanitized_styles_type,
+                        My::settingsDefault()['styles']['label']
                     );
 
                     self::_stylesCustomFile($sanitized_styles_value);
@@ -330,7 +332,8 @@ class Config extends Process
         $setting = [
             'id'    => $setting_id,
             'value' => null,
-            'type'  => null
+            'type'  => null,
+            'label' => $setting_data['label'] ?? null
         ];
 
         if (!isset($setting_data['sanitizer'])) {
@@ -1499,7 +1502,8 @@ class Config extends Process
                 App::blog()->settings->odyssey->put(
                     'styles_url',
                     My::odysseyPublicFolder('url', '/css/style.min.css'),
-                    'string'
+                    'string',
+                    __('settings-odysseystylesurl-label')
                 );
             } else {
                 if (file_exists($css_custom_path_file)) {
@@ -2101,9 +2105,13 @@ class Config extends Process
                         $file_extension = Files::getExtension($backup_path);
 
                         if ($file_extension === 'json') {
-                            $file_list[] = $backup_path;
+                            $file_datatime = str_replace('-', '', basename($backup_path, '-settings.json'));
+
+                            $file_list[$file_datatime] = $backup_path;
                         }
                     }
+
+                    ksort($file_list);
 
                     if (!empty($file_list)) {
                         $table_fields = [];
