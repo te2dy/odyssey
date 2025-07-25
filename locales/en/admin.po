@@ -960,6 +960,9 @@ msgstr "If you have any questions, suggestions, requests or feedback, please go 
 msgid "settings-reset-warning"
 msgstr "Warning: you are about to reset your theme settings. This action is irreversible."
 
+msgid "settings-config-restore-warning"
+msgstr "Warning: you are about to restore a previous configuration that will overwrite all your current settings."
+
 msgid "settings-config-remove-warning"
 msgstr "Warning: this configuration file will be permanently deleted."
 

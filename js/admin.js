@@ -433,6 +433,17 @@ window.onload = function() {
     });
   }
 
+  // Restore from config file warning
+  var configFilesRestore = document.getElementsByClassName("odyssey-backups-restore");
+
+  for (var i = 0; i < configFilesRestore.length; i++) {
+      configFilesRestore[i].addEventListener("click", function(event) {
+        if (!confirm(document.getElementById("config_restore_warning").value)) {
+          event.preventDefault();
+        }
+    });
+  }
+
   // Remove config files warning
   const buttonConfigRemoveAll = document.getElementById("odyssey-backups-remove-all");
 
@@ -444,10 +455,10 @@ window.onload = function() {
     });
   }
 
-  var configFiles = document.getElementsByClassName("odyssey-backups-remove");
+  var configFilesRemove = document.getElementsByClassName("odyssey-backups-remove");
 
-  for (var i = 0; i < configFiles.length; i++) {
-      configFiles[i].addEventListener("click", function(event) {
+  for (var i = 0; i < configFilesRemove.length; i++) {
+      configFilesRemove[i].addEventListener("click", function(event) {
         if (!confirm(document.getElementById("config_remove_warning").value)) {
           event.preventDefault();
         }

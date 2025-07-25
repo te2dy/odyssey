@@ -179,18 +179,21 @@ class Config extends Process
      */
     private static function _saveSettings(
         array  $http_post,
-        array  $http_files,
+        array  $http_files = [],
         string $notice_success = '',
         array  $redirect_params = []
     ): void
     {
-        if (empty($http_post) || empty($http_files)) {
+        if (empty($http_post)) {
             return;
         }
 
         // Puts all $_POST et $_FILES variables in a new array to manipulate them.
         $new_settings  = [];
-        $http_requests = array_merge($http_post, $http_files);
+
+        if (!empty($http_files)) {
+            $http_requests = array_merge($http_post, $http_files);
+        }
 
         foreach ($http_requests as $setting_id => $setting_value) {
             $new_settings[$setting_id] = $setting_value;
@@ -2068,6 +2071,7 @@ class Config extends Process
         $fields[] = (new Hidden('page_width_px_max_default', '1280'));
         $fields[] = (new Hidden('page_width_px_step_default', '2'));
         $fields[] = (new Hidden('reset_warning', __('settings-reset-warning')));
+        $fields[] = (new Hidden('config_restore_warning', __('settings-config-restore-warning')));
         $fields[] = (new Hidden('config_remove_warning', __('settings-config-remove-warning')));
         $fields[] = (new Hidden('config_remove_all_warning', __('settings-config-remove-all-warning')));
 
@@ -2157,6 +2161,7 @@ class Config extends Process
                                         ->items([
                                             (new Link())
                                                 ->href($restore_url, false)
+                                                ->class('odyssey-backups-restore')
                                                 ->text(__('settings-backup-restore-link')),
                                         ]),
                                     (new Td())

@@ -960,6 +960,9 @@ msgstr "Pour toute question, suggestion, demande, retour d’expérience ou autr
 msgid "settings-reset-warning"
 msgstr "Attention : vous êtes sur le point de réinitialiser les paramètres de votre thème. Cette action est irréversible."
 
+msgid "settings-config-restore-warning"
+msgstr "Attention : vous êtes sur le point de restaurer une configuration antérieure qui écrasera toutes vos paramètres actuels."
+
 msgid "settings-config-remove-warning"
 msgstr "Attention : ce fichier de configuration sera définitivement supprimé."
 

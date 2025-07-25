@@ -960,6 +960,9 @@ msgstr ""%s">le fil de discussion dédié à Odyssée sur le forum officiel de D
 msgid "settings-reset-warning"
 msgstr ""
 
+msgid "settings-config-restore-warning"
+msgstr ""
+
 msgid "settings-config-remove-warning"
 msgstr ""
 
