@@ -109,6 +109,7 @@ class My extends MyTheme
         $default_settings['global_unit'] = [
             'title'       => __('settings-global-unit-title'),
             'description' => __('settings-global-unit-description'),
+            'label'       => __('settings-global-unit-label'),
             'type'        => 'select',
             'choices'     => [
                 __('settings-global-unit-relative-default') => 'em',
@@ -121,6 +122,7 @@ class My extends MyTheme
         $default_settings['global_page_width_value'] = [
             'title'       => __('settings-global-pagewidthvalue-title'),
             'description' => __('settings-global-pagewidthvalue-description'),
+            'label'       => __('settings-global-pagewidthvalue-label'),
             'type'        => 'range',
             'sanitizer'   => 'sanitizePageWidth',
             'range'       => [
@@ -135,6 +137,7 @@ class My extends MyTheme
         $default_settings['global_font_family'] = [
             'title'       => __('settings-global-fontfamily-title'),
             'description' => __('settings-global-fontfamily-description'),
+            'label'       => __('settings-global-fontfamily-label'),
             'type'        => 'select',
             'choices'     => [
                 __('settings-global-fontfamily-system-default')     => 'system',
@@ -163,6 +166,7 @@ class My extends MyTheme
         $default_settings['global_font_size'] = [
             'title'       => __('settings-global-fontsize-title'),
             'description' => __('settings-global-fontsize-description'),
+            'label'       => __('settings-global-fontsize-label'),
             'type'        => 'select_int',
             'choices'     => [
                 __('settings-global-fontsize-80')          => 80,
@@ -178,6 +182,7 @@ class My extends MyTheme
         $default_settings['global_font_antialiasing'] = [
             'title'       => __('settings-global-fontantialiasing-title'),
             'description' => __('settings-global-fontantialiasing-description'),
+            'label'       => __('settings-global-fontantialiasing-label'),
             'type'        => 'checkbox',
             'default'     => false,
             'section'     => ['global', 'fonts']
@@ -186,6 +191,7 @@ class My extends MyTheme
         $default_settings['global_color_scheme'] = [
             'title'       => __('settings-global-colorscheme-title'),
             'description' => __('settings-global-colorscheme-description'),
+            'label'       => __('settings-global-colorscheme-label'),
             'type'        => 'select',
             'choices'     => [
                 __('settings-global-colorscheme-auto-default') => 'auto',
@@ -211,6 +217,7 @@ class My extends MyTheme
         $default_settings['global_color_primary'] = [
             'title'       => __('settings-global-primarycolor-title'),
             'description' => __('settings-global-primarycolor-description'),
+            'label'       => __('settings-global-primarycolor-label'),
             'type'        => 'select',
             'choices'     => $global_color_primary_choices,
             'default'     => 'blue',
@@ -220,6 +227,7 @@ class My extends MyTheme
         $default_settings['global_color_text_custom'] = [
             'title'       => __('settings-global-maintextcolorcustom-title'),
             'description' => '',
+            'label'       => __('settings-global-maintextcolorcustom-label'),
             'type'        => 'color',
             'default'     => '#303030',
             'placeholder' => '#303030',
@@ -229,6 +237,7 @@ class My extends MyTheme
         $default_settings['global_color_text_secondary_custom'] = [
             'title'       => __('settings-global-secondarytextcolorcustom-title'),
             'description' => '',
+            'label'       => __('settings-global-secondarytextcolorcustom-label'),
             'type'        => 'color',
             'default'     => '#6c6f78',
             'placeholder' => '#6c6f78',
@@ -238,6 +247,7 @@ class My extends MyTheme
         $default_settings['global_color_primary_custom'] = [
             'title'       => __('settings-global-primarycolorcustom-title'),
             'description' => '',
+            'label'       => __('settings-global-primarycolorcustom-label'),
             'type'        => 'color',
             'default'     => '#1742cf',
             'placeholder' => '#1742cf',
@@ -247,6 +257,7 @@ class My extends MyTheme
         $default_settings['global_color_primary_amplified_custom'] = [
             'title'       => __('settings-global-primarycoloramplifiedcustom-title'),
             'description' => '',
+            'label'       => __('settings-global-primarycoloramplifiedcustom-label'),
             'type'        => 'color',
             'default'     => '#063ff9',
             'placeholder' => '#063ff9',
@@ -256,6 +267,7 @@ class My extends MyTheme
         $default_settings['global_color_input_custom'] = [
             'title'       => __('settings-global-inputcustom-title'),
             'description' => '',
+            'label'       => __('settings-global-inputcustom-label'),
             'type'        => 'color',
             'default'     => '#f2f2f2',
             'placeholder' => '#f2f2f2',
@@ -265,6 +277,7 @@ class My extends MyTheme
         $default_settings['global_color_border_custom'] = [
             'title'       => __('settings-global-bordercustom-title'),
             'description' => '',
+            'label'       => __('settings-global-bordercustom-label'),
             'type'        => 'color',
             'default'     => '#cccccc',
             'placeholder' => '#cccccc',
@@ -274,6 +287,7 @@ class My extends MyTheme
         $default_settings['global_color_background_custom'] = [
             'title'       => __('settings-global-primarycolorbackgroundcustom-title'),
             'description' => '',
+            'label'       => __('settings-global-primarycolorbackgroundcustom-label'),
             'type'        => 'color',
             'default'     => '#fafafa',
             'placeholder' => '#fafafa',
@@ -283,6 +297,7 @@ class My extends MyTheme
         $default_settings['global_color_text_dark_custom'] = [
             'title'       => __('settings-global-maintextcolorcustom-title'),
             'description' => '',
+            'label'       => __('settings-global-maintextcolorcustom-label'),
             'type'        => 'color',
             'default'     => '#cccccc',
             'placeholder' => '#cccccc',
@@ -292,6 +307,7 @@ class My extends MyTheme
         $default_settings['global_color_text_secondary_dark_custom'] = [
             'title'       => __('settings-global-secondarytextcolorcustom-title'),
             'description' => '',
+            'label'       => __('settings-global-secondarytextcolorcustom-label'),
             'type'        => 'color',
             'default'     => '#969696',
             'placeholder' => '#969696',
@@ -301,6 +317,7 @@ class My extends MyTheme
         $default_settings['global_color_primary_dark_custom'] = [
             'title'       => __('settings-global-primarycolorcustom-title'),
             'description' => '',
+            'label'       => __('settings-global-primarycolorcustom-label'),
             'type'        => 'color',
             'default'     => '#7592f0',
             'placeholder' => '#7592f0',
@@ -310,6 +327,7 @@ class My extends MyTheme
         $default_settings['global_color_primary_dark_amplified_custom'] = [
             'title'       => __('settings-global-primarycoloramplifiedcustom-title'),
             'description' => '',
+            'label'       => __('settings-global-primarycoloramplifiedcustom-label'),
             'type'        => 'color',
             'default'     => '#9cb2fc',
             'placeholder' => '#9cb2fc',
@@ -319,6 +337,7 @@ class My extends MyTheme
         $default_settings['global_color_input_dark_custom'] = [
             'title'       => __('settings-global-inputcustom-title'),
             'description' => '',
+            'label'       => __('settings-global-inputcustom-label'),
             'type'        => 'color',
             'default'     => '#2b2a33',
             'placeholder' => '#2b2a33',
@@ -328,6 +347,7 @@ class My extends MyTheme
         $default_settings['global_color_border_dark_custom'] = [
             'title'       => __('settings-global-bordercustom-title'),
             'description' => '',
+            'label'       => __('settings-global-bordercustom-label'),
             'type'        => 'color',
             'default'     => '#cccccc',
             'placeholder' => '#cccccc',
@@ -337,6 +357,7 @@ class My extends MyTheme
         $default_settings['global_color_background_dark_custom'] = [
             'title'       => __('settings-global-primarycolorbackgroundcustom-title'),
             'description' => '',
+            'label'       => __('settings-global-primarycolorbackgroundcustom-label'),
             'type'        => 'color',
             'default'     => '#16161d',
             'placeholder' => '#16161d',
@@ -346,6 +367,7 @@ class My extends MyTheme
         $default_settings['global_css_transition'] = [
             'title'       => __('settings-global-colortransition-title'),
             'description' => __('settings-global-colortransition-description'),
+            'label'       => __('settings-global-colortransition-label'),
             'type'        => 'checkbox',
             'default'     => false,
             'section'     => ['global', 'colors-dark']
@@ -354,6 +376,7 @@ class My extends MyTheme
         $default_settings['global_links_underline'] = [
             'title'       => __('settings-global-linksunderline-title'),
             'description' => __('settings-global-linksunderline-description'),
+            'label'       => __('settings-global-linksunderline-label'),
             'type'        => 'checkbox',
             'default'     => false,
             'section'     => ['global', 'other']
@@ -362,6 +385,7 @@ class My extends MyTheme
         $default_settings['global_border_radius'] = [
             'title'       => __('settings-global-borderradius-title'),
             'description' => __('settings-global-borderradius-description'),
+            'label'       => __('settings-global-borderradius-label'),
             'type'        => 'checkbox',
             'default'     => false,
             'section'     => ['global', 'other']
@@ -370,6 +394,7 @@ class My extends MyTheme
         $default_settings['header_align'] = [
             'title'       => __('settings-header-align-title'),
             'description' => '',
+            'label'       => __('settings-header-align-label'),
             'type'        => 'select',
             'choices'     => [
                 __('settings-header-align-left')           => 'left',
@@ -386,6 +411,7 @@ class My extends MyTheme
                 __('settings-header-description-description'),
                 App::backend()->url()->get('admin.blog.pref')
             ),
+            'label'       => __('settings-header-description-label'),
             'type'        => 'checkbox',
             'default'     => true,
             'section'     => ['header', 'no-title']
@@ -394,6 +420,7 @@ class My extends MyTheme
         $default_settings['header_post_full'] = [
             'title'       => __('settings-header-postfull-title'),
             'description' => __('settings-header-postfull-description'),
+            'label'       => __('settings-header-postfull-label'),
             'type'        => 'checkbox',
             'default'     => false,
             'section'     => ['header', 'no-title']
@@ -405,6 +432,7 @@ class My extends MyTheme
                 __('settings-header-image-description'),
                 My::id()
             ),
+            'label'       => __('settings-header-image-label'),
             'type'        => 'image',
             'default'     => '',
             'section'     => ['header', 'image'],
@@ -414,6 +442,7 @@ class My extends MyTheme
         $default_settings['header_image2x'] = [
             'title'       => __('settings-header-image2x-title'),
             'description' => __('settings-header-image2x-description'),
+            'label'       => __('settings-header-image2x-label'),
             'type'        => 'image',
             'default'     => '',
             'section'     => ['header', 'image'],
@@ -423,6 +452,7 @@ class My extends MyTheme
         $default_settings['header_image_position'] = [
             'title'       => __('settings-header-imageposition-title'),
             'description' => '',
+            'label'       => __('settings-header-imageposition-label'),
             'type'        => 'select',
             'choices'     => [
                 __('settings-header-imageposition-top-default') => 'top',
@@ -435,6 +465,7 @@ class My extends MyTheme
         $default_settings['header_image_description'] = [
             'title'       => __('settings-header-imagedescription-title'),
             'description' => __('settings-header-imagedescription-description'),
+            'label'       => __('settings-header-imagedescription-label'),
             'type'        => 'text',
             'default'     => '',
             'section'     => ['header', 'image']
@@ -443,6 +474,7 @@ class My extends MyTheme
         $default_settings['content_postlist_type'] = [
             'title'       => __('settings-content-postlisttype-title'),
             'description' => '',
+            'label'       => __('settings-content-postlisttype-label'),
             'type'        => 'select',
             'choices'     => [
                 __('settings-content-postlisttype-oneline-default') => 'one-line',
@@ -456,6 +488,7 @@ class My extends MyTheme
         $default_settings['content_postlist_altcolor'] = [
             'title'       => __('settings-content-postlistaltcolor-title'),
             'description' => __('settings-content-postlistaltcolor-description'),
+            'label'       => __('settings-content-postlistaltcolor-label'),
             'type'        => 'checkbox',
             'default'     => false,
             'section'     => ['content', 'postlist']
@@ -464,6 +497,7 @@ class My extends MyTheme
         $default_settings['content_postlist_thumbnail'] = [
             'title'       => __('settings-content-postlistthumbnail-title'),
             'description' => '',
+            'label'       => __('settings-content-postlistthumbnail-label'),
             'type'        => 'checkbox',
             'default'     => true,
             'section'     => ['content', 'postlist']
@@ -472,6 +506,7 @@ class My extends MyTheme
         $default_settings['content_postlist_reactions'] = [
             'title'       => __('settings-content-postlistreactions-title'),
             'description' => '',
+            'label'       => __('settings-content-postlistreactions-label'),
             'type'        => 'checkbox',
             'default'     => false,
             'section'     => ['content', 'postlist']
@@ -480,6 +515,7 @@ class My extends MyTheme
         $default_settings['content_text_font'] = [
             'title'       => __('settings-content-fontfamily-title'),
             'description' => '',
+            'label'       => __('settings-content-fontfamily-label'),
             'type'        => 'select',
             'choices'     => [
                 __('settings-content-fontfamily-same-default')      => 'same',
@@ -509,6 +545,7 @@ class My extends MyTheme
         $default_settings['content_font_size'] = [
             'title'       => __('settings-content-fontsize-title'),
             'description' => __('settings-content-fontsize-description'),
+            'label'       => __('settings-content-fontsize-label'),
             'type'        => 'select_int',
             'choices'     => [
                 __('settings-global-fontsize-80')          => 80,
@@ -524,6 +561,7 @@ class My extends MyTheme
         $default_settings['content_line_height'] = [
             'title'       => __('settings-content-lineheight-title'),
             'description' => '',
+            'label'       => __('settings-content-lineheight-label'),
             'type'        => 'select_int',
             'choices'     => [
                 __('settings-content-lineheight-small')            => 125,
@@ -537,6 +575,7 @@ class My extends MyTheme
         $default_settings['content_text_align'] = [
             'title'       => __('settings-content-textalign-title'),
             'description' => __('settings-content-textalign-description'),
+            'label'       => __('settings-content-textalign-label'),
             'type'        => 'select',
             'choices'     => [
                 __('settings-content-textalign-left-default')       => 'left',
@@ -550,6 +589,7 @@ class My extends MyTheme
         $default_settings['content_hyphens'] = [
             'title'       => __('settings-content-hyphens-title'),
             'description' => '',
+            'label'       => __('settings-content-hyphens-label'),
             'type'        => 'select',
             'choices'     => [
                 __('settings-content-hyphens-disabled-default') => 'disabled',
@@ -563,6 +603,7 @@ class My extends MyTheme
         $default_settings['content_initial_letter'] = [
             'title'       => __('settings-content-initialletter-title'),
             'description' => __('settings-content-initialletter-description'),
+            'label'       => __('settings-content-initialletter-label'),
             'type'        => 'checkbox',
             'default'     => false,
             'section'     => ['content', 'text-formatting']
@@ -580,6 +621,7 @@ class My extends MyTheme
                 __('settings-content-imageswide-description'),
                 $plugin_userthumbsizes_url
             ),
+            'label'       => __('settings-content-imageswide-label'),
             'type'        => 'checkbox',
             'default'     => false,
             'section'     => ['content', 'images']
@@ -588,6 +630,7 @@ class My extends MyTheme
         $default_settings['content_images_grayscale'] = [
             'title'       => __('settings-content-imagesgrayscale-title'),
             'description' => __('settings-content-imagesgrayscale-description'),
+            'label'       => __('settings-content-imagesgrayscale-label'),
             'type'        => 'checkbox',
             'default'     => false,
             'section'     => ['content', 'images']
@@ -596,6 +639,7 @@ class My extends MyTheme
         $default_settings['content_post_pagination'] = [
             'title'       => __('settings-content-postpagination-title'),
             'description' => __('settings-content-postpagination-description'),
+            'label'       => __('settings-content-postpagination-label'),
             'type'        => 'checkbox',
             'default'     => true,
             'section'     => ['content', 'pagination']
@@ -604,6 +648,7 @@ class My extends MyTheme
         $default_settings['reactions_button'] = [
             'title'       => __('settings-reactions-button-title'),
             'description' => __('settings-reactions-button-description'),
+            'label'       => __('settings-reactions-button-label'),
             'type'        => 'checkbox',
             'default'     => true,
             'section'     => ['reactions', 'form']
@@ -613,6 +658,7 @@ class My extends MyTheme
             $default_settings['reactions_markdown_notice'] = [
                 'title'       => __('settings-reactions-markdownnotice-title'),
                 'description' => '',
+                'label'       => __('settings-reactions-markdownnotice-label'),
                 'type'        => 'checkbox',
                 'default'     => false,
                 'section'     => ['reactions', 'form']
@@ -622,6 +668,7 @@ class My extends MyTheme
         $default_settings['reactions_other_trackbacks'] = [
             'title'       => __('settings-reactions-other-trackbacks-title'),
             'description' => '',
+            'label'       => __('settings-reactions-other-trackbacks-label'),
             'type'        => 'checkbox',
             'default'     => false,
             'section'     => ['reactions', 'trackbacks']
@@ -630,6 +677,7 @@ class My extends MyTheme
         $default_settings['reactions_feed_link'] = [
             'title'       => __('settings-reactions-feedlink-title'),
             'description' => '',
+            'label'       => __('settings-reactions-feedlink-label'),
             'type'        => 'select',
             'choices'     => [
                 __('settings-reactions-feedlink-disabled-default') => 'disabled',
@@ -643,6 +691,7 @@ class My extends MyTheme
         $default_settings['reactions_other'] = [
             'title'       => __('settings-reactions-other-title'),
             'description' => __('settings-reactions-other-description'),
+            'label'       => __('settings-reactions-other-label'),
             'type'        => 'select',
             'choices'     => [
                 __('settings-reactions-other-disabled-default') => 'disabled',
@@ -662,6 +711,7 @@ class My extends MyTheme
         $default_settings['reactions_other_email'] = [
             'title'       => __('settings-reactions-otheremail-title'),
             'description' => sprintf(__('settings-reactions-otheremail-description'), $plugin_signal_url),
+            'label'       => __('settings-reactions-otheremail-label'),
             'type'        => 'checkbox',
             'default'     => false,
             'section'     => ['reactions', 'other']
@@ -675,6 +725,10 @@ class My extends MyTheme
                         $base['name']
                     ),
                     'description' => __('settings-reactions-other-' . $site . '-description'),
+                    'label'       => sprintf(
+                        __('settings-reactions-other-' . $site . '-label'),
+                        $base['name']
+                    ),
                     'type'        => 'checkbox',
                     'default'     => false,
                     'section'     => ['reactions', 'other']
@@ -689,6 +743,7 @@ class My extends MyTheme
                     __('settings-widgets-display-description'),
                     App::backend()->url()->get('admin.plugin.widgets')
                 ),
+                'label'       => __('settings-widgets-display-label'),
                 'type'        => 'checkbox',
                 'default'     => true,
                 'section'     => ['widgets', 'no-title']
@@ -698,6 +753,7 @@ class My extends MyTheme
         $default_settings['footer_enabled'] = [
             'title'       => __('settings-footer-activation-title'),
             'description' => __('settings-footer-activation-description'),
+            'label'       => __('settings-footer-activation-label'),
             'type'        => 'checkbox',
             'default'     => true,
             'section'     => ['footer', 'no-title']
@@ -705,6 +761,7 @@ class My extends MyTheme
 
         $default_settings['footer_align'] = [
             'title'       => __('settings-footer-align-title'),
+            'label'       => __('settings-footer-align-label'),
             'description' => '',
             'type'        => 'select',
             'choices'     => [
@@ -719,6 +776,7 @@ class My extends MyTheme
         $default_settings['footer_feed'] = [
             'title'       => __('settings-footer-feed-title'),
             'description' => '',
+            'label'       => __('settings-footer-feed-label'),
             'type'        => 'select',
             'choices'     => [
                 __('settings-footer-feed-disabled-default') => 'disabled',
@@ -732,6 +790,7 @@ class My extends MyTheme
         $default_settings['footer_credits'] = [
             'title'       => __('settings-footer-credits-title'),
             'description' => __('settings-footer-credits-description'),
+            'label'       => __('settings-footer-credits-label'),
             'type'        => 'checkbox',
             'default'     => true,
             'section'     => ['footer', 'no-title']
@@ -753,6 +812,7 @@ class My extends MyTheme
             $default_settings['footer_social_' . $site] = [
                 'title'       => sprintf(__('settings-footer-social-' . $site . '-title'), $base['name']),
                 'description' => $social_description,
+                'label'       => sprintf(__('settings-footer-social-' . $site . '-label'), $base['name']),
                 'type'        => 'checkbox',
                 'default'     => true,
                 'section'     => ['footer', 'social']
@@ -763,6 +823,7 @@ class My extends MyTheme
             $default_settings['social_' . $site] = [
                 'title'       => __('social-site-' . $site),
                 'description' => sprintf(__('settings-social-' . $site . '-description'), $base['name']),
+                'label'       => __('social-site-' . $site),
                 'type'        => 'text',
                 'default'     => '',
                 'section'     => ['social', 'no-title'],
@@ -773,6 +834,7 @@ class My extends MyTheme
         $default_settings['advanced_meta_description'] = [
             'title'       => __('settings-advanced-metadescription-title'),
             'description' => __('settings-advanced-metadescription-description'),
+            'label'       => __('settings-advanced-metadescription-label'),
             'type'        => 'textarea',
             'default'     => '',
             'section'     => ['advanced', 'seo']
@@ -781,6 +843,7 @@ class My extends MyTheme
         $default_settings['advanced_meta_social'] = [
             'title'       => __('settings-advanced-metasocial-title'),
             'description' => __('settings-advanced-metasocial-description'),
+            'label'       => __('settings-advanced-metasocial-label'),
             'type'        => 'checkbox',
             'default'     => false,
             'section'     => ['advanced', 'seo']
@@ -789,6 +852,7 @@ class My extends MyTheme
         $default_settings['advanced_canonical'] = [
             'title'       => __('settings-advanced-canonical-title'),
             'description' => __('settings-advanced-canonical-description'),
+            'label'       => __('settings-advanced-canonical-label'),
             'type'        => 'checkbox',
             'default'     => false,
             'section'     => ['advanced', 'seo']
@@ -797,6 +861,7 @@ class My extends MyTheme
         $default_settings['advanced_json'] = [
             'title'       => __('settings-advanced-json-title'),
             'description' => __('settings-advanced-json-description'),
+            'label'       => __('settings-advanced-json-label'),
             'type'        => 'checkbox',
             'default'     => false,
             'section'     => ['advanced', 'seo']
@@ -804,6 +869,7 @@ class My extends MyTheme
 
         $default_settings['styles'] = [
             'title'     => __('settings-odysseystyles-title'),
+            'label'     => __('settings-odysseystyles-label'),
             'sanitizer' => 'sanitizeStyles'
         ];
 

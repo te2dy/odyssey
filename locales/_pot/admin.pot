@@ -132,6 +132,9 @@ msgstr ""
 msgid "settings-global-unit-description"
 msgstr ""
 
+msgid "settings-global-unit-label"
+msgstr ""
+
 msgid "settings-global-unit-relative-default"
 msgstr ""
 
@@ -144,6 +147,9 @@ msgstr ""
 msgid "settings-global-pagewidthvalue-description"
 msgstr ""
 
+msgid "settings-global-pagewidthvalue-label"
+msgstr ""
+
 msgid "settings-input-width-range-output"
 msgstr ""
 
@@ -151,6 +157,9 @@ msgid "settings-global-fontfamily-title"
 msgstr ""
 
 msgid "settings-global-fontfamily-description"
+msgstr ""
+
+msgid "settings-global-fontfamily-label"
 msgstr ""
 
 msgid "settings-global-fontfamily-system-default"
@@ -228,6 +237,9 @@ msgstr ""
 msgid "settings-global-fontsize-description"
 msgstr ""
 
+msgid "settings-global-fontsize-label"
+msgstr ""
+
 msgid "settings-global-fontsize-80"
 msgstr ""
 
@@ -249,10 +261,16 @@ msgstr ""
 msgid "settings-global-fontantialiasing-description"
 msgstr ""
 
+msgid "settings-global-fontantialiasing-label"
+msgstr ""
+
 msgid "settings-global-colorscheme-title"
 msgstr ""
 
 msgid "settings-global-colorscheme-description"
+msgstr ""
+
+msgid "settings-global-colorscheme-label"
 msgstr ""
 
 msgid "settings-global-colorscheme-auto-default"
@@ -268,6 +286,9 @@ msgid "settings-global-primarycolor-title"
 msgstr ""
 
 msgid "settings-global-primarycolor-description"
+msgstr ""
+
+msgid "settings-global-primarycolor-label"
 msgstr ""
 
 msgid "settings-global-primarycolor-blue-default"
@@ -288,22 +309,43 @@ msgstr ""
 msgid "settings-global-maintextcolorcustom-title"
 msgstr ""
 
+msgid "settings-global-maintextcolorcustom-label"
+msgstr ""
+
 msgid "settings-global-secondarytextcolorcustom-title"
+msgstr ""
+
+msgid "settings-global-secondarytextcolorcustom-label"
 msgstr ""
 
 msgid "settings-global-primarycolorcustom-title"
 msgstr ""
 
+msgid "settings-global-primarycolorcustom-label"
+msgstr ""
+
 msgid "settings-global-primarycoloramplifiedcustom-title"
+msgstr ""
+
+msgid "settings-global-primarycoloramplifiedcustom-label"
 msgstr ""
 
 msgid "settings-global-inputcustom-title"
 msgstr ""
 
+msgid "settings-global-inputcustom-label"
+msgstr ""
+
 msgid "settings-global-bordercustom-title"
 msgstr ""
 
+msgid "settings-global-bordercustom-label"
+msgstr ""
+
 msgid "settings-global-primarycolorbackgroundcustom-title"
+msgstr ""
+
+msgid "settings-global-primarycolorbackgroundcustom-label"
 msgstr ""
 
 msgid "settings-colors-reset"
@@ -315,10 +357,16 @@ msgstr ""
 msgid "settings-global-linksunderline-description"
 msgstr ""
 
+msgid "settings-global-linksunderline-label"
+msgstr ""
+
 msgid "settings-global-borderradius-title"
 msgstr ""
 
 msgid "settings-global-borderradius-description"
+msgstr ""
+
+msgid "settings-global-borderradius-label"
 msgstr ""
 
 msgid "settings-global-colortransition-title"
@@ -327,7 +375,13 @@ msgstr ""
 msgid "settings-global-colortransition-description"
 msgstr ""
 
+msgid "settings-global-colortransition-label"
+msgstr ""
+
 msgid "settings-header-align-title"
+msgstr ""
+
+msgid "settings-header-align-label"
 msgstr ""
 
 msgid "settings-header-align-left"
@@ -343,6 +397,9 @@ msgid "settings-header-description-title"
 msgstr ""
 
 msgid "settings-header-description-description"
+msgstr ""%s">paramètres du blog</a>."
+
+msgid "settings-header-description-label"
 msgstr ""
 
 msgid "settings-header-postfull-title"
@@ -351,16 +408,22 @@ msgstr ""
 msgid "settings-header-postfull-description"
 msgstr ""
 
+msgid "settings-header-postfull-label"
+msgstr ""
+
 msgid "settings-header-image-title"
 msgstr ""
 
 msgid "settings-header-image-description"
 msgstr ""
 
+msgid "settings-header-image-label"
+msgstr ""
+
 msgid "header-image-preview-alt"
 msgstr ""
 
-msgid "header-image-retina-ready"
+msgid "header_image-retina-ready"
 msgstr ""
 
 msgid "header_image-delete-button"
@@ -370,6 +433,9 @@ msgid "settings-header-image2x-title"
 msgstr ""
 
 msgid "settings-header-image2x-description"
+msgstr ""
+
+msgid "settings-header-image2x-label"
 msgstr ""
 
 msgid "settings-upload-title"
@@ -387,6 +453,9 @@ msgstr ""
 msgid "settings-header-imageposition-title"
 msgstr ""
 
+msgid "settings-header-imageposition-label"
+msgstr ""
+
 msgid "settings-header-imageposition-top-default"
 msgstr ""
 
@@ -399,7 +468,13 @@ msgstr ""
 msgid "settings-header-imagedescription-description"
 msgstr ""
 
+msgid "settings-header-imagedescription-label"
+msgstr ""
+
 msgid "settings-content-postlisttype-title"
+msgstr ""
+
+msgid "settings-content-postlisttype-label"
 msgstr ""
 
 msgid "settings-content-postlisttype-oneline-default"
@@ -417,13 +492,25 @@ msgstr ""
 msgid "settings-content-postlistaltcolor-description"
 msgstr ""
 
+msgid "settings-content-postlistaltcolor-label"
+msgstr ""
+
 msgid "settings-content-postlistthumbnail-title"
+msgstr ""
+
+msgid "settings-content-postlistthumbnail-label"
 msgstr ""
 
 msgid "settings-content-postlistreactions-title"
 msgstr ""
 
+msgid "settings-content-postlistreactions-label"
+msgstr ""
+
 msgid "settings-content-fontfamily-title"
+msgstr ""
+
+msgid "settings-content-fontfamily-label"
 msgstr ""
 
 msgid "settings-content-fontfamily-same-default"
@@ -432,10 +519,16 @@ msgstr ""
 msgid "settings-content-fontsize-title"
 msgstr ""
 
+msgid "settings-content-fontsize-label"
+msgstr ""
+
 msgid "settings-content-fontsize-description"
 msgstr ""
 
 msgid "settings-content-lineheight-title"
+msgstr ""
+
+msgid "settings-content-lineheight-label"
 msgstr ""
 
 msgid "settings-content-lineheight-small"
@@ -453,6 +546,9 @@ msgstr ""
 msgid "settings-content-textalign-description"
 msgstr ""
 
+msgid "settings-content-textalign-label"
+msgstr ""
+
 msgid "settings-content-textalign-left-default"
 msgstr ""
 
@@ -463,6 +559,9 @@ msgid "settings-content-textalign-justify-not-mobile"
 msgstr ""
 
 msgid "settings-content-hyphens-title"
+msgstr ""
+
+msgid "settings-content-hyphens-label"
 msgstr ""
 
 msgid "settings-content-hyphens-disabled-default"
@@ -480,10 +579,16 @@ msgstr ""
 msgid "settings-content-initialletter-description"
 msgstr ""
 
+msgid "settings-content-initialletter-label"
+msgstr ""
+
 msgid "settings-content-imageswide-title"
 msgstr ""
 
 msgid "settings-content-imageswide-description"
+msgstr ""%s">Miniatures supplémentaires</a>. En effet, les images déborderont de 120 px de chaque côté de la page. Exemple&nbsp: si la largeur de votre blog est de 600 px, il vous faudra créer une taille de miniature mesurant 740 px (600 + 120 × 2) de large, voire une autre mesurant 1 480 px pour prendre en charge les écrans Retina."
+
+msgid "settings-content-imageswide-label"
 msgstr ""
 
 msgid "settings-content-imagesgrayscale-title"
@@ -492,10 +597,16 @@ msgstr ""
 msgid "settings-content-imagesgrayscale-description"
 msgstr ""
 
+msgid "settings-content-imagesgrayscale-label"
+msgstr ""
+
 msgid "settings-content-postpagination-title"
 msgstr ""
 
 msgid "settings-content-postpagination-description"
+msgstr ""
+
+msgid "settings-content-postpagination-label"
 msgstr ""
 
 msgid "settings-reactions-button-title"
@@ -504,13 +615,25 @@ msgstr ""
 msgid "settings-reactions-button-description"
 msgstr ""
 
+msgid "settings-reactions-button-label"
+msgstr ""
+
 msgid "settings-reactions-markdownnotice-title"
+msgstr ""
+
+msgid "settings-reactions-markdownnotice-label"
 msgstr ""
 
 msgid "settings-reactions-other-trackbacks-title"
 msgstr ""
 
+msgid "settings-reactions-other-trackbacks-label"
+msgstr ""
+
 msgid "settings-reactions-feedlink-title"
+msgstr ""
+
+msgid "settings-reactions-feedlink-label"
 msgstr ""
 
 msgid "settings-reactions-feedlink-disabled-default"
@@ -528,6 +651,9 @@ msgstr ""
 msgid "settings-reactions-other-description"
 msgstr ""
 
+msgid "settings-reactions-other-label"
+msgstr ""
+
 msgid "settings-reactions-other-disabled-default"
 msgstr ""
 
@@ -541,12 +667,18 @@ msgid "settings-reactions-otheremail-title"
 msgstr ""
 
 msgid "settings-reactions-otheremail-description"
-msgstr ""%s">Signal</a>."
+msgstr ""%s">Signal</a> ou un service tiers comme <a href=https://relay.firefox.com/>Firefox Relay</a>."
+
+msgid "settings-reactions-otheremail-label"
+msgstr ""
 
 msgid "settings-reactions-other-bluesky-title"
 msgstr ""
 
 msgid "settings-reactions-other-bluesky-description"
+msgstr ""
+
+msgid "settings-reactions-other-bluesky-label"
 msgstr ""
 
 msgid "settings-reactions-other-facebook-title"
@@ -555,10 +687,16 @@ msgstr ""
 msgid "settings-reactions-other-facebook-description"
 msgstr ""
 
+msgid "settings-reactions-other-facebook-label"
+msgstr ""
+
 msgid "settings-reactions-other-mastodon-title"
 msgstr ""
 
 msgid "settings-reactions-other-mastodon-description"
+msgstr ""
+
+msgid "settings-reactions-other-mastodon-label"
 msgstr ""
 
 msgid "settings-reactions-other-signal-title"
@@ -567,10 +705,16 @@ msgstr ""
 msgid "settings-reactions-other-signal-description"
 msgstr ""
 
+msgid "settings-reactions-other-signal-label"
+msgstr ""
+
 msgid "settings-reactions-other-sms-title"
 msgstr ""
 
 msgid "settings-reactions-other-sms-description"
+msgstr ""
+
+msgid "settings-reactions-other-sms-label"
 msgstr ""
 
 msgid "settings-reactions-other-whatsapp-title"
@@ -579,10 +723,16 @@ msgstr ""
 msgid "settings-reactions-other-whatsapp-description"
 msgstr ""
 
+msgid "settings-reactions-other-whatsapp-label"
+msgstr ""
+
 msgid "settings-reactions-other-x-title"
 msgstr ""
 
 msgid "settings-reactions-other-x-description"
+msgstr ""
+
+msgid "settings-reactions-other-x-label"
 msgstr ""
 
 msgid "settings-widgets-display-title"
@@ -591,13 +741,22 @@ msgstr ""
 msgid "settings-widgets-display-description"
 msgstr ""%s">page de configuration des widgets</a>)."
 
+msgid "settings-widgets-display-label"
+msgstr ""
+
 msgid "settings-footer-activation-title"
+msgstr ""
+
+msgid "settings-footer-activation-label"
 msgstr ""
 
 msgid "settings-footer-activation-description"
 msgstr ""
 
 msgid "settings-footer-align-title"
+msgstr ""
+
+msgid "settings-footer-align-label"
 msgstr ""
 
 msgid "settings-footer-align-left-default"
@@ -610,6 +769,9 @@ msgid "settings-footer-align-right"
 msgstr ""
 
 msgid "settings-footer-feed-title"
+msgstr ""
+
+msgid "settings-footer-feed-label"
 msgstr ""
 
 msgid "settings-footer-feed-disabled-default"
@@ -625,6 +787,9 @@ msgid "settings-footer-credits-title"
 msgstr ""
 
 msgid "settings-footer-credits-description"
+msgstr ""
+
+msgid "settings-footer-credits-label"
 msgstr ""
 
 msgid "settings-social-diaspora-description"
@@ -645,25 +810,49 @@ msgstr ""
 msgid "settings-footer-social-diaspora-title"
 msgstr ""
 
+msgid "settings-footer-social-diaspora-label"
+msgstr ""
+
 msgid "settings-footer-social-bluesky-title"
+msgstr ""
+
+msgid "settings-footer-social-bluesky-label"
 msgstr ""
 
 msgid "settings-footer-social-facebook-title"
 msgstr ""
 
+msgid "settings-footer-social-facebook-label"
+msgstr ""
+
 msgid "settings-footer-social-instagram-title"
+msgstr ""
+
+msgid "settings-footer-social-instagram-label"
 msgstr ""
 
 msgid "settings-footer-social-mastodon-title"
 msgstr ""
 
+msgid "settings-footer-social-mastodon-label"
+msgstr ""
+
 msgid "settings-footer-social-phone-title"
+msgstr ""
+
+msgid "settings-footer-social-phone-label"
 msgstr ""
 
 msgid "settings-footer-social-signal-title"
 msgstr ""
 
+msgid "settings-footer-social-signal-label"
+msgstr ""
+
 msgid "settings-footer-social-sms-title"
+msgstr ""
+
+msgid "settings-footer-social-sms-label"
 msgstr ""
 
 msgid "settings-footer-social-youtube-title"
@@ -672,10 +861,19 @@ msgstr ""
 msgid "settings-footer-social-whatsapp-title"
 msgstr ""
 
+msgid "settings-footer-social-whatsapp-label"
+msgstr ""
+
 msgid "settings-footer-social-x-title"
 msgstr ""
 
+msgid "settings-footer-social-x-label"
+msgstr ""
+
 msgid "settings-footer-social-other-title"
+msgstr ""
+
+msgid "settings-footer-social-other-label"
 msgstr ""
 
 msgid "settings-footer-social-sms-description"
@@ -714,10 +912,16 @@ msgstr ""
 msgid "settings-advanced-metadescription-description"
 msgstr ""
 
+msgid "settings-advanced-metadescription-label"
+msgstr ""
+
 msgid "settings-advanced-metasocial-title"
 msgstr ""
 
 msgid "settings-advanced-metasocial-description"
+msgstr ""
+
+msgid "settings-advanced-metasocial-label"
 msgstr ""
 
 msgid "settings-advanced-canonical-title"
@@ -726,20 +930,32 @@ msgstr ""
 msgid "settings-advanced-canonical-description"
 msgstr ""
 
+msgid "settings-advanced-canonical-label"
+msgstr ""
+
 msgid "settings-advanced-json-title"
 msgstr ""
 
 msgid "settings-advanced-json-description"
 msgstr ""
 
+msgid "settings-advanced-json-label"
+msgstr ""
+
 msgid "settings-odysseystyles-title"
+msgstr ""
+
+msgid "settings-odysseystyles-label"
+msgstr ""
+
+msgid "settings-odysseystylesurl-label"
 msgstr ""
 
 msgid "settings-page-intro"
 msgstr ""
 
 msgid "settings-page-forum-link"
-msgstr ""
+msgstr ""%s">le fil de discussion dédié à Odyssée sur le forum officiel de Dotclear</a>."
 
 msgid "settings-reset-warning"
 msgstr ""

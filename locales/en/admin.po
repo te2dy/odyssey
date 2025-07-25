@@ -132,6 +132,9 @@ msgstr "Base unit"
 msgid "settings-global-unit-description"
 msgstr "With em, the dimensions of your blog adapt to your visitors' browser settings (useful for accessibility), but its display may differ from one device to another. To keep control of your blog's appearance (useful for a photo blog, for example), using pixels as the basic unit is recommended."
 
+msgid "settings-global-unit-label"
+msgstr "CSS unit"
+
 msgid "settings-global-unit-relative-default"
 msgstr "Em (default)"
 
@@ -144,6 +147,9 @@ msgstr "Width"
 msgid "settings-global-pagewidthvalue-description"
 msgstr "In the case of em, the width must be between 30 and 80; in the case of pixels, between 480 and 1,280. Default: 30em or 480px."
 
+msgid "settings-global-pagewidthvalue-label"
+msgstr "Page width value"
+
 msgid "settings-input-width-range-output"
 msgstr "%1$s%2$s"
 
@@ -152,6 +158,9 @@ msgstr "Fonts"
 
 msgid "settings-global-fontfamily-description"
 msgstr "The theme uses the fonts installed on your readers' devices to display text. No fonts are downloaded for rendering, which is less resource-intensive. However, their display may vary from one device to another."
+
+msgid "settings-global-fontfamily-label"
+msgstr "Global font"
 
 msgid "settings-global-fontfamily-system-default"
 msgstr "System (default)"
@@ -228,6 +237,9 @@ msgstr "Font size"
 msgid "settings-global-fontsize-description"
 msgstr "This size is relative to the browser font size and may vary from one device to another."
 
+msgid "settings-global-fontsize-label"
+msgstr "Global font size"
+
 msgid "settings-global-fontsize-80"
 msgstr "80%"
 
@@ -249,11 +261,17 @@ msgstr "Enable font smoothing"
 msgid "settings-global-fontantialiasing-description"
 msgstr "Prevents aliasing, but can make font characters very (too) fine."
 
+msgid "settings-global-fontantialiasing-label"
+msgstr "Font smoothing"
+
 msgid "settings-global-colorscheme-title"
 msgstr "Color scheme"
 
 msgid "settings-global-colorscheme-description"
 msgstr "In auto mode, the color scheme applied is the same as that of the blog visitor's operating system."
+
+msgid "settings-global-colorscheme-label"
+msgstr "Color scheme"
 
 msgid "settings-global-colorscheme-auto-default"
 msgstr "Auto (default)"
@@ -269,6 +287,9 @@ msgstr "Main color"
 
 msgid "settings-global-primarycolor-description"
 msgstr "This color is mainly used to highlight links."
+
+msgid "settings-global-primarycolor-label"
+msgstr "Main color"
 
 msgid "settings-global-primarycolor-blue-default"
 msgstr "Blue (default)"
@@ -288,23 +309,44 @@ msgstr "Custom"
 msgid "settings-global-maintextcolorcustom-title"
 msgstr "Text color"
 
+msgid "settings-global-maintextcolorcustom-label"
+msgstr "Custom text color"
+
 msgid "settings-global-secondarytextcolorcustom-title"
 msgstr "Secondary text color"
+
+msgid "settings-global-secondarytextcolorcustom-label"
+msgstr "Custom secondary text color"
 
 msgid "settings-global-primarycolorcustom-title"
 msgstr "Primary color"
 
+msgid "settings-global-primarycolorcustom-label"
+msgstr "Custom primary color"
+
 msgid "settings-global-primarycoloramplifiedcustom-title"
 msgstr "Primary color on hover"
 
+msgid "settings-global-primarycoloramplifiedcustom-label"
+msgstr "Custom primary color on hover"
+
 msgid "settings-global-inputcustom-title"
-msgstr "Form inputs"
+msgstr "Form inputs color"
+
+msgid "settings-global-inputcustom-label"
+msgstr "Custom form inputs color"
 
 msgid "settings-global-bordercustom-title"
 msgstr "Border color"
 
+msgid "settings-global-bordercustom-label"
+msgstr "Custom border color"
+
 msgid "settings-global-primarycolorbackgroundcustom-title"
 msgstr "Background color"
+
+msgid "settings-global-primarycolorbackgroundcustom-label"
+msgstr "Custom background color"
 
 msgid "settings-colors-reset"
 msgstr "default"
@@ -315,11 +357,17 @@ msgstr "Underline links"
 msgid "settings-global-linksunderline-description"
 msgstr "Underline links to highlight them and make them more accessible."
 
+msgid "settings-global-linksunderline-label"
+msgstr "Underlining links"
+
 msgid "settings-global-borderradius-title"
 msgstr "Round the corners of borders"
 
 msgid "settings-global-borderradius-description"
 msgstr "This applies in particular to the corners of form fields and buttons."
+
+msgid "settings-global-borderradius-label"
+msgstr "Rounding border corners"
 
 msgid "settings-global-colortransition-title"
 msgstr "Enable color transitions"
@@ -327,8 +375,14 @@ msgstr "Enable color transitions"
 msgid "settings-global-colortransition-description"
 msgstr "Gradually changes the color of links and buttons as the mouse hovers over them."
 
+msgid "settings-global-colortransition-label"
+msgstr "Color transitions"
+
 msgid "settings-header-align-title"
 msgstr "Alignment"
+
+msgid "settings-header-align-label"
+msgstr "Header alignment"
 
 msgid "settings-header-align-left"
 msgstr "Left"
@@ -345,17 +399,26 @@ msgstr "Display blog description"
 msgid "settings-header-description-description"
 msgstr "The description can be customized in the <a href="%s">blog settings</a>."
 
+msgid "settings-header-description-label"
+msgstr "Blog description in header"
+
 msgid "settings-header-postfull-title"
 msgstr "Display full header on all blog posts"
 
 msgid "settings-header-postfull-description"
 msgstr "Disables the reduced header displayed on posts to show the same header as on the home page."
 
+msgid "settings-header-postfull-label"
+msgstr "Full header on all blog posts"
+
 msgid "settings-header-image-title"
 msgstr "Upload an image"
 
 msgid "settings-header-image-description"
 msgstr "The image will be uploaded in the <code>/public/%s/img</code> folder of your Dotclear installation."
+
+msgid "settings-header-image-label"
+msgstr "Header image URL"
 
 msgid "header-image-preview-alt"
 msgstr "Image preview"
@@ -372,6 +435,9 @@ msgstr "Optional: upload an image twice as large for Retina screens"
 msgid "settings-header-image2x-description"
 msgstr "Optional: to ensure optimum rendering of your image on dual-pixel-density screens, in particular Apple Retinas, you need to upload the same image at twice the size. Example: if the image you uploaded is 200px wide, upload a 400px version here. Note: this second image must have a different name from the first, otherwise the upload will fail."
 
+msgid "settings-header-image2x-label"
+msgstr "Header image URL for dual-pixel-density screens"
+
 msgid "settings-upload-title"
 msgstr "Upload a configuration"
 
@@ -387,6 +453,9 @@ msgstr "Cancel"
 msgid "settings-header-imageposition-title"
 msgstr "Image position"
 
+msgid "settings-header-imageposition-label"
+msgstr "Header image position"
+
 msgid "settings-header-imageposition-top-default"
 msgstr "Top of header (default)"
 
@@ -394,13 +463,19 @@ msgid "settings-header-imageposition-bottom"
 msgstr "Bottom of header"
 
 msgid "settings-header-imagedescription-title"
-msgstr "Header image description"
+msgstr "Image description"
 
 msgid "settings-header-imagedescription-description"
 msgstr "Useful for accessibility."
 
+msgid "settings-header-imagedescription-label"
+msgstr "Header image description"
+
 msgid "settings-content-postlisttype-title"
 msgstr "Appearance"
+
+msgid "settings-content-postlisttype-label"
+msgstr "Post list appearance"
 
 msgid "settings-content-postlisttype-oneline-default"
 msgstr "Title and date on a single line (default)"
@@ -417,14 +492,26 @@ msgstr "Alternate colors for links to posts"
 msgid "settings-content-postlistaltcolor-description"
 msgstr "Allows you to better distinguish each ticket in the list."
 
+msgid "settings-content-postlistaltcolor-label"
+msgstr "Alternating colors for links to posts"
+
 msgid "settings-content-postlistthumbnail-title"
 msgstr "Show a preview of the first image of posts"
+
+msgid "settings-content-postlistthumbnail-label"
+msgstr "Preview of the first image of posts"
 
 msgid "settings-content-postlistreactions-title"
 msgstr "Show a link to reactions"
 
+msgid "settings-content-postlistreactions-label"
+msgstr "Link to reactions"
+
 msgid "settings-content-fontfamily-title"
 msgstr "Fonts"
+
+msgid "settings-content-fontfamily-label"
+msgstr "Content font"
 
 msgid "settings-content-fontfamily-same-default"
 msgstr "Same as global theme font (default)"
@@ -432,11 +519,17 @@ msgstr "Same as global theme font (default)"
 msgid "settings-content-fontsize-title"
 msgstr "Font size"
 
+msgid "settings-content-fontsize-label"
+msgstr "Content font size"
+
 msgid "settings-content-fontsize-description"
 msgstr "This size is relative to the main size."
 
 msgid "settings-content-lineheight-title"
 msgstr "Line spacing"
+
+msgid "settings-content-lineheight-label"
+msgstr "Text line spacing"
 
 msgid "settings-content-lineheight-small"
 msgstr "Small"
@@ -453,6 +546,9 @@ msgstr "Alignment"
 msgid "settings-content-textalign-description"
 msgstr "Justify on small screens (phones) may cause a weird display. To avoid it, you can choose the “Justify (except on small screens)” option."
 
+msgid "settings-content-textalign-label"
+msgstr "Text content alignment"
+
 msgid "settings-content-textalign-left-default"
 msgstr "Left (default)"
 
@@ -464,6 +560,9 @@ msgstr "Justify (except on small screens)"
 
 msgid "settings-content-hyphens-title"
 msgstr "Hyphenation"
+
+msgid "settings-content-hyphens-label"
+msgstr "Content hyphenation"
 
 msgid "settings-content-hyphens-disabled-default"
 msgstr "Disabled (default)"
@@ -480,11 +579,17 @@ msgstr "Add a drop cap to the first paragraph of posts and pages."
 msgid "settings-content-initialletter-description"
 msgstr "At last count (February 2025), only works on recent versions of Safari and Chrome."
 
+msgid "settings-content-initialletter-label"
+msgstr "Drop cap to the first paragraph of posts and pages."
+
 msgid "settings-content-imageswide-title"
 msgstr "Enlarge images wide enough"
 
 msgid "settings-content-imageswide-description"
 msgstr "Large images will extend beyond the edges of the page to display large. If you activate this option, it is advisable to configure additional thumbnail sizes with the <a href="%s">User defined thumbnails</a> plugin. Images will overflow by 120px on each side of the page. Example: if the width of your blog is 600px, you'll need to create a thumbnail size measuring 740px (600+120×2) wide, or even another measuring 1480px to support Retina screens.
+
+msgid "settings-content-imageswide-label"
+msgstr "Enlarging wide enough images"
 
 msgid "settings-content-imagesgrayscale-title"
 msgstr "Enable black and white mode"
@@ -492,11 +597,17 @@ msgstr "Enable black and white mode"
 msgid "settings-content-imagesgrayscale-description"
 msgstr "Images in posts and pages will be displayed in black and white to reduce distraction. Colors will be displayed on mouseover or touch on mobile."
 
+msgid "settings-content-imagesgrayscale-label"
+msgstr "Black and white image mode"
+
 msgid "settings-content-postpagination-title"
 msgstr "Show pagination below posts"
 
 msgid "settings-content-postpagination-description"
 msgstr "Displays a link to the previous and next post below the post content."
+
+msgid "settings-content-postpagination-label"
+msgstr "Pagination below posts"
 
 msgid "settings-reactions-button-title"
 msgstr "Unveil the form by clicking a button"
@@ -504,14 +615,26 @@ msgstr "Unveil the form by clicking a button"
 msgid "settings-reactions-button-description"
 msgstr "Makes blog posts visually lighter."
 
+msgid "settings-reactions-button-label"
+msgstr "Comment form by clicking"
+
 msgid "settings-reactions-markdownnotice-title"
 msgstr "Show a message about Markdown markup support"
+
+msgid "settings-reactions-markdownnotice-label"
+msgstr "Message about Markdown markup support in comments"
 
 msgid "settings-reactions-other-trackbacks-title"
 msgstr "Display a link to add trackbacks"
 
+msgid "settings-reactions-other-trackbacks-label"
+msgstr "Link below posts to add trackbacks"
+
 msgid "settings-reactions-feedlink-title"
 msgstr "Display a link to follow the feed of reactions by RSS/Atom"
+
+msgid "settings-reactions-feedlink-label"
+msgstr "Link below posts to follow the feed of reactions by RSS/Atom"
 
 msgid "settings-reactions-feedlink-disabled-default"
 msgstr "No (default)"
@@ -528,6 +651,9 @@ msgstr "Allow other reaction methods"
 msgid "settings-reactions-other-description"
 msgstr "You can offer your readers the opportunity to react to your posts via e-mail, social networks or other apps."
 
+msgid "settings-reactions-other-label"
+msgstr "Other reaction methods"
+
 msgid "settings-reactions-other-disabled-default"
 msgstr "No"
 
@@ -543,11 +669,17 @@ msgstr "Allow replies by e-mail"
 msgid "settings-reactions-otheremail-description"
 msgstr "Warning: your e-mail address will be revealed and could be used by malicious parties (spam). To avoid revealing your address, you can try the <a href="%s">Signal</a> plugin or a third-party service such as <a href=https://relay.firefox.com/>Firefox Relay</a>."
 
+msgid "settings-reactions-otheremail-label"
+msgstr "Replies to posts by e-mail"
+
 msgid "settings-reactions-other-bluesky-title"
 msgstr "Allow sharing on %s"
 
 msgid "settings-reactions-other-bluesky-description"
 msgstr "Your readers can reply to you on Bluesky by public message."
+
+msgid "settings-reactions-other-bluesky-label"
+msgstr "Sharing posts on %s"
 
 msgid "settings-reactions-other-facebook-title"
 msgstr "Allow sharing on %s"
@@ -555,11 +687,17 @@ msgstr "Allow sharing on %s"
 msgid "settings-reactions-other-facebook-description"
 msgstr "Your readers can reply to you on Facebook by public message."
 
+msgid "settings-reactions-other-facebook-label"
+msgstr "Sharing posts on %s"
+
 msgid "settings-reactions-other-mastodon-title"
 msgstr "Allow sharing on %s"
 
 msgid "settings-reactions-other-mastodon-description"
 msgstr "Your readers can reply to you on Mastodon by public message."
+
+msgid "settings-reactions-other-mastodon-label"
+msgstr "Sharing posts on %s"
 
 msgid "settings-reactions-other-signal-title"
 msgstr "Allow replies on %s"
@@ -567,11 +705,17 @@ msgstr "Allow replies on %s"
 msgid "settings-reactions-other-signal-description"
 msgstr "Warning: if you have entered a phone number or user name, it will be made public and could fall into the wrong hands."
 
+msgid "settings-reactions-other-signal-label"
+msgstr "Replying to posts on %s"
+
 msgid "settings-reactions-other-sms-title"
 msgstr "Allow replies by %s"
 
 msgid "settings-reactions-other-sms-description"
 msgstr "Warning: your telephone number will be made public and could fall into the wrong hands."
+
+msgid "settings-reactions-other-sms-label"
+msgstr "Replying to posts by %s"
 
 msgid "settings-reactions-other-whatsapp-title"
 msgstr "Allow replies on %s"
@@ -579,11 +723,17 @@ msgstr "Allow replies on %s"
 msgid "settings-reactions-other-whatsapp-description"
 msgstr "Warning: your telephone number will be made public and could fall into the wrong hands."
 
+msgid "settings-reactions-other-whatsapp-label"
+msgstr "Replying to posts on %s"
+
 msgid "settings-reactions-other-x-title"
 msgstr "Allow sharing on %s"
 
 msgid "settings-reactions-other-x-description"
 msgstr "Your readers can reply to you on X by public message."
+
+msgid "settings-reactions-other-x-label"
+msgstr "Sharing posts on %s"
 
 msgid "settings-widgets-display-title"
 msgstr "Enable widgets (nav and extra panes)"
@@ -591,14 +741,23 @@ msgstr "Enable widgets (nav and extra panes)"
 msgid "settings-widgets-display-description"
 msgstr "It is recommended to disable this option if you have not configured any widgets in the nav and extra pane (see the <a href="%s">widget configuration page</a>)."
 
+msgid "settings-widgets-display-label"
+msgstr "Widgets display"
+
 msgid "settings-footer-activation-title"
 msgstr "Enable footer"
+
+msgid "settings-footer-activation-label"
+msgstr "Footer display"
 
 msgid "settings-footer-activation-description"
 msgstr "It is recommended to uncheck this setting if the footer does not contain any elements."
 
 msgid "settings-footer-align-title"
 msgstr "Alignment"
+
+msgid "settings-footer-align-label"
+msgstr "Footer alignment"
 
 msgid "settings-footer-align-left-default"
 msgstr "Left (default)"
@@ -611,6 +770,9 @@ msgstr "Right"
 
 msgid "settings-footer-feed-title"
 msgstr "Display a link to the RSS/Atom feed of the blog"
+
+msgid "settings-footer-feed-label"
+msgstr "Link in the footer to the RSS/Atom feed of the blog"
 
 msgid "settings-footer-feed-disabled-default"
 msgstr "No (default)"
@@ -626,6 +788,9 @@ msgstr "Show a mention to Dotclear and the theme"
 
 msgid "settings-footer-credits-description"
 msgstr "Allows you to advertise Dotclear and this theme."
+
+msgid "settings-footer-credits-label"
+msgstr "Mention to Dotclear and the theme in the footer"
 
 msgid "settings-social-diaspora-description"
 msgstr "URL of a %s profile or page."
@@ -645,26 +810,50 @@ msgstr "URL of a %s account."
 msgid "settings-footer-social-diaspora-title"
 msgstr "Display a link to %s"
 
+msgid "settings-footer-social-diaspora-label"
+msgstr "Link in the footer to %s"
+
 msgid "settings-footer-social-bluesky-title"
 msgstr "Display a link to %s"
+
+msgid "settings-footer-social-bluesky-label"
+msgstr "Link in the footer to %s"
 
 msgid "settings-footer-social-facebook-title"
 msgstr "Display a link to %s"
 
+msgid "settings-footer-social-facebook-label"
+msgstr "Link in the footer to %s"
+
 msgid "settings-footer-social-instagram-title"
 msgstr "Display a link to %s"
+
+msgid "settings-footer-social-instagram-label"
+msgstr "Link in the footer to %s"
 
 msgid "settings-footer-social-mastodon-title"
 msgstr "Display a link to %s"
 
+msgid "settings-footer-social-mastodon-label"
+msgstr "Link in the footer to %s"
+
 msgid "settings-footer-social-phone-title"
 msgstr "Display a link to call you"
+
+msgid "settings-footer-social-phone-label"
+msgstr "Link in the footer to call you"
 
 msgid "settings-footer-social-signal-title"
 msgstr "Display a link to %s"
 
+msgid "settings-footer-social-signal-label"
+msgstr "Link to %s in the footer"
+
 msgid "settings-footer-social-sms-title"
 msgstr "Display a link to text you"
+
+msgid "settings-footer-social-sms-label"
+msgstr "Link in the footer to text you"
 
 msgid "settings-footer-social-youtube-title"
 msgstr "Display a link to %s"
@@ -672,11 +861,20 @@ msgstr "Display a link to %s"
 msgid "settings-footer-social-whatsapp-title"
 msgstr "Display a link to %s"
 
+msgid "settings-footer-social-whatsapp-label"
+msgstr "Link in the footer to %s"
+
 msgid "settings-footer-social-x-title"
 msgstr "Display a link to %s"
 
+msgid "settings-footer-social-x-label"
+msgstr "Link in the footer to %s"
+
 msgid "settings-footer-social-other-title"
 msgstr "Display a link to your custom link"
+
+msgid "settings-footer-social-other-label"
+msgstr "Custom link in the footer"
 
 msgid "settings-footer-social-sms-description"
 msgstr "Warning: your phone number will be made public and could fall into the wrong hands."
@@ -714,11 +912,17 @@ msgstr "Description of the home page"
 msgid "settings-advanced-metadescription-description"
 msgstr "Text used as a description of the blog for search engines. Its ideal size is around 200 characters."
 
+msgid "settings-advanced-metadescription-label"
+msgstr "Description tag of the home page in HTML head"
+
 msgid "settings-advanced-metasocial-title"
 msgstr "Add minimalist social tags"
 
 msgid "settings-advanced-metasocial-description"
 msgstr "Ensures better display of the blog on social networks and can be useful for SEO."
+
+msgid "settings-advanced-metasocial-label"
+msgstr "Minimalist social tags in HTML head"
 
 msgid "settings-advanced-canonical-title"
 msgstr "Add canonical URLs"
@@ -726,14 +930,26 @@ msgstr "Add canonical URLs"
 msgid "settings-advanced-canonical-description"
 msgstr "Useful for search engine optimization. Add the canonical URL to home page, post and page headers."
 
+msgid "settings-advanced-canonical-label"
+msgstr "Canonical URLs in HTML head"
+
 msgid "settings-advanced-json-title"
 msgstr "Add metadata in JSON format"
 
 msgid "settings-advanced-json-description"
 msgstr "Useful for search engine optimization."
 
+msgid "settings-advanced-json-label"
+msgstr "Metadata in JSON format in HTML head"
+
 msgid "settings-odysseystyles-title"
 msgstr "All styles"
+
+msgid "settings-odysseystyles-label"
+msgstr "Custom styles"
+
+msgid "settings-odysseystylesurl-label"
+msgstr "Link to the custom stylesheet"
 
 msgid "settings-page-intro"
 msgstr "This is where you can customize your %s theme to suit your needs."
