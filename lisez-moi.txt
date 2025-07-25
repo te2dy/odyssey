@@ -11,9 +11,28 @@ Ce thème n’aurait pu avoir vu le jour sans les ressources mises à dispositio
 Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://blog.jim-nielsen.com/), des travaux réalisés sur les thèmes Ductile et Berlin pour Dotclear, et des billets de Franck Paul (https://open-time.net/).
 
 == 🍀 Feuille de route ==
-- Ajouter la possibilité d’afficher la barre latérale à gauche ou à droite, plutôt qu’en bas ? Version 3 ?
+- Basculer certaines options sur des extensions pour libérer le configurateur.
+- À évaluer : Créer une aide avec Page::helpBlock().
+- À évaluer : créer des onglets sur la page du configurateur (->class('multi-part'), etc.).
+- À évaluer : ajouter la possibilité d’afficher la barre latérale à gauche ou à droite, plutôt qu’en bas ? Version 3 ?
+- Ajouter des informations dans _define.php, comme :
+    'date' => null, // iso8601
+
+    // DA specifics
+    'section' => '',
+    'tags'    => '',
+    'sshot'   => '',
+    'score'   => 0,
+    'dc_min'  => '',
 
 == Notes de version ==
+
+=== 2.1 - 25 juillet 2025 ===
+- Ajout : libellé des options du configurateur dans la base de données.
+- Amélioration : agrandissement de la marge haute du lien vers les réactions dans la liste des billets.
+- Correction : l’ordre des fichiers de configuration n’était pas chronologique.
+- Modification : remplacement de My::settingValue() et Config::settingsSaved() par My::settings(), qui proposait déjà nativement la même chose.
+- Modification : apparence des messages d’avertissement suite à l’envoi de commentaires.
 
 === 2 - 24 juillet 2025 ===
 - Refonte du code du configurateur et suppression du caractère bêta de certaines fonctionnalités.
