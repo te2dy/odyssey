@@ -174,10 +174,10 @@ msgid "reactions-trackback-label"
 msgstr "Trackback:"
 
 msgid "reactions-comment-alert-published"
-msgstr "Your comment has been published ✅"
+msgstr "✅ Your comment has been published."
 
 msgid "reactions-comment-alert-review"
-msgstr "Your comment has been submitted,<br>but it will be reviewed before being published ⚠️"
+msgstr "⚠️ Your comment has been submitted. It will be reviewed before being published."
 
 msgid "reactions-comment-previewing"
 msgstr "Preview"

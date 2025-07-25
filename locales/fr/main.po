@@ -174,10 +174,10 @@ msgid "reactions-trackback-label"
 msgstr "Rétrolien&nbsp;:"
 
 msgid "reactions-comment-alert-published"
-msgstr "Votre commentaire été publié ✅"
+msgstr "✅ Votre commentaire été publié."
 
 msgid "reactions-comment-alert-review"
-msgstr "Votre commentaire a été envoyé,<br>mais il sera examiné avant d’être publié ⚠️"
+msgstr "⚠️ Votre commentaire a été envoyé. Il sera examiné avant d’être éventuellement publié."
 
 msgid "reactions-comment-previewing"
 msgstr "Prévisualisation"

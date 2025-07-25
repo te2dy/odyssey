@@ -51,17 +51,13 @@
   <tpl:Block name="comment-alerts">
     <tpl:SysIfCommentPublished>
       <div class=comment-message id={{tpl:lang reactions-comment-id}}>
-        <div class=comment-message-content>
-          {{tpl:lang reactions-comment-alert-published}}
-        </div>
+        {{tpl:lang reactions-comment-alert-published}}
       </div>
     </tpl:SysIfCommentPublished>
 
     <tpl:SysIfCommentPending>
       <div class=comment-message id={{tpl:lang reactions-comment-id}}>
-        <div class=comment-message-content>
-          {{tpl:lang reactions-comment-alert-review}}
-        </div>
+        {{tpl:lang reactions-comment-alert-review}}
       </div>
     </tpl:SysIfCommentPending>
 

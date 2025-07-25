@@ -617,14 +617,11 @@ details summary {
   font-weight: 700;
 }
 .comment-message {
-  margin-top: 4rem;
-  text-align: center;
-}
-.comment-message-content {
-  border: .063rem solid var(--color-border, #ccc);
+  background-color: var(--color-input-background, #f2f2f2);
   border-radius: var(--border-radius, unset);
-  display: inline-block;
-  padding: .5rem;
+  margin-top: 4rem;
+  padding: 1rem;
+  text-align: center;
 }
 .comment-preview {
   border: .063rem solid var(--color-border, #ccc);
