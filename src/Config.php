@@ -1922,7 +1922,7 @@ class Config extends Process
             $header_image_file_name = My::settings()->header_image['name'] ?? '';
 
             $the_setting[] = (new Hidden('header_image-delete-action', "false"));
-            $the_setting[] = (new Hidden('header_image-retina-text', __('header_image-retina-ready')));
+            $the_setting[] = (new Hidden('header_image-retina-text', Html::escapeHTML(__('header_image-retina-ready'))));
         }
 
         return $the_setting;
