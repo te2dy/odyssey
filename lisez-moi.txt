@@ -27,6 +27,12 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
+=== 2.1.1 - 28 juillet 2025 ===
+- Ajout : message de confirmation avant la restauration d’une configuration.
+- Correction : la restauration de configuration ne fonctionnait plus.
+- Suppression : styles de légende d’image.
+- Modifications mineures des styles.
+
 === 2.1 - 25 juillet 2025 ===
 - Ajout : libellé des options du configurateur dans la base de données.
 - Amélioration : agrandissement de la marge haute du lien vers les réactions dans la liste des billets.
