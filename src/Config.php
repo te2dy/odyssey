@@ -1099,7 +1099,7 @@ class Config extends Process
         if (isset($settings['content_images_wide']) && $settings['content_images_wide'] === '1') {
             $css_main_array['body']['overflow-x'] = 'hidden';
 
-            $css_main_array['.odyssey-img-wide']['display']     = 'block';
+            $css_main_array['.odyssey-img-wide']['display']     = 'inline-block';
             $css_main_array['.odyssey-img-wide']['margin-left'] = '50%';
             $css_main_array['.odyssey-img-wide']['transform']   = 'translateX(-50%)';
             $css_main_array['.odyssey-img-wide']['max-width']   = '95vw';
