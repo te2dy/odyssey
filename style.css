@@ -244,6 +244,9 @@ figure {
   display: block;
   margin: 1em 0;
 }
+figure img {
+  display: block;
+}
 figure figcaption {
   font-size: .8em;
   margin: 0;
