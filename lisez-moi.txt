@@ -27,6 +27,10 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
+=== 2.1.2 - 28 juillet 2025 ===
+- Ajout : styles pour les légendes des images avec figcaption.
+- Correction : les marges inférieures des images pouvaient être irrégulières.
+
 === 2.1.1 - 28 juillet 2025 ===
 - Ajout : message de confirmation avant la restauration d’une configuration.
 - Correction : la restauration de configuration ne fonctionnait plus.
