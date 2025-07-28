@@ -255,10 +255,6 @@ video {
 img.media {
   display: block;
 }
-img + em { /* Image caption */
-  display: block;
-  margin-top: .5rem;
-}
 
 /* Forms & buttons. */
 button,
@@ -541,7 +537,7 @@ details summary {
   margin-top: 4rem;
 }
 #attachments {
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
 }
 .post-meta:not(:last-child) {
   margin-bottom: .5rem;
