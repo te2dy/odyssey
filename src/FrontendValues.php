@@ -178,6 +178,8 @@ class FrontendValues
         $img_tag_end   = '</div>';
         $img_tag_id    = '';
 
+        $img_position = !My::settings()->header_image_position ? 'top' : 'bottom';
+
         if ($image_as_title === false) {
             $img_description = My::settings()->header_image_description ?: __('header-image-alt');
         } else {
@@ -185,9 +187,8 @@ class FrontendValues
             $img_tag_start    = '<h1 id=site-title>';
             $img_tag_end      = '</h1>';
             $img_tag_id       = ' class=site-image';
+            $img_position     = 'top';
         }
-
-        $img_position = !My::settings()->header_image_position ? 'top' : 'bottom';
 
         if (isset($attr['position']) && $img_position === $attr['position']) {
             if ((!App::blog()->settings()->system->static_home && App::url()->type === 'default')

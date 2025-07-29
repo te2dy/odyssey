@@ -121,6 +121,12 @@ function disableInputs() {
     document.getElementById("header_image-delete").style.display = "none";
   }
 
+  if (document.getElementById("header_image_as_title").checked) {
+    setStyle(["header_image_position", "header_image_description"], "none");
+  } else {
+    setStyle(["header_image_position", "header_image_description"], "block");
+  }
+
   if (document.getElementById("content_postlist_type").value !== "content") {
     setStyle([
       "content_postlist_altcolor",
