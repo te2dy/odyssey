@@ -1194,7 +1194,7 @@ class Config extends Process
 
         if ($footer_social_links === true) {
             $css_main_array['.footer-social-links']['list-style']                 = 'none';
-            $css_main_array['.footer-social-links']['margin']                     = '0 0 1rem';
+            $css_main_array['.footer-social-links']['margin']                     = '0';
             $css_main_array['.footer-social-links']['padding-left']               = '0';
 
             $css_main_array['.footer-social-links li']['display']                 = 'inline-block';
