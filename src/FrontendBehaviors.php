@@ -499,12 +499,6 @@ class FrontendBehaviors
      */
     public static function odysseyTplConditions(string $tag, ArrayObject $attr, string $content, ArrayObject $if): void
     {
-        if ($tag === 'EntryIf' && isset($attr['has_tag'])) {
-            $sign = (bool) $attr['has_tag'] ? '' : '!';
-
-            $if->append($sign . 'App::frontend()->context()->posts->post_meta');
-        }
-
         if ($tag === 'EntryIf' && isset($attr['has_reaction']) && My::settings()->content_postlist_reactions === true) {
             $sign = (bool) $attr['has_reaction'] ? '' : '!';
 
