@@ -249,7 +249,7 @@ figure img {
 }
 figure figcaption {
   font-size: .8em;
-  margin: 0;
+  margin: .5rem 0 1rem 0;
 }
 img,
 video {
@@ -531,6 +531,9 @@ details summary {
  */
 :is(.post, .page) header {
   margin-bottom: 2rem;
+}
+.page-static .content-text > :first-child {
+  margin-top: 0;
 }
 .post .post-selected {
   line-height: 1;
