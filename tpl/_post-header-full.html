@@ -1,9 +1,11 @@
 <header id=site-header>
   {{tpl:odysseyHeaderImage position="top"}}
 
-  <div id=site-title>
-    <a href={{tpl:BlogURL is_attr="1"}} rel=home><h4>{{tpl:BlogName}}</h4></a>
-  </div>
+  <tpl:odysseySiteTitle>
+    <div id=site-title>
+      <a href={{tpl:BlogURL is_attr="1"}} rel=home><h4>{{tpl:BlogName}}</h4></a>
+    </div>
+  </tpl:odysseySiteTitle>
 
   {{tpl:odysseyBlogDescription}}
 

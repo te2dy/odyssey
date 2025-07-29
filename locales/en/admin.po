@@ -438,6 +438,15 @@ msgstr "Optional: to ensure optimum rendering of your image on dual-pixel-densit
 msgid "settings-header-image2x-label"
 msgstr "Header image URL for dual-pixel-density screens"
 
+msgid "settings-header-imageastitle-title"
+msgstr "Use the header image as the blog title"
+
+msgid "settings-header-imageastitle-description"
+msgstr "The name of the blog will be hidden; only the header image will be displayed."
+
+msgid "settings-header-imageastitle-label"
+msgstr "Use the header image as the blog title"
+
 msgid "settings-upload-title"
 msgstr "Upload a configuration"
 

@@ -438,6 +438,15 @@ msgstr "Facultatif&nbsp;: pour assurer un rendu optimal de votre image sur les �
 msgid "settings-header-image2x-label"
 msgstr "Adresse de l’image d’en-tête à double densité de pixels"
 
+msgid "settings-header-imageastitle-title"
+msgstr "Utiliser l’image d’en-tête comme titre du blog"
+
+msgid "settings-header-imageastitle-description"
+msgstr "Le nom du blog sera masqué ; seule l’image d’en-tête sera affichée."
+
+msgid "settings-header-imageastitle-label"
+msgstr "Utiliser l’image d’en-tête comme titre du blog"
+
 msgid "settings-upload-title"
 msgstr "Téléverser une configuration"
 

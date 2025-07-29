@@ -156,8 +156,9 @@ class FrontendValues
      */
     public static function odysseyHeaderImage(ArrayObject $attr): string
     {
-        $image_url  = My::settings()->header_image['url']   ?? null;
-        $image_size = My::settings()->header_image['width'] ?? null;
+        $image_url      = My::settings()->header_image['url']   ?? null;
+        $image_size     = My::settings()->header_image['width'] ?? null;
+        $image_as_title = My::settings()->header_image_as_title ?? false;
 
         if (!$image_url || !$image_size) {
             return '';
@@ -173,19 +174,50 @@ class FrontendValues
             $sizes   = ' sizes=' . Html::escapeHTML($image_size) . 'vw';
         }
 
-        $img_description = My::settings()->header_image_description ?: __('header-image-alt');
-        $img_position    = !My::settings()->header_image_position ? 'top' : 'bottom';
+        $img_tag_start = '<div id=site-image>';
+        $img_tag_end   = '</div>';
+        $img_tag_id    = '';
+
+        if ($image_as_title === false) {
+            $img_description = My::settings()->header_image_description ?: __('header-image-alt');
+        } else {
+            $img_description  = App::blog()->name;
+            $img_tag_start    = '<h1 id=site-title>';
+            $img_tag_end      = '</h1>';
+            $img_tag_id       = ' class=site-image';
+        }
+
+        $img_position = !My::settings()->header_image_position ? 'top' : 'bottom';
 
         if (isset($attr['position']) && $img_position === $attr['position']) {
-            if (App::url()->type === 'default') {
+            if ((!App::blog()->settings()->system->static_home && App::url()->type === 'default')
+                || (App::blog()->settings()->system->static_home && App::url()->type === 'static')
+            ) {
                 // Do not add a link to the home page on home page.
-                return '<div id=site-image><img alt=' . My::displayAttr($img_description, 'html') . ' src=' . My::displayAttr($image_url, 'url') . $srcset . $sizes . '></div>';
+                return $img_tag_start . '<img alt=' . My::displayAttr($img_description, 'html') . $img_tag_id . ' src=' . My::displayAttr($image_url, 'url') . $srcset . $sizes . '>' . $img_tag_end;
             }
 
-            return '<div id=site-image><a href=' . My::displayAttr(App::blog()->url, 'url') . ' rel=home><img alt=' . My::displayAttr($img_description, 'html') . ' src=' . My::displayAttr($image_url, 'url') . $srcset . $sizes . '></a></div>';
+            return $img_tag_start . '<a href=' . My::displayAttr(App::blog()->url, 'url') . $img_tag_id .     ' rel=home><img alt=' . My::displayAttr($img_description, 'html') . ' src=' . My::displayAttr($image_url, 'url') . $srcset . $sizes . '></a>' . $img_tag_end;
         }
 
         return '';
+    }
+
+    /**
+     * Displays the blog name with ou without a link to homepage.
+     * in the theme configuration page.
+     *
+     * @return string The blog name.
+     */
+    public static function odysseyBlogNameLink(): string
+    {
+        if ((App::blog()->settings()->system->static_home && App::url()->type !== 'static')
+            || (!App::blog()->settings()->system->static_home && App::url()->type !== 'default')
+        ) {
+            return '<div id=site-title><a href=' . My::displayAttr(App::blog()->url, 'url') . ' rel=home><h1>' . Html::escapeHTML(App::blog()->name) . '</h1></a></div>';
+        }
+
+        return '<h1 id=site-title>' . Html::escapeHTML(App::blog()->name) . '</h1>';
     }
 
     /**

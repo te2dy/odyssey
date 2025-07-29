@@ -32,6 +32,23 @@ class FrontendBlocks
     }
 
     /**
+     * Hides the blog title block if the header image has been set as blog title.
+     *
+     * @param array $attr    Unused.
+     * @param void  $content The blog title block.
+     *
+     * @return string The blog title block.
+     */
+    public static function odysseySiteTitle($attr, $content): string
+    {
+        if (My::settings()->header_image_as_title !== true) {
+            return $content;
+        }
+
+        return '';
+    }
+
+    /**
      * Displays/hides the post pagination.
      *
      * @param array $attr    Unused.

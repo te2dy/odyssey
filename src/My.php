@@ -449,6 +449,15 @@ class My extends MyTheme
             'sanitizer'   => 'sanitizeHeaderImage'
         ];
 
+        $default_settings['header_image_as_title'] = [
+            'title'       => __('settings-header-imageastitle-title'),
+            'description' => __('settings-header-imageastitle-description'),
+            'label'       => __('settings-header-imageastitle-label'),
+            'type'        => 'checkbox',
+            'default'     => false,
+            'section'     => ['header', 'image']
+        ];
+
         $default_settings['header_image_position'] = [
             'title'       => __('settings-header-imageposition-title'),
             'description' => '',

@@ -438,6 +438,15 @@ msgstr ""
 msgid "settings-header-image2x-label"
 msgstr ""
 
+msgid "settings-header-imageastitle-title"
+msgstr ""
+
+msgid "settings-header-imageastitle-description"
+msgstr ""
+
+msgid "settings-header-imageastitle-label"
+msgstr ""
+
 msgid "settings-upload-title"
 msgstr ""
 
