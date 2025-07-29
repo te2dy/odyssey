@@ -5,16 +5,38 @@
 </tpl:Block>
 
 <tpl:Block name="head-description">
-  {{tpl:odysseyBlogDescription remove_html="1" encode_html="1"}}
+  {{tpl:odysseyMetaDescriptionHome}}
+</tpl:Block>
+
+<tpl:Block name="site-header">
+  <header id=site-header>
+    {{tpl:odysseyHeaderImage position="top"}}
+
+    <tpl:PaginationIf start="1">
+      <h1 id=site-title>{{tpl:BlogName}}</h1>
+    </tpl:PaginationIf>
+
+    <tpl:PaginationIf start="0">
+      <div id=site-title>
+        <a href={{tpl:BlogURL is_attr="1"}} rel=home><h1>{{tpl:BlogName}}</h1></a>
+      </div>
+    </tpl:PaginationIf>
+
+    {{tpl:odysseyBlogDescription}}
+
+    {{tpl:SimpleMenu id="main-menu"}}
+
+    {{tpl:odysseyHeaderImage position="bottom"}}
+
+    {{tpl:SysBehavior behavior="publicTopAfterContent"}}
+  </header>
 </tpl:Block>
 
 <tpl:Block name="main-content">
   {{tpl:BlogStaticEntryURL}}
 
   <tpl:Entries>
-    {{tpl:EntryContent}}
-
-    <article id={{tpl:lang page-id}}-{{tpl:EntryID}} class=page>
+    <article class="page page-static" id={{tpl:lang page-id}}-{{tpl:EntryID}}>
       <div class=content-text>
         {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
 
@@ -22,6 +44,12 @@
 
         {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
       </div>
+
+      <tpl:EntryIf has_attachment="1">
+        <footer class=post-footer>
+          {{tpl:include src="_attachments.html"}}
+        </footer>
+      </tpl:EntryIf>
     </article>
 
     {{tpl:include src="_comments.html"}}
