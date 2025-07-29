@@ -12,7 +12,7 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == 🍀 Feuille de route ==
 - Basculer certaines options sur des extensions pour libérer le configurateur.
-- À évaluer : Créer une aide avec Page::helpBlock().
+- À évaluer : créer une aide avec Page::helpBlock().
 - À évaluer : créer des onglets sur la page du configurateur (->class('multi-part'), etc.).
 - À évaluer : ajouter la possibilité d’afficher la barre latérale à gauche ou à droite, plutôt qu’en bas ? Version 3 ?
 - Ajouter des informations dans _define.php, comme :
@@ -26,6 +26,10 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
     'dc_min'  => '',
 
 == Notes de version ==
+
+=== 2.2 - 29 juillet 2025 ===
+- Ajout : petite marge au-dessus des légendes d’image.
+- Correction : affichage cassé des pages d’accueil statiques.
 
 === 2.1.3 - 28 juillet 2025 ===
 - Correction : la correction précédente des marges des images occasionnait des problèmes.

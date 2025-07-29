@@ -2019,6 +2019,7 @@ class Config extends Process
             __('settings-page-intro'),
             My::name()
         )));
+
         $fields[] = (new Text(
             'p',
             sprintf(
