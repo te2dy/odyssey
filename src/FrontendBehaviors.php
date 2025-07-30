@@ -176,14 +176,25 @@ class FrontendBehaviors
 
             switch (App::url()->type) {
                 case 'default':
+                case 'static':
+                    $blog_name = App::blog()->name;
+
+                    // Specific title for the post list page when a static home page has been set.
+                    if (App::blog()->settings()->system->static_home && App::url()->type === 'default') {
+                        $blog_name = sprintf(
+                            __('meta-title-static-postlist'),
+                            $blog_name
+                        );
+                    }
+
                     $json_ld = [
                         '@context'    => 'http://schema.org',
                         '@type'       => 'WebPage',
                         'publisher' => [
                             '@type' => 'Organization',
-                            'name'  => App::blog()->name
+                            'name'  => $blog_name
                         ],
-                        'name'        => App::blog()->name,
+                        'name'        => $blog_name,
                         'description' => My::settings()->advanced_meta_description ?: App::blog()->desc,
                         'url'         => App::blog()->url
                     ];
