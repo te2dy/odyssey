@@ -24,8 +24,21 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
     'sshot'   => '',
     'score'   => 0,
     'dc_min'  => '',
+- Ajouter des métadonnées aux pages de type "static".
+- Permettre l’ajout de boutons de partage pour des réseaux sociaux qui ne sont pas configurés.
+- Revoir odysseyMetaCanonical() sur les pages non prévues dans la boucle switch.
 
 == Notes de version ==
+
+=== 2.3 - 30 juillet 2025 ===
+- Amélioration générale de l’articulation entre image d’en-tête et titre du blog.
+- Amélioration : simplification du contenu du modèle principal "layout.html".
+- Amélioration : quand l’image à double densité de pixels est valide dans le configurateur, l’afficher.
+- Amélioration : l’option d’arrondissement des bordures est désormais appliqué à l’image d’en-tête.
+- Correction : absence du titre au-dessus des réactions si des commentaires ont été publié avant la fermeture des nouveaux commentaires.
+- Correction : balise og:title et métadonnées JSON lorsqu’une page d’accueil statique est définie.
+- Correction : URL canoniques erronées.
+- Modification : augmentation des marges des éléments du menu principal.
 
 === 2.2 - 29 juillet 2025 ===
 - Ajout : petite marge au-dessus des légendes d’image.
