@@ -420,6 +420,7 @@ details summary {
 }
 #main-menu li {
   display: inline-block;
+  margin-bottom: .5rem;
   margin-right: .5rem;
 }
 #main-menu li:last-child {
