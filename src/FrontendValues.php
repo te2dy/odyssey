@@ -13,7 +13,7 @@ use ArrayObject;
 use Dotclear\App;
 use Dotclear\Core\Frontend\Ctx;
 use Dotclear\Helper\Html\Html;
-use Dotclear\Helper\Network;
+use Dotclear\Helper\Network\Http;
 
 class FrontendValues
 {
@@ -106,7 +106,7 @@ class FrontendValues
 
                     break;
                 default:
-                    $current_uri = Network::getSelfURI();
+                    $current_uri = Http::getSelfURI();
 
                     if ($current_uri) {
                         return '<link rel=canonical href=' . My::displayAttr($current_uri, 'url') . '>' . "\n";
