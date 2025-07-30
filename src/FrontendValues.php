@@ -13,6 +13,7 @@ use ArrayObject;
 use Dotclear\App;
 use Dotclear\Core\Frontend\Ctx;
 use Dotclear\Helper\Html\Html;
+use Dotclear\Helper\Network;
 
 class FrontendValues
 {
@@ -93,14 +94,21 @@ class FrontendValues
                     return '<link rel=canonical href="<?= App::frontend()->context()->posts->getURL() ?>">' . "\n";
                     break;
                 case 'default':
-                    return '<link rel=canonical href=' . My::displayAttr(App::blog()->url, 'url') . '>' . "\n";
+                case 'static':
+                    $url = App::blog()->url;
+
+                    // Specific url for the post list page when a static home page has been set.
+                    if (App::blog()->settings()->system->static_home && App::url()->type === 'default') {
+                        $url = App::blog()->url() . App::url()->getURLFor('posts');
+                    }
+
+                    return '<link rel=canonical href=' . My::displayAttr($url, 'url') . '>' . "\n";
+
                     break;
                 default:
-                    $current_uri = self::odysseyGetURI();
+                    $current_uri = Network::getSelfURI();
 
                     if ($current_uri) {
-                        $current_uri = App::blog()->url() . $current_uri;
-
                         return '<link rel=canonical href=' . My::displayAttr($current_uri, 'url') . '>' . "\n";
                     }
             }
