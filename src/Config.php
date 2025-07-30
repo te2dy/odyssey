@@ -1906,11 +1906,19 @@ class Config extends Process
             $image_src = $setting_value['url'] ?? '';
 
             if (My::settings()->header_image) {
+                $image2x_src = My::settings()->header_image2x['url'] ?? null;
+                $srcset      = '';
+
+                if ($image_src) {
+                    $srcset = 'srcset="' . My::escapeURL($image_src) . ' 1x, ' . My::escapeURL($image2x_src) . ' 2x" sizes=100vw';
+                }
+
                 $the_setting[] = (new Para())
                     ->id('header_image-preview')
                     ->items([
                         (new Img(My::escapeURL($image_src), 'header_image-src'))
                             ->alt(__('header_image-preview-alt'))
+                            ->extra($srcset)
                     ]);
 
                 if (My::settings()->header_image2x) {
