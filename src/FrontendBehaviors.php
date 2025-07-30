@@ -78,7 +78,16 @@ class FrontendBehaviors
                     break;
                 case 'default':
                 case 'default-page':
+                case 'static':
                     $title = App::blog()->name;
+
+                    // Specific title for the post list page when a static home page has been set.
+                    if (App::blog()->settings()->system->static_home && App::url()->type === 'default') {
+                        $title = sprintf(
+                            __('meta-title-static-postlist'),
+                            $title
+                        );
+                    }
 
                     $page = (int) Ctx::PaginationPosition();
 

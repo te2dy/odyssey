@@ -23,6 +23,9 @@ msgstr ""
 msgid "feed-comments-title"
 msgstr ""
 
+msgid "meta-title-static-postlist"
+msgstr ""
+
 msgid "meta-social-page-with-number"
 msgstr ""
 

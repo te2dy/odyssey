@@ -23,6 +23,9 @@ msgstr "Feed"
 msgid "feed-comments-title"
 msgstr "Comment feed"
 
+msgid "meta-title-static-postlist"
+msgstr "Latest posts - %s"
+
 msgid "meta-social-page-with-number"
 msgstr "Page %s"
 
