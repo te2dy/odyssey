@@ -1242,7 +1242,6 @@ class My extends MyTheme
         $social_sites['matrix'] = [
             'name'      => __('social-site-matrix'),
             'type'      => 'matrix',
-            'reactions' => true
         ];
 
         $social_sites['phone'] = [
