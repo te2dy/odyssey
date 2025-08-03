@@ -18,16 +18,6 @@ use Dotclear\Helper\Network\Http;
 class FrontendValues
 {
     /**
-     * Returns the relative URI of the current page.
-     *
-     * @return string The relative URI.
-     */
-    public static function odysseyGetURI(): string
-    {
-        return '<?= Html::escapeURL($_SERVER["REQUEST_URI"]); ?>';
-    }
-
-    /**
      * Custom lang template value.
      *
      * Made in order to support the is_attr custom attribute.
@@ -309,7 +299,7 @@ class FrontendValues
                     if ($img_s && $img_s !== $img_t) {
                         $img_src = "src=\"" . $img_t . "\"";
 
-                        $img_src_srcset = Html::escapeURL($img_src) . " srcset=\"" . Html::escapeHTML($img_s) . " " . (int) $width_s . "w, " . Html::escapeHTML($img_t) . " " . (int) $width_t . "w\" size=100vw";
+                        $img_src_srcset = ' . Html::class . '::escapeURL($img_src) . " srcset=\"" . ' . Html::class . '::escapeHTML($img_s) . " " . (int) $width_s . "w, " . ' . Html::class . '::escapeHTML($img_t) . " " . (int) $width_t . "w\" size=100vw";
 
                         $img = str_replace($img_src, $img_src_srcset, $img);
                     }
@@ -342,17 +332,17 @@ class FrontendValues
                             $img_src_srcset = "";
 
                             if ($img_s) {
-                                $img_src_srcset .= Html::escapeHTML($img_s) . " " . (int) $width_s . "w, ";
+                                $img_src_srcset .= ' . Html::class . '::escapeHTML($img_s) . " " . (int) $width_s . "w, ";
                             }
 
                             if ($img_m) {
-                                $img_src_srcset .= Html::escapeHTML($img_m) . " " . (int) $width_m . "w, ";
+                                $img_src_srcset .= ' . Html::class . '::escapeHTML($img_m) . " " . (int) $width_m . "w, ";
                             }
 
-                            $img_src_srcset .= Html::escapeHTML($img_o) . " " . (int) $width_o . "w";
+                            $img_src_srcset .= ' . Html::class . '::escapeHTML($img_o) . " " . (int) $width_o . "w";
                         }
 
-                        $img_src_srcset = Html::escapeURL($img_src) . " srcset=\"" . $img_src_srcset . "\" size=100vw";
+                        $img_src_srcset = ' . Html::class . '::escapeURL($img_src) . " srcset=\"" . $img_src_srcset . "\" size=100vw";
 
                         $img = str_replace($img_src, $img_src_srcset, $img);
                     }
@@ -379,13 +369,13 @@ class FrontendValues
 
         if (' . sprintf(App::frontend()->template()->getFilters($attr), 'App::frontend()->context()->posts->getExcerpt()') . ') {
             $excerpt = ' . sprintf(App::frontend()->template()->getFilters($attr), 'App::frontend()->context()->posts->getExcerpt()') . ';
-            $excerpt = Html::clean($excerpt);
-            $excerpt = Html::decodeEntities($excerpt);
+            $excerpt = ' . Html::class . '::clean($excerpt);
+            $excerpt = ' . Html::class . '::decodeEntities($excerpt);
             $excerpt = preg_replace("/\s+/", " ", $excerpt);
         } else {
             $excerpt = ' . sprintf(App::frontend()->template()->getFilters($attr), 'App::frontend()->context()->posts->getContent()') . ';
-            $excerpt = Html::clean($excerpt);
-            $excerpt = Html::decodeEntities($excerpt);
+            $excerpt = ' . Html::class . '::clean($excerpt);
+            $excerpt = ' . Html::class . '::decodeEntities($excerpt);
             $excerpt = preg_replace("/\s+/", " ", $excerpt);
 
             if (strlen($excerpt) > 200) {
@@ -443,7 +433,7 @@ class FrontendValues
                 $reaction_text = __("reactions-reactions-title-count-one");
             }
 
-            echo "' . $separator . $tag_open . '<a href=\"" . Html::escapeURL($reaction_url) . "\">" . Html::escapeHTML($reaction_text) . "</a>' . $tag_close . '";
+            echo "' . $separator . $tag_open . '<a href=\"" . ' . Html::class . '::escapeURL($reaction_url) . "\">" . ' . Html::class . '::escapeHTML($reaction_text) . "</a>' . $tag_close . '";
         }
         ?>';
     }
@@ -532,7 +522,7 @@ class FrontendValues
             $output .= '<?php
             if (isset(App::frontend()->context()->posts->user_email) && App::frontend()->context()->posts->user_email && (App::blog()->settings->odyssey->reactions_other === "always" || (App::blog()->settings->odyssey->reactions_other === "comments_open" && App::frontend()->context()->posts->post_open_comment === "1"))
             ) {
-                $mailto  = Html::escapeHTML(App::frontend()->context()->posts->user_email);
+                $mailto  = ' . Html::class . '::escapeHTML(App::frontend()->context()->posts->user_email);
                 $subject = sprintf(__("reactions-other-email-title"), App::frontend()->context()->posts->post_title);
                 $body    = sprintf(__("reactions-other-email-body"), App::frontend()->context()->posts->getURL());
                 $href    = "mailto:" . $mailto . "?subject=" . rawurlencode($subject) . "&body=" . rawurlencode($body);
