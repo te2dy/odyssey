@@ -28,6 +28,11 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
+=== 2.4 - 3 août 2025 ===
+- Ajout : Matrix à la liste des liens sociaux.
+- Correction : erreur 571 à la désactivation de l’extension dcProxyV1.
+- Correction : oubli de suppression de la fonction odysseyGetURI(), remplacée par Http::getSelfURI().
+
 === 2.3.1 - 30 juillet 2025 ===
 - Correction : erreur fatale lors de l’affichage de l’URL canonique sur certaines pages.
 
