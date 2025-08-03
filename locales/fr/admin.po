@@ -816,6 +816,9 @@ msgstr "Adresse d’une page %s."
 msgid "settings-social-mastodon-description"
 msgstr "Adresse d’un compte %s."
 
+msgid "settings-social-matrix-description"
+msgstr "Adresse d’un utilisateur ou d’un salon Matrix <em>via</em> <a href=https://matrix.to/>matrix.to</a>."
+
 msgid "settings-footer-social-diaspora-title"
 msgstr "Afficher un lien vers %s"
 
@@ -845,6 +848,12 @@ msgstr "Afficher un lien vers %s"
 
 msgid "settings-footer-social-mastodon-label"
 msgstr "Lien dans le pied de page vers %s"
+
+msgid "settings-footer-social-matrix-title"
+msgstr "Afficher un lien vers %s"
+
+msgid "settings-footer-social-matrix-label"
+msgstr "Lien dans le pied de page vers un utilisateur ou un salon Matrix"
 
 msgid "settings-footer-social-phone-title"
 msgstr "Afficher un lien pour vous téléphoner"

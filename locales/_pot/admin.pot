@@ -816,6 +816,9 @@ msgstr ""
 msgid "settings-social-mastodon-description"
 msgstr ""
 
+msgid "settings-social-matrix-description"
+msgstr ""
+
 msgid "settings-footer-social-diaspora-title"
 msgstr ""
 
@@ -844,6 +847,12 @@ msgid "settings-footer-social-mastodon-title"
 msgstr ""
 
 msgid "settings-footer-social-mastodon-label"
+msgstr ""
+
+msgid "settings-footer-social-matrix-title"
+msgstr ""
+
+msgid "settings-footer-social-matrix-label"
 msgstr ""
 
 msgid "settings-footer-social-phone-title"

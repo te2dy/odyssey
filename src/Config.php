@@ -1420,6 +1420,15 @@ class Config extends Process
                 }
 
                 break;
+            case 'matrix':
+                if (str_starts_with($value, 'https://matrix.to/#/')) {
+                    return [
+                        'value' => filter_var($value, FILTER_SANITIZE_URL),
+                        'type'  => 'string'
+                    ];
+                }
+
+                break;
             case 'signal':
                 if (str_starts_with($value, '+') && preg_match('/\+[0-9]+/', $value)) {
                     return [

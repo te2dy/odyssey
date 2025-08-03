@@ -314,6 +314,9 @@ msgstr ""
 msgid "social-site-mastodon"
 msgstr ""
 
+msgid "social-site-matrix"
+msgstr ""
+
 msgid "social-site-phone"
 msgstr ""
 

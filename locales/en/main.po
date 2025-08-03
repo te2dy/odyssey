@@ -314,6 +314,9 @@ msgstr "Instagram"
 msgid "social-site-mastodon"
 msgstr "Mastodon"
 
+msgid "social-site-matrix"
+msgstr "Matrix"
+
 msgid "social-site-phone"
 msgstr "Phone"
 

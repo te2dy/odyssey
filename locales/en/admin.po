@@ -816,6 +816,9 @@ msgstr "URL of an %s page."
 msgid "settings-social-mastodon-description"
 msgstr "URL of a %s account."
 
+msgid "settings-social-matrix-description"
+msgstr "URL to a Matrix user or room via <a href=https://matrix.to/>matrix.to</a>."
+
 msgid "settings-footer-social-diaspora-title"
 msgstr "Display a link to %s"
 
@@ -845,6 +848,12 @@ msgstr "Display a link to %s"
 
 msgid "settings-footer-social-mastodon-label"
 msgstr "Link in the footer to %s"
+
+msgid "settings-footer-social-matrix-title"
+msgstr "Display a link to %s"
+
+msgid "settings-footer-social-matrix-label"
+msgstr "Link in the footer to a Matrix user or room"
 
 msgid "settings-footer-social-phone-title"
 msgstr "Display a link to call you"
