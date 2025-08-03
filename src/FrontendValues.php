@@ -48,10 +48,9 @@ class FrontendValues
     public static function odysseyMetaDescriptionHome(): string
     {
         $description = My::settings()->advanced_meta_description ?: App::blog()->desc ?: null;
+        $description = $description ? My::cleanStr(Ctx::remove_html($description)) : null;
 
         if ($description) {
-            $description = My::cleanStr(Ctx::remove_html($description));
-
             return '<meta name=description content=' . My::displayAttr($description, 'html') . '>';
         }
 
@@ -82,6 +81,7 @@ class FrontendValues
                 case 'post':
                 case 'pages':
                     return '<link rel=canonical href="<?= App::frontend()->context()->posts->getURL() ?>">' . "\n";
+
                     break;
                 case 'default':
                 case 'static':
