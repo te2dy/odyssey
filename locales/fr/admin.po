@@ -676,7 +676,7 @@ msgid "settings-reactions-otheremail-title"
 msgstr "Autoriser les réponses par courriel"
 
 msgid "settings-reactions-otheremail-description"
-msgstr "Attention&nbsp;: votre adresse électronique sera dévoilée et pourrait être utilisée par des personnes malveillantes (pourriels). Pour ne pas révéler votre adresse, vous pouvez essayer l’extension <a href="%s">Signal</a> ou un service tiers comme <a href=https://relay.firefox.com/>Firefox Relay</a>."
+msgstr "L’adresse électronique utilisée ici est celle de l’auteur du billet, pas celle définie dans les paramètres sociaux du thème. Attention&nbsp;: l’adresse électronique sera dévoilée et pourrait être utilisée par des personnes malveillantes (pourriels). Pour ne pas révéler votre adresse, vous pouvez essayer l’extension <a href="%s">Signal</a> ou un service tiers comme <a href=https://relay.firefox.com/>Firefox Relay</a>."
 
 msgid "settings-reactions-otheremail-label"
 msgstr "Réponses aux billets par courriel"
@@ -804,6 +804,9 @@ msgstr "Mention à Dotclear et au thème dans le pied de page"
 msgid "settings-social-diaspora-description"
 msgstr "Adresse d’une page ou d’un profil %s."
 
+msgid "settings-social-email-description"
+msgstr "Adresse électronique publique du blog."
+
 msgid "settings-social-bluesky-description"
 msgstr "Adresse d’un compte Bluesky."
 
@@ -824,6 +827,12 @@ msgstr "Afficher un lien vers %s"
 
 msgid "settings-footer-social-diaspora-label"
 msgstr "Lien dans le pied de page vers %s"
+
+msgid "settings-footer-social-email-title"
+msgstr "Afficher un lien vers l’adresse électronique publique du blog"
+
+msgid "settings-footer-social-email-label"
+msgstr "Lien dans le pied de page vers l’adresse électronique publique du blog"
 
 msgid "settings-footer-social-bluesky-title"
 msgstr "Afficher un lien vers %s"

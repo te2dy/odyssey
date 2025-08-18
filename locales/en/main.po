@@ -302,6 +302,9 @@ msgstr "Powered by <a href=https://dotclear.org/ title=%s>Dotclear %s</a> and <a
 msgid "social-site-diaspora"
 msgstr "diaspora*"
 
+msgid "social-site-email"
+msgstr "E-mail"
+
 msgid "social-site-bluesky"
 msgstr "Bluesky"
 

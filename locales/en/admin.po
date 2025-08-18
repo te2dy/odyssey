@@ -676,7 +676,7 @@ msgid "settings-reactions-otheremail-title"
 msgstr "Allow replies by e-mail"
 
 msgid "settings-reactions-otheremail-description"
-msgstr "Warning: your e-mail address will be revealed and could be used by malicious parties (spam). To avoid revealing your address, you can try the <a href="%s">Signal</a> plugin or a third-party service such as <a href=https://relay.firefox.com/>Firefox Relay</a>."
+msgstr "The e-mail address used here is that of the author of the post, not the one defined in the theme's social settings. Warning: the e-mail address will be revealed and could be used by malicious parties (spam). To avoid revealing your address, you can try the <a href="%s">Signal</a> plugin or a third-party service such as <a href=https://relay.firefox.com/>Firefox Relay</a>."
 
 msgid "settings-reactions-otheremail-label"
 msgstr "Replies to posts by e-mail"
@@ -804,6 +804,9 @@ msgstr "Mention to Dotclear and the theme in the footer"
 msgid "settings-social-diaspora-description"
 msgstr "URL of a %s profile or page."
 
+msgid "settings-social-email-description"
+msgstr "Public e-mail address of the blog."
+
 msgid "settings-social-bluesky-description"
 msgstr "URL of a %s account."
 
@@ -824,6 +827,12 @@ msgstr "Display a link to %s"
 
 msgid "settings-footer-social-diaspora-label"
 msgstr "Link in the footer to %s"
+
+msgid "settings-footer-social-email-title"
+msgstr "Display a link to the e-mail address of the blog"
+
+msgid "settings-footer-social-email-label"
+msgstr "Link in the footer to the email address of the blog"
 
 msgid "settings-footer-social-bluesky-title"
 msgstr "Display a link to %s"

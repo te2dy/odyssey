@@ -302,6 +302,9 @@ msgstr "Propulsé par <a href=https://fr.dotclear.org/ title=%s>Dotclear %s</a> 
 msgid "social-site-diaspora"
 msgstr "diaspora*"
 
+msgid "social-site-email"
+msgstr "Courriel"
+
 msgid "social-site-bluesky"
 msgstr "Bluesky"
 

@@ -799,10 +799,17 @@ class FrontendValues
 
                 $url = My::settings()->$social_id;
 
-                if ($id === 'phone') {
-                    $url = 'tel:' . $url;
-                } elseif ($id === 'sms') {
-                    $url = 'sms:' . $url;
+                switch ($id) {
+                    case 'email':
+                        $url = 'mailto:' . $url;
+
+                        break;
+                    case 'phone':
+                        $url = 'tel:' . $url;
+
+                        break;
+                    case 'sms':
+                        $url = 'sms:' . $url;
                 }
 
                 $output .= '<li>';

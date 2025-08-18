@@ -1220,6 +1220,11 @@ class My extends MyTheme
             'type' => 'url'
         ];
 
+        $social_sites['email'] = [
+            'name' => __('social-site-email'),
+            'type' => 'email'
+        ];
+
         $social_sites['facebook'] = [
             'name'      => __('social-site-facebook'),
             'base'      => 'https://www.facebook.com/',

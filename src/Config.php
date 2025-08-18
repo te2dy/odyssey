@@ -1397,24 +1397,10 @@ class Config extends Process
         $site_type = My::socialSites($id)['type'] ?? '';
 
         switch ($site_type) {
-            case 'phone-number':
-                if (str_starts_with($value, $site_base) && is_numeric(substr($value, 1))) {
+            case 'email':
+                if (str_contains($value, '@') && str_contains($value, '.')) {
                     return [
-                        'value' => '+' . str_replace('+', '', (int) $value),
-                        'type'  => 'string'
-                    ];
-                }
-
-                break;
-            case 'url':
-                if ($site_base !== '' && str_starts_with($value, $site_base)) {
-                    return [
-                        'value' => filter_var($value, FILTER_SANITIZE_URL),
-                        'type'  => 'string'
-                    ];
-                } elseif (filter_var($value, FILTER_VALIDATE_URL) !== false) {
-                    return [
-                        'value' => filter_var($value, FILTER_SANITIZE_URL),
+                        'value' => filter_var($value, FILTER_VALIDATE_EMAIL),
                         'type'  => 'string'
                     ];
                 }
@@ -1424,6 +1410,15 @@ class Config extends Process
                 if (str_starts_with($value, 'https://matrix.to/#/')) {
                     return [
                         'value' => filter_var($value, FILTER_SANITIZE_URL),
+                        'type'  => 'string'
+                    ];
+                }
+
+                break;
+            case 'phone-number':
+                if (str_starts_with($value, $site_base) && is_numeric(substr($value, 1))) {
+                    return [
+                        'value' => '+' . str_replace('+', '', (int) $value),
                         'type'  => 'string'
                     ];
                 }
@@ -1440,6 +1435,20 @@ class Config extends Process
                     || str_starts_with($value, 'https://signal.group/')
                     || str_starts_with($value, 'sgnl://signal.group/')
                 ) {
+                    return [
+                        'value' => filter_var($value, FILTER_SANITIZE_URL),
+                        'type'  => 'string'
+                    ];
+                }
+
+                break;
+            case 'url':
+                if ($site_base !== '' && str_starts_with($value, $site_base)) {
+                    return [
+                        'value' => filter_var($value, FILTER_SANITIZE_URL),
+                        'type'  => 'string'
+                    ];
+                } elseif (filter_var($value, FILTER_VALIDATE_URL) !== false) {
                     return [
                         'value' => filter_var($value, FILTER_SANITIZE_URL),
                         'type'  => 'string'

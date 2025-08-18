@@ -804,6 +804,9 @@ msgstr ""
 msgid "settings-social-diaspora-description"
 msgstr ""
 
+msgid "settings-social-email-description"
+msgstr ""
+
 msgid "settings-social-bluesky-description"
 msgstr ""
 
@@ -823,6 +826,12 @@ msgid "settings-footer-social-diaspora-title"
 msgstr ""
 
 msgid "settings-footer-social-diaspora-label"
+msgstr ""
+
+msgid "settings-footer-social-email-title"
+msgstr ""
+
+msgid "settings-footer-social-email-label"
 msgstr ""
 
 msgid "settings-footer-social-bluesky-title"
