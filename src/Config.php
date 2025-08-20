@@ -2195,7 +2195,7 @@ class Config extends Process
                                     (new Td())
                                         ->items([
                                             (new Link())
-                                                ->extra('download')
+                                                ->download(true)
                                                 ->href(My::escapeURL($download_url))
                                                 ->text(__('settings-backup-download-link'))
                                         ]),
