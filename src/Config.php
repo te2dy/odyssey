@@ -1657,7 +1657,7 @@ class Config extends Process
      */
     private static function _createBackupFile(BlogWorkspace $settings): void
     {
-        $custom_settings       = [];
+        $custom_settings = [];
 
         foreach (My::settingsDefault() as $setting_id => $setting_data) {
             if (My::settings()->$setting_id) {
@@ -1671,7 +1671,7 @@ class Config extends Process
         } else {
             $backups_path = My::odysseyVarFolder('path', '/backups');
 
-            // Creates the var/odyssey/backups folder if it doesn't exist.
+            // Creates the /var/odyssey/backups folder if it doesn't exist.
             if (Path::real($backups_path) === false) {
                 Files::makeDir($backups_path, true);
             }
@@ -1689,7 +1689,7 @@ class Config extends Process
             Notices::addNotice(
                 'success',
                 '<p>' . sprintf(__('settings-notice-save-success'), My::id(), '#odyssey-backups') . '</p>' .
-                '<a class="button submit" href=' . My::displayAttr(urldecode(Page::getVF(My::odysseyVarFolder('vf', '/backups/' . $file_name . '.json'))), 'url') . ' download>' . __('settings-notice-save-success-link') . '</a>',
+                '<a class="button submit" href=' . My::displayAttr(urldecode(Page::getVF(My::odysseyVarFolder('vf', '/backups/' . $file_name . '.json'))), 'url') . ' download=' . My::displayAttr($file_name) . '>' . __('settings-notice-save-success-link') . '</a>',
                 ['divtag' => true]
             );
 
@@ -2122,131 +2122,136 @@ class Config extends Process
             ]);
 
         // Displays theme configuration backups.
-        $backups_dir_path = My::odysseyVarFolder('path', '/backups/');
+        $backups_dir_path  = My::odysseyVarFolder('path', '/backups');
+        $backups_dir_data  = Files::getDirList($backups_dir_path);
+        $backups_dir_files = [];
 
-        if (is_dir($backups_dir_path)) {
-            $backups_dir_data = Files::getDirList($backups_dir_path);
+        if ($backups_dir_data) {
+            if (isset($backups_dir_data['files']) && !empty($backups_dir_data['files'])) {
+                $backups_dir_files = $backups_dir_data['files'];
+            }
 
-            if (!empty($backups_dir_data)) {
-                $backups_dir_files = $backups_dir_data['files'] ?? [];
+            $file_list = [];
 
-                if (!empty($backups_dir_files)) {
-                    $file_list = [];
+            foreach ($backups_dir_files as $backup_path) {
+                $file_extension = Files::getExtension($backup_path);
 
-                    foreach ($backups_dir_files as $backup_path) {
-                        $file_extension = Files::getExtension($backup_path);
+                if ($file_extension && $file_extension === 'json') {
+                    $file_datatime = str_replace('-', '', basename($backup_path, '-settings.json'));
 
-                        if ($file_extension === 'json') {
-                            $file_datatime = str_replace('-', '', basename($backup_path, '-settings.json'));
-
-                            $file_list[$file_datatime] = $backup_path;
-                        }
-                    }
-
-                    ksort($file_list);
-
-                    if (!empty($file_list)) {
-                        $table_fields = [];
-
-                        foreach ($file_list as $file_path) {
-                            $file_name_parts = explode('-', basename($file_path));
-
-                            $file_name_date = $file_name_parts[0] ?? null;
-                            $file_name_date = Date::str(App::blog()->settings()->system->date_format, strtotime($file_name_date));
-                            $file_name_time = $file_name_parts[1] ?? null;
-                            $file_name_time = Date::str(App::blog()->settings()->system->time_format, strtotime($file_name_time));
-                            $file_datetime  = $file_name_date . ' à ' . $file_name_time;
-                            $file_datetime  = sprintf(__('settings-backup-datetime'), $file_name_date, $file_name_time);
-
-                            $file_name_without_extension = substr(basename($file_path), 0, -5);
-
-                            $restore_url = App::backend()->url()->get(
-                                'admin.blog.theme',
-                                [
-                                    'module'  => My::id(),
-                                    'conf'    => '1',
-                                    'restore' => My::escapeURL($file_name_without_extension)
-                                ]
-                            );
-
-                            $download_url = Page::getVF(My::odysseyVarFolder('vf', '/backups/' . basename($backup_path)));
-
-                            $delete_url = App::backend()->url()->get(
-                                'admin.blog.theme',
-                                [
-                                    'module'              => My::id(),
-                                    'conf'                => '1',
-                                    'restore_delete_file' => My::escapeURL($file_name_without_extension)
-                                ]
-                            );
-
-                            $table_fields[] = (new Tr())
-                                ->class('line')
-                                ->items([
-                                    (new Td())
-                                        ->text(sprintf(__('settings-backup-title'), Html::escapeHTML($file_datetime))),
-                                    (new Td())
-                                        ->items([
-                                            (new Link())
-                                                ->href($restore_url, false)
-                                                ->class('odyssey-backups-restore')
-                                                ->text(__('settings-backup-restore-link')),
-                                        ]),
-                                    (new Td())
-                                        ->items([
-                                            (new Link())
-                                                ->extra('download')
-                                                ->href(My::escapeURL($download_url))
-                                                ->text(__('settings-backup-download-link'))
-                                        ]),
-                                    (new Td())
-                                        ->items([
-                                            (new Link())
-                                                ->class('odyssey-backups-remove')
-                                                ->href($delete_url)
-                                                ->text(__('settings-backup-delete-link'))
-                                        ])
-                                ]);
-                        }
-
-                        if (count($file_list) > 1) {
-                            $backups_table_intro = sprintf(
-                                __('settings-backups-count-multiple'),
-                                count($file_list)
-                            );
-                        } else {
-                            $backups_table_intro = __('settings-backups-count-one');
-                        }
-
-                        $delete_all_url = App::backend()->url()->get(
-                            'admin.blog.theme',
-                            [
-                                'module'             => My::id(),
-                                'conf'               => '1',
-                                'restore_delete_all' => '1'
-                            ]
-                        );
-
-                        $fields[] = (new Div('odyssey-backups'))
-                            ->items([
-                                (new Text('h3', __('settings-backups-title'))),
-                                (new Text('p', $backups_table_intro)),
-                                (new Table())
-                                    ->class('settings rch rch-thead')
-                                    ->items([
-                                        (new Tbody())
-                                            ->items($table_fields)
-                                    ]),
-                                (new Para())
-                                    ->items([
-                                            (new Link())
-                                                ->id('odyssey-backups-remove-all')
-                                                ->href($delete_all_url)
-                                                ->text(__('settings-backup-delete-all-link'))
-                                        ])
-                            ]);
-                    }
+                    $file_list[$file_datatime] = $backup_path;
                 }
+            }
+
+            ksort($file_list);
+
+            if (!empty($file_list)) {
+                $table_fields = [];
+
+                foreach ($file_list as $file_path) {
+                    $file_name       = basename($file_path);
+                    $file_name_parts = explode('-', $file_name);
+                    $file_name_date  = $file_name_parts[0] ?? null;
+
+                    if ($file_name_date) {
+                        $file_name_date = Date::str(App::blog()->settings()->system->date_format, strtotime($file_name_date));
+                    }
+
+                    $file_name_time = $file_name_parts[1] ?? null;
+
+                    if ($file_name_time) {
+                        $file_name_time = Date::str(App::blog()->settings()->system->time_format, strtotime($file_name_time));
+                    }
+
+                    $file_datetime = sprintf(__('settings-backup-datetime'), $file_name_date, $file_name_time);
+
+                    $file_name_without_extension = substr($file_name, 0, -5);
+
+                    $restore_url = App::backend()->url()->get(
+                        'admin.blog.theme',
+                        [
+                            'module'  => My::id(),
+                            'conf'    => '1',
+                            'restore' => My::escapeURL($file_name_without_extension)
+                        ]
+                    );
+
+                    $download_url = Page::getVF(My::odysseyVarFolder('vf', '/backups/' . $file_name));
+
+                    $delete_url = App::backend()->url()->get(
+                        'admin.blog.theme',
+                        [
+                            'module'              => My::id(),
+                            'conf'                => '1',
+                            'restore_delete_file' => My::escapeURL($file_name_without_extension)
+                        ]
+                    );
+
+                    $table_fields[] = (new Tr())
+                        ->class('line')
+                        ->items([
+                            (new Td())
+                                ->text(sprintf(__('settings-backup-title'), Html::escapeHTML($file_datetime))),
+                            (new Td())
+                                ->items([
+                                    (new Link())
+                                        ->href($restore_url, false)
+                                        ->class('odyssey-backups-restore')
+                                        ->text(__('settings-backup-restore-link')),
+                                ]),
+                            (new Td())
+                                ->items([
+                                    (new Link())
+                                        ->extra('download=' . My::displayAttr($file_name))
+                                        ->href(My::escapeURL($download_url))
+                                        ->text(__('settings-backup-download-link'))
+                                ]),
+                            (new Td())
+                                ->items([
+                                    (new Link())
+                                        ->class('odyssey-backups-remove')
+                                        ->href($delete_url)
+                                        ->text(__('settings-backup-delete-link'))
+                                ])
+                        ]);
+                }
+
+                if (count($file_list) > 1) {
+                    $backups_table_intro = sprintf(
+                        __('settings-backups-count-multiple'),
+                        count($file_list)
+                    );
+                } else {
+                    $backups_table_intro = __('settings-backups-count-one');
+                }
+
+                $delete_all_url = App::backend()->url()->get(
+                    'admin.blog.theme',
+                    [
+                        'module'             => My::id(),
+                        'conf'               => '1',
+                        'restore_delete_all' => '1'
+                    ]
+                );
+
+                $fields[] = (new Div('odyssey-backups'))
+                    ->items([
+                        (new Text('h3', __('settings-backups-title'))),
+                        (new Text('p', $backups_table_intro)),
+                        (new Table())
+                            ->class('settings rch rch-thead')
+                            ->items([
+                                (new Tbody())
+                                    ->items($table_fields)
+                            ]),
+                        (new Para())
+                            ->items([(new Link())
+                                ->id('odyssey-backups-remove-all')
+                                ->href($delete_all_url)
+                                ->text(__('settings-backup-delete-all-link'))
+                            ]),
+                        (new Text('p', sprintf(__('settings-backups-warning'), My::name()))),
+                    ]);
             }
         }
 
