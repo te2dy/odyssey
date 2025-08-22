@@ -51,7 +51,7 @@ class FrontendValues
         $description = $description ? My::cleanStr(Ctx::remove_html($description)) : null;
 
         if ($description) {
-            return '<meta name=description content=' . My::displayAttr($description, 'html') . '>';
+            return '<meta name=description content=' . My::displayAttr($description) . '>';
         }
 
         return '';
@@ -66,7 +66,7 @@ class FrontendValues
     {
         $robots = strtolower(App::blog()->settings()->system->robots_policy);
 
-        return My::displayAttr($robots, 'html');
+        return My::displayAttr($robots);
     }
 
     /**
@@ -193,10 +193,10 @@ class FrontendValues
                 || (App::blog()->settings()->system->static_home && App::url()->type === 'static')
             ) {
                 // Do not add a link to the home page on home page.
-                return $img_tag_start . '<img alt=' . My::displayAttr($img_description, 'html') . $img_tag_id . ' src=' . My::displayAttr($image_url, 'url') . $srcset . $sizes . '>' . $img_tag_end;
+                return $img_tag_start . '<img alt=' . My::displayAttr($img_description) . $img_tag_id . ' src=' . My::displayAttr($image_url, 'url') . $srcset . $sizes . '>' . $img_tag_end;
             }
 
-            return $img_tag_start . '<a href=' . My::displayAttr(App::blog()->url, 'url') . $img_tag_id .     ' rel=home><img alt=' . My::displayAttr($img_description, 'html') . ' src=' . My::displayAttr($image_url, 'url') . $srcset . $sizes . '></a>' . $img_tag_end;
+            return $img_tag_start . '<a href=' . My::displayAttr(App::blog()->url, 'url') . $img_tag_id .     ' rel=home><img alt=' . My::displayAttr($img_description) . ' src=' . My::displayAttr($image_url, 'url') . $srcset . $sizes . '></a>' . $img_tag_end;
         }
 
         return '';
