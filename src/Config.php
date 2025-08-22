@@ -127,7 +127,7 @@ class Config extends Process
                     $delete_file_path = $backups_folder . $delete_file_name;
 
                     if (Path::real($delete_file_path)) {
-                        // Deletes the file and directories if empty.
+                        // Deletes the file and directories if they are empty.
                         unlink($delete_file_path);
 
                         if (Path::real($odyssey_folder)
@@ -189,7 +189,7 @@ class Config extends Process
         }
 
         // Puts all $_POST et $_FILES variables in a new array to manipulate them.
-        $new_settings  = [];
+        $new_settings = [];
 
         if (!empty($http_files)) {
             $http_requests = array_merge($http_post, $http_files);
@@ -240,48 +240,53 @@ class Config extends Process
             }
 
             // Other actions:
-            if ($setting_id === 'header_image') {
-                // Saves header image.
-                if (isset($new_settings['header_image-delete-action'])
-                    && $new_settings['header_image-delete-action'] === 'true'
-                ) {
-                    // If the delete button has been clicked.
-                    self::_deleteHeaderImage();
-                } elseif (isset($setting['value'])
-                    && isset($setting_value['tmp_name'])
-                    && $setting_value['tmp_name']
-                ) {
-                    // If an image file has been submitted and the file exists, saves the image.
-                    self::_saveHeaderImage($setting_id, $setting, $setting_value['tmp_name']);
-                }
-            } elseif ($setting_id === 'header_image2x') {
-                // Saves header image for Retina displays.
-                if (isset($new_settings['header_image'])
-                    && isset($setting['value'])
-                    && isset($setting_value['tmp_name'])
-                    && $setting_value['tmp_name']
-                ) {
-                    // If a Retina image file has been submitted and the file exists, saves the image.
-                    self::_saveHeaderImage($setting_id, $setting, $setting_value['tmp_name']);
-                }
-            } elseif ($setting_id === 'styles') {
-                // Saves styles.
-                $sanitized_styles       = self::_sanitizeStyles($sanitizedSettings);
-                $sanitized_styles_value = $sanitized_styles['value'] ?? null;
-                $sanitized_styles_type  = $sanitized_styles['type']  ?? null;
+            switch ($setting_id) {
+                case 'header_image':
+                    // Saves header image.
+                    if (isset($new_settings['header_image-delete-action'])
+                        && $new_settings['header_image-delete-action'] === 'true'
+                    ) {
+                        // If the delete button has been clicked.
+                        self::_deleteHeaderImage();
+                    } elseif (isset($setting['value'])
+                        && isset($setting_value['tmp_name'])
+                        && $setting_value['tmp_name']
+                    ) {
+                        // If an image file has been submitted and the file exists, saves the image.
+                        self::_saveHeaderImage($setting_id, $setting, $setting_value['tmp_name']);
+                    }
 
-                if ($sanitized_styles_value && $sanitized_styles_type) {
-                    App::blog()->settings->odyssey->put(
-                        'styles',
-                        $sanitized_styles_value,
-                        $sanitized_styles_type,
-                        My::settingsDefault()['styles']['label']
-                    );
+                    break;
+                case 'header_image2x':
+                    // Saves header image for Retina displays.
+                    if (isset($new_settings['header_image'])
+                        && isset($setting['value'])
+                        && isset($setting_value['tmp_name'])
+                        && $setting_value['tmp_name']
+                    ) {
+                        // If a Retina image file has been submitted and the file exists, saves the image.
+                        self::_saveHeaderImage($setting_id, $setting, $setting_value['tmp_name']);
+                    }
 
-                    self::_stylesCustomFile($sanitized_styles_value);
-                } else {
-                    App::blog()->settings->odyssey->drop('styles');
-                }
+                    break;
+                case 'styles':
+                    // Saves styles.
+                    $sanitized_styles       = self::_sanitizeStyles($sanitizedSettings);
+                    $sanitized_styles_value = $sanitized_styles['value'] ?? null;
+                    $sanitized_styles_type  = $sanitized_styles['type']  ?? null;
+
+                    if ($sanitized_styles_value && $sanitized_styles_type) {
+                        App::blog()->settings->odyssey->put(
+                            'styles',
+                            $sanitized_styles_value,
+                            $sanitized_styles_type,
+                            My::settingsDefault()['styles']['label']
+                        );
+
+                        self::_stylesCustomFile($sanitized_styles_value);
+                    } else {
+                        App::blog()->settings->odyssey->drop('styles');
+                    }
             }
 
             // If the /public/odyssey folder has empty subfolders, deletes it.
