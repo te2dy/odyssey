@@ -14,7 +14,7 @@ $this->registerModule(
     '2.5',
     [
         'requires' => [
-            ['core', '2.30'],
+            ['core', '2.36'],
             ['php', '8']
         ],
 
