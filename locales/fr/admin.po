@@ -978,6 +978,9 @@ msgstr "Styles personnalisés"
 msgid "settings-odysseystylesurl-label"
 msgstr "Lien vers la feuille des styles personnalisés"
 
+msgid "settings-themeeditordevmode-warning"
+msgstr "L’éditeur de thème est en mode développement. Si vous avez modifié des fichiers du thème, certaines de ses fonctions pourraient avoir été altérées. Pour faire disparaître ce message, veuillez désactiver le mode développement de l’éditeur de thème dans <a href=%1$s>les paramètres de l’extension %2$s</a>."
+
 msgid "settings-page-intro"
 msgstr "C’est ici que vous pouvez personnaliser votre thème %s pour l’adapter à vos besoins."
 

@@ -2042,6 +2042,19 @@ class Config extends Process
         // Adds settings in their section.
         $fields = [];
 
+        if (App::auth()->prefs()->interface->themeeditordevmode) {
+            $tidyadmin_name = '';
+            $tidyadmin_url  = '';
+
+            if (App::plugins()->moduleExists('tidyAdmin')) {
+                $tidyadmin_name = __(App::plugins()->moduleInfo('tidyAdmin', 'name'));
+                $tidyadmin_url  = My::displayAttr(App::backend()->url()->get('admin.plugin.tidyAdmin', ['part' => 'options']));
+
+                $fields[] = (new Text('p', sprintf(__('settings-themeeditordevmode-warning'), $tidyadmin_url, $tidyadmin_name)))
+                    ->class('warning-msg');
+            }
+        }
+
         $fields[] = (new Text('p', sprintf(
             __('settings-page-intro'),
             My::name()

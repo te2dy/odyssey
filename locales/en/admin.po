@@ -978,6 +978,9 @@ msgstr "Custom styles"
 msgid "settings-odysseystylesurl-label"
 msgstr "Link to the custom stylesheet"
 
+msgid "settings-themeeditordevmode-warning"
+msgstr "The theme editor is in development mode. If you have modified theme files, some of its functions may have been altered. To remove this message, please disable development mode for the theme editor in <a href=%1$s>the %2$s plugins settings</a>."
+
 msgid "settings-page-intro"
 msgstr "This is where you can customize your %s theme to suit your needs."
 
