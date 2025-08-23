@@ -349,15 +349,18 @@ class Config extends Process
             switch ($setting_data['type']) {
                 case 'select':
                 case 'select_int':
+                    $setting_type = 'string';
+
                     if ($setting_data['type'] === 'select_int') {
                         $setting_value = (int) $setting_value;
+                        $setting_type  = 'integer';
                     }
 
                     if (in_array($setting_value, $setting_data['choices'], true)
                         && $setting_value !== $setting_data['default']
                     ) {
                         $setting['value'] = $setting_value;
-                        $setting['type']  = 'string';
+                        $setting['type']  = $setting_type;
                     }
 
                     break;
@@ -370,6 +373,24 @@ class Config extends Process
                     } elseif ($setting_value === false && $setting_data['default'] === true) {
                         $setting['value'] = '0';
                         $setting['type']  = 'boolean';
+                    }
+
+                    break;
+                case 'range':
+                    $setting_value = (int) $setting_value;
+
+                    $setting_min     = $setting_data['range']['min'];
+                    $setting_max     = $setting_data['range']['max'];
+                    $setting_step    = $setting_data['range']['step'];
+                    $setting_default = $setting_data['default'];
+
+                    if ($setting_value >= $setting_min
+                        && $setting_value <= $setting_max
+                        && $setting_value % $setting_step === 0
+                        && $setting_value !== $setting_default
+                    ) {
+                        $setting['value'] = $setting_value;
+                        $setting['type']  = 'integer';
                     }
 
                     break;
@@ -1862,14 +1883,14 @@ class Config extends Process
                     break;
                 case 'range' :
                     $range_default = [
-                        'unit'  => 'em',
+                        'unit'  => $default_settings[$setting_id]['range']['unit'],
                         'value' => (int) My::settings()->$setting_id ?: (int) $default_settings[$setting_id]['default'],
                         'min'   => (int) $default_settings[$setting_id]['range']['min'],
                         'max'   => (int) $default_settings[$setting_id]['range']['max'],
                         'step'  => (int) $default_settings[$setting_id]['range']['step']
                     ];
 
-                    if (My::settings()->global_unit === 'px') {
+                    if ($setting_id === 'global_page_width_value' && My::settings()->global_unit === 'px') {
                         $range_default['unit'] = 'px';
                         $range_default['min']  = 480;
                         $range_default['max']  = 1280;

@@ -240,21 +240,6 @@ msgstr ""
 msgid "settings-global-fontsize-label"
 msgstr ""
 
-msgid "settings-global-fontsize-80"
-msgstr ""
-
-msgid "settings-global-fontsize-90"
-msgstr ""
-
-msgid "settings-global-fontsize-100-default"
-msgstr ""
-
-msgid "settings-global-fontsize-110"
-msgstr ""
-
-msgid "settings-global-fontsize-120"
-msgstr ""
-
 msgid "settings-global-fontantialiasing-title"
 msgstr ""
 

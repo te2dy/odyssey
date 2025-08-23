@@ -346,7 +346,19 @@ window.onload = function() {
     disableInputs();
   };
 
-  // Supports page width option.
+  // Supports range inputs changes.
+  var rangeInputs = document.querySelectorAll("input[type=range]");
+
+  for (var i = 0; i < rangeInputs.length; i++) {
+    if (rangeInputs[i].id !== "global_page_width_value") {
+      // Page width setting is excluded.
+      rangeInputs[i].onchange = function(rangeInput) {
+        document.getElementById(rangeInput.target.id + "-output-value").innerHTML = rangeInput.target.value;
+      };
+    }
+  }
+
+  // Supports page width option (custom range input).
   pageWidthInputDefault()
 
   document.getElementById("global_page_width_value").oninput = function() {

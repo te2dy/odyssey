@@ -240,21 +240,6 @@ msgstr "This size is relative to the browser font size and may vary from one dev
 msgid "settings-global-fontsize-label"
 msgstr "Global font size"
 
-msgid "settings-global-fontsize-80"
-msgstr "80%"
-
-msgid "settings-global-fontsize-90"
-msgstr "90%"
-
-msgid "settings-global-fontsize-100-default"
-msgstr "100% (default)"
-
-msgid "settings-global-fontsize-110"
-msgstr "110%"
-
-msgid "settings-global-fontsize-120"
-msgstr "120%"
-
 msgid "settings-global-fontantialiasing-title"
 msgstr "Enable font smoothing"
 

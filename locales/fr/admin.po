@@ -240,21 +240,6 @@ msgstr "Cette taille est relative à la taille de police du navigateur ; elle 
 msgid "settings-global-fontsize-label"
 msgstr "Taille de la police d’écriture générale"
 
-msgid "settings-global-fontsize-80"
-msgstr "80 %"
-
-msgid "settings-global-fontsize-90"
-msgstr "90 %"
-
-msgid "settings-global-fontsize-100-default"
-msgstr "100 % (par défaut)"
-
-msgid "settings-global-fontsize-110"
-msgstr "110 %"
-
-msgid "settings-global-fontsize-120"
-msgstr "120 %"
-
 msgid "settings-global-fontantialiasing-title"
 msgstr "Activer le lissage des caractères"
 

@@ -128,7 +128,8 @@ class My extends MyTheme
             'range'       => [
                 'min'  => 30,
                 'max'  => 80,
-                'step' => 1
+                'step' => 1,
+                'unit' => 'em'
             ],
             'default'     => 30,
             'section'     => ['global', 'layout']
@@ -167,13 +168,12 @@ class My extends MyTheme
             'title'       => __('settings-global-fontsize-title'),
             'description' => __('settings-global-fontsize-description'),
             'label'       => __('settings-global-fontsize-label'),
-            'type'        => 'select_int',
-            'choices'     => [
-                __('settings-global-fontsize-80')          => 80,
-                __('settings-global-fontsize-90')          => 90,
-                __('settings-global-fontsize-100-default') => 100,
-                __('settings-global-fontsize-110')         => 110,
-                __('settings-global-fontsize-120')         => 120
+            'type'        => 'range',
+            'range'       => [
+                'min'  => 80,
+                'max'  => 120,
+                'step' => 10,
+                'unit' => '%'
             ],
             'default'     => 100,
             'section'     => ['global', 'fonts']
@@ -555,13 +555,12 @@ class My extends MyTheme
             'title'       => __('settings-content-fontsize-title'),
             'description' => __('settings-content-fontsize-description'),
             'label'       => __('settings-content-fontsize-label'),
-            'type'        => 'select_int',
-            'choices'     => [
-                __('settings-global-fontsize-80')          => 80,
-                __('settings-global-fontsize-90')          => 90,
-                __('settings-global-fontsize-100-default') => 100,
-                __('settings-global-fontsize-110')         => 110,
-                __('settings-global-fontsize-120')         => 120
+            'type'        => 'range',
+            'range'       => [
+                'min'  => 80,
+                'max'  => 120,
+                'step' => 10,
+                'unit' => '%'
             ],
             'default'     => 100,
             'section'     => ['content', 'text-formatting']
