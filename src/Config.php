@@ -2148,7 +2148,7 @@ class Config extends Process
 
         // Displays theme configuration backups.
         $backups_dir_path  = My::odysseyVarFolder('path', '/backups');
-        $backups_dir_data  = Files::getDirList($backups_dir_path);
+        $backups_dir_data  = is_dir($backups_dir_path) ? Files::getDirList($backups_dir_path) : null;
         $backups_dir_files = [];
 
         if ($backups_dir_data) {
