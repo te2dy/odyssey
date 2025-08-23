@@ -2220,14 +2220,14 @@ class Config extends Process
                             (new Td())
                                 ->items([
                                     (new Link())
-                                        ->href($restore_url, false)
                                         ->class('odyssey-backups-restore')
+                                        ->href($restore_url, false)
                                         ->text(__('settings-backup-restore-link')),
                                 ]),
                             (new Td())
                                 ->items([
                                     (new Link())
-                                        ->extra('download=' . My::displayAttr($file_name))
+                                        ->extra('download=' . My::displayAttr($file_name)) // DC 2.36: ->download($file_name)
                                         ->href(My::escapeURL($download_url))
                                         ->text(__('settings-backup-download-link'))
                                 ]),
@@ -2242,10 +2242,7 @@ class Config extends Process
                 }
 
                 if (count($file_list) > 1) {
-                    $backups_table_intro = sprintf(
-                        __('settings-backups-count-multiple'),
-                        count($file_list)
-                    );
+                    $backups_table_intro = sprintf(__('settings-backups-count-multiple'), count($file_list));
                 } else {
                     $backups_table_intro = __('settings-backups-count-one');
                 }
