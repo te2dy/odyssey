@@ -2056,7 +2056,9 @@ class Config extends Process
             'p',
             sprintf(
                 __('settings-page-forum-link'),
-                'https://forum.dotclear.org/viewtopic.php?id=51635'
+                'https://github.com/te2dy/odyssey/issues',
+                'mailto:zozxebpyr@mozmail.com',
+                'https://matrix.to/#/#dotclear:matrix.org'
             )
         ));
 

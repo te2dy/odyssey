@@ -984,6 +984,8 @@ msgstr "This is where you can customize your %s theme to suit your needs."
 msgid "settings-page-forum-link"
 msgstr "If you have any questions, suggestions, requests or feedback, please go to <a href="%s">the thread dedicated to Odyssey on the official Dotclear forum</a>."
 
+msgstr "If you have any questions, suggestions, requests or feedback, you can choose to <a href=%1$s>start a discussion on GitHub</a>, <a href=%2$s>send an email to the author of the theme</a> or post a message in the <a href=%3$s>official Dotclear Matrix chat room</a>."
+
 msgid "settings-reset-warning"
 msgstr "Warning: you are about to reset your theme settings. This action is irreversible."
 

@@ -982,7 +982,7 @@ msgid "settings-page-intro"
 msgstr "C’est ici que vous pouvez personnaliser votre thème %s pour l’adapter à vos besoins."
 
 msgid "settings-page-forum-link"
-msgstr "Pour toute question, suggestion, demande, retour d’expérience ou autre, rendez-vous sur <a href="%s">le fil de discussion dédié à Odyssée sur le forum officiel de Dotclear</a>."
+msgstr "Pour toute question, suggestion, demande, retour d’expérience ou autre, vous pouvez, au choix, <a href=%1$s>lancer une discussion sur GitHub</a>, <a href=%2$s>écrire un courriel à l’auteur du thème</a> ou publier un message dans le <a href=%3$s>salon Matrix officiel de Dotclear</a>."
 
 msgid "settings-reset-warning"
 msgstr "Attention : vous êtes sur le point de réinitialiser les paramètres de votre thème. Cette action est irréversible."
