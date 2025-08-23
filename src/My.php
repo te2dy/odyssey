@@ -42,7 +42,6 @@ class My extends MyTheme
             'header' => [
                 'name'         => __('section-header'),
                 'sub_sections' => [
-                    'no-title' => null,
                     'image'    => __('section-header-image')
                 ]
             ],
@@ -76,10 +75,7 @@ class My extends MyTheme
                 ]
             ],
             'social' => [
-                'name'         => __('section-social'),
-                'sub_sections' => [
-                    'no-title' => null
-                ]
+                'name' => __('section-social')
             ],
             'advanced' => [
                 'name'         => __('section-advanced'),
@@ -402,7 +398,7 @@ class My extends MyTheme
                 __('settings-header-align-right')          => 'right'
             ],
             'default'     => 'center',
-            'section'     => ['header', 'no-title']
+            'section'     => ['header']
         ];
 
         $default_settings['header_description'] = [
@@ -414,7 +410,7 @@ class My extends MyTheme
             'label'       => __('settings-header-description-label'),
             'type'        => 'checkbox',
             'default'     => true,
-            'section'     => ['header', 'no-title']
+            'section'     => ['header']
         ];
 
         $default_settings['header_post_full'] = [
@@ -423,7 +419,7 @@ class My extends MyTheme
             'label'       => __('settings-header-postfull-label'),
             'type'        => 'checkbox',
             'default'     => false,
-            'section'     => ['header', 'no-title']
+            'section'     => ['header']
         ];
 
         $default_settings['header_image'] = [
@@ -754,7 +750,7 @@ class My extends MyTheme
                 'label'       => __('settings-widgets-display-label'),
                 'type'        => 'checkbox',
                 'default'     => true,
-                'section'     => ['widgets', 'no-title']
+                'section'     => ['widgets']
             ];
         }
 
@@ -764,7 +760,7 @@ class My extends MyTheme
             'label'       => __('settings-footer-activation-label'),
             'type'        => 'checkbox',
             'default'     => true,
-            'section'     => ['footer', 'no-title']
+            'section'     => ['footer']
         ];
 
         $default_settings['footer_align'] = [
@@ -778,7 +774,7 @@ class My extends MyTheme
                 __('settings-footer-align-right')        => 'right'
             ],
             'default'     => 'left',
-            'section'     => ['footer', 'no-title']
+            'section'     => ['footer']
         ];
 
         $default_settings['footer_feed'] = [
@@ -792,7 +788,7 @@ class My extends MyTheme
                 __('settings-footer-feed-rss2')             => 'rss2'
             ],
             'default'     => 'disabled',
-            'section'     => ['footer', 'no-title']
+            'section'     => ['footer']
         ];
 
         $default_settings['footer_credits'] = [
@@ -801,7 +797,7 @@ class My extends MyTheme
             'label'       => __('settings-footer-credits-label'),
             'type'        => 'checkbox',
             'default'     => true,
-            'section'     => ['footer', 'no-title']
+            'section'     => ['footer']
         ];
 
         foreach (self::socialSites() as $site => $base) {
@@ -834,7 +830,7 @@ class My extends MyTheme
                 'label'       => __('social-site-' . $site),
                 'type'        => 'text',
                 'default'     => '',
-                'section'     => ['social', 'no-title'],
+                'section'     => ['social'],
                 'sanitizer'   => 'sanitizeSocial'
             ];
         }

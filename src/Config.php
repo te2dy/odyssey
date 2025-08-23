@@ -2049,15 +2049,13 @@ class Config extends Process
             $settings_render[$section_id] = [];
         }
 
-        $settings_ignored = ['styles'];
-
         foreach (My::settingsDefault() as $setting_id => $setting_data) {
-            if (!in_array($setting_id, $settings_ignored, true)) {
-                // If a sub-section has been set.
+            if ($setting_id !== 'styles') {
                 if (isset($setting_data['section'][1])) {
+                    // If a sub-section has been set.
                     $settings_render[$setting_data['section'][0]][$setting_data['section'][1]][] = $setting_id;
                 } else {
-                    $settings_render[$setting_data['section'][0]][] = $setting_id;
+                    $settings_render[$setting_data['section'][0]]['untitled'][] = $setting_id;
                 }
             }
         }
@@ -2085,7 +2083,7 @@ class Config extends Process
 
             foreach ($setting_data as $sub_section_id => $setting_id) {
                 // Displays the name of the sub-section unless its ID is "no-title".
-                if ($sub_section_id !== 'no-title') {
+                if ($sub_section_id !== 'untitled') {
                     $settings_fields[] = (new Text('h4', My::settingsSections($section_id)['sub_sections'][$sub_section_id]))
                         ->id('section-' . $section_id . '-' . $sub_section_id);
                 }
