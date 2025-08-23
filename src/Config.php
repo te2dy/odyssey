@@ -2048,9 +2048,9 @@ class Config extends Process
 
             if (App::plugins()->moduleExists('tidyAdmin')) {
                 $tidyadmin_name = __(App::plugins()->moduleInfo('tidyAdmin', 'name'));
-                $tidyadmin_url  = My::displayAttr(App::backend()->url()->get('admin.plugin.tidyAdmin', ['part' => 'options']));
+                $tidyadmin_url  = App::backend()->url()->get('admin.plugin.tidyAdmin', ['part' => 'options']);
 
-                $fields[] = (new Text('p', sprintf(__('settings-themeeditordevmode-warning'), $tidyadmin_url, $tidyadmin_name)))
+                $fields[] = (new Text('p', sprintf(__('settings-themeeditordevmode-warning'), My::displayAttr($tidyadmin_url), $tidyadmin_name)))
                     ->class('warning-msg');
             }
         }
