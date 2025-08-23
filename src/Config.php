@@ -10,7 +10,6 @@
 namespace Dotclear\Theme\odyssey;
 
 use Dotclear\App;
-use Dotclear\Core\BlogWorkspace;
 use Dotclear\Core\Process;
 use Dotclear\Core\Backend\Notices;
 use Dotclear\Core\Backend\Page;
@@ -1675,13 +1674,11 @@ class Config extends Process
     /**
      * Creates a JSON backup file.
      *
-     * The file will be uploaded in /var/odyssey/backups
-     *
-     * @param array $settings The name of the backup file.
+     * The file will be uploaded in /var/odyssey/backups.
      *
      * @return void
      */
-    private static function _createBackupFile(BlogWorkspace $settings): void
+    private static function _createBackupFile(): void
     {
         $custom_settings = [];
 
