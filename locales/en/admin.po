@@ -1022,8 +1022,11 @@ msgstr "%d configuration files are available:"
 msgid "settings-backups-count-one"
 msgstr "On configuration files is available:"
 
+msgid "settings-backups-explanations"
+msgstr "The configuration files are in JSON format and stored in the <code>/var/%1$s/backups</code> folder of your Dotclear installation."
+
 msgid "settings-backups-warning"
-msgstr "Note: Restoring a configuration file saved from an earlier version of %s may result in imperfections."
+msgstr "Note: Restoring a configuration saved from an earlier version of %s may result in imperfections."
 
 msgid "settings-backup-datetime"
 msgstr "%1$s at %2$s"

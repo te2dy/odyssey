@@ -2257,6 +2257,7 @@ class Config extends Process
                                 ->href($delete_all_url)
                                 ->text(__('settings-backup-delete-all-link'))
                             ]),
+                        (new Text('p', sprintf(__('settings-backups-explanations'), My::id()))),
                         (new Text('p', sprintf(__('settings-backups-warning'), My::name()))),
                     ]);
             }
