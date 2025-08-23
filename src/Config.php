@@ -64,6 +64,15 @@ class Config extends Process
      */
     public static function process(): bool
     {
+        // Loads custom styles and scripts for the configurator page.
+        App::behavior()->addBehavior(
+            'adminPageHTMLHead',
+            function () {
+                echo My::cssLoad('/css/admin.min.css'),
+                My::jsLoad('/js/admin.min.js');
+            }
+        );
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
             try {
                 if (isset($_POST['save'])) {
@@ -1995,11 +2004,6 @@ class Config extends Process
         if (!self::status()) {
             return;
         }
-
-        Page::openModule(
-            My::name(),
-            My::cssLoad('/css/admin.min.css') . My::jsLoad('/js/admin.min.js')
-        );
 
         echo Notices::getNotices();
 
