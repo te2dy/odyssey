@@ -342,7 +342,7 @@ class FrontendBehaviors
                  * To be replaced by json_validate() function
                  * available on PHP 8.3.
                  */
-                if (My::odysseyJsonValidate($json_ld)) {
+                if (My::jsonValidate($json_ld)) {
                     echo '<script type=application/ld+json>', $json_ld, '</script>', "\n";
                 }
             }

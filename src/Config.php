@@ -90,7 +90,7 @@ class Config extends Process
                     App::blog()->settings->odyssey->dropAll();
 
                     // Removes the header image, custom CSS file and their folders.
-                    Files::deltree(My::odysseyPublicFolder('path'));
+                    Files::deltree(My::publicFolder('path'));
 
                     App::blog()->triggerBlog();
 
@@ -144,8 +144,8 @@ class Config extends Process
                 if (isset($_GET['restore_delete_file'])) {
                     // Deletes a configuration file.
                     $delete_file_name = $_GET['restore_delete_file'] . '.json';
-                    $odyssey_folder   = My::odysseyVarFolder('path');
-                    $backups_folder   = My::odysseyVarFolder('path', '/backups/');
+                    $odyssey_folder   = My::varFolder('path');
+                    $backups_folder   = My::varFolder('path', '/backups/');
                     $delete_file_path = $backups_folder . $delete_file_name;
 
                     if (Path::real($delete_file_path)) {
@@ -170,7 +170,7 @@ class Config extends Process
 
                 if (isset($_GET['restore_delete_all'])) {
                     // Deletes all configuration files.
-                    $odyssey_var_folder = My::odysseyVarFolder('path');
+                    $odyssey_var_folder = My::varFolder('path');
 
                     if (Path::real($odyssey_var_folder)) {
                         Files::deltree($odyssey_var_folder);
@@ -314,10 +314,10 @@ class Config extends Process
             }
 
             // If the /public/odyssey folder has empty subfolders, deletes it.
-            if (!is_dir(My::odysseyPublicFolder('path', '/css'))
-                && !is_dir(My::odysseyPublicFolder('path', '/img'))
+            if (!is_dir(My::publicFolder('path', '/css'))
+                && !is_dir(My::publicFolder('path', '/img'))
             ) {
-                Files::deltree(My::odysseyPublicFolder('path'));
+                Files::deltree(My::publicFolder('path'));
             }
         }
 
@@ -578,7 +578,7 @@ class Config extends Process
                 $file_name  = Files::tidyFileName($image_file['name']) ?: '';
                 $file_path  = $image_file['tmp_name'];
                 $file_type  = $image_file['type'];
-                $file_url   = My::odysseyPublicFolder('url', '/img/' . $file_name);
+                $file_url   = My::publicFolder('url', '/img/' . $file_name);
                 $image_data = [];
 
                 $mime_types_supported = Files::mimeTypes();
@@ -1330,7 +1330,7 @@ class Config extends Process
         ?string $img_file_path
     ): void
     {
-        $img_folder_path = My::odysseyPublicFolder('path', '/img');
+        $img_folder_path = My::publicFolder('path', '/img');
 
         switch ($setting_id) {
             case 'header_image':
@@ -1347,7 +1347,7 @@ class Config extends Process
 
                 $image_name     = $image_data['value']['name'] ?? null;
                 $image_path     = $img_folder_path . '/' . $image_name;
-                $image_url      = My::odysseyPublicFolder('url', '/img/' . $image_name);
+                $image_url      = My::publicFolder('url', '/img/' . $image_name);
 
                 if ($img_file_path && $image_name) {
                     move_uploaded_file($img_file_path, $image_path);
@@ -1355,8 +1355,8 @@ class Config extends Process
 
                 break;
             case 'header_image2x':
-                $img_folder_path = My::odysseyPublicFolder('path', '/img');
-                $img_folder_url  = My::odysseyPublicFolder('url', '/img');
+                $img_folder_path = My::publicFolder('path', '/img');
+                $img_folder_url  = My::publicFolder('url', '/img');
 
                 $image2x_path_tmp = $img_file_path;
                 $image2x_name     = $image_data['value']['name'] ?? null;
@@ -1378,7 +1378,7 @@ class Config extends Process
      */
     private static function _deleteHeaderImage(): void
     {
-        Files::deltree(My::odysseyPublicFolder('path', '/img'));
+        Files::deltree(My::publicFolder('path', '/img'));
     }
 
     /**
@@ -1560,8 +1560,8 @@ class Config extends Process
 
             // Creates a custom CSS file in the public folder.
             if (is_writable(App::blog()->publicPath())) {
-                if (!is_dir(My::odysseyPublicFolder('path', '/css'))) {
-                    Files::makeDir(My::odysseyPublicFolder('path', '/css'), true);
+                if (!is_dir(My::publicFolder('path', '/css'))) {
+                    Files::makeDir(My::publicFolder('path', '/css'), true);
                 }
 
                 ThemeConfig::writeCss(
@@ -1573,7 +1573,7 @@ class Config extends Process
                 // Creates a entry in the database that contains the CSS URL.
                 App::blog()->settings->odyssey->put(
                     'styles_url',
-                    My::odysseyPublicFolder('url', '/css/style.min.css'),
+                    My::publicFolder('url', '/css/style.min.css'),
                     'string',
                     __('settings-odysseystylesurl-label')
                 );
@@ -1672,7 +1672,7 @@ class Config extends Process
      */
     private static function _restoreBackup(string $file_name): void
     {
-        $restore_file_path    = Path::real(My::odysseyVarFolder('path', '/backups/' . $file_name));
+        $restore_file_path    = Path::real(My::varFolder('path', '/backups/' . $file_name));
         $restore_file_content = file_get_contents($restore_file_path);
 
         if ($restore_file_path && $restore_file_content && $restore_file_content !== '[]') {
@@ -1717,7 +1717,7 @@ class Config extends Process
             // If no custom setting has been set.
             Notices::addErrorNotice(__('settings-notice-save-fail'));
         } else {
-            $backups_path = My::odysseyVarFolder('path', '/backups');
+            $backups_path = My::varFolder('path', '/backups');
 
             // Creates the /var/odyssey/backups folder if it doesn't exist.
             if (Path::real($backups_path) === false) {
@@ -1737,7 +1737,7 @@ class Config extends Process
             Notices::addNotice(
                 'success',
                 '<p>' . sprintf(__('settings-notice-save-success'), My::id(), '#odyssey-backups') . '</p>' .
-                '<a class="button submit" href=' . My::displayAttr(urldecode(Page::getVF(My::odysseyVarFolder('vf', '/backups/' . $file_name . '.json'))), 'url') . ' download=' . My::displayAttr($file_name) . '>' . __('settings-notice-save-success-link') . '</a>',
+                '<a class="button submit" href=' . My::displayAttr(urldecode(Page::getVF(My::varFolder('vf', '/backups/' . $file_name . '.json'))), 'url') . ' download=' . My::displayAttr($file_name) . '>' . __('settings-notice-save-success-link') . '</a>',
                 ['divtag' => true]
             );
 
@@ -2084,7 +2084,7 @@ class Config extends Process
         // Adds settings in their section.
         $fields = [];
 
-        if (My::dotclearVersionRequired('2.36')) {
+        if (My::dotclearVersionMimimum('2.36')) {
             if (App::auth()->prefs()->interface->themeeditordevmode) {
                 $tidyadmin_name = '';
                 $tidyadmin_url  = '';
@@ -2181,7 +2181,7 @@ class Config extends Process
             ]);
 
         // Displays theme configuration backups.
-        $backups_dir_path  = My::odysseyVarFolder('path', '/backups');
+        $backups_dir_path  = My::varFolder('path', '/backups');
         $backups_dir_data  = is_dir($backups_dir_path) ? Files::getDirList($backups_dir_path) : null;
         $backups_dir_files = [];
 
@@ -2235,7 +2235,7 @@ class Config extends Process
                         ]
                     );
 
-                    $download_url = Page::getVF(My::odysseyVarFolder('vf', '/backups/' . $file_name));
+                    $download_url = Page::getVF(My::varFolder('vf', '/backups/' . $file_name));
 
                     $delete_url = App::backend()->url()->get(
                         'admin.blog.theme',
@@ -2246,7 +2246,7 @@ class Config extends Process
                         ]
                     );
 
-                    if (My::dotclearVersionRequired('3.36')) {
+                    if (My::dotclearVersionMimimum('3.36')) {
                         $download_link = (new Link())
                             ->download($file_name)
                             ->href(My::escapeURL($download_url))

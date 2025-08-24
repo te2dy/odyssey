@@ -982,7 +982,7 @@ class My extends MyTheme
      *
      * @return string The path or URL.
      */
-    public static function odysseyPublicFolder(string $type, string $to_concatenate = ''): string
+    public static function publicFolder(string $type, string $to_concatenate = ''): string
     {
         switch ($type) {
             case 'url':
@@ -1002,7 +1002,7 @@ class My extends MyTheme
      *
      * @return string The path or URL.
      */
-    public static function odysseyVarFolder(string $type, string $to_concatenate = ''): string
+    public static function varFolder(string $type, string $to_concatenate = ''): string
     {
         switch ($type) {
             case 'vf':
@@ -1407,7 +1407,7 @@ class My extends MyTheme
      * @link https://www.php.net/releases/8.3/en.php#json_validate
      * To be replace by json_validate() function available in PHP 8.3.
      */
-    public static function odysseyJsonValidate(string $string): bool
+    public static function jsonValidate(string $string): bool
     {
         json_decode($string);
 
@@ -1440,7 +1440,7 @@ class My extends MyTheme
      *
      * @return bool true if Doclear version is superior or equal to the version number passed.
      */
-    public static function dotclearVersionRequired(string $version): bool
+    public static function dotclearVersionMimimum(string $version): bool
     {
         if (version_compare(self::dotclearVersion(true), $version, '>=')) {
             return true;
