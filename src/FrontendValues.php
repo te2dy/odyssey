@@ -875,13 +875,10 @@ class FrontendValues
         }
 
         // Otherwise, displays a more detailed information.
-        $dc_version       = App::config()->dotclearVersion();
-        $dc_version_short = explode('-', $dc_version)[0] ?? $dc_version;
-
         return '<div class=site-footer-block>' . sprintf(
             __('footer-powered-by-dev'),
-            $dc_version,
-            $dc_version_short,
+            My::dotclearVersion(),
+            My::dotclearVersion(true),
             My::name(),
             App::themes()->moduleInfo(My::id(), 'version')
         ) . '</div>';

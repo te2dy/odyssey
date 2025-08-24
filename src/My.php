@@ -1413,4 +1413,39 @@ class My extends MyTheme
 
         return json_last_error() === JSON_ERROR_NONE;
     }
+
+    /**
+     * Displays Dotclear version number.
+     *
+     * @param bool $short true to display a short version number
+     *                    without the date of release (for testing versions)
+     *
+     * @return string The version number.
+     */
+    public static function dotclearVersion(bool $short = false): string
+    {
+        $dc_version = App::config()->dotclearVersion();
+
+        if ($short === true) {
+            $dc_version = explode('-', $dc_version)[0] ?? $dc_version;
+        }
+
+        return $dc_version;
+    }
+
+    /**
+     * Checks if Dotclear version is superior or equal to a specific version number.
+     *
+     * @param string $version The minimum version.
+     *
+     * @return bool true if Doclear version is superior or equal to the version number passed.
+     */
+    public static function dotclearVersionRequired(string $version): bool
+    {
+        if (version_compare(self::dotclearVersion(true), $version, '>=')) {
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -78,10 +78,14 @@ class Config extends Process
                 if (isset($_POST['save'])) {
                     // If the save button has been clicked.
                     self::_saveSettings($_POST, $_FILES, __('settings-notice-saved'));
-                } elseif (isset($_POST['save-config'])) {
+                }
+
+                if (isset($_POST['save-config'])) {
                     // If the save configuration file button has been clicked.
                     self::_saveSettings($_POST, $_FILES, '', ['save-config' => 'create-file']);
-                } elseif (isset($_POST['reset'])) {
+                }
+
+                if (isset($_POST['reset'])) {
                     // If the reset button has been clicked, removes all saved settings from the database.
                     App::blog()->settings->odyssey->dropAll();
 
@@ -98,16 +102,22 @@ class Config extends Process
                         'admin.blog.theme',
                         ['module' => My::id(), 'conf' => '1']
                     );
-                } elseif (isset($_POST['import-config'])) {
+                }
+
+                if (isset($_POST['import-config'])) {
                     // When the upload configuration file link is clicked, redirects to the upload page.
                     App::backend()->url()->redirect(
                         'admin.blog.theme',
                         ['module' => My::id(), 'conf' => '1', 'config-upload' => '1']
                     );
-                } elseif (isset($_POST['config-upload-submit'])) {
+                }
+
+                if (isset($_POST['config-upload-submit'])) {
                     // When a configuration file has been submitted, uploads it.
                     self::_uploadConfigFile($_FILES);
-                } elseif (isset($_POST['config-upload-cancel'])) {
+                }
+
+                if (isset($_POST['config-upload-cancel'])) {
                     // Redirects if the cancel upload button has been clicked.
                     App::backend()->url()->redirect(
                         'admin.blog.theme',
@@ -124,10 +134,14 @@ class Config extends Process
                 if (isset($_GET['save-config']) && $_GET['save-config'] === 'create-file') {
                     // Creates a backup file.
                     self::_createBackupFile(My::settings());
-                } elseif (isset($_GET['restore']) && $_GET['restore'] !== 'success') {
+                }
+
+                if (isset($_GET['restore']) && $_GET['restore'] !== 'success') {
                     // Restores a configuration from a backup file listed from /var/odyssey/backups.
                     self::_restoreBackup($_GET['restore'] . '.json');
-                } elseif (isset($_GET['restore_delete_file'])) {
+                }
+
+                if (isset($_GET['restore_delete_file'])) {
                     // Deletes a configuration file.
                     $delete_file_name = $_GET['restore_delete_file'] . '.json';
                     $odyssey_folder   = My::odysseyVarFolder('path');
@@ -152,7 +166,9 @@ class Config extends Process
                             ['module' => My::id(), 'conf' => '1']
                         );
                     }
-                } elseif (isset($_GET['restore_delete_all'])) {
+                }
+
+                if (isset($_GET['restore_delete_all'])) {
                     // Deletes all configuration files.
                     $odyssey_var_folder = My::odysseyVarFolder('path');
 
@@ -1043,7 +1059,7 @@ class Config extends Process
 
                     break;
                 case 'justify-not-mobile' :
-                    $css_root_array[':root']['--text-align']  = 'justify';
+                    $css_root_array[':root']['--text-align'] = 'justify';
 
                     $css_media_array[':root']['--text-align'] = 'left';
 
@@ -1897,6 +1913,7 @@ class Config extends Process
                     ];
 
                     if ($setting_id === 'global_page_width_value' && My::settings()->global_unit === 'px') {
+                        // Specific values for page width in px.
                         $range_default['unit'] = 'px';
                         $range_default['min']  = 480;
                         $range_default['max']  = 1280;
@@ -2067,6 +2084,21 @@ class Config extends Process
         // Adds settings in their section.
         $fields = [];
 
+        if (My::dotclearVersionRequired('2.36')) {
+            if (App::auth()->prefs()->interface->themeeditordevmode) {
+                $tidyadmin_name = '';
+                $tidyadmin_url  = '';
+
+                if (App::plugins()->moduleExists('tidyAdmin')) {
+                    $tidyadmin_name = __(App::plugins()->moduleInfo('tidyAdmin', 'name'));
+                    $tidyadmin_url  = My::displayAttr(App::backend()->url()->get('admin.plugin.tidyAdmin', ['part' => 'options']));
+
+                    $fields[] = (new Text('p', sprintf(__('settings-themeeditordevmode-warning'), $tidyadmin_url, $tidyadmin_name)))
+                        ->class('warning-msg');
+                }
+            }
+        }
+
         $fields[] = (new Text('p', sprintf(
             __('settings-page-intro'),
             My::name()
@@ -2214,6 +2246,18 @@ class Config extends Process
                         ]
                     );
 
+                    if (My::dotclearVersionRequired('3.36')) {
+                        $download_link = (new Link())
+                            ->download($file_name)
+                            ->href(My::escapeURL($download_url))
+                            ->text(__('settings-backup-download-link'));
+                    } else {
+                        $download_link = (new Link())
+                            ->extra('download=' . My::displayAttr($file_name))
+                            ->href(My::escapeURL($download_url))
+                            ->text(__('settings-backup-download-link'));
+                    }
+
                     $table_fields[] = (new Tr())
                         ->class('line')
                         ->items([
@@ -2227,12 +2271,7 @@ class Config extends Process
                                         ->text(__('settings-backup-restore-link')),
                                 ]),
                             (new Td())
-                                ->items([
-                                    (new Link())
-                                        ->extra('download=' . My::displayAttr($file_name)) // DC 2.36: ->download($file_name)
-                                        ->href(My::escapeURL($download_url))
-                                        ->text(__('settings-backup-download-link'))
-                                ]),
+                                ->items([$download_link]),
                             (new Td())
                                 ->items([
                                     (new Link())

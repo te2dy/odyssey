@@ -963,6 +963,9 @@ msgstr ""
 msgid "settings-odysseystylesurl-label"
 msgstr ""
 
+msgid "settings-themeeditordevmode-warning"
+msgstr ""
+
 msgid "settings-page-intro"
 msgstr ""
 
