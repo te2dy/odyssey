@@ -21,7 +21,7 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 === 2.7 - 24 août 2025 ===
 - Ajout : message d’avertissement lorsque le mode développement de l’éditeur de thème est activé.
-- Amélioration : un contrôle de la version de l’installation de Dotclear est réalisée pour les fonctions nécessitant une version récente de Dotclear.
+- Amélioration : un contrôle de la version de l’installation de Dotclear est réalisé pour les fonctions nécessitant une version récente de Dotclear.
 - Correction : erreur HTML sur la page du configurateur.
 - Modification : utilisation de l’attribut "download" pour les versions de Dotclear supérieures ou égales à 2.36.
 - Modification : changement de noms de certaines fonctions.
