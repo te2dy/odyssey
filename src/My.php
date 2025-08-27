@@ -975,7 +975,7 @@ class My extends MyTheme
     }
 
     /**
-     * Gets the odyssey public folder absolute path or relative URL.
+     * Returns the odyssey public folder absolute path or relative URL.
      *
      * @param string $type        "path" or "url".
      * @param string $concatenate A string to be added at the end of the path or URL.
@@ -995,7 +995,7 @@ class My extends MyTheme
     }
 
     /**
-     * Gets the var folder absolute path or relative URL.
+     * Returns the var folder absolute path or relative URL.
      *
      * @param string $type        "path" or "vf".
      * @param string $concatenate A string to be added at the end of the path or URL.
@@ -1019,11 +1019,11 @@ class My extends MyTheme
      * or to a file located inside the theme folder.
      *
      * @param string $type           The type of pathway (url or path).
-     * @param string $to_concatenate The pathway to file inside the theme folder (optional).
+     * @param string $to_concatenate A string to be added at the end of the path or URL.
      *
      * @return string The path.
      */
-    public static function odysseyThemeFolder(string $type = 'url', string $to_concatenate = ''): string
+    public static function themeFolder(string $type, string $to_concatenate = ''): string
     {
         switch ($type) {
             case 'url':
@@ -1284,7 +1284,7 @@ class My extends MyTheme
             'type' => 'url'
         ];
 
-        if (array_key_exists($site_id, $social_sites)) {
+        if ($site_id && array_key_exists($site_id, $social_sites)) {
             return $social_sites[$site_id];
         }
 
@@ -1390,7 +1390,7 @@ class My extends MyTheme
             'author' => 'feathericons'
         ];
 
-        if ($id !== '' && isset($icons[$id])) {
+        if ($id && isset($icons[$id])) {
             return $icons[$id];
         }
 
