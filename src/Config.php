@@ -1546,7 +1546,7 @@ class Config extends Process
      */
     private static function _stylesCustomFile(?string $styles_custom): void
     {
-        $css_default_path_file = My::odysseyThemeFolder('path', '/style.min.css');
+        $css_default_path_file = My::themeFolder('path', '/style.min.css');
         $css_path_folder       = My::id() . '/css';
         $css_custom_path_file  = $css_path_folder . '/style.min.css';
 
@@ -2246,7 +2246,7 @@ class Config extends Process
                         ]
                     );
 
-                    if (My::dotclearVersionMimimum('3.36')) {
+                    if (My::dotclearVersionMimimum('2.36')) {
                         $download_link = (new Link())
                             ->download($file_name)
                             ->href(My::escapeURL($download_url))
