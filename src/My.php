@@ -1403,12 +1403,14 @@ class My extends MyTheme
      * @param string $string The JSON input.
      *
      * @return bool
-     *
-     * @link https://www.php.net/releases/8.3/en.php#json_validate
-     * To be replace by json_validate() function available in PHP 8.3.
      */
     public static function jsonValidate(string $string): bool
     {
+        if (version_compare(App::config()->release('php_min'), '8.3', '>=')) {
+            // If the required PHP version for Dotclear is at least 8.3.
+            return json_validate($string);
+        }
+
         json_decode($string);
 
         return json_last_error() === JSON_ERROR_NONE;
