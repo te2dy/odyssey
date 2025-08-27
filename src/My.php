@@ -895,7 +895,7 @@ class My extends MyTheme
      *
      * @return string The string.
      */
-    public static function displayAttr(string $value, string $input_type = 'html'): string
+    public static function displayAttr(string $value, ?string $input_type = null): string
     {
         if ($input_type === 'html') {
             $value = Html::escapeHTML($value);
