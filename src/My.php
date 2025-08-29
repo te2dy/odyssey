@@ -947,7 +947,7 @@ class My extends MyTheme
     }
 
     /**
-     * Gets an array of the content width of the blog.
+     * Returns the content width of the blog in an array.
      *
      * @param string $unit Must be 'em' or 'px'.
      *
@@ -1036,7 +1036,7 @@ class My extends MyTheme
     }
 
     /**
-     * Converts a style array into a minified style string.
+     * Converts styles to a string from an array.
      *
      * @param array $rules An array of styles.
      *

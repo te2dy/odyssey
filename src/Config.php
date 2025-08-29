@@ -42,7 +42,6 @@ use Dotclear\Helper\Html\Form\Td;
 use Dotclear\Helper\Html\Form\Tr;
 use Dotclear\Helper\Html\Form\Text;
 use Dotclear\Helper\Html\Form\Textarea;
-use Dotclear\Helper\Network\Http;
 
 class Config extends Process
 {
@@ -916,22 +915,25 @@ class Config extends Process
 
         // Color scheme
         if (isset($settings['global_color_scheme'])) {
-            if ($settings['global_color_scheme'] === 'light') {
-                $css_root_array[':root']['--color-background-dark']        = '#fafafa';
-                $css_root_array[':root']['--color-text-main-dark']         = '#303030';
-                $css_root_array[':root']['--color-text-secondary-dark']    = '#6c6f78';
-                $css_root_array[':root']['--color-primary-dark']           = $color_primary_light;
-                $css_root_array[':root']['--color-primary-dark-amplified'] = $color_primary_amplified_light;
-                $css_root_array[':root']['--color-input-background-dark']  = '#f2f2f2';
-                $css_root_array[':root']['--color-border-dark']            = '#ccc';
-            } elseif ($settings['global_color_scheme'] === 'dark') {
-                $css_root_array[':root']['--color-background']        = '#16161d';
-                $css_root_array[':root']['--color-text-main']         = '#ccc';
-                $css_root_array[':root']['--color-text-secondary']    = '#969696';
-                $css_root_array[':root']['--color-primary']           = $color_primary_dark;
-                $css_root_array[':root']['--color-primary-amplified'] = $color_primary_amplified_dark;
-                $css_root_array[':root']['--color-input-background']  = '#2b2a33';
-                $css_root_array[':root']['--color-border']            = '#ccc';
+            switch ($settings['global_color_scheme']) {
+                case 'light':
+                    $css_root_array[':root']['--color-background-dark']        = '#fafafa';
+                    $css_root_array[':root']['--color-text-main-dark']         = '#303030';
+                    $css_root_array[':root']['--color-text-secondary-dark']    = '#6c6f78';
+                    $css_root_array[':root']['--color-primary-dark']           = $color_primary_light;
+                    $css_root_array[':root']['--color-primary-dark-amplified'] = $color_primary_amplified_light;
+                    $css_root_array[':root']['--color-input-background-dark']  = '#f2f2f2';
+                    $css_root_array[':root']['--color-border-dark']            = '#ccc';
+
+                    break;
+                case 'dark':
+                    $css_root_array[':root']['--color-background']        = '#16161d';
+                    $css_root_array[':root']['--color-text-main']         = '#ccc';
+                    $css_root_array[':root']['--color-text-secondary']    = '#969696';
+                    $css_root_array[':root']['--color-primary']           = $color_primary_dark;
+                    $css_root_array[':root']['--color-primary-amplified'] = $color_primary_amplified_dark;
+                    $css_root_array[':root']['--color-input-background']  = '#2b2a33';
+                    $css_root_array[':root']['--color-border']            = '#ccc';
             }
         }
 
@@ -956,9 +958,7 @@ class Config extends Process
         // Header alignment
         $header_align_allowed = ['left', 'right'];
 
-        if (isset($settings['header_align'])
-            && in_array($settings['header_align'], $header_align_allowed, true)
-        ) {
+        if (isset($settings['header_align']) && in_array($settings['header_align'], $header_align_allowed, true)) {
             $css_root_array[':root']['--header-align'] = $settings['header_align'];
         }
 
@@ -975,32 +975,35 @@ class Config extends Process
 
         // Post list type
         if (isset($settings['content_postlist_type'])) {
-            if ($settings['content_postlist_type'] === 'excerpt') {
-                $css_main_array['.entry-list-excerpt .post']['margin']  = '1em -1rem';
-                $css_main_array['.entry-list-excerpt .post']['padding'] = '1rem';
+            switch ($settings['content_postlist_type']) {
+                case 'excerpt':
+                    $css_main_array['.entry-list-excerpt .post']['margin']  = '1em -1rem';
+                    $css_main_array['.entry-list-excerpt .post']['padding'] = '1rem';
 
-                $css_main_array['.entry-list-excerpt .post:first-child']['margin-top']   = '0';
-                $css_main_array['.entry-list-excerpt .post:last-child']['margin-bottom'] = '0';
+                    $css_main_array['.entry-list-excerpt .post:first-child']['margin-top']   = '0';
+                    $css_main_array['.entry-list-excerpt .post:last-child']['margin-bottom'] = '0';
 
-                $css_main_array['.entry-list-excerpt .entry-title']['font-size']    = '1.1rem';
-                $css_main_array['.entry-list-excerpt .entry-title']['margin-block'] = '.5rem';
+                    $css_main_array['.entry-list-excerpt .entry-title']['font-size']    = '1.1rem';
+                    $css_main_array['.entry-list-excerpt .entry-title']['margin-block'] = '.5rem';
 
-                $css_main_array['.entry-list-excerpt .post-excerpt']['margin-block'] = '.5rem';
-            } elseif ($settings['content_postlist_type'] === 'content') {
-                $css_main_array['.entry-list-content .post']['border-bottom'] = '.063em solid var(--color-border, #ccc)';
-                $css_main_array['.entry-list-content .post']['margin-bottom'] = '4em';
+                    $css_main_array['.entry-list-excerpt .post-excerpt']['margin-block'] = '.5rem';
 
-                $css_main_array['.entry-list-content .post:last-child']['margin-bottom'] = '0';
-                $css_main_array['.entry-list-content .post:last-child']['border-bottom'] = 'none';
+                    break;
+                case 'content':
+                    $css_main_array['.entry-list-content .post']['border-bottom'] = '.063em solid var(--color-border, #ccc)';
+                    $css_main_array['.entry-list-content .post']['margin-bottom'] = '4em';
 
-                $css_main_array['.entry-list-content .entry-title']['font-size'] = '1.4em';
+                    $css_main_array['.entry-list-content .post:last-child']['margin-bottom'] = '0';
+                    $css_main_array['.entry-list-content .post:last-child']['border-bottom'] = 'none';
 
-                $css_main_array['.entry-list-content .post-footer']['background-color'] = 'var(--color-input-background, #f2f2f2)';
-                $css_main_array['.entry-list-content .post-footer']['border-radius']    = 'var(--border-radius, unset)';
-                $css_main_array['.entry-list-content .post-footer']['margin-block']     = '2em 4em';
-                $css_main_array['.entry-list-content .post-footer']['padding']          = '1em';
+                    $css_main_array['.entry-list-content .entry-title']['font-size'] = '1.4em';
 
-                $css_main_array['.content-info + .entry-list-content']['margin-top'] = '4em;';
+                    $css_main_array['.entry-list-content .post-footer']['background-color'] = 'var(--color-input-background, #f2f2f2)';
+                    $css_main_array['.entry-list-content .post-footer']['border-radius']    = 'var(--border-radius, unset)';
+                    $css_main_array['.entry-list-content .post-footer']['margin-block']     = '2em 4em';
+                    $css_main_array['.entry-list-content .post-footer']['padding']          = '1em';
+
+                    $css_main_array['.content-info + .entry-list-content']['margin-top'] = '4em;';
             }
         }
 
@@ -1070,9 +1073,7 @@ class Config extends Process
         // Line Height
         $line_height_allowed = [125, 175];
 
-        if (isset($settings['content_line_height'])
-            && in_array((int) $settings['content_line_height'], $line_height_allowed, true)
-        ) {
+        if (isset($settings['content_line_height']) && in_array((int) $settings['content_line_height'], $line_height_allowed, true)) {
             $css_root_array[':root']['--text-line-height'] = (int) $settings['content_line_height'] / 100;
         }
 
@@ -1161,11 +1162,11 @@ class Config extends Process
             $css_main_array['.content-text img']['transition']                          = 'var(--color-transition, unset)';
             $css_main_array['.content-text img:not(:active, :focus, :hover)']['filter'] = 'grayscale(1)';
 
-            if (isset($settings['content_postlist_thumbnail']) && $settings['content_postlist_thumbnail'] === '1') {
-                if (isset($settings['content_postlist_type']) && $settings['content_postlist_type'] === 'one-line') {
-                    $css_main_array['.entry-list-img']['transition']                          = 'var(--color-transition, unset)';
-                    $css_main_array['.entry-list-img:not(:active, :focus, :hover)']['filter'] = 'grayscale(1)';
-                }
+            if (isset($settings['content_postlist_thumbnail']) && $settings['content_postlist_thumbnail'] === '1'
+                && isset($settings['content_postlist_type']) && $settings['content_postlist_type'] === 'one-line'
+            ) {
+                $css_main_array['.entry-list-img']['transition']                          = 'var(--color-transition, unset)';
+                $css_main_array['.entry-list-img:not(:active, :focus, :hover)']['filter'] = 'grayscale(1)';
             }
         }
 
@@ -1324,11 +1325,7 @@ class Config extends Process
      *
      * @return void
      */
-    public static function _saveHeaderImage(
-        string  $setting_id,
-        array   $image_data,
-        ?string $img_file_path
-    ): void
+    public static function _saveHeaderImage(string $setting_id, array $image_data, ?string $img_file_path): void
     {
         $img_folder_path = My::publicFolder('path', '/img');
 
@@ -1390,11 +1387,7 @@ class Config extends Process
      *
      * @return array The page width and its unit.
      */
-    public static function _sanitizePageWidth(
-        ?string $unit,
-        ?int    $value,
-        ?string $setting_id = null
-    ): array
+    public static function _sanitizePageWidth(?string $unit, ?int $value, ?string $setting_id = null): array
     {
         $units_allowed = ['em', 'px'];
 
@@ -1705,6 +1698,7 @@ class Config extends Process
      */
     private static function _createBackupFile(): void
     {
+        // Retrieves all custom settings to put in the file.
         $custom_settings = [];
 
         foreach (My::settingsDefault() as $setting_id => $setting_data) {
@@ -1714,7 +1708,7 @@ class Config extends Process
         }
 
         if (count($custom_settings) === 0) {
-            // If no custom setting has been set.
+            // If there is no custom settings.
             Notices::addErrorNotice(__('settings-notice-save-fail'));
         } else {
             $backups_path = My::varFolder('path', '/backups');
@@ -1731,15 +1725,15 @@ class Config extends Process
 
             $backups_path .= '/' . $file_name . '.json';
 
-            // Creates the JSON file.
+            // Creates the JSON file and saves it in the backups folder.
             Files::putContent($backups_path, json_encode($custom_settings));
 
-            Notices::addNotice(
-                'success',
-                '<p>' . sprintf(__('settings-notice-save-success'), My::id(), '#odyssey-backups') . '</p>' .
-                '<a class="button submit" href=' . My::displayAttr(urldecode(Page::getVF(My::varFolder('vf', '/backups/' . $file_name . '.json'))), 'url') . ' download=' . My::displayAttr($file_name) . '>' . __('settings-notice-save-success-link') . '</a>',
-                ['divtag' => true]
-            );
+            $notice  = '<p>' . sprintf(__('settings-notice-save-success'), My::id(), '#odyssey-backups') . '</p>';
+            $notice .= '<a class="button submit" href=' . My::displayAttr(urldecode(Page::getVF(My::varFolder('vf', '/backups/' . $file_name . '.json'))), 'url') . ' download=' . My::displayAttr($file_name) . '>';
+            $notice .= __('settings-notice-save-success-link');
+            $notice .= '</a>';
+
+            Notices::addNotice('success', $notice, ['divtag' => true]);
 
             App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
         }
@@ -2325,7 +2319,5 @@ class Config extends Process
             ->method('post')
             ->fields($fields)
             ->render();
-
-        Page::closeModule();
     }
 }
