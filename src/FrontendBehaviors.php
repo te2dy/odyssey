@@ -382,7 +382,7 @@ class FrontendBehaviors
                 $src_value = $src_match[1] ?? null;
 
                 // Transforms absolute URLs in relative ones.
-                if (str_starts_with($src_value, App::blog()->url())) {
+                if ($src_value && str_starts_with($src_value, App::blog()->url())) {
                     $src_value = str_replace(App::blog()->url(), '', $src_value);
                 }
 
