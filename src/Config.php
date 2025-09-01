@@ -1190,7 +1190,7 @@ class Config extends Process
                     && isset($settings['reactions_other_' . $id])
                 ) {
                     if (!empty(self::_sanitizeSocial('social_' . $id, $settings['social_' . $id]))) {
-                        if (My::svgIcons($id)['author'] === 'simpleicons') {
+                        if (My::svgIcons($id)['creator'] === 'simpleicons') {
                             $simpleicons_styles  = true;
                         }
                     }
@@ -1218,9 +1218,9 @@ class Config extends Process
                     if (!empty(self::_sanitizeSocial('social_' . $id, $settings['social_' . $id]))) {
                         $footer_social_links = true;
 
-                        if (My::svgIcons($id)['author'] === 'simpleicons') {
+                        if (My::svgIcons($id)['creator'] === 'simpleicons') {
                             $simpleicons_styles = true;
-                        } elseif (My::svgIcons($id)['author'] === 'feathericons') {
+                        } elseif (My::svgIcons($id)['creator'] === 'feathericons') {
                             $feathericons_styles = true;
                         }
                     }

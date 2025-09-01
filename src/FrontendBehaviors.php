@@ -52,7 +52,7 @@ class FrontendBehaviors
      */
     public static function odysseySocialMarkups(): void
     {
-        if (My::settings()->advanced_meta_social === true) {
+        if (My::settings()->advanced_meta_social) {
             $title = '';
             $desc  = '';
             $img   = '';
@@ -359,12 +359,8 @@ class FrontendBehaviors
      */
     public static function odysseyImageWide($tag, $args): void
     {
-        // If only on Entry content.
-        if (!in_array($tag, ['EntryContent'])) {
-            return;
-        }
-
-        if (!My::settings()->content_images_wide) {
+        if (!in_array($tag, ['EntryContent']) || !My::settings()->content_images_wide) {
+            // If we are not in an "Entry content" context or wide images are disabled.
             return;
         }
 

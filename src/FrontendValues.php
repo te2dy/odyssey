@@ -21,6 +21,7 @@ class FrontendValues
      * Custom lang template value.
      *
      * Made in order to support the is_attr custom attribute.
+     * The "id" attribute must be set.
      *
      * @param array $attr The attributes of the template.
      *
@@ -76,7 +77,7 @@ class FrontendValues
      */
     public static function odysseyMetaCanonical(): string
     {
-        if (My::settings()->advanced_canonical === true) {
+        if (My::settings()->advanced_canonical) {
             switch (App::url()->type) {
                 case 'post':
                 case 'pages':
@@ -128,7 +129,7 @@ class FrontendValues
     {
         $links = '<a id=skip-content class=skip-links href=#site-content>' . __('skip-link-content') . '</a>';
 
-        if (App::plugins()->moduleExists('simpleMenu') && App::blog()->settings->system->simpleMenu_active === true) {
+        if (App::plugins()->moduleExists('simpleMenu') && App::blog()->settings->system->simpleMenu_active) {
             $links .= '<a class=skip-links href=#main-menu>' . __('skip-link-menu') . '</a>';
         }
 
@@ -147,8 +148,8 @@ class FrontendValues
      *                          Attribute allowed: "position", to define the place
      *                          of the image in the header.
      *                          Values allowed:
-     *                          - (string) top
-     *                          - (string) bottom
+     *                            - (string) top
+     *                            - (string) bottom
      *
      * @return string The header image.
      */
@@ -156,7 +157,7 @@ class FrontendValues
     {
         $image_url      = My::settings()->header_image['url']   ?? null;
         $image_size     = My::settings()->header_image['width'] ?? null;
-        $image_as_title = My::settings()->header_image_as_title ?? false;
+        $image_as_title = My::settings()->header_image_as_title ?: false;
 
         if (!$image_url || !$image_size) {
             return '';
@@ -168,8 +169,8 @@ class FrontendValues
         $image2x_url = My::settings()->header_image2x['url'] ?? null;
 
         if ($image2x_url) {
-            $srcset  = ' srcset="' . My::escapeURL($image_url) . ' 1x, ' . My::escapeURL($image2x_url) . ' 2x"';
-            $sizes   = ' sizes=' . Html::escapeHTML($image_size) . 'vw';
+            $srcset = ' srcset="' . My::escapeURL($image_url) . ' 1x, ' . My::escapeURL($image2x_url) . ' 2x"';
+            $sizes  = ' sizes=' . Html::escapeHTML($image_size) . 'vw';
         }
 
         $img_tag_start = '<div id=site-image>';
@@ -178,7 +179,7 @@ class FrontendValues
 
         $img_position = !My::settings()->header_image_position ? 'top' : 'bottom';
 
-        if ($image_as_title === false) {
+        if (!$image_as_title) {
             $img_description = My::settings()->header_image_description ?: __('header-image-alt');
         } else {
             $img_description  = App::blog()->name;
@@ -196,7 +197,7 @@ class FrontendValues
                 return $img_tag_start . '<img alt=' . My::displayAttr($img_description) . $img_tag_id . ' src=' . My::displayAttr($image_url, 'url') . $srcset . $sizes . '>' . $img_tag_end;
             }
 
-            return $img_tag_start . '<a href=' . My::displayAttr(App::blog()->url, 'url') . $img_tag_id .     ' rel=home><img alt=' . My::displayAttr($img_description) . ' src=' . My::displayAttr($image_url, 'url') . $srcset . $sizes . '></a>' . $img_tag_end;
+            return $img_tag_start . '<a href=' . My::displayAttr(App::blog()->url, 'url') . $img_tag_id . ' rel=home><img alt=' . My::displayAttr($img_description) . ' src=' . My::displayAttr($image_url, 'url') . $srcset . $sizes . '></a>' . $img_tag_end;
         }
 
         return '';
@@ -226,11 +227,7 @@ class FrontendValues
      */
     public static function odysseyBlogDescription(): string
     {
-        if (My::settings()->header_description === false) {
-            return '';
-        }
-
-        if (App::blog()->desc) {
+        if (App::blog()->desc && My::settings()->header_description !== false) {
             $description = My::cleanStr(
                 App::blog()->desc,
                 ['<b>', '<strong>', '<i>', '<em>', '<mark>', '<del>', '<sub>', '<sup>']
@@ -250,19 +247,14 @@ class FrontendValues
      */
     public static function odysseyPostListType(): string
     {
-        if (!My::settings()->content_postlist_type) {
-            return App::frontend()->template()->includeFile(['src' => '_entry-list.html']);
+        switch (My::settings()->content_postlist_type) {
+            case 'excerpt':
+                return App::frontend()->template()->includeFile(['src' => '_entry-list-excerpt.html']);
+            case 'content':
+                return App::frontend()->template()->includeFile(['src' => '_entry-list-content.html']);
+            default:
+                return App::frontend()->template()->includeFile(['src' => '_entry-list.html']);
         }
-
-        if (My::settings()->content_postlist_type === 'excerpt') {
-            return App::frontend()->template()->includeFile(['src' => '_entry-list-excerpt.html']);
-        }
-
-        if (My::settings()->content_postlist_type === 'content') {
-            return App::frontend()->template()->includeFile(['src' => '_entry-list-content.html']);
-        }
-
-        return App::frontend()->template()->includeFile(['src' => '_entry-list.html']);
     }
 
     /**
@@ -404,21 +396,27 @@ class FrontendValues
     public static function odysseyPostListReactions(): string
     {
         if (My::settings()->content_postlist_reactions !== true) {
+            // If reactions are disabled.
             return '';
         }
 
-        $separator = '';
-        $tag_open  = '<div class=post-list-reaction-link><small>';
-        $tag_close = '</small></div>';
+        switch (My::settings()->content_postlist_type) {
+            case 'excerpt':
+                $separator = '| ';
+                $tag_open  = '';
+                $tag_close = '';
 
-        if (My::settings()->content_postlist_type === 'excerpt') {
-            $separator = '| ';
-            $tag_open  = '';
-            $tag_close = '';
-        } elseif (My::settings()->content_postlist_type === 'content') {
-            $separator = '';
-            $tag_open  = '<div class=\"post-meta text-secondary\">';
-            $tag_close = '</div>';
+                break;
+            case 'content':
+                $separator = '';
+                $tag_open  = '<div class=\"post-meta text-secondary\">';
+                $tag_close = '</div>';
+
+                break;
+            default:
+                $separator = '';
+                $tag_open  = '<div class=post-list-reaction-link><small>';
+                $tag_close = '</small></div>';
         }
 
         return '<?php
@@ -472,8 +470,6 @@ class FrontendValues
             return '';
         }
 
-        $feed_type = My::settings()->reactions_feed_link;
-
         return '<?php
             if (App::frontend()->context()->posts->commentsActive() === true
                 || App::frontend()->context()->posts->trackbacksActive() === true
@@ -481,7 +477,7 @@ class FrontendValues
                 || App::frontend()->context()->posts->hasTrackbacks() === true
             ) :
 
-            $feed_link = App::blog()->url() . App::url()->getURLFor("feed", "' . $feed_type . '") . "/comments/" . App::frontend()->context()->posts->post_id;
+            $feed_link = App::blog()->url() . App::url()->getURLFor("feed", "' . My::settings()->reactions_feed_link . '") . "/comments/" . App::frontend()->context()->posts->post_id;
             ?>
             <p>
                 <a class=reactions-button href="<?= $feed_link; ?>" rel=nofollow>
@@ -518,7 +514,7 @@ class FrontendValues
 
         $output = '<?php $reactions_other = ""; ?>';
 
-        if (My::settings()->reactions_other_email === true) {
+        if (My::settings()->reactions_other_email) {
             $output .= '<?php
             if (isset(App::frontend()->context()->posts->user_email) && App::frontend()->context()->posts->user_email && (App::blog()->settings->odyssey->reactions_other === "always" || (App::blog()->settings->odyssey->reactions_other === "comments_open" && App::frontend()->context()->posts->post_open_comment === "1"))
             ) {
@@ -533,7 +529,7 @@ class FrontendValues
             ?>';
         }
 
-        if (My::settings()->social_bluesky && My::settings()->reactions_other_bluesky === true) {
+        if (My::settings()->social_bluesky && My::settings()->reactions_other_bluesky) {
             $output .= '<?php
             $bluesky_url = "";
 
@@ -547,13 +543,13 @@ class FrontendValues
                 $bluesky_url .= urlencode(App::frontend()->context()->posts->getURL());
             }
 
-            if ($bluesky_url !== "") {
+            if ($bluesky_url) {
                 $reactions_other .= "<p><a class=reactions-button href=\"" . $bluesky_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('bluesky')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-bluesky-button'), My::socialSites('bluesky')['name']) . '</span></a></p>";
             }
             ?>';
         }
 
-        if (My::settings()->social_facebook && My::settings()->reactions_other_facebook === true) {
+        if (My::settings()->social_facebook && My::settings()->reactions_other_facebook) {
             $output .= '<?php
             $facebook_url = "";
 
@@ -565,13 +561,13 @@ class FrontendValues
                 }
             }
 
-            if ($facebook_url !== "") {
+            if ($facebook_url) {
                 $reactions_other .= "<p><a class=reactions-button href=\"" . $facebook_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('facebook')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-facebook-button'), My::socialSites('facebook')['name']) . '</span></a></p>";
             }
             ?>';
         }
 
-        if (My::settings()->social_mastodon && My::settings()->reactions_other_mastodon === true) {
+        if (My::settings()->social_mastodon && My::settings()->reactions_other_mastodon) {
             $output .= '<?php
             $mastodon_url = "";
 
@@ -583,17 +579,17 @@ class FrontendValues
                 }
             }
 
-            if ($mastodon_url !== "") {
+            if ($mastodon_url) {
                 $reactions_other .= "<p><a class=reactions-button href=\"" . $mastodon_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('mastodon')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-mastodon-button'), My::socialSites('mastodon')['name']) . '</span></a></p>";
             }
             ?>';
         }
 
-        if (My::settings()->social_sms && My::settings()->reactions_other_sms === true) {
+        if (My::settings()->social_sms && My::settings()->reactions_other_sms) {
             $output .= '<?php
             $phone_number = "' . My::settings()->social_sms . '";
 
-            if ($phone_number !== "") {
+            if ($phone_number) {
                 $sms_href = "sms:' . My::settings()->social_sms . '";
 
                 if (App::frontend()->context()->posts->post_title) {
@@ -605,34 +601,37 @@ class FrontendValues
             ?>';
         }
 
-        if (My::settings()->social_signal && My::settings()->reactions_other_signal === true) {
+        if (My::settings()->social_signal && My::settings()->reactions_other_signal) {
             $output .= '<?php
             $signal_url = "' . My::settings()->social_signal . '";
 
-            if ($signal_url !== "") {
+            if ($signal_url) {
                 $reactions_other .= "<p><a class=reactions-button href=\"" . $signal_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('signal')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-signal-button'), My::socialSites('signal')['name']) . '</span></a></p>";
             }
             ?>';
         }
 
-        if (My::settings()->social_whatsapp && My::settings()->reactions_other_whatsapp === true) {
+        if (My::settings()->social_whatsapp && My::settings()->reactions_other_whatsapp) {
             $output .= '<?php
-            $whatsapp_text = App::frontend()->context()->posts->post_title
-            ? "?text=" . sprintf(__("reactions-other-whatsapp-text"), App::frontend()->context()->posts->post_title)
-            : "";
-            $whatsapp_url  = "' . My::settings()->social_whatsapp . '" . $whatsapp_text;
+            if (App::frontend()->context()->posts->post_title) {
+                $whatsapp_text = "?text=" . sprintf(__("reactions-other-whatsapp-text"), App::frontend()->context()->posts->post_title);
+            } else {
+                $whatsapp_text = "";
+            }
 
-            if ($whatsapp_url !== "") {
+            $whatsapp_url = "' . My::settings()->social_whatsapp . '" . $whatsapp_text;
+
+            if ($whatsapp_url) {
                 $reactions_other .= "<p><a class=reactions-button href=\"" . $whatsapp_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('whatsapp')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-whatsapp-button'), My::socialSites('whatsapp')['name']) . '</span></a></p>";
             }
             ?>';
         }
 
-        if (My::settings()->social_x && My::settings()->reactions_other_x === true) {
+        if (My::settings()->social_x && My::settings()->reactions_other_x) {
             $output .= '<?php
             $x_url = "' . My::settings()->social_x . '";
 
-            if ($x_url !== "") {
+            if ($x_url) {
                 $x_url_parameters = [];
 
                 $x_url_parameters["url"] = urlencode(App::frontend()->context()->posts->getURL());
@@ -659,7 +658,7 @@ class FrontendValues
         }
 
         $output .= '<?php
-        if ($reactions_other !== "") {
+        if ($reactions_other) {
             echo $reactions_other;
         }
         ?>';
@@ -676,9 +675,9 @@ class FrontendValues
     {
         return '<?php
         if (count(App::frontend()->context()->attachments) === 1) {
-            echo "' . __('attachments-title-one') . '";
+            echo __("attachments-title-one");
         } else {
-            echo "' . __('attachments-title-multiple') . '";
+            echo __("attachments-title-multiple");
         }
         ?>';
     }
@@ -700,13 +699,9 @@ class FrontendValues
 
         $size = $attach_f->size;
 
-        // Typo for French
-        if (App::lang()->getLang() === "fr") {
-            $locale_decimal = ",";
-        } else {
-            $lang_conv      = localeconv();
-            $locale_decimal = $lang_conv["decimal_point"];
-        }
+        // Localizes decimal numbers.
+        $lang_conv      = localeconv();
+        $locale_decimal = $lang_conv["decimal_point"];
 
         if ($size > 0) {
             if ($size < $kb) {
@@ -754,9 +749,9 @@ class FrontendValues
      */
     public static function odysseyMarkdownSupportInfo(): string
     {
-        if (My::settings()->reactions_markdown_notice === true
+        if (My::settings()->reactions_markdown_notice
             && App::plugins()->moduleExists('legacyMarkdown')
-            && App::blog()->settings()->system->markdown_comments === true
+            && App::blog()->settings()->system->markdown_comments
         ) {
             $markdown_notice = sprintf(
                 __('reactions-comment-markdown-support'),
@@ -779,11 +774,14 @@ class FrontendValues
         $output = '';
         $count  = 0;
 
-        foreach (My::socialSites() as $id => $data) {
-            $social_id        = 'social_' . $id;
-            $footer_social_id = 'footer_social_' . $id;
+        foreach (My::socialSites() as $site_id => $site_data) {
+            $social_site_id    = 'social_' . $site_id;
+            $social_site_value = My::settings()->$social_site_id;
 
-            if (My::settings()->$social_id !== null && My::settings()->$footer_social_id !== false) {
+            $footer_social_id      = 'footer_social_' . $site_id;
+            $footer_social_setting = My::settings()->$footer_social_id !== true ? false : true;
+
+            if ($social_site_value && $footer_social_setting) {
                 $count++;
 
                 if ($count === 1) {
@@ -791,33 +789,35 @@ class FrontendValues
                     $output .= '<ul class=footer-social-links>';
                 }
 
-                if (My::svgIcons($id)['author'] === 'simpleicons') {
+                $icon_creator = My::svgIcons($site_id)['creator'] ?? '';
+
+                if ($icon_creator === 'simpleicons') {
                     $class = 'social-icon-si footer-social-links-icon-si';
-                } elseif (My::svgIcons($id)['author'] === 'feathericons') {
+                } else {
                     $class = 'social-icon-fi footer-social-links-icon-fi';
                 }
 
-                $url = My::settings()->$social_id;
+                if ($social_site_value) {
+                    switch ($social_site_id) {
+                        case 'email':
+                            $social_site_value = 'mailto:' . $social_site_value;
 
-                switch ($id) {
-                    case 'email':
-                        $url = 'mailto:' . $url;
+                            break;
+                        case 'phone':
+                            $social_site_value = 'tel:' . $social_site_value;
 
-                        break;
-                    case 'phone':
-                        $url = 'tel:' . $url;
-
-                        break;
-                    case 'sms':
-                        $url = 'sms:' . $url;
+                            break;
+                        case 'sms':
+                            $social_site_value = 'sms:' . $social_site_value;
+                    }
                 }
 
                 $output .= '<li>';
-                $output .= '<a href=' . My::displayAttr($url, 'url') . '>';
+                $output .= '<a href=' . My::displayAttr($social_site_value, 'url') . '>';
                 $output .= '<span class=footer-social-links-icon-container>';
                 $output .= '<svg class="' . $class . '" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>';
-                $output .= '<title>' . Html::escapeHTML($data['name']) . '</title>';
-                $output .= My::svgIcons($id)['path'];
+                $output .= '<title>' . Html::escapeHTML($site_data['name']) . '</title>';
+                $output .= My::svgIcons($site_id)['path'];
                 $output .= '</svg>';
                 $output .= '</span>';
                 $output .= '</a>';
@@ -825,7 +825,7 @@ class FrontendValues
             }
         }
 
-        if (My::settings()->footer_feed !== null) {
+        if (My::settings()->footer_feed) {
             if ($count === 0) {
                 $count++;
 
@@ -833,7 +833,7 @@ class FrontendValues
                 $output .= '<ul class=footer-social-links>';
             }
 
-            $feed_link = App::blog()->url() . App::url()->getURLFor("feed", My::settings()->footer_feed);
+            $feed_link = App::blog()->url() . App::url()->getURLFor('feed', My::settings()->footer_feed);
 
             $output .= '<li>';
             $output .= '<a href=' . My::displayAttr($feed_link, 'url') . '>';
@@ -863,24 +863,23 @@ class FrontendValues
     public static function odysseyFooterCredits(): string
     {
         if (My::settings()->footer_credits === false) {
+            // If footer credits are disabled.
             return '';
         }
 
-        // If we are not in a development environment.
-        if (!defined('DC_DEV') || (defined('DC_DEV') && DC_DEV === false)) {
-            return '<div class=site-footer-block>' . sprintf(
-                __('footer-powered-by'),
-                My::name()
-            ) . '</div>';
+        if (!DC_DEV) {
+            // If we are not in a development environment.
+            $footer_credits = sprintf(__('footer-powered-by'), My::name());
+        } else {
+            $footer_credits = sprintf(
+                __('footer-powered-by-dev'),
+                My::dotclearVersion(),
+                My::dotclearVersion(true),
+                My::name(),
+                App::themes()->moduleInfo(My::id(), 'version')
+            );
         }
 
-        // Otherwise, displays a more detailed information.
-        return '<div class=site-footer-block>' . sprintf(
-            __('footer-powered-by-dev'),
-            My::dotclearVersion(),
-            My::dotclearVersion(true),
-            My::name(),
-            App::themes()->moduleInfo(My::id(), 'version')
-        ) . '</div>';
+        return '<div class=site-footer-block>' . $footer_credits . '</div>';
     }
 }
