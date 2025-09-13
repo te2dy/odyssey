@@ -80,7 +80,8 @@ class My extends MyTheme
             'advanced' => [
                 'name'         => __('section-advanced'),
                 'sub_sections' => [
-                    'seo' => __('section-advanced-seo')
+                    'appearance' => __('section-advanced-appearance'),
+                    'seo'        => __('section-advanced-seo')
                 ]
             ]
         ];
@@ -834,6 +835,17 @@ class My extends MyTheme
                 'sanitizer'   => 'sanitizeSocial'
             ];
         }
+
+        $default_settings['styles_advanced'] = [
+            'title'       => __('settings-styles-advanced-title'),
+            'description' => __('settings-styles-advanced-description'),
+            'label'       => __('settings-styles-advanced-label'),
+            'type'        => 'textarea',
+            'default'     => '',
+            'placeholder' => '.' . __('settings-styles-advanced-placeholder-selector') . ' {' . "\n" . '  ' . __('settings-styles-advanced-placeholder-property') . ': ' . __('settings-styles-advanced-placeholder-value') . ';' . "\n" . '}',
+            'sanitizer'   => 'sanitizeCSS',
+            'section'     => ['advanced', 'appearance']
+        ];
 
         $default_settings['advanced_meta_description'] = [
             'title'       => __('settings-advanced-metadescription-title'),

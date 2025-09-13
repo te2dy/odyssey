@@ -123,6 +123,9 @@ msgstr "Social settings"
 msgid "section-advanced"
 msgstr "Advanced settings"
 
+msgid "section-advanced-appearance"
+msgstr "Appearance"
+
 msgid "section-advanced-seo"
 msgstr "Search engine optimization"
 
@@ -917,6 +920,24 @@ msgstr "URL of an %s account."
 
 msgid "settings-social-other-description"
 msgstr "URL of a webpage of your choice."
+
+msgid "settings-styles-advanced-title"
+msgstr "Custom styles"
+
+msgid "settings-styles-advanced-description"
+msgstr "The styles entered will be added to the end of the main minified stylesheet."
+
+msgid "settings-styles-advanced-label"
+msgstr "Custom styles"
+
+msgid "settings-styles-advanced-placeholder-selector"
+msgstr "selector"
+
+msgid "settings-styles-advanced-placeholder-property"
+msgstr "property"
+
+msgid "settings-styles-advanced-placeholder-value"
+msgstr "value"
 
 msgid "settings-advanced-metadescription-title"
 msgstr "Description of the home page"

@@ -123,6 +123,9 @@ msgstr ""
 msgid "section-advanced"
 msgstr ""
 
+msgid "section-advanced-appearance"
+msgstr ""
+
 msgid "section-advanced-seo"
 msgstr ""
 
@@ -916,6 +919,24 @@ msgid "settings-social-x-description"
 msgstr ""
 
 msgid "settings-social-other-description"
+msgstr ""
+
+msgid "settings-styles-advanced-title"
+msgstr ""
+
+msgid "settings-styles-advanced-description"
+msgstr ""
+
+msgid "settings-styles-advanced-label"
+msgstr ""
+
+msgid "settings-styles-advanced-placeholder-selector"
+msgstr ""
+
+msgid "settings-styles-advanced-placeholder-property"
+msgstr ""
+
+msgid "settings-styles-advanced-placeholder-value"
 msgstr ""
 
 msgid "settings-advanced-metadescription-title"

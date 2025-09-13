@@ -123,6 +123,9 @@ msgstr "Paramètres sociaux"
 msgid "section-advanced"
 msgstr "Paramètres avancés"
 
+msgid "section-advanced-appearance"
+msgstr "Apparence"
+
 msgid "section-advanced-seo"
 msgstr "Optimisation du référencement"
 
@@ -917,6 +920,24 @@ msgstr "Adresse d’un compte %s"
 
 msgid "settings-social-other-description"
 msgstr "Adresse d’une autre page de votre choix."
+
+msgid "settings-styles-advanced-title"
+msgstr "Styles personnalisés"
+
+msgid "settings-styles-advanced-description"
+msgstr "Les styles saisis seront ajoutés à la fin de la feuille de styles principale minifiée."
+
+msgid "settings-styles-advanced-label"
+msgstr "Styles personnalisés"
+
+msgid "settings-styles-advanced-placeholder-selector"
+msgstr "selecteur"
+
+msgid "settings-styles-advanced-placeholder-property"
+msgstr "propriete"
+
+msgid "settings-styles-advanced-placeholder-value"
+msgstr "valeur"
 
 msgid "settings-advanced-metadescription-title"
 msgstr "Description de la page d’accueil"

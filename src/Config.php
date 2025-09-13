@@ -67,8 +67,8 @@ class Config extends Process
         App::behavior()->addBehavior(
             'adminPageHTMLHead',
             function () {
-                echo My::cssLoad('/css/admin.min.css'),
-                My::jsLoad('/js/admin.min.js');
+                echo My::cssLoad('admin.min.css'),
+                My::jsLoad('admin.min.js');
             }
         );
 
@@ -214,6 +214,8 @@ class Config extends Process
         // Puts all $_POST et $_FILES variables in a new array to manipulate them.
         $new_settings = [];
 
+        $http_requests = $http_post;
+
         if (!empty($http_files)) {
             $http_requests = array_merge($http_post, $http_files);
         }
@@ -271,10 +273,7 @@ class Config extends Process
                     ) {
                         // If the delete button has been clicked.
                         self::_deleteHeaderImage();
-                    } elseif (isset($setting['value'])
-                        && isset($setting_value['tmp_name'])
-                        && $setting_value['tmp_name']
-                    ) {
+                    } elseif (isset($setting['value'], $setting_value['tmp_name']) && $setting_value['tmp_name']) {
                         // If an image file has been submitted and the file exists, saves the image.
                         self::_saveHeaderImage($setting_id, $setting, $setting_value['tmp_name']);
                     }
@@ -282,11 +281,7 @@ class Config extends Process
                     break;
                 case 'header_image2x':
                     // Saves header image for Retina displays.
-                    if (isset($new_settings['header_image'])
-                        && isset($setting['value'])
-                        && isset($setting_value['tmp_name'])
-                        && $setting_value['tmp_name']
-                    ) {
+                    if (isset($new_settings['header_image'], $setting['value'], $setting_value['tmp_name']) && $setting_value['tmp_name']) {
                         // If a Retina image file has been submitted and the file exists, saves the image.
                         self::_saveHeaderImage($setting_id, $setting, $setting_value['tmp_name']);
                     }
@@ -294,8 +289,21 @@ class Config extends Process
                     break;
                 case 'styles':
                     // Saves styles.
+                    $styles_advanced = $sanitizedSettings['styles_advanced'] ?? '';
+
+                    if ($styles_advanced) {
+                        App::blog()->settings->odyssey->put(
+                            'styles',
+                            $styles_advanced,
+                            'string',
+                            $default_settings['styles_advanced']['label']
+                        );
+                    } else {
+                        App::blog()->settings->odyssey->drop('styles_advanced');
+                    }
+
                     $sanitized_styles       = self::_sanitizeStyles($sanitizedSettings);
-                    $sanitized_styles_value = $sanitized_styles['value'] ?? null;
+                    $sanitized_styles_value = $sanitized_styles['value'] ?? '';
                     $sanitized_styles_type  = $sanitized_styles['type']  ?? null;
 
                     if ($sanitized_styles_value && $sanitized_styles_type) {
@@ -303,13 +311,13 @@ class Config extends Process
                             'styles',
                             $sanitized_styles_value,
                             $sanitized_styles_type,
-                            My::settingsDefault()['styles']['label']
+                            $default_settings['styles']['label']
                         );
-
-                        self::_stylesCustomFile($sanitized_styles_value);
                     } else {
                         App::blog()->settings->odyssey->drop('styles');
                     }
+
+                    self::_customStylesFile($sanitized_styles_value, $styles_advanced);
             }
 
             // If the /public/odyssey folder has empty subfolders, deletes it.
@@ -340,7 +348,7 @@ class Config extends Process
             $redirect_params
         );
 
-        App::backend()->url()->redirect('admin.blog.theme', $redirect_params);
+        // App::backend()->url()->redirect('admin.blog.theme', $redirect_params);
     }
 
     /**
@@ -428,7 +436,7 @@ class Config extends Process
                     }
             }
 
-            if (isset($setting['id']) && isset($setting['value']) && isset($setting['type'])) {
+            if (isset($setting['id'], $setting['value'], $setting['type'])) {
                 return $setting;
             }
         } else {
@@ -492,6 +500,10 @@ class Config extends Process
                             $new_settings
                         ];
                     }
+
+                    break;
+                case 'styles_advanced':
+                    $params = [$setting_value];
             }
 
             if (str_starts_with($setting_id, 'social_')) {
@@ -537,10 +549,11 @@ class Config extends Process
             $setting['value'] = $setting_callback['value'] ?? null;
             $setting['type']  = $setting_callback['type']  ?? null;
 
-            if (isset($setting['id'])
-                && isset($setting['value'])
-                && isset($setting['type'])
-            ) {
+            if ($setting_id === 'styles_advanced') {
+                var_dump($setting_callback);
+            }
+
+            if (isset($setting['id'], $setting['value'], $setting['type'])) {
                 return $setting;
             }
         }
@@ -557,17 +570,13 @@ class Config extends Process
      *
      * @return array The sanitized header image parameters.
      */
-    public static function _sanitizeHeaderImage(
+    private static function _sanitizeHeaderImage(
         string $setting_id,
         array  $image_file   = [],
         array  $new_settings = []
     ): array
     {
-        if (!empty($image_file)
-            && isset($image_file['size'])
-            && isset($image_file['tmp_name'])
-            && isset($image_file['type'])
-        ) {
+        if (!empty($image_file) && isset($image_file['size'], $image_file['tmp_name'], $image_file['type'])) {
             $image_size = (int) $image_file['size'];
 
             if ($image_size > 0
@@ -626,8 +635,7 @@ class Config extends Process
 
                             break;
                         case 'header_image2x':
-                            if (isset($new_settings['header_image'])
-                                && isset($new_settings['header_image']['name'])
+                            if (isset($new_settings['header_image'], $new_settings['header_image']['name'])
                                 && $new_settings['header_image']['name'] !== $file_name
                             ) {
                                 $img1x = $new_settings['header_image']['name'] ?? null;
@@ -657,13 +665,35 @@ class Config extends Process
     }
 
     /**
+     * Sanitizes styles entered in the configurator.
+     *
+     * @param string $css Custom CSS.
+     *
+     * @return array The sanitized styles parameters.
+     */
+    private static function _sanitizeCSS(string $css): array
+    {
+        $css = strip_tags($css);
+        $css = htmlspecialchars($css, ENT_HTML5 | ENT_NOQUOTES | ENT_SUBSTITUTE, 'utf-8');
+
+        if (!$css) {
+            return [];
+        }
+
+        return [
+            'value' => $css,
+            'type'  => 'string'
+        ];
+    }
+
+    /**
      * Adds custom styles to the theme to apply the settings.
      *
      * @param array $settings All sanitized settings after being passed through the configurator form.
      *
      * @return array The styles.
      */
-    public static function _sanitizeStyles(array $settings): array
+    private static function _sanitizeStyles(array $settings): array
     {
         $css_root_array                    = [];
         $css_root_dark_array               = [];
@@ -720,16 +750,14 @@ class Config extends Process
 
         if (isset($settings['global_color_primary']) && $settings['global_color_primary'] === 'custom') {
             // Main text color.
-            if (isset($settings['global_color_text_custom'])
-                && isset($default_settings['global_color_primary']['default'])
+            if (isset($settings['global_color_text_custom'], $default_settings['global_color_primary']['default'])
                 && My::isHexColor($settings['global_color_text_custom'])
                 && $settings['global_color_text_custom'] !== $default_settings['global_color_primary']['default']
             ) {
                 $css_root_array[':root']['--color-text-main'] = $settings['global_color_text_custom'];
             }
 
-            if (isset($settings['global_color_text_dark_custom'])
-                && isset($default_settings['global_color_text_dark_custom']['default'])
+            if (isset($settings['global_color_text_dark_custom'], $default_settings['global_color_text_dark_custom']['default'])
                 && My::isHexColor($settings['global_color_text_dark_custom'])
                 && $settings['global_color_text_dark_custom'] !== $default_settings['global_color_text_dark_custom']['default']
             ) {
@@ -737,16 +765,14 @@ class Config extends Process
             }
 
             // Text secondary color
-            if (isset($settings['global_color_text_secondary_custom'])
-                && isset($default_settings['global_color_text_secondary_custom']['default'])
+            if (isset($settings['global_color_text_secondary_custom'], $default_settings['global_color_text_secondary_custom']['default'])
                 && My::isHexColor($settings['global_color_text_secondary_custom'])
                 && $settings['global_color_text_secondary_custom'] !== $default_settings['global_color_text_secondary_custom']['default']
             ) {
                 $css_root_array[':root']['--color-text-secondary'] = $settings['global_color_text_secondary_custom'];
             }
 
-            if (isset($settings['global_color_text_secondary_dark_custom'])
-                && isset($default_settings['global_color_text_secondary_dark_custom']['default'])
+            if (isset($settings['global_color_text_secondary_dark_custom'], $default_settings['global_color_text_secondary_dark_custom']['default'])
                 && My::isHexColor($settings['global_color_text_secondary_dark_custom'])
                 && $settings['global_color_text_secondary_dark_custom'] !== $default_settings['global_color_text_secondary_dark_custom']['default']
             ) {
@@ -754,16 +780,14 @@ class Config extends Process
             }
 
             // Input color
-            if (isset($settings['global_color_input_custom'])
-                && isset($default_settings['global_color_input_custom']['default'])
+            if (isset($settings['global_color_input_custom'], $default_settings['global_color_input_custom']['default'])
                 && My::isHexColor($settings['global_color_input_custom'])
                 && $settings['global_color_input_custom'] !== $default_settings['global_color_input_custom']['default']
             ) {
                 $css_root_array[':root']['--color-input-background'] = $settings['global_color_input_custom'];
             }
 
-            if (isset($settings['global_color_input_dark_custom'])
-                && isset($default_settings['global_color_input_dark_custom']['default'])
+            if (isset($settings['global_color_input_dark_custom'], $default_settings['global_color_input_dark_custom']['default'])
                 && My::isHexColor($settings['global_color_input_dark_custom'])
                 && $settings['global_color_input_dark_custom'] !== $default_settings['global_color_input_dark_custom']['default']
             ) {
@@ -771,16 +795,14 @@ class Config extends Process
             }
 
             // Border color
-            if (isset($settings['global_color_border_custom'])
-                && isset($default_settings['global_color_border_custom']['default'])
+            if (isset($settings['global_color_border_custom'], $default_settings['global_color_border_custom']['default'])
                 && My::isHexColor($settings['global_color_border_custom'])
                 && $settings['global_color_border_custom'] !== $default_settings['global_color_border_custom']['default']
             ) {
                 $css_root_array[':root']['--color-border'] = $settings['global_color_border_custom'];
             }
 
-            if (isset($settings['global_color_border_dark_custom'])
-                && isset($default_settings['global_color_border_dark_custom']['default'])
+            if (isset($settings['global_color_border_dark_custom'], $default_settings['global_color_border_dark_custom']['default'])
                 && My::isHexColor($settings['global_color_border_dark_custom'])
                 && $settings['global_color_border_dark_custom'] !== $default_settings['global_color_border_dark_custom']['default']
             ) {
@@ -788,16 +810,14 @@ class Config extends Process
             }
 
             // Background color
-            if (isset($settings['global_color_background_custom'])
-                && isset($default_settings['global_color_background_custom']['default'])
+            if (isset($settings['global_color_background_custom'], $default_settings['global_color_background_custom']['default'])
                 && My::isHexColor($settings['global_color_background_custom'])
                 && $settings['global_color_background_custom'] !== $default_settings['global_color_background_custom']['default']
             ) {
                 $css_root_array[':root']['--color-background'] = $settings['global_color_background_custom'];
             }
 
-            if (isset($settings['global_color_background_dark_custom'])
-                && isset($default_settings['global_color_background_dark_custom']['default'])
+            if (isset($settings['global_color_background_dark_custom'], $default_settings['global_color_background_dark_custom']['default'])
                 && My::isHexColor($settings['global_color_background_dark_custom'])
                 && $settings['global_color_background_dark_custom'] !== $default_settings['global_color_background_dark_custom']['default']
             ) {
@@ -871,8 +891,7 @@ class Config extends Process
                     $css_root_array[':root']['--color-primary-dark-amplified'] = $color_primary_amplified_dark;
                 }
             } elseif ($settings['global_color_primary'] === 'custom') {
-                if (isset($settings['global_color_primary_custom'])
-                    && isset($default_settings['global_color_primary_custom']['default'])
+                if (isset($settings['global_color_primary_custom'], $default_settings['global_color_primary_custom']['default'])
                     && My::isHexColor($settings['global_color_primary_custom'])
                     && $settings['global_color_primary_custom'] !== $default_settings['global_color_primary_custom']['default']
                 ) {
@@ -881,8 +900,7 @@ class Config extends Process
                     $css_root_array[':root']['--color-primary'] = $color_primary_light;
                 }
 
-                if (isset($settings['global_color_primary_amplified_custom'])
-                    && isset($default_settings['global_color_primary_amplified_custom']['default'])
+                if (isset($settings['global_color_primary_amplified_custom'], $default_settings['global_color_primary_amplified_custom']['default'])
                     && My::isHexColor($settings['global_color_primary_amplified_custom'])
                     && $settings['global_color_primary_amplified_custom'] !== $default_settings['global_color_primary_amplified_custom']['default']
                 ) {
@@ -891,8 +909,7 @@ class Config extends Process
                     $css_root_array[':root']['--color-primary-amplified'] = $color_primary_amplified_light;
                 }
 
-                if (isset($settings['global_color_primary_dark_custom'])
-                    && isset($default_settings['global_color_primary_dark_custom']['default'])
+                if (isset($settings['global_color_primary_dark_custom'], $default_settings['global_color_primary_dark_custom']['default'])
                     && My::isHexColor($settings['global_color_primary_dark_custom'])
                     && $settings['global_color_primary_dark_custom'] !== $default_settings['global_color_primary_dark_custom']['default']
                 ) {
@@ -901,8 +918,7 @@ class Config extends Process
                     $css_root_dark_array[':root']['--color-primary-dark'] = $color_primary_dark;
                 }
 
-                if (isset($settings['global_color_primary_dark_amplified_custom'])
-                    && isset($default_settings['global_color_primary_dark_amplified_custom']['default'])
+                if (isset($settings['global_color_primary_dark_amplified_custom'], $default_settings['global_color_primary_dark_amplified_custom']['default'])
                     && My::isHexColor($settings['global_color_primary_dark_amplified_custom'])
                     && $settings['global_color_primary_dark_amplified_custom'] !== $default_settings['global_color_primary_dark_amplified_custom']['default']
                 ) {
@@ -1185,9 +1201,8 @@ class Config extends Process
         // Checks if a link has been set.
         foreach (My::socialSites() as $id => $data) {
             if (isset($settings['social_' . $id])) {
-                if (isset($settings['reactions_other'])
+                if (isset($settings['reactions_other'], $settings['reactions_other_' . $id])
                     && $settings['reactions_other'] !== 'disabled'
-                    && isset($settings['reactions_other_' . $id])
                 ) {
                     if (!empty(self::_sanitizeSocial('social_' . $id, $settings['social_' . $id]))) {
                         if (My::svgIcons($id)['creator'] === 'simpleicons') {
@@ -1387,7 +1402,7 @@ class Config extends Process
      *
      * @return array The page width and its unit.
      */
-    public static function _sanitizePageWidth(?string $unit, ?int $value, ?string $setting_id = null): array
+    private static function _sanitizePageWidth(?string $unit, ?int $value, ?string $setting_id = null): array
     {
         $units_allowed = ['em', 'px'];
 
@@ -1428,7 +1443,7 @@ class Config extends Process
      *
      * @return array The value of the setting and its type.
      */
-    public static function _sanitizeSocial(?string $setting_id, ?string $value): array
+    private static function _sanitizeSocial(?string $setting_id, ?string $value): array
     {
         if (!$setting_id || !$value) {
             return [];
@@ -1533,69 +1548,40 @@ class Config extends Process
     /**
      * Saves a custom CSS in the public folder of Dotclear, or deletes it.
      *
-     * @param ?string $styles_custom All custom CSS rules.
+     * @param string $css_options Styles from configurator options.
+     * @param string $css_custom  Styles entered in the textarea.
      *
      * @return void
      */
-    private static function _stylesCustomFile(?string $styles_custom): void
+    private static function _customStylesFile(string $css_options, string $css_custom): void
     {
-        $css_default_path_file = My::themeFolder('path', '/style.min.css');
-        $css_path_folder       = My::id() . '/css';
-        $css_custom_path_file  = $css_path_folder . '/style.min.css';
+        $css  = $css_options;
+        $css .= (string) file_get_contents(My::themeFolder('path', '/style.min.css')) ?: '';
+        $css .= $css_custom;
 
-        if ($styles_custom) {
-            $styles_default = '';
+        $css_folder    = My::id() . '/css';
+        $css_file_name = 'style.min';
 
-            // Gets default CSS content.
-            if (file_exists($css_default_path_file)) {
-                $styles_default = (string) file_get_contents($css_default_path_file) ?: '';
-            }
+        // Deletes the previous CSS file if it exists.
+        ThemeConfig::dropCss($css_folder, $css_file_name);
 
-            // Creates a custom CSS file in the public folder.
-            if (is_writable(App::blog()->publicPath())) {
-                if (!is_dir(My::publicFolder('path', '/css'))) {
-                    Files::makeDir(My::publicFolder('path', '/css'), true);
-                }
+        // Creates an Odyssey public folder if it does not exist.
+        if (!is_dir(My::publicFolder('path')) && is_writable(App::blog()->publicPath())) {
+            Files::makeDir(My::publicFolder('path'));
+        }
 
-                ThemeConfig::writeCss(
-                    $css_path_folder,
-                    'style.min',
-                    $styles_custom . $styles_default
-                );
-
-                // Creates a entry in the database that contains the CSS URL.
-                App::blog()->settings->odyssey->put(
-                    'styles_url',
-                    My::publicFolder('url', '/css/style.min.css'),
-                    'string',
-                    __('settings-odysseystylesurl-label')
-                );
-            } else {
-                if (file_exists($css_custom_path_file)) {
-                    ThemeConfig::dropCss(
-                        My::id() . '/css/',
-                        'style.min'
-                    );
-                }
-
-                App::blog()->settings->odyssey->drop('styles_url');
-            }
+        // Creates the CSS file.
+        if ($css && ThemeConfig::canWriteCss($css_folder, true)) {
+            ThemeConfig::writeCss($css_folder, $css_file_name, $css);
         } else {
-            // If there is no custom styles, deletes the CSS file if exists.
-            if (file_exists(ThemeConfig::cssPath($css_custom_path_file))) {
-                ThemeConfig::dropCss(
-                    My::id() . '/css/',
-                    'style.min'
-                );
-            }
+            ThemeConfig::dropCss($css_folder, $css_file_name);
 
-            // Removes the CSS folder if it exists.
-            if (Files::isDeletable(ThemeConfig::cssPath($css_path_folder))) {
-                Files::deltree(ThemeConfig::cssPath($css_path_folder));
+            // Removes the CSS folder if it exists and is empty.
+            if (Files::isDeletable(ThemeConfig::cssPath($css_folder))
+                && empty(Files::getDirList(ThemeConfig::cssPath($css_folder))['files'])
+            ) {
+                Files::deltree(ThemeConfig::cssPath($css_folder));
             }
-
-            // Removes the database entry.
-            App::blog()->settings->odyssey->drop('styles_url');
         }
     }
 
@@ -1608,11 +1594,7 @@ class Config extends Process
      */
     private static function _uploadConfigFile(array $file_data = []): void
     {
-        if (isset($file_data['config-upload-file']['tmp_name'])
-            && isset($file_data['config-upload-file']['type'])
-            && isset($file_data['config-upload-file']['error'])
-            && $file_data['config-upload-file']['error'] === UPLOAD_ERR_OK
-        ) {
+        if (isset($file_data['config-upload-file']['tmp_name'], $file_data['config-upload-file']['type'], $file_data['config-upload-file']['error']) && $file_data['config-upload-file']['error'] === UPLOAD_ERR_OK) {
             $file_tmp_path  = $file_data['config-upload-file']['tmp_name'];
             $file_type      = $file_data['config-upload-file']['type'];
             $json_content   = file_get_contents($file_tmp_path);
@@ -1998,7 +1980,7 @@ class Config extends Process
 
             $header_image_file_name = My::settings()->header_image['name'] ?? '';
 
-            $the_setting[] = (new Hidden('header_image-delete-action', "false"));
+            $the_setting[] = (new Hidden('header_image-delete-action', 'false'));
             $the_setting[] = (new Hidden('header_image-retina-text', Html::escapeHTML(__('header_image-retina-ready'))));
         }
 
