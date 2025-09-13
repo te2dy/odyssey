@@ -348,7 +348,7 @@ class Config extends Process
             $redirect_params
         );
 
-        // App::backend()->url()->redirect('admin.blog.theme', $redirect_params);
+        App::backend()->url()->redirect('admin.blog.theme', $redirect_params);
     }
 
     /**
