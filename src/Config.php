@@ -1556,11 +1556,11 @@ class Config extends Process
     private static function _customStylesFile(string $css_options, string $css_custom): void
     {
         $css  = $css_options;
-        $css .= (string) file_get_contents(My::themeFolder('path', '/style.min.css')) ?: '';
+        $css .= (string) file_get_contents(My::themeFolder('path', '/style.css')) ?: '';
         $css .= $css_custom;
 
         $css_folder    = My::id() . '/css';
-        $css_file_name = 'style.min';
+        $css_file_name = 'style';
 
         // Deletes the previous CSS file if it exists.
         ThemeConfig::dropCss($css_folder, $css_file_name);

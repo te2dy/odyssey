@@ -41,7 +41,9 @@ class FrontendBlocks
      */
     public static function odysseySiteTitle($attr, $content): string
     {
-        if (My::settings()->header_image_as_title !== true) {
+        if (My::settings()->header_image_as_title !== true
+            || (My::settings()->header_image_as_title && !My::settings()->header_image)
+        ) {
             return $content;
         }
 
