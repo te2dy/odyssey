@@ -671,14 +671,14 @@ class Config extends Process
      *
      * @return array The sanitized styles parameters.
      */
-    private static function _sanitizeCSS(string $css): array
+    private static function _sanitizeCSS(?string $css): array
     {
-        $css = strip_tags($css);
-        $css = htmlspecialchars($css, ENT_HTML5 | ENT_NOQUOTES | ENT_SUBSTITUTE, 'utf-8');
-
         if (!$css) {
             return [];
         }
+
+        $css = strip_tags($css);
+        $css = htmlspecialchars($css, ENT_HTML5 | ENT_NOQUOTES | ENT_SUBSTITUTE, 'utf-8');
 
         return [
             'value' => $css,
