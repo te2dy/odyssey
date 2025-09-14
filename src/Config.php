@@ -1238,12 +1238,12 @@ class Config extends Process
                 }
             }
 
-            if ($footer_social_links === true && $simpleicons_styles === true && $feathericons_styles === true) {
+            if ($footer_social_links && $simpleicons_styles && $feathericons_styles) {
                 break;
             }
         }
 
-        if ($simpleicons_styles === true) {
+        if ($simpleicons_styles) {
             $css_main_array['.social-icon-si']['border']          = '0';
             $css_main_array['.social-icon-si']['stroke']          = 'none';
             $css_main_array['.social-icon-si']['stroke-linecap']  = 'round';
@@ -1255,7 +1255,7 @@ class Config extends Process
             $css_media_contrast_array['.reactions-button:is(:active, :focus, :hover) .reactions-button-icon.social-icon-si']['fill'] = 'var(--color-background)';
         }
 
-        if ($footer_social_links === true) {
+        if ($footer_social_links) {
             $css_main_array['.footer-social-links']['list-style']                 = 'none';
             $css_main_array['.footer-social-links']['margin']                     = '0';
             $css_main_array['.footer-social-links']['padding-left']               = '0';
@@ -1277,11 +1277,11 @@ class Config extends Process
 
             $css_media_contrast_array['.footer-social-links-icon-container']['border'] = '.063rem solid var(--color-border, #ccc)';
 
-            if ($simpleicons_styles === true) {
+            if ($simpleicons_styles) {
                 $css_main_array['.footer-social-links-icon-container .footer-social-links-icon-si']['fill'] = 'var(--color-text-main, #303030)';
             }
 
-            if ($feathericons_styles === true) {
+            if ($feathericons_styles) {
                 $css_main_array['.footer-social-links-icon-container .footer-social-links-icon-fi']['stroke'] = 'var(--color-text-main, #303030)';
             }
 
@@ -1295,13 +1295,13 @@ class Config extends Process
 
             $css_media_contrast_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['border-color'] = 'var(--color-primary-amplified, hsl(226, 95%, 50%))';
 
-            if ($simpleicons_styles === true) {
+            if ($simpleicons_styles) {
                 $css_main_array['.footer-social-links a:active .footer-social-links-icon-si, .footer-social-links a:focus .footer-social-links-icon-si, .footer-social-links a:hover .footer-social-links-icon-si']['fill'] = 'var(--color-background, #fcfcfd)';
 
                 $css_main_array['.footer-social-links a:active .footer-social-links-icon-si, .footer-social-links a:focus .footer-social-links-icon-si, .footer-social-links a:hover .footer-social-links-icon-si']['transition'] = 'var(--color-transition, unset)';
             }
 
-            if ($feathericons_styles === true) {
+            if ($feathericons_styles) {
                 $css_main_array['.footer-social-links a:active .footer-social-links-icon-fi, .footer-social-links a:focus .footer-social-links-icon-fi, .footer-social-links a:hover .footer-social-links-icon-fi']['stroke'] = 'var(--color-background, #fcfcfd)';
 
                 $css_main_array['.footer-social-links a:active .footer-social-links-icon-fi, .footer-social-links a:focus .footer-social-links-icon-fi, .footer-social-links a:hover .footer-social-links-icon-fi']['transition'] = 'var(--color-transition, unset)';
@@ -1319,7 +1319,7 @@ class Config extends Process
 
         if ($css) {
             return [
-                'value' => $css,
+                'value' => self::_sanitizeCSS($css),
                 'type'  => 'string'
             ];
         }
