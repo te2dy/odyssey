@@ -549,10 +549,6 @@ class Config extends Process
             $setting['value'] = $setting_callback['value'] ?? null;
             $setting['type']  = $setting_callback['type']  ?? null;
 
-            if ($setting_id === 'styles_advanced') {
-                var_dump($setting_callback);
-            }
-
             if (isset($setting['id'], $setting['value'], $setting['type'])) {
                 return $setting;
             }
