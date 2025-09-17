@@ -26,26 +26,25 @@ function socialSites() {
   return ['bluesky', 'diaspora', 'email', 'facebook', 'instagram', 'mastodon', 'matrix', 'phone', 'signal', 'sms', 'youtube', 'whatsapp', 'x', 'other'];
 }
 
+// Toggles other reactions settings.
+function toggleOtherReactionsSettings(id) {
+  if (document.getElementById("social_" + id).value !== "") {
+    if (document.getElementById("footer_enabled").checked) {
+      setStyle("reactions_other_" + id, "block");
+    }
+  } else {
+    setStyle("reactions_other_" + id, "none");
+  }
+}
+
 // Toggles footer social settings.
-function toggleFooterSocialSetting(id) {
+function toggleFooterSocialSettings(id) {
   if (document.getElementById("social_" + id).value !== "" && document.getElementById("footer_enabled").checked) {
     if (document.getElementById("footer_enabled").checked) {
       setStyle("footer_social_" + id, "block");
     }
-
-    if (document.getElementById("reactions_other").value !== "disabled") {
-      setStyle("reactions_other_" + id, "block");
-    } else {
-      setStyle("reactions_other_" + id, "none");
-    }
   } else {
-    setStyle(
-      [
-        "footer_social_" + id,
-        "reactions_other_" + id
-      ],
-      "none"
-    );
+    setStyle("footer_social_" + id, "none");
   }
 }
 
@@ -179,7 +178,8 @@ function disableInputs() {
       displayFooterSocialTitle = true;
     }
 
-    toggleFooterSocialSetting(siteId);
+    toggleOtherReactionsSettings(siteId);
+    toggleFooterSocialSettings(siteId);
   }
 
   if (displayFooterSocialTitle === true) {
