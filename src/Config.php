@@ -1318,10 +1318,7 @@ class Config extends Process
         $css .= !empty($css_media_print_array) ? '@media print{' . My::stylesArrToStr($css_media_print_array) . '}' : '';
 
         if ($css) {
-            return [
-                'value' => self::_sanitizeCSS($css),
-                'type'  => 'string'
-            ];
+            return self::_sanitizeCSS($css);
         }
 
         return [];
