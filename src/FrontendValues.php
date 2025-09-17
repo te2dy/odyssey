@@ -783,7 +783,7 @@ class FrontendValues
             $social_site_value = My::settings()->$social_site_id;
 
             $footer_social_id      = 'footer_social_' . $site_id;
-            $footer_social_setting = My::settings()->$footer_social_id !== true ? false : true;
+            $footer_social_setting = is_bool(My::settings()->$footer_social_id) ?: false;
 
             if ($social_site_value && $footer_social_setting) {
                 $count++;
