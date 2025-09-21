@@ -291,7 +291,7 @@ class Config extends Process
 
                     if ($styles_advanced) {
                         App::blog()->settings->odyssey->put(
-                            'styles',
+                            'styles_advanced',
                             $styles_advanced,
                             'string',
                             $default_settings['styles_advanced']['label']
