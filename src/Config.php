@@ -26,11 +26,9 @@ use Dotclear\Helper\Html\Form\Fieldset;
 use Dotclear\Helper\Html\Form\File;
 use Dotclear\Helper\Html\Form\Form;
 use Dotclear\Helper\Html\Form\Hidden;
-use Dotclear\Helper\Html\Form\Image;
 use Dotclear\Helper\Html\Form\Img;
 use Dotclear\Helper\Html\Form\Input;
 use Dotclear\Helper\Html\Form\Label;
-use Dotclear\Helper\Html\Form\Legend;
 use Dotclear\Helper\Html\Form\Link;
 use Dotclear\Helper\Html\Form\Option;
 use Dotclear\Helper\Html\Form\Para;
@@ -427,12 +425,8 @@ class Config extends Process
                     break;
                 default:
                     if ($setting_value && $setting_value != $setting_data['default']) {
-                        $setting['value'] = filter_var(
-                            $setting_value,
-                            FILTER_SANITIZE_SPECIAL_CHARS
-                        );
-
-                        $setting['type'] = 'string';
+                        $setting['value'] = filter_var($setting_value, FILTER_SANITIZE_SPECIAL_CHARS);
+                        $setting['type']  = 'string';
                     }
             }
 
@@ -1418,11 +1412,6 @@ class Config extends Process
                     'type'  => 'integer'
                 ];
             }
-
-            return [
-                'unit'  => $unit,
-                'value' => (int) $value
-            ];
         }
 
         return [];
@@ -1793,17 +1782,16 @@ class Config extends Process
                                 ->id('odyssey-config-global-font-preview')
                                 ->class('odyssey-font-preview')
                                 ->items([
-                                    (new Text('strong', __('config-preview-font'))),
-                                    (new Text(null, ' ' . $preview_string))
+                                    new Text('strong', __('config-preview-font')),
+                                    new Text(null, ' ' . $preview_string)
                                 ]);
                         } else {
                             $the_setting[] = (new Para())
                                 ->id('odyssey-config-content-font-preview')
                                 ->class('odyssey-font-preview')
-                                // ->extra($style)
                                 ->items([
-                                    (new Text('strong', __('config-preview-font'))),
-                                    (new Text(null, ' ' . $preview_string))
+                                    new Text('strong', __('config-preview-font')),
+                                    new Text(null, ' ' . $preview_string)
                                 ]);
                         }
                     }
@@ -1822,7 +1810,7 @@ class Config extends Process
                             (new File($setting_id))
                                 ->label(
                                     (new Label($default_settings[$setting_id]['title'], 2))
-                                    ->for($setting_id)
+                                        ->for($setting_id)
                                 )
                         ]);
 
@@ -1844,12 +1832,12 @@ class Config extends Process
                         ->items([
                             (new Label($default_settings[$setting_id]['title'], 0))
                                 ->extra('for=' . $setting_id . '-text'),
-                            (new Color($setting_id, $setting_value)),
+                            new Color($setting_id, $setting_value),
                             (new Input($setting_id . '-text', $setting_value))
                                 ->placeholder($placeholder)
                                 ->value($setting_value_input),
-                            (new Button($setting_id . '-default-button', __('settings-colors-reset'))),
-                            (new Hidden($setting_id . '-default-value', $default_settings[$setting_id]['default']))
+                            new Button($setting_id . '-default-button', __('settings-colors-reset')),
+                            new Hidden($setting_id . '-default-value', $default_settings[$setting_id]['default'])
                         ]);
 
                     break;
@@ -1905,7 +1893,7 @@ class Config extends Process
                                 ->min($range_default['min'])
                                 ->max($range_default['max'])
                                 ->step($range_default['step']),
-                            (new Text(null, ' <output id=' . $setting_id . ' name=' . $setting_id . '-output>' . $range_default_output . '</output>'))
+                            new Text(null, ' <output id=' . $setting_id . ' name=' . $setting_id . '-output>' . $range_default_output . '</output>')
                         ]);
 
                     if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
@@ -1973,8 +1961,8 @@ class Config extends Process
 
             $header_image_file_name = My::settings()->header_image['name'] ?? '';
 
-            $the_setting[] = (new Hidden('header_image-delete-action', 'false'));
-            $the_setting[] = (new Hidden('header_image-retina-text', Html::escapeHTML(__('header_image-retina-ready'))));
+            $the_setting[] = new Hidden('header_image-delete-action', 'false');
+            $the_setting[] = new Hidden('header_image-retina-text', Html::escapeHTML(__('header_image-retina-ready')));
         }
 
         return $the_setting;
@@ -2120,16 +2108,16 @@ class Config extends Process
                 ->items($settings_fields);
         }
 
-        $fields[] = (new Hidden('page_width_em_min_default', '30'));
-        $fields[] = (new Hidden('page_width_em_max_default', '80'));
-        $fields[] = (new Hidden('page_width_em_step_default', '1'));
-        $fields[] = (new Hidden('page_width_px_min_default', '480'));
-        $fields[] = (new Hidden('page_width_px_max_default', '1280'));
-        $fields[] = (new Hidden('page_width_px_step_default', '2'));
-        $fields[] = (new Hidden('reset_warning', __('settings-reset-warning')));
-        $fields[] = (new Hidden('config_restore_warning', __('settings-config-restore-warning')));
-        $fields[] = (new Hidden('config_remove_warning', __('settings-config-remove-warning')));
-        $fields[] = (new Hidden('config_remove_all_warning', __('settings-config-remove-all-warning')));
+        $fields[] = new Hidden('page_width_em_min_default', '30');
+        $fields[] = new Hidden('page_width_em_max_default', '80');
+        $fields[] = new Hidden('page_width_em_step_default', '1');
+        $fields[] = new Hidden('page_width_px_min_default', '480');
+        $fields[] = new Hidden('page_width_px_max_default', '1280');
+        $fields[] = new Hidden('page_width_px_step_default', '2');
+        $fields[] = new Hidden('reset_warning', __('settings-reset-warning'));
+        $fields[] = new Hidden('config_restore_warning', __('settings-config-restore-warning'));
+        $fields[] = new Hidden('config_remove_warning', __('settings-config-remove-warning'));
+        $fields[] = new Hidden('config_remove_all_warning', __('settings-config-remove-all-warning'));
 
         $fields[] = (new Para())
             ->class('form-buttons')
@@ -2268,8 +2256,8 @@ class Config extends Process
 
                 $fields[] = (new Div('odyssey-backups'))
                     ->items([
-                        (new Text('h3', __('settings-backups-title'))),
-                        (new Text('p', $backups_table_intro)),
+                        new Text('h3', __('settings-backups-title')),
+                        new Text('p', $backups_table_intro),
                         (new Table())
                             ->class('settings rch rch-thead')
                             ->items([
@@ -2282,8 +2270,8 @@ class Config extends Process
                                 ->href($delete_all_url)
                                 ->text(__('settings-backup-delete-all-link'))
                             ]),
-                        (new Text('p', sprintf(__('settings-backups-explanations'), My::id()))),
-                        (new Text('p', sprintf(__('settings-backups-warning'), My::name()))),
+                        new Text('p', sprintf(__('settings-backups-explanations'), My::id())),
+                        new Text('p', sprintf(__('settings-backups-warning'), My::name()))
                     ]);
             }
         }
