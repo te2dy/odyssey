@@ -80,7 +80,7 @@ class Uninstall extends Process
 
         echo (new Para())
             ->items([
-                (new Checkbox('delete_odyssey_public_folder', true)),
+                new Checkbox('delete_odyssey_public_folder', true),
                 (new Label(sprintf(__('uninstall-checkbox-label'), My::name())))
                     ->for('delete_odyssey_public_folder')
                     ->class('classic')
