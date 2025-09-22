@@ -778,20 +778,6 @@ class My extends MyTheme
             'section'     => ['footer']
         ];
 
-        $default_settings['footer_feed'] = [
-            'title'       => __('settings-footer-feed-title'),
-            'description' => '',
-            'label'       => __('settings-footer-feed-label'),
-            'type'        => 'select',
-            'choices'     => [
-                __('settings-footer-feed-disabled-default') => 'disabled',
-                __('settings-footer-feed-atom')             => 'atom',
-                __('settings-footer-feed-rss2')             => 'rss2'
-            ],
-            'default'     => 'disabled',
-            'section'     => ['footer']
-        ];
-
         $default_settings['footer_credits'] = [
             'title'       => __('settings-footer-credits-title'),
             'description' => __('settings-footer-credits-description'),
@@ -835,6 +821,20 @@ class My extends MyTheme
                 'sanitizer'   => 'sanitizeSocial'
             ];
         }
+
+        $default_settings['footer_feed'] = [
+            'title'       => __('settings-footer-feed-title'),
+            'description' => '',
+            'label'       => __('settings-footer-feed-label'),
+            'type'        => 'select',
+            'choices'     => [
+                __('settings-footer-feed-disabled-default') => 'disabled',
+                __('settings-footer-feed-atom')             => 'atom',
+                __('settings-footer-feed-rss2')             => 'rss2'
+            ],
+            'default'     => 'disabled',
+            'section'     => ['footer', 'social']
+        ];
 
         $default_settings['styles_advanced'] = [
             'title'       => __('settings-styles-advanced-title'),
