@@ -12,6 +12,7 @@ namespace Dotclear\Theme\odyssey;
 use Dotclear\App;
 use Dotclear\Core\Backend\ThemeConfig;
 use Dotclear\Core\Process;
+use Dotclear\Helper\File\Files;
 
 class Install extends Process
 {
@@ -26,7 +27,7 @@ class Install extends Process
             return false;
         }
 
-        self::_odysseyUpdateStyles();
+        self::_updateStyles();
 
         return true;
     }
@@ -39,31 +40,30 @@ class Install extends Process
      *
      * @return void
      */
-    private static function _odysseyUpdateStyles(): void
+    private static function _updateStyles(): void
     {
-        $styles_custom = My::settings()->styles;
+        $styles          = My::settings()->styles          ?: '';
+        $styles_advanced = My::settings()->styles_advanced ?: '';
 
-        if ($styles_custom) {
-            $styles_default = '';
+        if ($styles || $styles_advanced) {
+            $css_theme_file_path = My::themeFolder('path', '/style.min.css');
 
-            $css_default_path_file = My::themeFolder('path', '/style.min.css');
+            $css = $styles;
 
-            if (file_exists($css_default_path_file) && (string) file_get_contents($css_default_path_file) !== '') {
-                $styles_default = (string) file_get_contents($css_default_path_file);
+            if (file_exists($css_theme_file_path)) {
+                $css .= (string) file_get_contents($css_theme_file_path);
             }
 
-            $css_custom_path_folder = My::publicFolder('path', '/css');
-            $css_custom_path_file   = $css_custom_path_folder . '/style.min.css';
+            $css .= $styles_advanced
 
-            if (ThemeConfig::canWriteCss(App::blog()->settings()->system->theme, true)
-                && ThemeConfig::canWriteCss($css_custom_path_folder, true)
-                && $styles_default
-            ) {
-                ThemeConfig::writeCss(
-                    $css_custom_path_folder,
-                    'style.min',
-                    $styles_custom . $styles_default
-                );
+            $css_public_dir_path = My::publicFolder('path', '/css');
+
+            if (!is_dir($css_public_dir_path) && is_writable(App::blog()->publicPath())) {
+                Files::makeDir($css_public_dir_path, true);
+            }
+
+            if (is_dir($css_public_dir_path) && is_writable($css_public_dir_path)) {
+                Files::putContent($css_public_dir_path, $css . '/style.css');
             }
         }
     }
