@@ -1020,7 +1020,7 @@ class Config extends Process
         }
 
         // Post thumbnail
-        if (isset($settings['content_postlist_thumbnail']) && $settings['content_postlist_thumbnail'] === '1') {
+        if (!isset($settings['content_postlist_thumbnail'])) {
             if (isset($settings['content_postlist_type']) && $settings['content_postlist_type'] === 'excerpt') {
                 $css_main_array['.post-list-excerpt']['display'] = 'block';
 
@@ -1177,10 +1177,8 @@ class Config extends Process
         }
 
         // Footer align
-        $footer_align_allowed = ['center', 'right'];
-
-        if (isset($settings['footer_enabled']) && $settings['footer_enabled'] === '1') {
-            if (isset($settings['footer_align']) && in_array($settings['footer_align'], $footer_align_allowed, true)) {
+        if (!isset($settings['footer_enabled'])) {
+            if (isset($settings['footer_align']) && in_array($settings['footer_align'], ['center', 'right'], true)) {
                 $css_root_array[':root']['--footer-align'] = $settings['footer_align'];
             }
         }
