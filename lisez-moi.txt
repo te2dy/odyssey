@@ -12,16 +12,21 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == 🍀 Feuille de route ==
 - Basculer certaines options sur des extensions pour libérer le configurateur.
-- À évaluer : créer une aide avec Page::helpBlock().
 - À évaluer : créer des onglets sur la page du configurateur (->class('multi-part'), etc.).
+- À évaluer : créer une aide avec Page::helpBlock().
 - À évaluer : ajouter la possibilité d’afficher la barre latérale à gauche ou à droite, plutôt qu’en bas ? Version 3 ?
-- Permettre l’ajout de boutons de partage pour des réseaux sociaux qui ne sont pas configurés?
+- À évaluer : permettre l’ajout de boutons de partage pour des réseaux sociaux qui ne sont pas configurés.
 
 == Notes de version ==
 
-=== 2.8 - 27 août 2025 ===
+=== 2.8 - 22 septembre 2025 ===
+- Ajout : option pour ajouter des styles personnalisés.
 - Amélioration : fonctionnement de My::jsonValidate() en fonction de la version minimale de PHP requise par Dotclear.
+- Amélioration : intégration du lien vers le flux RSS ou Atom aux les liens sociaux dans le configurateur de thème.
+- Correction : certaines options, parmis celles cochées par défaut, n’étaient plus fonctionnelles.
+- Correction : actions exécutées lors de l’installation ou de la mise à jour du thème.
 - Correction : erreur de version dans le contrôle de version pour l’attribut "download".
+- Correction : problèmes d’affichage des liens sociaux.
 - Revue de code.
 
 === 2.7 - 24 août 2025 ===
