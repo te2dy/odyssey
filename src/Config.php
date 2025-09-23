@@ -130,7 +130,7 @@ class Config extends Process
             try {
                 if (isset($_GET['save-config']) && $_GET['save-config'] === 'create-file') {
                     // Creates a backup file.
-                    self::_createBackupFile(My::settings());
+                    self::_createBackupFile();
                 }
 
                 if (isset($_GET['restore']) && $_GET['restore'] !== 'success') {
@@ -289,17 +289,6 @@ class Config extends Process
                     // Saves styles.
                     $styles_advanced = $sanitizedSettings['styles_advanced'] ?? '';
 
-                    if ($styles_advanced) {
-                        App::blog()->settings->odyssey->put(
-                            'styles_advanced',
-                            $styles_advanced,
-                            'string',
-                            $default_settings['styles_advanced']['label']
-                        );
-                    } else {
-                        App::blog()->settings->odyssey->drop('styles_advanced');
-                    }
-
                     $sanitized_styles       = self::_sanitizeStyles($sanitizedSettings);
                     $sanitized_styles_value = $sanitized_styles['value'] ?? '';
                     $sanitized_styles_type  = $sanitized_styles['type']  ?? null;
@@ -309,19 +298,20 @@ class Config extends Process
                             'styles',
                             $sanitized_styles_value,
                             $sanitized_styles_type,
-                            $default_settings['styles']['label']
+                            $default_settings['styles']['label'],
+                            true
                         );
                     } else {
                         App::blog()->settings->odyssey->drop('styles');
                     }
 
-                    self::_customStylesFile($sanitized_styles_value, $styles_advanced);
+                    if ($sanitized_styles_value || $styles_advanced) {
+                        self::_customStylesFile($sanitized_styles_value, $styles_advanced);
+                    }
             }
 
             // If the /public/odyssey folder has empty subfolders, deletes it.
-            if (!is_dir(My::publicFolder('path', '/css'))
-                && !is_dir(My::publicFolder('path', '/img'))
-            ) {
+            if (!is_dir(My::publicFolder('path', '/css')) && !is_dir(My::publicFolder('path', '/img'))) {
                 Files::deltree(My::publicFolder('path'));
             }
         }
@@ -1410,6 +1400,11 @@ class Config extends Process
                     'type'  => 'integer'
                 ];
             }
+
+            return [
+                'unit'  => $unit,
+                'value' => (int) $value
+            ];
         }
 
         return [];
@@ -1932,7 +1927,7 @@ class Config extends Process
                 $image2x_src = My::settings()->header_image2x['url'] ?? null;
                 $srcset      = '';
 
-                if ($image_src) {
+                if ($image2x_src) {
                     $srcset = 'srcset="' . My::escapeURL($image_src) . ' 1x, ' . My::escapeURL($image2x_src) . ' 2x" sizes=100vw';
                 }
 
@@ -1983,8 +1978,8 @@ class Config extends Process
         if (isset($_GET['config-upload']) && $_GET['config-upload'] === '1') {
             $upload_form_fields = [];
 
-            $upload_form_fields[] = (new Text('h3', __('settings-upload-title')));
-            $upload_form_fields[] = (new Text('p', __('settings-upload-description')));
+            $upload_form_fields[] = new Text('h3', __('settings-upload-title'));
+            $upload_form_fields[] = new Text('p', __('settings-upload-description'));
 
             $upload_form_fields[] = (new Para())
                 ->class('form-buttons')
@@ -2054,12 +2049,9 @@ class Config extends Process
             }
         }
 
-        $fields[] = (new Text('p', sprintf(
-            __('settings-page-intro'),
-            My::name()
-        )));
+        $fields[] = new Text('p', sprintf(__('settings-page-intro'), My::name()));
 
-        $fields[] = (new Text(
+        $fields[] = new Text(
             'p',
             sprintf(
                 __('settings-page-forum-link'),
@@ -2067,7 +2059,7 @@ class Config extends Process
                 'mailto:zozxebpyr@mozmail.com',
                 'https://matrix.to/#/#dotclear:matrix.org'
             )
-        ));
+        );
 
         foreach ($settings_render as $section_id => $setting_data) {
             $settings_fields = [];
@@ -2080,14 +2072,14 @@ class Config extends Process
                 }
 
                 if (isset($setting_id[0]) && $setting_id[0] === 'social_bluesky') {
-                    $settings_fields[] = (new Text(
+                    $settings_fields[] = new Text(
                         'p',
                         sprintf(
                             __('settings-social-notice'),
                             __('section-footer'),
                             __('section-reactions')
                         )
-                    ));
+                    );
                 }
 
                 // Displays the parameter.
@@ -2263,10 +2255,11 @@ class Config extends Process
                                     ->items($table_fields)
                             ]),
                         (new Para())
-                            ->items([(new Link())
-                                ->id('odyssey-backups-remove-all')
-                                ->href($delete_all_url)
-                                ->text(__('settings-backup-delete-all-link'))
+                            ->items([
+                                (new Link())
+                                    ->id('odyssey-backups-remove-all')
+                                    ->href($delete_all_url)
+                                    ->text(__('settings-backup-delete-all-link'))
                             ]),
                         new Text('p', sprintf(__('settings-backups-explanations'), My::id())),
                         new Text('p', sprintf(__('settings-backups-warning'), My::name()))
