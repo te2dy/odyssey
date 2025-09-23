@@ -11,6 +11,7 @@ Ce thème n’aurait pu avoir vu le jour sans les ressources mises à dispositio
 Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://blog.jim-nielsen.com/), des travaux réalisés sur les thèmes Ductile et Berlin pour Dotclear, et des billets de Franck Paul (https://open-time.net/).
 
 == 🍀 Feuille de route ==
+- Ajouter un avertissement signalant que les images d’en-tête ne peuvent pas être récupérées avec les fichiers de configuration.
 - Basculer certaines options sur des extensions pour libérer le configurateur.
 - À évaluer : créer des onglets sur la page du configurateur (->class('multi-part'), etc.).
 - À évaluer : créer une aide avec Page::helpBlock().
@@ -18,6 +19,11 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 - À évaluer : permettre l’ajout de boutons de partage pour des réseaux sociaux qui ne sont pas configurés.
 
 == Notes de version ==
+
+=== 2.8.1 - 23 septembre 2025 ===
+- Correction : le fichier CSS utilisé pour générer un fichier CSS personnalisé n’était pas la version minifiée de celui-ci.
+- Correction : diverses erreurs bloquantes à l’utilisation du configurateur de thème.
+- Revue de code.
 
 === 2.8 - 22 septembre 2025 ===
 - Ajout : option pour ajouter des styles personnalisés.
