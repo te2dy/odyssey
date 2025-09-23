@@ -1531,7 +1531,7 @@ class Config extends Process
     private static function _customStylesFile(string $css_options, string $css_custom): void
     {
         $css  = $css_options;
-        $css .= (string) file_get_contents(My::themeFolder('path', '/style.css')) ?: '';
+        $css .= (string) file_get_contents(My::themeFolder('path', '/style.min.css')) ?: '';
         $css .= $css_custom;
 
         $css_folder    = My::id() . '/css';
@@ -1720,7 +1720,7 @@ class Config extends Process
                             (new Checkbox($setting_id, (bool) $setting_value))
                                 ->label(
                                     (new Label($default_settings[$setting_id]['title'], 3))
-                                    ->class('classic')
+                                        ->class('classic')
                                 )
                             ]
                         );
