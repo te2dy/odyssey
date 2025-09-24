@@ -659,6 +659,7 @@ class Config extends Process
 
         $css = strip_tags($css);
         $css = htmlspecialchars($css, ENT_HTML5 | ENT_NOQUOTES | ENT_SUBSTITUTE, 'utf-8');
+        $css = str_replace('&gt;', '>', $css);
 
         return [
             'value' => $css,
@@ -675,14 +676,14 @@ class Config extends Process
      */
     private static function _sanitizeStyles(array $settings): array
     {
-        $css_root_array                    = [];
-        $css_root_dark_array               = [];
-        $css_main_array                    = [];
-        $css_supports_initial_letter_array = [];
-        $css_media_array                   = [];
-        $css_media_contrast_array          = [];
-        $css_media_motion_array            = [];
-        $css_media_print_array             = [];
+        $css_root_array                     = [];
+        $css_root_dark_array                = [];
+        $css_main_array                     = [];
+        $css_supported_initial_letter_array = [];
+        $css_media_array                    = [];
+        $css_media_contrast_array           = [];
+        $css_media_motion_array             = [];
+        $css_media_print_array              = [];
 
         $default_settings = My::settingsDefault();
 
@@ -1138,10 +1139,10 @@ class Config extends Process
 
         // Initial letter
         if (isset($settings['content_initial_letter']) && $settings['content_initial_letter'] === '1') {
-            $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['-moz-initial-letter'] = '2';
-            $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['-webkit-initial-letter'] = '2';
-            $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['initial-letter'] = '2';
-            $css_supports_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['margin-right'] = '.25rem';
+            $css_supported_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['-moz-initial-letter'] = '2';
+            $css_supported_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['-webkit-initial-letter'] = '2';
+            $css_supported_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['initial-letter'] = '2';
+            $css_supported_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['margin-right'] = '.25rem';
         }
 
         // Wide images
@@ -1294,7 +1295,7 @@ class Config extends Process
         $css  = !empty($css_root_array) ? My::stylesArrToStr($css_root_array) : '';
         $css .= !empty($css_root_dark_array) ? '@media (prefers-color-scheme:dark){' . My::stylesArrToStr($css_root_dark_array) . '}' : '';
         $css .= !empty($css_main_array) ? My::stylesArrToStr($css_main_array) : '';
-        $css .= !empty($css_supports_initial_letter_array) ? '@supports (initial-letter:2) or (-webkit-initial-letter:2) or (-moz-initial-letter:2){' . My::stylesArrToStr($css_supports_initial_letter_array) . '}' : '';
+        $css .= !empty($css_supported_initial_letter_array) ? '@supports (initial-letter:2) or (-webkit-initial-letter:2) or (-moz-initial-letter:2){' . My::stylesArrToStr($css_supported_initial_letter_array) . '}' : '';
         $css .= !empty($css_media_array) ? '@media (max-width:34em){' . My::stylesArrToStr($css_media_array) . '}' : '';
         $css .= !empty($css_media_contrast_array) ? '@media (prefers-contrast:more){' . My::stylesArrToStr($css_media_contrast_array) . '}' : '';
         $css .= !empty($css_media_motion_array) ? '@media (prefers-reduced-motion:reduce){' . My::stylesArrToStr($css_media_motion_array) . '}' : '';
