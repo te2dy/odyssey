@@ -344,7 +344,8 @@ window.onload = function() {
   for (var i = 0; i < rangeInputs.length; i++) {
     if (rangeInputs[i].id !== "global_page_width_value") {
       // Page width setting is excluded.
-      rangeInputs[i].onchange = function(rangeInput) {
+      rangeInputs[i].oninput = function(rangeInput) {
+        console.log(rangeInput.target.value);
         document.getElementById(rangeInput.target.id + "-output-value").innerHTML = rangeInput.target.value;
       };
     }
