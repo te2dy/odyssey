@@ -94,23 +94,19 @@ function disableInputs() {
     );
   }
 
-  if (document.getElementById("header_image-input").value
-    || document.getElementById("header_image-preview")
-  ) {
-    setStyle(["header_image_position", "header_image_position", "header_image_description"], "block");
+  if (document.getElementById("header_image-preview")) {
+    setStyle(["header_image_as_title", "header_image_position", "header_image_description"], "block");
     setStyle("header_image", "none");
 
     document.getElementById("header_image-delete").style.display = "block";
 
-    if (document.getElementById("header_image-retina")
-      && document.getElementById("header_image-retina").style.display !== "none"
-    ) {
+    if (document.getElementById("header_image-retina") && document.getElementById("header_image-retina").style.display !== "none") {
       setStyle("header_image2x", "none");
     } else {
       setStyle("header_image2x", "block");
     }
   } else {
-    setStyle(["header_image2x", "header_image_position", "header_image_description"], "none");
+    setStyle(["header_image2x", "header_image_as_title", "header_image_position", "header_image_description"], "none");
     setStyle("header_image", "block");
 
     document.getElementById("header_image-delete").style.display = "none";
@@ -217,7 +213,7 @@ function changeImage(inputImgURL) {
 
       document.getElementById("header_image-delete-action").value = "false";
 
-      setStyle(["header_image2x", "header_image_position", "header_image_description"], "block");
+      setStyle(["header_image2x", "header_image_as_title", "header_image_position", "header_image_description"], "block");
       setStyle("header_image", "none");
 
       document.getElementById("header_image-delete").style.display = "block";
@@ -427,7 +423,7 @@ window.onload = function() {
         document.getElementById("header_image-retina").style.display = "none";
       }
 
-      setStyle(["header_image2x", "header_image_position", "header_image_description"], "none");
+      setStyle(["header_image2x", "header_image_as_title", "header_image_position", "header_image_description"], "none");
       setStyle("header_image", "block");
 
       document.getElementById("header_image").value               = "";
