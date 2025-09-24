@@ -25,7 +25,7 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 - Amélioration : les options avec jauge s’actualisent immédiatement.
 - Correction : erreurs d’affichage sans le configurateur de thème.
 - Correction : l’affichage du pied des billets pouvait être altéré dans la liste des billets.
-- Correction : l’utilisation du caractère > n’était pas autorisé dans la feuille de styles personnalisée.
+- Correction : l’utilisation du caractère > n’était pas autorisée dans la feuille de styles personnalisée.
 
 === 2.8.1 - 23 septembre 2025 ===
 - Correction : le fichier CSS utilisé pour générer un fichier CSS personnalisé n’était pas la version minifiée de celui-ci.
