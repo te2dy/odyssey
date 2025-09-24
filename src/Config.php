@@ -676,14 +676,15 @@ class Config extends Process
      */
     private static function _sanitizeStyles(array $settings): array
     {
-        $css_root_array                     = [];
-        $css_root_dark_array                = [];
-        $css_main_array                     = [];
-        $css_supported_initial_letter_array = [];
-        $css_media_array                    = [];
-        $css_media_contrast_array           = [];
-        $css_media_motion_array             = [];
-        $css_media_print_array              = [];
+        $css_root_array                       = [];
+        $css_root_dark_array                  = [];
+        $css_main_array                       = [];
+        $css_supported_initial_letter_array   = [];
+        $css_unsupported_initial_letter_array = [];
+        $css_media_array                      = [];
+        $css_media_contrast_array             = [];
+        $css_media_motion_array               = [];
+        $css_media_print_array                = [];
 
         $default_settings = My::settingsDefault();
 
@@ -1143,6 +1144,15 @@ class Config extends Process
             $css_supported_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['-webkit-initial-letter'] = '2';
             $css_supported_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['initial-letter'] = '2';
             $css_supported_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['margin-right'] = '.25rem';
+
+            if (isset($settings['content_line_height']) && in_array((int) $settings['content_line_height'], [125, 175], true)) {
+                $content_line_height = (int) $settings['content_line_height'] / 100;
+            } else {
+                $content_line_height = 1.5;
+            }
+
+            $css_unsupported_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['float']     = 'left';
+            $css_unsupported_initial_letter_array[':is(.post, .page) .content-text > p:first-of-type::first-letter']['font-size'] = $content_line_height * 2 . 'em';
         }
 
         // Wide images
@@ -1296,6 +1306,7 @@ class Config extends Process
         $css .= !empty($css_root_dark_array) ? '@media (prefers-color-scheme:dark){' . My::stylesArrToStr($css_root_dark_array) . '}' : '';
         $css .= !empty($css_main_array) ? My::stylesArrToStr($css_main_array) : '';
         $css .= !empty($css_supported_initial_letter_array) ? '@supports (initial-letter:2) or (-webkit-initial-letter:2) or (-moz-initial-letter:2){' . My::stylesArrToStr($css_supported_initial_letter_array) . '}' : '';
+        $css .= !empty($css_unsupported_initial_letter_array) ? '@supports not (initial-letter:2){' . My::stylesArrToStr($css_unsupported_initial_letter_array) . '}' : '';
         $css .= !empty($css_media_array) ? '@media (max-width:34em){' . My::stylesArrToStr($css_media_array) . '}' : '';
         $css .= !empty($css_media_contrast_array) ? '@media (prefers-contrast:more){' . My::stylesArrToStr($css_media_contrast_array) . '}' : '';
         $css .= !empty($css_media_motion_array) ? '@media (prefers-reduced-motion:reduce){' . My::stylesArrToStr($css_media_motion_array) . '}' : '';
