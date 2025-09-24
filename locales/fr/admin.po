@@ -925,7 +925,7 @@ msgid "settings-styles-advanced-title"
 msgstr "Styles personnalisés"
 
 msgid "settings-styles-advanced-description"
-msgstr "Les styles saisis seront ajoutés à la fin de la feuille de styles principale minifiée."
+msgstr "Les styles saisis seront ajoutés à la fin de la feuille de styles principale."
 
 msgid "settings-styles-advanced-label"
 msgstr "Styles personnalisés"

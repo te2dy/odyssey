@@ -925,7 +925,7 @@ msgid "settings-styles-advanced-title"
 msgstr "Custom styles"
 
 msgid "settings-styles-advanced-description"
-msgstr "The styles entered will be added to the end of the main minified stylesheet."
+msgstr "The styles entered will be added to the end of the main stylesheet."
 
 msgid "settings-styles-advanced-label"
 msgstr "Custom styles"

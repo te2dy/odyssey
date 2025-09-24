@@ -28,10 +28,8 @@ function socialSites() {
 
 // Toggles other reactions settings.
 function toggleOtherReactionsSettings(id) {
-  if (document.getElementById("social_" + id).value !== "") {
-    if (document.getElementById("footer_enabled").checked) {
-      setStyle("reactions_other_" + id, "block");
-    }
+  if (document.getElementById("social_" + id).value && document.getElementById("reactions_other").value !== "disabled") {
+    setStyle("reactions_other_" + id, "block");
   } else {
     setStyle("reactions_other_" + id, "none");
   }
@@ -39,10 +37,8 @@ function toggleOtherReactionsSettings(id) {
 
 // Toggles footer social settings.
 function toggleFooterSocialSettings(id) {
-  if (document.getElementById("social_" + id).value !== "" && document.getElementById("footer_enabled").checked) {
-    if (document.getElementById("footer_enabled").checked) {
-      setStyle("footer_social_" + id, "block");
-    }
+  if (document.getElementById("social_" + id).value && document.getElementById("footer_enabled").checked) {
+    setStyle("footer_social_" + id, "block");
   } else {
     setStyle("footer_social_" + id, "none");
   }
