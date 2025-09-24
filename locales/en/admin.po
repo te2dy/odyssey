@@ -574,7 +574,7 @@ msgid "settings-content-initialletter-title"
 msgstr "Add a drop cap to the first paragraph of posts and pages."
 
 msgid "settings-content-initialletter-description"
-msgstr "At last count (February 2025), only works on recent versions of Safari and Chrome."
+msgstr "May not be supported by some web browsers."
 
 msgid "settings-content-initialletter-label"
 msgstr "Drop cap to the first paragraph of posts and pages."

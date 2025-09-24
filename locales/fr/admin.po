@@ -574,7 +574,7 @@ msgid "settings-content-initialletter-title"
 msgstr "Ajouter une lettrine au premier paragraphe des billets et des pages."
 
 msgid "settings-content-initialletter-description"
-msgstr "Aux dernières nouvelles (février 2025), ne fonctionne que sur des versions récentes de Safari et Chrome."
+msgstr "Peut ne pas être pris en charge par certains navigateurs."
 
 msgid "settings-content-initialletter-label"
 msgstr "Lettrine au premier paragraphe des billets et des pages."
