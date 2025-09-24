@@ -16,13 +16,12 @@
       {{tpl:EntryContent}}
     </div>
 
+    <tpl:EntryIf has_attachment="1">
+      {{tpl:include src="_attachments.html"}}
+    </tpl:EntryIf>
 
-    <tpl:EntryIf has_attachment="1" has_category="1" has_tag="1" has_reaction="1" operator="or">
+    <tpl:EntryIf has_category="1" has_tag="1" has_reaction="1" operator="or">
       <footer class=post-footer>
-        <tpl:EntryIf has_attachment="1">
-          {{tpl:include src="_attachments.html"}}
-        </tpl:EntryIf>
-
         <tpl:EntryIf has_category="1">
           <div class="post-meta text-secondary">
             {{tpl:lang post-category-prefix}} <a href={{tpl:EntryCategoryURL is_attr="1"}} rel=tag>{{tpl:EntryCategory}}</a>

@@ -986,8 +986,9 @@ class Config extends Process
 
                     break;
                 case 'content':
-                    $css_main_array['.entry-list-content .post']['border-bottom'] = '.063em solid var(--color-border, #ccc)';
-                    $css_main_array['.entry-list-content .post']['margin-bottom'] = '4em';
+                    $css_main_array['.entry-list-content .post']['border-bottom']  = '.063em solid var(--color-border, #ccc)';
+                    $css_main_array['.entry-list-content .post']['margin-bottom']  = '4em';
+                    $css_main_array['.entry-list-content .post']['padding-bottom'] = '2em';
 
                     $css_main_array['.entry-list-content .post:last-child']['margin-bottom'] = '0';
                     $css_main_array['.entry-list-content .post:last-child']['border-bottom'] = 'none';
@@ -996,7 +997,7 @@ class Config extends Process
 
                     $css_main_array['.entry-list-content .post-footer']['background-color'] = 'var(--color-input-background, #f2f2f2)';
                     $css_main_array['.entry-list-content .post-footer']['border-radius']    = 'var(--border-radius, unset)';
-                    $css_main_array['.entry-list-content .post-footer']['margin-block']     = '2em 4em';
+                    $css_main_array['.entry-list-content .post-footer']['margin-block']     = '2em';
                     $css_main_array['.entry-list-content .post-footer']['padding']          = '1em';
 
                     $css_main_array['.content-info + .entry-list-content']['margin-top'] = '4em;';
