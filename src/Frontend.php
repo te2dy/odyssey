@@ -40,7 +40,7 @@ class Frontend extends Process
         App::behavior()->addBehavior('publicAfterContentFilterV2', FrontendBehaviors::addAttrFilter(...));
         App::behavior()->addBehavior('tplIfConditions', FrontendBehaviors::odysseyTplConditions(...));
 
-        // Blocks
+        // Blocks.
         App::frontend()->template()->addBlock('odysseyHeaderMinimal', FrontendBlocks::odysseyHeaderMinimal(...));
         App::frontend()->template()->addBlock('odysseySiteTitle', FrontendBlocks::odysseySiteTitle(...));
         App::frontend()->template()->addBlock('odysseyPostPagination', FrontendBlocks::odysseyPostPagination(...));

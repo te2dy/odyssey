@@ -95,10 +95,7 @@ class Config extends Process
 
                     Notices::addSuccessNotice(__('settings-notice-reset'));
 
-                    App::backend()->url()->redirect(
-                        'admin.blog.theme',
-                        ['module' => My::id(), 'conf' => '1']
-                    );
+                    App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
                 }
 
                 if (isset($_POST['import-config'])) {
@@ -116,10 +113,7 @@ class Config extends Process
 
                 if (isset($_POST['config-upload-cancel'])) {
                     // Redirects if the cancel upload button has been clicked.
-                    App::backend()->url()->redirect(
-                        'admin.blog.theme',
-                        ['module' => My::id(), 'conf' => '1']
-                    );
+                    App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
                 }
             } catch (Exception $e) {
                 App::error()->add($e->getMessage());
@@ -195,28 +189,27 @@ class Config extends Process
      * @param array  $http_files      All files uploaded from the theme configurator form.
      * @param string $notice_success  A text displayed after successful parameter saving.
      * @param array  $redirect_params Parameters to add to the redirection after saving.
+     * @param bool   $import          If we are currently importing a configuration file.
      *
      * @return void
      */
     private static function _saveSettings(
         array  $http_post,
-        array  $http_files = [],
-        string $notice_success = '',
-        array  $redirect_params = []
+        array  $http_files      = [],
+        string $notice_success  = '',
+        array  $redirect_params = [],
+        bool   $import          = false
     ): void
     {
         if (empty($http_post)) {
             return;
         }
 
-        // Puts all $_POST et $_FILES variables in a new array to manipulate them.
+        // Merges post and files data.
+        $http_requests = array_merge($http_post, $http_files);
+
+        // Puts all $_POST et $_FILES variables in a new array to use them all later.
         $new_settings = [];
-
-        $http_requests = $http_post;
-
-        if (!empty($http_files)) {
-            $http_requests = array_merge($http_post, $http_files);
-        }
 
         foreach ($http_requests as $setting_id => $setting_value) {
             $new_settings[$setting_id] = $setting_value;
@@ -236,7 +229,8 @@ class Config extends Process
                     $setting_id,
                     $setting_data,
                     $setting_value,
-                    $new_settings
+                    $new_settings,
+                    $import
                 );
 
                 // Saves the setting in the database or drop it.
@@ -346,6 +340,7 @@ class Config extends Process
      * @param array  $setting_data  The components of the current parameter.
      * @param mixed  $setting_value The value of the setting to be saved.
      * @param array  $new_settings  All new settings passed through the configurator form.
+     * @param bool   $import        If we are currently importing a configuration file.
      *
      * @return array The sanitized setting value and type.
      */
@@ -353,7 +348,8 @@ class Config extends Process
         string $setting_id,
         array  $setting_data,
         mixed  $setting_value,
-        array  $new_settings
+        array  $new_settings,
+        bool   $import = false
     ): array
     {
         $setting = [
@@ -384,7 +380,15 @@ class Config extends Process
 
                     break;
                 case 'checkbox':
-                    $setting_value = $setting_value ? true : false;
+                    if ($import === false || ($import === true && $setting_value !== null)) {
+                        $setting_value = $setting_value ? true : false;
+                    } else {
+                        /**
+                         * If we are importing a configuration file and the value is null,
+                         * returns null instead of false.
+                         */
+                        $setting_value = null;
+                    }
 
                     if ($setting_value === true && $setting_data['default'] === false) {
                         $setting['value'] = '1';
@@ -1597,7 +1601,7 @@ class Config extends Process
                     App::blog()->settings->odyssey->dropAll();
 
                     // Then, imports all settings.
-                    self::_saveSettings($settings_array, [], __('settings-notice-upload-success'));
+                    self::_saveSettings($settings_array, [], __('settings-notice-upload-success'), [], true);
                 } else {
                     Notices::addErrorNotice(__('settings-notice-upload-file-not-valid'));
 
@@ -1646,16 +1650,13 @@ class Config extends Process
                 App::blog()->settings->odyssey->dropAll();
 
                 // Imports all settings.
-                self::_saveSettings($settings_array, [], __('settings-notice-restore-success'));
+                self::_saveSettings($settings_array, [], __('settings-notice-restore-success'), [], true);
             }
         } else {
             // If the file is empty.
             Notices::addErrorNotice(__('settings-notice-restore-error'));
 
-            App::backend()->url()->redirect(
-                'admin.blog.theme',
-                ['module' => My::id(), 'conf' => '1']
-            );
+            App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
         }
     }
 
@@ -1672,7 +1673,7 @@ class Config extends Process
         $custom_settings = [];
 
         foreach (My::settingsDefault() as $setting_id => $setting_data) {
-            if (My::settings()->$setting_id) {
+            if (My::settings()->$setting_id !== null) {
                 $custom_settings[$setting_id] = My::settings()->$setting_id;
             }
         }

@@ -360,7 +360,7 @@ class FrontendBehaviors
     public static function odysseyImageWide($tag, $args): void
     {
         if (!in_array($tag, ['EntryContent']) || !My::settings()->content_images_wide) {
-            // If we are not in an "Entry content" context or wide images are disabled.
+            // If we are not in an "Entry content" context or if wide images are disabled.
             return;
         }
 
