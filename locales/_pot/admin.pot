@@ -873,6 +873,9 @@ msgstr ""
 msgid "settings-footer-social-youtube-title"
 msgstr ""
 
+msgid "settings-footer-social-youtube-label"
+msgstr ""
+
 msgid "settings-footer-social-whatsapp-title"
 msgstr ""
 

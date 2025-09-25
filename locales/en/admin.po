@@ -873,6 +873,9 @@ msgstr "Link in the footer to text you"
 msgid "settings-footer-social-youtube-title"
 msgstr "Display a link to %s"
 
+msgid "settings-footer-social-youtube-label"
+msgstr "Link in the footer to %s"
+
 msgid "settings-footer-social-whatsapp-title"
 msgstr "Display a link to %s"
 

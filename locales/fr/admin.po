@@ -873,6 +873,9 @@ msgstr "Lien dans le pied de page pour vous écrire par SMS"
 msgid "settings-footer-social-youtube-title"
 msgstr "Afficher un lien vers %s"
 
+msgid "settings-footer-social-youtube-label"
+msgstr "Lien dans le pied de page vers %s"
+
 msgid "settings-footer-social-whatsapp-title"
 msgstr "Afficher un lien vers %s"
 
