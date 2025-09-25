@@ -428,7 +428,7 @@ class Config extends Process
                 return $setting;
             }
         } else {
-            // If a custom sanitizer function has been defined, prepare parameters to call it.
+            // If a custom sanitizer function has been defined, prepare parameters to call the function.
             $params = [];
 
             $action_delete = false;
@@ -1900,7 +1900,9 @@ class Config extends Process
                                 ->min($range_default['min'])
                                 ->max($range_default['max'])
                                 ->step($range_default['step']),
-                            new Text(null, ' <output id=' . $setting_id . ' name=' . $setting_id . '-output>' . $range_default_output . '</output>')
+                            (new Div(null, 'output'))
+                                ->id($setting_id . '-output')
+                                ->items([new Text(null, $range_default_output)])
                         ]);
 
                     if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
