@@ -428,7 +428,7 @@ class Config extends Process
                 return $setting;
             }
         } else {
-            // If a sanitizer function is defined.
+            // If a custom sanitizer function has been defined, prepare parameters to call it.
             $params = [];
 
             $action_delete = false;
