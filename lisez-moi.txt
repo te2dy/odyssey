@@ -20,6 +20,11 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
+=== 2.10 - 25 septembre 2025 ===
+- Correction : diverses erreurs à l’enregistrement des options de type coche.
+- Correction : oubli d’une traduction.
+- Revue de code.
+
 === 2.9 - 24 septembre 2025 ===
 - Ajout : prise en charge basique des lettrines sur Firefox.
 - Amélioration : les options avec jauge s’actualisent immédiatement.
