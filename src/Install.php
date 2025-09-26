@@ -13,6 +13,7 @@ use Dotclear\App;
 use Dotclear\Core\Backend\ThemeConfig;
 use Dotclear\Core\Process;
 use Dotclear\Helper\File\Files;
+use Dotclear\Helper\File\Path;
 
 class Install extends Process
 {
@@ -42,28 +43,27 @@ class Install extends Process
      */
     private static function _updateStyles(): void
     {
-        $styles        = My::settings()->styles        ?: '';
-        $styles_custom = My::settings()->styles_custom ?: '';
+        $css_theme_file_path = My::themeFolder('path', '/style.min.css');
 
-        if ($styles || $styles_custom) {
-            $css_theme_file_path = My::themeFolder('path', '/style.min.css');
+        if (Path::real($css_theme_file_path)) {
+            // If the theme stylesheet is readable.
+            $styles        = My::settings()->styles        ?: '';
+            $styles_custom = My::settings()->styles_custom ?: '';
 
-            $css = $styles;
-
-            if (file_exists($css_theme_file_path)) {
+            if ($styles || $styles_custom) {
+                $css  = $styles;
                 $css .= (string) file_get_contents($css_theme_file_path);
-            }
+                $css .= $styles_custom
 
-            $css .= $styles_custom
+                $css_public_dir_path = My::publicFolder('path', '/css');
 
-            $css_public_dir_path = My::publicFolder('path', '/css');
+                if (!is_dir($css_public_dir_path)) {
+                    Files::makeDir($css_public_dir_path, true);
+                }
 
-            if (!is_dir($css_public_dir_path) && is_writable(App::blog()->publicPath())) {
-                Files::makeDir($css_public_dir_path, true);
-            }
-
-            if (is_dir($css_public_dir_path) && is_writable($css_public_dir_path)) {
-                Files::putContent($css_public_dir_path, $css . '/style.css');
+                if (is_dir($css_public_dir_path)) {
+                    Files::putContent($css_public_dir_path, $css . '/style.css');
+                }
             }
         }
     }
