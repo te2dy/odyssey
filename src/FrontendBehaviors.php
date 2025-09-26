@@ -330,6 +330,88 @@ class FrontendBehaviors
                     $json_ld['commentCount'] = App::frontend()->context()->posts->nb_comment;
 
                     $json_ld['inLanguage'] = App::frontend()->context()->posts->post_lang;
+
+                    break;
+                case 'pages':
+                    $json_ld = [
+                        '@context' => 'http://schema.org',
+                        '@type'    => 'WebPage'
+                    ];
+
+                    $json_ld['mainEntity'] = [
+                        '@type'       => 'WebPageElement',
+                        'name'        => App::frontend()->context()->posts->post_title,
+                        'description' => App::frontend()->context()->posts->post_excerpt_xhtml,
+                        'text'        => App::frontend()->context()->posts->post_content_xhtml
+                    ];
+
+                    // First image
+                    if (Ctx::EntryFirstImageHelper('o', false, '', true)) {
+                        $image_path = App::config()->dotclearRoot() . Ctx::EntryFirstImageHelper('o', false, '', true);
+
+                        if (file_exists($image_path)) {
+                            list($width, $height) = getimagesize($image_path);
+
+                            $json_ld['image'] = [
+                                '@type'  => 'ImageObject',
+                                'url'    => App::blog()->url() . Ctx::EntryFirstImageHelper('o', false, '', true),
+                                'width'  => (int) $width,
+                                'height' => (int) $height
+                            ];
+                        }
+                    }
+
+                    // Author
+                    if (App::frontend()->context()->posts->user_displayname) {
+                        $json_ld['author'] = [
+                            '@type' => 'Person',
+                            'name'  => App::frontend()->context()->posts->user_displayname,
+                            'url'   => App::frontend()->context()->posts->user_url
+                        ];
+                    } elseif (App::frontend()->context()->posts->user_name || App::frontend()->context()->posts->user_firstname) {
+                        $json_ld['author'] = [
+                            '@type' => 'Person',
+                            'name'  => trim(App::frontend()->context()->posts->user_name . ' ' . App::frontend()->context()->posts->user_firstname),
+                            'url'   => App::frontend()->context()->posts->user_url
+                        ];
+                    }
+
+                    $json_ld['publisher'] = [
+                        '@type' => 'Organization',
+                        'name'  => App::blog()->name,
+                        'url'   => App::blog()->url
+                    ];
+
+                    if (isset(My::settings()->header_image['url'])) {
+                        // Retrieves the image path.
+                        $image_path = App::config()->dotclearRoot() . My::settings()->header_image['url'];
+
+                        if (file_exists($image_path)) {
+                            list($width, $height) = getimagesize($image_path);
+
+                            $json_ld['publisher']['logo'] = [
+                                '@type'  => 'ImageObject',
+                                'url'    => App::blog()->url() . My::settings()->header_image['url'],
+                                'width'  => (int) $width,
+                                'height' => (int) $height
+                            ];
+                        }
+                    }
+
+                    $json_ld['copyrightHolder'] = App::blog()->settings->system->editor;
+                    $json_ld['copyrightNotice'] = App::blog()->settings->system->copyright_notice;
+
+                    $json_ld['url'] = App::frontend()->context()->posts->getURL();
+
+                    $json_ld['datePublished'] = Date::iso8601(strtotime(App::frontend()->context()->posts->post_dt), App::frontend()->context()->posts->post_tz);
+
+                    $json_ld['dateCreated'] = Date::iso8601(strtotime(App::frontend()->context()->posts->post_creadt), App::frontend()->context()->posts->post_tz);
+
+                    $json_ld['dateModified'] = Date::iso8601(strtotime(App::frontend()->context()->posts->post_upddt), App::frontend()->context()->posts->post_tz);
+
+                    $json_ld['commentCount'] = App::frontend()->context()->posts->nb_comment;
+
+                    $json_ld['inLanguage'] = App::frontend()->context()->posts->post_lang;
             }
 
             // Removes empty values.
