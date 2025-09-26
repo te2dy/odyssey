@@ -42,10 +42,10 @@ class Install extends Process
      */
     private static function _updateStyles(): void
     {
-        $styles          = My::settings()->styles          ?: '';
-        $styles_advanced = My::settings()->styles_advanced ?: '';
+        $styles        = My::settings()->styles        ?: '';
+        $styles_custom = My::settings()->styles_custom ?: '';
 
-        if ($styles || $styles_advanced) {
+        if ($styles || $styles_custom) {
             $css_theme_file_path = My::themeFolder('path', '/style.min.css');
 
             $css = $styles;
@@ -54,7 +54,7 @@ class Install extends Process
                 $css .= (string) file_get_contents($css_theme_file_path);
             }
 
-            $css .= $styles_advanced
+            $css .= $styles_custom
 
             $css_public_dir_path = My::publicFolder('path', '/css');
 

@@ -135,9 +135,6 @@ msgstr "Unité de base"
 msgid "settings-global-unit-description"
 msgstr "En cadratin (em), les dimensions de votre blog s’adaptent aux paramètres du navigateur de vos visiteurs (utile pour l’accessibilité), mais son affichage peut différer d’un appareil à l’autre. Pour garder la maîtrise de l’apparence de votre blog (utile pour un blog photo par exemple), il est recommandé d’utiliser le pixel comme unité de base."
 
-msgid "settings-global-unit-label"
-msgstr "Unité CSS"
-
 msgid "settings-global-unit-relative-default"
 msgstr "Cadratin (par défaut)"
 
@@ -150,9 +147,6 @@ msgstr "Largeur"
 msgid "settings-global-pagewidthvalue-description"
 msgstr "En cadratin, la largeur doit être comprise entre 30 et 80 ; en pixel, entre 480 et 1 280. Par défaut&nbsp;: 30 em ou 480 px."
 
-msgid "settings-global-pagewidthvalue-label"
-msgstr "Valeur de la largeur de la page"
-
 msgid "settings-input-width-range-output"
 msgstr "%1$s %2$s"
 
@@ -161,9 +155,6 @@ msgstr "Police d’écriture"
 
 msgid "settings-global-fontfamily-description"
 msgstr "Le thème utilise les polices installées sur l’appareil de vos lecteurs pour afficher les textes. Aucune police n’est téléchargée pour assurer le rendu, ce qui est moins gourmand en ressources. Leur affichage peut néanmoins varier d’un appareil à l’autre."
-
-msgid "settings-global-fontfamily-label"
-msgstr "Police d’écriture globale"
 
 msgid "settings-global-fontfamily-system-default"
 msgstr "Système (par défaut)"
@@ -240,26 +231,17 @@ msgstr "Taille de la police"
 msgid "settings-global-fontsize-description"
 msgstr "Cette taille est relative à la taille de police du navigateur ; elle peut varier d’un appareil à l’autre."
 
-msgid "settings-global-fontsize-label"
-msgstr "Taille de la police d’écriture générale"
-
 msgid "settings-global-fontantialiasing-title"
 msgstr "Activer le lissage des caractères"
 
 msgid "settings-global-fontantialiasing-description"
 msgstr "Prévient l’effet de crénelage, mais peut rendre les caractères très (trop) fins."
 
-msgid "settings-global-fontantialiasing-label"
-msgstr "Lissage des caractères"
-
 msgid "settings-global-colorscheme-title"
 msgstr "Jeu de couleurs"
 
 msgid "settings-global-colorscheme-description"
 msgstr "En mode automatique, le jeu de couleur appliqué est celui du système d’exploitation des visiteurs du blog."
-
-msgid "settings-global-colorscheme-label"
-msgstr "Jeu de couleurs"
 
 msgid "settings-global-colorscheme-auto-default"
 msgstr "Automatique (par défaut)"
@@ -275,9 +257,6 @@ msgstr "Couleur principale"
 
 msgid "settings-global-primarycolor-description"
 msgstr "Cette couleur est principalement utilisée pour mettre les liens en évidence."
-
-msgid "settings-global-primarycolor-label"
-msgstr "Couleur principale"
 
 msgid "settings-global-primarycolor-blue-default"
 msgstr "Bleu (par défaut)"
@@ -297,44 +276,23 @@ msgstr "Personnalisée"
 msgid "settings-global-maintextcolorcustom-title"
 msgstr "Couleur de texte"
 
-msgid "settings-global-maintextcolorcustom-label"
-msgstr "Couleur de texte personnalisée"
-
 msgid "settings-global-secondarytextcolorcustom-title"
 msgstr "Couleur de texte secondaire"
-
-msgid "settings-global-secondarytextcolorcustom-label"
-msgstr "Couleur de texte secondaire personnalisée"
 
 msgid "settings-global-primarycolorcustom-title"
 msgstr "Couleur principale"
 
-msgid "settings-global-primarycolorcustom-label"
-msgstr "Couleur principale personnalisée"
-
 msgid "settings-global-primarycoloramplifiedcustom-title"
 msgstr "Couleur principale secondaire"
-
-msgid "settings-global-primarycoloramplifiedcustom-label"
-msgstr "Couleur principale secondaire personnalisée"
 
 msgid "settings-global-inputcustom-title"
 msgstr "Couleur des champs de formulaire"
 
-msgid "settings-global-inputcustom-label"
-msgstr "Couleur personnalisée des champs de formulaire"
-
 msgid "settings-global-bordercustom-title"
 msgstr "Couleur des bordures"
 
-msgid "settings-global-bordercustom-label"
-msgstr "Couleur personnalisée des bordures"
-
 msgid "settings-global-primarycolorbackgroundcustom-title"
 msgstr "Couleur d’arrière-plan"
-
-msgid "settings-global-primarycolorbackgroundcustom-label"
-msgstr "Couleur personnalisée d’arrière-plan"
 
 msgid "settings-colors-reset"
 msgstr "par défaut"
@@ -345,17 +303,11 @@ msgstr "Souligner les liens"
 msgid "settings-global-linksunderline-description"
 msgstr "Souligne les liens pour les mettre en évidence et les rendre plus accessibles."
 
-msgid "settings-global-linksunderline-label"
-msgstr "Soulignement les liens"
-
 msgid "settings-global-borderradius-title"
 msgstr "Arrondir les coins des bordures"
 
 msgid "settings-global-borderradius-description"
 msgstr "Concerne notamment les coins des champs de formulaire et des boutons."
-
-msgid "settings-global-borderradius-label"
-msgstr "Arrondissement des coins des bordures"
 
 msgid "settings-global-colortransition-title"
 msgstr "Activer les transitions de couleur"
@@ -363,14 +315,8 @@ msgstr "Activer les transitions de couleur"
 msgid "settings-global-colortransition-description"
 msgstr "Entraîne un changement progressif de la couleur des liens et des boutons à leur survol à la souris."
 
-msgid "settings-global-colortransition-label"
-msgstr "Transitions de couleur"
-
 msgid "settings-header-align-title"
 msgstr "Alignement"
-
-msgid "settings-header-align-label"
-msgstr "Alignement de l’en-tête"
 
 msgid "settings-header-align-left"
 msgstr "Gauche"
@@ -387,26 +333,17 @@ msgstr "Afficher la description du blog"
 msgid "settings-header-description-description"
 msgstr "La description peut être personnalisée dans les <a href="%s">paramètres du blog</a>."
 
-msgid "settings-header-description-label"
-msgstr "Description du blog dans l’en-tête"
-
 msgid "settings-header-postfull-title"
 msgstr "Afficher l’en-tête complet sur toutes les pages du blog"
 
 msgid "settings-header-postfull-description"
 msgstr "Désactive l’en-tête réduit des billets pour afficher le même en-tête qu’en page d’accueil."
 
-msgid "settings-header-postfull-label"
-msgstr "En-tête complet sur toutes les pages du blog"
-
 msgid "settings-header-image-title"
 msgstr "Téléverser une image"
 
 msgid "settings-header-image-description"
 msgstr "L’image sera téléversée dans le dossier <code>/public/%s/img</code> de votre installation Dotclear."
-
-msgid "settings-header-image-label"
-msgstr "Adresse de l’image d’en-tête"
 
 msgid "header-image-preview-alt"
 msgstr "Aperçu de l’image"
@@ -423,17 +360,11 @@ msgstr "Facultatif&nbsp;: téléverser une image deux fois plus grande pour les 
 msgid "settings-header-image2x-description"
 msgstr "Facultatif&nbsp;: pour assurer un rendu optimal de votre image sur les écrans à double densité de pixels, en particulier les Retina d’Apple, vous devez téléverser la même image avec une dimension deux fois plus grande. Exemple&nbsp;: si l’image que vous avez téléversée fait 200 px de large, téléversez-en une version de 400 px ici. Attention&nbsp;: cette seconde image doit avoir un nom différent de la première, sinon le téléversement échouera."
 
-msgid "settings-header-image2x-label"
-msgstr "Adresse de l’image d’en-tête à double densité de pixels"
-
 msgid "settings-header-imageastitle-title"
 msgstr "Utiliser l’image d’en-tête comme titre du blog"
 
 msgid "settings-header-imageastitle-description"
 msgstr "Le nom du blog sera masqué ; seule l’image d’en-tête sera affichée."
-
-msgid "settings-header-imageastitle-label"
-msgstr "Utiliser l’image d’en-tête comme titre du blog"
 
 msgid "settings-upload-title"
 msgstr "Téléverser une configuration"
@@ -450,9 +381,6 @@ msgstr "Annuler"
 msgid "settings-header-imageposition-title"
 msgstr "Position de l’image"
 
-msgid "settings-header-imageposition-label"
-msgstr "Position de l’image d’en-tête"
-
 msgid "settings-header-imageposition-top-default"
 msgstr "En haut de l’en-tête (par défaut)"
 
@@ -465,14 +393,8 @@ msgstr "Description de l’image"
 msgid "settings-header-imagedescription-description"
 msgstr "Utile pour l’accessibilité."
 
-msgid "settings-header-imagedescription-label"
-msgstr "Description de l’image d’en-tête"
-
 msgid "settings-content-postlisttype-title"
 msgstr "Apparence"
-
-msgid "settings-content-postlisttype-label"
-msgstr "Apparence de la liste des billets"
 
 msgid "settings-content-postlisttype-oneline-default"
 msgstr "Titre et date sur une ligne (par défaut)"
@@ -489,26 +411,14 @@ msgstr "Alterner la couleur des liens vers les billets"
 msgid "settings-content-postlistaltcolor-description"
 msgstr "Permet de mieux distinguer chaque billet dans la liste."
 
-msgid "settings-content-postlistaltcolor-label"
-msgstr "Alternance de la couleur des billets"
-
 msgid "settings-content-postlistthumbnail-title"
 msgstr "Afficher un aperçu de la première image des billets"
-
-msgid "settings-content-postlistthumbnail-label"
-msgstr "Aperçu de la première image des billets"
 
 msgid "settings-content-postlistreactions-title"
 msgstr "Afficher un lien vers les réactions"
 
-msgid "settings-content-postlistreactions-label"
-msgstr "Lien vers les réactions"
-
 msgid "settings-content-fontfamily-title"
 msgstr "Police d’écriture"
-
-msgid "settings-content-fontfamily-label"
-msgstr "Police d’écriture du contenu"
 
 msgid "settings-content-fontfamily-same-default"
 msgstr "Identique à la police globale du thème (par défaut)"
@@ -516,17 +426,11 @@ msgstr "Identique à la police globale du thème (par défaut)"
 msgid "settings-content-fontsize-title"
 msgstr "Taille de la police"
 
-msgid "settings-content-fontsize-label"
-msgstr "Taille de la police du contenu"
-
 msgid "settings-content-fontsize-description"
 msgstr "Cette taille est relative à la taille principale."
 
 msgid "settings-content-lineheight-title"
 msgstr "Interligne"
-
-msgid "settings-content-lineheight-label"
-msgstr "Interligne des textes"
 
 msgid "settings-content-lineheight-small"
 msgstr "Petit"
@@ -543,9 +447,6 @@ msgstr "Alignement"
 msgid "settings-content-textalign-description"
 msgstr "La justification sur les petits écrans (téléphones) peut provoquer un affichage bizarre. Pour l’éviter, vous pouvez choisir l’option « Justifié (sauf sur les petits écrans) »."
 
-msgid "settings-content-textalign-label"
-msgstr "Alignement du texte du contenu"
-
 msgid "settings-content-textalign-left-default"
 msgstr "Gauche (par défaut)"
 
@@ -557,9 +458,6 @@ msgstr "Justifié (sauf sur les petits écrans)"
 
 msgid "settings-content-hyphens-title"
 msgstr "Césures"
-
-msgid "settings-content-hyphens-label"
-msgstr "Césures dans le contenu"
 
 msgid "settings-content-hyphens-disabled-default"
 msgstr "Désactivées (par défaut)"
@@ -576,17 +474,11 @@ msgstr "Ajouter une lettrine au premier paragraphe des billets et des pages."
 msgid "settings-content-initialletter-description"
 msgstr "Peut ne pas être pris en charge par certains navigateurs."
 
-msgid "settings-content-initialletter-label"
-msgstr "Lettrine au premier paragraphe des billets et des pages."
-
 msgid "settings-content-imageswide-title"
 msgstr "Agrandir les images suffisamment larges"
 
 msgid "settings-content-imageswide-description"
 msgstr "Les grandes images dépasseront des bords de la page pour s’afficher en grand. Si vous activez cette option, il est conseillé de configurer des tailles de miniatures supplémentaires avec l’extension <a href="%s">Miniatures supplémentaires</a>. En effet, les images déborderont de 120 px de chaque côté de la page. Exemple&nbsp: si la largeur de votre blog est de 600 px, il vous faudra créer une taille de miniature mesurant 740 px (600 + 120 × 2) de large, voire une autre mesurant 1 480 px pour prendre en charge les écrans Retina."
-
-msgid "settings-content-imageswide-label"
-msgstr "Agrandissement des images suffisamment larges"
 
 msgid "settings-content-imagesgrayscale-title"
 msgstr "Activer le mode noir et blanc"
@@ -594,17 +486,11 @@ msgstr "Activer le mode noir et blanc"
 msgid "settings-content-imagesgrayscale-description"
 msgstr "Les images contenues dans les billets et les pages s’afficheront en noir et blanc pour réduire la distraction. Les couleurs s’afficheront au survol avec la souris ou au toucher sur mobile."
 
-msgid "settings-content-imagesgrayscale-label"
-msgstr "Mode noir et blanc des images"
-
 msgid "settings-content-postpagination-title"
 msgstr "Activer la pagination sous les billets"
 
 msgid "settings-content-postpagination-description"
 msgstr "Affiche un lien vers le billet précédent et le billet suivant sous le contenu des billets."
-
-msgid "settings-content-postpagination-label"
-msgstr "Pagination sous les billets"
 
 msgid "settings-reactions-button-title"
 msgstr "Dévoiler le formulaire en cliquant sur un bouton"
@@ -612,26 +498,14 @@ msgstr "Dévoiler le formulaire en cliquant sur un bouton"
 msgid "settings-reactions-button-description"
 msgstr "Permet d’alléger visuellement les billets du blog."
 
-msgid "settings-reactions-button-label"
-msgstr "Formulaire de commentaire en cliquant"
-
 msgid "settings-reactions-markdownnotice-title"
 msgstr "Afficher un message signalant la prise en charge du balisage Markdown"
-
-msgid "settings-reactions-markdownnotice-label"
-msgstr "Message signalant la prise en charge Markdown dans les commentaires"
 
 msgid "settings-reactions-other-trackbacks-title"
 msgstr "Afficher un lien pour ajouter des rétroliens"
 
-msgid "settings-reactions-other-trackbacks-label"
-msgstr "Lien sous les billets pour ajouter des rétroliens"
-
 msgid "settings-reactions-feedlink-title"
 msgstr "Afficher un lien pour suivre le fil des réactions par RSS/Atom"
-
-msgid "settings-reactions-feedlink-label"
-msgstr "Lien sous les billets pour suivre le fil des réactions par RSS/Atom"
 
 msgid "settings-reactions-feedlink-disabled-default"
 msgstr "Non (par défaut)"
@@ -648,9 +522,6 @@ msgstr "Autoriser d’autres moyens de réaction"
 msgid "settings-reactions-other-description"
 msgstr "Vous pouvez proposer à vos lecteurs de réagir à vos billets par courriel, sur les réseaux sociaux ou par le biais d’autres applications."
 
-msgid "settings-reactions-other-label"
-msgstr "Autres moyens de réaction"
-
 msgid "settings-reactions-other-disabled-default"
 msgstr "Non"
 
@@ -666,17 +537,11 @@ msgstr "Autoriser les réponses par courriel"
 msgid "settings-reactions-otheremail-description"
 msgstr "L’adresse électronique utilisée ici est celle de l’auteur du billet, pas celle définie dans les paramètres sociaux du thème. Attention&nbsp;: l’adresse électronique sera dévoilée et pourrait être utilisée par des personnes malveillantes (pourriels). Pour ne pas révéler votre adresse, vous pouvez essayer l’extension <a href="%s">Signal</a> ou un service tiers comme <a href=https://relay.firefox.com/>Firefox Relay</a>."
 
-msgid "settings-reactions-otheremail-label"
-msgstr "Réponses aux billets par courriel"
-
 msgid "settings-reactions-other-bluesky-title"
 msgstr "Autoriser le partage sur %s"
 
 msgid "settings-reactions-other-bluesky-description"
 msgstr "Vos lecteurs pourrons vous répondre sur Bluesky par message public."
-
-msgid "settings-reactions-other-bluesky-label"
-msgstr "Partage des billets sur %s"
 
 msgid "settings-reactions-other-facebook-title"
 msgstr "Autoriser le partage sur %s"
@@ -684,17 +549,11 @@ msgstr "Autoriser le partage sur %s"
 msgid "settings-reactions-other-facebook-description"
 msgstr "Vos lecteurs pourrons vous répondre sur Facebook par message public."
 
-msgid "settings-reactions-other-facebook-label"
-msgstr "Partage des billets sur %s"
-
 msgid "settings-reactions-other-mastodon-title"
 msgstr "Autoriser le partage sur %s"
 
 msgid "settings-reactions-other-mastodon-description"
 msgstr "Vos lecteurs pourrons vous répondre sur Mastodon par message public."
-
-msgid "settings-reactions-other-mastodon-label"
-msgstr "Partage des billets sur %s"
 
 msgid "settings-reactions-other-signal-title"
 msgstr "Autoriser les réponses par %s"
@@ -702,17 +561,11 @@ msgstr "Autoriser les réponses par %s"
 msgid "settings-reactions-other-signal-description"
 msgstr "Attention&nbsp;: si vous avez saisi un numéro de téléphone ou un nom d’utilisateur, celui-ci sera rendu public et pourrait tomber entre des mains malveillantes."
 
-msgid "settings-reactions-other-signal-label"
-msgstr "Réponses aux billets par %s"
-
 msgid "settings-reactions-other-sms-title"
 msgstr "Autoriser les réponses par %s"
 
 msgid "settings-reactions-other-sms-description"
 msgstr "Attention&nbsp;: votre numéro de téléphone sera rendu public et pourrait tomber entre des mains malveillantes."
-
-msgid "settings-reactions-other-sms-label"
-msgstr "Réponses aux billets par %s"
 
 msgid "settings-reactions-other-whatsapp-title"
 msgstr "Autoriser les réponses par %s"
@@ -720,17 +573,11 @@ msgstr "Autoriser les réponses par %s"
 msgid "settings-reactions-other-whatsapp-description"
 msgstr "Attention&nbsp;: votre numéro de téléphone sera rendu public et pourrait tomber entre des mains malveillantes."
 
-msgid "settings-reactions-other-whatsapp-label"
-msgstr "Réponses aux billets par %s"
-
 msgid "settings-reactions-other-x-title"
 msgstr "Autoriser le partage sur %s"
 
 msgid "settings-reactions-other-x-description"
 msgstr "Vos lecteurs pourrons vous répondre sur X par message public."
-
-msgid "settings-reactions-other-x-label"
-msgstr "Partage des billets sur %s"
 
 msgid "settings-widgets-display-title"
 msgstr "Activer les widgets (volets de navigation et d’extra)"
@@ -738,23 +585,14 @@ msgstr "Activer les widgets (volets de navigation et d’extra)"
 msgid "settings-widgets-display-description"
 msgstr "Il est recommandé de désactiver cette option si vous avez décidé de n’afficher aucun widget dans le volet de navigation et le volet d’extra (voir la <a href="%s">page de configuration des widgets</a>)."
 
-msgid "settings-widgets-display-label"
-msgstr "Affichage des widgets"
-
 msgid "settings-footer-activation-title"
 msgstr "Activer le pied de page"
-
-msgid "settings-footer-activation-label"
-msgstr "Affichage du pied de page"
 
 msgid "settings-footer-activation-description"
 msgstr "Il est recommandé de décocher cet paramètre si le pied de page ne contient aucun élément."
 
 msgid "settings-footer-align-title"
 msgstr "Alignement"
-
-msgid "settings-footer-align-label"
-msgstr "Alignement du pied de page"
 
 msgid "settings-footer-align-left-default"
 msgstr "Gauche (par défaut)"
@@ -767,9 +605,6 @@ msgstr "Droite"
 
 msgid "settings-footer-feed-title"
 msgstr "Afficher un lien vers le flux RSS/Atom du blog"
-
-msgid "settings-footer-feed-label"
-msgstr "Lien dans le pied de page vers le flux RSS/Atom du blog"
 
 msgid "settings-footer-feed-disabled-default"
 msgstr "Non (par défaut)"
@@ -785,9 +620,6 @@ msgstr "Afficher une mention à Dotclear et au thème"
 
 msgid "settings-footer-credits-description"
 msgstr "Permet de faire de la publicité à Dotclear et à ce thème."
-
-msgid "settings-footer-credits-label"
-msgstr "Mention à Dotclear et au thème dans le pied de page"
 
 msgid "settings-social-diaspora-description"
 msgstr "Adresse d’une page ou d’un profil %s."
@@ -813,86 +645,44 @@ msgstr "Adresse d’un utilisateur ou d’un salon Matrix <em>via</em> <a href=h
 msgid "settings-footer-social-diaspora-title"
 msgstr "Afficher un lien vers %s"
 
-msgid "settings-footer-social-diaspora-label"
-msgstr "Lien dans le pied de page vers %s"
-
 msgid "settings-footer-social-email-title"
 msgstr "Afficher un lien vers l’adresse électronique publique du blog"
-
-msgid "settings-footer-social-email-label"
-msgstr "Lien dans le pied de page vers l’adresse électronique publique du blog"
 
 msgid "settings-footer-social-bluesky-title"
 msgstr "Afficher un lien vers %s"
 
-msgid "settings-footer-social-bluesky-label"
-msgstr "Lien dans le pied de page vers %s"
-
 msgid "settings-footer-social-facebook-title"
 msgstr "Afficher un lien vers %s"
-
-msgid "settings-footer-social-facebook-label"
-msgstr "Lien dans le pied de page vers %s"
 
 msgid "settings-footer-social-instagram-title"
 msgstr "Afficher un lien vers %s"
 
-msgid "settings-footer-social-instagram-label"
-msgstr "Lien dans le pied de page vers %s"
-
 msgid "settings-footer-social-mastodon-title"
 msgstr "Afficher un lien vers %s"
-
-msgid "settings-footer-social-mastodon-label"
-msgstr "Lien dans le pied de page vers %s"
 
 msgid "settings-footer-social-matrix-title"
 msgstr "Afficher un lien vers %s"
 
-msgid "settings-footer-social-matrix-label"
-msgstr "Lien dans le pied de page vers un utilisateur ou un salon Matrix"
-
 msgid "settings-footer-social-phone-title"
 msgstr "Afficher un lien pour vous téléphoner"
-
-msgid "settings-footer-social-phone-label"
-msgstr "Lien dans le pied de page pour vous téléphoner"
 
 msgid "settings-footer-social-signal-title"
 msgstr "Afficher un lien vers %s"
 
-msgid "settings-footer-social-signal-label"
-msgstr "Lien vers %s dans le pied de page"
-
 msgid "settings-footer-social-sms-title"
 msgstr "Afficher un lien pour vous écrire par SMS"
-
-msgid "settings-footer-social-sms-label"
-msgstr "Lien dans le pied de page pour vous écrire par SMS"
 
 msgid "settings-footer-social-youtube-title"
 msgstr "Afficher un lien vers %s"
 
-msgid "settings-footer-social-youtube-label"
-msgstr "Lien dans le pied de page vers %s"
-
 msgid "settings-footer-social-whatsapp-title"
 msgstr "Afficher un lien vers %s"
-
-msgid "settings-footer-social-whatsapp-label"
-msgstr "Lien dans le pied de page vers %s"
 
 msgid "settings-footer-social-x-title"
 msgstr "Afficher un lien vers %s"
 
-msgid "settings-footer-social-x-label"
-msgstr "Lien dans le pied de page vers %s"
-
 msgid "settings-footer-social-other-title"
 msgstr "Afficher votre lien personnalisé"
-
-msgid "settings-footer-social-other-label"
-msgstr "Lien personnalisé dans le pied de page"
 
 msgid "settings-footer-social-sms-description"
 msgstr "Attention&nbsp;: votre numéro de téléphone sera rendu public et pourrait tomber entre des mains malveillantes."
@@ -924,22 +714,19 @@ msgstr "Adresse d’un compte %s"
 msgid "settings-social-other-description"
 msgstr "Adresse d’une autre page de votre choix."
 
-msgid "settings-styles-advanced-title"
+msgid "settings-styles-custom-title"
 msgstr "Styles personnalisés"
 
-msgid "settings-styles-advanced-description"
+msgid "settings-styles-custom-description"
 msgstr "Les styles saisis seront ajoutés à la fin de la feuille de styles principale."
 
-msgid "settings-styles-advanced-label"
-msgstr "Styles personnalisés"
-
-msgid "settings-styles-advanced-placeholder-selector"
+msgid "settings-styles-custom-placeholder-selector"
 msgstr "selecteur"
 
-msgid "settings-styles-advanced-placeholder-property"
+msgid "settings-styles-custom-placeholder-property"
 msgstr "propriete"
 
-msgid "settings-styles-advanced-placeholder-value"
+msgid "settings-styles-custom-placeholder-value"
 msgstr "valeur"
 
 msgid "settings-advanced-metadescription-title"
@@ -948,17 +735,11 @@ msgstr "Description de la page d’accueil"
 msgid "settings-advanced-metadescription-description"
 msgstr "Texte utilisé comme description du blog pour des moteurs de recherche. Sa taille idéale est d’environ 200&nbsp;caractères."
 
-msgid "settings-advanced-metadescription-label"
-msgstr "Balise de description de la page d’accueil dans l’en-tête HTML"
-
 msgid "settings-advanced-metasocial-title"
 msgstr "Ajouter des balises sociales minimalistes"
 
 msgid "settings-advanced-metasocial-description"
 msgstr "Assure un meilleur affichage du blog sur les réseaux sociaux et peut être utile pour le référencement."
-
-msgid "settings-advanced-metasocial-label"
-msgstr "Ajouter des balises sociales minimalistes dans l’en-tête HTML"
 
 msgid "settings-advanced-canonical-title"
 msgstr "Ajouter des URL canoniques"
@@ -966,26 +747,14 @@ msgstr "Ajouter des URL canoniques"
 msgid "settings-advanced-canonical-description"
 msgstr "Utile pour le référencement. Ajouter l’URL canonique dans les en-têtes de la page d’accueil, des billets et des pages."
 
-msgid "settings-advanced-canonical-label"
-msgstr "URL canoniques dans l’en-tête HTML"
-
 msgid "settings-advanced-json-title"
 msgstr "Ajouter des métadonnées au format JSON"
 
 msgid "settings-advanced-json-description"
 msgstr "Utile pour le référencement sur les moteurs de recherche."
 
-msgid "settings-advanced-json-label"
-msgstr "Métadonnées au format JSON dans l’en-tête HTML"
-
 msgid "settings-odysseystyles-title"
 msgstr "Tous les styles"
-
-msgid "settings-odysseystyles-label"
-msgstr "Styles personnalisés"
-
-msgid "settings-odysseystylesurl-label"
-msgstr "Lien vers la feuille des styles personnalisés"
 
 msgid "settings-themeeditordevmode-warning"
 msgstr "L’éditeur de thème est en mode développement. Si vous avez modifié des fichiers du thème, certaines de ses fonctions pourraient avoir été altérées. Pour faire disparaître ce message, veuillez désactiver le mode développement de l’éditeur de thème dans <a href=%1$s>les paramètres de l’extension %2$s</a>."

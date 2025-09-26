@@ -115,7 +115,7 @@ class FrontendValues
      */
     public static function odysseyStylesheetURL(): string
     {
-        if (My::settings()->styles || My::settings()->styles_advanced) {
+        if (My::settings()->styles || My::settings()->styles_custom) {
             $css_url = My::publicFolder('url', '/css/style.css');
         } else {
             $css_url = My::themeFolder('url', '/style.min.css');

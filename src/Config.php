@@ -95,7 +95,10 @@ class Config extends Process
 
                     Notices::addSuccessNotice(__('settings-notice-reset'));
 
-                    App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
+                    App::backend()->url()->redirect(
+                        'admin.blog.theme',
+                        ['module' => My::id(), 'conf' => '1']
+                    );
                 }
 
                 if (isset($_POST['import-config'])) {
@@ -113,7 +116,10 @@ class Config extends Process
 
                 if (isset($_POST['config-upload-cancel'])) {
                     // Redirects if the cancel upload button has been clicked.
-                    App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
+                    App::backend()->url()->redirect(
+                        'admin.blog.theme',
+                        ['module' => My::id(), 'conf' => '1']
+                    );
                 }
             } catch (Exception $e) {
                 App::error()->add($e->getMessage());
@@ -129,7 +135,7 @@ class Config extends Process
 
                 if (isset($_GET['restore']) && $_GET['restore'] !== 'success') {
                     // Restores a configuration from a backup file listed from /var/odyssey/backups.
-                    self::_restoreBackup($_GET['restore'] . '.json');
+                    self::_restoreBackup($_GET['restore']);
                 }
 
                 if (isset($_GET['restore_delete_file'])) {
@@ -189,7 +195,7 @@ class Config extends Process
      * @param array  $http_files      All files uploaded from the theme configurator form.
      * @param string $notice_success  A text displayed after successful parameter saving.
      * @param array  $redirect_params Parameters to add to the redirection after saving.
-     * @param bool   $import          If we are currently importing a configuration file.
+     * @param bool   $from_json       If we are currently importing a JSON configuration file.
      *
      * @return void
      */
@@ -198,7 +204,7 @@ class Config extends Process
         array  $http_files      = [],
         string $notice_success  = '',
         array  $redirect_params = [],
-        bool   $import          = false
+        bool   $from_json       = false
     ): void
     {
         if (empty($http_post)) {
@@ -230,7 +236,7 @@ class Config extends Process
                     $setting_data,
                     $setting_value,
                     $new_settings,
-                    $import
+                    $from_json
                 );
 
                 // Saves the setting in the database or drop it.
@@ -281,7 +287,7 @@ class Config extends Process
                     break;
                 case 'styles':
                     // Saves styles.
-                    $styles_advanced = $sanitizedSettings['styles_advanced'] ?? '';
+                    $styles_custom = $sanitizedSettings['styles_custom'] ?? '';
 
                     $sanitized_styles       = self::_sanitizeStyles($sanitizedSettings);
                     $sanitized_styles_value = $sanitized_styles['value'] ?? '';
@@ -299,8 +305,8 @@ class Config extends Process
                         App::blog()->settings->odyssey->drop('styles');
                     }
 
-                    if ($sanitized_styles_value || $styles_advanced) {
-                        self::_customStylesFile($sanitized_styles_value, $styles_advanced);
+                    if ($sanitized_styles_value || $styles_custom) {
+                        self::_customStylesFile($sanitized_styles_value, $styles_custom);
                     }
             }
 
@@ -340,7 +346,7 @@ class Config extends Process
      * @param array  $setting_data  The components of the current parameter.
      * @param mixed  $setting_value The value of the setting to be saved.
      * @param array  $new_settings  All new settings passed through the configurator form.
-     * @param bool   $import        If we are currently importing a configuration file.
+     * @param bool   $from_json     If we are currently importing a JSON configuration file.
      *
      * @return array The sanitized setting value and type.
      */
@@ -349,7 +355,7 @@ class Config extends Process
         array  $setting_data,
         mixed  $setting_value,
         array  $new_settings,
-        bool   $import = false
+        bool   $from_json = false
     ): array
     {
         $setting = [
@@ -380,7 +386,7 @@ class Config extends Process
 
                     break;
                 case 'checkbox':
-                    if ($import === false || ($import === true && $setting_value !== null)) {
+                    if ($from_json === false || ($from_json === true && $setting_value !== null)) {
                         $setting_value = $setting_value ? true : false;
                     } else {
                         /**
@@ -490,7 +496,7 @@ class Config extends Process
                     }
 
                     break;
-                case 'styles_advanced':
+                case 'styles_custom':
                     $params = [$setting_value];
             }
 
@@ -1639,7 +1645,7 @@ class Config extends Process
      */
     private static function _restoreBackup(string $file_name): void
     {
-        $restore_file_path    = Path::real(My::varFolder('path', '/backups/' . $file_name));
+        $restore_file_path    = Path::real(My::varFolder('path', '/backups/' . $file_name . '.json'));
         $restore_file_content = file_get_contents($restore_file_path);
 
         if ($restore_file_path && $restore_file_content && $restore_file_content !== '[]') {
