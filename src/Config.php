@@ -1757,12 +1757,12 @@ class Config extends Process
 
                     if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
                         $the_setting[] = (new Text('p', $default_settings[$setting_id]['description'] . $checkbox_default))
-                            ->id($setting_id . '-description')
-                            ->class('form-note');
+                            ->class('form-note')
+                            ->id($setting_id . '-description');
                     } elseif ($checkbox_default !== '') {
                         $the_setting[] = (new Text('p', $checkbox_default))
-                            ->id($setting_id . '-description')
-                            ->class('form-note');
+                            ->class('form-note')
+                            ->id($setting_id . '-description');
                     }
 
                     break;
@@ -1792,16 +1792,16 @@ class Config extends Process
 
                         if ($setting_id === 'global_font_family') {
                             $the_setting[] = (new Para())
-                                ->id('odyssey-config-global-font-preview')
                                 ->class('odyssey-font-preview')
+                                ->id('odyssey-config-global-font-preview')
                                 ->items([
                                     new Text('strong', __('config-preview-font')),
                                     new Text(null, ' ' . $preview_string)
                                 ]);
                         } else {
                             $the_setting[] = (new Para())
-                                ->id('odyssey-config-content-font-preview')
                                 ->class('odyssey-font-preview')
+                                ->id('odyssey-config-content-font-preview')
                                 ->items([
                                     new Text('strong', __('config-preview-font')),
                                     new Text(null, ' ' . $preview_string)
@@ -1811,8 +1811,8 @@ class Config extends Process
 
                     if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
                         $the_setting[] = (new Text('p', $default_settings[$setting_id]['description']))
-                            ->id($setting_id . '-description')
-                            ->class('form-note');
+                            ->class('form-note')
+                            ->id($setting_id . '-description');
                     }
 
                     break;
@@ -1829,8 +1829,8 @@ class Config extends Process
 
                     if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
                         $the_setting[] = (new Text('p', $default_settings[$setting_id]['description']))
-                            ->id($setting_id . '-description')
-                            ->class('form-note');
+                            ->class('form-note')
+                            ->id($setting_id . '-description');
                     }
 
                     break;
@@ -1861,33 +1861,33 @@ class Config extends Process
                             (new Label($default_settings[$setting_id]['title'], 2))
                                 ->for($setting_id),
                             (new Textarea($setting_id, $setting_value))
-                                ->placeholder($placeholder)
                                 ->cols(60)
+                                ->placeholder($placeholder)
                                 ->rows(3)
                         ]);
 
                     if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
                         $the_setting[] = (new Text('p', $default_settings[$setting_id]['description']))
-                            ->id($setting_id . '-description')
-                            ->class('form-note');
+                            ->class('form-note')
+                            ->id($setting_id . '-description');
                     }
 
                     break;
                 case 'range' :
                     $range_default = [
-                        'unit'  => $default_settings[$setting_id]['range']['unit'],
-                        'value' => (int) My::settings()->$setting_id ?: (int) $default_settings[$setting_id]['default'],
-                        'min'   => (int) $default_settings[$setting_id]['range']['min'],
                         'max'   => (int) $default_settings[$setting_id]['range']['max'],
-                        'step'  => (int) $default_settings[$setting_id]['range']['step']
+                        'min'   => (int) $default_settings[$setting_id]['range']['min'],
+                        'step'  => (int) $default_settings[$setting_id]['range']['step'],
+                        'unit'  => $default_settings[$setting_id]['range']['unit'],
+                        'value' => (int) My::settings()->$setting_id ?: (int) $default_settings[$setting_id]['default']
                     ];
 
                     if ($setting_id === 'global_page_width_value' && My::settings()->global_unit === 'px') {
                         // Specific values for page width in px.
-                        $range_default['unit'] = 'px';
-                        $range_default['min']  = 480;
                         $range_default['max']  = 1280;
+                        $range_default['min']  = 480;
                         $range_default['step'] = 2;
+                        $range_default['unit'] = 'px';
                     }
 
                     $range_default_output = sprintf(
@@ -1902,10 +1902,10 @@ class Config extends Process
                             (new Label($default_settings[$setting_id]['title'], 2))
                                 ->for($setting_id),
                             (new Input($setting_id, 'range'))
-                                ->value($range_default['value'])
-                                ->min($range_default['min'])
                                 ->max($range_default['max'])
-                                ->step($range_default['step']),
+                                ->min($range_default['min'])
+                                ->step($range_default['step'])
+                                ->value($range_default['value']),
                             (new Div(null, 'output'))
                                 ->id($setting_id . '-output')
                                 ->items([new Text(null, $range_default_output)])
@@ -1913,8 +1913,8 @@ class Config extends Process
 
                     if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
                         $the_setting[] = (new Text('p', $default_settings[$setting_id]['description']))
-                            ->id($setting_id . '-description')
-                            ->class('form-note');
+                            ->class('form-note')
+                            ->id($setting_id . '-description');
                     }
 
                     break;
@@ -1935,8 +1935,8 @@ class Config extends Process
 
                     if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
                         $the_setting[] = (new Text('p', $default_settings[$setting_id]['description']))
-                            ->id($setting_id . '-description')
-                            ->class('form-note');
+                            ->class('form-note')
+                            ->id($setting_id . '-description');
                     }
             }
         }
@@ -2025,8 +2025,8 @@ class Config extends Process
                 ->action(App::backend()->url()->get('admin.blog.theme', ['module' => My::id(), 'conf' => '1', 'config-upload' => '1']))
                 ->class('fieldset')
                 ->enctype('multipart/form-data')
-                ->method('post')
                 ->fields($upload_form_fields)
+                ->method('post')
                 ->render();
         }
 
@@ -2292,8 +2292,8 @@ class Config extends Process
         echo (new Form('theme-config-form'))
             ->action(App::backend()->url()->get('admin.blog.theme', ['module' => My::id(), 'conf' => '1']))
             ->enctype('multipart/form-data')
-            ->method('post')
             ->fields($fields)
+            ->method('post')
             ->render();
     }
 }
