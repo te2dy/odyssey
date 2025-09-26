@@ -11,7 +11,6 @@ Ce thème n’aurait pu avoir vu le jour sans les ressources mises à dispositio
 Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://blog.jim-nielsen.com/), des travaux réalisés sur les thèmes Ductile et Berlin pour Dotclear, des billets de Franck Paul (https://open-time.net/) et du blog DotclearWatch (https://dotclear.watch/).
 
 == 🍀 Feuille de route ==
-- Ajouter un avertissement signalant que les images d’en-tête ne peuvent pas être récupérées avec les fichiers de configuration.
 - Basculer certaines options sur des extensions pour libérer le configurateur.
 - À évaluer : créer des onglets sur la page du configurateur (->class('multi-part'), etc.).
 - À évaluer : créer une aide avec Page::helpBlock().
