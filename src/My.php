@@ -786,7 +786,7 @@ class My extends MyTheme
 
         foreach (self::socialSites() as $site => $base) {
             // Provides a description for some sites only.
-            $add_description = ['signal', 'sms', 'whatsapp'];
+            $add_description = ['phone', 'signal', 'sms', 'whatsapp'];
 
             $social_description = '';
 

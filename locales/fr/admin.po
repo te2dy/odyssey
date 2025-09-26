@@ -684,6 +684,9 @@ msgstr "Afficher un lien vers %s"
 msgid "settings-footer-social-other-title"
 msgstr "Afficher votre lien personnalisé"
 
+msgid "settings-footer-social-phone-description"
+msgstr "Attention&nbsp;: votre numéro de téléphone sera rendu public et pourrait tomber entre des mains malveillantes."
+
 msgid "settings-footer-social-sms-description"
 msgstr "Attention&nbsp;: votre numéro de téléphone sera rendu public et pourrait tomber entre des mains malveillantes."
 

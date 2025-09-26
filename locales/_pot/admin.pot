@@ -684,6 +684,9 @@ msgstr ""
 msgid "settings-footer-social-other-title"
 msgstr ""
 
+msgid "settings-footer-social-phone-description"
+msgstr ""
+
 msgid "settings-footer-social-sms-description"
 msgstr ""
 

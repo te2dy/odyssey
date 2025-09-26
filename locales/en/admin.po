@@ -684,6 +684,9 @@ msgstr "Display a link to %s"
 msgid "settings-footer-social-other-title"
 msgstr "Display a link to your custom link"
 
+msgid "settings-footer-social-phone-description"
+msgstr "Warning: your phone number will be made public and could fall into the wrong hands."
+
 msgid "settings-footer-social-sms-description"
 msgstr "Warning: your phone number will be made public and could fall into the wrong hands."
 
