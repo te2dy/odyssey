@@ -802,8 +802,10 @@ class FrontendValues
                     $class = 'social-icon-fi footer-social-links-icon-fi';
                 }
 
+                var_dump($site_id);
+
                 if ($social_site_value) {
-                    switch ($social_site_id) {
+                    switch ($site_id) {
                         case 'email':
                             $social_site_value = 'mailto:' . $social_site_value;
 
