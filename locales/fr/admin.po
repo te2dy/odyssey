@@ -24,6 +24,9 @@ msgstr "Erreur&nbsp;: aucun fichier n’a été téléversé."
 msgid "settings-notice-save-success"
 msgstr "La configuration du thème a été enregistrée au format JSON dans le dossier <code>/var/%1$s/backups</code> de votre installation Dotclear. Vous pouvez gérer tous les fichiers générés <a href=%2$s>au bas de cette page</a>."
 
+msgid "settings-notice-save-success-warning"
+msgstr "Attention&nbsp;: l’image d’en-tête que vous auriez éventuellement définie n’est pas enregistrée dans le fichier de configuration ; il vous faudra la téléverser à nouveau en cas de restauration de cette configuration."
+
 msgid "settings-notice-save-success-link"
 msgstr "Télécharger le fichier de configuration"
 

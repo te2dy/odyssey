@@ -1706,6 +1706,7 @@ class Config extends Process
             Files::putContent($backups_path, json_encode($custom_settings));
 
             $notice  = '<p>' . sprintf(__('settings-notice-save-success'), My::id(), '#odyssey-backups') . '</p>';
+            $notice .= '<p>' . __('settings-notice-save-success-warning') . '</p>';
             $notice .= '<a class="button submit" href=' . My::displayAttr(urldecode(Page::getVF(My::varFolder('vf', '/backups/' . $file_name . '.json'))), 'url') . ' download=' . My::displayAttr($file_name) . '>';
             $notice .= __('settings-notice-save-success-link');
             $notice .= '</a>';

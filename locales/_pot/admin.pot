@@ -24,6 +24,9 @@ msgstr ""
 msgid "settings-notice-save-success"
 msgstr ""
 
+msgid "settings-notice-save-success-warning"
+msgstr ""
+
 msgid "settings-notice-save-success-link"
 msgstr ""
 

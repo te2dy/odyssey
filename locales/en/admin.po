@@ -24,6 +24,9 @@ msgstr "Error: no file has been uploaded."
 msgid "settings-notice-save-success"
 msgstr "The theme configuration has been saved in JSON format in the folder <code>/var/%1$s/backups</code> of your Dotclear installation. You can manage all generated files <a href=%2$s>at the bottom of this page</a>."
 
+msgid "settings-notice-save-success-warning"
+msgstr "Warning&nbsp;: any header image you may have defined is not saved in the configuration file; you will need to upload it again if this configuration is restored."
+
 msgid "settings-notice-save-success-link"
 msgstr "Download configuration file"
 
