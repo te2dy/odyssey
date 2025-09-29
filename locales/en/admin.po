@@ -765,6 +765,9 @@ msgstr "All styles"
 msgid "settings-themeeditordevmode-warning"
 msgstr "The theme editor is in development mode. If you have modified theme files, some of its functions may have been altered. To remove this message, please disable development mode for the theme editor in <a href=%1$s>the %2$s plugins settings</a>."
 
+msgid "settings-mediacss-warning"
+msgstr "The theme incorporates its own media alignment styles; therefore, it is advisable not to load the default stylesheet by checking the option “Don't load standard stylesheet (used for media alignement)” in the Media and Images section of the <a href=%s>Blog Settings</a>"
+
 msgid "settings-page-intro"
 msgstr "This is where you can customize your %s theme to suit your needs."
 

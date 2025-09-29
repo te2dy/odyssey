@@ -765,6 +765,9 @@ msgstr "Tous les styles"
 msgid "settings-themeeditordevmode-warning"
 msgstr "L’éditeur de thème est en mode développement. Si vous avez modifié des fichiers du thème, certaines de ses fonctions pourraient avoir été altérées. Pour faire disparaître ce message, veuillez désactiver le mode développement de l’éditeur de thème dans <a href=%1$s>les paramètres de l’extension %2$s</a>."
 
+msgid "settings-mediacss-warning"
+msgstr "Le thème intègre ses propres styles d’alignement des médias ; il est donc conseillé de ne pas charger la feuille de styles par défaut en cochant l’option « Ne pas charger la feuille de style standard (utilisée pour l'alignement des médias) » située dans la section Médias et images des <a href=%s>Paramètres du blog</a>."
+
 msgid "settings-page-intro"
 msgstr "C’est ici que vous pouvez personnaliser votre thème %s pour l’adapter à vos besoins."
 

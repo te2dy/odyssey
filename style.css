@@ -259,6 +259,20 @@ video {
 img.media {
   display: block;
 }
+.media-center {
+  display: block;
+  margin-inline: auto;
+}
+.media-left {
+  float: left;
+  margin-right: 1em;
+  margin-bottom: 1em;
+}
+.media-right {
+  float: right;
+  margin-left: 1em;
+  margin-bottom: 1em;
+}
 
 /* Forms & buttons. */
 button,

@@ -2057,6 +2057,18 @@ class Config extends Process
         // Adds settings in their section.
         $fields = [];
 
+        $fields[] = new Text('p', sprintf(__('settings-page-intro'), My::name()));
+
+        $fields[] = new Text(
+            'p',
+            sprintf(
+                __('settings-page-forum-link'),
+                'https://github.com/te2dy/odyssey/issues',
+                'mailto:zozxebpyr@mozmail.com',
+                'https://matrix.to/#/#dotclear:matrix.org'
+            )
+        );
+
         if (My::dotclearVersionMimimum('2.36')) {
             if (App::auth()->prefs()->interface->themeeditordevmode) {
                 $tidyadmin_name = '';
@@ -2072,17 +2084,12 @@ class Config extends Process
             }
         }
 
-        $fields[] = new Text('p', sprintf(__('settings-page-intro'), My::name()));
+        if (!App::blog()->settings()->system->no_public_css) {
+            $blogpref_url  = My::displayAttr(App::backend()->url()->get('admin.blog.pref'));
 
-        $fields[] = new Text(
-            'p',
-            sprintf(
-                __('settings-page-forum-link'),
-                'https://github.com/te2dy/odyssey/issues',
-                'mailto:zozxebpyr@mozmail.com',
-                'https://matrix.to/#/#dotclear:matrix.org'
-            )
-        );
+            $fields[] = (new Text('p', sprintf(__('settings-mediacss-warning'), $blogpref_url)))
+                ->class('warning-msg');
+        }
 
         foreach ($settings_render as $section_id => $setting_data) {
             $settings_fields = [];

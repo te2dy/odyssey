@@ -765,6 +765,9 @@ msgstr ""
 msgid "settings-themeeditordevmode-warning"
 msgstr ""
 
+msgid "settings-mediacss-warning"
+msgstr ""
+
 msgid "settings-page-intro"
 msgstr ""
 
