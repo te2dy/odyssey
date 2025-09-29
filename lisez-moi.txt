@@ -16,8 +16,13 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 - À évaluer : créer une aide avec Page::helpBlock().
 - À évaluer : ajouter la possibilité d’afficher la barre latérale à gauche ou à droite, plutôt qu’en bas ? Version 3 ?
 - À évaluer : permettre l’ajout de boutons de partage pour des réseaux sociaux qui ne sont pas configurés.
+- À évaluer : ajouter des styles à l’éditeur.
 
 == Notes de version ==
+
+=== 2.12 - 29 septembre 2025 ===
+- Ajout : styles d’alignement des médias avec avertissement pour ne pas charger la feuille de styles par défaut de Dotclear.
+- Ajout : prise en charge minimale des pages dans l’affichage des métadonnées au format JSON.
 
 === 2.11.1 - 26 septembre 2025 ===
 - Correction : des options d’image d’en-tête pouvaient s’afficher en l’absence d’image.
