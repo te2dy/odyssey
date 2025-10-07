@@ -480,11 +480,11 @@ class FrontendBehaviors
                 // Gets the image src attribute.
                 preg_match('/src="([^"]*)/', $img, $src_match);
 
-                $src_attr  = $src_match[0] ?? null;
-                $src_value = $src_match[1] ?? null;
+                $src_attr  = $src_match[0] ?? '';
+                $src_value = $src_match[1] ?? '';
 
                 // Transforms absolute URLs in relative ones.
-                if ($src_value && str_starts_with($src_value, App::blog()->url())) {
+                if (str_starts_with($src_value, App::blog()->url())) {
                     $src_value = str_replace(App::blog()->url(), '', $src_value);
                 }
 
