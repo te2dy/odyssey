@@ -33,12 +33,11 @@ class Frontend extends Process
         }
 
         // Behaviors.
-        App::behavior()->addBehavior('publicHeadContent', FrontendBehaviors::odysseyHeadMeta(...));
-        App::behavior()->addBehavior('publicHeadContent', FrontendBehaviors::odysseySocialMarkups(...));
-        App::behavior()->addBehavior('publicHeadContent', FrontendBehaviors::odysseyJsonLd(...));
-        App::behavior()->addBehavior('publicAfterContentFilterV2', FrontendBehaviors::odysseyImageWide(...));
-        App::behavior()->addBehavior('publicAfterContentFilterV2', FrontendBehaviors::addAttrFilter(...));
-        App::behavior()->addBehavior('tplIfConditions', FrontendBehaviors::odysseyTplConditions(...));
+        App::behavior()->addBehaviors([
+            'publicHeadContent'          => FrontendBehaviors::odysseyHead(...),
+            'publicAfterContentFilterV2' => FrontendBehaviors::odysseyAfterContent(...),
+            'tplIfConditions'            => FrontendBehaviors::odysseyTplConditions(...)
+        ]);
 
         // Blocks.
         App::frontend()->template()->addBlock('odysseyHeaderMinimal', FrontendBlocks::odysseyHeaderMinimal(...));

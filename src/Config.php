@@ -1499,7 +1499,7 @@ class Config extends Process
 
                 break;
             case 'url':
-                if ($site_base !== '' && str_starts_with($value, $site_base)) {
+                if ($site_base && str_starts_with($value, $site_base)) {
                     return [
                         'value' => filter_var($value, FILTER_SANITIZE_URL),
                         'type'  => 'string'
@@ -1554,7 +1554,7 @@ class Config extends Process
     private static function _customStylesFile(string $css_options, string $css_custom): void
     {
         $css  = $css_options;
-        $css .= (string) file_get_contents(My::themeFolder('path', '/style.min.css')) ?: '';
+        $css .= file_get_contents(My::themeFolder('path', '/style.min.css')) ?: '';
         $css .= $css_custom;
 
         $css_folder    = My::id() . '/css';
@@ -1564,9 +1564,7 @@ class Config extends Process
         ThemeConfig::dropCss($css_folder, $css_file_name);
 
         // Creates an Odyssey public folder if it does not exist.
-        if (!is_dir(My::publicFolder('path')) && is_writable(App::blog()->publicPath())) {
-            Files::makeDir(My::publicFolder('path'));
-        }
+        Files::makeDir(My::publicFolder('path'));
 
         // Creates the CSS file.
         if ($css && ThemeConfig::canWriteCss($css_folder, true)) {
@@ -1691,9 +1689,7 @@ class Config extends Process
             $backups_path = My::varFolder('path', '/backups');
 
             // Creates the /var/odyssey/backups folder if it doesn't exist.
-            if (Path::real($backups_path) === false) {
-                Files::makeDir($backups_path, true);
-            }
+            Files::makeDir($backups_path, true);
 
             // Sets the name of the backup file with date and time.
             $time = str_replace(':', '', Date::str('%Y%m%d', time(), App::blog()->settings()->system->blog_timezone) . '-' . Date::str('%T', time(), App::blog()->settings()->system->blog_timezone));

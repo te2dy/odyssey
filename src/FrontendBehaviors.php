@@ -22,11 +22,11 @@ use Dotclear\Helper\Html\Html;
 class FrontendBehaviors
 {
     /**
-     * Adds meta tags in the <head> section depending on the blog settings.
+     * Adds meta tags in the head of the document.
      *
-     * @return void The head meta.
+     * @return void
      */
-    public static function odysseyHeadMeta(): void
+    public static function odysseyHead(): void
     {
         // Adds the name of the editor.
         if (App::blog()->settings->system->editor) {
@@ -41,6 +41,14 @@ class FrontendBehaviors
             My::displayAttr(App::blog()->settings->system->copyright_notice),
             '>', "\n";
         }
+
+        if (My::settings()->advanced_meta_social) {
+            self::_odysseySocialMarkups();
+        }
+
+        if (My::settings()->advanced_json) {
+            self::_odysseyJsonLd();
+        }
     }
 
     /**
@@ -50,116 +58,114 @@ class FrontendBehaviors
      *
      * @link https://meiert.com/en/blog/minimal-social-markup/
      */
-    public static function odysseySocialMarkups(): void
+    private static function _odysseySocialMarkups(): void
     {
-        if (My::settings()->advanced_meta_social) {
-            $title = '';
-            $desc  = '';
-            $img   = '';
+        $title = '';
+        $desc  = '';
+        $img   = '';
 
-            switch (App::url()->type) {
-                case 'post':
-                case 'pages':
-                    $title = App::frontend()->context()->posts->post_title;
+        switch (App::url()->type) {
+            case 'post':
+            case 'pages':
+                $title = App::frontend()->context()->posts->post_title;
 
-                    $desc = App::frontend()->context()->posts->getExcerpt() ?: App::frontend()->context()->posts->getContent();
+                $desc = App::frontend()->context()->posts->getExcerpt() ?: App::frontend()->context()->posts->getContent();
+                $desc = My::cleanStr($desc);
+
+                if (strlen($desc) > 180) {
+                    $desc = Text::cutString($desc, 179) . '…';
+                }
+
+                $img_url_rel = Ctx::EntryFirstImageHelper('o', true, '', true);
+
+                if ($img_url_rel) {
+                    $img = App::blog()->url() . $img_url_rel;
+                }
+
+                break;
+            case 'default':
+            case 'default-page':
+            case 'static':
+                $title = App::blog()->name;
+
+                // Specific title for the post list page when a static home page has been set.
+                if (App::blog()->settings()->system->static_home && App::url()->type === 'default') {
+                    $title = sprintf(
+                        __('meta-title-static-postlist'),
+                        $title
+                    );
+                }
+
+                $page = (int) Ctx::PaginationPosition();
+
+                if ($page > 1) {
+                    $desc = sprintf(__('meta-social-page-with-number'), $page);
+                }
+
+                if (My::settings()->advanced_meta_description || App::blog()->desc) {
+                    if ($desc) {
+                        $desc .= ' – ';
+                    }
+
+                    $desc .= My::settings()->advanced_meta_description ?: App::blog()->desc ?: '';
+
                     $desc = My::cleanStr($desc);
 
                     if (strlen($desc) > 180) {
                         $desc = Text::cutString($desc, 179) . '…';
                     }
+                }
 
-                    $img_url_rel = Ctx::EntryFirstImageHelper('o', true, '', true);
+                break;
+            case 'category':
+                $title = App::frontend()->context()->categories->cat_title;
 
-                    if ($img_url_rel) {
-                        $img = App::blog()->url() . $img_url_rel;
+                if (App::frontend()->context()->categories->cat_desc) {
+                    $desc = App::frontend()->context()->categories->cat_desc;
+                    $desc = My::cleanStr($desc);
+
+                    if (strlen($desc) > 180) {
+                        $desc = Text::cutString($desc, 179) . '…';
                     }
+                }
 
-                    break;
-                case 'default':
-                case 'default-page':
-                case 'static':
-                    $title = App::blog()->name;
+                break;
+            case 'tag':
+                if (App::frontend()->context()->meta->meta_type === 'tag') {
+                    $title = App::frontend()->context()->meta->meta_id;
+                    $desc  = sprintf(__('meta-social-tags-post-related'), $title);
+                }
+        }
 
-                    // Specific title for the post list page when a static home page has been set.
-                    if (App::blog()->settings()->system->static_home && App::url()->type === 'default') {
-                        $title = sprintf(
-                            __('meta-title-static-postlist'),
-                            $title
-                        );
-                    }
+        $title = Html::escapeHTML($title);
+        $img   = My::escapeURL($img);
 
-                    $page = (int) Ctx::PaginationPosition();
-
-                    if ($page > 1) {
-                        $desc = sprintf(__('meta-social-page-with-number'), $page);
-                    }
-
-                    if (My::settings()->advanced_meta_description || App::blog()->desc) {
-                        if ($desc) {
-                            $desc .= ' – ';
-                        }
-
-                        $desc .= My::settings()->advanced_meta_description ?: App::blog()->desc ?: '';
-
-                        $desc = My::cleanStr($desc);
-
-                        if (strlen($desc) > 180) {
-                            $desc = Text::cutString($desc, 179) . '…';
-                        }
-                    }
-
-                    break;
-                case 'category':
-                    $title = App::frontend()->context()->categories->cat_title;
-
-                    if (App::frontend()->context()->categories->cat_desc) {
-                        $desc = App::frontend()->context()->categories->cat_desc;
-                        $desc = My::cleanStr($desc);
-
-                        if (strlen($desc) > 180) {
-                            $desc = Text::cutString($desc, 179) . '…';
-                        }
-                    }
-
-                    break;
-                case 'tag':
-                    if (App::frontend()->context()->meta->meta_type === 'tag') {
-                        $title = App::frontend()->context()->meta->meta_id;
-                        $desc  = sprintf(__('meta-social-tags-post-related'), $title);
-                    }
+        if ($title) {
+            if (!$img && isset(My::settings()->header_image['url'])) {
+                $img = My::escapeURL(App::blog()->url() . My::settings()->header_image['url']);
             }
 
-            $title = Html::escapeHTML($title);
-            $img   = My::escapeURL($img);
+            if ($img) {
+                echo '<meta name="twitter:card" content="summary_large_image">', "\n";
 
-            if ($title) {
-                if (!$img && isset(My::settings()->header_image['url'])) {
-                    $img = My::escapeURL(App::blog()->url() . My::settings()->header_image['url']);
+                if (My::settings()->social_x) {
+                    echo '<meta property="twitter:creator" content="@',
+                    str_replace('https://x.com/', '', Html::escapeHTML(My::settings()->social_x)),
+                    '">', "\n";
                 }
+            }
 
-                if ($img) {
-                    echo '<meta name="twitter:card" content="summary_large_image">', "\n";
+            // Quotes seem required for the following meta properties.
+            echo '<meta property="og:title" content="', $title, '">', "\n";
 
-                    if (My::settings()->social_x) {
-                        echo '<meta property="twitter:creator" content="@',
-                        str_replace('https://x.com/', '', Html::escapeHTML(My::settings()->social_x)),
-                        '">', "\n";
-                    }
-                }
+            $desc = trim(Html::escapeHTML($desc));
 
-                // Quotes seem required for the following meta properties.
-                echo '<meta property="og:title" content="', $title, '">', "\n";
+            if ($desc) {
+                echo '<meta property="og:description" content="', $desc, '">', "\n";
+            }
 
-                $desc = trim(Html::escapeHTML($desc));
-
-                if ($desc) {
-                    echo '<meta property="og:description" content="', $desc, '">', "\n";
-                }
-
-                if ($img) {
-                    echo '<meta property="og:image" content="', $img, '">', "\n";
-                }
+            if ($img) {
+                echo '<meta property="og:image" content="', $img, '">', "\n";
             }
         }
     }
@@ -169,285 +175,303 @@ class FrontendBehaviors
      *
      * @return void The structured data.
      */
-    public static function odysseyJsonLd(): void
+    private static function _odysseyJsonLd(): void
     {
-        if (My::settings()->advanced_json === true) {
-            $json_ld = [];
+        $json_ld = [];
 
-            switch (App::url()->type) {
-                case 'default':
-                case 'static':
-                    $blog_name = App::blog()->name;
+        switch (App::url()->type) {
+            case 'default':
+            case 'static':
+                $blog_name = App::blog()->name;
 
-                    // Specific title for the post list page when a static home page has been set.
-                    if (App::blog()->settings()->system->static_home && App::url()->type === 'default') {
-                        $blog_name = sprintf(
-                            __('meta-title-static-postlist'),
-                            $blog_name
-                        );
-                    }
-
-                    $json_ld = [
-                        '@context'    => 'http://schema.org',
-                        '@type'       => 'WebPage',
-                        'publisher' => [
-                            '@type' => 'Organization',
-                            'name'  => $blog_name
-                        ],
-                        'name'        => $blog_name,
-                        'description' => My::settings()->advanced_meta_description ?: App::blog()->desc,
-                        'url'         => App::blog()->url
-                    ];
-
-                    // Logo
-                    if (isset(My::settings()->header_image['url'])) {
-                        // Retrieves the image path.
-                        $image_path = App::config()->dotclearRoot() . My::settings()->header_image['url'];
-
-                        if (file_exists($image_path)) {
-                            list($width, $height) = getimagesize($image_path);
-
-                            $json_ld['publisher']['logo'] = [
-                                '@type'  => 'ImageObject',
-                                'url'    => App::blog()->url() . My::settings()->header_image['url'],
-                                'width'  => (int) $width,
-                                'height' => (int) $height
-                            ];
-                        }
-                    }
-
-                    // Social links
-                    $social_sites   = My::socialSites();
-                    $social_links   = [];
-                    $social_exclude = ['phone', 'signal', 'sms', 'whatsapp'];
-
-                    foreach ($social_sites as $id => $data) {
-                        $footer_social_id = 'footer_social_' . $id;
-
-                        if (My::settings()->$footer_social_id !== null && !in_array($id, $social_exclude, true)) {
-                            $json_ld['sameAs'][] = My::settings()->$footer_social_id;
-                        }
-                    }
-
-                    $json_ld['copyrightHolder'] = App::blog()->settings->system->editor;
-                    $json_ld['copyrightNotice'] = App::blog()->settings->system->copyright_notice;
-
-                    $json_ld['inLanguage'] = App::blog()->settings()->system->lang;
-
-                    break;
-                case 'post':
-                    $json_ld = [
-                        '@context' => 'http://schema.org',
-                        '@type'    => 'BlogPosting'
-                    ];
-
-                    $json_ld['headline'] = App::frontend()->context()->posts->post_title;
-
-                    $json_ld['description'] = My::cleanStr(App::frontend()->context()->posts->post_excerpt_xhtml);
-
-                    $json_ld['articleBody'] = App::frontend()->context()->posts->post_content_xhtml;
-
-                    // First image
-                    if (Ctx::EntryFirstImageHelper('o', false, '', true)) {
-                        $image_path = App::config()->dotclearRoot() . Ctx::EntryFirstImageHelper('o', false, '', true);
-
-                        if (file_exists($image_path)) {
-                            list($width, $height) = getimagesize($image_path);
-
-                            $json_ld['image'] = [
-                                '@type'  => 'ImageObject',
-                                'url'    => App::blog()->url() . Ctx::EntryFirstImageHelper('o', false, '', true),
-                                'width'  => (int) $width,
-                                'height' => (int) $height
-                            ];
-                        }
-                    }
-
-                    // Author
-                    if (App::frontend()->context()->posts->user_displayname) {
-                        $json_ld['author'] = [
-                            '@type' => 'Person',
-                            'name'  => App::frontend()->context()->posts->user_displayname,
-                            'url'   => App::frontend()->context()->posts->user_url
-                        ];
-                    } elseif (App::frontend()->context()->posts->user_name || App::frontend()->context()->posts->user_firstname) {
-                        $json_ld['author'] = [
-                            '@type' => 'Person',
-                            'name'  => trim(App::frontend()->context()->posts->user_name . ' ' . App::frontend()->context()->posts->user_firstname),
-                            'url'   => App::frontend()->context()->posts->user_url
-                        ];
-                    }
-
-                    $json_ld['publisher'] = [
-                        '@type' => 'Organization',
-                        'name'  => App::blog()->name,
-                        'url'   => App::blog()->url
-                    ];
-
-                    if (isset(My::settings()->header_image['url'])) {
-                        // Retrieves the image path.
-                        $image_path = App::config()->dotclearRoot() . My::settings()->header_image['url'];
-
-                        if (file_exists($image_path)) {
-                            list($width, $height) = getimagesize($image_path);
-
-                            $json_ld['publisher']['logo'] = [
-                                '@type'  => 'ImageObject',
-                                'url'    => App::blog()->url() . My::settings()->header_image['url'],
-                                'width'  => (int) $width,
-                                'height' => (int) $height
-                            ];
-                        }
-                    }
-
-                    $json_ld['copyrightHolder'] = App::blog()->settings->system->editor;
-                    $json_ld['copyrightNotice'] = App::blog()->settings->system->copyright_notice;
-
-                    $json_ld['articleSection'] = App::frontend()->context()->posts->cat_title;
-
-                    if (App::frontend()->context()->posts->post_meta) {
-                        $post_meta = unserialize(App::frontend()->context()->posts->post_meta);
-                        $tags      = '';
-
-                        if (is_array($post_meta) && isset($post_meta['tag'])) {
-                            if (count($post_meta['tag']) > 1) {
-                                $json_ld['keywords'] = $post_meta['tag'];
-                            } else {
-                                $json_ld['keywords'] = $post_meta['tag'][0];
-                            }
-
-                        }
-                    }
-
-                    $json_ld['url'] = App::frontend()->context()->posts->getURL();
-
-                    $json_ld['datePublished'] = Date::iso8601(strtotime(App::frontend()->context()->posts->post_dt), App::frontend()->context()->posts->post_tz);
-
-                    $json_ld['dateCreated'] = Date::iso8601(strtotime(App::frontend()->context()->posts->post_creadt), App::frontend()->context()->posts->post_tz);
-
-                    $json_ld['dateModified'] = Date::iso8601(strtotime(App::frontend()->context()->posts->post_upddt), App::frontend()->context()->posts->post_tz);
-
-                    $json_ld['commentCount'] = App::frontend()->context()->posts->nb_comment;
-
-                    $json_ld['inLanguage'] = App::frontend()->context()->posts->post_lang;
-
-                    break;
-                case 'pages':
-                    $json_ld = [
-                        '@context' => 'http://schema.org',
-                        '@type'    => 'WebPage'
-                    ];
-
-                    $json_ld['mainEntity'] = [
-                        '@type'       => 'WebPageElement',
-                        'name'        => App::frontend()->context()->posts->post_title,
-                        'description' => App::frontend()->context()->posts->post_excerpt_xhtml,
-                        'text'        => App::frontend()->context()->posts->post_content_xhtml
-                    ];
-
-                    // First image
-                    if (Ctx::EntryFirstImageHelper('o', false, '', true)) {
-                        $image_path = App::config()->dotclearRoot() . Ctx::EntryFirstImageHelper('o', false, '', true);
-
-                        if (file_exists($image_path)) {
-                            list($width, $height) = getimagesize($image_path);
-
-                            $json_ld['image'] = [
-                                '@type'  => 'ImageObject',
-                                'url'    => App::blog()->url() . Ctx::EntryFirstImageHelper('o', false, '', true),
-                                'width'  => (int) $width,
-                                'height' => (int) $height
-                            ];
-                        }
-                    }
-
-                    // Author
-                    if (App::frontend()->context()->posts->user_displayname) {
-                        $json_ld['author'] = [
-                            '@type' => 'Person',
-                            'name'  => App::frontend()->context()->posts->user_displayname,
-                            'url'   => App::frontend()->context()->posts->user_url
-                        ];
-                    } elseif (App::frontend()->context()->posts->user_name || App::frontend()->context()->posts->user_firstname) {
-                        $json_ld['author'] = [
-                            '@type' => 'Person',
-                            'name'  => trim(App::frontend()->context()->posts->user_name . ' ' . App::frontend()->context()->posts->user_firstname),
-                            'url'   => App::frontend()->context()->posts->user_url
-                        ];
-                    }
-
-                    $json_ld['publisher'] = [
-                        '@type' => 'Organization',
-                        'name'  => App::blog()->name,
-                        'url'   => App::blog()->url
-                    ];
-
-                    if (isset(My::settings()->header_image['url'])) {
-                        // Retrieves the image path.
-                        $image_path = App::config()->dotclearRoot() . My::settings()->header_image['url'];
-
-                        if (file_exists($image_path)) {
-                            list($width, $height) = getimagesize($image_path);
-
-                            $json_ld['publisher']['logo'] = [
-                                '@type'  => 'ImageObject',
-                                'url'    => App::blog()->url() . My::settings()->header_image['url'],
-                                'width'  => (int) $width,
-                                'height' => (int) $height
-                            ];
-                        }
-                    }
-
-                    $json_ld['copyrightHolder'] = App::blog()->settings->system->editor;
-                    $json_ld['copyrightNotice'] = App::blog()->settings->system->copyright_notice;
-
-                    $json_ld['url'] = App::frontend()->context()->posts->getURL();
-
-                    $json_ld['datePublished'] = Date::iso8601(strtotime(App::frontend()->context()->posts->post_dt), App::frontend()->context()->posts->post_tz);
-
-                    $json_ld['dateCreated'] = Date::iso8601(strtotime(App::frontend()->context()->posts->post_creadt), App::frontend()->context()->posts->post_tz);
-
-                    $json_ld['dateModified'] = Date::iso8601(strtotime(App::frontend()->context()->posts->post_upddt), App::frontend()->context()->posts->post_tz);
-
-                    $json_ld['commentCount'] = App::frontend()->context()->posts->nb_comment;
-
-                    $json_ld['inLanguage'] = App::frontend()->context()->posts->post_lang;
-            }
-
-            // Removes empty values.
-            $json_ld = array_filter($json_ld);
-
-            if (!empty($json_ld)) {
-                $json_ld = json_encode($json_ld, JSON_HEX_QUOT|JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS);
-
-                /**
-                 * To be replaced by json_validate() function
-                 * available on PHP 8.3.
-                 */
-                if (My::jsonValidate($json_ld)) {
-                    echo '<script type=application/ld+json>', $json_ld, '</script>', "\n";
+                // Specific title for the post list page when a static home page has been set.
+                if (App::blog()->settings()->system->static_home && App::url()->type === 'default') {
+                    $blog_name = sprintf(
+                        __('meta-title-static-postlist'),
+                        $blog_name
+                    );
                 }
+
+                $json_ld = [
+                    '@context'    => 'http://schema.org',
+                    '@type'       => 'WebPage',
+                    'publisher' => [
+                        '@type' => 'Organization',
+                        'name'  => $blog_name
+                    ],
+                    'name'        => $blog_name,
+                    'description' => My::settings()->advanced_meta_description ?: App::blog()->desc,
+                    'url'         => App::blog()->url
+                ];
+
+                // Logo
+                if (isset(My::settings()->header_image['url'])) {
+                    // Retrieves the image path.
+                    $image_path = App::config()->dotclearRoot() . My::settings()->header_image['url'];
+
+                    if (file_exists($image_path)) {
+                        list($width, $height) = getimagesize($image_path);
+
+                        $json_ld['publisher']['logo'] = [
+                            '@type'  => 'ImageObject',
+                            'url'    => App::blog()->url() . My::settings()->header_image['url'],
+                            'width'  => (int) $width,
+                            'height' => (int) $height
+                        ];
+                    }
+                }
+
+                // Social links
+                $social_sites   = My::socialSites();
+                $social_links   = [];
+                $social_exclude = ['phone', 'signal', 'sms', 'whatsapp'];
+
+                foreach ($social_sites as $id => $data) {
+                    $footer_social_id = 'footer_social_' . $id;
+
+                    if (My::settings()->$footer_social_id !== null && !in_array($id, $social_exclude, true)) {
+                        $json_ld['sameAs'][] = My::settings()->$footer_social_id;
+                    }
+                }
+
+                $json_ld['copyrightHolder'] = App::blog()->settings->system->editor;
+                $json_ld['copyrightNotice'] = App::blog()->settings->system->copyright_notice;
+
+                $json_ld['inLanguage'] = App::blog()->settings()->system->lang;
+
+                break;
+            case 'post':
+                $json_ld = [
+                    '@context' => 'http://schema.org',
+                    '@type'    => 'BlogPosting'
+                ];
+
+                $json_ld['headline'] = App::frontend()->context()->posts->post_title;
+
+                $json_ld['description'] = My::cleanStr(App::frontend()->context()->posts->post_excerpt_xhtml);
+
+                $json_ld['articleBody'] = App::frontend()->context()->posts->post_content_xhtml;
+
+                // First image
+                if (Ctx::EntryFirstImageHelper('o', false, '', true)) {
+                    $image_path = App::config()->dotclearRoot() . Ctx::EntryFirstImageHelper('o', false, '', true);
+
+                    if (file_exists($image_path)) {
+                        list($width, $height) = getimagesize($image_path);
+
+                        $json_ld['image'] = [
+                            '@type'  => 'ImageObject',
+                            'url'    => App::blog()->url() . Ctx::EntryFirstImageHelper('o', false, '', true),
+                            'width'  => (int) $width,
+                            'height' => (int) $height
+                        ];
+                    }
+                }
+
+                // Author
+                if (App::frontend()->context()->posts->user_displayname) {
+                    $json_ld['author'] = [
+                        '@type' => 'Person',
+                        'name'  => App::frontend()->context()->posts->user_displayname,
+                        'url'   => App::frontend()->context()->posts->user_url
+                    ];
+                } elseif (App::frontend()->context()->posts->user_name || App::frontend()->context()->posts->user_firstname) {
+                    $json_ld['author'] = [
+                        '@type' => 'Person',
+                        'name'  => trim(App::frontend()->context()->posts->user_name . ' ' . App::frontend()->context()->posts->user_firstname),
+                        'url'   => App::frontend()->context()->posts->user_url
+                    ];
+                }
+
+                $json_ld['publisher'] = [
+                    '@type' => 'Organization',
+                    'name'  => App::blog()->name,
+                    'url'   => App::blog()->url
+                ];
+
+                if (isset(My::settings()->header_image['url'])) {
+                    // Retrieves the image path.
+                    $image_path = App::config()->dotclearRoot() . My::settings()->header_image['url'];
+
+                    if (file_exists($image_path)) {
+                        list($width, $height) = getimagesize($image_path);
+
+                        $json_ld['publisher']['logo'] = [
+                            '@type'  => 'ImageObject',
+                            'url'    => App::blog()->url() . My::settings()->header_image['url'],
+                            'width'  => (int) $width,
+                            'height' => (int) $height
+                        ];
+                    }
+                }
+
+                $json_ld['copyrightHolder'] = App::blog()->settings->system->editor;
+                $json_ld['copyrightNotice'] = App::blog()->settings->system->copyright_notice;
+
+                $json_ld['articleSection'] = App::frontend()->context()->posts->cat_title;
+
+                if (App::frontend()->context()->posts->post_meta) {
+                    $post_meta = unserialize(App::frontend()->context()->posts->post_meta);
+                    $tags      = '';
+
+                    if (is_array($post_meta) && isset($post_meta['tag'])) {
+                        if (count($post_meta['tag']) > 1) {
+                            $json_ld['keywords'] = $post_meta['tag'];
+                        } else {
+                            $json_ld['keywords'] = $post_meta['tag'][0];
+                        }
+
+                    }
+                }
+
+                $json_ld['url'] = App::frontend()->context()->posts->getURL();
+
+                $json_ld['datePublished'] = Date::iso8601(strtotime(App::frontend()->context()->posts->post_dt), App::frontend()->context()->posts->post_tz);
+
+                $json_ld['dateCreated'] = Date::iso8601(strtotime(App::frontend()->context()->posts->post_creadt), App::frontend()->context()->posts->post_tz);
+
+                $json_ld['dateModified'] = Date::iso8601(strtotime(App::frontend()->context()->posts->post_upddt), App::frontend()->context()->posts->post_tz);
+
+                $json_ld['commentCount'] = App::frontend()->context()->posts->nb_comment;
+
+                $json_ld['inLanguage'] = App::frontend()->context()->posts->post_lang;
+
+                break;
+            case 'pages':
+                $json_ld = [
+                    '@context' => 'http://schema.org',
+                    '@type'    => 'WebPage'
+                ];
+
+                $json_ld['mainEntity'] = [
+                    '@type'       => 'WebPageElement',
+                    'name'        => App::frontend()->context()->posts->post_title,
+                    'description' => App::frontend()->context()->posts->post_excerpt_xhtml,
+                    'text'        => App::frontend()->context()->posts->post_content_xhtml
+                ];
+
+                // First image
+                if (Ctx::EntryFirstImageHelper('o', false, '', true)) {
+                    $image_path = App::config()->dotclearRoot() . Ctx::EntryFirstImageHelper('o', false, '', true);
+
+                    if (file_exists($image_path)) {
+                        list($width, $height) = getimagesize($image_path);
+
+                        $json_ld['image'] = [
+                            '@type'  => 'ImageObject',
+                            'url'    => App::blog()->url() . Ctx::EntryFirstImageHelper('o', false, '', true),
+                            'width'  => (int) $width,
+                            'height' => (int) $height
+                        ];
+                    }
+                }
+
+                // Author
+                if (App::frontend()->context()->posts->user_displayname) {
+                    $json_ld['author'] = [
+                        '@type' => 'Person',
+                        'name'  => App::frontend()->context()->posts->user_displayname,
+                        'url'   => App::frontend()->context()->posts->user_url
+                    ];
+                } elseif (App::frontend()->context()->posts->user_name || App::frontend()->context()->posts->user_firstname) {
+                    $json_ld['author'] = [
+                        '@type' => 'Person',
+                        'name'  => trim(App::frontend()->context()->posts->user_name . ' ' . App::frontend()->context()->posts->user_firstname),
+                        'url'   => App::frontend()->context()->posts->user_url
+                    ];
+                }
+
+                $json_ld['publisher'] = [
+                    '@type' => 'Organization',
+                    'name'  => App::blog()->name,
+                    'url'   => App::blog()->url
+                ];
+
+                if (isset(My::settings()->header_image['url'])) {
+                    // Retrieves the image path.
+                    $image_path = App::config()->dotclearRoot() . My::settings()->header_image['url'];
+
+                    if (file_exists($image_path)) {
+                        list($width, $height) = getimagesize($image_path);
+
+                        $json_ld['publisher']['logo'] = [
+                            '@type'  => 'ImageObject',
+                            'url'    => App::blog()->url() . My::settings()->header_image['url'],
+                            'width'  => (int) $width,
+                            'height' => (int) $height
+                        ];
+                    }
+                }
+
+                $json_ld['copyrightHolder'] = App::blog()->settings->system->editor;
+                $json_ld['copyrightNotice'] = App::blog()->settings->system->copyright_notice;
+
+                $json_ld['url'] = App::frontend()->context()->posts->getURL();
+
+                $json_ld['datePublished'] = Date::iso8601(strtotime(App::frontend()->context()->posts->post_dt), App::frontend()->context()->posts->post_tz);
+
+                $json_ld['dateCreated'] = Date::iso8601(strtotime(App::frontend()->context()->posts->post_creadt), App::frontend()->context()->posts->post_tz);
+
+                $json_ld['dateModified'] = Date::iso8601(strtotime(App::frontend()->context()->posts->post_upddt), App::frontend()->context()->posts->post_tz);
+
+                $json_ld['commentCount'] = App::frontend()->context()->posts->nb_comment;
+
+                $json_ld['inLanguage'] = App::frontend()->context()->posts->post_lang;
+        }
+
+        // Removes empty values.
+        $json_ld = array_filter($json_ld);
+
+        if (!empty($json_ld)) {
+            $json_ld = json_encode($json_ld, JSON_HEX_QUOT|JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS);
+
+            /**
+             * To be replaced by json_validate() function
+             * available on PHP 8.3.
+             */
+            if (My::jsonValidate($json_ld)) {
+                echo '<script type=application/ld+json>', $json_ld, '</script>', "\n";
             }
         }
     }
 
     /**
-     * Displays wide image.
+     * Modifies the entry content depending on theme settings.
+     *
+     * @param string $tag  The tag.
+     * @param array  $args The args.
+     *
+     * @return string The entry content.
+     */
+    public static function odysseyAfterContent(string $tag, array $args): string
+    {
+        // Displays wide images.
+        if ($tag === 'EntryContent' && My::settings()->content_images_wide) {
+            $args[0] = self::odysseyImageWide($args[0]);
+        }
+
+        // Adds quotes to a template value only if is_attr argument is set.
+        if (isset($args['is_attr']) && $args['is_attr'] === '1') {
+            $args[0] = My::displayAttr($args[0]);
+        }
+
+        return $args[0];
+    }
+
+    /**
+     * Displays wide images.
+     *
+     * Function used by self::odysseyAfterContent().
      *
      * @param array $tag  The tags.
      * @param array $args The args.
      *
      * @return void The image.
      */
-    public static function odysseyImageWide($tag, $args): void
+    public static function odysseyImageWide(string $entry_content): string
     {
-        if (!in_array($tag, ['EntryContent']) || !My::settings()->content_images_wide) {
-            // If we are not in an "Entry content" context or if wide images are disabled.
-            return;
-        }
-
         // Matches all images by regex.
-        $args[0] = preg_replace_callback(
+        $entry_content = preg_replace_callback(
             '/<img[^>]*>/',
             function ($matches) {
                 // The image HTML code.
@@ -562,25 +586,10 @@ class FrontendBehaviors
 
                 return $matches[0];
             },
-            $args[0]
+            $entry_content
         );
-    }
 
-    /**
-     * Adds quotes to a template value only if is_attr argument is set.
-     *
-     * @param array $tag  The tags.
-     * @param array $args The args.
-     *
-     * @return string The template value.
-     */
-    public static function addAttrFilter($tag, $args): string
-    {
-        if (isset($args['is_attr']) && $args['is_attr'] === '1') {
-            $args[0] = My::displayAttr($args[0]);
-        }
-
-        return $args[0];
+        return $entry_content;
     }
 
     /**
