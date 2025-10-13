@@ -25,9 +25,6 @@ $this->registerModule(
         'details'    => 'https://themes.dotaddict.org/galerie-dc2/details/odyssey',
         'repository' => 'https://raw.githubusercontent.com/te2dy/odyssey/main/dcstore.xml',
 
-        // Allows theme files edit.
-        'overload' => true,
-
         // Allows a full control for the theme configurator.
         'standalone_config' => true,
 

@@ -48,8 +48,8 @@ class FrontendValues
      */
     public static function odysseyMetaDescriptionHome(): string
     {
-        $description = My::settings()->advanced_meta_description ?: App::blog()->desc ?: null;
-        $description = $description ? My::cleanStr(Ctx::remove_html($description)) : null;
+        $description = My::settings()->advanced_meta_description ?: App::blog()->desc ?: '';
+        $description = $description ? My::cleanStr(Ctx::remove_html($description)) : '';
 
         if ($description) {
             return '<meta name=description content=' . My::displayAttr($description) . '>';
@@ -77,32 +77,34 @@ class FrontendValues
      */
     public static function odysseyMetaCanonical(): string
     {
-        if (My::settings()->advanced_canonical) {
-            switch (App::url()->type) {
-                case 'post':
-                case 'pages':
-                    return '<link rel=canonical href="<?= App::frontend()->context()->posts->getURL() ?>">' . "\n";
+        if (!My::settings()->advanced_canonical) {
+            return '';
+        }
 
-                    break;
-                case 'default':
-                case 'static':
-                    $url = App::blog()->url;
+        switch (App::url()->type) {
+            case 'post':
+            case 'pages':
+                return '<link rel=canonical href="<?= App::frontend()->context()->posts->getURL() ?>">' . "\n";
 
-                    // Specific url for the post list page when a static home page has been set.
-                    if (App::blog()->settings()->system->static_home && App::url()->type === 'default') {
-                        $url = App::blog()->url() . App::url()->getURLFor('posts');
-                    }
+                break;
+            case 'default':
+            case 'static':
+                $url = App::blog()->url;
 
-                    return '<link rel=canonical href=' . My::displayAttr($url, 'url') . '>' . "\n";
+                // Specific url for the post list page when a static home page has been set.
+                if (App::blog()->settings()->system->static_home && App::url()->type === 'default') {
+                    $url = App::blog()->url() . App::url()->getURLFor('posts');
+                }
 
-                    break;
-                default:
-                    $current_uri = Http::getSelfURI();
+                return '<link rel=canonical href=' . My::displayAttr($url, 'url') . '>' . "\n";
 
-                    if ($current_uri) {
-                        return '<link rel=canonical href=' . My::displayAttr($current_uri, 'url') . '>' . "\n";
-                    }
-            }
+                break;
+            default:
+                $current_uri = Http::getSelfURI();
+
+                if ($current_uri) {
+                    return '<link rel=canonical href=' . My::displayAttr($current_uri, 'url') . '>' . "\n";
+                }
         }
 
         return '';
@@ -234,7 +236,7 @@ class FrontendValues
         if (App::blog()->desc && My::settings()->header_description !== false) {
             $description = My::cleanStr(
                 App::blog()->desc,
-                ['<b>', '<strong>', '<i>', '<em>', '<mark>', '<del>', '<sub>', '<sup>']
+                ['<b>', '<strong>', '<i>', '<em>', 'u', '<mark>', '<del>', '<sub>', '<sup>']
             );
 
             return '<div id=site-desc>' . $description . '</div>';

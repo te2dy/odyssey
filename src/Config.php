@@ -1843,7 +1843,7 @@ class Config extends Process
                             (new Label($default_settings[$setting_id]['title'], 0))
                                 ->extra('for=' . $setting_id . '-text'),
                             new Color($setting_id, $setting_value),
-                            (new Input($setting_id . '-text', $setting_value))
+                            (new Input($setting_id . '-text'))
                                 ->placeholder($placeholder)
                                 ->value($setting_value_input),
                             new Button($setting_id . '-default-button', __('settings-colors-reset')),
