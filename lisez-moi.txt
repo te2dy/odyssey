@@ -20,6 +20,14 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
+=== 2.13 - 18 octobre 2025 ===
+- Ajout : option pour choisir de charger ou non le fichier util.js.
+- Amélioration : basculement de fichiers JS dans l’en-tête.
+- Correction : l’option de réponse aux billets par courriel n’était plus fonctionnelle.
+- Correction : traductions.
+- Suppression : paramètre "overload" dans le fichier de définition du thème.
+- Revue de code.
+
 === 2.12 - 29 septembre 2025 ===
 - Ajout : styles d’alignement des médias avec avertissement pour ne pas charger la feuille de styles par défaut de Dotclear.
 - Ajout : prise en charge minimale des pages dans l’affichage des métadonnées au format JSON.
