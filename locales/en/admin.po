@@ -132,6 +132,9 @@ msgstr "Appearance"
 msgid "section-advanced-seo"
 msgstr "Search engine optimization"
 
+msgid "section-advanced-js"
+msgstr "Javascript"
+
 msgid "settings-global-unit-title"
 msgstr "Base unit"
 
@@ -759,11 +762,14 @@ msgstr "Add metadata in JSON format"
 msgid "settings-advanced-json-description"
 msgstr "Useful for search engine optimization."
 
+msgid "settings-advanced-jsutil-title"
+msgstr "Load the Dotclear util.js file"
+
 msgid "settings-odysseystyles-title"
 msgstr "All styles"
 
 msgid "settings-themeeditordevmode-warning"
-msgstr "The theme editor is in development mode. If you have modified theme files, some of its functions may have been altered. To remove this message, please disable development mode for the theme editor in <a href=%1$s>the %2$s plugins settings</a>."
+msgstr "The theme editor is in development mode. If you have modified theme files, some of its functions may have been altered. To remove this message, please disable development mode for the theme editor in <a href=%1$s>the %2$s plugin settings</a>."
 
 msgid "settings-mediacss-warning"
 msgstr "The theme incorporates its own media alignment styles; therefore, it is advisable not to load the default stylesheet by checking the option “Don't load standard stylesheet (used for media alignement)” in the Media and Images section of the <a href=%s>Blog Settings</a>"

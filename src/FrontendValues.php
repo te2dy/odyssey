@@ -127,6 +127,16 @@ class FrontendValues
     }
 
     /**
+     * Returns jQuery URL to be displayed in head.
+     *
+     * @return string The jQuery URL.
+     */
+    public static function odysseyJqueryURL(): string
+    {
+        return My::displayAttr(App::blog()->getQmarkURL() . App::blog()->getJsJQuery() . '/jquery.js', 'url');
+    }
+
+    /**
      * Adds links for screen readers on the top of pages.
      *
      * @return string The links.

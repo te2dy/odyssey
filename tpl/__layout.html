@@ -17,9 +17,27 @@
       {{tpl:odysseyMetaCanonical}}
     </tpl:Block>
 
-    <tpl:Block name="head-link">
+    <tpl:Block name="head-styles-scripts">
       <link rel=preload href={{tpl:odysseyStylesheetURL}} as=style>
       <link rel=stylesheet href={{tpl:odysseyStylesheetURL}}>
+
+      <tpl:SysIf jquery_needed="1">
+        <link rel=preload href={{tpl:odysseyJqueryURL}} as=script>
+        <script src={{tpl:odysseyJqueryURL}}></script>
+      </tpl:SysIf>
+
+      <tpl:SysIf legacy_needed="1">
+        <link rel=preload href="{{tpl:BlogQmarkURL}}pf=legacy.js" as=script>
+        <script src="{{tpl:BlogQmarkURL}}pf=legacy.js"></script>
+      </tpl:SysIf>
+
+      <tpl:odysseyJsUtil>
+        <link rel=preload href="{{tpl:BlogQmarkURL}}pf=util.js" as=script>
+        <script src="{{tpl:BlogQmarkURL}}pf=util.js"></script>
+      </tpl:odysseyJsUtil>
+    </tpl:Block>
+
+    <tpl:Block name="head-links">
       <link rel=alternate type=application/atom+xml title={{tpl:odysseyLang id="feed-title" is_attr="1"}} href={{tpl:BlogFeedURL is_attr="1"}}>
     </tpl:Block>
 

@@ -132,6 +132,9 @@ msgstr "Apparence"
 msgid "section-advanced-seo"
 msgstr "Optimisation du référencement"
 
+msgid "section-advanced-js"
+msgstr "Javascript"
+
 msgid "settings-global-unit-title"
 msgstr "Unité de base"
 
@@ -758,6 +761,9 @@ msgstr "Ajouter des métadonnées au format JSON"
 
 msgid "settings-advanced-json-description"
 msgstr "Utile pour le référencement sur les moteurs de recherche."
+
+msgid "settings-advanced-jsutil-title"
+msgstr "Charger le fichier Dotclear util.js"
 
 msgid "settings-odysseystyles-title"
 msgstr "Tous les styles"

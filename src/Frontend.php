@@ -40,6 +40,7 @@ class Frontend extends Process
         ]);
 
         // Blocks.
+        App::frontend()->template()->addBlock('odysseyJsUtil', FrontendBlocks::odysseyJsUtil(...));
         App::frontend()->template()->addBlock('odysseyHeaderMinimal', FrontendBlocks::odysseyHeaderMinimal(...));
         App::frontend()->template()->addBlock('odysseySiteTitle', FrontendBlocks::odysseySiteTitle(...));
         App::frontend()->template()->addBlock('odysseyPostPagination', FrontendBlocks::odysseyPostPagination(...));
@@ -53,6 +54,7 @@ class Frontend extends Process
         App::frontend()->template()->addValue('odysseyMetaRobots', FrontendValues::odysseyMetaRobots(...));
         App::frontend()->template()->addValue('odysseyMetaCanonical', FrontendValues::odysseyMetaCanonical(...));
         App::frontend()->template()->addValue('odysseyStylesheetURL', FrontendValues::odysseyStylesheetURL(...));
+        App::frontend()->template()->addValue('odysseyJqueryURL', FrontendValues::odysseyJqueryURL(...));
         App::frontend()->template()->addValue('odysseyScreenReaderLinks', FrontendValues::odysseyScreenReaderLinks(...));
         App::frontend()->template()->addValue('odysseyHeaderImage', FrontendValues::odysseyHeaderImage(...));
         App::frontend()->template()->addValue('odysseyBlogNameLink', FrontendValues::odysseyBlogNameLink(...));

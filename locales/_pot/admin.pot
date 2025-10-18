@@ -132,6 +132,9 @@ msgstr ""
 msgid "section-advanced-seo"
 msgstr ""
 
+msgid "section-advanced-js"
+msgstr ""
+
 msgid "settings-global-unit-title"
 msgstr ""
 
@@ -757,6 +760,9 @@ msgid "settings-advanced-json-title"
 msgstr ""
 
 msgid "settings-advanced-json-description"
+msgstr ""
+
+msgid "settings-advanced-jsutil-title"
 msgstr ""
 
 msgid "settings-odysseystyles-title"

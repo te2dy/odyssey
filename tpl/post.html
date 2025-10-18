@@ -14,8 +14,7 @@
   </tpl:EntryIf>
 </tpl:Block>
 
-<tpl:Block name="head-link">
-  <link rel=stylesheet href={{tpl:odysseyStylesheetURL}}>
+<tpl:Block name="head-links">
   <link rel=alternate type=application/atom+xml title={{tpl:odysseyLang id="feed-title" is_attr="1"}} href={{tpl:BlogFeedURL is_attr="1"}}>
   <link rel=alternate type=application/atom+xml title={{tpl:odysseyLang id="feed-comments-title" is_attr="1"}} href={{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}}>
   <tpl:EntryIf pings_active="1"><link rel=pingback href={{tpl:BlogXMLRPCURL is_attr="1"}}></tpl:EntryIf>
@@ -37,11 +36,8 @@
   {{tpl:include src="_entry-post.html"}}
 </tpl:Block>
 
-<tpl:Block name="footer-scripts-jquery">
-  <script src="{{tpl:BlogQmarkURL}}pf={{tpl:BlogJsJQuery}}/jquery.js"></script>
-
+<tpl:Block name="footer-scripts">
   <tpl:EntryIf show_comments="1">
-    <script src="{{tpl:BlogQmarkURL}}pf=util.js"></script>
     <script type=application/json id=dc_post_remember_str-data>
       {"post_remember_str": "{{tpl:lang reactions-comment-remember-me}}"}
     </script>

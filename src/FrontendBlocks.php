@@ -14,6 +14,15 @@ use Dotclear\Core\Frontend\Ctx;
 
 class FrontendBlocks
 {
+    public static function odysseyJsUtil($attr, $content): string
+    {
+        if (My::settings()->advanced_js_util === false) {
+            return '';
+        }
+
+        return $content;
+    }
+
     /**
      * Displays the right blog header on posts.
      *

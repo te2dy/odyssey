@@ -81,7 +81,8 @@ class My extends MyTheme
                 'name'         => __('section-advanced'),
                 'sub_sections' => [
                     'appearance' => __('section-advanced-appearance'),
-                    'seo'        => __('section-advanced-seo')
+                    'seo'        => __('section-advanced-seo'),
+                    'js'         => __('section-advanced-js')
                 ]
             ]
         ];
@@ -880,6 +881,15 @@ class My extends MyTheme
             'section'     => ['advanced', 'seo']
         ];
 
+        $default_settings['advanced_js_util'] = [
+            'title'       => __('settings-advanced-jsutil-title'),
+            'description' => '',
+            'label'       => 'Load util.js',
+            'type'        => 'checkbox',
+            'default'     => true,
+            'section'     => ['advanced', 'js']
+        ];
+
         $default_settings['styles'] = [
             'title'     => __('settings-odysseystyles-title'),
             'label'     => 'Styles based on configurator options',
@@ -912,10 +922,10 @@ class My extends MyTheme
             $value = self::escapeURL($value);
         }
 
-        if (str_contains($value, ' ') === false
-            && str_contains($value, '=') === false
-            && str_contains($value, '"') === false
-            && str_contains($value, '&quot;') === false
+        if (!str_contains($value, ' ')
+            && !str_contains($value, '=')
+            && !str_contains($value, '"')
+            && !str_contains($value, '&quot;')
         ) {
             return $value;
         }
