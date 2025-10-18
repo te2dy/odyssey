@@ -12,9 +12,6 @@ namespace Dotclear\Theme\odyssey;
 use Dotclear\App;
 use Dotclear\Core\BlogWorkspace;
 use Dotclear\Core\Process;
-use Dotclear\Core\Backend\Notices;
-use Dotclear\Core\Backend\Page;
-use Dotclear\Core\Backend\ThemeConfig;
 use Dotclear\Helper\Date;
 use Dotclear\Helper\File\Files;
 use Dotclear\Helper\File\Path;
@@ -84,7 +81,7 @@ class Config extends Process
 
                     App::cache()->emptyTemplatesCache();
 
-                    Notices::addSuccessNotice(__('settings-notice-reset'));
+                    App::backend()->notices()->addSuccessNotice(__('settings-notice-reset'));
 
                     App::backend()->url()->redirect(
                         'admin.blog.theme',
@@ -137,7 +134,7 @@ class Config extends Process
                             Files::deltree($odyssey_folder);
                         }
 
-                        Notices::addSuccessNotice(__('settings-notice-file-deleted'));
+                        App::backend()->notices()->addSuccessNotice(__('settings-notice-file-deleted'));
 
                         App::backend()->url()->redirect(
                             'admin.blog.theme',
@@ -152,7 +149,7 @@ class Config extends Process
                         Files::deltree($odyssey_var_folder);
                     }
 
-                    Notices::addSuccessNotice(__('settings-notice-files-deleted'));
+                    App::backend()->notices()->addSuccessNotice(__('settings-notice-files-deleted'));
 
                     App::backend()->url()->redirect(
                         'admin.blog.theme',
@@ -300,7 +297,7 @@ class Config extends Process
 
         // Displays a success notice.
         if ($notice_success) {
-            Notices::addSuccessNotice($notice_success);
+            App::backend()->notices()->addSuccessNotice($notice_success);
         }
 
         // Redirects.
@@ -1503,9 +1500,29 @@ class Config extends Process
         if ($styles_custom) {
             $styles_default = '';
 
+<<<<<<< Updated upstream
             // Gets default CSS content.
             if (file_exists($css_default_path_file)) {
                 $styles_default = (string) file_get_contents($css_default_path_file) ?: '';
+=======
+        // Deletes the previous CSS file if it exists.
+        App::backend()->themeConfig()->dropCss($css_folder, $css_file_name);
+
+        // Creates an Odyssey public folder if it does not exist.
+        Files::makeDir(My::publicFolder('path'));
+
+        // Creates the CSS file.
+        if ($css && App::backend()->themeConfig()->canWriteCss($css_folder, true)) {
+            App::backend()->themeConfig()->writeCss($css_folder, $css_file_name, $css);
+        } else {
+            App::backend()->themeConfig()->dropCss($css_folder, $css_file_name);
+
+            // Removes the CSS folder if it exists and is empty.
+            if (Files::isDeletable(App::backend()->themeConfig()->cssPath($css_folder))
+                && empty(Files::getDirList(App::backend()->themeConfig()->cssPath($css_folder))['files'])
+            ) {
+                Files::deltree(App::backend()->themeConfig()->cssPath($css_folder));
+>>>>>>> Stashed changes
             }
 
             // Creates a custom CSS file in the public folder.
@@ -1586,7 +1603,7 @@ class Config extends Process
                     // Then, imports all settings.
                     self::_saveSettings($settings_array, [], __('settings-notice-upload-success'));
                 } else {
-                    Notices::addErrorNotice(__('settings-notice-upload-file-not-valid'));
+                    App::backend()->notices()->addErrorNotice(__('settings-notice-upload-file-not-valid'));
 
                     App::backend()->url()->redirect(
                         'admin.blog.theme',
@@ -1595,7 +1612,7 @@ class Config extends Process
                 }
             } else {
                 // If the uploaded file is not a JSON file.
-                Notices::addErrorNotice(__('settings-notice-upload-file-not-valid'));
+                App::backend()->notices()->addErrorNotice(__('settings-notice-upload-file-not-valid'));
 
                 App::backend()->url()->redirect(
                     'admin.blog.theme',
@@ -1604,7 +1621,7 @@ class Config extends Process
             }
         } else {
             // If there is no file uploaded.
-            Notices::addErrorNotice(__('settings-notice-upload-no-file'));
+            App::backend()->notices()->addErrorNotice(__('settings-notice-upload-no-file'));
 
             App::backend()->url()->redirect(
                 'admin.blog.theme',
@@ -1637,7 +1654,7 @@ class Config extends Process
             }
         } else {
             // If the file is empty.
-            Notices::addErrorNotice(__('settings-notice-restore-error'));
+            App::backend()->notices()->addErrorNotice(__('settings-notice-restore-error'));
 
             App::backend()->url()->redirect(
                 'admin.blog.theme',
@@ -1666,8 +1683,13 @@ class Config extends Process
         }
 
         if (count($custom_settings) === 0) {
+<<<<<<< Updated upstream
             // If no custom setting has been set.
             Notices::addErrorNotice(__('settings-notice-save-fail'));
+=======
+            // If there is no custom settings.
+            App::backend()->notices()->addErrorNotice(__('settings-notice-save-fail'));
+>>>>>>> Stashed changes
         } else {
             $backups_path = My::odysseyVarFolder('path', '/backups');
 
@@ -1686,12 +1708,22 @@ class Config extends Process
             // Creates the JSON file.
             Files::putContent($backups_path, json_encode($custom_settings));
 
+<<<<<<< Updated upstream
             Notices::addNotice(
                 'success',
                 '<p>' . sprintf(__('settings-notice-save-success'), My::id(), '#odyssey-backups') . '</p>' .
                 '<a class="button submit" href=' . My::displayAttr(urldecode(Page::getVF(My::odysseyVarFolder('vf', '/backups/' . $file_name . '.json'))), 'url') . ' download>' . __('settings-notice-save-success-link') . '</a>',
                 ['divtag' => true]
             );
+=======
+            $notice  = '<p>' . sprintf(__('settings-notice-save-success'), My::id(), '#odyssey-backups') . '</p>';
+            $notice .= '<p>' . __('settings-notice-save-success-warning') . '</p>';
+            $notice .= '<a class="button submit" href=' . My::displayAttr(urldecode(App::backend()->page()->getVF(My::varFolder('vf', '/backups/' . $file_name . '.json'))), 'url') . ' download=' . My::displayAttr($file_name) . '>';
+            $notice .= __('settings-notice-save-success-link');
+            $notice .= '</a>';
+
+            App::backend()->notices()->addNotice('success', $notice, ['divtag' => true]);
+>>>>>>> Stashed changes
 
             App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
         }
@@ -1973,12 +2005,16 @@ class Config extends Process
             return;
         }
 
+<<<<<<< Updated upstream
         Page::openModule(
             My::name(),
             My::cssLoad('/css/admin.min.css') . My::jsLoad('/js/admin.min.js')
         );
 
         echo Notices::getNotices();
+=======
+        echo App::backend()->notices()->getNotices();
+>>>>>>> Stashed changes
 
         // Add a form before the main form to upload a configuration file.
         if (isset($_GET['config-upload']) && $_GET['config-upload'] === '1') {
@@ -2173,6 +2209,7 @@ class Config extends Process
 
                             $file_name_without_extension = substr(basename($file_path), 0, -5);
 
+<<<<<<< Updated upstream
                             $restore_url = App::backend()->url()->get(
                                 'admin.blog.theme',
                                 [
@@ -2181,6 +2218,9 @@ class Config extends Process
                                     'restore' => My::escapeURL($file_name_without_extension)
                                 ]
                             );
+=======
+                    $download_url = App::backend()->page()->getVF(My::varFolder('vf', '/backups/' . $file_name));
+>>>>>>> Stashed changes
 
                             $download_url = Page::getVF(My::odysseyVarFolder('vf', '/backups/' . basename($backup_path)));
 

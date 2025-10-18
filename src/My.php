@@ -12,7 +12,6 @@ namespace Dotclear\Theme\odyssey;
 use Dotclear\App;
 use Dotclear\Module\MyTheme;
 use Dotclear\Helper\File\Files;
-use Dotclear\Helper\File\Path;
 use Dotclear\Helper\Html\Html;
 
 class My extends MyTheme

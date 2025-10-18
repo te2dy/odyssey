@@ -10,7 +10,6 @@
 namespace Dotclear\Theme\odyssey;
 
 use Dotclear\App;
-use Dotclear\Core\Backend\ThemeConfig;
 use Dotclear\Core\Process;
 
 class Install extends Process

@@ -12,8 +12,6 @@ namespace Dotclear\Theme\odyssey;
 use ArrayObject;
 use Dotclear\App;
 use Dotclear\Core\Process;
-use Dotclear\Core\Frontend\Ctx;
-use Dotclear\Core\Frontend\Url;
 use Dotclear\Helper\Date;
 use Dotclear\Helper\Text;
 use Dotclear\Helper\File\Path;
@@ -57,10 +55,57 @@ class FrontendBehaviors
             $desc  = '';
             $img   = '';
 
+<<<<<<< Updated upstream
             switch (App::url()->type) {
                 case 'post':
                 case 'pages':
                     $title = App::frontend()->context()->posts->post_title;
+=======
+        switch (App::url()->type) {
+            case 'post':
+            case 'pages':
+                $title = App::frontend()->context()->posts->post_title;
+
+                $desc = App::frontend()->context()->posts->getExcerpt() ?: App::frontend()->context()->posts->getContent();
+                $desc = My::cleanStr($desc);
+
+                if (strlen($desc) > 180) {
+                    $desc = Text::cutString($desc, 179) . '…';
+                }
+
+                $img_url_rel = App::frontend()->context()->EntryFirstImageHelper('o', true, '', true);
+
+                if ($img_url_rel) {
+                    $img = App::blog()->url() . $img_url_rel;
+                }
+
+                break;
+            case 'default':
+            case 'default-page':
+            case 'static':
+                $title = App::blog()->name;
+
+                // Specific title for the post list page when a static home page has been set.
+                if (App::blog()->settings()->system->static_home && App::url()->type === 'default') {
+                    $title = sprintf(
+                        __('meta-title-static-postlist'),
+                        $title
+                    );
+                }
+
+                $page = (int) App::frontend()->context()->PaginationPosition();
+
+                if ($page > 1) {
+                    $desc = sprintf(__('meta-social-page-with-number'), $page);
+                }
+
+                if (My::settings()->advanced_meta_description || App::blog()->desc) {
+                    if ($desc) {
+                        $desc .= ' – ';
+                    }
+
+                    $desc .= My::settings()->advanced_meta_description ?: App::blog()->desc ?: '';
+>>>>>>> Stashed changes
 
                     $desc = App::frontend()->context()->posts->getExcerpt() ?: App::frontend()->context()->posts->getContent();
                     $desc = My::cleanStr($desc);
@@ -187,6 +232,7 @@ class FrontendBehaviors
                         );
                     }
 
+<<<<<<< Updated upstream
                     $json_ld = [
                         '@context'    => 'http://schema.org',
                         '@type'       => 'WebPage',
@@ -197,6 +243,61 @@ class FrontendBehaviors
                         'name'        => $blog_name,
                         'description' => My::settings()->advanced_meta_description ?: App::blog()->desc,
                         'url'         => App::blog()->url
+=======
+                // Social links
+                $social_sites   = My::socialSites();
+                $social_links   = [];
+                $social_exclude = ['phone', 'signal', 'sms', 'whatsapp'];
+
+                foreach ($social_sites as $id => $data) {
+                    $footer_social_id = 'footer_social_' . $id;
+
+                    if (My::settings()->$footer_social_id !== null && !in_array($id, $social_exclude, true)) {
+                        $json_ld['sameAs'][] = My::settings()->$footer_social_id;
+                    }
+                }
+
+                $json_ld['copyrightHolder'] = App::blog()->settings->system->editor;
+                $json_ld['copyrightNotice'] = App::blog()->settings->system->copyright_notice;
+
+                $json_ld['inLanguage'] = App::blog()->settings()->system->lang;
+
+                break;
+            case 'post':
+                $json_ld = [
+                    '@context' => 'http://schema.org',
+                    '@type'    => 'BlogPosting'
+                ];
+
+                $json_ld['headline'] = App::frontend()->context()->posts->post_title;
+
+                $json_ld['description'] = My::cleanStr(App::frontend()->context()->posts->post_excerpt_xhtml);
+
+                $json_ld['articleBody'] = App::frontend()->context()->posts->post_content_xhtml;
+
+                // First image
+                if (App::frontend()->context()->EntryFirstImageHelper('o', false, '', true)) {
+                    $image_path = App::config()->dotclearRoot() . App::frontend()->context()->EntryFirstImageHelper('o', false, '', true);
+
+                    if (file_exists($image_path)) {
+                        list($width, $height) = getimagesize($image_path);
+
+                        $json_ld['image'] = [
+                            '@type'  => 'ImageObject',
+                            'url'    => App::blog()->url() . App::frontend()->context()->EntryFirstImageHelper('o', false, '', true),
+                            'width'  => (int) $width,
+                            'height' => (int) $height
+                        ];
+                    }
+                }
+
+                // Author
+                if (App::frontend()->context()->posts->user_displayname) {
+                    $json_ld['author'] = [
+                        '@type' => 'Person',
+                        'name'  => App::frontend()->context()->posts->user_displayname,
+                        'url'   => App::frontend()->context()->posts->user_url
+>>>>>>> Stashed changes
                     ];
 
                     // Logo
@@ -245,12 +346,19 @@ class FrontendBehaviors
 
                     $json_ld['description'] = My::cleanStr(App::frontend()->context()->posts->post_excerpt_xhtml);
 
+<<<<<<< Updated upstream
                     $json_ld['articleBody'] = App::frontend()->context()->posts->post_content_xhtml;
+=======
+                // First image
+                if (App::frontend()->context()->EntryFirstImageHelper('o', false, '', true)) {
+                    $image_path = App::config()->dotclearRoot() . App::frontend()->context()->EntryFirstImageHelper('o', false, '', true);
+>>>>>>> Stashed changes
 
                     // First image
                     if (Ctx::EntryFirstImageHelper('o', false, '', true)) {
                         $image_path = App::config()->dotclearRoot() . Ctx::EntryFirstImageHelper('o', false, '', true);
 
+<<<<<<< Updated upstream
                         if (file_exists($image_path)) {
                             list($width, $height) = getimagesize($image_path);
 
@@ -275,6 +383,13 @@ class FrontendBehaviors
                             '@type' => 'Person',
                             'name'  => trim(App::frontend()->context()->posts->user_name . ' ' . App::frontend()->context()->posts->user_firstname),
                             'url'   => App::frontend()->context()->posts->user_url
+=======
+                        $json_ld['image'] = [
+                            '@type'  => 'ImageObject',
+                            'url'    => App::blog()->url() . App::frontend()->context()->EntryFirstImageHelper('o', false, '', true),
+                            'width'  => (int) $width,
+                            'height' => (int) $height
+>>>>>>> Stashed changes
                         ];
                     }
 
