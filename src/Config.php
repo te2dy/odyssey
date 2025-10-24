@@ -140,9 +140,9 @@ class Config extends Process
 
                 if (isset($_GET['restore_delete_file'])) {
                     // Deletes a configuration file.
-                    $delete_file_name = $_GET['restore_delete_file'] . '.json';
+                    $delete_file_name = Files::tidyFileName($_GET['restore_delete_file']) . '.json';
                     $odyssey_folder   = My::varFolder('path');
-                    $backups_folder   = My::varFolder('path', '/backups/');
+                    $backups_folder   = $odyssey_folder . '/backups/';
                     $delete_file_path = $backups_folder . $delete_file_name;
 
                     if (Path::real($delete_file_path)) {
