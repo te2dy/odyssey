@@ -51,17 +51,8 @@ class Uninstall extends Process
 
         // Removes the odyssey public and var folders.
         if (isset($_POST['delete_odyssey_public_folder'])) {
-            $odyssey_public_path = Path::real(My::publicFolder('path'));
-
-            if ($odyssey_public_path) {
-                Files::deltree($odyssey_public_path);
-            }
-
-            $odyssey_var_path = Path::real(My::varFolder('path'));
-
-            if ($odyssey_var_path) {
-                Files::deltree($odyssey_var_path);
-            }
+            Files::deltree(My::publicFolder('path'));
+            Files::deltree(My::varFolder('path'));
         }
 
         return true;

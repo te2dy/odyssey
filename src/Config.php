@@ -149,10 +149,7 @@ class Config extends Process
                         // Deletes the file and directories if they are empty.
                         unlink($delete_file_path);
 
-                        if (Path::real($odyssey_folder)
-                            && Path::real($backups_folder)
-                            && empty(Files::getDirList($backups_folder)['files'])
-                        ) {
+                        if (Path::real($backups_folder) && empty(Files::getDirList($backups_folder)['files'])) {
                             Files::deltree($odyssey_folder);
                         }
 
@@ -167,11 +164,7 @@ class Config extends Process
 
                 if (isset($_GET['restore_delete_all'])) {
                     // Deletes all configuration files.
-                    $odyssey_var_folder = My::varFolder('path');
-
-                    if (Path::real($odyssey_var_folder)) {
-                        Files::deltree($odyssey_var_folder);
-                    }
+                    Files::deltree(My::varFolder('path'));
 
                     Notices::addSuccessNotice(__('settings-notice-files-deleted'));
 
@@ -699,7 +692,7 @@ class Config extends Process
         $default_settings = My::settingsDefault();
 
         // Page width
-        $page_width_data  = self::_sanitizePageWidth(
+        $page_width_data = self::_sanitizePageWidth(
             $settings['global_unit'] ?? 'em',
             isset($settings['global_page_width_value']) ? (int) $settings['global_page_width_value'] : 30
         );
@@ -855,7 +848,7 @@ class Config extends Process
 
         if (isset($settings['global_color_primary'])) {
             if ($settings['global_color_primary'] !== 'custom'
-                && in_array($settings['global_color_primary'], $primary_colors_allowed, true)
+                && in_array($settings['global_color_primary'], $primary_colors_allowed)
             ) {
                 // Light
                 $color_primary_light = $primary_colors['light'][$settings['global_color_primary']];
@@ -1349,10 +1342,7 @@ class Config extends Process
                  * and its folder; then, created the folder again
                  * to store the image later.
                  */
-                if (is_dir($img_folder_path)) {
-                    Files::deltree($img_folder_path);
-                }
-
+                Files::deltree($img_folder_path);
                 Files::makeDir($img_folder_path, true);
 
                 $image_name     = $image_data['value']['name'] ?? null;
