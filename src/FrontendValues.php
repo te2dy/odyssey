@@ -213,7 +213,7 @@ class FrontendValues
                 return $img_tag_start . '<img alt=' . My::displayAttr($img_description) . $img_tag_id . ' src=' . My::displayAttr($image_url, 'url') . $srcset . $sizes . '>' . $img_tag_end;
             }
 
-            return $img_tag_start . '<a href=' . My::displayAttr(App::blog()->url, 'url') . $img_tag_id . ' rel=home><img alt=' . My::displayAttr($img_description) . ' src=' . My::displayAttr($image_url, 'url') . $srcset . $sizes . '></a>' . $img_tag_end;
+            return $img_tag_start . '<a href=' . My::displayAttr(My::blogBaseURL(), 'url') . $img_tag_id . ' rel=home><img alt=' . My::displayAttr($img_description) . ' src=' . My::displayAttr($image_url, 'url') . $srcset . $sizes . '></a>' . $img_tag_end;
         }
 
         return '';
@@ -230,7 +230,7 @@ class FrontendValues
         if ((App::blog()->settings()->system->static_home && App::url()->type !== 'static')
             || (!App::blog()->settings()->system->static_home && App::url()->type !== 'default')
         ) {
-            return '<div id=site-title><a href=' . My::displayAttr(App::blog()->url, 'url') . ' rel=home><h1>' . Html::escapeHTML(App::blog()->name) . '</h1></a></div>';
+            return '<div id=site-title><a href=' . My::displayAttr(My::blogBaseURL(), 'url') . ' rel=home><h1>' . Html::escapeHTML(App::blog()->name) . '</h1></a></div>';
         }
 
         return '<h1 id=site-title>' . Html::escapeHTML(App::blog()->name) . '</h1>';

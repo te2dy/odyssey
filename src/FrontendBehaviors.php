@@ -214,7 +214,7 @@ class FrontendBehaviors
 
                         $json_ld['publisher']['logo'] = [
                             '@type'  => 'ImageObject',
-                            'url'    => App::blog()->url() . My::settings()->header_image['url'],
+                            'url'    => My::blogBaseURL() . My::settings()->header_image['url'],
                             'width'  => (int) $width,
                             'height' => (int) $height
                         ];
@@ -261,7 +261,7 @@ class FrontendBehaviors
 
                         $json_ld['image'] = [
                             '@type'  => 'ImageObject',
-                            'url'    => App::blog()->url() . Ctx::EntryFirstImageHelper('o', false, '', true),
+                            'url'    => My::blogBaseURL() . Ctx::EntryFirstImageHelper('o', false, '', true),
                             'width'  => (int) $width,
                             'height' => (int) $height
                         ];
@@ -298,7 +298,7 @@ class FrontendBehaviors
 
                         $json_ld['publisher']['logo'] = [
                             '@type'  => 'ImageObject',
-                            'url'    => App::blog()->url() . My::settings()->header_image['url'],
+                            'url'    => My::blogBaseURL() . My::settings()->header_image['url'],
                             'width'  => (int) $width,
                             'height' => (int) $height
                         ];
@@ -359,7 +359,7 @@ class FrontendBehaviors
 
                         $json_ld['image'] = [
                             '@type'  => 'ImageObject',
-                            'url'    => App::blog()->url() . Ctx::EntryFirstImageHelper('o', false, '', true),
+                            'url'    => My::blogBaseURL() . Ctx::EntryFirstImageHelper('o', false, '', true),
                             'width'  => (int) $width,
                             'height' => (int) $height
                         ];
@@ -396,7 +396,7 @@ class FrontendBehaviors
 
                         $json_ld['publisher']['logo'] = [
                             '@type'  => 'ImageObject',
-                            'url'    => App::blog()->url() . My::settings()->header_image['url'],
+                            'url'    => My::blogBaseURL() . My::settings()->header_image['url'],
                             'width'  => (int) $width,
                             'height' => (int) $height
                         ];
@@ -484,8 +484,8 @@ class FrontendBehaviors
                 $src_value = $src_match[1] ?? '';
 
                 // Transforms absolute URLs in relative ones.
-                if (str_starts_with($src_value, App::blog()->url())) {
-                    $src_value = str_replace(App::blog()->url(), '', $src_value);
+                if (str_starts_with($src_value, My::blogBaseURL())) {
+                    $src_value = str_replace(My::blogBaseURL(), '', $src_value);
                 }
 
                 // Builds an array that will contain all image sizes.

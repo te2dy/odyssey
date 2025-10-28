@@ -43,6 +43,8 @@ use Dotclear\Helper\Html\Form\Textarea;
 
 class Config extends Process
 {
+    private static array $redirect_query = ['module' => 'odyssey', 'conf' => '1'];
+
     public static function init(): bool
     {
         if (!self::status(My::checkContext(My::CONFIG))) {
@@ -95,18 +97,12 @@ class Config extends Process
 
                     Notices::addSuccessNotice(__('settings-notice-reset'));
 
-                    App::backend()->url()->redirect(
-                        'admin.blog.theme',
-                        ['module' => My::id(), 'conf' => '1']
-                    );
+                    App::backend()->url()->redirect('admin.blog.theme', self::$redirect_query);
                 }
 
                 if (isset($_POST['import-config'])) {
                     // When the upload configuration file link is clicked, redirects to the upload page.
-                    App::backend()->url()->redirect(
-                        'admin.blog.theme',
-                        ['module' => My::id(), 'conf' => '1', 'config-upload' => '1']
-                    );
+                    App::backend()->url()->redirect('admin.blog.theme', array_merge(self::$redirect_query, ['config-upload' => '1']));
                 }
 
                 if (isset($_POST['config-upload-submit'])) {
@@ -116,10 +112,7 @@ class Config extends Process
 
                 if (isset($_POST['config-upload-cancel'])) {
                     // Redirects if the cancel upload button has been clicked.
-                    App::backend()->url()->redirect(
-                        'admin.blog.theme',
-                        ['module' => My::id(), 'conf' => '1']
-                    );
+                    App::backend()->url()->redirect('admin.blog.theme', self::$redirect_query);
                 }
             } catch (Exception $e) {
                 App::error()->add($e->getMessage());
@@ -155,10 +148,7 @@ class Config extends Process
 
                         Notices::addSuccessNotice(__('settings-notice-file-deleted'));
 
-                        App::backend()->url()->redirect(
-                            'admin.blog.theme',
-                            ['module' => My::id(), 'conf' => '1']
-                        );
+                        App::backend()->url()->redirect('admin.blog.theme', self::$redirect_query);
                     }
                 }
 
@@ -168,10 +158,7 @@ class Config extends Process
 
                     Notices::addSuccessNotice(__('settings-notice-files-deleted'));
 
-                    App::backend()->url()->redirect(
-                        'admin.blog.theme',
-                        ['module' => My::id(), 'conf' => '1']
-                    );
+                    App::backend()->url()->redirect('admin.blog.theme', self::$redirect_query);
                 }
             } catch (Exception $e) {
                 App::error()->add($e->getMessage());
@@ -187,7 +174,7 @@ class Config extends Process
      * @param array  $http_post       All parameters sent with the theme configurator form.
      * @param array  $http_files      All files uploaded from the theme configurator form.
      * @param string $notice_success  A text displayed after successful parameter saving.
-     * @param array  $redirect_params Parameters to add to the redirection after saving.
+     * @param array  $redirect_params Parameters to add to the redirection URL after saving.
      * @param bool   $from_json       If we are currently importing a JSON configuration file.
      *
      * @return void
@@ -320,16 +307,10 @@ class Config extends Process
             Notices::addSuccessNotice($notice_success);
         }
 
-        // Redirects.
-        $redirect_params = array_merge(
-            [
-                'module' => My::id(),
-                'conf'   => '1'
-            ],
-            $redirect_params
-        );
+        var_dump($redirect_params);
 
-        App::backend()->url()->redirect('admin.blog.theme', $redirect_params);
+        // Redirects.
+        App::backend()->url()->redirect('admin.blog.theme', array_merge(self::$redirect_query, $redirect_params));
     }
 
     /**

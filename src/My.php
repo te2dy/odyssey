@@ -1417,6 +1417,22 @@ class My extends MyTheme
     }
 
     /**
+     * Gets the URL of the blog.
+     *
+     * @return string The URL.
+     */
+    public static function blogBaseURL(): string
+    {
+        $parsed_url = parse_url(App::blog()->url);
+
+        $scheme = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
+        $host   = $parsed_url['host'] ?? '';
+        $port   = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
+
+        return $scheme . $host . $port;
+    }
+
+    /**
      * Validates JSON.
      *
      * @param string $string The JSON input.
