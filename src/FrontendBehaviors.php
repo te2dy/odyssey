@@ -79,7 +79,7 @@ class FrontendBehaviors
                 $img_url_rel = Ctx::EntryFirstImageHelper('o', true, '', true);
 
                 if ($img_url_rel) {
-                    $img = App::blog()->url() . $img_url_rel;
+                    $img = My::blogBaseURL() . $img_url_rel;
                 }
 
                 break;
