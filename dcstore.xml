@@ -2,10 +2,10 @@
 <modules xmlns:da="http://dotaddict.org/da/">
   <module id="odyssey">
     <name>Odyssey</name>
-    <version>2.14</version>
+    <version>2.14.1</version>
     <author>Teddy</author>
     <desc>A simple and customizable theme to write your own odyssey</desc>
-    <file>https://github.com/te2dy/odyssey/releases/download/2.14/odyssey.zip</file>
+    <file>https://github.com/te2dy/odyssey/releases/download/2.14.1/odyssey.zip</file>
     <da:dcmin>2.30</da:dcmin>
     <da:details>https://themes.dotaddict.org/galerie-dc2/details/odyssey</da:details>
     <da:support>https://forum.dotclear.org/viewtopic.php?id=51635</da:support>
