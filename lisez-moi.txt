@@ -19,6 +19,9 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
+=== 2.14.1 - 1er novembre 2025 ===
+- Correction : erreur PHP à l’affichage de la coloration syntaxique.
+
 === 2.14 - 1er novembre 2025 ===
 - Amélioration : l’éditeur de code CSS prend en compte les préférences de coloration syntaxique de l’utilisateur.
 - Correction : réintroduction de la fonction My::blogBaseURL(), sans laquelle certains problèmes de liens pouvaient survenir.
