@@ -67,8 +67,21 @@ class Config extends Process
         App::behavior()->addBehavior(
             'adminPageHTMLHead',
             function () {
+                // To support textarea color syntax.
+                $code_mirror = '';
+
+                if (App::auth()->prefs()->interface->colorsyntax) {
+                    $code_mirror = Page::jsLoadCodeMirror(
+                        App::auth()->prefs()->interface->colorsyntax_theme ?: 'default',
+                        true,
+                        ['css']
+                    );
+                }
+
+                // Loads files.
                 echo My::cssLoad('admin.min.css'),
-                My::jsLoad('admin.min.js');
+                My::jsLoad('admin.min.js'),
+                $code_mirror;
             }
         );
 
@@ -1823,6 +1836,9 @@ class Config extends Process
 
                     break;
                 case 'textarea' :
+                    // Expands CSS textarea.
+                    $rows = $setting_id !== 'styles_custom' ? 3 : 10;
+
                     $the_setting[] = (new Para())
                         ->id($setting_id . '-input')
                         ->items([
@@ -1831,7 +1847,7 @@ class Config extends Process
                             (new Textarea($setting_id, $setting_value))
                                 ->cols(60)
                                 ->placeholder($placeholder)
-                                ->rows(3)
+                                ->rows($rows)
                         ]);
 
                     if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
@@ -2270,5 +2286,18 @@ class Config extends Process
             ->fields($fields)
             ->method('post')
             ->render();
+
+        if (App::auth()->prefs()->interface->colorsyntax) {
+            echo App::backend()->page()->jsRunCodeMirror(
+                [
+                    [
+                        'name'  => 'styles_custom',
+                        'id'    => 'styles_custom',
+                        'mode'  => 'css',
+                        'theme' => App::auth()->prefs()->interface->colorsyntax_theme ?: 'default',
+                    ],
+                ]
+            );
+        }
     }
 }
