@@ -2288,16 +2288,14 @@ class Config extends Process
             ->render();
 
         if (App::auth()->prefs()->interface->colorsyntax) {
-            echo App::backend()->page()->jsRunCodeMirror(
+            echo Page::jsRunCodeMirror([
                 [
-                    [
-                        'name'  => 'styles_custom',
-                        'id'    => 'styles_custom',
-                        'mode'  => 'css',
-                        'theme' => App::auth()->prefs()->interface->colorsyntax_theme ?: 'default',
-                    ],
+                    'name'  => 'styles_custom',
+                    'id'    => 'styles_custom',
+                    'mode'  => 'css',
+                    'theme' => App::auth()->prefs()->interface->colorsyntax_theme ?: 'default',
                 ]
-            );
+            ]);
         }
     }
 }
