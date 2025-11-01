@@ -67,21 +67,17 @@ class Config extends Process
         App::behavior()->addBehavior(
             'adminPageHTMLHead',
             function () {
-                // To support textarea color syntax.
-                $code_mirror = '';
+                echo My::cssLoad('admin.min.css'),
+                My::jsLoad('admin.min.js');
 
+                // To support textarea color syntax.
                 if (App::auth()->prefs()->interface->colorsyntax) {
-                    $code_mirror = Page::jsLoadCodeMirror(
+                    echo Page::jsLoadCodeMirror(
                         App::auth()->prefs()->interface->colorsyntax_theme ?: 'default',
                         true,
                         ['css']
                     );
                 }
-
-                // Loads files.
-                echo My::cssLoad('admin.min.css'),
-                My::jsLoad('admin.min.js'),
-                $code_mirror;
             }
         );
 
