@@ -537,10 +537,19 @@ msgstr ""
 msgid "settings-reactions-other-always"
 msgstr ""
 
-msgid "settings-reactions-otheremail-title"
+msgid "settings-reactions-other-email-title"
 msgstr ""
 
-msgid "settings-reactions-otheremail-description"
+msgid "settings-reactions-other-email-description"
+msgstr ""
+
+msgid "settings-reactions-other-email-disabled-default"
+msgstr ""
+
+msgid "settings-reactions-other-email-author"
+msgstr ""
+
+msgid "settings-reactions-other-email-blog"
 msgstr ""
 
 msgid "settings-reactions-other-bluesky-title"

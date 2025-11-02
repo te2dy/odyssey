@@ -537,11 +537,20 @@ msgstr "Yes, only when comments are opened"
 msgid "settings-reactions-other-always"
 msgstr "Yes, always"
 
-msgid "settings-reactions-otheremail-title"
+msgid "settings-reactions-other-email-title"
 msgstr "Allow replies by e-mail"
 
-msgid "settings-reactions-otheremail-description"
-msgstr "The e-mail address used here is that of the author of the post, not the one defined in the theme's social settings. Warning: the e-mail address will be revealed and could be used by malicious parties (spam). To avoid revealing your address, you can try the <a href="%s">Signal</a> plugin or a third-party service such as <a href=https://relay.firefox.com/>Firefox Relay</a>."
+msgid "settings-reactions-other-email-description"
+msgstr "You can choose to use the email address of the post author or the one defined in <a href=#section-social>the theme's social settings</a>. Warning: this address will be made public; it could be used by malicious individuals and increase the risk of spam. To avoid revealing your address, you can try the <a href="%s">Signal</a> plugin or a third-party service such as <a href=https://relay.firefox.com/>Firefox Relay</a>."
+
+msgid "settings-reactions-other-email-disabled-default"
+msgstr "No"
+
+msgid "settings-reactions-other-email-author"
+msgstr "Yes, to the personal address of the author of the post"
+
+msgid "settings-reactions-other-email-blog"
+msgstr "Yes, to the blog's public address"
 
 msgid "settings-reactions-other-bluesky-title"
 msgstr "Allow sharing on %s"

@@ -23,15 +23,17 @@ function setStyle(id, display) {
 
 // An array of social sites supported by the theme.
 function socialSites() {
-  return ['bluesky', 'diaspora', 'facebook', 'instagram', 'mastodon', 'matrix', 'phone', 'signal', 'sms', 'youtube', 'whatsapp', 'x', 'other'];
+  return ['bluesky', 'diaspora', 'email', 'facebook', 'instagram', 'mastodon', 'matrix', 'phone', 'signal', 'sms', 'youtube', 'whatsapp', 'x', 'other'];
 }
 
 // Toggles other reactions settings.
 function toggleOtherReactionsSettings(id) {
-  if (document.getElementById("social_" + id).value && document.getElementById("reactions_other").value !== "disabled") {
-    setStyle("reactions_other_" + id, "block");
-  } else {
-    setStyle("reactions_other_" + id, "none");
+  if (id !== 'email') {
+    if (document.getElementById("social_" + id).value && document.getElementById("reactions_other").value !== "disabled") {
+      setStyle("reactions_other_" + id, "block");
+    } else {
+      setStyle("reactions_other_" + id, "none");
+    }
   }
 }
 

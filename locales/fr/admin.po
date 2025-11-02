@@ -537,11 +537,20 @@ msgstr "Oui, seulement quand les commentaires sont ouverts"
 msgid "settings-reactions-other-always"
 msgstr "Oui, toujours"
 
-msgid "settings-reactions-otheremail-title"
+msgid "settings-reactions-other-email-title"
 msgstr "Autoriser les réponses par courriel"
 
-msgid "settings-reactions-otheremail-description"
-msgstr "L’adresse électronique utilisée ici est celle de l’auteur du billet, pas celle définie dans les paramètres sociaux du thème. Attention&nbsp;: l’adresse électronique sera dévoilée et pourrait être utilisée par des personnes malveillantes (pourriels). Pour ne pas révéler votre adresse, vous pouvez essayer l’extension <a href="%s">Signal</a> ou un service tiers comme <a href=https://relay.firefox.com/>Firefox Relay</a>."
+msgid "settings-reactions-other-email-description"
+msgstr "Vous pouvez choisir d’utiliser l’adresse électronique de l’auteur du billet ou celle définie dans <a href=#section-social>les paramètres sociaux du thème</a>. Attention&nbsp;: cette adresse sera rendue publique ; elle pourrait être utilisée par des personnes malveillantes et augmenter le risque de courrier indésirable. Pour ne pas révéler votre adresse, vous pouvez essayer l’extension <a href="%s">Signal</a> ou un service tiers comme <a href=https://relay.firefox.com/>Firefox Relay</a>."
+
+msgid "settings-reactions-other-email-disabled-default"
+msgstr "Non"
+
+msgid "settings-reactions-other-email-author"
+msgstr "Oui, à l’adresse personnelle de l’auteur du billet"
+
+msgid "settings-reactions-other-email-blog"
+msgstr "Oui, à l’adresse publique du blog"
 
 msgid "settings-reactions-other-bluesky-title"
 msgstr "Autoriser le partage sur %s"

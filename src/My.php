@@ -725,6 +725,20 @@ class My extends MyTheme
 
         foreach (self::socialSites() as $site => $base) {
             if (isset($base['reactions']) && $base['reactions'] === true) {
+                $type    = 'checkbox';
+                $default = false;
+                $choices = null;
+
+                if ($site === 'email') {
+                    $type    = 'select';
+                    $default = 'disabled';
+                    $choices = [
+                        __('settings-reactions-other-email-disabled-default') => 'disabled',
+                        __('settings-reactions-other-email-author')           => 'author',
+                        __('settings-reactions-other-email-blog')             => 'blog'
+                    ];
+                }
+
                 $default_settings['reactions_other_' . $site] = [
                     'title'       => sprintf(
                         __('settings-reactions-other-' . $site . '-title'),
@@ -732,8 +746,9 @@ class My extends MyTheme
                     ),
                     'description' => __('settings-reactions-other-' . $site . '-description'),
                     'label'       => 'Post sharing (' . $site . ')',
-                    'type'        => 'checkbox',
-                    'default'     => false,
+                    'type'        => $type,
+                    'default'     => $default,
+                    'choices'     => $choices,
                     'section'     => ['reactions', 'other']
                 ];
             }
@@ -1236,7 +1251,8 @@ class My extends MyTheme
 
         $social_sites['email'] = [
             'name' => __('social-site-email'),
-            'type' => 'email'
+            'type' => 'email',
+            'reactions' => true
         ];
 
         $social_sites['facebook'] = [

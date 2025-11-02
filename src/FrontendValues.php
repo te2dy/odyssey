@@ -516,7 +516,7 @@ class FrontendValues
             return '';
         }
 
-        if (My::settings()->reactions_other_email !== true
+        if (My::settings()->reactions_other_email === false
             && My::settings()->reactions_other_bluesky !== true
             && My::settings()->reactions_other_facebook !== true
             && My::settings()->reactions_other_mastodon !== true
@@ -532,14 +532,24 @@ class FrontendValues
 
         if (My::settings()->reactions_other_email) {
             $output .= '<?php
-            if (isset(App::frontend()->context()->posts->user_email) && App::frontend()->context()->posts->user_email && (App::blog()->settings->odyssey->reactions_other === "always" || (App::blog()->settings->odyssey->reactions_other === "comments_open" && App::frontend()->context()->posts->post_open_comment === "1"))
-            ) {
-                $mailto  = ' . Html::class . '::escapeHTML(App::frontend()->context()->posts->user_email);
-                $subject = sprintf(__("reactions-other-email-title"), App::frontend()->context()->posts->post_title);
-                $body    = sprintf(__("reactions-other-email-body"), App::frontend()->context()->posts->getURL());
-                $href    = "mailto:" . $mailto . "?subject=" . rawurlencode($subject) . "&body=" . rawurlencode($body);
+            if (App::blog()->settings->odyssey->reactions_other === "always" || (App::blog()->settings->odyssey->reactions_other === "comments_open" && App::frontend()->context()->posts->post_open_comment === 1)) {
 
-                $reactions_other .= "<p><a class=reactions-button href=\"" . $href . "\"><svg class=\"reactions-button-icon social-icon-fi\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('email')['path']) . '</svg> <span class=reactions-button-text>' . __('reactions-other-email-button-text') . '</span></a></p>";
+                $reaction_email_type = "' . My::settings()->reactions_other_email . '";
+
+                if ($reaction_email_type === "blog") {
+                    $reaction_email = "' . My::settings()->social_email . '";
+                } else {
+                    $reaction_email = App::frontend()->context()->posts->user_email ?: "";
+                }
+
+                if ($reaction_email) {
+                    $mailto  = ' . Html::class . '::escapeHTML($reaction_email);
+                    $subject = sprintf(__("reactions-other-email-title"), App::frontend()->context()->posts->post_title);
+                    $body    = sprintf(__("reactions-other-email-body"), App::frontend()->context()->posts->getURL());
+                    $href    = "mailto:" . $mailto . "?subject=" . rawurlencode($subject) . "&body=" . rawurlencode($body);
+
+                    $reactions_other .= "<p><a class=reactions-button href=\"" . $href . "\"><svg class=\"reactions-button-icon social-icon-fi\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('email')['path']) . '</svg> <span class=reactions-button-text>' . __('reactions-other-email-button-text') . '</span></a></p>";
+                }
 
             }
             ?>';
