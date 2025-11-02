@@ -516,7 +516,7 @@ class FrontendValues
             return '';
         }
 
-        if (My::settings()->reactions_other_email === false
+        if ((!My::settings()->reactions_other_email || My::settings()->reactions_other_email === 'disabled')
             && My::settings()->reactions_other_bluesky !== true
             && My::settings()->reactions_other_facebook !== true
             && My::settings()->reactions_other_mastodon !== true
