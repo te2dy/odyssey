@@ -1501,4 +1501,23 @@ class My extends MyTheme
 
         return false;
     }
+
+    /**
+     * Clears out multiple caches of the blog.
+     *
+     * @return void
+     */
+    public static function refreshBlog(): void
+    {
+        // Refreshes the blog.
+        App::blog()->triggerBlog();
+
+        // Clears out template cache.
+        App::cache()->emptyTemplatesCache();
+
+        // Clears out staticCache plugin folder if it exists.
+        if (defined('DC_SC_CACHE_DIR') && is_dir(DC_SC_CACHE_DIR)) {
+            Files::deltree(DC_SC_CACHE_DIR);
+        }
+    }
 }

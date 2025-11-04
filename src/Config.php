@@ -100,9 +100,8 @@ class Config extends Process
                     // Removes the header image, custom CSS file and their folders.
                     Files::deltree(My::publicFolder('path'));
 
-                    App::blog()->triggerBlog();
-
-                    App::cache()->emptyTemplatesCache();
+                    // Clears caches.
+                    My::refreshBlog();
 
                     Notices::addSuccessNotice(__('settings-notice-reset'));
 
@@ -305,11 +304,8 @@ class Config extends Process
             }
         }
 
-        // Refreshes the blog.
-        App::blog()->triggerBlog();
-
-        // Resets template cache.
-        App::cache()->emptyTemplatesCache();
+        // Clears caches.
+        My::refreshBlog();
 
         // Displays a success notice.
         if ($notice_success) {
