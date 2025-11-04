@@ -609,7 +609,7 @@ class FrontendBehaviors
         if ($tag === 'EntryIf' && isset($attr['has_reaction']) && My::settings()->content_postlist_reactions) {
             $sign = (bool) $attr['has_reaction'] ? '' : '!';
 
-            $if->append($sign . 'App::frontend()->context()->posts->hasComments() || App::frontend()->context()->posts->hasTrackbacks()');
+            $if->append($sign . '(App::frontend()->context()->posts->hasComments() || App::frontend()->context()->posts->hasTrackbacks())');
         }
     }
 }
