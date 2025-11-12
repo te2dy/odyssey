@@ -894,7 +894,7 @@ class FrontendValues
             return '';
         }
 
-        if (!DC_DEV) {
+        if (!defined('DC_DEV') || (defined('DC_DEV') && DC_DEV === false)) {
             // If we are not in a development environment.
             $footer_credits = sprintf(__('footer-powered-by'), My::name());
         } else {
