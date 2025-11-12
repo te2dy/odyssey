@@ -1489,6 +1489,8 @@ class My extends MyTheme
     /**
      * Checks if Dotclear version is superior or equal to a specific version number.
      *
+     * Unused function since Odyssey 2.16.
+     *
      * @param string $version The minimum version.
      *
      * @return bool true if Doclear version is superior or equal to the version number passed.
