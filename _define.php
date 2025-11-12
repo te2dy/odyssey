@@ -11,17 +11,16 @@ $this->registerModule(
     'Odyssey',
     'A simple and customizable theme to write your own odyssey',
     'Teddy',
-    '2.15',
+    '2.16',
     [
         'requires' => [
-            ['core', '2.35'],
-            ['php', '8']
+            ['core', '2.36'],
+            ['php', '8.1']
         ],
 
         'type' => 'theme',
 
-        // The forum is offline:
-        // 'support'    => 'https://forum.dotclear.org/viewtopic.php?id=51635',
+        // 'support'    => 'https://forum.dotclear.org/viewtopic.php?id=51635', // The forum is offline.
         'details'    => 'https://themes.dotaddict.org/galerie-dc2/details/odyssey',
         'repository' => 'https://raw.githubusercontent.com/te2dy/odyssey/main/dcstore.xml',
 
