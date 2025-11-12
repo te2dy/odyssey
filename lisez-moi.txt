@@ -20,7 +20,7 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 == Notes de version ==
 
 === 2.16 - 12 novembre 2025 ===
-- Amélioration : mise en conformité avec Dotclear 2.26.
+- Amélioration : mise en conformité avec Dotclear 2.36.
 - Amélioration : suppression du cache statique éventuel à la mise à jour des paramètres du thème.
 - Modification : ce thème nécessite au moins la version 2.36 de Dotclear.
 - Modification : ce thème nécessite au moins la version 8.1 de PHP.
