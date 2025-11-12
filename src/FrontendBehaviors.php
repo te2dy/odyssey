@@ -501,8 +501,16 @@ class FrontendBehaviors
 
                     // Gets original image dimensions.
                     list($width, $height) = getimagesize(App::config()->dotclearRoot() . $src_value);
+
                     $img['o']['width']    = (int) $width;
                     $img['o']['height']   = (int) $height;
+
+                    // Gets image orientation.
+                    $portrait = false;
+
+                    if ($width < $height) {
+                        $portrait = true;
+                    }
 
                     // Sets wide image width in px.
                     $content_width = My::getContentWidth('px')['value'];
@@ -510,11 +518,13 @@ class FrontendBehaviors
 
                     $img_width_max = $content_width;
 
-                    if (App::url()->type === 'post'
-                        || App::url()->type === 'pages'
-                        || My::settings()->content_postlist_type === 'content'
-                    ) {
-                        $img_width_max += $margin_max * 2;
+                    if (!$portrait) {
+                        if (App::url()->type === 'post'
+                            || App::url()->type === 'pages'
+                            || My::settings()->content_postlist_type === 'content'
+                        ) {
+                            $img_width_max += $margin_max * 2;
+                        }
                     }
 
                     // If the image width is lower than the content + margin width.
