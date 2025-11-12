@@ -10,13 +10,14 @@
 namespace Dotclear\Theme\odyssey;
 
 use Dotclear\App;
-use Dotclear\Core\Backend\ThemeConfig;
-use Dotclear\Core\Process;
 use Dotclear\Helper\File\Files;
 use Dotclear\Helper\File\Path;
+use Dotclear\Helper\Process\TraitProcess;
 
-class Install extends Process
+class Install
 {
+    use TraitProcess;
+
     public static function init(): bool
     {
         return self::status(My::checkContext(My::INSTALL));

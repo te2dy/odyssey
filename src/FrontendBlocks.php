@@ -10,7 +10,6 @@
 namespace Dotclear\Theme\odyssey;
 
 use Dotclear\App;
-use Dotclear\Core\Frontend\Ctx;
 
 class FrontendBlocks
 {

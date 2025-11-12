@@ -961,7 +961,7 @@ class My extends MyTheme
     {
         $url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
 
-        return $attr ? self::displayAttr($url, 'url') : $url;
+        return !$attr ? $url : self::displayAttr($url, 'url');
     }
 
     /**

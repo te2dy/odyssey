@@ -12,16 +12,18 @@
 namespace Dotclear\Theme\odyssey;
 
 use Dotclear\App;
-use Dotclear\Core\Process;
 use Dotclear\Helper\File\Files;
 use Dotclear\Helper\File\Path;
 use Dotclear\Helper\Html\Form\Checkbox;
 use Dotclear\Helper\Html\Form\Label;
 use Dotclear\Helper\Html\Form\Para;
+use Dotclear\Helper\Process\TraitProcess;
 use Dotclear\Plugin\Uninstaller\Uninstaller;
 
-class Uninstall extends Process
+class Uninstall
 {
+    use TraitProcess;
+
     public static function init(): bool
     {
         My::l10n('admin');

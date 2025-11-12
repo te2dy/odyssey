@@ -11,7 +11,6 @@ namespace Dotclear\Theme\odyssey;
 
 use ArrayObject;
 use Dotclear\App;
-use Dotclear\Core\Process;
 use Dotclear\Core\Frontend\Ctx;
 use Dotclear\Core\Frontend\Url;
 use Dotclear\Helper\Date;

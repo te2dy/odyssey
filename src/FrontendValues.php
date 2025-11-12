@@ -11,7 +11,6 @@ namespace Dotclear\Theme\odyssey;
 
 use ArrayObject;
 use Dotclear\App;
-use Dotclear\Core\Frontend\Ctx;
 use Dotclear\Helper\Html\Html;
 use Dotclear\Helper\Network\Http;
 
@@ -49,7 +48,7 @@ class FrontendValues
     public static function odysseyMetaDescriptionHome(): string
     {
         $description = My::settings()->advanced_meta_description ?: App::blog()->desc ?: '';
-        $description = $description ? My::cleanStr(Ctx::remove_html($description)) : '';
+        $description = $description ? My::cleanStr(App::frontend()->context()->remove_html($description)) : '';
 
         if ($description) {
             return '<meta name=description content=' . My::displayAttr($description) . '>';
@@ -85,8 +84,6 @@ class FrontendValues
             case 'post':
             case 'pages':
                 return '<link rel=canonical href="<?= App::frontend()->context()->posts->getURL() ?>">' . "\n";
-
-                break;
             case 'default':
             case 'static':
                 $url = App::blog()->url;
@@ -97,8 +94,6 @@ class FrontendValues
                 }
 
                 return '<link rel=canonical href=' . My::displayAttr($url, 'url') . '>' . "\n";
-
-                break;
             default:
                 $current_uri = Http::getSelfURI();
 
@@ -295,13 +290,13 @@ class FrontendValues
 
         switch ($context) {
             case "entry-list" :
-                $img = ' . Ctx::class . '::EntryFirstImageHelper("t", false, "entry-list-img");
+                $img = ' . App::frontend()->context()::class . '::EntryFirstImageHelper("t", false, "entry-list-img");
 
                 if ($img) {
-                    $img_t   = ' . Ctx::class . '::EntryFirstImageHelper("t", false, "", true);
+                    $img_t   = ' . App::frontend()->context()::class . '::EntryFirstImageHelper("t", false, "", true);
                     $width_t = ' . App::media()->thumb_sizes['t'][0] . ';
 
-                    $img_s   = ' . Ctx::class . '::EntryFirstImageHelper("s", false, "", true);
+                    $img_s   = ' . App::frontend()->context()::class . '::EntryFirstImageHelper("s", false, "", true);
                     $width_s = ' . App::media()->thumb_sizes['s'][0] . ';
 
                     if ($img_s && $img_s !== $img_t) {
@@ -317,20 +312,20 @@ class FrontendValues
 
                 break;
             case "entry-list-excerpt" :
-                $img = ' . Ctx::class . '::EntryFirstImageHelper("o", false, "entry-list-excerpt-img");
+                $img = ' . App::frontend()->context()::class . '::EntryFirstImageHelper("o", false, "entry-list-excerpt-img");
 
                 if ($img) {
                     $content_width = ' . My::getContentWidth('px')['value'] . ';
 
-                    $img_o         = ' . Ctx::class . '::EntryFirstImageHelper("o", false, "", true) ?: "";
+                    $img_o         = ' . App::frontend()->context()::class . '::EntryFirstImageHelper("o", false, "", true) ?: "";
                     $img_o_path    = substr(App::blog()->public_path, 0, -strlen(App::blog()->settings->system->public_url));
                     $img_o_path   .= !str_ends_with($img_o_path, "/") ? "/" . $img_o : $img_o;
                     list($width_o) = getimagesize($img_o_path);
 
-                    $img_m   = ' . Ctx::class . '::EntryFirstImageHelper("m", false, "", true) ?: null;
+                    $img_m   = ' . App::frontend()->context()::class . '::EntryFirstImageHelper("m", false, "", true) ?: null;
                     $width_m = ' . App::media()->thumb_sizes['m'][0] . ';
 
-                    $img_s   = ' . Ctx::class . '::EntryFirstImageHelper("s", false, "", true) ?: null;
+                    $img_s   = ' . App::frontend()->context()::class . '::EntryFirstImageHelper("s", false, "", true) ?: null;
                     $width_s = ' . App::media()->thumb_sizes['s'][0] . ';
 
                     if ($img_o !== "" && $width_o >= $content_width) {

@@ -10,10 +10,6 @@
 namespace Dotclear\Theme\odyssey;
 
 use Dotclear\App;
-use Dotclear\Core\Process;
-use Dotclear\Core\Backend\Notices;
-use Dotclear\Core\Backend\Page;
-use Dotclear\Core\Backend\ThemeConfig;
 use Dotclear\Helper\Date;
 use Dotclear\Helper\File\Files;
 use Dotclear\Helper\File\Path;
@@ -40,9 +36,12 @@ use Dotclear\Helper\Html\Form\Td;
 use Dotclear\Helper\Html\Form\Tr;
 use Dotclear\Helper\Html\Form\Text;
 use Dotclear\Helper\Html\Form\Textarea;
+use Dotclear\Helper\Process\TraitProcess;
 
-class Config extends Process
+class Config
 {
+    use TraitProcess;
+
     private static array $redirect_query = ['module' => 'odyssey', 'conf' => '1'];
 
     public static function init(): bool
@@ -72,7 +71,7 @@ class Config extends Process
 
                 // To support textarea color syntax.
                 if (App::auth()->prefs()->interface->colorsyntax) {
-                    echo Page::jsLoadCodeMirror(
+                    echo App::backend()->page()->jsLoadCodeMirror(
                         App::auth()->prefs()->interface->colorsyntax_theme ?: 'default',
                         true,
                         ['css']
@@ -103,7 +102,7 @@ class Config extends Process
                     // Clears caches.
                     My::refreshBlog();
 
-                    Notices::addSuccessNotice(__('settings-notice-reset'));
+                    App::backend()->notices()->addSuccessNotice(__('settings-notice-reset'));
 
                     App::backend()->url()->redirect('admin.blog.theme', self::$redirect_query);
                 }
@@ -154,7 +153,7 @@ class Config extends Process
                             Files::deltree($odyssey_folder);
                         }
 
-                        Notices::addSuccessNotice(__('settings-notice-file-deleted'));
+                        App::backend()->notices()->addSuccessNotice(__('settings-notice-file-deleted'));
 
                         App::backend()->url()->redirect('admin.blog.theme', self::$redirect_query);
                     }
@@ -164,7 +163,7 @@ class Config extends Process
                     // Deletes all configuration files.
                     Files::deltree(My::varFolder('path'));
 
-                    Notices::addSuccessNotice(__('settings-notice-files-deleted'));
+                    App::backend()->notices()->addSuccessNotice(__('settings-notice-files-deleted'));
 
                     App::backend()->url()->redirect('admin.blog.theme', self::$redirect_query);
                 }
@@ -309,7 +308,7 @@ class Config extends Process
 
         // Displays a success notice.
         if ($notice_success) {
-            Notices::addSuccessNotice($notice_success);
+            App::backend()->notices()->addSuccessNotice($notice_success);
         }
 
         var_dump($redirect_params);
@@ -1537,22 +1536,22 @@ class Config extends Process
         $css_file_name = 'style';
 
         // Deletes the previous CSS file if it exists.
-        ThemeConfig::dropCss($css_folder, $css_file_name);
+        App::backend()->themeConfig()->dropCss($css_folder, $css_file_name);
 
         // Creates an Odyssey public folder if it does not exist.
         Files::makeDir(My::publicFolder('path'));
 
         // Creates the CSS file.
-        if ($css && ThemeConfig::canWriteCss($css_folder, true)) {
-            ThemeConfig::writeCss($css_folder, $css_file_name, $css);
+        if ($css && App::backend()->themeConfig()->canWriteCss($css_folder, true)) {
+            App::backend()->themeConfig()->writeCss($css_folder, $css_file_name, $css);
         } else {
-            ThemeConfig::dropCss($css_folder, $css_file_name);
+            App::backend()->themeConfig()->dropCss($css_folder, $css_file_name);
 
             // Removes the CSS folder if it exists and is empty.
-            if (Files::isDeletable(ThemeConfig::cssPath($css_folder))
-                && empty(Files::getDirList(ThemeConfig::cssPath($css_folder))['files'])
+            if (Files::isDeletable(App::backend()->themeConfig()->cssPath($css_folder))
+                && empty(Files::getDirList(App::backend()->themeConfig()->cssPath($css_folder))['files'])
             ) {
-                Files::deltree(ThemeConfig::cssPath($css_folder));
+                Files::deltree(App::backend()->themeConfig()->cssPath($css_folder));
             }
         }
     }
@@ -1583,7 +1582,7 @@ class Config extends Process
                     // Then, imports all settings.
                     self::_saveSettings($settings_array, [], __('settings-notice-upload-success'), [], true);
                 } else {
-                    Notices::addErrorNotice(__('settings-notice-upload-file-not-valid'));
+                    App::backend()->notices()->addErrorNotice(__('settings-notice-upload-file-not-valid'));
 
                     App::backend()->url()->redirect(
                         'admin.blog.theme',
@@ -1592,7 +1591,7 @@ class Config extends Process
                 }
             } else {
                 // If the uploaded file is not a JSON file.
-                Notices::addErrorNotice(__('settings-notice-upload-file-not-valid'));
+                App::backend()->notices()->addErrorNotice(__('settings-notice-upload-file-not-valid'));
 
                 App::backend()->url()->redirect(
                     'admin.blog.theme',
@@ -1601,7 +1600,7 @@ class Config extends Process
             }
         } else {
             // If there is no file uploaded.
-            Notices::addErrorNotice(__('settings-notice-upload-no-file'));
+            App::backend()->notices()->addErrorNotice(__('settings-notice-upload-no-file'));
 
             App::backend()->url()->redirect(
                 'admin.blog.theme',
@@ -1634,7 +1633,7 @@ class Config extends Process
             }
         } else {
             // If the file is empty.
-            Notices::addErrorNotice(__('settings-notice-restore-error'));
+            App::backend()->notices()->addErrorNotice(__('settings-notice-restore-error'));
 
             App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
         }
@@ -1660,7 +1659,7 @@ class Config extends Process
 
         if (count($custom_settings) === 0) {
             // If there is no custom settings.
-            Notices::addErrorNotice(__('settings-notice-save-fail'));
+            App::backend()->notices()->addErrorNotice(__('settings-notice-save-fail'));
         } else {
             $backups_path = My::varFolder('path', '/backups');
 
@@ -1679,11 +1678,11 @@ class Config extends Process
 
             $notice  = '<p>' . sprintf(__('settings-notice-save-success'), My::id(), '#odyssey-backups') . '</p>';
             $notice .= '<p>' . __('settings-notice-save-success-warning') . '</p>';
-            $notice .= '<a class="button submit" href=' . My::displayAttr(urldecode(Page::getVF(My::varFolder('vf', '/backups/' . $file_name . '.json'))), 'url') . ' download=' . My::displayAttr($file_name) . '>';
+            $notice .= '<a class="button submit" href=' . My::displayAttr(urldecode(App::backend()->page()->getVF(My::varFolder('vf', '/backups/' . $file_name . '.json'))), 'url') . ' download=' . My::displayAttr($file_name) . '>';
             $notice .= __('settings-notice-save-success-link');
             $notice .= '</a>';
 
-            Notices::addNotice('success', $notice, ['divtag' => true]);
+            App::backend()->notices()->addNotice('success', $notice, ['divtag' => true]);
 
             App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
         }
@@ -1970,7 +1969,7 @@ class Config extends Process
             return;
         }
 
-        echo Notices::getNotices();
+        echo App::backend()->notices()->getNotices();
 
         // Add a form before the main form to upload a configuration file.
         if (isset($_GET['config-upload']) && $_GET['config-upload'] === '1') {
@@ -2044,18 +2043,16 @@ class Config extends Process
             )
         );
 
-        if (My::dotclearVersionMimimum('2.36')) {
-            if (App::auth()->prefs()->interface->themeeditordevmode) {
-                $tidyadmin_name = '';
-                $tidyadmin_url  = '';
+        if (App::auth()->prefs()->interface->themeeditordevmode) {
+            $tidyadmin_name = '';
+            $tidyadmin_url  = '';
 
-                if (App::plugins()->moduleExists('tidyAdmin')) {
-                    $tidyadmin_name = __(App::plugins()->moduleInfo('tidyAdmin', 'name'));
-                    $tidyadmin_url  = App::backend()->url()->get('admin.plugin.tidyAdmin', ['part' => 'options']);
+            if (App::plugins()->moduleExists('tidyAdmin')) {
+                $tidyadmin_name = __(App::plugins()->moduleInfo('tidyAdmin', 'name'));
+                $tidyadmin_url  = App::backend()->url()->get('admin.plugin.tidyAdmin', ['part' => 'options']);
 
-                    $fields[] = (new Text('p', sprintf(__('settings-themeeditordevmode-warning'), My::displayAttr($tidyadmin_url), $tidyadmin_name)))
-                        ->class('warning-msg');
-                }
+                $fields[] = (new Text('p', sprintf(__('settings-themeeditordevmode-warning'), My::displayAttr($tidyadmin_url), $tidyadmin_name)))
+                    ->class('warning-msg');
             }
         }
 
@@ -2187,7 +2184,7 @@ class Config extends Process
                         ]
                     );
 
-                    $download_url = Page::getVF(My::varFolder('vf', '/backups/' . $file_name));
+                    $download_url = App::backend()->page()->getVF(My::varFolder('vf', '/backups/' . $file_name));
 
                     $delete_url = App::backend()->url()->get(
                         'admin.blog.theme',
@@ -2197,18 +2194,6 @@ class Config extends Process
                             'restore_delete_file' => My::escapeURL($file_name_without_extension)
                         ]
                     );
-
-                    if (My::dotclearVersionMimimum('2.36')) {
-                        $download_link = (new Link())
-                            ->download($file_name)
-                            ->href(My::escapeURL($download_url))
-                            ->text(__('settings-backup-download-link'));
-                    } else {
-                        $download_link = (new Link())
-                            ->extra('download=' . My::displayAttr($file_name))
-                            ->href(My::escapeURL($download_url))
-                            ->text(__('settings-backup-download-link'));
-                    }
 
                     $table_fields[] = (new Tr())
                         ->class('line')
@@ -2223,7 +2208,12 @@ class Config extends Process
                                         ->text(__('settings-backup-restore-link')),
                                 ]),
                             (new Td())
-                                ->items([$download_link]),
+                                ->items([
+                                    (new Link())
+                                        ->download($file_name)
+                                        ->href(My::escapeURL($download_url))
+                                        ->text(__('settings-backup-download-link'))
+                                ]),
                             (new Td())
                                 ->items([
                                     (new Link())
@@ -2280,7 +2270,7 @@ class Config extends Process
             ->render();
 
         if (App::auth()->prefs()->interface->colorsyntax) {
-            echo Page::jsRunCodeMirror([
+            echo App::backend()->page()->jsRunCodeMirror([
                 [
                     'name'  => 'styles_custom',
                     'id'    => 'styles_custom',
