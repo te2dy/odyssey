@@ -12,12 +12,15 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == 🍀 Feuille de route ==
 - Basculer certaines options sur des extensions pour libérer le configurateur.
-- À évaluer : créer des onglets sur la page du configurateur (->class('multi-part'), etc.).
 - À évaluer : créer une aide avec Page::helpBlock().
 - À évaluer : ajouter la possibilité d’afficher la barre latérale à gauche ou à droite, plutôt qu’en bas ? Version 3 ?
 - À évaluer : permettre l’ajout de boutons de partage pour des réseaux sociaux qui ne sont pas configurés.
 
 == Notes de version ==
+
+=== 2.17 - 13 novembre 2025 ===
+- Amélioration : créations de plusieurs comportements.
+- Revue de code.
 
 === 2.16 - 12 novembre 2025 ===
 - Amélioration : mise en conformité avec Dotclear 2.36.
