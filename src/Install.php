@@ -63,17 +63,19 @@ class Install
 
             if ($styles || $styles_custom) {
                 $css  = $styles;
-                $css .= (string) file_get_contents($css_theme_file_path);
+                $css .= file_get_contents($css_theme_file_path) ?: '';
                 $css .= $styles_custom
 
-                $css_public_dir_path = My::publicFolder('path', '/css');
+                if ($css) {
+                    $css_public_dir_path = My::publicFolder('path', '/css');
 
-                if (!is_dir($css_public_dir_path)) {
-                    Files::makeDir($css_public_dir_path, true);
-                }
+                    if (!is_dir($css_public_dir_path)) {
+                        Files::makeDir($css_public_dir_path, true);
+                    }
 
-                if (is_dir($css_public_dir_path)) {
-                    Files::putContent($css_public_dir_path, $css . '/style.css');
+                    if (is_dir($css_public_dir_path)) {
+                        Files::putContent($css_public_dir_path, $css . '/style.css');
+                    }
                 }
             }
         }
