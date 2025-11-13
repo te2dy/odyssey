@@ -46,7 +46,7 @@ class FrontendBehaviors
         }
 
         if (My::settings()->advanced_json) {
-            self::_odysseyJsonLd();
+            self::odysseyJsonLd();
         }
     }
 
@@ -183,7 +183,7 @@ class FrontendBehaviors
      *
      * @return void The structured data.
      */
-    private static function _odysseyJsonLd(): void
+    public static function odysseyJsonLd(): void
     {
         $json_ld = [];
 
@@ -429,6 +429,9 @@ class FrontendBehaviors
 
         // Removes empty values.
         $json_ld = array_filter($json_ld);
+
+        # --BEHAVIOR-- odysseyJsonLdEdit -- string, array
+        App::behavior()->callBehavior('odysseyJsonLdEdit', $json_ld);
 
         if (!empty($json_ld)) {
             $json_ld = json_encode($json_ld, JSON_HEX_QUOT|JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS);

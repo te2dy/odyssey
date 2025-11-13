@@ -90,7 +90,7 @@ class FrontendValues
 
                 // Specific url for the post list page when a static home page has been set.
                 if (App::blog()->settings()->system->static_home && App::url()->type === 'default') {
-                    $url = App::blog()->url() . App::url()->getURLFor('posts');
+                    $url .= App::url()->getURLFor('posts');
                 }
 
                 return '<link rel=canonical href=' . My::displayAttr($url, 'url') . '>' . "\n";
@@ -677,6 +677,9 @@ class FrontendValues
             }
             ?>';
         }
+
+        # --BEHAVIOR-- odysseyPrivateCommentLinkEdit -- string, string
+        $output = App::behavior()->callBehavior('odysseyPrivateCommentLinkEdit', $output);
 
         $output .= '<?php
         if ($reactions_other) {
