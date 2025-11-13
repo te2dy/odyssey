@@ -42,7 +42,7 @@ class FrontendBehaviors
         }
 
         if (My::settings()->advanced_meta_social) {
-            self::_odysseySocialMarkups();
+            self::odysseySocialMarkups();
         }
 
         if (My::settings()->advanced_json) {
@@ -57,7 +57,7 @@ class FrontendBehaviors
      *
      * @link https://meiert.com/en/blog/minimal-social-markup/
      */
-    private static function _odysseySocialMarkups(): void
+    public static function odysseySocialMarkups(): void
     {
         $title = '';
         $desc  = '';
@@ -136,8 +136,17 @@ class FrontendBehaviors
                 }
         }
 
-        $title = Html::escapeHTML($title);
-        $img   = My::escapeURL($img);
+        $markups = new ArrayObject([
+            'title' => $title,
+            'desc'  => $desc,
+            'img'   => $img
+        ]);
+
+        # --BEHAVIOR-- odysseySocialMarkupsEdit -- string, ArrayObject
+        App::behavior()->callBehavior('odysseySocialMarkupsEdit', $markups);
+
+        $title = Html::escapeHTML($markups['title']);
+        $img   = My::escapeURL($markups['img']);
 
         if ($title) {
             if (!$img && isset(My::settings()->header_image['url'])) {
@@ -157,7 +166,7 @@ class FrontendBehaviors
             // Quotes seem required for the following meta properties.
             echo '<meta property="og:title" content="', $title, '">', "\n";
 
-            $desc = trim(Html::escapeHTML($desc));
+            $desc = trim(Html::escapeHTML($markups['desc']));
 
             if ($desc) {
                 echo '<meta property="og:description" content="', $desc, '">', "\n";
