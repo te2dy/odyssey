@@ -311,8 +311,6 @@ class Config
             App::backend()->notices()->addSuccessNotice($notice_success);
         }
 
-        var_dump($redirect_params);
-
         // Redirects.
         App::backend()->url()->redirect('admin.blog.theme', array_merge(self::$redirect_query, $redirect_params));
     }
