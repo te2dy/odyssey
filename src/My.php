@@ -1063,7 +1063,7 @@ class My extends MyTheme
             case 'url':
                 return App::blog()->settings()->system->themes_url . '/' . My::id() . $to_concatenate;
             case 'path':
-                return App::blog()->themesPath() . '/' . My::id() . $to_concatenate;
+                return My::path() . $to_concatenate;
         }
 
         return '';
