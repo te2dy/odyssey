@@ -24,6 +24,11 @@ class Uninstall
 {
     use TraitProcess;
 
+    /**
+     * Inits the process.
+     *
+     * @return bool
+     */
     public static function init(): bool
     {
         My::l10n('admin');
@@ -31,6 +36,11 @@ class Uninstall
         return self::status(My::checkContext(My::UNINSTALL));
     }
 
+    /**
+     * Processes the multiple requests.
+     *
+     * @return bool
+     */
     public static function process(): bool
     {
         if (!self::status() || !App::themes()->moduleExists('odyssey')) {

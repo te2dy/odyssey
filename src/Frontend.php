@@ -18,13 +18,18 @@ class Frontend
 {
     use TraitProcess;
 
+    /**
+     * Inits the process.
+     *
+     * @return bool
+     */
     public static function init(): bool
     {
         return self::status(My::checkContext(My::FRONTEND));
     }
 
     /**
-     * Performs actions and/or prepares render.
+     * Sets up the functions.
      *
      * @return bool
      */

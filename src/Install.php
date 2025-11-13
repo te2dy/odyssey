@@ -18,11 +18,21 @@ class Install
 {
     use TraitProcess;
 
+    /**
+     * Inits the process.
+     *
+     * @return bool
+     */
     public static function init(): bool
     {
         return self::status(My::checkContext(My::INSTALL));
     }
 
+    /**
+     * Processes the multiple requests.
+     *
+     * @return bool
+     */
     public static function process(): bool
     {
         if (!self::status()) {

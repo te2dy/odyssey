@@ -44,6 +44,11 @@ class Config
 
     private static array $redirect_query = ['module' => 'odyssey', 'conf' => '1'];
 
+    /**
+     * Inits the process.
+     *
+     * @return bool
+     */
     public static function init(): bool
     {
         if (!self::status(My::checkContext(My::CONFIG))) {
