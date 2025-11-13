@@ -1319,7 +1319,7 @@ class Config
      *
      * @return void
      */
-    public static function _saveHeaderImage(string $setting_id, array $image_data, ?string $img_file_path): void
+    private static function _saveHeaderImage(string $setting_id, array $image_data, ?string $img_file_path): void
     {
         $img_folder_path = My::publicFolder('path', '/img');
 
@@ -1589,7 +1589,7 @@ class Config
 
                     App::backend()->url()->redirect(
                         'admin.blog.theme',
-                        ['module' => My::id(), 'conf' => '1', 'config-upload' => '1']
+                        array_merge(self::$redirect_query, ['config-upload' => '1'])
                     );
                 }
             } else {
@@ -1598,7 +1598,7 @@ class Config
 
                 App::backend()->url()->redirect(
                     'admin.blog.theme',
-                    ['module' => My::id(), 'conf' => '1', 'config-upload' => '1']
+                    array_merge(self::$redirect_query, ['config-upload' => '1'])
                 );
             }
         } else {
@@ -1607,7 +1607,7 @@ class Config
 
             App::backend()->url()->redirect(
                 'admin.blog.theme',
-                ['module' => My::id(), 'conf' => '1', 'config-upload' => '1']
+                array_merge(self::$redirect_query, ['config-upload' => '1'])
             );
         }
     }
@@ -1638,7 +1638,7 @@ class Config
             // If the file is empty.
             App::backend()->notices()->addErrorNotice(__('settings-notice-restore-error'));
 
-            App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
+            App::backend()->url()->redirect('admin.blog.theme', self::$redirect_query);
         }
     }
 
@@ -1687,7 +1687,7 @@ class Config
 
             App::backend()->notices()->addNotice('success', $notice, ['divtag' => true]);
 
-            App::backend()->url()->redirect('admin.blog.theme', ['module' => My::id(), 'conf' => '1']);
+            App::backend()->url()->redirect('admin.blog.theme', self::$redirect_query);
         }
     }
 
@@ -2000,7 +2000,7 @@ class Config
                 ]);
 
             echo (new Form('theme-config-upload'))
-                ->action(App::backend()->url()->get('admin.blog.theme', ['module' => My::id(), 'conf' => '1', 'config-upload' => '1']))
+                ->action(App::backend()->url()->get('admin.blog.theme', array_merge(self::$redirect_query, ['config-upload' => '1'])))
                 ->class('fieldset')
                 ->enctype('multipart/form-data')
                 ->fields($upload_form_fields)
@@ -2180,22 +2180,14 @@ class Config
 
                     $restore_url = App::backend()->url()->get(
                         'admin.blog.theme',
-                        [
-                            'module'  => My::id(),
-                            'conf'    => '1',
-                            'restore' => My::escapeURL($file_name_without_extension)
-                        ]
+                        array_merge(self::$redirect_query, ['restore' => My::escapeURL($file_name_without_extension)])
                     );
 
                     $download_url = App::backend()->page()->getVF(My::varFolder('vf', '/backups/' . $file_name));
 
                     $delete_url = App::backend()->url()->get(
                         'admin.blog.theme',
-                        [
-                            'module'              => My::id(),
-                            'conf'                => '1',
-                            'restore_delete_file' => My::escapeURL($file_name_without_extension)
-                        ]
+                        array_merge(self::$redirect_query, ['restore_delete_file' => My::escapeURL($file_name_without_extension)])
                     );
 
                     $table_fields[] = (new Tr())
@@ -2235,11 +2227,7 @@ class Config
 
                 $delete_all_url = App::backend()->url()->get(
                     'admin.blog.theme',
-                    [
-                        'module'             => My::id(),
-                        'conf'               => '1',
-                        'restore_delete_all' => '1'
-                    ]
+                    array_merge(self::$redirect_query, ['restore_delete_all' => '1'])
                 );
 
                 $fields[] = (new Div('odyssey-backups'))
@@ -2266,7 +2254,7 @@ class Config
         }
 
         echo (new Form('theme-config-form'))
-            ->action(App::backend()->url()->get('admin.blog.theme', ['module' => My::id(), 'conf' => '1']))
+            ->action(App::backend()->url()->get('admin.blog.theme', self::$redirect_query))
             ->enctype('multipart/form-data')
             ->fields($fields)
             ->method('post')

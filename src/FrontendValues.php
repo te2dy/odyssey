@@ -678,14 +678,10 @@ class FrontendValues
             ?>';
         }
 
-        # --BEHAVIOR-- odysseyPrivateCommentLinkEdit -- string, string
-        $output = App::behavior()->callBehavior('odysseyPrivateCommentLinkEdit', $output);
+        $output .= '<?php echo $reactions_other ?: ""; ?>';
 
-        $output .= '<?php
-        if ($reactions_other) {
-            echo $reactions_other;
-        }
-        ?>';
+        # --BEHAVIOR-- odysseyPrivateCommentLinkAdd -- string, string
+        $output .= App::behavior()->callBehavior('odysseyPrivateCommentLinkAdd');
 
         return $output;
     }
