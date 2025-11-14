@@ -777,11 +777,14 @@ msgstr "Load the Dotclear util.js file"
 msgid "settings-odysseystyles-title"
 msgstr "All styles"
 
+msgid "settings-themeeupdatelocked-warning"
+msgstr "The theme update is locked. If necessary, you can unlock it from <a href=%s>the theme file edit page</a>."
+
 msgid "settings-themeeditordevmode-warning"
-msgstr "The theme editor is in development mode. If you have modified theme files, some of its functions may have been altered. To remove this message, please disable development mode for the theme editor in <a href=%1$s>the %2$s plugin settings</a>."
+msgstr "The theme editor is in development mode. If you have modified theme files, some of its functions may have been altered. To disable developer mode, go to <a href=%1$s>the %2$s plugin settings</a>."
 
 msgid "settings-mediacss-warning"
-msgstr "The theme incorporates its own media alignment styles; therefore, it is advisable not to load the default stylesheet by checking the option “Don't load standard stylesheet (used for media alignement)” in the Media and Images section of the <a href=%s>Blog Settings</a>"
+msgstr "It is advisable to check the option “Don't load standard stylesheet (used for media alignement)” in the Media and Images section of the <a href=%s>Blog Settings</a>. Indeed, this theme incorporates its own media alignment styles."
 
 msgid "settings-page-intro"
 msgstr "This is where you can customize your %s theme to suit your needs."

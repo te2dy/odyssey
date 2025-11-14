@@ -2046,24 +2046,57 @@ class Config
             )
         );
 
-        if (App::auth()->prefs()->interface->themeeditordevmode) {
-            $tidyadmin_name = '';
-            $tidyadmin_url  = '';
+        $theme_dev_mode = false;
 
-            if (App::plugins()->moduleExists('tidyAdmin')) {
+        if ((bool) App::auth()->prefs()->interface->themeeditordevmode
+            && App::plugins()->moduleExists('tidyAdmin')
+        ) {
+            $theme_dev_mode = true;
+        }
+
+        $theme_update_locked = false;
+
+        if ((bool) App::themes()->getDefine(App::blog()->settings()->system->theme)->updLocked()
+            && App::plugins()->moduleExists('themeEditor')
+        ) {
+            $theme_update_locked = true;
+        }
+
+        $no_public_css = (bool) App::blog()->settings()->system->no_public_css;
+
+        if ($theme_update_locked || $theme_dev_mode || !$no_public_css) {
+            $theme_info = [];
+
+            if ($theme_update_locked) {
+                $theme_info[] = (new Text('p', sprintf(
+                    __('settings-themeeupdatelocked-warning'),
+                    My::displayAttr(App::backend()->url()->get('admin.plugin.themeEditor'))
+                )));
+            }
+
+            if ($theme_dev_mode) {
                 $tidyadmin_name = __(App::plugins()->moduleInfo('tidyAdmin', 'name'));
                 $tidyadmin_url  = App::backend()->url()->get('admin.plugin.tidyAdmin', ['part' => 'options']);
 
-                $fields[] = (new Text('p', sprintf(__('settings-themeeditordevmode-warning'), My::displayAttr($tidyadmin_url), $tidyadmin_name)))
-                    ->class('warning-msg');
+                $theme_info[] = (new Text('p', sprintf(
+                    __('settings-themeeditordevmode-warning'),
+                    My::displayAttr($tidyadmin_url),
+                    $tidyadmin_name
+                )));
             }
-        }
 
-        if (!App::blog()->settings()->system->no_public_css) {
-            $blogpref_url  = My::displayAttr(App::backend()->url()->get('admin.blog.pref'));
+            if (!$no_public_css) {
+                $blogpref_url  = My::displayAttr(App::backend()->url()->get('admin.blog.pref'));
 
-            $fields[] = (new Text('p', sprintf(__('settings-mediacss-warning'), $blogpref_url)))
-                ->class('warning-msg');
+                $theme_info[] = (new Text('p', sprintf(
+                    __('settings-mediacss-warning'),
+                    $blogpref_url
+                )));
+            }
+
+            $fields[] = (new Div())
+                ->class('info')
+                ->items($theme_info);
         }
 
         foreach ($settings_render as $section_id => $setting_data) {

@@ -777,6 +777,9 @@ msgstr ""
 msgid "settings-odysseystyles-title"
 msgstr ""
 
+msgid "settings-themeeupdatelocked-warning"
+msgstr ""
+
 msgid "settings-themeeditordevmode-warning"
 msgstr ""
 
