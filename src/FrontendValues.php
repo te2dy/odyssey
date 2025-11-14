@@ -527,7 +527,7 @@ class FrontendValues
 
         if (My::settings()->reactions_other_email) {
             $output .= '<?php
-            if (App::blog()->settings->odyssey->reactions_other === "always" || (App::blog()->settings->odyssey->reactions_other === "comments_open" && App::frontend()->context()->posts->post_open_comment === 1)) {
+            if (App::blog()->settings->odyssey->reactions_other === "always" || (App::blog()->settings->odyssey->reactions_other === "comments_open" && (bool) App::frontend()->context()->posts->post_open_comment === true)) {
 
                 $reaction_email_type = "' . My::settings()->reactions_other_email . '";
 
