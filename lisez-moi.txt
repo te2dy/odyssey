@@ -18,6 +18,10 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Notes de version ==
 
+=== 2.18 - 14 novembre 2025 ===
+- Amélioration : les messages d’avertissement du configurateur de thème sont moins invasifs.
+- Correction : le lien pour répondre par courriel à un billet ne s’affichait pas toujours.
+
 === 2.17 - 13 novembre 2025 ===
 - Amélioration : création de plusieurs comportements.
 - Revue de code.
