@@ -78,6 +78,9 @@ msgstr "Header settings"
 msgid "section-header-image"
 msgstr "Logo or banner"
 
+msgid "section-header-nav"
+msgstr "Navigation"
+
 msgid "section-content"
 msgstr "Content settings"
 
@@ -398,6 +401,21 @@ msgstr "Image description"
 
 msgid "settings-header-imagedescription-description"
 msgstr "Useful for accessibility."
+
+msgid "settings-header-breadcrumbalign-title"
+msgstr "Breadcrumb alignment"
+
+msgid "settings-header-breadcrumbalign-description"
+msgstr "The breadcrumb trail remains aligned to the left on pages with a reduced header."
+
+msgid "settings-header-breadcrumbalign-left"
+msgstr "Left"
+
+msgid "settings-header-breadcrumbalign-center-default"
+msgstr "Center (default)"
+
+msgid "settings-header-breadcrumbalign-right"
+msgstr "Right"
 
 msgid "settings-content-postlisttype-title"
 msgstr "Appearance"

@@ -78,6 +78,9 @@ msgstr ""
 msgid "section-header-image"
 msgstr ""
 
+msgid "section-header-nav"
+msgstr ""
+
 msgid "section-content"
 msgstr ""
 
@@ -397,6 +400,21 @@ msgid "settings-header-imagedescription-title"
 msgstr ""
 
 msgid "settings-header-imagedescription-description"
+msgstr ""
+
+msgid "settings-header-breadcrumbalign-title"
+msgstr ""
+
+msgid "settings-header-breadcrumbalign-description"
+msgstr ""
+
+msgid "settings-header-breadcrumbalign-left"
+msgstr ""
+
+msgid "settings-header-breadcrumbalign-center-default"
+msgstr ""
+
+msgid "settings-header-breadcrumbalign-right"
 msgstr ""
 
 msgid "settings-content-postlisttype-title"

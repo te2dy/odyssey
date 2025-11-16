@@ -427,6 +427,8 @@ details summary {
 #site-desc {
   color: var(--color-text-secondary, #6c6f78);
 }
+
+/* Simple Menu */
 #main-menu {
   list-style: none;
   margin: 0;
@@ -463,6 +465,18 @@ details summary {
     text-decoration: none;
   }
 }
+/* Breadcrumb */
+#breadcrumb {
+  font-size: .8em;
+  font-style: italic;
+  margin-bottom: 0;
+  text-align: var(--breadcrumb-align, center);
+}
+#site-header-short #breadcrumb {
+  text-align: left;
+  width: 100%;
+}
+/* Skip links */
 .skip-links {
   border: 0;
   clip: rect(1px, 1px, 1px, 1px);

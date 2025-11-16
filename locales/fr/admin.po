@@ -78,6 +78,9 @@ msgstr "Paramètres de l’en-tête"
 msgid "section-header-image"
 msgstr "Logo ou bannière"
 
+msgid "section-header-nav"
+msgstr "Navigation"
+
 msgid "section-content"
 msgstr "Paramètres du contenu"
 
@@ -398,6 +401,21 @@ msgstr "Description de l’image"
 
 msgid "settings-header-imagedescription-description"
 msgstr "Utile pour l’accessibilité."
+
+msgid "settings-header-breadcrumbalign-title"
+msgstr "Alignement du fil d’Ariane"
+
+msgid "settings-header-breadcrumbalign-description"
+msgstr "Le fil d’Ariane reste aligné à gauche sur les pages qui ont un en-tête réduit."
+
+msgid "settings-header-breadcrumbalign-left"
+msgstr "Gauche"
+
+msgid "settings-header-breadcrumbalign-center-default"
+msgstr "Centre (par défaut)"
+
+msgid "settings-header-breadcrumbalign-right"
+msgstr "Droite"
 
 msgid "settings-content-postlisttype-title"
 msgstr "Apparence"

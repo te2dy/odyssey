@@ -962,6 +962,13 @@ class Config
             $css_main_array['#site-image img']['display']       = 'inline-block';
         }
 
+        // Breadcrumb
+        $breadcrumb_align_allowed = ['left', 'right'];
+
+        if (isset($settings['header_breadcrumb_align']) && in_array($settings['header_breadcrumb_align'], $breadcrumb_align_allowed, true)) {
+            $css_root_array[':root']['--breadcrumb-align'] = $settings['header_breadcrumb_align'];
+        }
+
         // Post list type
         if (isset($settings['content_postlist_type'])) {
             switch ($settings['content_postlist_type']) {

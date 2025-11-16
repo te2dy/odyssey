@@ -42,7 +42,8 @@ class My extends MyTheme
             'header' => [
                 'name'         => __('section-header'),
                 'sub_sections' => [
-                    'image'    => __('section-header-image')
+                    'image'      => __('section-header-image'),
+                    'nav'        => __('section-header-nav')
                 ]
             ],
             'content' => [
@@ -477,6 +478,25 @@ class My extends MyTheme
             'default'     => '',
             'section'     => ['header', 'image']
         ];
+
+        if (App::blog()->settings->breadcrumb->breadcrumb_enabled) {
+            $default_settings['header_breadcrumb_align'] = [
+                'title'       => __('settings-header-breadcrumbalign-title'),
+                'description' => sprintf(
+                    __('settings-header-breadcrumbalign-description'),
+                    My::displayAttr(App::backend()->url()->get('admin.blog.pref'))
+                ),
+                'label'       => 'Breadbrumb alignment',
+                'type'        => 'select',
+                'choices'     => [
+                    __('settings-header-breadcrumbalign-left')           => 'left',
+                    __('settings-header-breadcrumbalign-center-default') => 'center',
+                    __('settings-header-breadcrumbalign-right')          => 'right'
+                ],
+                'default'     => 'center',
+                'section'     => ['header', 'nav']
+            ];
+        }
 
         $default_settings['content_postlist_type'] = [
             'title'       => __('settings-content-postlisttype-title'),
