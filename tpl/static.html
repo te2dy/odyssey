@@ -59,3 +59,13 @@
     {{tpl:include src="_comments.html"}}
   </tpl:Entries>
 </tpl:Block>
+
+<tpl:Block name="footer-scripts">
+  <tpl:EntryIf show_comments="1">
+    <script type=application/json id=dc_post_remember_str-data>
+      {"post_remember_str": "{{tpl:lang reactions-comment-remember-me}}"}
+    </script>
+
+    <script src="{{tpl:BlogQmarkURL}}pf=post.js"></script>
+  </tpl:EntryIf>
+</tpl:Block>
