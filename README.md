@@ -30,7 +30,7 @@ Odyssée intègre de nombreuses options de personnalisation. Elles sont accessib
 
 ### Contribuer, suggérer, signaler
 
-N’hésitez pas à [contribuer](https://github.com/te2dy/odyssey/pulls) à ce projet, à [proposer](https://github.com/te2dy/odyssey/issues) des nouvelles fonctionnalités ou à [signaler](https://github.com/te2dy/odyssey/issues) des problèmes directement depuis GitHub. Vous pouvez aussi [m’écrire](mailto:zozxebpyr@mozmail.com).
+N’hésitez pas à [contribuer](https://github.com/te2dy/odyssey/pulls) à ce projet, à [proposer](https://github.com/te2dy/odyssey/issues) des nouvelles fonctionnalités ou à [signaler](https://github.com/te2dy/odyssey/issues) des problèmes directement depuis GitHub. Vous pouvez aussi [m’écrire](mailto:contact.teddy@laposte.net).
 
 ### Licence
 
@@ -63,7 +63,7 @@ Odyssey offers a wide range of customization options. These can be accessed in t
 
 ### Contribute, suggest, report
 
-Feel free to [contribute](https://github.com/te2dy/odyssey/pulls) to this project, [suggest](https://github.com/te2dy/odyssey/issues) new features or [report](https://github.com/te2dy/odyssey/issues) issues directly on GitHub. You can also [write to me](mailto:zozxebpyr@mozmail.com).
+Feel free to [contribute](https://github.com/te2dy/odyssey/pulls) to this project, [suggest](https://github.com/te2dy/odyssey/issues) new features or [report](https://github.com/te2dy/odyssey/issues) issues directly on GitHub. You can also [write to me](mailto:contact.teddy@laposte.net).
 
 ### License
 

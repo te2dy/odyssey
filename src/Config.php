@@ -2,7 +2,7 @@
 /**
  * Odyssey, a simple and customizable Dotclear theme.
  *
- * @author    Teddy <zozxebpyr@mozmail.com>
+ * @author    Teddy <contact.teddy@laposte.net>
  * @copyright 2022-2025 Teddy
  * @license   GPL-3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
  */
@@ -2048,7 +2048,7 @@ class Config
             sprintf(
                 __('settings-page-forum-link'),
                 'https://github.com/te2dy/odyssey/issues',
-                'mailto:zozxebpyr@mozmail.com',
+                'mailto:contact.teddy@laposte.net',
                 'https://matrix.to/#/#dotclear:matrix.org'
             )
         );
