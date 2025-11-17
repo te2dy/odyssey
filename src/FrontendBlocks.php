@@ -85,7 +85,7 @@ class FrontendBlocks
      */
     public static function odysseyCommentFormWrapper($attr, $content): string
     {
-        if (My::settings()->reactions_button !== false
+        if (My::settings()->reactions_button === null
             && (isset(App::frontend()->context()->comment_preview['content']) && App::frontend()->context()->comment_preview['content'] === '')
         ) {
             return '<details class=reactions-details>
