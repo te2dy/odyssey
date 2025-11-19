@@ -10,13 +10,23 @@ Adresse de la licence : https://www.gnu.org/licenses/gpl-3.0.fr.html
 Ce thème n’aurait pu avoir vu le jour sans les ressources mises à disposition librement par la communauté Dotclear.
 Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://blog.jim-nielsen.com/), des travaux réalisés sur les thèmes Ductile et Berlin pour Dotclear, des billets de Franck Paul (https://open-time.net/) et du blog DotclearWatch (https://dotclear.watch/).
 
-== 🍀 Feuille de route ==
-- Basculer certaines options sur des extensions pour libérer le configurateur.
-- À évaluer : créer une aide avec Page::helpBlock().
-- À évaluer : ajouter la possibilité d’afficher la barre latérale à gauche ou à droite, plutôt qu’en bas ? Version 3 ?
-- À évaluer : permettre l’ajout de boutons de partage pour des réseaux sociaux qui ne sont pas configurés.
+== Feuille de route ==
+Ordre de priorité : 🔴 🟠 🟢
+- 🔴 Une page statique en page d’accueil est-elle censée pouvoir recevoir des commentaires ?
+- 🟢 Basculer certaines options sur des extensions pour libérer le configurateur.
+- 🟢 À évaluer : créer une aide avec Page::helpBlock().
+- 🟢 À évaluer : ajouter la possibilité d’afficher la barre latérale à gauche ou à droite, plutôt qu’en bas ? Version 3 ?
+- 🟢 À évaluer : permettre l’ajout de boutons de partage pour des réseaux sociaux qui ne sont pas configurés.
 
 == Notes de version ==
+
+=== 2.20 - 19 novembre 2025 ===
+- Ajout : lien vers la liste des billets quand aucune page statique n’a été définie.
+- Amélioration : le script post.js migre dans le pied de page et s’affiche au besoin seulement.
+- Correction : le bouton pour réagir aux billets n’était pas toujours fonctionnel.
+- Modification : adresse électonique de l’auteur du thème.
+- Modification : transfert de balises de valeur vers la balise de comportement du pied de page.
+- Revue de code.
 
 === 2.19 - 16 novembre 2025 ===
 - Ajout : prise en charge de l’affichage du fil d’Ariane.
