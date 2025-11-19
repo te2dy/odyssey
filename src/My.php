@@ -1542,4 +1542,13 @@ class My extends MyTheme
             Files::deltree(DC_SC_CACHE_DIR);
         }
     }
+
+    public static function scriptRememberMe(): string
+    {
+        return '<script type=application/json id=dc_post_remember_str-data>
+            {"post_remember_str": "{{tpl:lang reactions-comment-remember-me}}"}
+        </script>
+
+        <script src="' . App::blog()->getQmarkURL() . 'pf=post.js"></script>';
+    }
 }

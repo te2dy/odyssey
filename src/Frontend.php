@@ -41,9 +41,10 @@ class Frontend
 
         // Behaviors.
         App::behavior()->addBehaviors([
-            'publicHeadContent'          => FrontendBehaviors::odysseyHead(...),
+            'publicHeadContent'          => FrontendBehaviors::odysseyHeadContent(...),
             'publicAfterContentFilterV2' => FrontendBehaviors::odysseyAfterContent(...),
-            'tplIfConditions'            => FrontendBehaviors::odysseyTplConditions(...)
+            'tplIfConditions'            => FrontendBehaviors::odysseyTplConditions(...),
+            'publicFooterContent'        => FrontendBehaviors::odysseyFooterContent(...)
         ]);
 
         // Blocks.
@@ -77,8 +78,6 @@ class Frontend
         App::frontend()->template()->addValue('odysseyAttachmentSize', FrontendValues::odysseyAttachmentSize(...));
         App::frontend()->template()->addValue('odysseyPostTagsBefore', FrontendValues::odysseyPostTagsBefore(...));
         App::frontend()->template()->addValue('odysseyMarkdownSupportInfo', FrontendValues::odysseyMarkdownSupportInfo(...));
-        App::frontend()->template()->addValue('odysseyFooterSocialLinks', FrontendValues::odysseyFooterSocialLinks(...));
-        App::frontend()->template()->addValue('odysseyFooterCredits', FrontendValues::odysseyFooterCredits(...));
 
         return true;
     }

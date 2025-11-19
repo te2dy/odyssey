@@ -25,7 +25,7 @@ class FrontendBehaviors
      *
      * @return void
      */
-    public static function odysseyHead(): void
+    public static function odysseyHeadContent(): void
     {
         // Adds the name of the editor.
         if (App::blog()->settings->system->editor) {
@@ -631,6 +631,156 @@ class FrontendBehaviors
             $sign = (bool) $attr['has_reaction'] ? '' : '!';
 
             $if->append($sign . '(App::frontend()->context()->posts->hasComments() || App::frontend()->context()->posts->hasTrackbacks())');
+        }
+    }
+
+    /**
+     * Adds content to the footer of the blos.
+     *
+     * @return void The content.
+     */
+    public static function odysseyFooterContent(): void
+    {
+        // Adds a Dotclear script for posts and pages.
+        if (App::url()->type === "post" || App::url()->type === "pages") {
+            echo App::frontend()->context()->posts->commentsActive() ? My::scriptRememberMe() : '';
+        }
+
+        self::odysseyFooterSocialLinks();
+
+        self::odysseyFooterCredits();
+    }
+
+    /**
+     * Displays social links in the footer.
+     *
+     * @return void The social links.
+     */
+    public static function odysseyFooterSocialLinks(): void
+    {
+        $count = 0;
+
+        foreach (My::socialSites() as $site_id => $site_data) {
+            $social_site_id    = 'social_' . $site_id;
+            $social_site_value = My::settings()->$social_site_id;
+
+            $footer_social_id      = 'footer_social_' . $site_id;
+            $footer_social_setting = My::settings()->$footer_social_id === null ? true : false;
+
+            if ($social_site_value && $footer_social_setting) {
+                $count++;
+
+                if ($count === 1) {
+                    ?>
+
+                    <div class=site-footer-block>
+                        <ul class=footer-social-links>
+
+                    <?php
+                }
+
+                $icon_creator = My::svgIcons($site_id)['creator'] ?? '';
+
+                if ($icon_creator === 'simpleicons') {
+                    $class = 'social-icon-si footer-social-links-icon-si';
+                } else {
+                    $class = 'social-icon-fi footer-social-links-icon-fi';
+                }
+
+                if ($social_site_value) {
+                    switch ($site_id) {
+                        case 'email':
+                            $social_site_value = 'mailto:' . $social_site_value;
+
+                            break;
+                        case 'phone':
+                            $social_site_value = 'tel:' . $social_site_value;
+
+                            break;
+                        case 'sms':
+                            $social_site_value = 'sms:' . $social_site_value;
+                    }
+                }
+                ?>
+
+                <li>
+                    <a href=<?= My::displayAttr($social_site_value, 'url'); ?>>
+                        <span class=footer-social-links-icon-container>
+                            <svg class="<?= $class; ?>" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>
+                                <title><?= Html::escapeHTML($site_data['name']); ?></title>
+                                <?= My::svgIcons($site_id)['path']; ?>
+                            </svg>
+                        </span>
+                    </a>
+                </li>
+
+                <?php
+            }
+        }
+
+        if (My::settings()->footer_feed) {
+            if ($count === 0) {
+                $count++;
+                ?>
+
+                <div class=site-footer-block>
+                    <ul class=footer-social-links>
+
+                <?php
+            }
+
+            $feed_link = App::blog()->url() . App::url()->getURLFor('feed', My::settings()->footer_feed);
+            ?>
+
+            <li>
+                <a href=<?= My::displayAttr($feed_link, 'url'); ?>>
+                    <span class=footer-social-links-icon-container>
+                        <svg class="social-icon-fi footer-social-links-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>
+                            <title><?= Html::escapeHTML(__('footer-social-links-feed-title')); ?></title>
+                            <?= My::svgIcons('feed')['path']; ?>
+                        </svg>
+                    </span>
+                </a>
+            </li>
+
+            <?php
+        }
+
+        if ($count > 0) {
+            ?>
+
+                </ul>
+            </div>
+
+            <?php
+        }
+    }
+
+    /**
+     * Displays Dotclear and Odyssey as credits in the footer.
+     *
+     * @return void The credits.
+     */
+    public static function odysseyFooterCredits(): void
+    {
+        if (My::settings()->footer_credits !== false) {
+            if (!defined('DC_DEV') || (defined('DC_DEV') && DC_DEV === false)) {
+                // If we are not in a development environment.
+                $footer_credits = sprintf(__('footer-powered-by'), My::name());
+            } else {
+                $footer_credits = sprintf(
+                    __('footer-powered-by-dev'),
+                    My::dotclearVersion(),
+                    My::dotclearVersion(true),
+                    My::name(),
+                    App::themes()->moduleInfo(My::id(), 'version')
+                );
+            }
+            ?>
+
+            <div class=site-footer-block><?= $footer_credits; ?></div>
+
+            <?php
         }
     }
 }
