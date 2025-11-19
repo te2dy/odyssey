@@ -13,15 +13,7 @@
     {{tpl:odysseyHeaderImage position="top"}}
 
     <tpl:odysseySiteTitle>
-      <tpl:PaginationIf start="1">
-        {{tpl:odysseyBlogNameLink}}
-      </tpl:PaginationIf>
-
-      <tpl:PaginationIf start="0">
-        <div id=site-title>
-          <a href={{tpl:BlogURL is_attr="1"}} rel=home><h1>{{tpl:BlogName}}</h1></a>
-        </div>
-      </tpl:PaginationIf>
+      {{tpl:odysseyBlogNameLink}}
     </tpl:odysseySiteTitle>
 
     {{tpl:odysseyBlogDescription}}
@@ -56,8 +48,6 @@
           </footer>
         </tpl:EntryIf>
       </article>
-
-      {{tpl:include src="_comments.html"}}
     </tpl:Entries>
 
     {{tpl:else}}
