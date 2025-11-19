@@ -20,6 +20,9 @@ Ordre de priorité : 🔴 🟠 🟢
 
 == Notes de version ==
 
+=== 2.20.1 - 19 novembre 2025 ===
+- Correction : les scripts ne se chargaient pas forcément dans le bon contexte.
+
 === 2.20 - 19 novembre 2025 ===
 - Ajout : lien vers la liste des billets quand aucune page statique n’a été définie.
 - Amélioration : le script post.js migre dans le pied de page et s’affiche au besoin seulement.
