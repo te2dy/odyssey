@@ -8,18 +8,6 @@
   {{tpl:odysseyMetaDescriptionHome}}
 </tpl:Block>
 
-<tpl:Block name="head-post-scripts">
-  <tpl:Entries lastn="1">
-    <tpl:EntryIf show_comments="1">
-      <script type=application/json id=dc_post_remember_str-data>
-        {"post_remember_str": "{{tpl:lang reactions-comment-remember-me}}"}
-      </script>
-
-      <script src="{{tpl:BlogQmarkURL}}pf=post.js"></script>
-    </tpl:EntryIf>
-  </tpl:Entries>
-</tpl:Block>
-
 <tpl:Block name="site-header">
   <header id=site-header>
     {{tpl:odysseyHeaderImage position="top"}}
@@ -49,25 +37,31 @@
 </tpl:Block>
 
 <tpl:Block name="main-content">
-  {{tpl:BlogStaticEntryURL}}
+  <tpl:IfBlogStaticEntryURL>
+    {{tpl:BlogStaticEntryURL}}
 
-  <tpl:Entries>
-    <article class="page page-static" id={{tpl:lang page-id}}-{{tpl:EntryID}}>
-      <div class=content-text>
-        {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
+    <tpl:Entries>
+      <article class="page page-static" id={{tpl:lang page-id}}-{{tpl:EntryID}}>
+        <div class=content-text>
+          {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
 
-        {{tpl:EntryContent}}
+          {{tpl:EntryContent}}
 
-        {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
-      </div>
+          {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
+        </div>
 
-      <tpl:EntryIf has_attachment="1">
-        <footer class=post-footer>
-          {{tpl:include src="_attachments.html"}}
-        </footer>
-      </tpl:EntryIf>
-    </article>
+        <tpl:EntryIf has_attachment="1">
+          <footer class=post-footer>
+            {{tpl:include src="_attachments.html"}}
+          </footer>
+        </tpl:EntryIf>
+      </article>
 
-    {{tpl:include src="_comments.html"}}
-  </tpl:Entries>
+      {{tpl:include src="_comments.html"}}
+    </tpl:Entries>
+
+    {{tpl:else}}
+
+    {{tpl:odysseyStaticUnset}}
+  </tpl:IfBlogStaticEntryURL>
 </tpl:Block>

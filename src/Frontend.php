@@ -78,6 +78,7 @@ class Frontend
         App::frontend()->template()->addValue('odysseyAttachmentSize', FrontendValues::odysseyAttachmentSize(...));
         App::frontend()->template()->addValue('odysseyPostTagsBefore', FrontendValues::odysseyPostTagsBefore(...));
         App::frontend()->template()->addValue('odysseyMarkdownSupportInfo', FrontendValues::odysseyMarkdownSupportInfo(...));
+        App::frontend()->template()->addValue('odysseyStaticUnset', FrontendValues::odysseyStaticUnset(...));
 
         return true;
     }

@@ -341,6 +341,11 @@ msgstr "X"
 msgid "social-site-other"
 msgstr "Autre lien"
 
+# Static
+
+msgid "static-page-unset"
+msgstr "La liste des derniers billets publiés est consultable <a href=%s>ici</a>."
+
 # Archives
 
 msgid "archives-title"

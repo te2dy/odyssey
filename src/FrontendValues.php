@@ -783,4 +783,11 @@ class FrontendValues
 
         return '';
     }
+
+    public static function odysseyStaticUnset(): string
+    {
+        $url = App::blog()->settings()->system->static_home ? App::blog()->url() . App::url()->getURLFor('posts') : App::blog()->url();
+
+        return '<p>' . sprintf(__('static-page-unset'), My::displayAttr($url, 'url')) . '</p>';
+    }
 }

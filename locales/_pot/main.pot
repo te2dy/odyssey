@@ -341,6 +341,11 @@ msgstr ""
 msgid "social-site-other"
 msgstr ""
 
+# Static
+
+msgid "static-page-unset"
+msgstr ""
+
 # Archives
 
 msgid "archives-title"
