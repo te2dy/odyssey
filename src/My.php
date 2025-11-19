@@ -1488,6 +1488,20 @@ class My extends MyTheme
     }
 
     /**
+     * Loads scripts to add Remember me input in the comment form.
+     *
+     * @return string The scripts.
+     */
+    public static function scriptRememberMe(): string
+    {
+        return '<script type=application/json id=dc_post_remember_str-data>
+            {"post_remember_str": "' . __('reactions-comment-remember-me') . '"}
+        </script>
+
+        <script src="' . App::blog()->getQmarkURL() . 'pf=post.js"></script>';
+    }
+
+    /**
      * Displays Dotclear version number.
      *
      * @param bool $short true to display a short version number
@@ -1541,14 +1555,5 @@ class My extends MyTheme
         if (defined('DC_SC_CACHE_DIR') && is_dir(DC_SC_CACHE_DIR)) {
             Files::deltree(DC_SC_CACHE_DIR);
         }
-    }
-
-    public static function scriptRememberMe(): string
-    {
-        return '<script type=application/json id=dc_post_remember_str-data>
-            {"post_remember_str": "' . __('reactions-comment-remember-me') . '"}
-        </script>
-
-        <script src="' . App::blog()->getQmarkURL() . 'pf=post.js"></script>';
     }
 }

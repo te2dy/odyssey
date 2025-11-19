@@ -784,6 +784,11 @@ class FrontendValues
         return '';
     }
 
+    /**
+     * Displays a text string with a link in case no static page has been defined.
+     *
+     * @return string The text.
+     */
     public static function odysseyStaticUnset(): string
     {
         $url = App::blog()->settings()->system->static_home ? App::blog()->url() . App::url()->getURLFor('posts') : App::blog()->url();

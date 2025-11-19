@@ -13,17 +13,17 @@
     </tpl:Block>
 
     <tpl:Block name="head-meta">
-      <meta name=robots content={{tpl:odysseyMetaRobots}}>
+      <meta name=robots content={{tpl:odysseyMetaRobots is_attr="1"}}>
       {{tpl:odysseyMetaCanonical}}
     </tpl:Block>
 
     <tpl:Block name="head-styles-scripts">
-      <link rel=preload href={{tpl:odysseyStylesheetURL}} as=style>
-      <link rel=stylesheet href={{tpl:odysseyStylesheetURL}}>
+      <link rel=preload href={{tpl:odysseyStylesheetURL is_attr="1"}} as=style>
+      <link rel=stylesheet href={{tpl:odysseyStylesheetURL is_attr="1"}}>
 
       <tpl:SysIf jquery_needed="1">
-        <link rel=preload href={{tpl:odysseyJqueryURL}} as=script>
-        <script src={{tpl:odysseyJqueryURL}}></script>
+        <link rel=preload href={{tpl:odysseyJqueryURL is_attr="1"}} as=script>
+        <script src={{tpl:odysseyJqueryURL is_attr="1"}}></script>
       </tpl:SysIf>
 
       <tpl:SysIf legacy_needed="1">
