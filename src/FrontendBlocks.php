@@ -15,7 +15,7 @@ class FrontendBlocks
 {
     public static function odysseyJsUtil($attr, $content): string
     {
-        if (My::settings()->advanced_js_util === false) {
+        if (My::settings()->advanced_js_util === false || !App::blog()->settings->system->jquery_needed) {
             return '';
         }
 
@@ -134,8 +134,8 @@ class FrontendBlocks
         }
 
         if (My::settings()->footer_enabled === false && App::blog()->settings->system->jquery_needed === true && My::settings()->advanced_js_util === null) {
-            if (App::url()->type === "post" || App::url()->type === "pages") {
-                if (App::frontend()->context()->posts->hasComments() || App::frontend()->context()->posts->commentsActive()) {
+            if (App::url()->type === 'post' || App::url()->type === 'pages') {
+                if (App::frontend()->context()->posts->commentsActive()) {
                     return '<footer id=site-footer>' . My::scriptRememberMe() . '</footer>';
                 }
             }

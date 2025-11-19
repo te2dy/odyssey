@@ -642,8 +642,12 @@ class FrontendBehaviors
     public static function odysseyFooterContent(): void
     {
         // Adds a Dotclear script for posts and pages.
-        if (App::url()->type === "post" || App::url()->type === "pages") {
-            echo App::frontend()->context()->posts->commentsActive() ? My::scriptRememberMe() : '';
+        if (App::blog()->settings->system->jquery_needed === true && My::settings()->advanced_js_util === null) {
+            if (App::url()->type === 'post' || App::url()->type === 'pages') {
+                if (App::frontend()->context()->posts->commentsActive()) {
+                    echo My::scriptRememberMe();
+                }
+            }
         }
 
         self::odysseyFooterSocialLinks();
