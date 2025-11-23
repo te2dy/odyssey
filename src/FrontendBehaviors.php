@@ -548,31 +548,30 @@ class FrontendBehaviors
 
                     $info = Path::info($src_value);
 
-                    foreach (App::media()->getThumbSizes() as $size_id => $size_data) {
-                        $img_width = $size_data[0] ?? null;
-                        $img_crop  = $size_data[1] ?? null;
+                    if ($info) {
+                        foreach (App::media()->getThumbSizes() as $size_id => $size_data) {
+                            $img_width = $size_data[0] ?? null;
+                            $img_crop  = $size_data[1] ?? null;
 
-                        if ($img_width && $img_crop === 'ratio') {
-                            $dc_img_pattern = App::media()->getThumbnailFilePattern($info['extension']);
-                            $img_pattern    = sprintf($dc_img_pattern, $info['dirname'], $info['base'], '%s');
-                            $img_path_rel   = sprintf($img_pattern, $size_id);
-                            $img_path       = App::config()->dotclearRoot() . $img_path_rel;
+                            if ($img_width && $img_crop === 'ratio') {
+                                $dc_img_pattern = App::media()->getThumbnailFilePattern($info['extension']);
+                                $img_pattern    = sprintf($dc_img_pattern, $info['dirname'], $info['base'], '%s');
+                                $img_path_rel   = sprintf($img_pattern, $size_id);
+                                $img_path       = App::config()->dotclearRoot() . $img_path_rel;
 
-                            if (file_exists($img_path)) {
-                                $img[$size_id]['url']    = $img_path_rel;
-                                $img[$size_id]['width']  = (int) $img_width;
-                                $img[$size_id]['height'] = isset(getimagesize($img_path)[1]) ? (int) getimagesize($img_path)[1] : null;
+                                if (file_exists($img_path)) {
+                                    $img[$size_id]['url']    = $img_path_rel;
+                                    $img[$size_id]['width']  = (int) $img_width;
+                                    $img[$size_id]['height'] = isset(getimagesize($img_path)[1]) ? (int) getimagesize($img_path)[1] : null;
+                                }
                             }
                         }
                     }
 
                     // Sort $img by width.
-                    uasort(
-                        $img,
-                        function ($a, $b) {
-                            return $a['width'] <=> $b['width'];
-                        }
-                    );
+                    uasort($img, function ($a, $b) {
+                        return $a['width'] <=> $b['width'];
+                    });
 
                     // Defines image attributes.
                     $attr = 'src=' . My::displayAttr($img['o']['url'], 'url') . ' ';
