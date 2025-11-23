@@ -795,14 +795,17 @@ msgstr "Charger le fichier Dotclear util.js"
 msgid "settings-odysseystyles-title"
 msgstr "Tous les styles"
 
-msgid "settings-themeeupdatelocked-warning"
-msgstr "La mise à jour du thème est verrouillée. Si nécessaire, vous pouvez la déverrouiller depuis <a href=%s>la page de modification des fichiers du thème</a>."
+msgid "settings-theme-warning-locked"
+msgstr "<strong>La mise à jour d’%1$s est verrouillée</strong> pour permettre la modification de ses fichiers. Veuillez noter qu’une telle modification peut altérer le fonctionnement du thème. Rendez-vous <a href=%2$s>ici</a> pour déverrouiller la mise à jour."
 
-msgid "settings-themeeditordevmode-warning"
-msgstr "L’éditeur de thème est en mode développement. Si vous avez modifié des fichiers du thème, certaines de ses fonctions pourraient avoir été altérées. Pour désactiver le mode développement, rendez-vous dans les <a href=%1$s>les paramètres de l’extension %2$s</a>."
+msgid "settings-theme-warning-dev"
+msgstr "<strong>Le mode développement de l’éditeur de thème est activé</strong>, ce qui vous permet de modifier les fichiers du thème directement à la source. Veuillez noter qu’une telle modification peut altérer le fonctionnement du thème. Rendez-vous <a href=%s>ici</a> pour désactivez le mode développement."
+
+msgid "settings-theme-warning-lockedanddev"
+msgstr "<strong>La mise à jour d’%1$s est verrouillée</strong> pour permettre la modification de ses fichiers, et <strong>le mode développement de l’éditeur de thème est activé</strong> pour que ces modifications soient effectuées à la source, directement dans les fichiers du thème. Veuillez noter que de telles modifications peuvent altérer le fonctionnement du thème. Rendez-vous <a href=%2$s>ici</a> pour déverrouiller la mise à jour et <a href=%3$s>là</a> pour désactivez le mode développement."
 
 msgid "settings-mediacss-warning"
-msgstr "Il est conseillé de cocher l’option « Ne pas charger la feuille de style standard (utilisée pour l'alignement des médias) » dans la section Médias et images des <a href=%s>Paramètres du blog</a>. En effet, ce thème intègre ses propres styles d’alignement des médias."
+msgstr "Il est conseillé de cocher l’option « <strong>Ne pas charger la feuille de style standard (utilisée pour l’alignement des médias)</strong> » dans la section Médias et images des <a href=%s>Paramètres du blog</a>. En effet, %s intègre ses propres styles d’alignement des médias et rend superflu le chargement de cette feuille de style."
 
 msgid "settings-page-intro"
 msgstr "C’est ici que vous pouvez personnaliser votre thème %s pour l’adapter à vos besoins."

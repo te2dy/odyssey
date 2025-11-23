@@ -2074,31 +2074,30 @@ class Config
         if ($theme_update_locked || $theme_dev_mode || !$no_public_css) {
             $theme_info = [];
 
-            if ($theme_update_locked) {
+            if ($theme_update_locked && $theme_dev_mode) {
                 $theme_info[] = (new Text('p', sprintf(
-                    __('settings-themeeupdatelocked-warning'),
+                    __('settings-theme-warning-lockedanddev'),
+                    My::name(),
+                    My::displayAttr(App::backend()->url()->get('admin.plugin.themeEditor')),
+                    My::displayAttr(App::backend()->url()->get('admin.plugin.tidyAdmin', ['part' => 'options']))
+                )));
+            } elseif ($theme_update_locked) {
+                $theme_info[] = (new Text('p', sprintf(
+                    __('settings-theme-warning-locked'),
+                    My::name(),
                     My::displayAttr(App::backend()->url()->get('admin.plugin.themeEditor'))
                 )));
-            }
-
-            if ($theme_dev_mode) {
-                $tidyadmin_name = __(App::plugins()->moduleInfo('tidyAdmin', 'name'));
-                $tidyadmin_url  = App::backend()->url()->get('admin.plugin.tidyAdmin', ['part' => 'options']);
-
-                $theme_info[] = (new Text('p', sprintf(
-                    __('settings-themeeditordevmode-warning'),
-                    My::displayAttr($tidyadmin_url),
-                    $tidyadmin_name
-                )));
+            } elseif ($theme_dev_mode) {
+                $theme_info[] = new Text('p', sprintf(
+                    __('settings-theme-warning-dev'),
+                    My::displayAttr(App::backend()->url()->get('admin.plugin.tidyAdmin', ['part' => 'options']))
+                ));
             }
 
             if (!$no_public_css) {
                 $blogpref_url  = My::displayAttr(App::backend()->url()->get('admin.blog.pref'));
 
-                $theme_info[] = (new Text('p', sprintf(
-                    __('settings-mediacss-warning'),
-                    $blogpref_url
-                )));
+                $theme_info[] = new Text('p', sprintf(__('settings-mediacss-warning'), $blogpref_url, My::name()));
             }
 
             $fields[] = (new Div())

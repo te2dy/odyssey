@@ -795,10 +795,13 @@ msgstr ""
 msgid "settings-odysseystyles-title"
 msgstr ""
 
-msgid "settings-themeeupdatelocked-warning"
+msgid "settings-theme-warning-locked"
 msgstr ""
 
-msgid "settings-themeeditordevmode-warning"
+msgid "settings-theme-warning-dev"
+msgstr ""
+
+msgid "settings-theme-warning-lockedanddev"
 msgstr ""
 
 msgid "settings-mediacss-warning"
