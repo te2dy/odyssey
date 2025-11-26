@@ -1758,14 +1758,14 @@ class Config
                     $combo = [];
 
                     foreach ($default_settings[$setting_id]['choices'] as $name => $value) {
-                        $combo[] = new Option($name, $value);
+                        $combo[] = new Option($name, Html::escapeHTML($value));
                     }
 
                     $the_setting[] = (new Para())
                         ->id($setting_id . '-input')
                         ->items([
                             (new Select($setting_id))
-                                ->default((string) $setting_value)
+                                ->default((string) Html::escapeHTML($setting_value))
                                 ->items($combo)
                                 ->label(
                                     new Label($default_settings[$setting_id]['title'], 2)
@@ -1832,10 +1832,10 @@ class Config
                         ->items([
                             (new Label($default_settings[$setting_id]['title'], 0))
                                 ->extra('for=' . $setting_id . '-text'),
-                            new Color($setting_id, $setting_value),
+                            new Color($setting_id, Html::escapeHTML($setting_value)),
                             (new Input($setting_id . '-text'))
                                 ->placeholder($placeholder)
-                                ->value($setting_value_input),
+                                ->value(Html::escapeHTML($setting_value_input)),
                             new Button($setting_id . '-default-button', __('settings-colors-reset')),
                             new Hidden($setting_id . '-default-value', $default_settings[$setting_id]['default'])
                         ]);
@@ -1850,7 +1850,7 @@ class Config
                         ->items([
                             (new Label($default_settings[$setting_id]['title'], 2))
                                 ->for($setting_id),
-                            (new Textarea($setting_id, $setting_value))
+                            (new Textarea($setting_id, Html::escapeHTML($setting_value)))
                                 ->cols(60)
                                 ->placeholder($placeholder)
                                 ->rows($rows)
@@ -1920,7 +1920,7 @@ class Config
                                 ->maxlength(255)
                                 ->placeholder($placeholder)
                                 ->size(30)
-                                ->value($setting_value)
+                                ->value(Html::escapeHTML($setting_value))
                         ]);
 
                     if (isset($default_settings[$setting_id]['description']) && $default_settings[$setting_id]['description'] !== '') {
