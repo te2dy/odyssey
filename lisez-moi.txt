@@ -11,14 +11,20 @@ Ce thème n’aurait pu avoir vu le jour sans les ressources mises à dispositio
 Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://blog.jim-nielsen.com/), des travaux réalisés sur les thèmes Ductile et Berlin pour Dotclear, des billets de Franck Paul (https://open-time.net/) et du blog DotclearWatch (https://dotclear.watch/).
 
 == Feuille de route ==
-Ordre de priorité : 🔴 🟠 🟢
-- 🔴 Une page statique en page d’accueil est-elle censée pouvoir recevoir des commentaires ?
+Hiérarchie des priorités : 🔴 🟠 🟢
 - 🟢 Basculer certaines options sur des extensions pour libérer le configurateur.
 - 🟢 À évaluer : créer une aide avec Page::helpBlock().
 - 🟢 À évaluer : ajouter la possibilité d’afficher la barre latérale à gauche ou à droite, plutôt qu’en bas ? Version 3 ?
 - 🟢 À évaluer : permettre l’ajout de boutons de partage pour des réseaux sociaux qui ne sont pas configurés.
 
 == Notes de version ==
+
+=== 2.21 - 26 novembre 2025 ===
+- Amélioration : modèle de page d’accueil statique.
+- Amélioration : validation plus poussée des liens sociaux.
+- Amélioration : sécurité à l’ajout d’une image d’en-tête.
+- Correction : absence d’échappement pour certaines valeurs dans le configurateur.
+- Mise à jour des traductions.
 
 === 2.20.1 - 19 novembre 2025 ===
 - Correction : les scripts ne se chargaient pas forcément dans le bon contexte.
