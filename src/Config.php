@@ -569,6 +569,7 @@ class Config
                     && file_exists($file_path)
                     && str_starts_with($file_type, 'image/')
                     && in_array($file_type, $mime_types_supported, true)
+                    && mime_content_type($file_path) === $file_type
                 ) {
                     switch ($setting_id) {
                         case 'header_image':
