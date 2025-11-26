@@ -1439,7 +1439,7 @@ class Config
 
         switch ($site_type) {
             case 'email':
-                if (str_contains($value, '@') && str_contains($value, '.')) {
+                if (str_contains($value, '@') && str_contains($value, '.') && filter_var($value, FILTER_VALIDATE_EMAIL)) {
                     return [
                         'value' => filter_var($value, FILTER_VALIDATE_EMAIL),
                         'type'  => 'string'
@@ -1448,7 +1448,7 @@ class Config
 
                 break;
             case 'matrix':
-                if (str_starts_with($value, 'https://matrix.to/#/')) {
+                if (str_starts_with($value, 'https://matrix.to/#/') && filter_var($value, FILTER_VALIDATE_URL)) {
                     return [
                         'value' => filter_var($value, FILTER_SANITIZE_URL),
                         'type'  => 'string'
@@ -1471,11 +1471,12 @@ class Config
                         'value' => My::escapeURL('https://signal.me/#p/' . $value),
                         'type'  => 'string',
                     ];
-                } elseif (str_starts_with($value, 'https://signal.me/')
+                } elseif (filter_var($value, FILTER_VALIDATE_URL)
+                    && (str_starts_with($value, 'https://signal.me/')
                     || str_starts_with($value, 'sgnl://signal.me/')
                     || str_starts_with($value, 'https://signal.group/')
                     || str_starts_with($value, 'sgnl://signal.group/')
-                ) {
+                )) {
                     return [
                         'value' => filter_var($value, FILTER_SANITIZE_URL),
                         'type'  => 'string'
@@ -1484,12 +1485,12 @@ class Config
 
                 break;
             case 'url':
-                if ($site_base && str_starts_with($value, $site_base)) {
+                if ($site_base && str_starts_with($value, $site_base) && filter_var($value, FILTER_VALIDATE_URL)) {
                     return [
                         'value' => filter_var($value, FILTER_SANITIZE_URL),
                         'type'  => 'string'
                     ];
-                } elseif (filter_var($value, FILTER_VALIDATE_URL) !== false) {
+                } elseif (filter_var($value, FILTER_VALIDATE_URL)) {
                     return [
                         'value' => filter_var($value, FILTER_SANITIZE_URL),
                         'type'  => 'string'
@@ -1503,7 +1504,9 @@ class Config
                         'value' => filter_var('https://wa.me/' . substr($value, 1), FILTER_SANITIZE_URL),
                         'type'  => 'string'
                     ];
-                } elseif (str_starts_with($value, 'https://wa.me/') || str_starts_with($value, 'whatsapp://wa.me/')) {
+                } elseif (filter_var($value, FILTER_VALIDATE_URL)
+                    && (str_starts_with($value, 'https://wa.me/') || str_starts_with($value, 'whatsapp://wa.me/'))
+                ) {
                     return [
                         'value' => filter_var($value, FILTER_SANITIZE_URL),
                         'type'  => 'string'
@@ -1517,7 +1520,9 @@ class Config
                         'value' => filter_var('https://x.com/' . substr($value, 1), FILTER_SANITIZE_URL),
                         'type'  => 'string'
                     ];
-                } elseif (str_starts_with($value, 'https://x.com/') || str_starts_with($value, 'https://twitter.com/')) {
+                } elseif (filter_var($value, FILTER_VALIDATE_URL)
+                    && (str_starts_with($value, 'https://x.com/') || str_starts_with($value, 'https://twitter.com/'))
+                ) {
                     return [
                         'value' => filter_var($value, FILTER_SANITIZE_URL),
                         'type'  => 'string'
