@@ -707,7 +707,7 @@ details summary {
 .reactions-button:is(:focus-visible) .reactions-button-text {
   text-decoration: none;
 }
-.reactions-button:is(:focus-visible) .reactions-button-icon {
+.reactions-button:is(:focus-visible) .reactions-button-icon.social-icon-fi {
   stroke: var(--color-background, #fafafa);
 }
 @media (prefers-contrast: more),

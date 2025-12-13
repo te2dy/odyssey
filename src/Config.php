@@ -1205,6 +1205,7 @@ class Config
         // Other reactions
         if (isset($settings['reactions_other']) && $settings['reactions_other'] !== 'disabled') {
             $css_main_array['.reactions-button .social-icon-si']['fill'] = 'var(--color-primary, hsl(226, 80%, 45%))';
+            $css_main_array['.reactions-button:is(:focus-visible) .reactions-button-icon.social-icon-si']['fill'] = 'var(--color-background, #fafafa)';
         }
 
         // Footer links
