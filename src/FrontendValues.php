@@ -556,7 +556,6 @@ class FrontendValues
 
             if (App::frontend()->context()->posts->post_title) {
                 $bluesky_url .= "https://bsky.app/intent/compose?text=" . App::frontend()->context()->posts->post_title;
-
             }
 
             if (App::frontend()->context()->posts->getURL()) {
@@ -680,8 +679,8 @@ class FrontendValues
 
         $output .= '<?php echo $reactions_other ?: ""; ?>';
 
-        # --BEHAVIOR-- odysseyPrivateCommentLinkAdd -- string, string
-        $output .= App::behavior()->callBehavior('odysseyPrivateCommentLinkAdd');
+        # --BEHAVIOR-- odysseyPrivateCommentLinkAdd
+        $output .= (string) App::behavior()->callBehavior('odysseyPrivateCommentLinkAdd');
 
         return $output;
     }
@@ -762,8 +761,7 @@ class FrontendValues
     }
 
     /**
-     * Displays a notice informing about the support of the Markdown syntax
-     * in comments.
+     * Displays a notice informing about the support of the Markdown syntax in comments.
      *
      * @return string The notice.
      */
