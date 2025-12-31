@@ -19,6 +19,11 @@ Hiérarchie des priorités : 🔴 🟠 🟢
 
 == Notes de version ==
 
+=== 2.22 - 31 décembre 2025 ===
+- Correction : la couleur de certaines icônes de liens sociaux n’était pas la bonne lors de leur survol.
+- Correction : le comportement "odysseyPrivateCommentLinkAdd" n’était pas fonctionnel.
+- Mise à jour : remplacement de 2025 par 2026 dans les mentions de droit d’auteur.
+
 === 2.21 - 26 novembre 2025 ===
 - Amélioration : modèle de page d’accueil statique.
 - Amélioration : validation plus poussée des liens sociaux.
