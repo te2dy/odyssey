@@ -2095,7 +2095,8 @@ class Config
                 __('settings-page-forum-link'),
                 'https://github.com/te2dy/odyssey/issues',
                 'mailto:contact.teddy@laposte.net',
-                'https://matrix.to/#/#dotclear:matrix.org'
+                'https://matrix.to/#/#dotclear:matrix.org',
+                'https://dotclear.org/forum'
             )
         );
 

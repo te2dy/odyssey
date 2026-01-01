@@ -820,10 +820,10 @@ msgid "settings-mediacss-warning"
 msgstr "Il est conseillé de cocher l’option « <strong>Ne pas charger la feuille de style standard (utilisée pour l’alignement des médias)</strong> » dans la section Médias et images des <a href=%s>Paramètres du blog</a>. En effet, %s intègre ses propres styles d’alignement des médias et rend superflu le chargement de cette feuille de style."
 
 msgid "settings-page-intro"
-msgstr "C’est ici que vous pouvez personnaliser votre thème %s pour l’adapter à vos besoins."
+msgstr "Personnalisez ici votre thème %s pour l’adapter à vos besoins."
 
 msgid "settings-page-forum-link"
-msgstr "Pour toute question, suggestion, demande, retour d’expérience ou autre, vous pouvez, au choix, <a href=%1$s>lancer une discussion sur GitHub</a>, <a href=%2$s>écrire un courriel à l’auteur du thème</a> ou publier un message dans le <a href=%3$s>salon Matrix officiel de Dotclear</a>."
+msgstr "Pour toute question, suggestion, demande, retour d’expérience ou autre, vous pouvez <a href=%1$s>lancer une discussion sur GitHub</a>, <a href=%2$s>écrire un courriel à l’auteur du thème</a>, publier un message dans le <a href=%3$s>salon Matrix officiel de Dotclear</a> ou sur le <a href=%4$s>forum officiel de Dotclear</a>."
 
 msgid "settings-reset-warning"
 msgstr "Attention : vous êtes sur le point de réinitialiser les paramètres de votre thème. Cette action est irréversible."
