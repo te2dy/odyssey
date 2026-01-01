@@ -49,6 +49,9 @@ msgstr "Image d’en-tête"
 msgid "post-home-link-title"
 msgstr "Retour à l’accueil"
 
+msgid "menu"
+msgstr "Menu"
+
 # Posts & pages
 
 msgid "entry-list-aria-label"

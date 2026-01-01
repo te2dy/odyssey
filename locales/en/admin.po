@@ -402,6 +402,15 @@ msgstr "Image description"
 msgid "settings-header-imagedescription-description"
 msgstr "Useful for accessibility."
 
+msgid "settings-header-menuburger-title"
+msgstr "Click on a button to open the menu"
+
+msgid "settings-header-menuburger-description"
+msgstr "Works with the plugin <a href=%1$s>%2$s</a>."
+
+msgid "settings-header-menuburgertext-title"
+msgstr "Text of the menu button"
+
 msgid "settings-header-breadcrumbalign-title"
 msgstr "Breadcrumb alignment"
 

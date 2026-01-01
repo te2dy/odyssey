@@ -120,6 +120,12 @@ function disableInputs() {
     document.getElementById("header_image-delete").style.display = "none";
   }
 
+  if (document.getElementById("header_menu_burger").checked) {
+    setStyle("header_menu_burger_text", "block");
+  } else {
+    setStyle("header_menu_burger_text", "none");
+  }
+
   if (document.getElementById("content_postlist_type").value !== "content") {
     setStyle([
       "content_postlist_altcolor",

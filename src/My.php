@@ -479,6 +479,31 @@ class My extends MyTheme
             'section'     => ['header', 'image']
         ];
 
+        if (App::plugins()->moduleExists('simpleMenu')) {
+            $default_settings['header_menu_burger'] = [
+                'title'       => __('settings-header-menuburger-title'),
+                'description' => sprintf(
+                    __('settings-header-menuburger-description'),
+                    App::backend()->url()->get('admin.plugin.simpleMenu'),
+                    __(App::plugins()->moduleInfo('simpleMenu', 'name'))
+                ),
+                'label'       => 'Burger Menu',
+                'type'        => 'checkbox',
+                'default'     => false,
+                'section'     => ['header', 'nav']
+            ];
+
+            $default_settings['header_menu_burger_text'] = [
+                'title'       => __('settings-header-menuburgertext-title'),
+                'description' => '',
+                'label'       => 'Burger Menu button text',
+                'type'        => 'text',
+                'default'     => '',
+                'placeholder' => __('menu'),
+                'section'     => ['header', 'nav']
+            ];
+        }
+
         if (App::blog()->settings->breadcrumb->breadcrumb_enabled) {
             $default_settings['header_breadcrumb_align'] = [
                 'title'       => __('settings-header-breadcrumbalign-title'),

@@ -963,6 +963,42 @@ class Config
             $css_main_array['#site-image img']['display']       = 'inline-block';
         }
 
+        // Burger Menu
+        if (isset($settings['header_menu_burger']) && $settings['header_menu_burger'] === '1') {
+            if (!isset($settings['header_post_full'])) {
+                $css_root_array[':root']['--header-short-direction'] = 'column';
+            }
+
+            $css_main_array['#site-nav details']['display'] = 'inline-block';
+
+            $css_main_array['#site-nav summary']['list-style-type'] = 'none';
+
+            $css_main_array['#site-nav summary::after']['content'] = '" ≡"';
+
+            $css_main_array['#site-nav details[open] summary::after']['content'] = '" ×"';
+
+            $css_main_array['#site-nav-content']['margin-top'] = '1em';
+
+            $css_main_array['#site-nav li a']['background-color'] = 'transparent';
+            $css_main_array['#site-nav li a']['border']           = '.063rem solid var(--color-primary, #1641ce)';
+            $css_main_array['#site-nav li a']['border-radius']    = 'var(--border-radius, unset)';
+            $css_main_array['#site-nav li a']['box-sizing']       = 'border-box';
+            $css_main_array['#site-nav li a']['display']          = 'inline-block';
+            $css_main_array['#site-nav li a']['line-height']      = '1.5';
+            $css_main_array['#site-nav li a']['max-width']        = '100%';
+            $css_main_array['#site-nav li a']['padding']          = '.25em .5em';
+            $css_main_array['#site-nav li a']['transition']       = 'var(--color-transition, unset)';
+
+            $css_main_array['#site-nav li.active a']['text-decoration'] = 'none';
+
+            $css_main_array['#site-nav li a:is(:active, :focus, :hover), #site-nav li.active a']['background-color'] = 'var(--color-primary-amplified, hsl(226, 95%, 50%))';
+            $css_main_array['#site-nav li a:is(:active, :focus, :hover), #site-nav li.active a']['border-color']     = 'var(--color-primary-amplified, hsl(226, 95%, 50%))';
+            $css_main_array['#site-nav li a:is(:active, :focus, :hover), #site-nav li.active a']['color']            = 'var(--color-background, #fcfcfd)';
+            $css_main_array['#site-nav li a:is(:active, :focus, :hover), #site-nav li.active a']['cursor']           = 'pointer';
+            $css_main_array['#site-nav li a:is(:active, :focus, :hover), #site-nav li.active a']['text-decoration']  = 'none';
+            $css_main_array['#site-nav li a:is(:active, :focus, :hover), #site-nav li.active a']['transition']       = 'var(--color-transition, unset)';
+        }
+
         // Breadcrumb
         $breadcrumb_align_allowed = ['left', 'right'];
 

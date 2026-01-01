@@ -49,6 +49,9 @@ msgstr ""
 msgid "post-home-link-title"
 msgstr ""
 
+msgid "menu"
+msgstr ""
+
 # Posts & pages
 
 msgid "entry-list-aria-label"

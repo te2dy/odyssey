@@ -51,6 +51,7 @@ class Frontend
         App::frontend()->template()->addBlock('odysseyJsUtil', FrontendBlocks::odysseyJsUtil(...));
         App::frontend()->template()->addBlock('odysseyHeaderMinimal', FrontendBlocks::odysseyHeaderMinimal(...));
         App::frontend()->template()->addBlock('odysseySiteTitle', FrontendBlocks::odysseySiteTitle(...));
+        App::frontend()->template()->addBlock('odysseyMenuBurger', FrontendBlocks::odysseyMenuBurger(...));
         App::frontend()->template()->addBlock('odysseyPostPagination', FrontendBlocks::odysseyPostPagination(...));
         App::frontend()->template()->addBlock('odysseyCommentFormWrapper', FrontendBlocks::odysseyCommentFormWrapper(...));
         App::frontend()->template()->addBlock('odysseySidebar', FrontendBlocks::odysseySidebar(...));

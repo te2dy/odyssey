@@ -10,6 +10,7 @@
 namespace Dotclear\Theme\odyssey;
 
 use Dotclear\App;
+use Dotclear\Helper\Html\Html;
 
 class FrontendBlocks
 {
@@ -56,6 +57,38 @@ class FrontendBlocks
         }
 
         return '';
+    }
+
+    /**
+     * Displays the menu as a burger menu or not.
+     *
+     * Works only with the simpleMenu plugin.
+     *
+     * @param array $attr    Unused.
+     * @param void  $content The menu.
+     *
+     * @return string The blog title block.
+     */
+    public static function odysseyMenuBurger($attr, $content): string
+    {
+        if (My::settings()->header_menu_burger !== true) {
+            return $content;
+        }
+
+        if (!App::plugins()->moduleExists('simpleMenu') || !App::blog()->settings->system->simpleMenu_active) {
+            return $content;
+        }
+
+        $menu_text = My::settings()->header_menu_burger_text ?: __('menu');
+
+        return '
+        <div id=site-nav>
+          <details>
+            <summary>' . Html::escapeHTML($menu_text) . '</summary>
+            <div id=site-nav-content>' . $content . '</div>
+          </details>
+        </div>
+        ';
     }
 
     /**

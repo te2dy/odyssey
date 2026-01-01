@@ -49,6 +49,9 @@ msgstr "Header Image"
 msgid "post-home-link-title"
 msgstr "Back to home"
 
+msgid "menu"
+msgstr "Menu"
+
 # Posts & pages
 
 msgid "entry-list-aria-label"

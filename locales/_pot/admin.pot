@@ -402,6 +402,15 @@ msgstr ""
 msgid "settings-header-imagedescription-description"
 msgstr ""
 
+msgid "settings-header-menuburger-title"
+msgstr ""
+
+msgid "settings-header-menuburger-description"
+msgstr ""
+
+msgid "settings-header-menuburgertext-title"
+msgstr ""
+
 msgid "settings-header-breadcrumbalign-title"
 msgstr ""
 
