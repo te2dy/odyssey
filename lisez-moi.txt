@@ -19,6 +19,12 @@ Hiérarchie des priorités : 🔴 🟠 🟢
 
 == Notes de version ==
 
+=== 2.23 - 1er janvier 2025 ===
+- Ajout : option pour ouvrir avec un bouton le menu de l’en-tête du blogue généré avec l’extension Menu simple.
+- Amélioration : les styles personnalisés sont désormais minifiés avant d’être ajoutés à la feuille de styles principale.
+- Amélioration : fonction de minification des styles plus efficace.
+- Mise à jour : textes de l’en-tête du configurateur.
+
 === 2.22 - 31 décembre 2025 ===
 - Correction : la couleur de certaines icônes de liens sociaux n’était pas la bonne lors de leur survol.
 - Correction : le comportement "odysseyPrivateCommentLinkAdd" n’était pas fonctionnel.
