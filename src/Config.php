@@ -1348,6 +1348,8 @@ class Config
         $css .= !empty($css_media_motion_array) ? '@media (prefers-reduced-motion:reduce){' . My::stylesArrToStr($css_media_motion_array) . '}' : '';
         $css .= !empty($css_media_print_array) ? '@media print{' . My::stylesArrToStr($css_media_print_array) . '}' : '';
 
+        $css = My::cssMinify($css);
+
         if ($css) {
             return self::_sanitizeCSS($css);
         }
@@ -1583,7 +1585,8 @@ class Config
     {
         $css  = $css_options;
         $css .= file_get_contents(My::themeFolder('path', '/style.min.css')) ?: '';
-        $css .= $css_custom;
+        $css  = trim($css);
+        $css .= My::cssMinify($css_custom) . PHP_EOL;
 
         $css_folder    = My::id() . '/css';
         $css_file_name = 'style';

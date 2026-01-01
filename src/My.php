@@ -479,7 +479,7 @@ class My extends MyTheme
             'section'     => ['header', 'image']
         ];
 
-        if (App::plugins()->moduleExists('simpleMenu')) {
+        if (App::plugins()->moduleExists('simpleMenu') && App::blog()->settings->system->simpleMenu_active) {
             $default_settings['header_menu_burger'] = [
                 'title'       => __('settings-header-menuburger-title'),
                 'description' => sprintf(
@@ -495,8 +495,8 @@ class My extends MyTheme
 
             $default_settings['header_menu_burger_text'] = [
                 'title'       => __('settings-header-menuburgertext-title'),
-                'description' => '',
-                'label'       => 'Burger Menu button text',
+                'description' => __('settings-header-menuburgertext-description'),
+                'label'       => 'Burger Menu text button',
                 'type'        => 'text',
                 'default'     => '',
                 'placeholder' => __('menu'),
@@ -1144,6 +1144,53 @@ class My extends MyTheme
         }
 
         return $css;
+    }
+
+    /**
+     * Minifies CSS strings.
+     *
+     * @see tidyAdmin CSS minification function.
+     * @see https://github.com/matthiasmullie/minify/
+     *
+     * @param string $css The styles.
+     *
+     * @return string The minified styles.
+     */
+    public static function cssMinify(string $css): string
+    {
+        // Remove comments
+        $css = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $css);
+
+        // Remove leading & trailing whitespace
+        $css = preg_replace('/^\s*/m', '', $css);
+        $css = preg_replace('/\s*$/m', '', $css);
+
+        // Replace newlines with a single space
+        $css = preg_replace('/\s+/', ' ', $css);
+
+        /**
+         * Remove whitespace around meta characters
+         * inspired by stackoverflow.com/questions/15195750/minify-compress-css-with-regex
+         */
+        $css = preg_replace('/\s*([\*$~^|]?+=|[{};,>~]|!important\b)\s*/', '$1', $css);
+        $css = preg_replace('/([\[(:>\+])\s+/', '$1', $css);
+        $css = preg_replace('/\s+([\]\)>\+])/', '$1', $css);
+        $css = preg_replace('/\s+(:)(?![^\}]*\{)/', '$1', $css);
+
+        /**
+         * Whitespace around + and - can only be stripped inside some pseudo-
+         * classes, like `:nth-child(3+2n)`
+         * not in things like `calc(3px + 2px)`, shorthands like `3px -2px`, or
+         * selectors like `div.weird- p`
+         */
+        $pseudos = ['nth-child', 'nth-last-child', 'nth-last-of-type', 'nth-of-type'];
+
+        $css = preg_replace('/:(' . implode('|', $pseudos) . ')\(\s*([+-]?)\s*(.+?)\s*([+-]?)\s*(.*?)\s*\)/', ':$1($2$3$4$5)', $css);
+
+        // Remove semicolon/whitespace followed by closing bracket
+        $css = str_replace(';}', '}', $css);
+
+        return trim($css);
     }
 
     /**
