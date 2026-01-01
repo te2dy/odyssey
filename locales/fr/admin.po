@@ -406,10 +406,13 @@ msgid "settings-header-menuburger-title"
 msgstr "Cliquer sur un bouton pour ouvrir le menu"
 
 msgid "settings-header-menuburger-description"
-msgstr "Fonctionne grâce à l’extension <a href=%1$s>%2$s</a>."
+msgstr "Vous devez au préalable avoir configuré un menu avec l’extension <a href=%1$s>%2$s</a>."
 
 msgid "settings-header-menuburgertext-title"
 msgstr "Texte du bouton du menu"
+
+msgid "settings-header-menuburgertext-description"
+msgstr "Par défaut&nbsp;: Menu"
 
 msgid "settings-header-breadcrumbalign-title"
 msgstr "Alignement du fil d’Ariane"

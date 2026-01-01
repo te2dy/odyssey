@@ -411,6 +411,9 @@ msgstr ""
 msgid "settings-header-menuburgertext-title"
 msgstr ""
 
+msgid "settings-header-menuburgertext-description"
+msgstr ""
+
 msgid "settings-header-breadcrumbalign-title"
 msgstr ""
 
