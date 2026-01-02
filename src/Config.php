@@ -973,7 +973,9 @@ class Config
 
             $css_main_array['#site-nav summary']['list-style-type'] = 'none';
 
-            $css_main_array['#site-nav summary::after']['content'] = '" ≡"';
+            $css_main_array['#site-nav summary::after']['content']     = '" ☰"';
+            $css_main_array['#site-nav summary::after']['display']     = 'inline-block';
+            $css_main_array['#site-nav summary::after']['margin-left'] = '.1em';
 
             $css_main_array['#site-nav details[open] summary::after']['content'] = '" ×"';
 
