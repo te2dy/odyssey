@@ -2,7 +2,7 @@
 /**
  * Odyssey, a simple and customizable Dotclear theme.
  *
- * @author    Teddy <contact.teddy@laposte.net>
+ * @author    Teddy
  * @copyright 2022-2026 Teddy
  * @license   GPL-3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
  *
