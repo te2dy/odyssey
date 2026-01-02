@@ -9,13 +9,13 @@
 
 ### Présentation
 
-Odyssée a été spécialement conçu pour garantir une excellente lisibilité à vos textes tout en réduisant, grâce à son apparence minimaliste, les éléments de distraction qui pourraient perturber leur lecture. Il convient parfaitement aux journalistes, aux écrivains et aux simples blogueurs qui souhaitent mettre leurs écrits en valeur.
+Odyssée a été spécialement conçu pour garantir une excellente lisibilité aux textes tout en réduisant, grâce à son apparence minimaliste, les éléments de distraction qui pourraient perturber leur lecture. Il convient parfaitement aux journalistes, aux écrivains et aux simples blogueurs qui souhaitent mettre leurs écrits en valeur.
 
 ### Téléchargement
 
 **[Télécharger la dernière version d’Odyssée sur GitHub](https://github.com/te2dy/odyssey/releases/latest)**
 
-**[Télécharger la dernière version d’Odyssée sur DotAddict](https://themes.dotaddict.org/galerie-dc2/details/odyssey)**
+**[Télécharger la dernière version d’Odyssée sur Dotclear](https://dotclear.org/theme/detail/odyssey)**
 
 ### Installation
 
@@ -42,13 +42,13 @@ N’hésitez pas à [contribuer](https://github.com/te2dy/odyssey/pulls) à ce p
 
 ### Overview
 
-Odyssey has been specially designed to ensure excellent readability for your texts, while its minimalist appearance minimizes distracting elements that could disrupt their reading. It's perfect for journalists, writers and bloggers who want to make the most of their writing.
+Odyssey has been specially designed to ensure excellent readability for texts, while its minimalist appearance minimizes distracting elements that could disrupt their reading. It's perfect for journalists, writers and bloggers who want to make the most of their writing.
 
 ### Download
 
 **[Download the latest version of Odyssey on GitHub](https://github.com/te2dy/odyssey/releases/latest)**
 
-**[Download the latest version of Odyssey on DotAddict](https://themes.dotaddict.org/galerie-dc2/details/odyssey)**
+**[Download the latest version of Odyssey on Dotclear](https://dotclear.org/theme/detail/odyssey)**
 
 ### Install
 
