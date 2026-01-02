@@ -1585,31 +1585,37 @@ class Config
      */
     private static function _customStylesFile(string $css_options, string $css_custom): void
     {
-        $css  = $css_options;
-        $css .= file_get_contents(My::themeFolder('path', '/style.min.css')) ?: '';
-        $css  = trim($css);
-        $css .= My::cssMinify($css_custom) . PHP_EOL;
+        $css_theme_file_path = My::themeFolder('path', '/style.min.css');
 
-        $css_folder    = My::id() . '/css';
-        $css_file_name = 'style.min';
+        if (Path::real($css_theme_file_path)) {
+            // If the theme stylesheet is readable.
 
-        // Deletes the previous CSS file if it exists.
-        App::backend()->themeConfig()->dropCss($css_folder, $css_file_name);
+            $css  = $css_options;
+            $css .= file_get_contents($css_theme_file_path) ?: '';
+            $css  = trim($css);
+            $css .= My::cssMinify($css_custom) . PHP_EOL;
 
-        // Creates an Odyssey public folder if it does not exist.
-        Files::makeDir(My::publicFolder('path'));
+            $css_folder    = My::id() . '/css';
+            $css_file_name = 'style.min';
 
-        // Creates the CSS file.
-        if ($css && App::backend()->themeConfig()->canWriteCss($css_folder, true)) {
-            App::backend()->themeConfig()->writeCss($css_folder, $css_file_name, $css);
-        } else {
+            // Deletes the previous CSS file if it exists.
             App::backend()->themeConfig()->dropCss($css_folder, $css_file_name);
 
-            // Removes the CSS folder if it exists and is empty.
-            if (Files::isDeletable(App::backend()->themeConfig()->cssPath($css_folder))
-                && empty(Files::getDirList(App::backend()->themeConfig()->cssPath($css_folder))['files'])
-            ) {
-                Files::deltree(App::backend()->themeConfig()->cssPath($css_folder));
+            // Creates the CSS file.
+            if ($css && App::backend()->themeConfig()->canWriteCss($css_folder, true)) {
+                // Creates an Odyssey public folder if it does not exist.
+                Files::makeDir(My::publicFolder('path'));
+
+                App::backend()->themeConfig()->writeCss($css_folder, $css_file_name, $css);
+            } else {
+                App::backend()->themeConfig()->dropCss($css_folder, $css_file_name);
+
+                // Removes the CSS folder if it exists and is empty.
+                if (Files::isDeletable(App::backend()->themeConfig()->cssPath($css_folder))
+                    && empty(Files::getDirList(App::backend()->themeConfig()->cssPath($css_folder))['files'])
+                ) {
+                    Files::deltree(App::backend()->themeConfig()->cssPath($css_folder));
+                }
             }
         }
     }

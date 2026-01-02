@@ -67,15 +67,26 @@ class Install
                 $css  = trim($css);
                 $css .= My::cssMinify($styles_custom) . PHP_EOL;
 
-                if ($css) {
-                    $css_public_dir_path = My::publicFolder('path', '/css');
+                $css_folder    = My::id() . '/css';
+                $css_file_name = 'style.min';
 
-                    if (!is_dir($css_public_dir_path)) {
-                        Files::makeDir($css_public_dir_path, true);
-                    }
+                // Deletes the previous CSS file if it exists.
+                App::backend()->themeConfig()->dropCss($css_folder, $css_file_name);
 
-                    if (is_dir($css_public_dir_path)) {
-                        Files::putContent($css_public_dir_path, $css . '/style.min.css');
+                // Creates the CSS file.
+                if ($css && App::backend()->themeConfig()->canWriteCss($css_folder, true)) {
+                    // Creates an Odyssey public folder if it does not exist.
+                    Files::makeDir(My::publicFolder('path'));
+
+                    App::backend()->themeConfig()->writeCss($css_folder, $css_file_name, $css);
+                } else {
+                    App::backend()->themeConfig()->dropCss($css_folder, $css_file_name);
+
+                    // Removes the CSS folder if it exists and is empty.
+                    if (Files::isDeletable(App::backend()->themeConfig()->cssPath($css_folder))
+                        && empty(Files::getDirList(App::backend()->themeConfig()->cssPath($css_folder))['files'])
+                    ) {
+                        Files::deltree(App::backend()->themeConfig()->cssPath($css_folder));
                     }
                 }
             }
