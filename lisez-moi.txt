@@ -20,9 +20,10 @@ Hiérarchie des priorités : 🔴 🟠 🟢
 
 == Notes de version ==
 
-=== 2.24-b2 - 2 janvier 2025 ===
+=== 2.24 - 2 janvier 2025 ===
 - Amélioration : revue du code du système de création de la feuille de styles personnalisée.
 - Amélioration : styles du bouton de menu.
+- Amélioration : les anciens fichiers désormais inutilisés du thème seront supprimés lors de sa mise à jour.
 - Correction : ".min" est ajouté avant l’extension du fichier de la feuille de styles personnalisée.
 - Correction : la minification des styles n’était pas effective lors de la mise à jour du thème.
 
