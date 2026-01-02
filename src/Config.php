@@ -1591,7 +1591,7 @@ class Config
         $css .= My::cssMinify($css_custom) . PHP_EOL;
 
         $css_folder    = My::id() . '/css';
-        $css_file_name = 'style';
+        $css_file_name = 'style.min';
 
         // Deletes the previous CSS file if it exists.
         App::backend()->themeConfig()->dropCss($css_folder, $css_file_name);
