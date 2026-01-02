@@ -64,7 +64,8 @@ class Install
             if ($styles || $styles_custom) {
                 $css  = $styles;
                 $css .= file_get_contents($css_theme_file_path) ?: '';
-                $css .= $styles_custom
+                $css  = trim($css);
+                $css .= My::cssMinify($styles_custom) . PHP_EOL;
 
                 if ($css) {
                     $css_public_dir_path = My::publicFolder('path', '/css');
@@ -74,7 +75,7 @@ class Install
                     }
 
                     if (is_dir($css_public_dir_path)) {
-                        Files::putContent($css_public_dir_path, $css . '/style.css');
+                        Files::putContent($css_public_dir_path, $css . '/style.min.css');
                     }
                 }
             }
