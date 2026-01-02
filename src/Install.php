@@ -41,6 +41,16 @@ class Install
 
         self::_updateStyles();
 
+        // Removes the old unminified CSS if it has been set previously.
+        $old_css = My::publicFolder('path') . '/css/style.css';
+
+        if (Path::real($old_css)) {
+            unlink($old_css);
+        }
+
+        // Removes a previously used folder for backups if it still exists.
+        Files::deltree(My::publicFolder('path') . '/backups');
+
         return true;
     }
 
@@ -58,7 +68,6 @@ class Install
 
         if (Path::real($css_theme_file_path)) {
             // If the theme stylesheet is readable.
-
             $styles        = My::settings()->styles        ?: '';
             $styles_custom = My::settings()->styles_custom ?: '';
 
