@@ -42,11 +42,7 @@ class Install
         self::_updateStyles();
 
         // Removes the old unminified CSS if it has been set previously.
-        $old_css = My::publicFolder('path') . '/css/style.css';
-
-        if (Path::real($old_css)) {
-            unlink($old_css);
-        }
+        App::backend()->themeConfig()->dropCss(My::id() . '/css', 'style');
 
         // Removes a previously used folder for backups if it still exists.
         Files::deltree(My::publicFolder('path') . '/backups');
