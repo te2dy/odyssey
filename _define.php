@@ -11,7 +11,7 @@ $this->registerModule(
     'Odyssey',
     'A simple and customizable theme to write your own odyssey',
     'Teddy',
-    '2.23',
+    '2.24-b1',
     [
         'requires' => [
             ['core', '2.36']

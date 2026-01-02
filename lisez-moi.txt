@@ -12,12 +12,19 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Feuille de route ==
 Hiérarchie des priorités : 🔴 🟠 🟢
+- 🟠 Ajouter un lien vers le forum Dotclear officiel dans "define.php".
 - 🟢 Basculer certaines options sur des extensions pour libérer le configurateur.
 - 🟢 À évaluer : créer une aide avec Page::helpBlock().
 - 🟢 À évaluer : ajouter la possibilité d’afficher la barre latérale à gauche ou à droite, plutôt qu’en bas ? Version 3 ?
 - 🟢 À évaluer : permettre l’ajout de boutons de partage pour des réseaux sociaux qui ne sont pas configurés.
 
 == Notes de version ==
+
+=== 2.24-b1 - 2 janvier 2025 ===
+- Amélioration : revue du code du système de création de la feuille de styles personnalisée.
+- Amélioration : styles du bouton de menu.
+- Correction : ".min" est ajouté avec l’extension du fichier de la feuille de styles personnalisée.
+- Correction : la minification des styles n’était pas effective lors de la mise à jour du thème.
 
 === 2.23 - 1er janvier 2025 ===
 - Ajout : option pour ouvrir avec un bouton le menu de l’en-tête du blogue généré avec l’extension Menu simple.
