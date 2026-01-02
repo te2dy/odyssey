@@ -58,10 +58,12 @@ class Install
 
         if (Path::real($css_theme_file_path)) {
             // If the theme stylesheet is readable.
+
             $styles        = My::settings()->styles        ?: '';
             $styles_custom = My::settings()->styles_custom ?: '';
 
             if ($styles || $styles_custom) {
+                // If custom styles have been set.
                 $css  = $styles;
                 $css .= file_get_contents($css_theme_file_path) ?: '';
                 $css  = trim($css);
@@ -70,24 +72,12 @@ class Install
                 $css_folder    = My::id() . '/css';
                 $css_file_name = 'style.min';
 
-                // Deletes the previous CSS file if it exists.
-                App::backend()->themeConfig()->dropCss($css_folder, $css_file_name);
+                // Deletes the previous CSS folder instead of the CSS file only.
+                Files::deltree(My::publicFolder('path') . '/css');
 
-                // Creates the CSS file.
+                // Creates the new CSS folder and file.
                 if ($css && App::backend()->themeConfig()->canWriteCss($css_folder, true)) {
-                    // Creates an Odyssey public folder if it does not exist.
-                    Files::makeDir(My::publicFolder('path'));
-
                     App::backend()->themeConfig()->writeCss($css_folder, $css_file_name, $css);
-                } else {
-                    App::backend()->themeConfig()->dropCss($css_folder, $css_file_name);
-
-                    // Removes the CSS folder if it exists and is empty.
-                    if (Files::isDeletable(App::backend()->themeConfig()->cssPath($css_folder))
-                        && empty(Files::getDirList(App::backend()->themeConfig()->cssPath($css_folder))['files'])
-                    ) {
-                        Files::deltree(App::backend()->themeConfig()->cssPath($css_folder));
-                    }
                 }
             }
         }
