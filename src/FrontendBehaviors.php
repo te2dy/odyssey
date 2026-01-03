@@ -474,10 +474,9 @@ class FrontendBehaviors
      *
      * Function used by self::odysseyAfterContent().
      *
-     * @param array $tag  The tags.
-     * @param array $args The args.
+     * @param string $entry_content The post content.
      *
-     * @return void The image.
+     * @return string The image.
      */
     public static function odysseyImageWide(string $entry_content): string
     {
@@ -526,7 +525,7 @@ class FrontendBehaviors
 
                     // Sets wide image width in px.
                     $content_width = My::getContentWidth('px')['value'];
-                    $margin_max    = '120';
+                    $margin_max    = 120;
 
                     $img_width_max = $content_width;
 

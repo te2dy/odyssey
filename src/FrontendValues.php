@@ -302,7 +302,7 @@ class FrontendValues
                     if ($img_s && $img_s !== $img_t) {
                         $img_src = "src=\"" . $img_t . "\"";
 
-                        $img_src_srcset = ' . Html::class . '::escapeURL($img_src) . " srcset=\"" . ' . Html::class . '::escapeHTML($img_s) . " " . (int) $width_s . "w, " . ' . Html::class . '::escapeHTML($img_t) . " " . (int) $width_t . "w\" size=100vw";
+                        $img_src_srcset = ' . Html::class . '::escapeURL($img_src) . " srcset=\"" . ' . Html::class . '::escapeHTML($img_s) . " " . (int) $width_s . "w, " . ' . Html::class . '::escapeHTML($img_t) . " " . (int) $width_t . "w\" sizes=100vw";
 
                         $img = str_replace($img_src, $img_src_srcset, $img);
                     }
@@ -318,8 +318,9 @@ class FrontendValues
                     $content_width = ' . My::getContentWidth('px')['value'] . ';
 
                     $img_o         = ' . App::frontend()->context()::class . '::EntryFirstImageHelper("o", false, "", true) ?: "";
+                    $img_o         = !str_starts_with($img_o, "/") ? "/" . $img_o : $img_o;
                     $img_o_path    = substr(App::blog()->public_path, 0, -strlen(App::blog()->settings->system->public_url));
-                    $img_o_path   .= !str_ends_with($img_o_path, "/") ? "/" . $img_o : $img_o;
+                    $img_o_path   .= str_ends_with($img_o_path, "/") ? substr($img_o, 1) : $img_o;
                     list($width_o) = getimagesize($img_o_path);
 
                     $img_m   = ' . App::frontend()->context()::class . '::EntryFirstImageHelper("m", false, "", true) ?: null;
@@ -345,7 +346,7 @@ class FrontendValues
                             $img_src_srcset .= ' . Html::class . '::escapeHTML($img_o) . " " . (int) $width_o . "w";
                         }
 
-                        $img_src_srcset = ' . Html::class . '::escapeURL($img_src) . " srcset=\"" . $img_src_srcset . "\" size=100vw";
+                        $img_src_srcset = ' . Html::class . '::escapeURL($img_src) . " srcset=\"" . $img_src_srcset . "\" sizes=100vw";
 
                         $img = str_replace($img_src, $img_src_srcset, $img);
                     }
