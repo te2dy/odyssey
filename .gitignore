@@ -8,5 +8,5 @@ _disabled
 /prive
 
 # Custom
-tpl/_entry-post-photo.html
-tpl/_entry-list-photo.html
+tpl/_entry-post-gallery.html
+tpl/_entry-list-gallery.html
