@@ -513,20 +513,15 @@ class FrontendBehaviors
                     // Gets original image dimensions.
                     list($width, $height) = getimagesize(App::config()->dotclearRoot() . $src_value);
 
-                    $img['o']['width']    = (int) $width;
-                    $img['o']['height']   = (int) $height;
+                    $img['o']['width']  = (int) $width;
+                    $img['o']['height'] = (int) $height;
 
                     // Gets image orientation.
-                    $portrait = false;
+                    $portrait = $img['o']['width'] < $img['o']['height'] ? true : false;
 
-                    if ($width < $height) {
-                        $portrait = true;
-                    }
-
-                    // Sets wide image width in px.
+                    // Sets maximum image width in px.
                     $content_width = My::getContentWidth('px')['value'];
                     $margin_max    = 120;
-
                     $img_width_max = $content_width;
 
                     if (!$portrait) {
@@ -539,10 +534,10 @@ class FrontendBehaviors
                     }
 
                     // If the image width is lower than the content + margin width.
-                    $margin_diff = abs(($img_width_max - $width) / 2);
+                    $margin_diff = ($img['o']['width'] - $img_width_max) / 2;
 
                     if ($margin_diff < $margin_max) {
-                        $img_width_max = $width;
+                        $img_width_max = $img['o']['width'];
                     }
 
                     $info = Path::info($src_value);
@@ -595,7 +590,9 @@ class FrontendBehaviors
                             $attr .= 'class=odyssey-img-wide ';
                         }
 
-                        $attr .= 'sizes=100vw ';
+                        $sizes = My::imgSizes($img['o']['width'], $portrait);
+
+                        $attr .= 'sizes=' . My::displayAttr($sizes) . ' ';
                         $attr .= 'width=' . (int) $img_width_max . ' ';
                         $attr .= 'height=' . (int) ($img_width_max * $img['o']['height'] / $img['o']['width']);
                     }

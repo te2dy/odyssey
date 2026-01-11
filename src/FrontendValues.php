@@ -181,7 +181,8 @@ class FrontendValues
 
         if ($image2x_url) {
             $srcset = ' srcset="' . My::escapeURL($image_url) . ' 1x, ' . My::escapeURL($image2x_url) . ' 2x"';
-            $sizes  = ' sizes=' . Html::escapeHTML($image_size) . 'vw';
+            $sizes  = My::imgSizes($image_size, false, true);
+            $sizes  = ' sizes=' . My::displayAttr($sizes);
         }
 
         $img_tag_start = '<div id=site-image>';
@@ -302,7 +303,7 @@ class FrontendValues
                     if ($img_s && $img_s !== $img_t) {
                         $img_src = "src=\"" . $img_t . "\"";
 
-                        $img_src_srcset = ' . Html::class . '::escapeURL($img_src) . " srcset=\"" . ' . Html::class . '::escapeHTML($img_s) . " " . (int) $width_s . "w, " . ' . Html::class . '::escapeHTML($img_t) . " " . (int) $width_t . "w\" sizes=100vw";
+                        $img_src_srcset = ' . Html::class . '::escapeURL($img_src) . " srcset=\"" . ' . Html::class . '::escapeHTML($img_s) . " " . (int) $width_s . "w, " . ' . Html::class . '::escapeHTML($img_t) . " " . (int) $width_t . "w\" sizes=2rem";
 
                         $img = str_replace($img_src, $img_src_srcset, $img);
                     }
@@ -346,7 +347,9 @@ class FrontendValues
                             $img_src_srcset .= ' . Html::class . '::escapeHTML($img_o) . " " . (int) $width_o . "w";
                         }
 
-                        $img_src_srcset = ' . Html::class . '::escapeURL($img_src) . " srcset=\"" . $img_src_srcset . "\" sizes=100vw";
+                        $sizes = ' . My::class . '::imgSizes($width_o);
+
+                        $img_src_srcset = ' . Html::class . '::escapeURL($img_src) . " srcset=\"" . $img_src_srcset . "\" sizes=" . ' . My::class . '::displayAttr($sizes);
 
                         $img = str_replace($img_src, $img_src_srcset, $img);
                     }

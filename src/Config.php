@@ -317,7 +317,7 @@ class Config
         }
 
         // Redirects.
-        App::backend()->url()->redirect('admin.blog.theme', array_merge(self::$redirect_query, $redirect_params));
+        // App::backend()->url()->redirect('admin.blog.theme', array_merge(self::$redirect_query, $redirect_params));
     }
 
     /**
@@ -581,22 +581,13 @@ class Config
                              * if its superior to the page width,
                              * and sets its height proportionally.
                              */
-                            if (isset($new_settings['global_page_width_value'])) {
-                                $page_width = (int) $new_settings['global_page_width_value'];
-                            } else {
-                                $page_width = 30;
-                            }
 
-                            $page_width_unit = $new_settings['global_unit'] ?? 'em';
+                            $page_width_value = $new_settings['global_page_width_value'] ? (int) $new_settings['global_page_width_value'] : 480;
+                            $page_width_unit  = $new_settings['global_unit'] ?? 'px';
+                            $page_width_value = $page_width_unit === 'em' ? $page_width_value * 16 : $page_width_value;
 
-                            if ($page_width_unit === 'em') {
-                                $page_width = $page_width * 16;
-                            }
-
-                            if ($header_image_width > $page_width) {
-                                $header_image_width = 100;
-                            } else {
-                                $header_image_width = $header_image_width * 100 / $page_width;
+                            if ($header_image_width > $page_width_value) {
+                                $header_image_width = $page_width_value;
                             }
 
                             $image_data = [

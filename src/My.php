@@ -1628,4 +1628,47 @@ class My extends MyTheme
             Files::deltree(DC_SC_CACHE_DIR);
         }
     }
+
+    /**
+     * Sets image "sizes" attribute for responsiveness.
+     *
+     * @param int  $img_width The image width.
+     * @param bool $portrait  true if the height of the image is greater than is width.
+     *
+     * @return string The "sizes" attribute.
+     */
+    public static function imgSizes(int $img_width, bool $portrait = false, bool $disable_wide = false): string
+    {
+        if (!$img_width) {
+            return '';
+        }
+
+        $sizes = '';
+
+        $content_width_data = self::getContentWidth('px');
+        $width_px           = $content_width_data['value'];
+        $width_max          = '85vw';
+
+        if (My::settings()->content_images_wide && $disable_wide === false) {
+            $width_max_mobile = $portrait === false ? '95vw'  : '85vw';
+            $margins          = $portrait === false ? 120 * 2 : 0;
+        } elseif ($disable_wide === true) {
+            $width_max_mobile = '85vw';
+            $margins          = 0;
+        }
+
+        if ($img_width >= $width_px) {
+            $width_max    = $width_px + $margins . 'px';
+            $width_mobile = '(max-width: calc(30em / 0.85)) ' . $width_max_mobile;
+
+            $sizes = $width_mobile . ', ' . $width_max;
+        } else {
+            $width_max = $img_width . 'px';
+            $width_mobile = '(max-width: ' . $img_width . 'px) ' . $width_max_mobile;
+
+            $sizes = $width_mobile . ', ' . $width_max;
+        }
+
+        return $sizes;
+    }
 }

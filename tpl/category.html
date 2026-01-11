@@ -15,11 +15,23 @@
 </tpl:Block>
 
 <tpl:Block name="main-content">
-  <header class=content-info>
-    <h1><span class=text-secondary>{{tpl:lang category-title-prefix}} </span>{{tpl:CategoryTitle}}</h1>
+  <tpl:CategoryIf url="!galerie-photo">
+    <header class=content-info>
+      <h1><span class=text-secondary>{{tpl:lang category-title-prefix}} </span>{{tpl:CategoryTitle}}</h1>
 
-    {{tpl:CategoryDescription}}
-  </header>
+      {{tpl:CategoryDescription}}
+    </header>
 
-  {{tpl:odysseyPostListType}}
+    {{tpl:odysseyPostListType}}
+
+    {{tpl:else}}
+
+    <header class=content-info>
+      <h1>{{tpl:CategoryTitle}}</h1>
+
+      {{tpl:CategoryDescription}}
+    </header>
+
+    {{tpl:include src="_entry-list-gallery.html"}}
+  </tpl:CategoryIf>
 </tpl:Block>
