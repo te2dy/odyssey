@@ -515,18 +515,6 @@ class FrontendValues
             return '';
         }
 
-        if ((!My::settings()->reactions_other_email || My::settings()->reactions_other_email === 'disabled')
-            && My::settings()->reactions_other_bluesky !== true
-            && My::settings()->reactions_other_facebook !== true
-            && My::settings()->reactions_other_mastodon !== true
-            && My::settings()->reactions_other_sms !== true
-            && My::settings()->reactions_other_signal !== true
-            && My::settings()->reactions_other_whatsapp !== true
-            && My::settings()->reactions_other_x !== true
-        ) {
-            return '';
-        }
-
         $output = '<?php $reactions_other = ""; ?>';
 
         if (My::settings()->reactions_other_email) {
