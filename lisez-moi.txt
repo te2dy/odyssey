@@ -12,13 +12,25 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Feuille de route ==
 Hiérarchie des priorités : 🔴 🟠 🟢
+- 🔴 Modifier la valeur de "sizes" dans les images larges.
+- 🔴 Modification de l'image d'en-tête dans le configurateur.
+- 🔴 Créer le dossier "public" voire "var" s'ils n'existent pas.
+- 🟠 Supprimer le mot "Requête" des champs de recherche ?
+- 🟠 Revoir les moyens de contact. Supprimer l’adresse électronique des fichiers PHP ?
 - 🟠 Ajouter un lien vers le forum Dotclear officiel dans "define.php".
+- 🟠 Vérifier l’apparence du thème à l’impression.
+- 🟠 Voir pour utilise Text::tidyURL() à la place de My::escapeURL ?
 - 🟢 Basculer certaines options sur des extensions pour libérer le configurateur.
 - 🟢 À évaluer : créer une aide avec Page::helpBlock().
 - 🟢 À évaluer : ajouter la possibilité d’afficher la barre latérale à gauche ou à droite, plutôt qu’en bas ? Version 3 ?
 - 🟢 À évaluer : permettre l’ajout de boutons de partage pour des réseaux sociaux qui ne sont pas configurés.
 
 == Notes de version ==
+
+=== 2.25 - 28 janvier 2025 ===
+- Correction : les images n’étaient pas réellement adaptatives.
+- Correction : l’ajout de liens sociaux personnalisés par l’intermédiaire du "behavior" prévu à cet effet n’était pas toujours fonctionnel.
+- Revue de code.
 
 === 2.24 - 2 janvier 2025 ===
 - Amélioration : revue du code du système de création de la feuille de styles personnalisée.
