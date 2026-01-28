@@ -704,10 +704,10 @@ details summary {
 .reactions-button:is(:active, :focus, :hover) .reactions-button-text {
   text-decoration: var(--link-text-decoration, underline);
 }
-.reactions-button:is(:focus-visible) .reactions-button-text {
+.reactions-button:focus-visible .reactions-button-text {
   text-decoration: none;
 }
-.reactions-button:is(:focus-visible) .reactions-button-icon.social-icon-fi {
+.reactions-button:focus-visible .reactions-button-icon.social-icon-fi {
   stroke: var(--color-background, #fafafa);
 }
 @media (prefers-contrast: more),
