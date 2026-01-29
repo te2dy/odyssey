@@ -317,7 +317,7 @@ class Config
         }
 
         // Redirects.
-        // App::backend()->url()->redirect('admin.blog.theme', array_merge(self::$redirect_query, $redirect_params));
+        App::backend()->url()->redirect('admin.blog.theme', array_merge(self::$redirect_query, $redirect_params));
     }
 
     /**
@@ -986,7 +986,7 @@ class Config
 
             $css_main_array['#site-nav li a:is(:active, :focus, :hover), #site-nav li.active a']['background-color'] = 'var(--color-primary-amplified, hsl(226, 95%, 50%))';
             $css_main_array['#site-nav li a:is(:active, :focus, :hover), #site-nav li.active a']['border-color']     = 'var(--color-primary-amplified, hsl(226, 95%, 50%))';
-            $css_main_array['#site-nav li a:is(:active, :focus, :hover), #site-nav li.active a']['color']            = 'var(--color-background, #fcfcfd)';
+            $css_main_array['#site-nav li a:is(:active, :focus, :hover), #site-nav li.active a']['color']            = 'var(--color-background, #fafafa)';
             $css_main_array['#site-nav li a:is(:active, :focus, :hover), #site-nav li.active a']['cursor']           = 'pointer';
             $css_main_array['#site-nav li a:is(:active, :focus, :hover), #site-nav li.active a']['text-decoration']  = 'none';
             $css_main_array['#site-nav li a:is(:active, :focus, :hover), #site-nav li.active a']['transition']       = 'var(--color-transition, unset)';
@@ -1275,7 +1275,7 @@ class Config
             $css_main_array['.social-icon-si']['width']           = '1rem';
             $css_main_array['.social-icon-si']['transition']      = 'var(--color-transition, unset)';
 
-            $css_media_contrast_array['.reactions-button:is(:active, :focus, :hover) .reactions-button-icon.social-icon-si']['fill'] = 'var(--color-background)';
+            $css_media_contrast_array['.reactions-button:is(:active, :focus, :hover) .reactions-button-icon.social-icon-si']['fill'] = 'var(--color-background, #fafafa)';
         }
 
         if ($footer_social_links) {
@@ -1319,13 +1319,13 @@ class Config
             $css_media_contrast_array['.footer-social-links a:is(:active, :focus, :hover) .footer-social-links-icon-container']['border-color'] = 'var(--color-primary-amplified, hsl(226, 95%, 50%))';
 
             if ($simpleicons_styles) {
-                $css_main_array['.footer-social-links a:active .footer-social-links-icon-si, .footer-social-links a:focus .footer-social-links-icon-si, .footer-social-links a:hover .footer-social-links-icon-si']['fill'] = 'var(--color-background, #fcfcfd)';
+                $css_main_array['.footer-social-links a:active .footer-social-links-icon-si, .footer-social-links a:focus .footer-social-links-icon-si, .footer-social-links a:hover .footer-social-links-icon-si']['fill'] = 'var(--color-background, #fafafa)';
 
                 $css_main_array['.footer-social-links a:active .footer-social-links-icon-si, .footer-social-links a:focus .footer-social-links-icon-si, .footer-social-links a:hover .footer-social-links-icon-si']['transition'] = 'var(--color-transition, unset)';
             }
 
             if ($feathericons_styles) {
-                $css_main_array['.footer-social-links a:active .footer-social-links-icon-fi, .footer-social-links a:focus .footer-social-links-icon-fi, .footer-social-links a:hover .footer-social-links-icon-fi']['stroke'] = 'var(--color-background, #fcfcfd)';
+                $css_main_array['.footer-social-links a:active .footer-social-links-icon-fi, .footer-social-links a:focus .footer-social-links-icon-fi, .footer-social-links a:hover .footer-social-links-icon-fi']['stroke'] = 'var(--color-background, #fafafa)';
 
                 $css_main_array['.footer-social-links a:active .footer-social-links-icon-fi, .footer-social-links a:focus .footer-social-links-icon-fi, .footer-social-links a:hover .footer-social-links-icon-fi']['transition'] = 'var(--color-transition, unset)';
             }
