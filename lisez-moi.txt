@@ -27,6 +27,10 @@ Hiérarchie des priorités : 🔴 🟠 🟢
 
 == Notes de version ==
 
+=== 2.27 - 29 janvier 2025 ===
+- Correction : problème de chargement de jQuery à cause d’une erreur d’URL.
+- Correction : oubli de styles de bordures.
+
 === 2.26 - 29 janvier 2025 ===
 - Correction : problème d’enregistrement des modifications de la configuration du thème.
 - Correction : la couleur d’arrière-plan par défaut n’était pas harmonisée.
