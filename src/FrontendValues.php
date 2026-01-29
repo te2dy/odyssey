@@ -128,7 +128,7 @@ class FrontendValues
      */
     public static function odysseyJqueryURL(): string
     {
-        return My::displayAttr(App::blog()->getQmarkURL() . App::blog()->getJsJQuery() . '/jquery.js', 'url');
+        return My::displayAttr(App::blog()->getQmarkURL() . 'pf=' . App::blog()->getJsJQuery() . '/jquery.js', 'url');
     }
 
     /**
