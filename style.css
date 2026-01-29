@@ -317,7 +317,7 @@ button {
 button:is(:hover) {
   background-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
   border-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
-  color: var(--color-background, #fcfcfd);
+  color: var(--color-background, #fafafa);
   cursor: pointer;
   transition: var(--color-transition, unset);
 }
@@ -331,7 +331,7 @@ input[type="submit"],
 :is(input[type="submit"], .form-submit):is(:active, :focus, :hover) {
   background-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
   border-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
-  color: var(--color-background, #fcfcfd);
+  color: var(--color-background, #fafafa);
   cursor: pointer;
   transition: var(--color-transition, unset);
 }
@@ -340,28 +340,28 @@ input[type="submit"].button-priority,
 .form-submit.button-priority {
   background-color: var(--color-primary, hsl(226, 80%, 45%));
   border-color: var(--color-primary, hsl(226, 80%, 45%));
-  color: var(--color-background, #fcfcfd);
+  color: var(--color-background, #fafafa);
 }
 button.button-priority:is(:hover),
 input[type="submit"].button-priority:is(:active, :focus, :hover),
 .form-submit.button-priority:is(:active, :focus, :hover) {
   background-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
   border-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
-  color: var(--color-background, #fcfcfd);
+  color: var(--color-background, #fafafa);
 }
 @media (prefers-contrast: more),
        (-ms-high-contrast: active),
        (-ms-high-contrast: black-on-white) {
   :is(input[type="submit"], .form-submit):is(:active, :focus, :hover) {
     background-color: var(--color-primary-amplified, hsl(226, 95%, 50%));
-    color: var(--color-background, #fcfcfd);
+    color: var(--color-background, #fafafa);
   }
 }
 input:disabled {
   color: var(--color-text-secondary, #6c6f78);
 }
 input[type="submit"]:disabled {
-  background-color: var(--color-background, #fcfcfd);
+  background-color: var(--color-background, #fafafa);
   border-color: var(--color-border, #ccc);
 }
 input[type="submit"]:is(:active, :focus, :hover):disabled {
