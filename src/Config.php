@@ -1292,6 +1292,7 @@ class Config
 
             $css_main_array['.footer-social-links-icon-container']['align-items']      = 'center';
             $css_main_array['.footer-social-links-icon-container']['background-color'] = 'var(--color-input-background, #f2f2f2)';
+            $css_main_array['.footer-social-links-icon-container']['border-radius']    = 'var(--border-radius, unset)';
             $css_main_array['.footer-social-links-icon-container']['display']          = 'flex';
             $css_main_array['.footer-social-links-icon-container']['justify-content']  = 'center';
             $css_main_array['.footer-social-links-icon-container']['width']            = '1.5rem';
