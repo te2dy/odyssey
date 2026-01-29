@@ -27,6 +27,11 @@ Hiérarchie des priorités : 🔴 🟠 🟢
 
 == Notes de version ==
 
+=== 2.26 - 29 janvier 2025 ===
+- Correction : problème d’enregistrement des modifications de la configuration du thème.
+- Correction : la couleur d’arrière-plan par défaut n’était pas harmonisée.
+- Revue de code.
+
 === 2.25 - 28 janvier 2025 ===
 - Correction : les images n’étaient pas réellement adaptatives.
 - Correction : l’ajout de liens sociaux personnalisés par l’intermédiaire du "behavior" prévu à cet effet n’était pas toujours fonctionnel.
