@@ -277,17 +277,11 @@ class FrontendBehaviors
                 }
 
                 // Author
-                if (App::frontend()->context()->posts->user_displayname) {
+                if (App::frontend()->context()->posts->getAuthorCN()) {
                     $json_ld['author'] = [
                         '@type' => 'Person',
-                        'name'  => App::frontend()->context()->posts->user_displayname,
-                        'url'   => App::frontend()->context()->posts->user_url
-                    ];
-                } elseif (App::frontend()->context()->posts->user_name || App::frontend()->context()->posts->user_firstname) {
-                    $json_ld['author'] = [
-                        '@type' => 'Person',
-                        'name'  => trim(App::frontend()->context()->posts->user_name . ' ' . App::frontend()->context()->posts->user_firstname),
-                        'url'   => App::frontend()->context()->posts->user_url
+                        'name'  => App::frontend()->context()->posts->getAuthorCN(),
+                        'url'   => App::frontend()->context()->posts->user_url ?: ''
                     ];
                 }
 
