@@ -1518,6 +1518,20 @@ class Config
                 }
 
                 break;
+            case 'telegram':
+                if (preg_match('/\@[\w+]{0,15}/', $value)) {
+                    return [
+                        'value' => filter_var('https://t.me/' . substr($value, 1), FILTER_SANITIZE_URL),
+                        'type'  => 'string'
+                    ];
+                } elseif (filter_var($value, FILTER_VALIDATE_URL) && str_starts_with($value, 'https://t.me/')) {
+                    return [
+                        'value' => filter_var($value, FILTER_SANITIZE_URL),
+                        'type'  => 'string'
+                    ];
+                }
+
+                break;
             case 'url':
                 if ($site_base && str_starts_with($value, $site_base) && filter_var($value, FILTER_VALIDATE_URL)) {
                     return [

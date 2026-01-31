@@ -606,6 +606,12 @@ msgstr ""
 msgid "settings-reactions-other-signal-description"
 msgstr ""
 
+msgid "settings-reactions-other-telegram-title"
+msgstr ""
+
+msgid "settings-reactions-other-telegram-description"
+msgstr ""
+
 msgid "settings-reactions-other-sms-title"
 msgstr ""
 
@@ -714,6 +720,9 @@ msgstr ""
 msgid "settings-footer-social-signal-title"
 msgstr ""
 
+msgid "settings-footer-social-telegram-title"
+msgstr ""
+
 msgid "settings-footer-social-sms-title"
 msgstr ""
 
@@ -745,6 +754,9 @@ msgid "settings-social-phone-description"
 msgstr ""
 
 msgid "settings-social-signal-description"
+msgstr ""
+
+msgid "settings-social-telegram-description"
 msgstr ""
 
 msgid "settings-social-sms-description"

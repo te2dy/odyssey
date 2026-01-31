@@ -550,10 +550,8 @@ class FrontendValues
                 $bluesky_url .= "https://bsky.app/intent/compose?text=" . App::frontend()->context()->posts->post_title;
             }
 
-            if (App::frontend()->context()->posts->getURL()) {
-                $bluesky_url .= $bluesky_url ? " " : "";
-                $bluesky_url .= urlencode(App::frontend()->context()->posts->getURL());
-            }
+            $bluesky_url .= $bluesky_url ? " " : "";
+            $bluesky_url .= urlencode(App::frontend()->context()->posts->getURL());
 
             if ($bluesky_url) {
                 $reactions_other .= "<p><a class=reactions-button href=\"" . $bluesky_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('bluesky')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-bluesky-button'), My::socialSites('bluesky')['name']) . '</span></a></p>";
@@ -565,12 +563,10 @@ class FrontendValues
             $output .= '<?php
             $facebook_url = "";
 
-            if (App::frontend()->context()->posts->getURL()) {
-                $facebook_url .= "https://www.facebook.com/sharer/sharer.php?u=" . urlencode(App::frontend()->context()->posts->getURL());
+            $facebook_url .= "https://www.facebook.com/sharer/sharer.php?u=" . urlencode(App::frontend()->context()->posts->getURL());
 
-                if (App::frontend()->context()->posts->post_title) {
-                    $facebook_url .= "&t=" . App::frontend()->context()->posts->post_title;
-                }
+            if (App::frontend()->context()->posts->post_title) {
+                $facebook_url .= "&t=" . App::frontend()->context()->posts->post_title;
             }
 
             if ($facebook_url) {
@@ -583,12 +579,10 @@ class FrontendValues
             $output .= '<?php
             $mastodon_url = "";
 
-            if (App::frontend()->context()->posts->getURL()) {
-                $mastodon_url .= "https://mastodonshare.com/?url=" . urlencode(App::frontend()->context()->posts->getURL());
+            $mastodon_url .= "https://mastodonshare.com/?url=" . urlencode(App::frontend()->context()->posts->getURL());
 
-                if (App::frontend()->context()->posts->post_title) {
-                    $mastodon_url .= "&text=" . App::frontend()->context()->posts->post_title;
-                }
+            if (App::frontend()->context()->posts->post_title) {
+                $mastodon_url .= "&text=" . App::frontend()->context()->posts->post_title;
             }
 
             if ($mastodon_url) {
@@ -619,6 +613,18 @@ class FrontendValues
 
             if ($signal_url) {
                 $reactions_other .= "<p><a class=reactions-button href=\"" . $signal_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('signal')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-signal-button'), My::socialSites('signal')['name']) . '</span></a></p>";
+            }
+            ?>';
+        }
+
+        if (My::settings()->social_telegram && My::settings()->reactions_other_telegram) {
+            $output .= '<?php
+            $telegram_username = "@' . substr(My::settings()->social_telegram, strlen('https://t.me/')) . '";
+
+            $telegram_url = "https://t.me/share/url?url=" . urlencode(App::frontend()->context()->posts->getURL()) . "&text=" . urlencode(App::frontend()->context()->posts->post_title . " via " . $telegram_username);
+
+            if ($telegram_url) {
+                $reactions_other .= "<p><a class=reactions-button href=\"" . $telegram_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('telegram')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-telegram-button'), My::socialSites('telegram')['name']) . '</span></a></p>";
             }
             ?>';
         }

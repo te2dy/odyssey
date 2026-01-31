@@ -606,6 +606,12 @@ msgstr "Autoriser les réponses par %s"
 msgid "settings-reactions-other-signal-description"
 msgstr "Attention&nbsp;: si vous avez saisi un numéro de téléphone ou un nom d’utilisateur, celui-ci sera rendu public et pourrait tomber entre des mains malveillantes."
 
+msgid "settings-reactions-other-telegram-title"
+msgstr "Autoriser le partage sur %s"
+
+msgid "settings-reactions-other-telegram-description"
+msgstr "Vos lecteurs pourront réagir sur Telegram en mentionnant votre nom d’utilisateur."
+
 msgid "settings-reactions-other-sms-title"
 msgstr "Autoriser les réponses par %s"
 
@@ -714,6 +720,9 @@ msgstr "Afficher un lien pour vous téléphoner"
 msgid "settings-footer-social-signal-title"
 msgstr "Afficher un lien vers %s"
 
+msgid "settings-footer-social-telegram-title"
+msgstr "Afficher un lien vers %s"
+
 msgid "settings-footer-social-sms-title"
 msgstr "Afficher un lien pour vous écrire par SMS"
 
@@ -739,13 +748,16 @@ msgid "settings-footer-social-signal-description"
 msgstr "Attention&nbsp;: si vous avez saisi un numéro de téléphone ou un nom d’utilisateur, celui-ci sera rendu public et pourrait tomber entre des mains malveillantes."
 
 msgid "settings-footer-social-whatsapp-description"
-msgstr "Attention&nbsp;: votre numéro de téléphone sera rendu public et pourrait tomber entre des mains malveillantes."
+msgstr "Attention&nbsp;: si vous avez saisi un numéro de téléphone ou un nom d’utilisateur, celui-ci sera rendu public et pourrait tomber entre des mains malveillantes."
 
 msgid "settings-social-phone-description"
 msgstr "Numéro de téléphone au format +33123456789."
 
 msgid "settings-social-signal-description"
 msgstr "Numéro de téléphone au format +33123456789 ou adresse d’un compte ou groupe %s."
+
+msgid "settings-social-telegram-description"
+msgstr "Adresse d’un compte %s ou @nomdutilisateur"
 
 msgid "settings-social-sms-description"
 msgstr "Numéro de téléphone au format +33123456789."
@@ -757,7 +769,7 @@ msgid "settings-social-whatsapp-description"
 msgstr "Numéro de téléphone %s au format +33123456789"
 
 msgid "settings-social-x-description"
-msgstr "Adresse d’un compte %s"
+msgstr "Adresse d’un compte %s ou @nomdutilisateur"
 
 msgid "settings-social-other-description"
 msgstr "Adresse d’une autre page de votre choix."

@@ -606,6 +606,12 @@ msgstr "Allow replies on %s"
 msgid "settings-reactions-other-signal-description"
 msgstr "Warning: if you have entered a phone number or user name, it will be made public and could fall into the wrong hands."
 
+msgid "settings-reactions-other-telegram-title"
+msgstr "Allow sharing on %s"
+
+msgid "settings-reactions-other-telegram-description"
+msgstr "Your readers can respond on Telegram by mentioning your username."
+
 msgid "settings-reactions-other-sms-title"
 msgstr "Allow replies by %s"
 
@@ -714,6 +720,9 @@ msgstr "Display a link to call you"
 msgid "settings-footer-social-signal-title"
 msgstr "Display a link to %s"
 
+msgid "settings-footer-social-telegram-title"
+msgstr "Display a link to %s"
+
 msgid "settings-footer-social-sms-title"
 msgstr "Display a link to text you"
 
@@ -736,16 +745,19 @@ msgid "settings-footer-social-sms-description"
 msgstr "Warning: your phone number will be made public and could fall into the wrong hands."
 
 msgid "settings-footer-social-signal-description"
-msgstr "Warning: if you have entered a phone number or user name, it will be made public and could fall into the wrong hands."
+msgstr "Warning: if you have entered a phone number or username, it will be made public and could fall into the wrong hands."
 
 msgid "settings-footer-social-whatsapp-description"
-msgstr "Warning: your telephone number will be made public and could fall into the wrong hands."
+msgstr "Warning: if you have entered a phone number or username, it will be made public and could fall into the wrong hands."
 
 msgid "settings-social-phone-description"
 msgstr "Phone number in +1234567890 format."
 
 msgid "settings-social-signal-description"
 msgstr "Phone number in +1234567890 format or URL of an %s account or group"
+
+msgid "settings-social-telegram-description"
+msgstr "URL of an %s account or @username"
 
 msgid "settings-social-sms-description"
 msgstr "Phone number in +1234567890 format."
@@ -757,7 +769,7 @@ msgid "settings-social-whatsapp-description"
 msgstr "Phone number in +1234567890 format."
 
 msgid "settings-social-x-description"
-msgstr "URL of an %s account."
+msgstr "URL of an %s account or @username."
 
 msgid "settings-social-other-description"
 msgstr "URL of a webpage of your choice."

@@ -245,6 +245,9 @@ msgstr ""
 msgid "reactions-other-signal-button"
 msgstr ""
 
+msgid "reactions-other-telegram-button"
+msgstr ""
+
 msgid "reactions-other-sms-text"
 msgstr ""
 
@@ -327,6 +330,9 @@ msgid "social-site-phone"
 msgstr ""
 
 msgid "social-site-signal"
+msgstr ""
+
+msgid "social-site-telegram"
 msgstr ""
 
 msgid "social-site-sms"

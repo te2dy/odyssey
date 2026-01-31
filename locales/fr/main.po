@@ -245,6 +245,9 @@ msgstr "Publier sur %s"
 msgid "reactions-other-signal-button"
 msgstr "Répondre sur %s"
 
+msgid "reactions-other-telegram-button"
+msgstr "Partager sur %s"
+
 msgid "reactions-other-sms-text"
 msgstr "Re: %s"
 
@@ -328,6 +331,9 @@ msgstr "Téléphone"
 
 msgid "social-site-signal"
 msgstr "Signal"
+
+msgid "social-site-telegram"
+msgstr "Telegram"
 
 msgid "social-site-sms"
 msgstr "SMS"
