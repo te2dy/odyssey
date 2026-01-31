@@ -27,6 +27,9 @@ Hiérarchie des priorités : 🔴 🟠 🟢
 
 == Notes de version ==
 
+=== 2.28 - 31 janvier 2025 ===
+- Ajout : prise en charge de la messagerie Telegram.
+
 === 2.27 - 29 janvier 2025 ===
 - Correction : problème de chargement de jQuery à cause d’une erreur d’URL.
 - Correction : oubli de styles de bordures.
