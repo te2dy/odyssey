@@ -535,7 +535,7 @@ class FrontendValues
                     $body    = sprintf(__("reactions-other-email-body"), App::frontend()->context()->posts->getURL());
                     $href    = "mailto:" . $mailto . "?subject=" . rawurlencode($subject) . "&body=" . rawurlencode($body);
 
-                    $reactions_other .= "<p><a class=reactions-button href=\"" . $href . "\"><svg class=\"reactions-button-icon social-icon-fi\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('email')['path']) . '</svg> <span class=reactions-button-text>' . __('reactions-other-email-button-text') . '</span></a></p>";
+                    $reactions_other .= "<p class=reaction-other-item><a class=reactions-button href=\"" . $href . "\"><svg class=\"reactions-button-icon social-icon-fi\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('email')['path']) . '</svg> <span class=reactions-button-text>' . __('reactions-other-email-button-text') . '</span></a></p>";
                 }
 
             }
@@ -554,39 +554,35 @@ class FrontendValues
             $bluesky_url .= urlencode(App::frontend()->context()->posts->getURL());
 
             if ($bluesky_url) {
-                $reactions_other .= "<p><a class=reactions-button href=\"" . $bluesky_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('bluesky')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-bluesky-button'), My::socialSites('bluesky')['name']) . '</span></a></p>";
+                $reactions_other .= "<p class=reaction-other-item><a class=reactions-button href=\"" . $bluesky_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('bluesky')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-bluesky-button'), My::socialSites('bluesky')['name']) . '</span></a></p>";
             }
             ?>';
         }
 
         if (My::settings()->social_facebook && My::settings()->reactions_other_facebook) {
             $output .= '<?php
-            $facebook_url = "";
-
-            $facebook_url .= "https://www.facebook.com/sharer/sharer.php?u=" . urlencode(App::frontend()->context()->posts->getURL());
+            $facebook_url = "https://www.facebook.com/sharer/sharer.php?u=" . urlencode(App::frontend()->context()->posts->getURL());
 
             if (App::frontend()->context()->posts->post_title) {
                 $facebook_url .= "&t=" . App::frontend()->context()->posts->post_title;
             }
 
             if ($facebook_url) {
-                $reactions_other .= "<p><a class=reactions-button href=\"" . $facebook_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('facebook')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-facebook-button'), My::socialSites('facebook')['name']) . '</span></a></p>";
+                $reactions_other .= "<p class=reaction-other-item><a class=reactions-button href=\"" . $facebook_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('facebook')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-facebook-button'), My::socialSites('facebook')['name']) . '</span></a></p>";
             }
             ?>';
         }
 
         if (My::settings()->social_mastodon && My::settings()->reactions_other_mastodon) {
             $output .= '<?php
-            $mastodon_url = "";
-
-            $mastodon_url .= "https://mastodonshare.com/?url=" . urlencode(App::frontend()->context()->posts->getURL());
+            $mastodon_url = "https://mastodonshare.com/?url=" . urlencode(App::frontend()->context()->posts->getURL());
 
             if (App::frontend()->context()->posts->post_title) {
                 $mastodon_url .= "&text=" . App::frontend()->context()->posts->post_title;
             }
 
             if ($mastodon_url) {
-                $reactions_other .= "<p><a class=reactions-button href=\"" . $mastodon_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('mastodon')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-mastodon-button'), My::socialSites('mastodon')['name']) . '</span></a></p>";
+                $reactions_other .= "<p class=reaction-other-item><a class=reactions-button href=\"" . $mastodon_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('mastodon')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-mastodon-button'), My::socialSites('mastodon')['name']) . '</span></a></p>";
             }
             ?>';
         }
@@ -602,7 +598,7 @@ class FrontendValues
                     $sms_href .= "?body=" . sprintf(__("reactions-other-sms-text"), App::frontend()->context()->posts->post_title);
                 }
 
-                $reactions_other .= "<p><a class=reactions-button href=\"" . $sms_href . "\"><svg class=\"reactions-button-icon social-icon-fi\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('sms')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-sms-button'), My::socialSites('sms')['name']) . '</span></a></p>";
+                $reactions_other .= "<p class=reaction-other-item><a class=reactions-button href=\"" . $sms_href . "\"><svg class=\"reactions-button-icon social-icon-fi\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('sms')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-sms-button'), My::socialSites('sms')['name']) . '</span></a></p>";
             }
             ?>';
         }
@@ -612,7 +608,7 @@ class FrontendValues
             $signal_url = "' . My::settings()->social_signal . '";
 
             if ($signal_url) {
-                $reactions_other .= "<p><a class=reactions-button href=\"" . $signal_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('signal')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-signal-button'), My::socialSites('signal')['name']) . '</span></a></p>";
+                $reactions_other .= "<p class=reaction-other-item><a class=reactions-button href=\"" . $signal_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('signal')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-signal-button'), My::socialSites('signal')['name']) . '</span></a></p>";
             }
             ?>';
         }
@@ -624,7 +620,7 @@ class FrontendValues
             $telegram_url = "https://t.me/share/url?url=" . urlencode(App::frontend()->context()->posts->getURL()) . "&text=" . urlencode(App::frontend()->context()->posts->post_title . " via " . $telegram_username);
 
             if ($telegram_url) {
-                $reactions_other .= "<p><a class=reactions-button href=\"" . $telegram_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('telegram')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-telegram-button'), My::socialSites('telegram')['name']) . '</span></a></p>";
+                $reactions_other .= "<p class=reaction-other-item><a class=reactions-button href=\"" . $telegram_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('telegram')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-telegram-button'), My::socialSites('telegram')['name']) . '</span></a></p>";
             }
             ?>';
         }
@@ -640,7 +636,7 @@ class FrontendValues
             $whatsapp_url = "' . My::settings()->social_whatsapp . '" . $whatsapp_text;
 
             if ($whatsapp_url) {
-                $reactions_other .= "<p><a class=reactions-button href=\"" . $whatsapp_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('whatsapp')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-whatsapp-button'), My::socialSites('whatsapp')['name']) . '</span></a></p>";
+                $reactions_other .= "<p class=reaction-other-item><a class=reactions-button href=\"" . $whatsapp_url . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('whatsapp')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-whatsapp-button'), My::socialSites('whatsapp')['name']) . '</span></a></p>";
             }
             ?>';
         }
@@ -670,7 +666,7 @@ class FrontendValues
 
                 $x_url_share = substr($x_url_share, 0, -1);
 
-                $reactions_other .= "<p><a class=reactions-button href=\"" . $x_url_share . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('x')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-x-button'), My::socialSites('x')['name']) . '</span></a></p>";
+                $reactions_other .= "<p class=reaction-other-item><a class=reactions-button href=\"" . $x_url_share . "\"><svg class=\"reactions-button-icon social-icon-si\" role=img viewBox=\"0 0 24 24\" xmlns=http://www.w3.org/2000/svg>' . str_replace('"', '\"', My::svgIcons('x')['path']) . '</svg> <span class=reactions-button-text>' . sprintf(__('reactions-other-x-button'), My::socialSites('x')['name']) . '</span></a></p>";
             }
             ?>';
         }
