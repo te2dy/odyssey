@@ -820,3 +820,44 @@ aside .widget:not(:last-child) {
     order: 1;
   }
 }
+
+/* Print  */
+@media print {
+  :root {
+    --color-background: #fff;
+    --color-text-main: #000;
+    --color-primary: var(--color-text-main, #303030);
+  }
+  @page {
+    margin: 2cm;
+    size: portrait;
+  }
+  #site {
+    margin: 0;
+    row-gap: 4rem;
+    width: 100%;
+  }
+  #main-menu, #site-nav, /* Pourquoi deux ID différents ? */
+  .post-pagination,
+  #comment-form,
+  .reaction-other-item, /* Dans le configurateur uniquement ? */
+  .footnote-backref,
+  #blognav,
+  #blogextra,
+  #footer-social-links
+  {
+    display: none;
+  }
+  h1, h2, h3, h4, h5, h6, img {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+}
+
+@media print and (orientation: landscape) {
+  body {
+    columns: 2;
+    column-fill: auto;
+    column-gap: 2cm;
+  }
+}
