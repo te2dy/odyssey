@@ -29,6 +29,8 @@ Hiérarchie des priorités : 🔴 🟠 🟢
 === 2.29 - 8 février 2025 ===
 - Ajout : lien vers le forum Dotclear officiel dans le fichier "define.php".
 - Amélioration : images dans les X Cards.
+- Modifications mineurs.
+- Suppression : modèles des flux de syndication.
 
 === 2.28 - 31 janvier 2025 ===
 - Ajout : prise en charge de la messagerie Telegram.
