@@ -19,8 +19,8 @@ $this->registerModule(
 
         'type' => 'theme',
 
-        // 'support'    => 'https://forum.dotclear.org/viewtopic.php?id=51635', // The forum is offline.
-        'details'    => 'https://dotclear.org/theme/detail/Odyssey',
+        'support'    => 'https://dotclear.org/post/2026/01/02/Thème-Odyssée-%3A-présentation-et-aide',
+        'details'    => 'https://dotclear.org/theme/detail/odyssey',
         'repository' => 'https://raw.githubusercontent.com/te2dy/odyssey/main/dcstore.xml',
 
         // Allows a full control for the theme configurator.

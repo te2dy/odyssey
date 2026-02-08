@@ -12,12 +12,11 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Feuille de route ==
 Hiérarchie des priorités : 🔴 🟠 🟢
+- 🔴 Erreur à la restauration d’une ancienne configuration : "Impossible de créer le répertoire."
+- 🔴 Créer le dossier "public" voire "var" s'ils n'existent pas.
 - 🔴 Modifier la valeur de "sizes" dans les images larges.
 - 🔴 Modification de l'image d'en-tête dans le configurateur.
-- 🔴 Créer le dossier "public" voire "var" s'ils n'existent pas.
 - 🟠 Supprimer le mot "Requête" des champs de recherche ?
-- 🟠 Revoir les moyens de contact. Supprimer l’adresse électronique des fichiers PHP ?
-- 🟠 Ajouter un lien vers le forum Dotclear officiel dans "define.php".
 - 🟠 Vérifier l’apparence du thème à l’impression.
 - 🟠 Voir pour utilise Text::tidyURL() à la place de My::escapeURL ?
 - 🟢 Basculer certaines options sur des extensions pour libérer le configurateur.
@@ -27,8 +26,10 @@ Hiérarchie des priorités : 🔴 🟠 🟢
 
 == Notes de version ==
 
-=== 2.28 - 31 janvier 2025 ===
+=== 2.28 - 8 février 2025 ===
 - Ajout : prise en charge de la messagerie Telegram.
+- Ajout : lien vers le forum Dotclear officiel dans le fichier "define.php".
+- Amélioration : images dans les X Cards.
 
 === 2.27 - 29 janvier 2025 ===
 - Correction : problème de chargement de jQuery à cause d’une erreur d’URL.
