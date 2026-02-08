@@ -149,12 +149,11 @@ class FrontendBehaviors
         $img   = My::escapeURL($markups['img']);
 
         if ($title) {
+            // If there is no image, pushes the logo.
             if (!$img && isset(My::settings()->header_image['url'])) {
                 $img2x = My::settings()->header_image2x['url'];
-
-                $img = $img2x ?: My::settings()->header_image['url'];
-
-                $img = My::escapeURL(My::blogBaseURL() . $img);
+                $img   = $img2x ?: My::settings()->header_image['url'];
+                $img   = My::escapeURL(My::escapeURL(My::blogBaseURL() . $img));
             }
 
             if ($img) {
