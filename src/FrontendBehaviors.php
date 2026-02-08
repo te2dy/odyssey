@@ -150,11 +150,27 @@ class FrontendBehaviors
 
         if ($title) {
             if (!$img && isset(My::settings()->header_image['url'])) {
-                $img = My::escapeURL(App::blog()->url() . My::settings()->header_image['url']);
+                $img2x = My::settings()->header_image2x['url'];
+
+                $img = $img2x ?: My::settings()->header_image['url'];
+
+                $img = My::escapeURL(My::blogBaseURL() . $img);
             }
 
             if ($img) {
-                echo '<meta name="twitter:card" content="summary_large_image">', "\n";
+                $image_type = 'summary';
+
+                $img_path = App::config()->dotclearRoot() . Html::stripHostURL($img);
+
+                list($img_width, $img_height) = getimagesize($img_path);
+
+                $img_ratio = $img_width / $img_height;
+
+                if ($img_width > 600 && $img_ratio >= .5) {
+                    $image_type = 'summary_large_image';
+                }
+
+                echo '<meta name="twitter:card" content="' . $image_type . '">', "\n";
 
                 if (My::settings()->social_x) {
                     echo '<meta property="twitter:creator" content="@',
