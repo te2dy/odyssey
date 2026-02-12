@@ -165,7 +165,7 @@ class FrontendBehaviors
 
                 $img_ratio = $img_width / $img_height;
 
-                if ($img_width > 600 && $img_ratio >= 1) {
+                if ($img_width > 600 && $img_ratio >= 1.5) {
                     $image_type = 'summary_large_image';
                 }
 
