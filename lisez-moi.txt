@@ -15,7 +15,8 @@ Hiérarchie des priorités : 🔴 🟠 🟢
 - 🔴 Erreur à la restauration d’une ancienne configuration : "Impossible de créer le répertoire."
 - 🔴 Créer le dossier "public" voire "var" s'ils n'existent pas.
 - 🔴 Modifier la valeur de "sizes" dans les images larges.
-- 🔴 Modification de l'image d'en-tête dans le configurateur.
+- 🔴 Modification de l’image d'en-tête dans le configurateur.
+- 🟠 Modifier odysseyEntryExcerpt pour exclure le numéro des notes de bas de page.
 - 🟠 Supprimer le mot "Requête" des champs de recherche ?
 - 🟠 Vérifier l’apparence du thème à l’impression.
 - 🟠 Voir pour utilise Text::tidyURL() à la place de My::escapeURL ?
@@ -25,6 +26,10 @@ Hiérarchie des priorités : 🔴 🟠 🟢
 - 🟢 À évaluer : permettre l’ajout de boutons de partage pour des réseaux sociaux qui ne sont pas configurés.
 
 == Notes de version ==
+
+=== 2.30 - 20 février 2025 ===
+- Correction : erreur de ratio d’image dans les metadonnées sociales.
+- Correction : styles du menu principal.
 
 === 2.29 - 8 février 2025 ===
 - Ajout : lien vers le forum Dotclear officiel dans le fichier "define.php".
