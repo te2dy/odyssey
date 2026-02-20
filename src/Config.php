@@ -984,11 +984,18 @@ class Config
 
             $css_main_array['#site-nav li.active a']['text-decoration'] = 'none';
 
-            $css_main_array['#site-nav li a:is(:active, :focus, :hover), #site-nav li.active a']['background-color'] = 'var(--color-primary-amplified, hsl(226, 95%, 50%))';
-            $css_main_array['#site-nav li a:is(:active, :focus, :hover), #site-nav li.active a']['border-color']     = 'var(--color-primary-amplified, hsl(226, 95%, 50%))';
-            $css_main_array['#site-nav li a:is(:active, :focus, :hover), #site-nav li.active a']['color']            = 'var(--color-background, #fafafa)';
+            $css_main_array['#site-nav li.active a']['border-color'] = 'var(--color-primary, hsl(226, 80%, 45%))';
+            $css_main_array['#site-nav li.active a']['color']        = 'var(--color-primary, hsl(226, 80%, 45%))';
+            $css_main_array['#site-nav li.active a']['cursor']       = 'pointer';
+
+            $css_main_array['#site-nav li a:is(:active, :focus, :hover)']['background-color'] = 'var(--color-primary-amplified, hsl(226, 95%, 50%))';
+            $css_main_array['#site-nav li a:is(:active, :focus, :hover)']['border-color']     = 'var(--color-primary-amplified, hsl(226, 95%, 50%))';
+            $css_main_array['#site-nav li a:is(:active, :focus, :hover)']['color']            = 'var(--color-background, #fafafa)';
+
             $css_main_array['#site-nav li a:is(:active, :focus, :hover), #site-nav li.active a']['cursor']           = 'pointer';
+
             $css_main_array['#site-nav li a:is(:active, :focus, :hover), #site-nav li.active a']['text-decoration']  = 'none';
+
             $css_main_array['#site-nav li a:is(:active, :focus, :hover), #site-nav li.active a']['transition']       = 'var(--color-transition, unset)';
         }
 
