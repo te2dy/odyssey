@@ -1610,9 +1610,17 @@ class Config
             // Deletes the previous CSS file if it exists.
             App::backend()->themeConfig()->dropCss($css_folder, $css_file_name);
 
-            if ($css && App::backend()->themeConfig()->canWriteCss($css_folder, true)) {
-                // Creates the CSS file.
-                App::backend()->themeConfig()->writeCss($css_folder, $css_file_name, $css);
+            if ($css) {
+                $css_path = App::blog()->publicPath() . '/' . $css_folder;
+
+                if (!Path::real($css_path)) {
+                    Files::makeDir($css_path, true);
+                }
+
+                if (App::backend()->themeConfig()->canWriteCss($css_folder)) {
+                    // Creates the CSS file.
+                    App::backend()->themeConfig()->writeCss($css_folder, $css_file_name, $css);
+                }
             } else {
                 // Deletes the CSS folder.
                 Files::deltree(App::backend()->themeConfig()->cssPath($css_folder));
