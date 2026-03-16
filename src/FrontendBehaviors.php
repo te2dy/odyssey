@@ -534,8 +534,9 @@ class FrontendBehaviors
                     $img_width_max = $content_width;
 
                     if (!$portrait) {
-                        if (App::url()->type === 'post'
-                            || App::url()->type === 'pages'
+                        $page_types_allowed = ['post', 'pages', 'static'];
+
+                        if (in_array(App::url()->type, $page_types_allowed, true)
                             || My::settings()->content_postlist_type === 'content'
                         ) {
                             $img_width_max += $margin_max * 2;
