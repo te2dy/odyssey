@@ -574,7 +574,7 @@ class Config
                     switch ($setting_id) {
                         case 'header_image':
                             // Gets the dimensions of the image.
-                            list($header_image_width) = getimagesize($file_path);
+                            list($header_image_width, $header_image_height) = getimagesize($file_path);
 
                             /**
                              * Limits the maximum width value of the image
@@ -591,9 +591,10 @@ class Config
                             }
 
                             $image_data = [
-                                'name'     => $file_name,
-                                'url'      => $file_url,
-                                'width'    => (int) $header_image_width
+                                'name'   => $file_name,
+                                'url'    => $file_url,
+                                'width'  => (int) $header_image_width,
+                                'height' => (int) $header_image_height
                             ];
 
                             break;
@@ -2111,8 +2112,7 @@ class Config
                 __('settings-page-forum-link'),
                 'https://github.com/te2dy/odyssey/issues',
                 'mailto:contact.teddy@laposte.net',
-                'https://matrix.to/#/#dotclear:matrix.org',
-                'https://dotclear.org/forum'
+                'https://dotclear.org/post/2026/01/02/Th%C3%A8me-Odyss%C3%A9e-%3A-pr%C3%A9sentation-et-aide'
             )
         );
 
