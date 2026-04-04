@@ -166,16 +166,18 @@ class FrontendValues
      */
     public static function odysseyHeaderImage(ArrayObject $attr): string
     {
-        $image_url      = My::settings()->header_image['url']   ?? null;
-        $image_size     = My::settings()->header_image['width'] ?? null;
-        $image_as_title = My::settings()->header_image_as_title ?: false;
+        $image_url      = My::settings()->header_image['url']    ?? null;
+        $image_size     = My::settings()->header_image['width']  ?? null;
+        $image_height   = My::settings()->header_image['height'] ?? null;
+        $image_as_title = My::settings()->header_image_as_title  ?: false;
 
         if (!$image_url || !$image_size) {
             return '';
         }
 
-        $srcset = '';
-        $sizes  = '';
+        $srcset     = '';
+        $sizes      = '';
+        $dimensions = '';
 
         $image2x_url = My::settings()->header_image2x['url'] ?? null;
 
@@ -201,15 +203,48 @@ class FrontendValues
             $img_position     = 'top';
         }
 
+        $dimensions .= $image_size   ? ' width='  . (int) $image_size   : '';
+
+        /**
+         * The height was not saved in the "header_image" setting before the version 2.32 of the theme.
+         * Then, if there is no height associated to the image, calculates it and saves it in the database.
+         *
+         * These lines should be removed some weeks or monthes later.
+         */
+        if (!$image_height) {
+            $image_name = My::settings()->header_image['name'] ?? '';
+            $img_path   = My::publicFolder('path', '/img/' . $image_name);
+
+            if (file_exists($img_path)) {
+                list($image_width_unsued, $image_height) = getimagesize($img_path);
+
+                $img_setting_value = [
+                    'name'   => My::settings()->header_image['name'] ?? '',
+                    'url'    => $image_url,
+                    'width'  => (int) $image_size,
+                    'height' => (int) $image_height
+                ];
+
+                App::blog()->settings->odyssey->put(
+                    'header_image',
+                    $img_setting_value,
+                    'array',
+                    'Header image URL'
+                );
+            }
+        }
+
+        $dimensions .= $image_height ? ' height=' . (int) $image_height : '';
+
         if (isset($attr['position']) && $img_position === $attr['position']) {
             if ((!App::blog()->settings()->system->static_home && App::url()->type === 'default')
                 || (App::blog()->settings()->system->static_home && App::url()->type === 'static')
             ) {
                 // Do not add a link to the home page on home page.
-                return $img_tag_start . '<img alt=' . My::displayAttr($img_description) . $img_tag_id . ' fetchpriority=high src=' . My::displayAttr($image_url, 'url') . $srcset . $sizes . '>' . $img_tag_end;
+                return $img_tag_start . '<img alt=' . My::displayAttr($img_description) . $img_tag_id . ' fetchpriority=high src=' . My::displayAttr($image_url, 'url') . $srcset . $sizes . $dimensions . '>' . $img_tag_end;
             }
 
-            return $img_tag_start . '<a href=' . My::displayAttr(My::blogBaseURL(), 'url') . $img_tag_id . ' rel=home><img alt=' . My::displayAttr($img_description) . ' fetchpriority=high src=' . My::displayAttr($image_url, 'url') . $srcset . $sizes . '></a>' . $img_tag_end;
+            return $img_tag_start . '<a href=' . My::displayAttr(My::blogBaseURL(), 'url') . $img_tag_id . ' rel=home><img alt=' . My::displayAttr($img_description) . ' fetchpriority=high src=' . My::displayAttr($image_url, 'url') . $srcset . $sizes . $dimensions . '></a>' . $img_tag_end;
         }
 
         return '';
