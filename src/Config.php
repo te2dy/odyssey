@@ -582,8 +582,8 @@ class Config
                              * and sets its height proportionally.
                              */
 
-                            $page_width_value = $new_settings['global_page_width_value'] ? (int) $new_settings['global_page_width_value'] : 480;
-                            $page_width_unit  = $new_settings['global_unit'] ?? 'px';
+                            $page_width_value = isset($new_settings['global_page_width_value']) ? (int) $new_settings['global_page_width_value'] : 480;
+                            $page_width_unit  = $new_settings['global_unit'] ?? 'em';
                             $page_width_value = $page_width_unit === 'em' ? $page_width_value * 16 : $page_width_value;
 
                             if ($header_image_width > $page_width_value) {

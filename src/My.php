@@ -1683,12 +1683,12 @@ class My extends MyTheme
             $width_max    = $page_width_px + $margins . 'px';
             $width_mobile = '(max-width: calc(' . $page_width . ' / .85)) ' . $width_max_mobile;
 
-            $sizes = $width_mobile . ', ' . $page_width_max;
+            $sizes = $width_mobile . ', ' . $width_max;
         } else {
-            $page_width_max = $img_width . 'px';
-            $width_mobile   = '(max-width: ' . $img_width . 'px) ' . $width_max_mobile;
+            $width_max    = $img_width . 'px';
+            $width_mobile = '(max-width: ' . $img_width . 'px) ' . $width_max_mobile;
 
-            $sizes = $width_mobile . ', ' . $page_width_max;
+            $sizes = $width_mobile . ', ' . $width_max;
         }
 
         return $sizes;
