@@ -24,6 +24,9 @@ Hiérarchie des priorités : 🔴 🟠 🟢
 
 == Notes de version ==
 
+=== 2.32.1 - 5 avril 2026 ===
+- Correction : certaines images ne s’affichaient pas correctement.
+
 === 2.32 - 5 avril 2026 ===
 - Ajout : attributs "width" et "height" à l'image d’en-tête.
 - Ajout : attribut "fetchpriority=high" à l’image d’en-tête.
