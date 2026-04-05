@@ -24,6 +24,9 @@ Hiérarchie des priorités : 🔴 🟠 🟢
 
 == Notes de version ==
 
+=== 2.32.2 - 5 avril 2026 ===
+- Suppression : code qui n’avait rien à faire là.
+
 === 2.32.1 - 5 avril 2026 ===
 - Correction : certaines images ne s’affichaient pas correctement.
 
