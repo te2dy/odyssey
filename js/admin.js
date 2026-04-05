@@ -212,6 +212,7 @@ function changeImage(inputImgURL) {
 
         imgPreviewContainer.appendChild(imgPreview);
       } else {
+        document.getElementById("header_image-src").removeAttribute("srcset");
         document.getElementById("header_image-src").src = this.result;
 
         if (document.getElementById("header_image-preview").style.display === "none") {
@@ -353,7 +354,6 @@ window.onload = function() {
     if (rangeInputs[i].id !== "global_page_width_value") {
       // Page width setting is excluded.
       rangeInputs[i].oninput = function(rangeInput) {
-        console.log(rangeInput.target.value);
         document.getElementById(rangeInput.target.id + "-output-value").innerHTML = rangeInput.target.value;
       };
     }
