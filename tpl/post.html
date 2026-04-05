@@ -37,11 +37,5 @@
 </tpl:Block>
 
 <tpl:Block name="main-content">
-  <tpl:EntryIf categories="!galerie-photo">
-    {{tpl:include src="_entry-post.html"}}
-
-    {{tpl:else}}
-
-    {{tpl:include src="_entry-post-gallery.html"}}
-  </tpl:EntryIf>
+  {{tpl:include src="_entry-post.html"}}
 </tpl:Block>
