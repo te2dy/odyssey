@@ -12,17 +12,25 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 
 == Feuille de route ==
 Hiérarchie des priorités : 🔴 🟠 🟢
-- 🔴 Voir si nécessité de créer le dossier "var" s'il n'existe pas.
-- 🔴 Modifier la valeur de "sizes" dans les images larges.
-- 🔴 Modification de l’image d'en-tête dans le configurateur.
+- 🔴 Balise <sup> s’affiche dans <title> au lieu d’être supprimée.
+- 🟠 Confirmer que la valeur de "sizes" des images larges est bonne.
 - 🟠 Modifier odysseyEntryExcerpt pour exclure le numéro des notes de bas de page.
 - 🟠 Vérifier l’apparence du thème à l’impression.
+- 🟠 Dans odysseyHeaderImage(), supprimer la partie qui définit la hauteur des images après quelques mois (avril 2026).
 - 🟢 Basculer certaines options sur des extensions pour libérer le configurateur.
 - 🟢 À évaluer : créer une aide avec Page::helpBlock().
 - 🟢 À évaluer : ajouter la possibilité d’afficher la barre latérale à gauche ou à droite, plutôt qu’en bas ? Version 3 ?
 - 🟢 À évaluer : permettre l’ajout de boutons de partage pour des réseaux sociaux qui ne sont pas configurés.
 
 == Notes de version ==
+
+=== 2.32 - 5 avril 2026 ===
+- Ajout : attributs "width" et "height" à l'image d’en-tête.
+- Ajout : attribut "fetchpriority=high" à l’image d’en-tête.
+- Correction : l’aperçu de l’image d’en-tête n’était pas modifié lors de la modification de celle-ci.
+- Correction : attribut "sizes" des images larges.
+- Correction : l’option pour afficher des images sur une largeur plus grande que la zone de texte ne fonctionnait pas sur les pages d’accueil statiques.
+- Suppression : lien vers le salon Matrix de Dotclear.
 
 === 2.31 - 4 mars 2025 ===
 - Correction : "Impossible de créer le répertoire" lors de la restauration d’une configuration.
