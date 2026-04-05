@@ -600,7 +600,7 @@ class FrontendBehaviors
                             $attr .= 'class=odyssey-img-wide ';
                         }
 
-                        $sizes = My::imgSizes($img['o']['width'], $portrait);
+                        $sizes = My::imgSizes($img_width_max, $portrait);
 
                         $attr .= 'sizes=' . My::displayAttr($sizes) . ' ';
                         $attr .= 'width=' . (int) $img_width_max . ' ';

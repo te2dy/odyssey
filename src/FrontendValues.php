@@ -203,7 +203,7 @@ class FrontendValues
             $img_position     = 'top';
         }
 
-        $dimensions .= $image_size   ? ' width='  . (int) $image_size   : '';
+        $dimensions .= $image_size ? ' width=' . (int) $image_size : '';
 
         /**
          * The height was not saved in the "header_image" setting before the version 2.32 of the theme.
@@ -357,7 +357,7 @@ class FrontendValues
                     $img_o         = !str_starts_with($img_o, "/") ? "/" . $img_o : $img_o;
                     $img_o_path    = substr(App::blog()->public_path, 0, -strlen(App::blog()->settings->system->public_url));
                     $img_o_path   .= str_ends_with($img_o_path, "/") ? substr($img_o, 1) : $img_o;
-                    list($width_o) = getimagesize($img_o_path);
+                    list($width_o, $height_o) = getimagesize($img_o_path);
 
                     $img_m   = ' . App::frontend()->context()::class . '::EntryFirstImageHelper("m", false, "", true) ?: null;
                     $width_m = ' . App::media()->thumb_sizes['m'][0] . ';
@@ -382,7 +382,9 @@ class FrontendValues
                             $img_src_srcset .= ' . Html::class . '::escapeHTML($img_o) . " " . (int) $width_o . "w";
                         }
 
-                        $sizes = ' . My::class . '::imgSizes($width_o);
+                        $portrait = $width_o <= $height_o ? true : false;
+
+                        $sizes = ' . My::class . '::imgSizes($width_o, $portrait, true);
 
                         $img_src_srcset = ' . Html::class . '::escapeURL($img_src) . " srcset=\"" . $img_src_srcset . "\" sizes=" . ' . My::class . '::displayAttr($sizes);
 

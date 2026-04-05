@@ -1644,8 +1644,9 @@ class My extends MyTheme
     /**
      * Sets image "sizes" attribute for responsiveness.
      *
-     * @param int  $img_width The image width.
-     * @param bool $portrait  true if the height of the image is greater than is width.
+     * @param int  $img_width    The image width.
+     * @param bool $portrait     true if the height of the image is greater than is width.
+     * @param bool $disable_wide true if the image shouldn't be wider than the page width.
      *
      * @return string The "sizes" attribute.
      */
@@ -1658,27 +1659,36 @@ class My extends MyTheme
         $sizes = '';
 
         $content_width_data = self::getContentWidth('px');
-        $width_px           = $content_width_data['value'];
-        $width_max          = '85vw';
+        $page_width_px      = $content_width_data['value'];
 
-        if (My::settings()->content_images_wide && $disable_wide === false) {
-            $width_max_mobile = $portrait === false ? '95vw'  : '85vw';
-            $margins          = $portrait === false ? 120 * 2 : 0;
-        } elseif ($disable_wide === true) {
+        if ($img_width > $page_width_px) {
+            $page_width_max = $page_width_px . 'px';
+        } else {
+            $page_width_max = $img_width . 'px';
+        }
+
+        $page_width_unit  = My::settings()->global_unit ?: 'em' ;
+        $page_width_value = My::settings()->global_page_width_value ?: 30;
+        $page_width       = $page_width_value . $page_width_unit;
+
+        if (My::settings()->content_images_wide && !$disable_wide) {
+            $width_max_mobile = !$portrait ? '95vw'  : '85vw';
+            $margins          = !$portrait ? 120 * 2 : 0;
+        } elseif ($disable_wide) {
             $width_max_mobile = '85vw';
             $margins          = 0;
         }
 
-        if ($img_width >= $width_px) {
-            $width_max    = $width_px + $margins . 'px';
-            $width_mobile = '(max-width: calc(30em / 0.85)) ' . $width_max_mobile;
+        if ($img_width >= $page_width_px) {
+            $width_max    = $page_width_px + $margins . 'px';
+            $width_mobile = '(max-width: calc(' . $page_width . ' / .85)) ' . $width_max_mobile;
 
-            $sizes = $width_mobile . ', ' . $width_max;
+            $sizes = $width_mobile . ', ' . $page_width_max;
         } else {
-            $width_max = $img_width . 'px';
-            $width_mobile = '(max-width: ' . $img_width . 'px) ' . $width_max_mobile;
+            $page_width_max = $img_width . 'px';
+            $width_mobile   = '(max-width: ' . $img_width . 'px) ' . $width_max_mobile;
 
-            $sizes = $width_mobile . ', ' . $width_max;
+            $sizes = $width_mobile . ', ' . $page_width_max;
         }
 
         return $sizes;
