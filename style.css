@@ -93,6 +93,9 @@ strong {
 em {
   font-style: italic;
 }
+em em {
+  font-style: normal;
+}
 small {
   font-size: .8em;
 }
