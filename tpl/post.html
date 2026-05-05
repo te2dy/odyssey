@@ -23,7 +23,10 @@
 
   <tpl:EntryIf pings_active="1">
     <link rel=pingback href={{tpl:BlogXMLRPCURL is_attr="1"}}>
-    <link rel=webmention href={{tpl:BlogWebmentionURL is_attr="1"}}>
+
+    <tpl:odysseyDotclearVersionMimimum number="2.38">
+      <link rel=webmention href={{tpl:BlogWebmentionURL is_attr="1"}}>
+    </tpl:odysseyDotclearVersionMimimum>
   </tpl:EntryIf>
 </tpl:Block>
 

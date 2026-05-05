@@ -56,6 +56,7 @@ class Frontend
         App::frontend()->template()->addBlock('odysseyCommentFormWrapper', FrontendBlocks::odysseyCommentFormWrapper(...));
         App::frontend()->template()->addBlock('odysseySidebar', FrontendBlocks::odysseySidebar(...));
         App::frontend()->template()->addBlock('odysseyFooter', FrontendBlocks::odysseyFooter(...));
+        App::frontend()->template()->addBlock('odysseyDotclearVersionMimimum', FrontendBlocks::odysseyDotclearVersionMimimum(...));
 
         // Values.
         App::frontend()->template()->addValue('odysseyLang', FrontendValues::odysseyLang(...));

@@ -176,4 +176,23 @@ class FrontendBlocks
 
         return '';
     }
+
+    /**
+     * Displays template content only if a certain version of Dotclear is installed.
+     *
+     * @param array $attr    Unused.
+     * @param void  $content The content of the footer.
+     *
+     * @return string The content.
+     */
+    public static function odysseyDotclearVersionMimimum($attr, $content): string
+    {
+        $minimum_version_number = $attr['number'] ?? null;
+
+        if (My::dotclearVersionMimimum($minimum_version_number) || !$minimum_version_number) {
+            return $content;
+        }
+
+        return '';
+    }
 }
