@@ -1672,7 +1672,7 @@ class My extends MyTheme
         $page_width       = $page_width_value . $page_width_unit;
 
         if (My::settings()->content_images_wide && !$disable_wide) {
-            $width_max_mobile = !$portrait ? '95vw'  : '85vw';
+            $width_max_mobile = !$portrait ? '95vw' : '85vw';
             $margins          = !$portrait ? 120 * 2 : 0;
         } elseif ($disable_wide) {
             $width_max_mobile = '85vw';
