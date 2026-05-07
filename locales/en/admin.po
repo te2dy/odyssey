@@ -831,8 +831,11 @@ msgstr "<strong>The %1$s update is locked</strong> to allow modification of its 
 msgid "settings-mediacss-warning"
 msgstr "It is recommended that you check the option “<strong>Do not load the standard style sheet (used for media alignment)</strong>” in the Media and Images section of <a href=%s>the Blog Settings</a>. %s integrates its own media alignment styles, making it unnecessary to load this style sheet."
 
+msgid "settings-page-title"
+msgstr "Customize %s"
+
 msgid "settings-page-intro"
-msgstr "Here you can customize your %s theme to suit your needs."
+msgstr "Here, you can customise your theme to suit your needs."
 
 msgid "settings-page-forum-link"
 msgstr "If you have any questions, suggestions, requests or feedback, you can choose to <a href=%1$s>start a discussion on GitHub</a>, <a href=%2$s>send an email to the author of the theme</a> or post a message on the <a href=%4$s>official Dotclear forum</a>."

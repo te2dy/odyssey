@@ -831,6 +831,9 @@ msgstr ""
 msgid "settings-mediacss-warning"
 msgstr ""
 
+msgid "settings-page-title"
+msgstr ""
+
 msgid "settings-page-intro"
 msgstr ""
 
