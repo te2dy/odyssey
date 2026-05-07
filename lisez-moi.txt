@@ -13,6 +13,8 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 == Feuille de route ==
 Hiérarchie des priorités : 🔴 🟠 🟢
 - 🔴 Balise <sup> s’affiche dans <title> au lieu d’être supprimée.
+- 🔴 Voir comment gérer les images lorsque, pour une largeur définie en em, l’utilisateur a défini la taille de police à 20 ou 22 px au lieu de 16.
+- 🟠 Revoir displayAttr et escapeURL.
 - 🟠 Confirmer que la valeur de "sizes" des images larges est bonne.
 - 🟠 Modifier odysseyEntryExcerpt pour exclure le numéro des notes de bas de page.
 - 🟠 Vérifier l’apparence du thème à l’impression.
@@ -23,6 +25,13 @@ Hiérarchie des priorités : 🔴 🟠 🟢
 - 🟢 À évaluer : permettre l’ajout de boutons de partage pour des réseaux sociaux qui ne sont pas configurés.
 
 == Notes de version ==
+
+=== 2.33 - 7 mai 2026 ===
+- Ajout : adresse d’ajout de webmention dans l’en-tête HTML (pour Dotclear 2.38).
+- Ajout : titre en haut de la page du configurateur.
+- Correction : erreur PHP en absence d’image de une pour les écrans Retina.
+- Modification : mettre du texte en italique dans du texte en italique affiche le premier normalement.
+- Modification : utilisation de strip_tags() au lieu d’encode_html() et remove_html() dans la métadonnée description.
 
 === 2.32.2 - 5 avril 2026 ===
 - Suppression : code qui n’avait rien à faire là.
