@@ -429,7 +429,7 @@ class My extends MyTheme
             'title'       => __('settings-header-image-title'),
             'description' => sprintf(
                 __('settings-header-image-description'),
-                My::id()
+                self::id()
             ),
             'label'       => 'Header image URL',
             'type'        => 'image',
@@ -509,7 +509,7 @@ class My extends MyTheme
                 'title'       => __('settings-header-breadcrumbalign-title'),
                 'description' => sprintf(
                     __('settings-header-breadcrumbalign-description'),
-                    My::displayAttr(App::backend()->url()->get('admin.blog.pref'))
+                    self::displayAttr(App::backend()->url()->get('admin.blog.pref'))
                 ),
                 'label'       => 'Breadbrumb alignment',
                 'type'        => 'select',
@@ -1034,8 +1034,8 @@ class My extends MyTheme
      */
     public static function getContentWidth($unit = 'em'): array
     {
-        $page_width_unit  = My::settings()->global_unit ?: 'em' ;
-        $page_width_value = (int) My::settings()->global_page_width_value ?: 30;
+        $page_width_unit  = self::settings()->global_unit ?: 'em' ;
+        $page_width_value = (int) self::settings()->global_page_width_value ?: 30;
 
         if ($page_width_unit !== $unit) {
             if ($unit === 'px') {
@@ -1106,9 +1106,9 @@ class My extends MyTheme
     {
         switch ($type) {
             case 'url':
-                return App::blog()->settings()->system->themes_url . '/' . My::id() . $to_concatenate;
+                return App::blog()->settings()->system->themes_url . '/' . self::id() . $to_concatenate;
             case 'path':
-                return My::path() . $to_concatenate;
+                return self::path() . $to_concatenate;
         }
 
         return '';
@@ -1667,11 +1667,11 @@ class My extends MyTheme
             $page_width_max = $img_width . 'px';
         }
 
-        $page_width_unit  = My::settings()->global_unit ?: 'em' ;
-        $page_width_value = My::settings()->global_page_width_value ?: 30;
+        $page_width_unit  = self::settings()->global_unit ?: 'em' ;
+        $page_width_value = self::settings()->global_page_width_value ?: 30;
         $page_width       = $page_width_value . $page_width_unit;
 
-        if (My::settings()->content_images_wide && !$disable_wide) {
+        if (self::settings()->content_images_wide && !$disable_wide) {
             $width_max_mobile = !$portrait ? '95vw' : '85vw';
             $margins          = !$portrait ? 120 * 2 : 0;
         } elseif ($disable_wide) {
