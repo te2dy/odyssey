@@ -16,15 +16,20 @@ Hiérarchie des priorités : 🔴 🟠 🟢
 - 🔴 Voir comment gérer les images lorsque, pour une largeur définie en em, l’utilisateur a défini la taille de police à 20 ou 22 px au lieu de 16.
 - 🟠 Revoir displayAttr et escapeURL.
 - 🟠 Confirmer que la valeur de "sizes" des images larges est bonne.
-- 🟠 Modifier odysseyEntryExcerpt pour exclure le numéro des notes de bas de page.
+- 🟠 Modifier odysseyEntryExcerpt pour exclure le numéro des notes de bas de page ?
 - 🟠 Vérifier l’apparence du thème à l’impression.
-- 🟠 Dans odysseyHeaderImage(), supprimer la partie qui définit la hauteur des images après quelques mois (avril 2026).
 - 🟢 Basculer certaines options sur des extensions pour libérer le configurateur.
-- 🟢 À évaluer : créer une aide avec Page::helpBlock().
+- 🟢 À évaluer : créer une aide dans le configurateur avec Page::helpBlock().
 - 🟢 À évaluer : ajouter la possibilité d’afficher la barre latérale à gauche ou à droite, plutôt qu’en bas ? Version 3 ?
 - 🟢 À évaluer : permettre l’ajout de boutons de partage pour des réseaux sociaux qui ne sont pas configurés.
+- ⏳ Dans odysseyHeaderImage(), supprimer la partie qui définit la hauteur des images après quelques mois (avril 2026).
 
 == Notes de version ==
+
+=== 2.34 - 13 mai 2026 ===
+- Correction : mise en forme de la description des catégories.
+- Correction : remplacement de l’attribut has_tag, qui n’existe pas, par has_tags.
+- Revue de code.
 
 === 2.33 - 7 mai 2026 ===
 - Ajout : adresse d’ajout de webmention dans l’en-tête HTML (pour Dotclear 2.38).
