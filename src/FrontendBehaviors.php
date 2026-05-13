@@ -619,9 +619,7 @@ class FrontendBehaviors
     }
 
     /**
-     * Adds two new conditions to tpl:EntryIf:
-     * - "has_tag" if a post has tags.
-     * - "has_reaction" if the post has comments or trackbacks.
+     * Adds a new condition to tpl:EntryIf: "has_reaction" if the post has a comment or trackback.
      *
      * @param string                     $tag     The EntryIf tag
      * @param ArrayObject<string, mixed> $attr    The attributes
