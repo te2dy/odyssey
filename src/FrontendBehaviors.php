@@ -29,16 +29,12 @@ class FrontendBehaviors
     {
         // Adds the name of the editor.
         if (App::blog()->settings->system->editor) {
-            echo '<meta name=author content=',
-            My::displayAttr(App::blog()->settings->system->editor),
-            '>', "\n";
+            echo '<meta name=author content=', My::displayAttr(App::blog()->settings->system->editor), '>', "\n";
         }
 
         // Adds the content of the copyright notice.
         if (App::blog()->settings->system->copyright_notice) {
-            echo '<meta name=copyright content=',
-            My::displayAttr(App::blog()->settings->system->copyright_notice),
-            '>', "\n";
+            echo '<meta name=copyright content=', My::displayAttr(App::blog()->settings->system->copyright_notice), '>', "\n";
         }
 
         if (My::settings()->advanced_meta_social) {
@@ -89,10 +85,7 @@ class FrontendBehaviors
 
                 // Specific title for the post list page when a static home page has been set.
                 if (App::blog()->settings()->system->static_home && App::url()->type === 'default') {
-                    $title = sprintf(
-                        __('meta-title-static-postlist'),
-                        $title
-                    );
+                    $title = sprintf(__('meta-title-static-postlist'), $title);
                 }
 
                 $page = (int) Ctx::PaginationPosition();
@@ -102,13 +95,9 @@ class FrontendBehaviors
                 }
 
                 if (My::settings()->advanced_meta_description || App::blog()->desc) {
-                    if ($desc) {
-                        $desc .= ' – ';
-                    }
-
-                    $desc .= My::settings()->advanced_meta_description ?: App::blog()->desc ?: '';
-
-                    $desc = My::cleanStr($desc);
+                    $desc .= $desc ? ' – ' : '';
+                    $desc .= My::settings()->advanced_meta_description ?: App::blog()->desc;
+                    $desc  = My::cleanStr($desc);
 
                     if (strlen($desc) > 180) {
                         $desc = Text::cutString($desc, 179) . '…';
@@ -137,9 +126,9 @@ class FrontendBehaviors
         }
 
         $markups = new ArrayObject([
-            'title' => $title,
-            'desc'  => $desc,
-            'img'   => $img
+            'title' => $title ?: '',
+            'desc'  => $desc  ?: '',
+            'img'   => $img   ?: ''
         ]);
 
         # --BEHAVIOR-- odysseySocialMarkupsEdit -- string, ArrayObject
@@ -654,7 +643,6 @@ class FrontendBehaviors
         }
 
         self::odysseyFooterSocialLinks();
-
         self::odysseyFooterCredits();
     }
 

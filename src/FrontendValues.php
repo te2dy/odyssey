@@ -708,7 +708,7 @@ class FrontendValues
             ?>';
         }
 
-        $output .= '<?php echo $reactions_other ?: ""; ?>';
+        $output .= '<?= $reactions_other ?: ""; ?>';
 
         # --BEHAVIOR-- odysseyPrivateCommentLinkAdd
         $output .= (string) App::behavior()->callBehavior('odysseyPrivateCommentLinkAdd');

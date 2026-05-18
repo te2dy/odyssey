@@ -581,7 +581,6 @@ class Config
                              * if its superior to the page width,
                              * and sets its height proportionally.
                              */
-
                             $page_width_value = isset($new_settings['global_page_width_value']) ? (int) $new_settings['global_page_width_value'] : 480;
                             $page_width_unit  = $new_settings['global_unit'] ?? 'em';
                             $page_width_value = $page_width_unit === 'em' ? $page_width_value * 16 : $page_width_value;
@@ -2355,6 +2354,7 @@ class Config
             }
         }
 
+        // Renders the form.
         echo (new Form('theme-config-form'))
             ->action(App::backend()->url()->get('admin.blog.theme', self::$redirect_query))
             ->enctype('multipart/form-data')
@@ -2362,6 +2362,7 @@ class Config
             ->method('post')
             ->render();
 
+        // Loads JS to run CodeMirror syntax.
         if (App::auth()->prefs()->interface->colorsyntax) {
             echo App::backend()->page()->jsRunCodeMirror([
                 [
