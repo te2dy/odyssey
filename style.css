@@ -37,6 +37,7 @@ body {
   color: var(--color-text-main, #303030);
   font-family: var(--font-family, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");
   font-size: var(--font-size, 1rem);
+  -webkit-text-size-adjust: 100%;
 }
 #site {
   box-sizing: border-box;
