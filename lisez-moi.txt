@@ -26,6 +26,10 @@ Hiérarchie des priorités : 🔴 🟠 🟢
 
 == Notes de version ==
 
+=== 2.35 - 20 mai 2026 ===
+- Correction : la taille de certains textes était variable en mode paysage sur certains appareils mobiles.
+- Revue de code.
+
 === 2.34 - 13 mai 2026 ===
 - Correction : mise en forme de la description des catégories.
 - Correction : remplacement de l’attribut has_tag, qui n’existe pas, par has_tags.
