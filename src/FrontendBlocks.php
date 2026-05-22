@@ -87,8 +87,7 @@ class FrontendBlocks
             <summary>' . Html::escapeHTML($menu_text) . '</summary>
             <div id=site-nav-content>' . $content . '</div>
           </details>
-        </div>
-        ';
+        </div>';
     }
 
     /**
@@ -118,18 +117,21 @@ class FrontendBlocks
      */
     public static function odysseyCommentFormWrapper($attr, $content): string
     {
-        if (My::settings()->reactions_button === null
-            && (isset(App::frontend()->context()->comment_preview['content']) && App::frontend()->context()->comment_preview['content'] === '')
-        ) {
-            return '<details class=reactions-details>
-                <summary class=reactions-button>
-                    <svg class="reactions-button-icon social-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>' . My::svgIcons('comment')['path'] . '</svg>
+        if (My::settings()->reactions_button === null) {
+            return '
+            <?php if (isset(App::frontend()->context()->comment_preview["rawcontent"]) && App::frontend()->context()->comment_preview["rawcontent"] === "") { ?>
+                <details class=reactions-details>
+                    <summary class=reactions-button>
+                        <svg class="reactions-button-icon social-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>' . My::svgIcons('comment')['path'] . '</svg>
 
-                    <span class=reactions-button-text>' . __('reactions-comment-form-title') . '</span>
-                </summary>
+                        <span class=reactions-button-text>' . __('reactions-comment-form-title') . '</span>
+                    </summary>
 
-                <div class=reactions-details-content>' . $content . '</div>
-            </details>';
+                    <div class=reactions-details-content>' . $content . '</div>
+                </details>
+            <?php } else { ?>
+                <h3>' . __('reactions-comment-form-title') . '</h3>' . $content . '
+            <?php } ?>';
         }
 
         return '<h3>' . __('reactions-comment-form-title') . '</h3>' . $content;
@@ -168,9 +170,10 @@ class FrontendBlocks
 
         if (My::settings()->footer_enabled === false && App::blog()->settings->system->jquery_needed === true && My::settings()->advanced_js_util === null) {
             if (App::url()->type === 'post' || App::url()->type === 'pages') {
-                if (App::frontend()->context()->posts->commentsActive()) {
-                    return '<footer id=site-footer>' . My::scriptRememberMe() . '</footer>';
-                }
+                return '
+                <?php if (App::frontend()->context()->posts->commentsActive()) { ?>
+                    <footer id=site-footer>' . My::scriptRememberMe() . '</footer>
+                <?php } ?>';
             }
         }
 
