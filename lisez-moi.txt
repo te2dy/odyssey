@@ -26,6 +26,10 @@ Hiérarchie des priorités : 🔴 🟠 🟢
 
 == Notes de version ==
 
+=== 2.36 - 22 mai 2026 ===
+- Correction : l’affichage du formulaire de commentaire était parfois aléatoire.
+- Revue de code.
+
 === 2.35 - 20 mai 2026 ===
 - Correction : la taille de certains textes était variable en mode paysage sur certains appareils mobiles.
 - Revue de code.
