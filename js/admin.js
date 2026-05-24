@@ -3,7 +3,7 @@
  * by its or their id.
  */
 function setStyle(id, display) {
-  if (!Array.isArray(id)) {
+  if (id.constructor !== Array) {
     id = [id];
   }
 
@@ -392,30 +392,30 @@ window.onload = function() {
    */
   const colorSettings = document.getElementsByClassName("odyssey-color-setting");
 
-  Array.prototype.forEach.call(colorSettings, function(colorSetting) {
-    let settingInputId = colorSetting.getAttribute("id"),
+  for (var i = 0; i < colorSettings.length; i++) {
+    let settingInputId = colorSettings[i].getAttribute("id"),
         settingId      = "",
         textId         = "",
         defaultId      = "";
 
     if (settingInputId.substr(settingInputId.length - 6) === "-input") {
-        settingId = settingInputId.substr(0, settingInputId.length - 6),
-        textId  = settingId + "-text";
-        defaultId = settingId + "-default-button";
+      settingId = settingInputId.substr(0, settingInputId.length - 6),
+      textId    = settingId + "-text";
+      defaultId = settingId + "-default-button";
 
-        document.getElementById(settingId).oninput = function() {
-          changeColorInput(settingId, "picker");
-        };
+      document.getElementById(settingId).oninput = function() {
+        changeColorInput(settingId, "picker");
+      };
 
-        document.getElementById(textId).oninput = function() {
-          changeColorInput(settingId, "text");
-        };
+      document.getElementById(textId).oninput = function() {
+        changeColorInput(settingId, "text");
+      };
 
-        document.getElementById(defaultId).onclick = function() {
-          changeColorInput(settingId, "default");
-        };
+      document.getElementById(defaultId).onclick = function() {
+        changeColorInput(settingId, "default");
+      };
     }
-  });
+  }
 
   // Header image
   document.getElementById("header_image").onchange = function() {
