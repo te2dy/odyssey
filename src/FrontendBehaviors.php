@@ -64,7 +64,7 @@ class FrontendBehaviors
             case 'pages':
                 $title = App::frontend()->context()->posts->post_title;
 
-                $desc = App::frontend()->context()->posts->getExcerpt() ?: App::frontend()->context()->posts->getContent();
+                $desc = App::frontend()->context()->posts->post_excerpt_xhtml ?: App::frontend()->context()->posts->post_content_xhtml;
                 $desc = My::cleanStr($desc);
 
                 if (strlen($desc) > 180) {
