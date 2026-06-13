@@ -982,7 +982,8 @@ class My extends MyTheme
             $value = self::escapeURL($value);
         }
 
-        if (!str_contains($value, ' ')
+        if ($value !== ''
+            && !str_contains($value, ' ')
             && !str_contains($value, '=')
             && !str_contains($value, '"')
             && !str_contains($value, '&quot;')
