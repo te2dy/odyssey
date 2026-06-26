@@ -184,7 +184,7 @@ class FrontendBlocks
      * Displays template content only if a certain version of Dotclear is installed.
      *
      * @param array $attr    Unused.
-     * @param void  $content The content of the footer.
+     * @param void  $content The content.
      *
      * @return string The content.
      */

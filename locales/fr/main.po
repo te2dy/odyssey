@@ -298,10 +298,10 @@ msgid "footer-social-links-feed-title"
 msgstr "Fil RSS/Atom"
 
 msgid "footer-powered-by"
-msgstr "Propulsé par <a href=https://fr.dotclear.org/>Dotclear</a> et <a href=https://themes.dotaddict.org/galerie-dc2/details/odyssey>%s</a>"
+msgstr "Propulsé par <a href=https://dotclear.org/>Dotclear</a> et <a href=https://dotclear.org/theme/detail/odyssey>%s</a>"
 
 msgid "footer-powered-by-dev"
-msgstr "Propulsé par <a href=https://fr.dotclear.org/ title=%s>Dotclear %s</a> et <a href=https://github.com/te2dy/odyssey>%s %s</a>"
+msgstr "Propulsé par <a href=https://dotclear.org/ title=%s>Dotclear %s</a> et <a href=https://github.com/te2dy/odyssey>%s %s</a>"
 
 # Social links
 
