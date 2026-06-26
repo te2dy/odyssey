@@ -1,0 +1,75 @@
+{{tpl:extends parent="__layout.html"}}
+
+<tpl:Block name="head-title">
+  <title>{{tpl:ContactMePageTitle encode_html="1"}}</title>
+</tpl:Block>
+
+<tpl:Block name="head-description"></tpl:Block>
+
+<tpl:Block name="head-links"></tpl:Block>
+
+<tpl:Block name="main-content">
+  <article class=page>
+    <header>
+      <h1>{{tpl:ContactMePageTitle encode_html="1"}}</h1>
+    </header>
+
+    <div class=content-text>
+      {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
+
+      <tpl:ContactMeIf sent="1">{{tpl:ContactMeMsgSuccess}}</tpl:ContactMeIf>
+
+      <tpl:ContactMeIf error="1">{{tpl:ContactMeMsgError}}</tpl:ContactMeIf>
+
+      <tpl:ContactMeIf sent="0">
+        {{tpl:ContactMeFormCaption}}
+
+        <form action={{tpl:ContactMeURL is_attr="1"}} class=contactme method=post>
+          {{tpl:SysBehavior behavior="publicContactMeFormBeforeContent"}}
+
+          <div class=form-entry>
+            <label for=c_name><small>{{tpl:lang contact-me-form-label-name}}</small></label>
+            <br>
+            <input name=c_name id=c_name maxlength=255 value="{{tpl:ContactMeName encode_html="1"}}" required>
+          </div>
+
+          <div class=form-entry>
+            <label for=c_mail><small>{{tpl:lang contact-me-form-label-email}}</small></label>
+            <br>
+            <input name=c_mail id=c_mail type=email maxlength=255 value="{{tpl:ContactMeEmail encode_html="1"}}" required>
+          </div>
+
+          <div class=form-entry>
+            <label for=c_site><small>{{tpl:lang contact-me-form-label-website}}</small></label>
+            <br>
+            <input name=c_site id=c_site type=url maxlength=255 value="{{tpl:ContactMeSite encode_html="1"}}">
+          </div>
+
+          <div class=form-entry>
+            <label for=c_subject><small>{{tpl:lang contact-me-form-label-subject}}</small></label>
+            <br>
+            <input name=c_subject id=c_subject maxlength=255 value="{{tpl:ContactMeSubject encode_html="1"}}" required>
+          </div>
+
+          <div class=form-entry style="display:none">
+            <input name=f_mail maxlength=255 value="">
+          </div>
+
+          <div class=form-entry>
+            <label for=c_message><small>{{tpl:lang contact-me-form-label-message}}</small></label>
+            <br>
+            <textarea name=c_message id=c_message cols=35 rows=7>{{tpl:ContactMeMessage raw="1" encode_html="1"}}</textarea>
+          </div>
+
+          {{tpl:SysBehavior behavior="publicContactMeFormAfterContent"}}
+
+          <div class=form-entry>
+            <input type=submit class=submit value="{{tpl:lang contact-me-form-submit-send}}">
+          </div>
+        </form>
+      </tpl:ContactMeIf>
+
+      {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
+    </div>
+  </article>
+</tpl:Block>

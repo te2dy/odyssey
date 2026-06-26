@@ -452,3 +452,23 @@ msgstr ""
 
 msgid "password-needed-form-submit"
 msgstr ""
+
+# Contact Me plugin
+
+msgid "contact-me-form-label-name"
+msgstr ""
+
+msgid "contact-me-form-label-email"
+msgstr ""
+
+msgid "contact-me-form-label-website"
+msgstr ""
+
+msgid "contact-me-form-label-subject"
+msgstr ""
+
+msgid "contact-me-form-label-message"
+msgstr ""
+
+msgid "contact-me-form-submit-send"
+msgstr ""
