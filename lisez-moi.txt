@@ -26,6 +26,12 @@ Hiérarchie des priorités : 🔴 🟠 🟢
 
 == Notes de version ==
 
+=== 2.37 - 26 juin 2026 ===
+- Ajout : gabarit pour la page publique de l’extension Contact Me.
+- Correction : la fonction displayAttr() ne fonctionnait pas de la façon escomptée en présente d’une espace.
+- Modification : utilisation de post_content_xhtml au lien de getContent().
+- Modification : remplacement du lien vers le thème de DotAddict vers Dotclear.
+
 === 2.36 - 22 mai 2026 ===
 - Correction : l’affichage du formulaire de commentaire était parfois aléatoire.
 - Revue de code.
