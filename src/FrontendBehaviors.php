@@ -428,8 +428,12 @@ class FrontendBehaviors
         // Removes empty values.
         $json_ld = array_filter($json_ld);
 
-        # --BEHAVIOR-- odysseyJsonLdEdit -- string, array
+        $json_ld = new ArrayObject($json_ld);
+
+        # --BEHAVIOR-- odysseyJsonLdEdit -- string, ArrayObject
         App::behavior()->callBehavior('odysseyJsonLdEdit', $json_ld);
+
+        $json_ld = (array) $json_ld;
 
         if (!empty($json_ld)) {
             $json_ld = json_encode($json_ld, JSON_HEX_QUOT|JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS);
