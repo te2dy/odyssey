@@ -100,8 +100,9 @@ em em {
 small {
   font-size: .8em;
 }
-del {
-  text-decoration: underline;
+del,
+s {
+  text-decoration: line-through;
 }
 mark {
   background-color: #fbf7a6;
