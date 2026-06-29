@@ -135,6 +135,9 @@ msgstr "Apparence"
 msgid "section-advanced-seo"
 msgstr "Optimisation du référencement"
 
+msgid "section-advanced-css"
+msgstr "Feuille de styles"
+
 msgid "section-advanced-js"
 msgstr "Javascript"
 
@@ -812,6 +815,12 @@ msgstr "Ajouter des métadonnées au format JSON"
 
 msgid "settings-advanced-json-description"
 msgstr "Utile pour le référencement sur les moteurs de recherche."
+
+msgid "settings-advanced-cssversion-title"
+msgstr "Ajouter une version à l’adresse de la feuille de styles"
+
+msgid "settings-advanced-cssversion-description"
+msgstr "Ajoute <code>?v=123456789</code> (date et heure au format UNIX) après l’adresse de la feuille de styles dans l’en-tête."
 
 msgid "settings-advanced-jsutil-title"
 msgstr "Charger le fichier Dotclear util.js"

@@ -135,6 +135,9 @@ msgstr ""
 msgid "section-advanced-seo"
 msgstr ""
 
+msgid "section-advanced-css"
+msgstr "Feuille de styles"
+
 msgid "section-advanced-js"
 msgstr ""
 
@@ -811,6 +814,12 @@ msgid "settings-advanced-json-title"
 msgstr ""
 
 msgid "settings-advanced-json-description"
+msgstr ""
+
+msgid "settings-advanced-cssversion-title"
+msgstr ""
+
+msgid "settings-advanced-cssversion-description"
 msgstr ""
 
 msgid "settings-advanced-jsutil-title"

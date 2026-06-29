@@ -113,7 +113,9 @@ class FrontendValues
     public static function odysseyStylesheetURL(): string
     {
         if (My::settings()->styles || My::settings()->styles_custom) {
-            $css_url = My::publicFolder('url', '/css/style.min.css');
+            $version = My::settings()->advanced_css_version_value ? '?v=' . (int) My::settings()->advanced_css_version_value : '';
+
+            $css_url = My::publicFolder('url', '/css/style.min.css' . $version);
         } else {
             $css_url = My::themeFolder('url', '/style.min.css');
         }

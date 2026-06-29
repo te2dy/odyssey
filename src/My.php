@@ -83,6 +83,7 @@ class My extends MyTheme
                 'sub_sections' => [
                     'appearance' => __('section-advanced-appearance'),
                     'seo'        => __('section-advanced-seo'),
+                    'css'        => __('section-advanced-css'),
                     'js'         => __('section-advanced-js')
                 ]
             ]
@@ -939,6 +940,21 @@ class My extends MyTheme
             'type'        => 'checkbox',
             'default'     => false,
             'section'     => ['advanced', 'seo']
+        ];
+
+        $default_settings['advanced_css_version'] = [
+            'title'       => __('settings-advanced-cssversion-title'),
+            'description' => __('settings-advanced-cssversion-description'),
+            'label'       => 'Add a version to CSS URI',
+            'type'        => 'checkbox',
+            'default'     => false,
+            'section'     => ['advanced', 'css']
+        ];
+
+        $default_settings['advanced_css_version_value'] = [
+            'title'       => __('settings-advanced-cssversionvalue-title'),
+            'label'       => 'CSS version',
+            'sanitizer'   => 'sanitizeInt',
         ];
 
         $default_settings['advanced_js_util'] = [

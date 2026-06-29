@@ -222,7 +222,9 @@ class Config
             $setting_value = $new_settings[$setting_id] ?? null;
 
             // Sanitizes the setting.
-            if ($setting_id !== 'styles') {
+            $settings_excluded = ['styles'];
+
+            if (!in_array($setting_id, $settings_excluded, true)) {
                 $setting = self::_sanitizeSetting(
                     $setting_id,
                     $setting_data,
@@ -472,6 +474,16 @@ class Config
                         $params = [
                             $setting_id,
                             $setting_value,
+                            $new_settings
+                        ];
+                    }
+
+                    break;
+                case 'advanced_css_version_value':
+                    if (isset($new_settings['advanced_css_version'])) {
+                        $params = [
+                            $setting_id,
+                            date('U'),
                             $new_settings
                         ];
                     }
@@ -1585,6 +1597,14 @@ class Config
         return [];
     }
 
+    private static function _sanitizeInt(?string $setting_id, ?string $value): array
+    {
+        return [
+            'value' => filter_var($value, FILTER_VALIDATE_INT),
+            'type'  => 'integer'
+        ];
+    }
+
     /**
      * Saves a custom CSS in the public folder of Dotclear, or deletes it.
      *
@@ -2090,7 +2110,9 @@ class Config
         }
 
         foreach (My::settingsDefault() as $setting_id => $setting_data) {
-            if ($setting_id !== 'styles') {
+            $settings_excluded = ['advanced_css_version_value', 'styles'];
+
+            if (!in_array($setting_id, $settings_excluded, true)) {
                 if (isset($setting_data['section'][1])) {
                     // If a sub-section has been set.
                     $settings_render[$setting_data['section'][0]][$setting_data['section'][1]][] = $setting_id;
