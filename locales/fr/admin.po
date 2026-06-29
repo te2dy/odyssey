@@ -817,7 +817,7 @@ msgid "settings-advanced-json-description"
 msgstr "Utile pour le référencement sur les moteurs de recherche."
 
 msgid "settings-advanced-cssversion-title"
-msgstr "Ajouter une version à l’adresse de la feuille de styles"
+msgstr "Ajouter un numéro de version à l’adresse de la feuille de styles"
 
 msgid "settings-advanced-cssversion-description"
 msgstr "Ajoute <code>?v=123456789</code> (date et heure au format UNIX) après l’adresse de la feuille de styles dans l’en-tête."

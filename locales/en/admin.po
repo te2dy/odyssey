@@ -817,7 +817,7 @@ msgid "settings-advanced-json-description"
 msgstr "Useful for search engine optimization."
 
 msgid "settings-advanced-cssversion-title"
-msgstr "Stylesheet"
+msgstr "Add a version number to the stylesheet URL"
 
 msgid "settings-advanced-cssversion-description"
 msgstr "Add <code>?v=123456789</code> (date and time in UNIX format) after the stylesheet URL in the header."
