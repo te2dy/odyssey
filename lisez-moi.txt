@@ -14,6 +14,7 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 Hiérarchie des priorités : 🔴 🟠 🟢
 - 🔴 Balise <sup> s’affiche dans <title> au lieu d’être supprimée.
 - 🔴 Voir comment gérer les images lorsque, pour une largeur définie en em, l’utilisateur a défini la taille de police à 20 ou 22 px au lieu de 16.
+- 🟠 Des is_attr="1" sont parfois superflus.
 - 🟠 Revoir displayAttr et escapeURL.
 - 🟠 Confirmer que la valeur de "sizes" des images larges est bonne.
 - 🟠 Modifier odysseyEntryExcerpt pour exclure le numéro des notes de bas de page ?
@@ -25,6 +26,12 @@ Hiérarchie des priorités : 🔴 🟠 🟢
 - ⏳ Dans odysseyHeaderImage(), supprimer la partie qui définit la hauteur des images après quelques mois (avril 2026).
 
 == Notes de version ==
+
+=== 2.38 - 29 juin 2026 ===
+- Ajout : option pour ajouter une version à la feuille de styles dans son appel dans l’en-tête.
+- Correction : le style barré (del ou s) soulignait au lieu de barrer.
+- Correction : le "behavior" odysseyJsonLdEdit ne fonctionnaire pas correctement.
+- Correction : suppression d’is_attr superflus.
 
 === 2.37 - 26 juin 2026 ===
 - Ajout : gabarit pour la page publique de l’extension Contact Me.
