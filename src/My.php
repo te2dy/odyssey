@@ -1039,19 +1039,15 @@ class My extends MyTheme
     }
 
     /**
-     * Escapes URLs.
+     * Escapes an URL to display it.
      *
-     * @param string $url  The URL to escape.
-     * @param bool   $attr true if the escaped URL should be displayed
-     *                     in an HTML attribute.
+     * @param string $url he URL to escape.
      *
      * @return string The escaped URL.
      */
-    public static function escapeURL(string $url, bool $attr = false): string
+    public static function escapeURL(string $url): string
     {
-        $url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
-
-        return !$attr ? $url : self::displayAttr($url, 'url');
+        return htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5, 'UTF-8');
     }
 
     /**
