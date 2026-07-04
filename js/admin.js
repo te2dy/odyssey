@@ -142,6 +142,12 @@ function disableInputs() {
     );
   }
 
+  if (document.getElementById("content_postlist_time").checked || document.getElementById("content_post_time").checked) {
+    setStyle("content_post_datetimeseparator", "block");
+  } else {
+    setStyle("content_post_datetimeseparator", "none");
+  }
+
   if (document.getElementById("reactions_other").value !== "disabled") {
     setStyle("reactions_other_email", "block");
   } else {

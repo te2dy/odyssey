@@ -432,6 +432,15 @@ msgstr ""
 msgid "settings-header-breadcrumbalign-right"
 msgstr ""
 
+msgid "settings-content-postdatetimeseparator-title"
+msgstr ""
+
+msgid "settings-content-postdatetimeseparator-description"
+msgstr ""
+
+msgid "settings-content-postdatetimeseparator-placeholder"
+msgstr ""
+
 msgid "settings-content-postlisttype-title"
 msgstr ""
 
@@ -442,6 +451,9 @@ msgid "settings-content-postlisttype-excerpt"
 msgstr ""
 
 msgid "settings-content-postlisttype-content"
+msgstr ""
+
+msgid "settings-content-postlisttime-title"
 msgstr ""
 
 msgid "settings-content-postlistaltcolor-title"
@@ -455,6 +467,9 @@ msgstr ""
 
 msgid "settings-content-postlistreactions-title"
 msgstr ""
+
+msgid "settings-content-posttime-title"
+msgstr "
 
 msgid "settings-content-fontfamily-title"
 msgstr ""

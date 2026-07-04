@@ -307,6 +307,40 @@ class FrontendValues
     }
 
     /**
+     * Displays date and eventually time of posts depending on the settings.
+     *
+     * @param ArrayObject $attr Attributes of the template value.
+     *
+     * @return string The date and time.
+     */
+    public static function odysseyEntryDateTime(ArrayObject $attr): string
+    {
+        $context = $attr['context'] ?? '';
+
+        if (($context === 'entry-list' && My::settings()->content_postlist_time)
+            || ($context === 'entry-post' && My::settings()->content_post_time)
+        ) {
+            return '
+            <?php
+            $date = App::frontend()->context()->posts->getDate("", "creadt") ?: "";
+
+            $time_display = ' . My::class . '::settings()->content_postlist_time ? true : false;
+            $time         = $time_display ? App::frontend()->context()->posts->getTime("", "creadt") : "";
+
+            $separator = ' . My::class . '::settings()->content_post_datetimeseparator ?: "à";
+
+            if (!$time_display) {
+                echo $date;
+            } else {
+                echo sprintf(__("entry-datetime"), $date, $time, $separator);
+            }
+            ?>';
+        }
+
+        return '';
+    }
+
+    /**
      * Displays a thumbnail in the post list of the first image found in each post.
      *
      * This function replaces the tag {{tpl:EntryFirstImage}}

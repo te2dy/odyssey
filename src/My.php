@@ -524,6 +524,16 @@ class My extends MyTheme
             ];
         }
 
+        $default_settings['content_post_datetimeseparator'] = [
+            'title'       => __('settings-content-postdatetimeseparator-title'),
+            'description' => __('settings-content-postdatetimeseparator-description'),
+            'label'       => 'Post time separator',
+            'type'        => 'text',
+            'default'     => '',
+            'placeholder' => __('settings-content-postdatetimeseparator-placeholder'),
+            'section'     => ['content']
+        ];
+
         $default_settings['content_postlist_type'] = [
             'title'       => __('settings-content-postlisttype-title'),
             'description' => '',
@@ -535,6 +545,15 @@ class My extends MyTheme
                 __('settings-content-postlisttype-content')         => 'content'
             ],
             'default'     => 'one-line',
+            'section'     => ['content', 'postlist']
+        ];
+
+        $default_settings['content_postlist_time'] = [
+            'title'       => __('settings-content-postlisttime-title'),
+            'description' => '',
+            'label'       => 'Post time in post list',
+            'type'        => 'checkbox',
+            'default'     => false,
             'section'     => ['content', 'postlist']
         ];
 
@@ -550,7 +569,7 @@ class My extends MyTheme
         $default_settings['content_postlist_thumbnail'] = [
             'title'       => __('settings-content-postlistthumbnail-title'),
             'description' => '',
-            'label'       => 'Thumbnail on post list',
+            'label'       => 'Thumbnail in post list',
             'type'        => 'checkbox',
             'default'     => true,
             'section'     => ['content', 'postlist']
@@ -563,6 +582,15 @@ class My extends MyTheme
             'type'        => 'checkbox',
             'default'     => false,
             'section'     => ['content', 'postlist']
+        ];
+
+        $default_settings['content_post_time'] = [
+            'title'       => __('settings-content-postttime-title'),
+            'description' => '',
+            'label'       => 'Add post time in a post',
+            'type'        => 'checkbox',
+            'default'     => false,
+            'section'     => ['content', 'post']
         ];
 
         $default_settings['content_text_font'] = [

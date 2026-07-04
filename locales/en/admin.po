@@ -432,6 +432,15 @@ msgstr "Center (default)"
 msgid "settings-header-breadcrumbalign-right"
 msgstr "Right"
 
+msgid "settings-content-postdatetimeseparator-title"
+msgstr "Separator between the publication date and time"
+
+msgid "settings-content-postdatetimeseparator-description"
+msgstr "Example&nbsp;: 0000/00/00 at 00:00."
+
+msgid "settings-content-postdatetimeseparator-placeholder"
+msgstr "at"
+
 msgid "settings-content-postlisttype-title"
 msgstr "Appearance"
 
@@ -444,6 +453,9 @@ msgstr "Title, date and post excerpt"
 msgid "settings-content-postlisttype-content"
 msgstr "Title, date and post content"
 
+msgid "settings-content-postlisttime-title"
+msgstr "Display the time of publication as well as the date"
+
 msgid "settings-content-postlistaltcolor-title"
 msgstr "Alternate colors for links to posts"
 
@@ -455,6 +467,9 @@ msgstr "Show a preview of the first image of posts"
 
 msgid "settings-content-postlistreactions-title"
 msgstr "Show a link to reactions"
+
+msgid "settings-content-posttime-title"
+msgstr "Display the time of publication as well as the date"
 
 msgid "settings-content-fontfamily-title"
 msgstr "Fonts"

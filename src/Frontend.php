@@ -70,6 +70,7 @@ class Frontend
         App::frontend()->template()->addValue('odysseyBlogNameLink', FrontendValues::odysseyBlogNameLink(...));
         App::frontend()->template()->addValue('odysseyBlogDescription', FrontendValues::odysseyBlogDescription(...));
         App::frontend()->template()->addValue('odysseyPostListType', FrontendValues::odysseyPostListType(...));
+        App::frontend()->template()->addValue('odysseyEntryDateTime', FrontendValues::odysseyEntryDateTime(...));
         App::frontend()->template()->addValue('odysseyEntryListImage', FrontendValues::odysseyEntryListImage(...));
         App::frontend()->template()->addValue('odysseyEntryExcerpt', FrontendValues::odysseyEntryExcerpt(...));
         App::frontend()->template()->addValue('odysseyPostListReactions', FrontendValues::odysseyPostListReactions(...));

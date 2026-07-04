@@ -432,6 +432,15 @@ msgstr "Centre (par défaut)"
 msgid "settings-header-breadcrumbalign-right"
 msgstr "Droite"
 
+msgid "settings-content-postdatetimeseparator-title"
+msgstr "Caractère de séparation entre la date et l’heure de publication"
+
+msgid "settings-content-postdatetimeseparator-description"
+msgstr "Exemple&nbsp;: 00/00/0000 à 00:00."
+
+msgid "settings-content-postdatetimeseparator-placeholder"
+msgstr "à"
+
 msgid "settings-content-postlisttype-title"
 msgstr "Apparence"
 
@@ -444,6 +453,9 @@ msgstr "Titre, date et extrait du billet"
 msgid "settings-content-postlisttype-content"
 msgstr "Titre, date et contenu du billet"
 
+msgid "settings-content-postlisttime-title"
+msgstr "Afficher l’heure de publication en plus de la date"
+
 msgid "settings-content-postlistaltcolor-title"
 msgstr "Alterner la couleur des liens vers les billets"
 
@@ -455,6 +467,9 @@ msgstr "Afficher un aperçu de la première image des billets"
 
 msgid "settings-content-postlistreactions-title"
 msgstr "Afficher un lien vers les réactions"
+
+msgid "settings-content-postttime-title"
+msgstr "Afficher l’heure de publication en plus de la date"
 
 msgid "settings-content-fontfamily-title"
 msgstr "Police d’écriture"

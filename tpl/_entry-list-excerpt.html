@@ -5,7 +5,7 @@
 
   <li class="post post-list-excerpt<tpl:EntryIf selected="1"> post-selected</tpl:EntryIf>" id={{tpl:lang post-id}}-{{tpl:EntryID}}>
     <tpl:EntryIf type="post">
-      <small class="post-date text-secondary"><time aria-label={{tpl:odysseyLang id="entry-list-date-aria-label" is_attr="1"}} datetime={{tpl:EntryDate iso8601="1"}}>{{tpl:EntryDate}}</time></small>
+      <small class="post-date text-secondary"><time aria-label={{tpl:odysseyLang id="entry-list-date-aria-label" is_attr="1"}} datetime={{tpl:EntryDate iso8601="1"}}>{{tpl:odysseyEntryDateTime context="entry-list"}}</time></small>
     </tpl:EntryIf>
 
     <h3 class=entry-title><tpl:EntryIf selected="1"><span class=post-selected-star>⭐️</span> </tpl:EntryIf><a href={{tpl:EntryURL is_attr="1"}} rel=bookmark>{{tpl:EntryTitle}}</a></h3>
