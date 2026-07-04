@@ -6,7 +6,7 @@
   <article class="post<tpl:EntryIf selected="1"> post-selected</tpl:EntryIf>" id={{tpl:lang post-id}}-{{tpl:EntryID}}>
     <header>
       <tpl:EntryIf type="post">
-        <time class="post-date text-secondary" datetime={{tpl:EntryDate iso8601="1"}}>{{tpl:EntryDate}}</time><tpl:EntryIf selected="1"><span class=text-secondary> – {{tpl:lang post-selected-label}} ⭐️</span></tpl:EntryIf>
+        <time class="post-date text-secondary" datetime={{tpl:EntryDate iso8601="1"}}>{{tpl:odysseyEntryDateTime context="entry-list"}}</time><tpl:EntryIf selected="1"><span class=text-secondary> – {{tpl:lang post-selected-label}} ⭐️</span></tpl:EntryIf>
       </tpl:EntryIf>
 
       <h3 class=entry-title><a href={{tpl:EntryURL is_attr="1"}} rel=bookmark>{{tpl:EntryTitle}}</a></h3>

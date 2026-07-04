@@ -317,27 +317,25 @@ class FrontendValues
     {
         $context = $attr['context'] ?? '';
 
+        $separator = My::settings()->content_post_datetimeseparator ?: __('entry-datetime-separator');
+
         if (($context === 'entry-list' && My::settings()->content_postlist_time)
             || ($context === 'entry-post' && My::settings()->content_post_time)
         ) {
             return '
             <?php
             $date = App::frontend()->context()->posts->getDate("", "creadt") ?: "";
+            $time = App::frontend()->context()->posts->getTime("", "creadt") ?: "";
 
-            $time_display = ' . My::class . '::settings()->content_postlist_time ? true : false;
-            $time         = $time_display ? App::frontend()->context()->posts->getTime("", "creadt") : "";
+            $separator = "' . $separator . '";
 
-            $separator = ' . My::class . '::settings()->content_post_datetimeseparator ?: "à";
-
-            if (!$time_display) {
-                echo $date;
-            } else {
+            if ($date && $time && $separator) {
                 echo sprintf(__("entry-datetime"), $date, $time, $separator);
             }
             ?>';
         }
 
-        return '';
+        return '<?= App::frontend()->context()->posts->getDate("", "creadt") ?: ""; ?>';
     }
 
     /**

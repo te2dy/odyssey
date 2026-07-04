@@ -72,6 +72,9 @@ msgstr "Date de publication du billet"
 msgid "entry-datetime"
 msgstr "%1$s %3$s %2$s"
 
+msgid "entry-datetime-separator"
+msgstr "à"
+
 msgid "entry-list-read-more"
 msgstr "Lire la suite"
 

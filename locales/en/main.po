@@ -72,6 +72,9 @@ msgstr "Date of publication of the post"
 msgid "entry-datetime"
 msgstr "%1$s %3$s %2$s"
 
+msgid "entry-datetime-separator"
+msgstr "at"
+
 msgid "entry-list-read-more"
 msgstr "Read more"
 

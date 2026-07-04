@@ -70,7 +70,10 @@ msgid "entry-list-date-aria-label"
 msgstr ""
 
 msgid "entry-datetime"
-msgstr "$1%s $3%s $2%s"
+msgstr ""
+
+msgid "entry-datetime-separator"
+msgstr ""
 
 msgid "entry-list-read-more"
 msgstr ""
