@@ -470,17 +470,7 @@ details summary {
     text-decoration: none;
   }
 }
-/* Breadcrumb */
-#breadcrumb {
-  font-size: .8em;
-  font-style: italic;
-  margin-bottom: 0;
-  text-align: var(--breadcrumb-align, center);
-}
-#site-header-short #breadcrumb {
-  text-align: left;
-  width: 100%;
-}
+
 /* Skip links */
 .skip-links {
   border: 0;

@@ -417,21 +417,6 @@ msgstr ""
 msgid "settings-header-menuburgertext-description"
 msgstr ""
 
-msgid "settings-header-breadcrumbalign-title"
-msgstr ""
-
-msgid "settings-header-breadcrumbalign-description"
-msgstr ""
-
-msgid "settings-header-breadcrumbalign-left"
-msgstr ""
-
-msgid "settings-header-breadcrumbalign-center-default"
-msgstr ""
-
-msgid "settings-header-breadcrumbalign-right"
-msgstr ""
-
 msgid "settings-content-postdatetimeseparator-title"
 msgstr ""
 

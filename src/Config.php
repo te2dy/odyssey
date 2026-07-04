@@ -1008,13 +1008,6 @@ class Config
             $css_main_array['#site-nav li a:is(:active, :focus, :hover), #site-nav li.active a']['transition']       = 'var(--color-transition, unset)';
         }
 
-        // Breadcrumb
-        $breadcrumb_align_allowed = ['left', 'right'];
-
-        if (isset($settings['header_breadcrumb_align']) && in_array($settings['header_breadcrumb_align'], $breadcrumb_align_allowed, true)) {
-            $css_root_array[':root']['--breadcrumb-align'] = $settings['header_breadcrumb_align'];
-        }
-
         // Post list type
         if (isset($settings['content_postlist_type'])) {
             switch ($settings['content_postlist_type']) {

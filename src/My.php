@@ -505,25 +505,6 @@ class My extends MyTheme
             ];
         }
 
-        if (App::blog()->settings->breadcrumb->breadcrumb_enabled) {
-            $default_settings['header_breadcrumb_align'] = [
-                'title'       => __('settings-header-breadcrumbalign-title'),
-                'description' => sprintf(
-                    __('settings-header-breadcrumbalign-description'),
-                    self::displayAttr(App::backend()->url()->get('admin.blog.pref'))
-                ),
-                'label'       => 'Breadbrumb alignment',
-                'type'        => 'select',
-                'choices'     => [
-                    __('settings-header-breadcrumbalign-left')           => 'left',
-                    __('settings-header-breadcrumbalign-center-default') => 'center',
-                    __('settings-header-breadcrumbalign-right')          => 'right'
-                ],
-                'default'     => 'center',
-                'section'     => ['header', 'nav']
-            ];
-        }
-
         $default_settings['content_post_datetimeseparator'] = [
             'title'       => __('settings-content-postdatetimeseparator-title'),
             'description' => __('settings-content-postdatetimeseparator-description'),

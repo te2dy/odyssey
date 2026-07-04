@@ -417,21 +417,6 @@ msgstr "Text of the menu button"
 msgid "settings-header-menuburgertext-description"
 msgstr "Default: Menu"
 
-msgid "settings-header-breadcrumbalign-title"
-msgstr "Breadcrumb alignment"
-
-msgid "settings-header-breadcrumbalign-description"
-msgstr "The breadcrumb trail remains aligned to the left on pages with a reduced header."
-
-msgid "settings-header-breadcrumbalign-left"
-msgstr "Left"
-
-msgid "settings-header-breadcrumbalign-center-default"
-msgstr "Center (default)"
-
-msgid "settings-header-breadcrumbalign-right"
-msgstr "Right"
-
 msgid "settings-content-postdatetimeseparator-title"
 msgstr "Separator between the publication date and time"
 

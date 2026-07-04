@@ -417,21 +417,6 @@ msgstr "Texte du bouton du menu"
 msgid "settings-header-menuburgertext-description"
 msgstr "Par défaut&nbsp;: Menu"
 
-msgid "settings-header-breadcrumbalign-title"
-msgstr "Alignement du fil d’Ariane"
-
-msgid "settings-header-breadcrumbalign-description"
-msgstr "Le fil d’Ariane reste aligné à gauche sur les pages qui ont un en-tête réduit."
-
-msgid "settings-header-breadcrumbalign-left"
-msgstr "Gauche"
-
-msgid "settings-header-breadcrumbalign-center-default"
-msgstr "Centre (par défaut)"
-
-msgid "settings-header-breadcrumbalign-right"
-msgstr "Droite"
-
 msgid "settings-content-postdatetimeseparator-title"
 msgstr "Caractère de séparation entre la date et l’heure de publication"
 
