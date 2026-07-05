@@ -324,8 +324,8 @@ class FrontendValues
         ) {
             return '
             <?php
-            $date = App::frontend()->context()->posts->getDate("", "creadt") ?: "";
-            $time = App::frontend()->context()->posts->getTime("", "creadt") ?: "";
+            $date = App::frontend()->context()->posts->getDate("") ?: "";
+            $time = App::frontend()->context()->posts->getTime("") ?: "";
 
             $separator = "' . $separator . '";
 
