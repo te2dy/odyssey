@@ -25,6 +25,9 @@ Hiérarchie des priorités : 🔴 🟠 🟢
 
 == Notes de version ==
 
+=== 2.39.1 - 5 juillet 2026 ===
+- Correction : erreur de date de publication des billets.
+
 === 2.39 - 4 juillet 2026 ===
 - Ajout : option pour afficher la date de publication des billets en plus de l’heure.
 - Amélioration : la fonction escapeURL() a été modernisée.
