@@ -59,7 +59,9 @@ class FrontendBehaviors
         $desc  = '';
         $img   = '';
 
-        switch (App::url()->type) {
+        $url_type = My::dotclearVersionMimimum('2.39') ? App::url()->getType() : App::url()->type;
+
+        switch ($url_type) {
             case 'post':
             case 'pages':
                 $title = App::frontend()->context()->posts->post_title;
@@ -84,7 +86,7 @@ class FrontendBehaviors
                 $title = App::blog()->name;
 
                 // Specific title for the post list page when a static home page has been set.
-                if (App::blog()->settings()->system->static_home && App::url()->type === 'default') {
+                if (App::blog()->settings()->system->static_home && $url_type === 'default') {
                     $title = sprintf(__('meta-title-static-postlist'), $title);
                 }
 
@@ -189,15 +191,16 @@ class FrontendBehaviors
      */
     public static function odysseyJsonLd(): void
     {
-        $json_ld = [];
+        $json_ld  = [];
+        $url_type = My::dotclearVersionMimimum('2.39') ? App::url()->getType() : App::url()->type;
 
-        switch (App::url()->type) {
+        switch ($url_type) {
             case 'default':
             case 'static':
                 $blog_name = App::blog()->name;
 
                 // Specific title for the post list page when a static home page has been set.
-                if (App::blog()->settings()->system->static_home && App::url()->type === 'default') {
+                if (App::blog()->settings()->system->static_home && $url_type === 'default') {
                     $blog_name = sprintf(
                         __('meta-title-static-postlist'),
                         $blog_name
@@ -528,8 +531,9 @@ class FrontendBehaviors
 
                     if (!$portrait) {
                         $page_types_allowed = ['post', 'pages', 'static'];
+                        $url_type           = My::dotclearVersionMimimum('2.39') ? App::url()->getType() : App::url()->type;
 
-                        if (in_array(App::url()->type, $page_types_allowed, true)
+                        if (in_array($url_type, $page_types_allowed, true)
                             || My::settings()->content_postlist_type === 'content'
                         ) {
                             $img_width_max += $margin_max * 2;
@@ -639,7 +643,9 @@ class FrontendBehaviors
     {
         // Adds a Dotclear script for posts and pages.
         if (App::blog()->settings->system->jquery_needed === true && My::settings()->advanced_js_util === null) {
-            if (App::url()->type === 'post' || App::url()->type === 'pages') {
+            $url_type = My::dotclearVersionMimimum('2.39') ? App::url()->getType() : App::url()->type;
+
+            if ($url_type === 'post' || $url_type === 'pages') {
                 if (App::frontend()->context()->posts->commentsActive()) {
                     echo My::scriptRememberMe();
                 }

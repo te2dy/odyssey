@@ -80,7 +80,9 @@ class FrontendValues
             return '';
         }
 
-        switch (App::url()->type) {
+        $url_type = My::dotclearVersionMimimum('2.39') ? App::url()->getType() : App::url()->type;
+
+        switch ($url_type) {
             case 'post':
             case 'pages':
                 return '<link rel=canonical href="<?= App::frontend()->context()->posts->getURL() ?>">' . "\n";
@@ -89,7 +91,7 @@ class FrontendValues
                 $url = App::blog()->url;
 
                 // Specific url for the post list page when a static home page has been set.
-                if (App::blog()->settings()->system->static_home && App::url()->type === 'default') {
+                if (App::blog()->settings()->system->static_home && $url_type === 'default') {
                     $url .= App::url()->getURLFor('posts');
                 }
 
@@ -239,8 +241,10 @@ class FrontendValues
         $dimensions .= $image_height ? ' height=' . (int) $image_height : '';
 
         if (isset($attr['position']) && $img_position === $attr['position']) {
-            if ((!App::blog()->settings()->system->static_home && App::url()->type === 'default')
-                || (App::blog()->settings()->system->static_home && App::url()->type === 'static')
+            $url_type = My::dotclearVersionMimimum('2.39') ? App::url()->getType() : App::url()->type;
+
+            if ((!App::blog()->settings()->system->static_home && $url_type === 'default')
+                || (App::blog()->settings()->system->static_home && $url_type === 'static')
             ) {
                 // Do not add a link to the home page on home page.
                 return $img_tag_start . '<img alt=' . My::displayAttr($img_description) . $img_tag_id . ' fetchpriority=high src=' . My::displayAttr($image_url, 'url') . $srcset . $sizes . $dimensions . '>' . $img_tag_end;
@@ -260,8 +264,10 @@ class FrontendValues
      */
     public static function odysseyBlogNameLink(): string
     {
-        if ((App::blog()->settings()->system->static_home && App::url()->type !== 'static')
-            || (!App::blog()->settings()->system->static_home && App::url()->type !== 'default')
+        $url_type = My::dotclearVersionMimimum('2.39') ? App::url()->getType() : App::url()->type;
+
+        if ((App::blog()->settings()->system->static_home && $url_type !== 'static')
+            || (!App::blog()->settings()->system->static_home && $url_type !== 'default')
         ) {
             return '<div id=site-title><a href=' . My::displayAttr(My::blogBaseURL(), 'url') . ' rel=home><h1>' . Html::escapeHTML(App::blog()->name) . '</h1></a></div>';
         }
