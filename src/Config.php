@@ -724,9 +724,9 @@ class Config
 
         if (isset($settings['global_color_primary']) && $settings['global_color_primary'] === 'custom') {
             // Main text color.
-            if (isset($settings['global_color_text_custom'], $default_settings['global_color_primary']['default'])
+            if (isset($settings['global_color_text_custom'], $default_settings['global_color_text_custom']['default'])
                 && My::isHexColor($settings['global_color_text_custom'])
-                && $settings['global_color_text_custom'] !== $default_settings['global_color_primary']['default']
+                && $settings['global_color_text_custom'] !== $default_settings['global_color_text_custom']['default']
             ) {
                 $css_root_array[':root']['--color-text-main'] = $settings['global_color_text_custom'];
             }
