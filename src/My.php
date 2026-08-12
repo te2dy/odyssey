@@ -1715,4 +1715,9 @@ class My extends MyTheme
 
         return $sizes;
     }
+
+    public static function urlType(): string
+    {
+        return My::dotclearVersionMimimum('2.39') ? App::url()->getType() : App::url()->type;
+    }
 }
