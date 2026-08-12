@@ -148,19 +148,30 @@ class FrontendBehaviors
             }
 
             if ($img) {
-                $image_type = 'summary';
+                $img_type = 'summary';
+                $img_path = Path::real(App::config()->dotclearRoot() . Html::stripHostURL($img));
 
-                $img_path = App::config()->dotclearRoot() . Html::stripHostURL($img);
+                if ($img_path) {
+                    $img_size   = @getimagesize($img_path);
+                    $img_width  = 0;
+                    $img_height = 0;
+                    $img_ratio  = 0;
 
-                list($img_width, $img_height) = getimagesize($img_path);
+                    if (is_array($img_size)) {
+                        $img_width  = isset($img_size[0]) ? (int) $img_size[0] : false;
+                        $img_height = isset($img_size[1]) ? (int) $img_size[1] : false;
+                    }
 
-                $img_ratio = $img_width / $img_height;
+                    if ($img_width > 0 && $img_height > 0) {
+                        $img_ratio = $img_width / $img_height;
+                    }
 
-                if ($img_width > 600 && $img_ratio >= 1.5) {
-                    $image_type = 'summary_large_image';
+                    if ($img_width > 600 && $img_ratio >= 1.5) {
+                        $img_type = 'summary_large_image';
+                    }
                 }
 
-                echo '<meta name="twitter:card" content="' . $image_type . '">', "\n";
+                echo '<meta name="twitter:card" content="' . $img_type . '">', "\n";
 
                 if (My::settings()->social_x) {
                     echo '<meta property="twitter:creator" content="@',
