@@ -1270,7 +1270,7 @@ class My extends MyTheme
      */
     public static function isHexColor(string $color): bool
     {
-        if (preg_match('/#[A-Fa-f0-9]{6}/', $color)) {
+        if (preg_match('/^#[A-Fa-f0-9]{6}$/', $color)) {
             return true;
         }
 
