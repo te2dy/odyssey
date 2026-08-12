@@ -574,7 +574,12 @@ class FrontendBehaviors
                                 if (file_exists($img_path)) {
                                     $img[$size_id]['url']    = $img_path_rel;
                                     $img[$size_id]['width']  = (int) $img_width;
-                                    $img[$size_id]['height'] = isset(getimagesize($img_path)[1]) ? (int) getimagesize($img_path)[1] : null;
+
+                                    $img_sizes = @getimagesize($img_path);
+
+                                    if ($img_sizes) {
+                                        $img[$size_id]['height'] = isset($img_sizes[1]) ? (int) $img_sizes[1] : null;
+                                    }
                                 }
                             }
                         }
