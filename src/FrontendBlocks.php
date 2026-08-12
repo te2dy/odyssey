@@ -169,7 +169,9 @@ class FrontendBlocks
         }
 
         if (My::settings()->footer_enabled === false && App::blog()->settings->system->jquery_needed === true && My::settings()->advanced_js_util === null) {
-            if (App::url()->type === 'post' || App::url()->type === 'pages') {
+            $url_type = My::urlType();
+
+            if ($url_type === 'post' || $url_type === 'pages') {
                 return '
                 <?php if (App::frontend()->context()->posts->commentsActive()) { ?>
                     <footer id=site-footer>' . My::scriptRememberMe() . '</footer>
