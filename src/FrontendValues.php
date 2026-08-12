@@ -80,7 +80,7 @@ class FrontendValues
             return '';
         }
 
-        $url_type = My::dotclearVersionMimimum('2.39') ? App::url()->getType() : App::url()->type;
+        $url_type = My::urlType();
 
         switch ($url_type) {
             case 'post':
@@ -241,7 +241,7 @@ class FrontendValues
         $dimensions .= $image_height ? ' height=' . (int) $image_height : '';
 
         if (isset($attr['position']) && $img_position === $attr['position']) {
-            $url_type = My::dotclearVersionMimimum('2.39') ? App::url()->getType() : App::url()->type;
+            $url_type = My::urlType();
 
             if ((!App::blog()->settings()->system->static_home && $url_type === 'default')
                 || (App::blog()->settings()->system->static_home && $url_type === 'static')
@@ -264,7 +264,7 @@ class FrontendValues
      */
     public static function odysseyBlogNameLink(): string
     {
-        $url_type = My::dotclearVersionMimimum('2.39') ? App::url()->getType() : App::url()->type;
+        $url_type = My::urlType();
 
         if ((App::blog()->settings()->system->static_home && $url_type !== 'static')
             || (!App::blog()->settings()->system->static_home && $url_type !== 'default')
