@@ -253,7 +253,7 @@ class FrontendBehaviors
                 $social_exclude = ['phone', 'signal', 'sms', 'whatsapp'];
 
                 foreach ($social_sites as $id => $data) {
-                    $footer_social_id = 'footer_social_' . $id;
+                    $footer_social_id = 'social_' . $id;
 
                     if (My::settings()->$footer_social_id !== null && !in_array($id, $social_exclude, true)) {
                         $json_ld['sameAs'][] = My::settings()->$footer_social_id;
