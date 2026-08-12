@@ -120,7 +120,7 @@ function disableInputs() {
     document.getElementById("header_image-delete").style.display = "none";
   }
 
-  if (document.getElementById("header_menu_burger").checked) {
+  if (document.getElementById("header_menu_burger")?.checked) {
     setStyle("header_menu_burger_text", "block");
   } else {
     setStyle("header_menu_burger_text", "none");
