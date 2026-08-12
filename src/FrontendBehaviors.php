@@ -69,7 +69,7 @@ class FrontendBehaviors
                 $desc = App::frontend()->context()->posts->post_excerpt_xhtml ?: App::frontend()->context()->posts->post_content_xhtml;
                 $desc = My::cleanStr($desc);
 
-                if (strlen($desc) > 180) {
+                if (mb_strlen($desc) > 180) {
                     $desc = Text::cutString($desc, 179) . '…';
                 }
 
@@ -101,7 +101,7 @@ class FrontendBehaviors
                     $desc .= My::settings()->advanced_meta_description ?: App::blog()->desc;
                     $desc  = My::cleanStr($desc);
 
-                    if (strlen($desc) > 180) {
+                    if (mb_strlen($desc) > 180) {
                         $desc = Text::cutString($desc, 179) . '…';
                     }
                 }
@@ -114,7 +114,7 @@ class FrontendBehaviors
                     $desc = App::frontend()->context()->categories->cat_desc;
                     $desc = My::cleanStr($desc);
 
-                    if (strlen($desc) > 180) {
+                    if (mb_strlen($desc) > 180) {
                         $desc = Text::cutString($desc, 179) . '…';
                     }
                 }
