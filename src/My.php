@@ -1716,6 +1716,11 @@ class My extends MyTheme
         return $sizes;
     }
 
+    /**
+     * Displays the URL type.
+     *
+     * @return string The URL type.
+     */
     public static function urlType(): string
     {
         return My::dotclearVersionMimimum('2.39') ? App::url()->getType() : App::url()->type;

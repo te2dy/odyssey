@@ -59,7 +59,7 @@ class FrontendBehaviors
         $desc  = '';
         $img   = '';
 
-        $url_type = My::dotclearVersionMimimum('2.39') ? App::url()->getType() : App::url()->type;
+        $url_type = My::urlType();
 
         switch ($url_type) {
             case 'post':
@@ -192,7 +192,7 @@ class FrontendBehaviors
     public static function odysseyJsonLd(): void
     {
         $json_ld  = [];
-        $url_type = My::dotclearVersionMimimum('2.39') ? App::url()->getType() : App::url()->type;
+        $url_type = My::urlType();
 
         switch ($url_type) {
             case 'default':
@@ -531,7 +531,7 @@ class FrontendBehaviors
 
                     if (!$portrait) {
                         $page_types_allowed = ['post', 'pages', 'static'];
-                        $url_type           = My::dotclearVersionMimimum('2.39') ? App::url()->getType() : App::url()->type;
+                        $url_type           = My::urlType();
 
                         if (in_array($url_type, $page_types_allowed, true)
                             || My::settings()->content_postlist_type === 'content'
@@ -643,7 +643,7 @@ class FrontendBehaviors
     {
         // Adds a Dotclear script for posts and pages.
         if (App::blog()->settings->system->jquery_needed === true && My::settings()->advanced_js_util === null) {
-            $url_type = My::dotclearVersionMimimum('2.39') ? App::url()->getType() : App::url()->type;
+            $url_type = My::urlType();
 
             if ($url_type === 'post' || $url_type === 'pages') {
                 if (App::frontend()->context()->posts->commentsActive()) {
