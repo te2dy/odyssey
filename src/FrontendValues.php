@@ -80,7 +80,7 @@ class FrontendValues
             return '';
         }
 
-        $url_type = My::dotclearVersionMimimum('2.39') ? App::url()->getType() : App::url()->type;
+        $url_type = My::urlType();
 
         switch ($url_type) {
             case 'post':
@@ -241,7 +241,7 @@ class FrontendValues
         $dimensions .= $image_height ? ' height=' . (int) $image_height : '';
 
         if (isset($attr['position']) && $img_position === $attr['position']) {
-            $url_type = My::dotclearVersionMimimum('2.39') ? App::url()->getType() : App::url()->type;
+            $url_type = My::urlType();
 
             if ((!App::blog()->settings()->system->static_home && $url_type === 'default')
                 || (App::blog()->settings()->system->static_home && $url_type === 'static')
@@ -264,7 +264,7 @@ class FrontendValues
      */
     public static function odysseyBlogNameLink(): string
     {
-        $url_type = My::dotclearVersionMimimum('2.39') ? App::url()->getType() : App::url()->type;
+        $url_type = My::urlType();
 
         if ((App::blog()->settings()->system->static_home && $url_type !== 'static')
             || (!App::blog()->settings()->system->static_home && $url_type !== 'default')
@@ -361,6 +361,8 @@ class FrontendValues
             return '';
         }
 
+        $lazy_enabled = App::plugins()->moduleExists('simpleMenu') && App::blog()->settings->lazyLoading->enabled ? true : false;
+
         return '<?php
         $context = "' . $attr['context'] . '";
 
@@ -376,11 +378,18 @@ class FrontendValues
                     $width_s = ' . App::media()->thumb_sizes['s'][0] . ';
 
                     if ($img_s && $img_s !== $img_t) {
+                        $lazy_enabled = ' . $lazy_enabled . ';
+                        $loading      = "";
+
+                        if ($lazy_enabled === true) {
+                            $loading = " loading=lazy";
+                        }
+
                         $img_src = "src=\"" . $img_t . "\"";
 
                         $img_src_srcset = ' . Html::class . '::escapeURL($img_src) . " srcset=\"" . ' . Html::class . '::escapeHTML($img_s) . " " . (int) $width_s . "w, " . ' . Html::class . '::escapeHTML($img_t) . " " . (int) $width_t . "w\" sizes=2rem";
 
-                        $img = str_replace($img_src, $img_src_srcset, $img);
+                        $img = str_replace($img_src, $loading . $img_src_srcset, $img);
                     }
 
                     echo $img;
@@ -424,11 +433,18 @@ class FrontendValues
 
                         $portrait = $width_o <= $height_o ? true : false;
 
+                        $lazy_enabled = ' . $lazy_enabled . ';
+                        $loading      = "";
+
+                        if ($lazy_enabled === true) {
+                            $loading = " loading=lazy";
+                        }
+
                         $sizes = ' . My::class . '::imgSizes($width_o, $portrait, true);
 
                         $img_src_srcset = ' . Html::class . '::escapeURL($img_src) . " srcset=\"" . $img_src_srcset . "\" sizes=" . ' . My::class . '::displayAttr($sizes);
 
-                        $img = str_replace($img_src, $img_src_srcset, $img);
+                        $img = str_replace($img_src, $loading . $img_src_srcset, $img);
                     }
 
                     echo $img;
@@ -539,7 +555,8 @@ class FrontendValues
             return '';
         }
 
-        return '<?php if (App::frontend()->context()->posts->trackbacksActive() === true) : ?>
+        return '
+        <?php if (App::frontend()->context()->posts->trackbacksActive() === true) : ?>
           <details class=reactions-details>
             <summary class=reactions-button>
               <svg class="reactions-button-icon social-icon-fi" role=img viewBox="0 0 24 24" xmlns=http://www.w3.org/2000/svg>' . My::svgIcons('trackback')['path'] . '</svg>
