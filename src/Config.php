@@ -713,15 +713,12 @@ class Config
         // Font antialiasing
         if (isset($settings['global_font_antialiasing']) && $settings['global_font_antialiasing'] === '1') {
             $css_main_array['body']['-moz-osx-font-smoothing'] = 'grayscale';
-            $css_main_array['body']['-webkit-font-smoothing']  = 'antialiased';
             $css_main_array['body']['font-smooth']             = 'always';
 
             $css_media_contrast_array['body']['-moz-osx-font-smoothing'] = 'unset';
-            $css_media_contrast_array['body']['-webkit-font-smoothing']  = 'unset';
             $css_media_contrast_array['body']['font-smooth']             = 'unset';
 
             $css_media_print_array['body']['-moz-osx-font-smoothing'] = 'unset';
-            $css_media_print_array['body']['-webkit-font-smoothing']  = 'unset';
             $css_media_print_array['body']['font-smooth']             = 'unset';
         }
 
