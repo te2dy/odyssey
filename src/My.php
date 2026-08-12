@@ -1016,6 +1016,8 @@ class My extends MyTheme
             return $value;
         }
 
+        $value = str_replace('"', "'", $value);
+
         return '"' . $value . '"';
     }
 
@@ -1043,6 +1045,7 @@ class My extends MyTheme
     {
         $string = empty($tags_allowed) ? strip_tags($string) : strip_tags($string, $tags_allowed);
         $string = Html::decodeEntities($string);
+        $string = empty($tags_allowed) ? strip_tags($string) : strip_tags($string, $tags_allowed);
 
         return preg_replace('/\s+/mu', ' ', $string);
     }
