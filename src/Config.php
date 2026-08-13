@@ -586,7 +586,14 @@ class Config
                     switch ($setting_id) {
                         case 'header_image':
                             // Gets the dimensions of the image.
-                            list($header_image_width, $header_image_height) = getimagesize($file_path);
+                            $img_size            = @getimagesize($file_path);
+                            $header_image_width  = 0;
+                            $header_image_height = 0;
+
+                            if (is_array($img_size)) {
+                                $header_image_width  = isset($img_size[0]) ? (int) $img_size[0] : false;
+                                $header_image_height = isset($img_size[1]) ? (int) $img_size[1] : false;
+                            }
 
                             /**
                              * Limits the maximum width value of the image
