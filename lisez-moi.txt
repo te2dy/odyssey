@@ -25,6 +25,19 @@ Hiérarchie des priorités : 🔴 🟠 🟢
 
 == Notes de version ==
 
+=== 2.40 - 13 août 2026 ===
+- Ajout : fonction My::urlType() qui retourne le type de page consultée, en utilisant une nouvelle fonction spécifique à Dotclear 2.39.
+- Correction : remplacement de strlen() par mb_strlen().
+- Correction : l’utilisation de la fonction getimagesize() pouvait entraîner des erreurs ou des appels trop nombreux.
+- Correction : la désactivation de simpleMenu altérait le fonctionnement du configurateur de thème.
+- Suppression : "-webkit-font-smoothing" a été supprimé des styles.
+- Correction : My::displayAttr() ne gérait pas les cas où la chaîne de caractère d’entrée comprenait des guillemets.
+- Correction : My::cleanStr() ne fonctionnait pas comme attendu.
+- Correction : les liens sociaux étaient absent des métadonnées JSON-LD.
+- Correction : mauvais "behavior" dans le gabarit des commentaires.
+- Correction : une balise d’élément de liste n’était jamais fermée dans le gabarit des commentaires.
+- Correction : la fonction My::isHexColor() pouvait accepter autre chose qu’une couleur hexadécimale.
+
 === 2.39.1 - 5 juillet 2026 ===
 - Correction : erreur de date de publication des billets.
 
