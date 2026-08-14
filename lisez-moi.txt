@@ -25,6 +25,11 @@ Hiérarchie des priorités : 🔴 🟠 🟢
 
 == Notes de version ==
 
+=== 2.41 - 14 août 2026 ===
+- Correction : une balise <div> n’était pas toujours fermée dans le gabarit des commentaires.
+- Correction : réduction des appels à la fonction getimagesize().
+- Correction : la taille de la police d’écriture dans les éléments de formulaire.
+
 === 2.40 - 13 août 2026 ===
 - Ajout : fonction My::urlType() qui retourne le type de page consultée, en utilisant une nouvelle fonction spécifique à Dotclear 2.39.
 - Correction : remplacement de strlen() par mb_strlen().
