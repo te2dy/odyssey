@@ -1728,4 +1728,37 @@ class My extends MyTheme
     {
         return My::dotclearVersionMimimum('2.39') ? App::url()->getType() : App::url()->type;
     }
+
+    public static function getImageSize(string $img_path): array
+    {
+        $output = [
+            'width'       => null,
+            'height'      => null,
+            'ratio'       => null,
+            'orientation' => null
+        ];
+
+        if ($img_path) {
+            $img_size = @getimagesize($img_path);
+
+            $img_width  = null;
+            $img_height = null;
+            $img_ratio  = 0;
+
+            if (is_array($img_size)) {
+                $output['width']  = isset($img_size[0]) ? (int) $img_size[0] : null;
+                $output['height'] = isset($img_size[1]) ? (int) $img_size[1] : null;
+            }
+
+            if (isset($output['width'], $output['height'])) {
+                $output['ratio'] = $output['width'] / $output['height'];
+            }
+
+            if ($output['ratio']) {
+                $output['orientation'] = $output['ratio'] >= 1 ? 'lanscape' : 'portrait';
+            }
+        }
+
+        return $output;
+    }
 }

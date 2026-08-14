@@ -152,21 +152,9 @@ class FrontendBehaviors
                 $img_path = Path::real(App::config()->dotclearRoot() . Html::stripHostURL($img));
 
                 if ($img_path) {
-                    $img_size   = @getimagesize($img_path);
-                    $img_width  = 0;
-                    $img_height = 0;
-                    $img_ratio  = 0;
+                    $img_size = My::getImageSize($img_path);
 
-                    if (is_array($img_size)) {
-                        $img_width  = isset($img_size[0]) ? (int) $img_size[0] : false;
-                        $img_height = isset($img_size[1]) ? (int) $img_size[1] : false;
-                    }
-
-                    if ($img_width > 0 && $img_height > 0) {
-                        $img_ratio = $img_width / $img_height;
-                    }
-
-                    if ($img_width > 600 && $img_ratio >= 1.5) {
+                    if ($img_size['width'] > 600 && $img_size['ratio'] >= 1.5) {
                         $img_type = 'summary_large_image';
                     }
                 }
@@ -236,14 +224,16 @@ class FrontendBehaviors
                     $image_path = App::config()->dotclearRoot() . My::settings()->header_image['url'];
 
                     if (file_exists($image_path)) {
-                        list($width, $height) = getimagesize($image_path);
+                        $image_size = My::getImageSize($image_path);
 
-                        $json_ld['publisher']['logo'] = [
-                            '@type'  => 'ImageObject',
-                            'url'    => My::blogBaseURL() . My::settings()->header_image['url'],
-                            'width'  => (int) $width,
-                            'height' => (int) $height
-                        ];
+                        if (isset($image_size['width'], $image_size['height'])) {
+                            $json_ld['publisher']['logo'] = [
+                                '@type'  => 'ImageObject',
+                                'url'    => My::blogBaseURL() . My::settings()->header_image['url'],
+                                'width'  => $image_size['width'],
+                                'height' => $image_size['height']
+                            ];
+                        }
                     }
                 }
 
@@ -283,14 +273,16 @@ class FrontendBehaviors
                     $image_path = App::config()->dotclearRoot() . Ctx::EntryFirstImageHelper('o', false, '', true);
 
                     if (file_exists($image_path)) {
-                        list($width, $height) = getimagesize($image_path);
+                        $image_size = My::getImageSize($image_path);
 
-                        $json_ld['image'] = [
-                            '@type'  => 'ImageObject',
-                            'url'    => My::blogBaseURL() . Ctx::EntryFirstImageHelper('o', false, '', true),
-                            'width'  => (int) $width,
-                            'height' => (int) $height
-                        ];
+                        if (isset($image_size['width'], $image_size['height'])) {
+                            $json_ld['image'] = [
+                                '@type'  => 'ImageObject',
+                                'url'    => My::blogBaseURL() . Ctx::EntryFirstImageHelper('o', false, '', true),
+                                'width'  => $image_size['width'],
+                                'height' => $image_size['height']
+                            ];
+                        }
                     }
                 }
 
@@ -314,14 +306,16 @@ class FrontendBehaviors
                     $image_path = App::config()->dotclearRoot() . My::settings()->header_image['url'];
 
                     if (file_exists($image_path)) {
-                        list($width, $height) = getimagesize($image_path);
+                        $image_size = My::getImageSize($image_path);
 
-                        $json_ld['publisher']['logo'] = [
-                            '@type'  => 'ImageObject',
-                            'url'    => My::blogBaseURL() . My::settings()->header_image['url'],
-                            'width'  => (int) $width,
-                            'height' => (int) $height
-                        ];
+                        if (isset($image_size['width'], $image_size['height'])) {
+                            $json_ld['publisher']['logo'] = [
+                                '@type'  => 'ImageObject',
+                                'url'    => My::blogBaseURL() . My::settings()->header_image['url'],
+                                'width'  => $image_size['width'],
+                                'height' => $image_size['height']
+                            ];
+                        }
                     }
                 }
 
@@ -375,14 +369,16 @@ class FrontendBehaviors
                     $image_path = App::config()->dotclearRoot() . Ctx::EntryFirstImageHelper('o', false, '', true);
 
                     if (file_exists($image_path)) {
-                        list($width, $height) = getimagesize($image_path);
+                        $image_size = My::getImageSize($image_path);
 
-                        $json_ld['image'] = [
-                            '@type'  => 'ImageObject',
-                            'url'    => My::blogBaseURL() . Ctx::EntryFirstImageHelper('o', false, '', true),
-                            'width'  => (int) $width,
-                            'height' => (int) $height
-                        ];
+                        if (isset($image_size['width'], $image_size['height'])) {
+                            $json_ld['image'] = [
+                                '@type'  => 'ImageObject',
+                                'url'    => My::blogBaseURL() . Ctx::EntryFirstImageHelper('o', false, '', true),
+                                'width'  => $image_size['width'],
+                                'height' => $image_size['height']
+                            ];
+                        }
                     }
                 }
 
@@ -412,14 +408,16 @@ class FrontendBehaviors
                     $image_path = App::config()->dotclearRoot() . My::settings()->header_image['url'];
 
                     if (file_exists($image_path)) {
-                        list($width, $height) = getimagesize($image_path);
+                        $image_size = My::getImageSize($image_path);
 
-                        $json_ld['publisher']['logo'] = [
-                            '@type'  => 'ImageObject',
-                            'url'    => My::blogBaseURL() . My::settings()->header_image['url'],
-                            'width'  => (int) $width,
-                            'height' => (int) $height
-                        ];
+                        if (isset($image_size['width'], $image_size['height'])) {
+                            $json_ld['publisher']['logo'] = [
+                                '@type'  => 'ImageObject',
+                                'url'    => My::blogBaseURL() . My::settings()->header_image['url'],
+                                'width'  => $image_size['width'],
+                                'height' => $image_size['height']
+                            ];
+                        }
                     }
                 }
 
@@ -523,14 +521,15 @@ class FrontendBehaviors
                     ]
                 ];
 
+                $img_path = Path::real(App::config()->dotclearRoot() . $src_value);
+
                 // If the original image size exists.
-                if ($src_value && file_exists(App::config()->dotclearRoot() . $src_value)) {
-
+                if ($src_value && $img_path) {
                     // Gets original image dimensions.
-                    list($width, $height) = getimagesize(App::config()->dotclearRoot() . $src_value);
+                    $img_size = My::getImageSize($img_path);
 
-                    $img['o']['width']  = (int) $width;
-                    $img['o']['height'] = (int) $height;
+                    $img['o']['width']  = $img_size['width'];
+                    $img['o']['height'] = $img_size['height'];
 
                     // Gets image orientation.
                     $portrait = $img['o']['width'] < $img['o']['height'] ? true : false;
@@ -571,15 +570,13 @@ class FrontendBehaviors
                                 $img_path_rel   = sprintf($img_pattern, $size_id);
                                 $img_path       = App::config()->dotclearRoot() . $img_path_rel;
 
-                                if (file_exists($img_path)) {
-                                    $img[$size_id]['url']    = $img_path_rel;
-                                    $img[$size_id]['width']  = (int) $img_width;
+                                $img[$size_id]['url']    = $img_path_rel;
+                                $img[$size_id]['width']  = (int) $img_width;
 
-                                    $img_sizes = @getimagesize($img_path);
+                                $img_size = My::getImageSize($img_path);
 
-                                    if ($img_sizes) {
-                                        $img[$size_id]['height'] = isset($img_sizes[1]) ? (int) $img_sizes[1] : null;
-                                    }
+                                if ($img_size['height']) {
+                                    $img[$size_id]['height'] = $img_size['height'];
                                 }
                             }
                         }
