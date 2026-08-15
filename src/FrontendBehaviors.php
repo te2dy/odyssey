@@ -303,9 +303,9 @@ class FrontendBehaviors
 
                 if (isset(My::settings()->header_image['url'])) {
                     // Retrieves the image path.
-                    $image_path = App::config()->dotclearRoot() . My::settings()->header_image['url'];
+                    $image_path = Path::real(App::config()->dotclearRoot() . My::settings()->header_image['url']);
 
-                    if (file_exists($image_path)) {
+                    if ($image_path) {
                         $image_size = My::getImageSize($image_path);
 
                         if (isset($image_size['width'], $image_size['height'])) {
@@ -568,15 +568,17 @@ class FrontendBehaviors
                                 $dc_img_pattern = App::media()->getThumbnailFilePattern($info['extension']);
                                 $img_pattern    = sprintf($dc_img_pattern, $info['dirname'], $info['base'], '%s');
                                 $img_path_rel   = sprintf($img_pattern, $size_id);
-                                $img_path       = App::config()->dotclearRoot() . $img_path_rel;
+                                $img_path       = Path::real(App::config()->dotclearRoot() . $img_path_rel);
 
-                                $img[$size_id]['url']    = $img_path_rel;
-                                $img[$size_id]['width']  = (int) $img_width;
+                                if ($img_path) {
+                                    $img[$size_id]['url']    = $img_path_rel;
+                                    $img[$size_id]['width']  = (int) $img_width;
 
-                                $img_size = My::getImageSize($img_path);
+                                    $img_size = My::getImageSize($img_path);
 
-                                if ($img_size['height']) {
-                                    $img[$size_id]['height'] = $img_size['height'];
+                                    if ($img_size['height']) {
+                                        $img[$size_id]['height'] = $img_size['height'];
+                                    }
                                 }
                             }
                         }
