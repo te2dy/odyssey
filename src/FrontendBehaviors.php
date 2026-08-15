@@ -68,16 +68,10 @@ class FrontendBehaviors
 
                 $desc = App::frontend()->context()->posts->post_excerpt_xhtml ?: App::frontend()->context()->posts->post_content_xhtml;
                 $desc = My::cleanStr($desc);
-
-                if (mb_strlen($desc) > 180) {
-                    $desc = Text::cutString($desc, 179) . '…';
-                }
+                $desc = mb_strlen($desc) > 180 ? Text::cutString($desc, 179) . '…' : $desc;
 
                 $img_url_rel = Ctx::EntryFirstImageHelper('o', true, '', true);
-
-                if ($img_url_rel) {
-                    $img = My::blogBaseURL() . $img_url_rel;
-                }
+                $img         = $img_url_rel ? My::blogBaseURL() . $img_url_rel : '';
 
                 break;
             case 'default':
@@ -92,18 +86,13 @@ class FrontendBehaviors
 
                 $page = (int) Ctx::PaginationPosition();
 
-                if ($page > 1) {
-                    $desc = sprintf(__('meta-social-page-with-number'), $page);
-                }
+                $desc = $page > 1 ? sprintf(__('meta-social-page-with-number'), $page) : '';
 
                 if (My::settings()->advanced_meta_description || App::blog()->desc) {
                     $desc .= $desc ? ' – ' : '';
                     $desc .= My::settings()->advanced_meta_description ?: App::blog()->desc;
                     $desc  = My::cleanStr($desc);
-
-                    if (mb_strlen($desc) > 180) {
-                        $desc = Text::cutString($desc, 179) . '…';
-                    }
+                    $desc  = mb_strlen($desc) > 180 ? Text::cutString($desc, 179) . '…' : $desc;
                 }
 
                 break;
@@ -113,10 +102,7 @@ class FrontendBehaviors
                 if (App::frontend()->context()->categories->cat_desc) {
                     $desc = App::frontend()->context()->categories->cat_desc;
                     $desc = My::cleanStr($desc);
-
-                    if (mb_strlen($desc) > 180) {
-                        $desc = Text::cutString($desc, 179) . '…';
-                    }
+                    $desc = mb_strlen($desc) > 180 ? Text::cutString($desc, 179) . '…' : $desc;
                 }
 
                 break;
