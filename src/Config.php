@@ -2142,33 +2142,12 @@ class Config
             $theme_dev_mode = true;
         }
 
-        $theme_update_locked = false;
-
-        if ((bool) App::themes()->getDefine(App::blog()->settings()->system->theme)->updLocked()
-            && App::plugins()->moduleExists('themeEditor')
-        ) {
-            $theme_update_locked = true;
-        }
-
         $no_public_css = (bool) App::blog()->settings()->system->no_public_css;
 
-        if ($theme_update_locked || $theme_dev_mode || !$no_public_css) {
+        if ($theme_dev_mode || !$no_public_css) {
             $theme_info = [];
 
-            if ($theme_update_locked && $theme_dev_mode) {
-                $theme_info[] = (new Text('p', sprintf(
-                    __('settings-theme-warning-lockedanddev'),
-                    My::name(),
-                    My::displayAttr(App::backend()->url()->get('admin.plugin.themeEditor')),
-                    My::displayAttr(App::backend()->url()->get('admin.plugin.tidyAdmin', ['part' => 'options']))
-                )));
-            } elseif ($theme_update_locked) {
-                $theme_info[] = (new Text('p', sprintf(
-                    __('settings-theme-warning-locked'),
-                    My::name(),
-                    My::displayAttr(App::backend()->url()->get('admin.plugin.themeEditor'))
-                )));
-            } elseif ($theme_dev_mode) {
+            if ($theme_dev_mode) {
                 $theme_info[] = new Text('p', sprintf(
                     __('settings-theme-warning-dev'),
                     My::displayAttr(App::backend()->url()->get('admin.plugin.tidyAdmin', ['part' => 'options']))

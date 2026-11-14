@@ -828,13 +828,7 @@ msgstr ""
 msgid "settings-odysseystyles-title"
 msgstr ""
 
-msgid "settings-theme-warning-locked"
-msgstr ""
-
 msgid "settings-theme-warning-dev"
-msgstr ""
-
-msgid "settings-theme-warning-lockedanddev"
 msgstr ""
 
 msgid "settings-mediacss-warning"
