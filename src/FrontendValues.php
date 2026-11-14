@@ -207,37 +207,8 @@ class FrontendValues
             $img_position     = 'top';
         }
 
-        $dimensions .= $image_size ? ' width=' . (int) $image_size : '';
-
-        /**
-         * The height was not saved in the "header_image" setting before the version 2.32 of the theme.
-         * Then, if there is no height associated to the image, calculates it and saves it in the database.
-         *
-         * These lines should be removed some weeks or monthes later.
-         */
-        if (!$image_height) {
-            $image_name = My::settings()->header_image['name'] ?? '';
-            $img_path   = My::publicFolder('path', '/img/' . $image_name);
-
-                list($image_width_unsued, $image_height) = getimagesize($img_path);
-
-                $img_setting_value = [
-                    'name'   => My::settings()->header_image['name'] ?? '',
-                    'url'    => $image_url,
-                    'width'  => (int) $image_size,
-                    'height' => (int) $image_height
-                ];
-
-                App::blog()->settings->odyssey->put(
-                    'header_image',
-                    $img_setting_value,
-                    'array',
-                    'Header image URL'
-                );
-            }
-        }
-
-        $dimensions .= $image_height ? ' height=' . (int) $image_height : '';
+        $dimensions .= ' width=' . (int) $image_width;
+        $dimensions .= ' height=' . (int) $image_height;
 
         if (isset($attr['position']) && $img_position === $attr['position']) {
             $url_type = My::urlType();
