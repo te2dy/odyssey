@@ -14,16 +14,20 @@ Son auteur s’est particulièrement inspiré du blog de Jim Nielsen (https://bl
 Hiérarchie des priorités : 🔴 🟠 🟢
 - 🔴 Balise <sup> s’affiche dans <title> au lieu d’être supprimée.
 - 🔴 Voir comment gérer les images lorsque, pour une largeur définie en em, l’utilisateur a défini la taille de police à 20 ou 22 px au lieu de 16.
-- 🟠 Confirmer que la valeur de "sizes" des images larges est bonne.
+- 🟠 Confirmer que la valeur de "sizes" des images larges est la bonne.
 - 🟠 Modifier odysseyEntryExcerpt pour exclure le numéro des notes de bas de page ?
 - 🟠 Vérifier l’apparence du thème à l’impression.
 - 🟢 Basculer certaines options sur des extensions pour libérer le configurateur.
 - 🟢 À évaluer : créer une aide dans le configurateur avec Page::helpBlock().
 - 🟢 À évaluer : ajouter la possibilité d’afficher la barre latérale à gauche ou à droite, plutôt qu’en bas ? Version 3 ?
 - 🟢 À évaluer : permettre l’ajout de boutons de partage pour des réseaux sociaux qui ne sont pas configurés.
-- ⏳ Dans odysseyHeaderImage(), supprimer la partie qui définit la hauteur des images après quelques mois (avril 2026).
 
 == Notes de version ==
+
+=== 2.42 - 14 novembre 2026 ===
+- Correction : l’existence de certaines images larges n’était pas vérifiée avant la tentative de leur affichage.
+- Suppression : avertissement si le thème est verrouillé (fonction supprimée dans Dotclear 2.40).
+- Suppression : enregistrement de la largeur du logo dans la base de données si ce n’était pas déjà le cas.
 
 === 2.41 - 14 août 2026 ===
 - Correction : une balise <div> n’était pas toujours fermée dans le gabarit des commentaires.
