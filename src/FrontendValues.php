@@ -171,11 +171,11 @@ class FrontendValues
     public static function odysseyHeaderImage(ArrayObject $attr): string
     {
         $image_url      = My::settings()->header_image['url']    ?? null;
-        $image_size     = My::settings()->header_image['width']  ?? null;
+        $image_width    = My::settings()->header_image['width']  ?? null;
         $image_height   = My::settings()->header_image['height'] ?? null;
         $image_as_title = My::settings()->header_image_as_title  ?: false;
 
-        if (!$image_url || !$image_size) {
+        if (!$image_url || !$image_width || !$image_height) {
             return '';
         }
 
@@ -187,7 +187,7 @@ class FrontendValues
 
         if ($image2x_url) {
             $srcset = ' srcset="' . My::escapeURL($image_url) . ' 1x, ' . My::escapeURL($image2x_url) . ' 2x"';
-            $sizes  = My::imgSizes($image_size, false, true);
+            $sizes  = My::imgSizes($image_width, false, true);
             $sizes  = ' sizes=' . My::displayAttr($sizes);
         }
 
@@ -219,7 +219,6 @@ class FrontendValues
             $image_name = My::settings()->header_image['name'] ?? '';
             $img_path   = My::publicFolder('path', '/img/' . $image_name);
 
-            if (file_exists($img_path)) {
                 list($image_width_unsued, $image_height) = getimagesize($img_path);
 
                 $img_setting_value = [
