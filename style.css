@@ -700,6 +700,7 @@ details summary {
 }
 .reactions-button,
 .reactions-button:is(:active, :focus, :hover) {
+  display: inline-block;
   text-decoration: none;
 }
 .reactions-button:is(:active, :focus, :hover) .reactions-button-text {
